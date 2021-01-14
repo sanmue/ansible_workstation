@@ -1,0 +1,68 @@
+---
+- hosts: localhost
+  connection: local
+  become: true
+
+  tasks:
+  - name: install packages
+    package:
+      name:
+        - clamav
+        - clamtk
+        - flatpak
+        - gimp
+        - gimp-help-de
+        - gparted
+        - grsync
+        - htop
+        - hunspell-de-de-frami
+        - hyphen-de
+        - inkscape
+        - keepassxc
+        - libreoffice
+        - libreoffice-help-de
+        - libreoffice-l10n-de
+        - libreoffice-pdfimport
+        - luckybackup
+        - nano
+        - neofetch
+        - remmina
+        - rsync
+        - skanlite
+        - snapd
+        - ssh
+        - terminator
+        - thunderbird
+        - vlc
+        - alacarte
+        - deluge
+        - guake
+        - gufw
+        - language-pack-gnome-de-base
+        - language-pack-gnome-de
+        - nemo
+        - python3-psutil
+        - rhythmbox
+        - searchmonkey
+        - syncthing
+        - ufw
+
+  - name: add ansible user
+    user:
+      name: s_ansible
+      system: yes
+
+  - name: set up sudo for ansible user
+    copy:
+      src: files/sudoer_s_ansible
+      dest: /etc/sudoers.d/s_ansible
+      owner: root
+      group: root
+      mode: 0440
+
+  - name: add ansible-pull cron job
+    cron:
+      name: ansible auto-provision
+      user: s_ansible
+      minute: "*/10"
+      job: ansible-pull -o -U https://github.com/sanmue/ansible_test.git
