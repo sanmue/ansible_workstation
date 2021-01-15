@@ -12,6 +12,7 @@
         - flatpak
         - gimp
         - gimp-help-de
+        - git
         - gparted
         - grsync
         - htop
@@ -19,22 +20,26 @@
         - hyphen-de
         - inkscape
         - keepassxc
-        - libreoffice
-        - libreoffice-help-de
-        - libreoffice-l10n-de
-        - libreoffice-pdfimport
+#        - libreoffice
+#        - libreoffice-help-de
+#        - libreoffice-l10n-de
+#        - libreoffice-pdfimport
         - luckybackup
         - nano
         - neofetch
+        - openssh-client
         - remmina
         - rsync
         - skanlite
-        - snapd
         - ssh
+#        - syncthing
         - terminator
-        - thunderbird
         - vlc
+###       Automation
+        - ansible
+###       Gnome/Ubuntu:
         - alacarte
+        - dconf-cli
         - deluge
         - guake
         - gufw
@@ -44,8 +49,19 @@
         - python3-psutil
         - rhythmbox
         - searchmonkey
-        - syncthing
         - ufw
+###       Server:
+#        - openssh-server
+###       Snap:
+#        - chromium
+#        - discord
+#        - gdu-disk-usage-analyzer
+#        - joplin-james-carroll
+#        - ksnip
+#        - libreoffice
+#        - signal-desktop
+#        - thunderbird
+#        - whalebird
 
   - name: add ansible user
     user:
