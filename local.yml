@@ -18,7 +18,6 @@
         - htop
         - hunspell-de-de-frami
         - hyphen-de
-        - inkscape
         - keepassxc
 #        - libreoffice
 #        - libreoffice-help-de
@@ -33,7 +32,7 @@
         - rsync
         - skanlite
         - ssh
-#        - syncthing
+        - syncthing
         - terminator
         - vlc
 ###       Gnome/Ubuntu:
@@ -42,6 +41,7 @@
         - deluge
         - guake
         - gufw
+        - inkscape
         - language-pack-gnome-de-base
         - language-pack-gnome-de
         - nemo
