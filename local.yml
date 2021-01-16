@@ -7,14 +7,23 @@
   - name: install packages
     package:
       name:
+###     basic
         - clamav
+        - git
+        - htop
+        - nano
+        - neofetch
+        - openssh-client
+        - rsync
+        - ssh
+#       Automation:
+        - ansible
+###    Desktop/Laptop
         - clamtk
         - gimp
         - gimp-help-de
-        - git
         - gparted
         - grsync
-        - htop
         - hunspell-de-de-frami
         - hyphen-de
         - keepassxc
@@ -23,20 +32,13 @@
 #        - libreoffice-l10n-de
 #        - libreoffice-pdfimport
         - luckybackup
-        - nano
-        - neofetch
         - nextcloud-desktop
-        - openssh-client
         - remmina
-        - rsync
         - skanlite
-        - ssh
         - syncthing
         - terminator
         - vlc
-###     Automation:
-        - ansible
-###     Gnome/Ubuntu:
+##     Gnome/Ubuntu:
         - alacarte
         - dconf-cli
         - deluge
@@ -52,12 +54,16 @@
         - rhythmbox
         - searchmonkey
         - ufw
-###     weitere Repos benötigt:
+##      KDE Plasma
+#       - 
+###     Repos needed:
 #        -vivaldi-stable
-#       Flatpak, Snap:
+#       Flatpak:
 #        - flatpak
+#       Snap:
 #        - snapd
-###     Snap (Ubuntu):
+#
+###     Snap Apps (Ubuntu):
 #        - chromium
 #        - discord
 #        - gdu-disk-usage-analyzer
@@ -67,10 +73,20 @@
 #        - signal-desktop
 #        - thunderbird
 #        - whalebird
-###     flatpak (flathub):
+###     flatpak Apps:
 #        -
 ###     Server:
 #        - openssh-server
+###      Virtualization:
+##       QEMU - KVM:
+#        Ubuntu:
+#         - qemu-kvm
+#         - libvirt-daemon-system
+#         - libvirt-clients
+#         - bridge-utils
+#         - virtinst
+#         - virt-manager
+#         - virt-viewer
 
   - name: add ansible user
     user:
