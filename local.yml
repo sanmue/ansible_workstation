@@ -27,6 +27,7 @@
         - luckybackup
         - nano
         - neofetch
+        - nextcloud-desktop
         - openssh-client
         - remmina
         - rsync
@@ -35,8 +36,6 @@
 #        - syncthing
         - terminator
         - vlc
-###       Automation
-        - ansible
 ###       Gnome/Ubuntu:
         - alacarte
         - dconf-cli
@@ -46,12 +45,12 @@
         - language-pack-gnome-de-base
         - language-pack-gnome-de
         - nemo
+        - nemo-nextcloud
         - python3-psutil
         - rhythmbox
         - searchmonkey
         - ufw
-###       Server:
-#        - openssh-server
+#
 ###       Snap:
 #        - chromium
 #        - discord
@@ -62,6 +61,16 @@
 #        - signal-desktop
 #        - thunderbird
 #        - whalebird
+#
+#        seperate repo:
+#        - vivalid
+#
+###       Automation
+        - ansible
+#
+###       Server:
+#        - openssh-server
+
 
   - name: add ansible user
     user:
