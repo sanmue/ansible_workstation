@@ -9,7 +9,6 @@
       name:
         - clamav
         - clamtk
-        - flatpak
         - gimp
         - gimp-help-de
         - git
@@ -35,10 +34,13 @@
         - syncthing
         - terminator
         - vlc
-###       Gnome/Ubuntu:
+###     Automation:
+        - ansible
+###     Gnome/Ubuntu:
         - alacarte
         - dconf-cli
         - deluge
+#        - gnome-software-plugin-flatpak
         - guake
         - gufw
         - inkscape
@@ -50,8 +52,12 @@
         - rhythmbox
         - searchmonkey
         - ufw
-#
-###       Snap:
+###     weitere Repos benötigt:
+#        -vivaldi-stable
+#       Flatpak, Snap:
+#        - flatpak
+#        - snapd
+###     Snap (Ubuntu):
 #        - chromium
 #        - discord
 #        - gdu-disk-usage-analyzer
@@ -61,16 +67,10 @@
 #        - signal-desktop
 #        - thunderbird
 #        - whalebird
-#
-#        seperate repo:
-#        - vivalid
-#
-###       Automation
-        - ansible
-#
-###       Server:
+###     flatpak (flathub):
+#        -
+###     Server:
 #        - openssh-server
-
 
   - name: add ansible user
     user:
