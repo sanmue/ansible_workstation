@@ -9,7 +9,7 @@
     package:
       state: latest
       update_cache: yes
-      upgrade: dist
+#      upgrade: dist
       name:
         - clamav
         - git
