@@ -1,11 +1,33 @@
----
+#---
 - hosts: localhost
   connection: local
   become: true
 
+# pre_tasks:
   tasks:
+### Update repos:
+#    - name: update repository index for Ubuntu
+#      apt:
+#        update_cache: yes
+        #when: ansible_distribution_version == "Ubuntu"
+        #when: ansible_os_family == "Debian"
+#        when: ansible_pkg_mgr == "apt"
+
+#    - name: update repository index for (open)SUSE
+#      zypper:
+#        update_cache: yes
+        #when: ansible_distribution_version == "Suse"
+        #when: ansible_os_family == "Suse"
+#        when: ansible_pkg_mgr == "zypper"
+
+### Installation:
   - name: install packages
     package:
+      state: latest
+      update_cache: yes
+# Debian/Ubuntu:
+      upgrade: dist
+#
       name:
 ###     basic
         - clamav
@@ -18,6 +40,13 @@
         - ssh
 #       Automation:
         - ansible
+#       Automation apt (Ubuntu, Debian, ...)
+        - python-apt
+        - python3-apt
+        - aptitude
+#       Automation zypper (openSUSE, ...)
+#        - python-xml
+#        - rpm
 ###    Desktop/Laptop
         - clamtk
         - gimp
@@ -27,6 +56,7 @@
         - hunspell-de-de-frami
         - hyphen-de
         - keepassxc
+#       siehe snap oder flatpak:
 #        - libreoffice
 #        - libreoffice-help-de
 #        - libreoffice-l10n-de
@@ -42,7 +72,6 @@
         - alacarte
         - dconf-cli
         - deluge
-#        - gnome-software-plugin-flatpak
         - guake
         - gufw
         - inkscape
@@ -56,10 +85,13 @@
         - ufw
 ##      KDE Plasma
 #       - 
+#
+#
 ###     Repos needed:
 #        -vivaldi-stable
 #       Flatpak:
 #        - flatpak
+#        - gnome-software-plugin-flatpak
 #       Snap:
 #        - snapd
 #
@@ -75,8 +107,12 @@
 #        - whalebird
 ###     flatpak Apps:
 #        -
+#
+#
 ###     Server:
 #        - openssh-server
+#
+#
 ###      Virtualization:
 ##       QEMU - KVM:
 #        Ubuntu:
