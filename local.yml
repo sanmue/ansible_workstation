@@ -3,13 +3,32 @@
   connection: local
   become: true
 
+# pre_tasks:
   tasks:
+### Update repos:
+#    - name: update repository index for Ubuntu
+#      apt:
+#        update_cache: yes
+        #when: ansible_distribution_version == "Ubuntu"
+        #when: ansible_os_family == "Debian"
+#        when: ansible_pkg_mgr == "apt"
 
+#    - name: update repository index for (open)SUSE
+#      zypper:
+#        update_cache: yes
+        #when: ansible_distribution_version == "Suse"
+        #when: ansible_os_family == "Suse"
+#        when: ansible_pkg_mgr == "zypper"
+
+### Installation:
   - name: install packages
     package:
       state: latest
       update_cache: yes
-#      upgrade: dist
+# Debian/Ubuntu:
+      upgrade: dist
+#
+###     basic
       name:
         - clamav
         - git
@@ -19,10 +38,16 @@
         - openssh-client
         - rsync
         - ssh
+#       Automation:
         - ansible
+#       Automation apt (Ubuntu, Debian, ...)
         - python-apt
         - python3-apt
         - aptitude
+#       Automation zypper (openSUSE, ...)
+#        - python-xml
+#        - rpm
+###    Desktop/Laptop
         - clamtk
         - gimp
         - gimp-help-de
@@ -31,6 +56,11 @@
         - hunspell-de-de-frami
         - hyphen-de
         - keepassxc
+#       siehe snap oder flatpak:
+#        - libreoffice
+#        - libreoffice-help-de
+#        - libreoffice-l10n-de
+#        - libreoffice-pdfimport
         - luckybackup
         - nextcloud-desktop
         - remmina
@@ -38,6 +68,7 @@
         - syncthing
         - terminator
         - vlc
+##     Gnome/Ubuntu:
         - alacarte
         - dconf-cli
         - deluge
@@ -52,6 +83,46 @@
         - rhythmbox
         - searchmonkey
         - ufw
+##      KDE Plasma
+#       - 
+#
+#
+###     Repos needed:
+#        -vivaldi-stable
+#       Flatpak:
+#        - flatpak
+#        - gnome-software-plugin-flatpak
+#       Snap:
+#        - snapd
+#
+###     Snap Apps (Ubuntu):
+#        - chromium
+#        - discord
+#        - gdu-disk-usage-analyzer
+#        - joplin-james-carroll
+#        - ksnip
+#        - libreoffice
+#        - signal-desktop
+#        - thunderbird
+#        - whalebird
+###     flatpak Apps:
+#        -
+#
+#
+###     Server:
+#        - openssh-server
+#
+#
+###      Virtualization:
+##       QEMU - KVM:
+#        Ubuntu:
+#         - qemu-kvm
+#         - libvirt-daemon-system
+#         - libvirt-clients
+#         - bridge-utils
+#         - virtinst
+#         - virt-manager
+#         - virt-viewer
 
   - name: add ansible user
     user:
