@@ -31,11 +31,7 @@
   - name: install packages
     package:
       state: latest
-      update_cache: yes
-# Debian/Ubuntu:
-      upgrade: dist
-#
-###     basic
+### basic
       name:
         - clamav
         - git
