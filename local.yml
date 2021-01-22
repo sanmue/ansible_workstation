@@ -11,7 +11,7 @@
         update_cache: yes
 #        when: ansible_distribution_version == "Ubuntu"
 #        when: ansible_os_family == "Debian"
-        when: ansible_pkg_mgr == "apt"
+      when: ansible_pkg_mgr == "apt"
 
     - name: update repository index and update (open)SUSE
       zypper:
@@ -19,7 +19,7 @@
         state: dist-upgrade
 #        when: ansible_distribution_version == "Suse"
 #        when: ansible_os_family == "Suse"
-        when: ansible_pkg_mgr == "zypper"
+      when: ansible_pkg_mgr == "zypper"
 
 
 - hosts: localhost
