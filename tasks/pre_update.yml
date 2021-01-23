@@ -1,0 +1,17 @@
+- name: update repository index and update Ubuntu
+  apt:
+    upgrade: dist
+    update_cache: yes
+#  when: ansible_distribution_version == "Ubuntu"
+#  when: ansible_os_family == "Debian"
+  when: ansible_pkg_mgr == "apt"
+  changed_when: False
+
+- name: update repository index and update (open)SUSE
+  zypper:
+    update_cache: yes
+    state: dist-upgrade
+#  when: ansible_distribution_version == "Suse"
+#  when: ansible_os_family == "Suse"
+  when: ansible_pkg_mgr == "zypper"
+  changed_when: False
