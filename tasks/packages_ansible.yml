@@ -2,7 +2,6 @@
 
 - name install requirements for ansible (apt)
   apt:
-    state: latest
     name:
       - python-apt
       - python3-apt
