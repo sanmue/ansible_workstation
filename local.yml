@@ -113,18 +113,9 @@
 #         - virt-manager
 #         - virt-viewer
 
-  - name: add ansible user
-    user:
-      name: s_ansible
-      system: yes
 
-  - name: set up sudo for ansible user
-    copy:
-      src: files/sudoer_s_ansible
-      dest: /etc/sudoers.d/s_ansible
-      owner: root
-      group: root
-      mode: 0440
+  - include: tasks/users.yml
+
 
   - name: add ansible-pull cron job
     cron:
