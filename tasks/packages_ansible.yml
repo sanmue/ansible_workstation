@@ -1,0 +1,25 @@
+# sollte schon installiert sein
+
+- name install requirements for ansible (apt)
+  apt:
+    state: latest
+    name:
+      - python-apt
+      - python3-apt
+      - aptitude
+  when: ansible_pkg_mgr == "apt"
+
+- name install requirements for ansible (zypper)
+  zypper:
+    state: latest
+    name:
+      - python-xml
+      - rpm
+  when: ansible_pkg_mgr == "zypper"
+
+
+- name: install ansible
+  package:
+    state: latest
+    name:
+      - ansible

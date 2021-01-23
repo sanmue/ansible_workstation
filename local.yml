@@ -14,21 +14,13 @@
 
   tasks:
 
+  - include: tasks/packages_ansible.yml
   - include: tasks/packages_basic.yml
 
   - name: install packages
     package:
       state: latest
       name:
-###     Automation:
-        - ansible
-#       Automation apt (Ubuntu, Debian, ...)
-        - python-apt
-        - python3-apt
-        - aptitude
-#       Automation zypper (openSUSE, ...)
-#        - python-xml
-#        - rpm
 ###    Desktop/Laptop
         - clamtk
         - gimp
@@ -38,7 +30,7 @@
         - hunspell-de-de-frami
         - hyphen-de
         - keepassxc
-#       aktueller: über  snap oder flatpak:
+#       aktueller: über snap oder flatpak:
 #        - libreoffice
 #        - libreoffice-help-de
 #        - libreoffice-l10n-de
