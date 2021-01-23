@@ -1,0 +1,15 @@
+- name: install VM QEMU/KVM (Ubuntu)
+  apt:
+    state: latest
+    name:
+       - qemu-kvm
+       - libvirt-daemon-system
+       - libvirt-clients
+       - bridge-utils
+       - virtinst
+       - virt-manager
+       - virt-viewer
+  when: ansible_distribution_version == "Ubuntu"
+
+# TODO: add user to groups
+# TODO: Enable and start service

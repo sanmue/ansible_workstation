@@ -14,14 +14,17 @@
 
   tasks:
 
+  - include: tasks/users.yml
+  - include: tasks/cron.yml
   - include: tasks/packages_ansible.yml
   - include: tasks/packages_basic.yml
+  - include: tasks/packages_VM_QEMU-KVM.yml
 
   - name: install packages
     package:
       state: latest
       name:
-###    Desktop/Laptop
+###   Workstation (Desktop/Laptop)
         - clamtk
         - gimp
         - gimp-help-de
@@ -97,7 +100,3 @@
 #         - virtinst
 #         - virt-manager
 #         - virt-viewer
-
-
-  - include: tasks/users.yml
-  - include: tasks/cron.yml
