@@ -19,6 +19,7 @@
   - name: install packages
     package:
       state: latest
+      name:
 ###     Automation:
         - ansible
 #       Automation apt (Ubuntu, Debian, ...)
