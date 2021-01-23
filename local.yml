@@ -4,99 +4,25 @@
   connection: local
   become: true
   pre_tasks:
-
     - include: tasks/pre_update.yml
 
 
 - hosts: localhost
   connection: local
   become: true
-
   tasks:
-
   - include: tasks/users.yml
   - include: tasks/cron.yml
   - include: tasks/packages_ansible.yml
   - include: tasks/packages_basic.yml
+  - include: tasks/packages_workstation.yml
   - include: tasks/packages_VM_QEMU-KVM.yml
 
   - name: install packages
     package:
       state: latest
       name:
-###   Workstation (Desktop/Laptop)
-        - clamtk
-        - gimp
-        - gimp-help-de
-        - gparted
-        - grsync
-        - hunspell-de-de-frami
-        - hyphen-de
-        - keepassxc
-#       aktueller: über snap oder flatpak:
-#        - libreoffice
-#        - libreoffice-help-de
-#        - libreoffice-l10n-de
-#        - libreoffice-pdfimport
-        - luckybackup
-        - nextcloud-desktop
-        - remmina
-        - skanlite
-        - syncthing
-        - terminator
-        - vlc
-##     Gnome/Ubuntu:
-        - alacarte
-        - dconf-cli
-        - deluge
-        - guake
-        - gufw
-        - inkscape
-        - language-pack-gnome-de-base
-        - language-pack-gnome-de
-        - nemo
-        - nemo-nextcloud
-        - python3-psutil
-        - rhythmbox
-        - searchmonkey
-        - ufw
-##      KDE Plasma
-#       - 
-#
-#
-###     Repos needed:
-#        -vivaldi-stable
-#       Flatpak:
-#        - flatpak
-#        - gnome-software-plugin-flatpak
-#       Snap:
-#        - snapd
-#
-###     Snap Apps (Ubuntu):
-#        - chromium
-#        - discord
-#        - gdu-disk-usage-analyzer
-#        - joplin-james-carroll
-#        - ksnip
-#        - libreoffice
-#        - signal-desktop
-#        - thunderbird
-#        - whalebird
-###     flatpak Apps:
-#        -
-#
-#
+
 ###     Server:
 #        - openssh-server
-#
-#
-###      Virtualization:
-##       QEMU - KVM:
-#        Ubuntu:
-#         - qemu-kvm
-#         - libvirt-daemon-system
-#         - libvirt-clients
-#         - bridge-utils
-#         - virtinst
-#         - virt-manager
-#         - virt-viewer
+
