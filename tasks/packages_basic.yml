@@ -1,0 +1,12 @@
+- name: install basic packages
+  package:
+    state: latest
+    name:
+      - clamav
+      - git
+      - htop
+      - nano
+      - neofetch
+      - openssh-client
+      - rsync
+      - ssh

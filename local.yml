@@ -13,21 +13,13 @@
   become: true
 
   tasks:
-### Installation:
+
+  - include: tasks/packages_basic.yml
+
   - name: install packages
     package:
       state: latest
-### basic
-      name:
-        - clamav
-        - git
-        - htop
-        - nano
-        - neofetch
-        - openssh-client
-        - rsync
-        - ssh
-#       Automation:
+###     Automation:
         - ansible
 #       Automation apt (Ubuntu, Debian, ...)
         - python-apt
@@ -45,7 +37,7 @@
         - hunspell-de-de-frami
         - hyphen-de
         - keepassxc
-#       siehe snap oder flatpak:
+#       aktueller: über  snap oder flatpak:
 #        - libreoffice
 #        - libreoffice-help-de
 #        - libreoffice-l10n-de
