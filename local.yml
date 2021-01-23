@@ -17,12 +17,4 @@
   - include: tasks/packages_basic.yml
   - include: tasks/packages_workstation.yml
   - include: tasks/packages_VM_QEMU-KVM.yml
-
-  - name: install packages
-    package:
-      state: latest
-      name:
-
-###     Server:
-#        - openssh-server
-
+#  - include: tasks/packages_server-basic.yml

@@ -1,0 +1,5 @@
+- name: install basic packages for servers
+  package:
+    state: latest
+    name:
+      - openssh-server
