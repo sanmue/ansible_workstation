@@ -1,0 +1,39 @@
+- name: start and enable snapd (Suse)
+  tags: workstation,suse,snap
+  service:
+    name: snapd
+    state: started
+    enabled: yes
+  when: ansible_distribution == "Suse"
+
+#- name: start and enable snapd (Tumbleweed)
+#   tags: workstation,suse,snap 
+#   service:
+#     name: snapd-apparmor
+#     state: started
+#   when: ansible_distribution == "Suse"
+
+- name: start and enable snapd (Archlinux)  
+  tags: workstation,arch,snap
+  service:
+    name: snapd.socket
+    state: started
+    enabled: yes
+  when: ansible_distribution == "Archlinux"
+
+
+# https://stackoverflow.com/questions/56560173/ansible-how-to-add-modify-path-variable-in-centos
+#- name: 'Add {{ snapd_path }} if PATH does not exist'
+#    lineinfile:
+#      path: /etc/environment
+#      line: 'PATH="{{ snapd_path }}"'
+#      insertafter: EOF
+#    when: lookup('file', '/etc/environment') is not search('^\s*PATH\s*=')
+
+#- name: 'Add {{ snapd_path }} to PATH'
+#    lineinfile:
+#      path: /etc/environment
+#      regexp: 'PATH=(["])((?!.*?{{ snapd_path }}).*?)(["])$'
+#      line: 'PATH=\1\2:{{ snapd_path }}\3'
+#      backrefs: yes
+#    when: lookup('file', '/etc/environment') is search('^\s*PATH\s*=')

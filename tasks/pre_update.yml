@@ -1,26 +1,28 @@
 - name: update repository index and update system (apt)
+  tags: always,update
   apt:
     upgrade: dist
     update_cache: yes
-#  when: ansible_distribution_version == "Ubuntu"
+#  when: ansible_distribution == "Ubuntu"
 #  when: ansible_os_family == "Debian"
   when: ansible_pkg_mgr == "apt"
   changed_when: False
 
 - name: update repository index and update system (zypper)
+  tags: always,update
   zypper:
     update_cache: yes
     name: '*'
     state: dist-upgrade
-#  when: ansible_distribution_version == "Suse"
+#  when: ansible_distribution == "Suse"
 #  when: ansible_os_family == "Suse"
   when: ansible_pkg_mgr == "zypper"
   changed_when: False
 
 - name: update repository index and update system (pacman)
+  tags: always,update
   pacman:
     update_cache: yes
     upgrade: yes
   when: ansible_pkg_mgr == "pacman"
   changed_when: False
-

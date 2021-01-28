@@ -1,10 +1,13 @@
 - name: install basic packages
+  tags: basic
   package:
     state: latest
     name:
       - clamav
       - git
+      - gpg
       - htop
+      - lsb-release
       - nano
       - neofetch
       - openssh-client

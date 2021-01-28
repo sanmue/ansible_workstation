@@ -1,0 +1,51 @@
+- name: add apt signing key for repos (Ubuntu)
+  tags: workstation,ubuntu,addrepos,pre
+  apt_key:
+    url: https://repo.vivaldi.com/archive/linux_signing_key.pub
+    state: present
+  when:
+    - ansible_distribution == "Ubuntu"
+
+- name: add repo for Vivaldi Browser (Ubuntu)
+  tags: workstation,ubuntu,addrepos,pre
+  apt_repository:
+    repo: deb https://repo.vivaldi.com/archive/deb/ stable main
+    state: present
+    update_cache: yes
+  when:
+    - ansible_distribution == "Ubuntu"
+
+- name: add repo for flatpak (Ubuntu)
+  tags: workstation,ubuntu,addrepos,pre,flatpak
+  apt_repository:
+    repo: ppa:alexlarsson/flatpak
+    state: present
+    update_cache: yes
+  when:
+    - ansible_distribution == "Ubuntu"
+
+
+- name: add repo for Vivaldi Browser (Suse)
+  tags: workstation,suse,addrepos,pre
+  zypper_repository:
+    name: vivaldi-repo
+    repo: 'https://repo.vivaldi.com/archive/vivaldi-suse.repo'
+    state: present
+    auto_import_keys: yes
+    autorefresh: yes
+    enabled: yes
+  when:
+    - ansible_distribution == "Suse"
+
+- name: add repo for snappy (Suse)
+  tags: workstation,suse,addrepos,pre,snap
+  zypper_repository:
+    name: snappy-repo
+#   Version noch hart codiert:
+    repo: 'https://download.opensuse.org/repositories/system:/snappy/openSUSE_Leap_15.2'
+    state: present
+    auto_import_keys: yes
+    autorefresh: yes
+    enabled: yes
+  when:
+    - ansible_distribution == "Suse"

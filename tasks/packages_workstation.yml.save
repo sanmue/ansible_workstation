@@ -1,5 +1,4 @@
 - name: install packages for workstations (basic/all)
-  tags: workstation
   package:
     state: latest
     name:
@@ -12,7 +11,7 @@
       - hunspell-de-de-frami
       - hyphen-de
       - keepassxc
-#     ggf. aktueller: snap oder flatpak:
+#     aktueller über snap oder flatpak:
 #      - libreoffice
 #      - libreoffice-help-de
 #      - libreoffice-l10n-de
@@ -21,13 +20,11 @@
       - nextcloud-desktop
       - remmina
       - skanlite
-      - snapd
       - syncthing
       - terminator
       - vlc
 
 - name: install packages for workstations (Ubuntu)
-  tags: workstation,gnome,ubuntu
   apt:
     state: latest
     name:
@@ -52,10 +49,29 @@
 
 
 - name: install packages for workstations (Suse, Archlinux)
-  tags: workstation,kde,suse,arch
   apt:
     state: latest
     name:
       - yakuake
   when: ansible_distribution == "Suse" or
         ansible_distribution == "Archlinux"
+
+
+###  Repos needed:
+#      -vivaldi-stable
+##   Snap:
+#      - snapd
+#
+##   Snap Apps (Ubuntu):
+#      - chromium
+#      - discord
+#      - gdu-disk-usage-analyzer
+#      - joplin-james-carroll
+#      - ksnip
+#      - libreoffice
+#      - signal-desktop
+#      - thunderbird
+#      - whalebird
+##   flatpak Apps:
+#        - de.willuhn.Jameica
+

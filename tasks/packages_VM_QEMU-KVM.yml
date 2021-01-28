@@ -1,4 +1,5 @@
 - name: install VM QEMU/KVM (Ubuntu)
+  tags: VM
   apt:
     state: latest
     name:
@@ -9,7 +10,9 @@
        - virtinst
        - virt-manager
        - virt-viewer
-  when: ansible_distribution_version == "Ubuntu"
+  when: ansible_distribution == "Ubuntu" and
+        ansible_virtualization_role != "guest"
 
 # TODO: add user to groups
 # TODO: Enable and start service
+

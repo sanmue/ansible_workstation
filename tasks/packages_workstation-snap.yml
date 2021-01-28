@@ -1,0 +1,14 @@
+- name: install snap packages for workstations (Ubuntu,Suse,Archlinux)
+  tags: workstation,ubuntu,suse,arch,snap
+  snap:
+    state: present
+    name:
+      - chromium
+      - discord
+      - gdu-disk-usage-analyzer
+      - joplin-james-carroll
+      - ksnip
+      - libreoffice
+      - signal-desktop
+      - thunderbird
+      - whalebird

@@ -1,0 +1,6 @@
+- name: install additional packages for workstations (Ubuntu,Suse,Archlinux)
+  tags: workstation,ubuntu,suse,arch
+  apt:
+    state: latest
+    name:
+      - vivaldi-stable

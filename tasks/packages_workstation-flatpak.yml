@@ -1,0 +1,6 @@
+- name: install flatpak packages for workstations (Ubuntu,Suse,Archlinux)
+  tags: workstation,ubuntu,suse,arch,flatpak
+  flatpak:
+    name: de.willuhn.Jameica
+    state: present
+    method: system

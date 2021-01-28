@@ -3,18 +3,30 @@
 - hosts: localhost
   connection: local
   become: true
+  tags: startall,pre
   pre_tasks:
+    - include: tasks/pre_addrepos_workstation.yml
     - include: tasks/pre_update.yml
 
 
 - hosts: localhost
   connection: local
   become: true
+  tags: startall
   tasks:
+
+#  ssh, ansible+abhängigkeiten,... muss bereits vorhanden sein
+#  - include: tasks/packages_ansible.yml
   - include: tasks/users.yml
   - include: tasks/cron.yml
-  - include: tasks/packages_ansible.yml
   - include: tasks/packages_basic.yml
   - include: tasks/packages_workstation.yml
+  - include: tasks/packages_workstation-additional.yml
+  - include: tasks/packages_workstation-snapservice.yml
+  - include: tasks/packages_workstation-snap.yml
+  - include: tasks/packages_workstation-flatpakrepo.yml
+  - include: tasks/packages_workstation-flatpak.yml
   - include: tasks/packages_VM_QEMU-KVM.yml
+
+#  Server:
 #  - include: tasks/packages_server-basic.yml

@@ -1,15 +1,17 @@
 # sollte schon installiert sein
 
 - name: install requirements for ansible (apt)
+  tags: ansible
   apt:
     state: latest
     name:
-      - python-apt
+#      - python-apt
       - python3-apt
-      - aptitude
+#      - aptitude
   when: ansible_pkg_mgr == "apt"
 
 - name: install requirements for ansible (zypper)
+  tags: ansible
   zypper:
     state: latest
     name:
@@ -19,7 +21,9 @@
 
 
 - name: install ansible
+  tags: ansible
   package:
     state: latest
     name:
       - ansible
+

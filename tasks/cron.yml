@@ -1,4 +1,5 @@
 - name: add ansible-pull cron job
+  tags: cron
   cron:
     name: ansible auto-provision
     user: s_ansible

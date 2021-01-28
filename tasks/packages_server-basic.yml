@@ -1,4 +1,5 @@
 - name: install basic packages for servers
+  tags: server
   package:
     state: latest
     name:
