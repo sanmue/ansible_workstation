@@ -10,6 +10,7 @@
       - lsb-release
       - nano
       - neofetch
+#      - openssh
       - openssh-client
       - rsync
       - ssh

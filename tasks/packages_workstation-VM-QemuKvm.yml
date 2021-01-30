@@ -1,0 +1,9 @@
+- name: install VM QEMU/KVM (Ubuntu)
+  tags: VM,workstation
+  apt:
+    state: latest
+    name:
+       - virt-manager
+  when: ansible_distribution == "Ubuntu" and
+        ansible_virtualization_role != "guest"
+

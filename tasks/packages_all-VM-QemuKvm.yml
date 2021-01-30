@@ -9,7 +9,6 @@
        - bridge-utils
        - virtinst
        - virt-manager
-       - virt-viewer
   when: ansible_distribution == "Ubuntu" and
         ansible_virtualization_role != "guest"
 

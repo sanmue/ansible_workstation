@@ -1,0 +1,11 @@
+#- name: allow KDE Connect
+#  ufw:
+#    rule: allow
+#    name: KDE Connect
+#    comment: allow KDE Connect
+#  when: ansible_distribution == "Ubuntu"
+
+- name: reload UFW
+  ufw:
+    state: reloaded
+  when: ansible_distribution == "Ubuntu"

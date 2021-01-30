@@ -1,0 +1,17 @@
+- name: enable UFW
+  ufw:
+    state: enabled
+  when: ansible_distribution == "Ubuntu"
+
+- name: allow OpenSSH
+  ufw:
+    rule: allow
+#    name: ssh
+    name: OpenSSH
+    comment: allow OpenSSH
+  when: ansible_distribution == "Ubuntu"
+
+- name: reload UFW
+  ufw:
+    state: reloaded
+  when: ansible_distribution == "Ubuntu"
