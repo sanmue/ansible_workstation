@@ -5,7 +5,7 @@
 
 #- name: UFW - allow OpenSSH
 #  ufw:
-#    rule: allow
+#    rule: limit
 #    name: OpenSSH
 #    comment: OpenSSH
 #  when: ansible_distribution == "Ubuntu"
@@ -15,7 +15,6 @@
     rule: limit
     port: ssh
     proto: tcp
-#    direction: in
     comment: ssh (tcp)
   when: ansible_distribution == "Ubuntu"
 
