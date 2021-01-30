@@ -1,17 +1,25 @@
-- name: enable UFW
+- name: UFW - enable
   ufw:
     state: enabled
   when: ansible_distribution == "Ubuntu"
 
-- name: allow OpenSSH
+#- name: UFW - allow OpenSSH
+#  ufw:
+#    rule: allow
+#    name: OpenSSH
+#    comment: OpenSSH
+#  when: ansible_distribution == "Ubuntu"
+
+- name: UFW - allow ssh (tcp)
   ufw:
-    rule: allow
-#    name: ssh
-    name: OpenSSH
-    comment: allow OpenSSH
+    rule: limit
+    port: ssh
+    proto: tcp
+#    direction: in
+    comment: ssh (tcp)
   when: ansible_distribution == "Ubuntu"
 
-- name: reload UFW
+- name: UFW - reload
   ufw:
     state: reloaded
   when: ansible_distribution == "Ubuntu"

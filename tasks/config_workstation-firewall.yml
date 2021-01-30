@@ -1,11 +1,28 @@
-#- name: allow KDE Connect
+#- name: UFW - allow KDE Connect
 #  ufw:
 #    rule: allow
 #    name: KDE Connect
-#    comment: allow KDE Connect
+#    comment: KDE Connect
 #  when: ansible_distribution == "Ubuntu"
 
-- name: reload UFW
+- name: UFW - allow KDE Connect / GSConnect (tcp)
+  ufw:
+    rule: allow
+    port: 1714:1764 
+    proto: tcp
+    comment: KDE Connect / GSConnect
+  when: ansible_distribution == "Ubuntu"
+
+- name: UFW - allow KDE Connect / GSConnect (upd)
+  ufw:
+    rule: allow
+    port: 1714:1764
+    proto: udp
+    comment: KDE Connect / GSConnect
+  when: ansible_distribution == "Ubuntu"
+
+
+- name: UFW - reload
   ufw:
     state: reloaded
   when: ansible_distribution == "Ubuntu"
