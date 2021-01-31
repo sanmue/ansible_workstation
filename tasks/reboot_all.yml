@@ -1,3 +1,5 @@
 - name: reboot system
   tags: reboot
-  command: systemctl reboot now
+  command: reboot
+#  command: reboot now
+#  command: systemctl reboot now
