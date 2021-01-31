@@ -1,15 +1,29 @@
+#- name: install flatpak packages for workstations (Ubuntu,Suse,Archlinux)
+#  tags: workstation,ubuntu,suse,arch,flatpak
+#  flatpak:
+#    name: ['de.willuhn.Jameica','io.atom.Atom']
+#    state: present
+#    method: system
+
+# oder:
+
 - name: install flatpak packages for workstations (Ubuntu,Suse,Archlinux)
   tags: workstation,ubuntu,suse,arch,flatpak
   flatpak:
-    name: de.willuhn.Jameica
+    name: '{{ item }}'
     state: present
     method: system
-
-
-- name: install flatpak packages for workstations (Ubuntu,Suse,Archlinux)
-  tags: workstation,ubuntu,suse,arch,flatpak
-  flatpak:
-    name: io.atom.Atom
-    state: present
-    method: system
-
+  with_items:
+    - 'com.discordapp.Discord'
+    - 'com.github.bilelmoussaoui.Authenticator'
+    - 'com.github.johnfactotum.Foliate'
+    - 'com.ulduzsoft.Birdtray'
+    - 'de.willuhn.Jameica'
+    - 'io.atom.Atom'
+    - 'net.cozic.joplin_desktop'
+    - 'org.chromium.Chromium'
+    - 'org.jitsi.jitsi-meet'
+    - 'org.ksnip.ksnip'
+    - 'org.libreoffice.LibreOffice'
+    - 'org.mozilla.Thunderbird'
+    - 'org.signal.Signal'

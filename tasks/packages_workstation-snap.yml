@@ -3,12 +3,12 @@
   snap:
     state: present
     name:
-      - chromium
-      - discord
+#      - chromium
+#      - discord
       - gdu-disk-usage-analyzer
-      - joplin-james-carroll
-      - ksnip
-      - libreoffice
-      - signal-desktop
-      - thunderbird
+#      - joplin-james-carroll
+#      - ksnip
+#      - libreoffice
+#      - signal-desktop
+#      - thunderbird
       - whalebird
