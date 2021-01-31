@@ -1,0 +1,3 @@
+- name: reboot system
+  tags: reboot
+  command: systemctl reboot now

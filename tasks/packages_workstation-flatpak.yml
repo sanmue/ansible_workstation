@@ -4,3 +4,12 @@
     name: de.willuhn.Jameica
     state: present
     method: system
+
+
+- name: install flatpak packages for workstations (Ubuntu,Suse,Archlinux)
+  tags: workstation,ubuntu,suse,arch,flatpak
+  flatpak:
+    name: io.atom.Atom
+    state: present
+    method: system
+
