@@ -3,6 +3,7 @@
   snap:
     state: present
     name:
+      - atom
       - chromium
       - discord
       - gdu-disk-usage-analyzer

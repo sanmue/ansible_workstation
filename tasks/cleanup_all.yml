@@ -12,4 +12,4 @@
     purge: yes
   when: ansible_pkg_mgr == "apt"
 
-# TODO: Suse, Arch/Manjaro
+# TODO: Suse (zypper), Arch/Manjaro (pacman)
