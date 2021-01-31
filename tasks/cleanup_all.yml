@@ -1,0 +1,15 @@
+- name: cleanup package cache (apt)
+  tags: always,cleanup
+  apt:
+    autoclean: yes
+  changed_when: false
+  when: ansible_pkg_mgr == "apt"
+
+- name: autoremove orphan packages (apt)
+  tags: always,cleanup
+  apt:
+    autoremove: yes 
+    purge: yes
+  when: ansible_pkg_mgr == "apt"
+
+# TODO: Suse, Arch/Manjaro
