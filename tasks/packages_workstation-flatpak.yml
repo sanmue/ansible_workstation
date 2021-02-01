@@ -14,8 +14,8 @@
     state: present
     method: system
   with_items:
+    - 'com.belmoussaoui.Authenticator'
     - 'com.discordapp.Discord'
-    - 'com.github.bilelmoussaoui.Authenticator'
     - 'com.github.johnfactotum.Foliate'
     - 'com.github.micahflee.torbrowser-launcher'
     - 'com.ulduzsoft.Birdtray'

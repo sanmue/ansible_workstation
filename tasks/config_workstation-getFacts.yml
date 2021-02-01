@@ -1,9 +1,19 @@
-- name: Get desktop environment (XDG_CURRENT_DESKTOP)
+- name: AnsibleFacts - Get desktop environment (XDG_CURRENT_DESKTOP)
   set_fact:
     env_desktop: "{{ ansible_facts['env']['XDG_CURRENT_DESKTOP']|lower }}"
 #    env_desktop: "{{ lookup('env','XDG_CURRENT_DESKTOP')|lower }}"
 #    env_hostname: "{{ ansible_facts['hostname'] }}"
-- name: Print recognised desktop environment            
-  debug:
-    msg: "{{ env_desktop }}"
-#    msg: "{{ env_desktop }} on hostame: {{ env_hostname }}"
+
+#- name: Print recognised desktop environment            
+#  debug:
+#    msg: "{{ env_desktop }}"
+##    msg: "{{ env_desktop }} on hostame: {{ env_hostname }}"
+
+- name: AnsibleFacts - Get datadirs (XDG_DATA_DIRS)
+  set_fact:
+    env_datadirs: "{{ ansible_facts['env']['XDG_DATA_DIRS']|lower }}"
+
+- name: AnsibleFacts - Get path (PATH)
+  set_fact:
+    env_path: "{{ ansible_facts['env']['PATH']|lower }}"
+
