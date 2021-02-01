@@ -1,0 +1,17 @@
+---
+
+# assuming beeing run local in the desired Desktop Environment
+- hosts: localhost
+  connection: local
+#  become: sandro
+  gather_facts: true
+  tasks:
+    - name: Display available ansible facts
+      debug:
+#        msg: "{{ ansible_env }}"
+#        oder:
+        var: ansible_facts
+
+#        msg: "{{ ansible_env.XDG_CURRENT_DESKTOP }}"
+#        oder:
+#        msg: "{{ ansible_facts['env']['XDG_CURRENT_DESKTOP']|lower }}"

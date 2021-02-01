@@ -1,0 +1,3 @@
+- name: Display Variable (env_desktop)
+  debug: 
+    msg: "{{ env_desktop }}"

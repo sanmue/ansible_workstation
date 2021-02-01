@@ -1,4 +1,4 @@
-- name: install packages for workstations (basic/all)
+- name: Install packages for workstations (basic/all)
   tags: workstation
   package:
     state: latest
@@ -26,7 +26,7 @@
       - terminator
       - vlc
 
-- name: install packages for workstations (Ubuntu)
+- name: Install packages for workstations (Ubuntu/Gnome)
   tags: workstation,gnome,ubuntu
   apt:
     state: latest
@@ -47,11 +47,11 @@
       - searchmonkey
       - ufw
   when: 
-    - ansible_distribution == "Ubuntu"
-#    - ansible_facts['distribution'] == "Ubuntu"
+#    - ansible_distribution == "Ubuntu"
+    - env_desktop == "ubuntu:gnome"
 
 
-- name: install packages for workstations (Suse, Archlinux)
+- name: Install packages for workstations (Suse, Archlinux with KDE Plasma)
   tags: workstation,kde,suse,arch
   apt:
     state: latest

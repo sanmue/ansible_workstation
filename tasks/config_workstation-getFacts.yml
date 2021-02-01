@@ -1,0 +1,9 @@
+- name: Get desktop environment (XDG_CURRENT_DESKTOP)
+  set_fact:
+    env_desktop: "{{ ansible_facts['env']['XDG_CURRENT_DESKTOP']|lower }}"
+#    env_desktop: "{{ lookup('env','XDG_CURRENT_DESKTOP')|lower }}"
+#    env_hostname: "{{ ansible_facts['hostname'] }}"
+- name: Print recognised desktop environment            
+  debug:
+    msg: "{{ env_desktop }}"
+#    msg: "{{ env_desktop }} on hostame: {{ env_hostname }}"

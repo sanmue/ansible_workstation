@@ -2,6 +2,7 @@
   ufw:
     state: enabled
   when: ansible_distribution == "Ubuntu"
+  register: firewall
 
 #- name: UFW - allow OpenSSH
 #  ufw:
@@ -10,15 +11,19 @@
 #    comment: OpenSSH
 #  when: ansible_distribution == "Ubuntu"
 
-- name: UFW - allow ssh (tcp)
+- name: UFW - allow ssh
   ufw:
     rule: limit
     port: ssh
     proto: tcp
-    comment: ssh (tcp)
+    comment: SSH
   when: ansible_distribution == "Ubuntu"
+  register: firewall
 
 - name: UFW - reload
   ufw:
     state: reloaded
-  when: ansible_distribution == "Ubuntu"
+  when: ansible_distribution == "Ubuntu" and
+        firewall.changed
+
+

@@ -5,6 +5,7 @@
     proto: tcp
     comment: KDE Connect / GSConnect
   when: ansible_distribution == "Ubuntu"
+  register: firewall
 
 - name: UFW - allow KDE Connect / GSConnect (upd)
   ufw:
@@ -13,9 +14,11 @@
     proto: udp
     comment: KDE Connect / GSConnect
   when: ansible_distribution == "Ubuntu"
+  register: firewall
 
 
 - name: UFW - reload
   ufw:
     state: reloaded
-  when: ansible_distribution == "Ubuntu"
+  when: ansible_distribution == "Ubuntu" and
+        firewall.changed

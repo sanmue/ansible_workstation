@@ -2,6 +2,14 @@
 
 - hosts: localhost
   connection: local
+#  become: sandro
+  gather_facts: true
+  pre_tasks:
+  - include: tasks/config_workstation-getFacts.yml
+
+
+- hosts: localhost
+  connection: local
   become: true
   tags: startall,pre
   pre_tasks:
