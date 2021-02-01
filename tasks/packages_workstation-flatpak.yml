@@ -1,4 +1,4 @@
-#- name: install flatpak packages for workstations (Ubuntu,Suse,Archlinux)
+#- name: install flatpak packages for workstations (all Distros)
 #  tags: workstation,ubuntu,suse,arch,flatpak
 #  flatpak:
 #    name: ['de.willuhn.Jameica','io.atom.Atom']
@@ -7,7 +7,7 @@
 
 # oder:
 
-- name: install flatpak packages for workstations (Ubuntu,Suse,Archlinux)
+- name: install flatpak packages for workstations (all distros)
   tags: workstation,ubuntu,suse,arch,flatpak
   flatpak:
     name: '{{ item }}'

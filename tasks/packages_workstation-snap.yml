@@ -1,4 +1,4 @@
-- name: install snap packages for workstations (Ubuntu,Suse,Archlinux)
+- name: install snap packages for workstations (all distros)
   tags: workstation,ubuntu,suse,arch,snap
   snap:
     state: present
