@@ -1,0 +1,14 @@
+
+- name: Install gnome (shell extension) stuff (Ubuntu/Gnome)
+  tags: workstation,gnome,ubuntu
+  package:
+    state: latest
+    name:
+      - gnome-shell-extensions
+      - gnome-tweaks
+      - gnome-tweak-tool
+      - gnome-shell-extension-appindicator
+      - gnome-shell-extension-gsconnect-browsers
+      - chrome-gnome-shell
+#    when:
+#      - env_desktop == "ubuntu:gnome"

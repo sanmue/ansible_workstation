@@ -24,7 +24,7 @@
   tasks:
 
 #   ssh, ansible, git ... muss bereits vorhanden sein
-  - include: tasks/packages_all-ansible.yml
+#  - include: tasks/packages_all-ansible.yml
   - include: tasks/config_all-users.yml
   - include: tasks/config_all-cron.yml
   - include: tasks/packages_all-basic.yml
@@ -34,6 +34,7 @@
   - include: tasks/packages_workstation-snap.yml
   - include: tasks/config_workstation-flatpak.yml
   - include: tasks/packages_workstation-flatpak.yml
+  - include: tasks/packages_workstation-gnomeshellstuff.yml
   - include: tasks/packages_all-VM-QemuKvm.yml
   - include: tasks/packages_workstation-VM-QemuKvm.yml
   - include: tasks/config_all-firewall.yml
@@ -42,5 +43,9 @@
 #  - include: tasks/reboot_all.yml
 
 
-#  Server:
-#  - include: tasks/packages_server-basic.yml
+- hosts: localhost
+  connection: local
+  become: sandro
+  tags: gnome, gnome-shell
+  tasks:
+  - include: tasks/packages_workstation-gnomeshellExtensions.yml

@@ -1,0 +1,40 @@
+- name: GnomeShell Extension - Extensions Sync - create extension folder 
+  tags: gnome
+  file:
+    path: ~/.local/share/gnome-shell/extensions/extensions-sync@elhan.io
+    state: directory
+    mode: u+rwx,g+rwx,o-rx
+  when: 
+    - env_desktop == "ubuntu:gnome"
+
+- name: GnomeShell Extension - Extensions Sync - copy to extension folder
+  tags: gnome
+  copy:
+    src: files/gnomeshellExtensions/extensions-syncelhan.io.v11.shell-extension.zip
+    dest: ~/.local/share/gnome-shell/extensions/extensions-sync@elhan.io
+    remote_src: yes
+  when: 
+    - env_desktop == "ubuntu:gnome"
+
+- name: GnomeShell Extension - Extensions Sync - unzipping
+  tags: gnome
+  unarchive:
+    src: ~/.local/share/gnome-shell/extensions/extensions-sync@elhan.io/extensions-syncelhan.io.v11.shell-extension.zip
+    dest: ~/.local/share/gnome-shell/extensions/extensions-sync@elhan.io
+    remote_src: yes
+  when: 
+    - env_desktop == "ubuntu:gnome"
+
+- name: GnomeShell Extension - Extensions Sync - delete zip-file
+  tags: gnome
+  file:
+    path: ~/.local/share/gnome-shell/extensions/extensions-sync@elhan.io/extensions-syncelhan.io.v11.shell-extension.zip
+    state: absent
+  when: 
+    - env_desktop == "ubuntu:gnome"
+
+- name: GnomeShell Extension - Extensions Sync - aktivate Extension
+  tags: gnome
+  command: gnome-shell-extension-tool -e extensions-sync@elhan.io
+  when: 
+    - env_desktop == "ubuntu:gnome"
