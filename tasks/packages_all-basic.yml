@@ -4,6 +4,7 @@
     state: latest
     name:
       - clamav
+      - curl
       - git
       - gpg
       - htop
@@ -14,3 +15,4 @@
       - openssh-client
       - rsync
       - ssh
+      - unzip

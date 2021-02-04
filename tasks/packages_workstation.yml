@@ -28,12 +28,13 @@
 
 - name: Install packages for workstations (Ubuntu/Gnome)
   tags: workstation,gnome,ubuntu
-  apt:
+  package:
     state: latest
     name:
       - alacarte
       - dconf-cli
       - deluge
+      - gnome-shell-extensions
       - gnome-software-plugin-flatpak
       - guake
       - gufw
@@ -51,9 +52,10 @@
     - env_desktop == "ubuntu:gnome"
 
 
+# TODO: check for KDE Plasma
 - name: Install packages for workstations (Suse, Archlinux with KDE Plasma)
   tags: workstation,kde,suse,arch
-  apt:
+  package:
     state: latest
     name:
       - yakuake
