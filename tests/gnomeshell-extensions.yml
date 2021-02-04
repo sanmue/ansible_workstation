@@ -1,0 +1,127 @@
+---
+
+- hosts: localhost
+  connection: local
+  become: true
+  tags: gnome
+  tasks:
+
+  - name: Install gnome shell stuff (Ubuntu/Gnome)
+    tags: workstation,gnome,ubuntu
+    package:
+      state: latest
+      name:
+        - gnome-shell-extensions
+        - gnome-tweaks
+        - gnome-tweak-tool
+        - gnome-shell-extension-appindicator
+        - chrome-gnome-shell
+    when: ansible_distribution == "Ubuntu"
+#    when:
+#      - env_desktop == "ubuntu:gnome"
+#   und Chromium, Vivaldi, ... ist installiert
+
+
+
+# https://linuxconfig.org/how-to-install-gnome-shell-extensions-from-zip-file-using-command-line-on-ubuntu-18-04-bionic-beaver-linux
+
+- hosts: localhost
+  connection: local
+  become: sandro
+#  become: true
+  tags: gnome   
+  tasks:
+
+#  - name: GnomeShell Extension - Extensions Sync - download 3.36-11
+#    tags: gnome
+#    get_url:
+#      url: https://extensions.gnome.org/extension/1486/extensions-sync/extensions-syncelhan.io.v11.shell-extension.zip
+#      dest: /tmp
+#      force: yes
+#      mode: '0777'
+##      mode: u=rwx,g=rwx,o=rwx
+#    when: ansible_distribution == "Ubuntu"
+
+
+#  - name: GnomeShell Extension - Extensions Sync - create unzip-dir
+#    tags: gnome
+#    comannd: mkdir /tmp/extensions-syncelhan.io.v11.shell-extension
+
+
+# extensions-syncelhan.io.v11.shell-extension.zip
+# extensions-sync@elhan.io
+
+#  - name: GnomeShell Extension - copy from files/gnomeshellExtensions to /tmp/gnomeshellExtensions
+#    tags: gnome
+#    copy:
+#      src: files/gnomeshellExtensions/
+#      dest: /tmp/gnomeshellExtensions
+#      force: yes
+##      mode: '01777'
+##      mode: preserve
+#      remote_src: yes
+#    when: ansible_distribution == "Ubuntu"
+
+  - name: GnomeShell Extension - Extensions Sync - create extension folder 
+    tags: gnome
+    file:
+      path: ~/.local/share/gnome-shell/extensions/extensions-sync@elhan.io
+      state: directory
+      mode: u+rwx,g+rwx,o-rx
+    when: ansible_distribution == "Ubuntu"
+
+  - name: GnomeShell Extension - Extensions Sync - copy to extension folder
+    tags: gnome
+    copy:
+      src: files/gnomeshellExtensions/extensions-syncelhan.io.v11.shell-extension.zip
+      dest: ~/.local/share/gnome-shell/extensions/extensions-sync@elhan.io
+#      force: yes
+#      mode: '01777'
+#      mode: preserve
+      remote_src: yes
+    when: ansible_distribution == "Ubuntu"
+
+  - name: GnomeShell Extension - Extensions Sync - unzipping
+    tags: gnome
+    unarchive:
+#      src: https://extensions.gnome.org/extension/1486/extensions-sync/extensions-syncelhan.io.v11.shell-extension.zip
+      src: ~/.local/share/gnome-shell/extensions/extensions-sync@elhan.io/extensions-syncelhan.io.v11.shell-extension.zip
+#      creates: /home/sandro/.local/share/gnome-shell/extensions/extensions-sync@elhan.io
+      dest: ~/.local/share/gnome-shell/extensions/extensions-sync@elhan.io
+      remote_src: yes
+    when: ansible_distribution == "Ubuntu"
+
+  - name: GnomeShell Extension - Extensions Sync - delete zip-file
+    tags: gnome
+    file:
+      path: ~/.local/share/gnome-shell/extensions/extensions-sync@elhan.io/extensions-syncelhan.io.v11.shell-extension.zip
+      state: absent
+    when: ansible_distribution == "Ubuntu"
+
+#  - name: GnomeShell Extension - Extensions Sync - get UUID
+#    tags: gnome
+##   (metdata.json | grep uuid | cut -d \" -f4)
+#    command: cat /tmp/gnomeshellExtensions/metadata.json
+#    debug:
+#      msg: "{{ lookup('file', '/tmp/gnomeshellExtensions/metadata.json')  }}"
+#    when: ansible_distribution == "Ubuntu"
+
+#  - name: GnomeShell Extension - Extensions Sync - set UUID
+#    vars:
+#      gnomeshellExtension_UUID: extensions-sync@elhan.io
+#    debug:
+#      msg: Setting UUID to {{ gnomeshellExtension_UUID }}
+
+  - name: GnomeShell Extension - Extensions Sync - aktivate Extension
+    tags: gnome
+#    command: gnome-extensions install --force /tmp/gnomeshellExtensions/extensions-syncelhan.io.v11.shell-extension.zip
+    command: gnome-shell-extension-tool -e extensions-sync@elhan.io
+#    debug:
+#      msg: TODO Install
+    when: ansible_distribution == "Ubuntu"
+
+  - name: GnomeShell Extension - Extensions Sync - final
+    tags: gnome
+    debug:
+      msg: Please restart gnome-shell
+    when: ansible_distribution == "Ubuntu"
