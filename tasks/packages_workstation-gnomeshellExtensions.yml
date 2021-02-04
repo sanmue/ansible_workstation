@@ -38,3 +38,9 @@
   command: gnome-shell-extension-tool -e extensions-sync@elhan.io
   when: 
     - env_desktop == "ubuntu:gnome"
+
+- name: Disable ubuntu dock
+  tags: gnome
+  command: gnome-extensions disable ubuntu-dock@ubuntu.com
+  when:
+    - env_desktop == "ubuntu:gnome"

@@ -12,6 +12,3 @@
   when: ansible_distribution == "Ubuntu" and
         ansible_virtualization_role != "guest"
 
-# TODO: add user to groups
-# TODO: Enable and start service
-

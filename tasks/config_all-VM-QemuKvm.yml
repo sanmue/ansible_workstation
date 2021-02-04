@@ -1,0 +1,17 @@
+- name: start libvirtd
+  tags: VM
+  service:
+    name: libvirtd
+    state: started
+  when: 
+    - ansible_virtualization_role != "guest"
+# noch ohne nested virtualization
+
+- name: enable libvirtd
+  tags: VM
+  service:
+    name: libvirtd
+    state: enabled
+  when:  
+    - ansible_virtualization_role != "guest"
+# noch ohne nested virtualization

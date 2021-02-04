@@ -12,3 +12,18 @@
     owner: root
     group: root
     mode: 0440
+
+- name: add user 'sandro' to group 'kvm' (Ubuntu)
+  user:
+    name: sandro
+    groups: kvm
+    append: yes
+  when: ansible_distribution == "Ubuntu"
+
+- name: add user 'sandro' to group 'libvirt' (Suse,Archlinux)
+  user:
+    name: sandro
+    groups: libvirt
+    append: yes
+  when: ansible_distribution == "Suse" or
+        ansible_distribution == "Archlinux"
