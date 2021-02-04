@@ -11,4 +11,4 @@
        - virt-manager
   when: ansible_distribution == "Ubuntu" and
         ansible_virtualization_role != "guest"
-
+# noch ohne nested virtualization
