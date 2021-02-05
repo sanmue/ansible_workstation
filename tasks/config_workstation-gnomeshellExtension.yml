@@ -1,0 +1,10 @@
+- name: copy and decypt extensions-sync.json to users home-config
+  copy:
+    src: files/extensions-sync.json
+    dest: ~/.config
+    owner: sandro
+    group: sandro
+    mode: u=rw,g=rw,o=r
+    decrypt: yes
+  when:
+    - env_desktop == "ubuntu:gnome"
