@@ -33,6 +33,7 @@
     name:
       - alacarte
       - dconf-cli
+      - dconf-editor
       - deluge
       - gnome-shell-extensions
       - gnome-software-plugin-flatpak
