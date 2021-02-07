@@ -42,7 +42,7 @@
   - include: tasks/config_workstation-firewall.yml
   - include: tasks/cleanup_all.yml
 #  - include: tasks/reboot_all.yml
-
+#
 
 - hosts: localhost
   connection: local
