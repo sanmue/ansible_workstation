@@ -10,5 +10,5 @@
       - gnome-shell-extension-appindicator
       - gnome-shell-extension-gsconnect-browsers
       - chrome-gnome-shell
-#    when:
-#      - env_desktop == "ubuntu:gnome"
+  when:
+    - env_desktop == "ubuntu:gnome"

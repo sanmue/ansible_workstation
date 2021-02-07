@@ -18,12 +18,27 @@
     name: sandro
     groups: kvm
     append: yes
-  when: ansible_distribution == "Ubuntu"
+  when:
+    - ansible_distribution == "Ubuntu"
+    - ansible_virtualization_role != "guest"
+# noch ohne nested virtualization
 
 - name: add user 'sandro' to group 'libvirt' (Suse,Archlinux)
   user:
     name: sandro
     groups: libvirt
     append: yes
-  when: ansible_distribution == "Suse" or
-        ansible_distribution == "Archlinux"
+  when: 
+    - ansible_distribution in ["Archlinux", "Suse"]
+    - ansible_virtualization_role != "guest"
+# noch ohne nested virtualization
+
+- name: add user 'sandro' to group 'kvm' (Suse,Archlinux)
+  user:
+    name: sandro
+    groups: kvm
+    append: yes
+  when: 
+    - ansible_distribution in ["Archlinux", "Suse"]
+#    - ansible_virtualization_role != "guest"
+# noch ohne nested virtualization

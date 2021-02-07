@@ -17,6 +17,7 @@
   tags: workstation,arch,snap
   service:
     name: snapd.socket
+#    name: snapd
     state: started
     enabled: yes
   when: ansible_distribution == "Archlinux"

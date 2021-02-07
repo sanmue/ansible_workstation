@@ -1,4 +1,4 @@
-- name: install basic packages
+- name: install basic packages (all Distros)
   tags: basic
   package:
     state: latest
@@ -6,13 +6,34 @@
       - clamav
       - curl
       - git
-      - gpg
+
       - htop
       - lsb-release
       - nano
       - neofetch
-#      - openssh
-      - openssh-client
       - rsync
-      - ssh
       - unzip
+
+- name: install basic packages (Ubuntu)
+  tags: basic
+  package:
+    state: latest
+    name:
+      - gpg
+      - openssh-client
+      - ssh
+      - ufw
+  when: ansible_distribution == "Ubuntu"
+
+- name: install basic packages (Archlinux, Suse)
+  tags: basic
+  package:
+    state: latest
+    name:
+      - firewalld
+      - gnupg
+      - ebtables
+      - ipset
+      - openssh
+  when:
+    - ansible_distribution in ["Archlinux", "Suse"]

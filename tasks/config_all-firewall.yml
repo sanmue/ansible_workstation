@@ -2,7 +2,7 @@
   ufw:
     state: enabled
   when: ansible_distribution == "Ubuntu"
-  register: firewall
+  register: firewall_ufw
 
 #- name: UFW - allow OpenSSH
 #  ufw:
@@ -18,12 +18,45 @@
     proto: tcp
     comment: SSH
   when: ansible_distribution == "Ubuntu"
-  register: firewall
+  register: firewall_ufw
 
 - name: UFW - reload
   ufw:
     state: reloaded
   when: ansible_distribution == "Ubuntu" and
-        firewall.changed
+        firewall_ufw.changed
 
 
+- name: firewalld - enable
+  service:
+    enabled: yes
+#    state: started
+    name: firewalld
+  when:
+    - ansible_distribution in ["Archlinux", "Suse"]
+  register: firewall_d
+
+- name: firewalld - starting
+  systemd:
+    state: started
+    name: firewalld
+  when:
+    - ansible_distribution in ["Archlinux", "Suse"]
+  register: firewall_d
+  
+- name: firewalld - allow ssh 
+  firewalld:
+    service: ssh
+    permanent: yes
+    state: enabled
+    immediate: yes
+#    zone: public
+  when:
+    - ansible_distribution in ["Archlinux", "Suse"]
+  register: firewall_d
+
+- name: firewalld - reload
+  command: firewall-cmd --reload
+  when:
+    - ansible_distribution in ["Archlinux", "Suse"]
+    - firewall_d.changed

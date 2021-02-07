@@ -5,7 +5,6 @@
 #    state: present
 #    method: system
 
-# oder:
 
 - name: install flatpak packages for workstations (all distros)
   tags: workstation,ubuntu,suse,arch,flatpak

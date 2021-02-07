@@ -46,7 +46,8 @@
 
 - hosts: localhost
   connection: local
-  become: sandro
+#  become: sandro
+  become: no
   tags: gnome,gnome-shell
   tasks:
   - include: tasks/packages_workstation-gnomeshellExtensions.yml

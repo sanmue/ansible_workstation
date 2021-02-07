@@ -11,9 +11,11 @@
 
 - name: AnsibleFacts - Get datadirs (XDG_DATA_DIRS)
   set_fact:
-    env_datadirs: "{{ ansible_facts['env']['XDG_DATA_DIRS']|lower }}"
+    env_datadirs: "{{ ansible_facts['env']['XDG_DATA_DIRS'] }}"
+#   In Archlinux/KDE anscheinend nicht vorhanden
+  when:
+    - ansible_distribution == "Ubuntu"
 
 - name: AnsibleFacts - Get path (PATH)
   set_fact:
-    env_path: "{{ ansible_facts['env']['PATH']|lower }}"
-
+    env_path: "{{ ansible_facts['env']['PATH'] }}"

@@ -1,6 +1,18 @@
-- name: install additional packages for workstations (Ubuntu,Suse,Archlinux)
-  tags: workstation,ubuntu,suse,arch
+- name: install additional packages for workstations (Ubuntu,Suse)
+  tags: workstation,ubuntu,suse
   package:
     state: latest
     name:
       - vivaldi-stable
+  when:
+    - ansible_distribution in ["Ubuntu", "Suse"]
+
+- name: install additional packages for workstations (Archlinux)
+  tags: workstation,arch
+  package:
+    state: latest
+    name:
+      - vivaldi
+      - vivaldi-ffmpeg-codecs
+  when:
+    - ansible_distribution in ["Archlinux"]

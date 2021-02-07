@@ -3,12 +3,37 @@
   apt:
     state: latest
     name:
-       - qemu-kvm
-       - libvirt-daemon-system
-       - libvirt-clients
-       - bridge-utils
-       - virtinst
-       - virt-manager
-  when: ansible_distribution == "Ubuntu" and
-        ansible_virtualization_role != "guest"
+      - qemu-kvm
+      - libvirt-daemon-system
+      - libvirt-clients
+      - bridge-utils
+      - virtinst
+  when: 
+    - ansible_distribution == "Ubuntu"
+    - ansible_virtualization_role != "guest"
 # noch ohne nested virtualization
+
+- name: install VM QEMU/KVM (Archlinux)
+  tags: VM
+  pacman:
+    state: latest
+    name:
+#     for check:
+      - dmidecode
+      - inxi      
+#     qemu, dependendies, ...:      
+      - bridge-utils
+      - dnsmasq
+      - ebtables
+      - libvirt
+      - openbsd-netcat
+      - qemu
+      - samba
+      - vde2
+      - virt-install
+  when: 
+    - ansible_distribution == "Archlinux"
+    - ansible_virtualization_role != "guest"
+# noch ohne nested virtualization
+
+#TODO: ggf. noch nested virtualization

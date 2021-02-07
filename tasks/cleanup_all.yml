@@ -12,4 +12,10 @@
     purge: yes
   when: ansible_pkg_mgr == "apt"
 
-# TODO: Suse (zypper), Arch/Manjaro (pacman)
+
+- name: clean package cache und orphan packages (pacman)
+  tags: always,cleanup
+  command: paccache -rk2 -ruk1
+  when: ansible_pkg_mgr == "pacman"
+
+# TODO: Suse (zypper)
