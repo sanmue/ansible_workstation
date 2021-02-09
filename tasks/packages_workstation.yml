@@ -3,6 +3,7 @@
   package:
     state: latest
     name:
+      - anki
       - clamtk
       - flatpak
       - gimp
@@ -57,7 +58,8 @@
   tags: workstation,kde,suse,arch
   package:
     state: latest
-    name:   
+    name:
+      - kde-cli-tools
       - krita
       - ktorrent
       - nextcloud-client
