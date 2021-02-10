@@ -4,6 +4,7 @@
     state: latest
     name:
       - virt-manager
+      - virt-viewer
 #  when: ansible_distribution == "Ubuntu" and
 #        ansible_virtualization_role != "guest"
   when: ansible_virtualization_role != "guest"

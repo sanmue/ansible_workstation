@@ -25,6 +25,7 @@
       - bridge-utils
       - dnsmasq
       - ebtables
+      - edk2-ovmf
       - libvirt
       - openbsd-netcat
       - qemu
