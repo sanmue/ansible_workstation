@@ -33,6 +33,8 @@
       - dconf-cli
       - dconf-editor
       - deluge
+      - exfat-fuse
+      - exfat-utils
       - firefox
       - firefox-locale-de
       - gnome-shell-extensions
@@ -76,6 +78,7 @@
   package:
     state: latest
     name:
+      - exfat-utils
       - firefox
       - firefox-i18n-de
       - pamac-flatpak-plugin
