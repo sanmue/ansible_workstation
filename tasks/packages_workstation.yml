@@ -81,8 +81,11 @@
       - exfat-utils
       - firefox
       - firefox-i18n-de
+      - hunspell-de
+      - man-pages-de
       - pamac-flatpak-plugin
       - pamac-snap-plugin
+      - qt5-translations
       - snapd
   when:
     - env_desktop == "kde"
