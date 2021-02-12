@@ -6,7 +6,8 @@
 #    method: system
 
 
-- name: install flatpak packages for workstations (all distros)
+#- name: install flatpak packages for workstations (all distros)
+- name: install flatpak packages for workstations (Ubuntu, Suse)
   tags: workstation,ubuntu,suse,arch,flatpak
   flatpak:
     name: '{{ item }}'
@@ -27,3 +28,30 @@
     - 'org.libreoffice.LibreOffice'
     - 'org.mozilla.Thunderbird'
     - 'org.signal.Signal'
+  when:
+    - ansible_distribution in ["Ubuntu", "Suse"]    
+    
+
+- name: install flatpak packages for workstations (Archlinux)
+  tags: workstation,ubuntu,suse,arch,flatpak
+  flatpak:
+    name: '{{ item }}'
+    state: present
+    method: system
+  with_items:
+    - 'com.belmoussaoui.Authenticator'
+#    - 'com.discordapp.Discord'
+#    - 'com.github.johnfactotum.Foliate'
+#    - 'com.github.micahflee.torbrowser-launcher'
+    - 'com.ulduzsoft.Birdtray'
+    - 'de.willuhn.Jameica'
+#    - 'io.atom.Atom'
+    - 'net.cozic.joplin_desktop'
+#    - 'org.chromium.Chromium'
+    - 'org.jitsi.jitsi-meet'
+    - 'org.ksnip.ksnip'
+#    - 'org.libreoffice.LibreOffice'
+    - 'org.mozilla.Thunderbird'
+    - 'org.signal.Signal'
+  when:
+    - ansible_distribution in ["Archlinux"]
