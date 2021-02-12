@@ -87,7 +87,7 @@
       - pamac-snap-plugin
       - qt5-translations
       - snapd
-#     Statt flatpaks aus offiziellen Repos:
+#     instead of flatpaks from repos:
       - discord
       - foliate
       - torbrowser-launcher
