@@ -51,7 +51,7 @@
     - 'org.jitsi.jitsi-meet'
     - 'org.ksnip.ksnip'
 #    - 'org.libreoffice.LibreOffice'
-    - 'org.mozilla.Thunderbird'
+#    - 'org.mozilla.Thunderbird'
     - 'org.signal.Signal'
   when:
     - ansible_distribution in ["Archlinux"]
