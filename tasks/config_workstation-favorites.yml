@@ -19,10 +19,23 @@
 #######################
 
 - name: adding favorite apps to dock (Ubuntu + Gnome)
-  command: gsettings set org.gnome.shell favorite-apps "['org.gnome.Screenshot.desktop', 'org.keepassxc.KeePassXC.desktop', 'firefox.desktop', 'vivaldi-stable.desktop', 'chromium.desktop', 'org.gnome.Terminal.desktop', 'terminator.desktop', 'nemo.desktop', 'org.gnome.gedit.desktop', 'libreoffice-startcenter.desktop', 'anki.desktop', 'net.cozic.joplin_desktop.desktop', 'de.willuhn.Jameica.desktop', 'rhythmbox.desktop', 'org.jitsi.jitsi-meet.desktop', 'signal-desktop.desktop', 'discord.desktop', 'whalebird_whalebird.desktop', 'org.remmina.Remmina.desktop', 'virt-manager.desktop', 'gnome-control-center.desktop', 'org.manjaro.pamac.manager.desktop']"
+  command: gsettings set org.gnome.shell favorite-apps "['org.keepassxc.KeePassXC.desktop', 'firefox.desktop', 'vivaldi-stable.desktop', 'chromium.desktop', 'org.gnome.Terminal.desktop', 'terminator.desktop', 'nemo.desktop', 'org.gnome.gedit.desktop', 'libreoffice-startcenter.desktop', 'anki.desktop', 'net.cozic.joplin_desktop.desktop', 'de.willuhn.Jameica.desktop', 'rhythmbox.desktop', 'org.jitsi.jitsi-meet.desktop', 'signal-desktop.desktop', 'discord.desktop', 'whalebird_whalebird.desktop', 'org.remmina.Remmina.desktop', 'virt-manager.desktop', 'gnome-control-center.desktop', 'org.manjaro.pamac.manager.desktop']"
   when:
     - ansible_distribution == "Archlinux"
     - env_desktop == "gnome"
+
+# TODO: remove (unnecessary) favorites first
+
+
+####################
+### Suse + Gnome ###
+####################
+
+#- name: adding favorite apps to dock (Ubuntu + Gnome)
+#  command: gsettings set org.gnome.shell favorite-apps "['org.keepassxc.KeePassXC.desktop', 'firefox.desktop', 'vivaldi-stable.desktop', #'chromium.desktop', 'org.gnome.Terminal.desktop', 'terminator.desktop', 'nemo.desktop', 'org.gnome.gedit.desktop', 'libreoffice-#startcenter.desktop', 'anki.desktop', 'net.cozic.joplin_desktop.desktop', 'de.willuhn.Jameica.desktop', 'rhythmbox.desktop', #'org.jitsi.jitsi-meet.desktop', 'signal-desktop.desktop', 'discord.desktop', 'whalebird_whalebird.desktop', #'org.remmina.Remmina.desktop', 'virt-manager.desktop', 'gnome-control-center.desktop', 'org.manjaro.pamac.manager.desktop']"
+#  when: 
+#    - ansible_os_family == "Suse"
+#    - env_desktop == "gnome"
 
 # TODO: remove (unnecessary) favorites first
 

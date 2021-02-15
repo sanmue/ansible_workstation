@@ -1,13 +1,13 @@
-- name: install VM QEMU/KVM (all distros with DesktopEnv - virt-manager)
+- name: install VM QEMU/KVM - virt-manager/viewer (Workstation, all distros with DesktopEnv)
   tags: VM,workstation
   package:
     state: latest
     name:
       - virt-manager
       - virt-viewer
-#  when: ansible_distribution == "Ubuntu" and
-#        ansible_virtualization_role != "guest"
   when: ansible_virtualization_role != "guest"
 # noch ohne nested virtualization
 
 #TODO: ggf. noch nested virtualization
+#TODO: prüfen auf DesktopEnv
+

@@ -19,3 +19,4 @@
 - name: AnsibleFacts - Get path (PATH)
   set_fact:
     env_path: "{{ ansible_facts['env']['PATH'] }}"
+

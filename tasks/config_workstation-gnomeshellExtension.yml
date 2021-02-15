@@ -25,3 +25,5 @@
     - ansible_distribution == "Archlinux"
     - env_desktop == "gnome"
 
+### TODO: Suse
+

@@ -4,14 +4,14 @@
     name: snapd
     state: started
     enabled: yes
-  when: ansible_distribution == "Suse"
+  when: ansible_os_family == "Suse"
 
 #- name: start and enable snapd (Tumbleweed)
 #   tags: workstation,suse,snap 
 #   service:
 #     name: snapd-apparmor
 #     state: started
-#   when: ansible_distribution == "Suse"
+#   when: ansible_os_family == "Suse"
 
 - name: start and enable snapd (Archlinux)  
   tags: workstation,arch,snap
@@ -38,3 +38,4 @@
 #      line: 'PATH=\1\2:{{ snapd_path }}\3'
 #      backrefs: yes
 #    when: lookup('file', '/etc/environment') is search('^\s*PATH\s*=')
+

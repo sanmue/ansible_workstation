@@ -1,3 +1,7 @@
+
+#######
+### apt
+#######
 - name: add apt signing key for repos (Ubuntu)
   tags: workstation,ubuntu,addrepos,pre
   apt_key:
@@ -27,6 +31,34 @@
 #    - ansible_distribution == "Ubuntu"
     - ansible_pkg_mgr == "apt"
 
+##########
+### zypper
+##########
+- name: add Packman Repository (openSUSE Leap 15.2)
+  tags: workstation,suse,addrepos,pre
+  zypper_repository:
+    name: Packman Repository
+    repo: 'http://packman.inode.at/suse/openSUSE_Leap_15.2/'
+    state: present
+    auto_import_keys: yes
+    autorefresh: yes
+    enabled: yes
+    priority: '40'
+  when:
+    - ansible_pkg_mgr == "zypper"
+
+- name: add Libdvdcss Repository (openSUSE Leap 15.2)
+  tags: workstation,suse,addrepos,pre
+  zypper_repository:
+    name: Libdvdcss Repository
+    repo: 'http://opensuse-guide.org/repo/openSUSE_Leap_15.2/'
+    state: present
+    auto_import_keys: yes
+    autorefresh: yes
+    enabled: yes
+    priority: '40'
+  when:
+    - ansible_pkg_mgr == "zypper"
 
 - name: add repo for Vivaldi Browser (Suse)
   tags: workstation,suse,addrepos,pre
@@ -38,10 +70,9 @@
     autorefresh: yes
     enabled: yes
   when:
-#    - ansible_distribution == "Suse"
     - ansible_pkg_mgr == "zypper"
 
-- name: add repo for snappy (Suse)
+- name: add repo for snappy (openSUSE Leap 15.2)
   tags: workstation,suse,addrepos,pre,snap
   zypper_repository:
     name: snappy-repo
@@ -52,5 +83,5 @@
     autorefresh: yes
     enabled: yes
   when:
-#    - ansible_distribution == "Suse"
     - ansible_pkg_mgr == "zypper"
+

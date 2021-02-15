@@ -74,7 +74,7 @@
     state: enabled
     immediate: yes
   when:
-    - ansible_distribution in ["Suse"]
+    - ansible_os_family == "Suse"
   register: firewall_d
 
 - name: firewalld - allow KDE Connect (Archlinux + KDE)
@@ -93,7 +93,7 @@
 - name: firewalld - reload (Suse)
   command: firewall-cmd --reload
   when:
-    - ansible_distribution in ["Suse"]
+    - ansible_os_family == "Suse"
     - firewall_d.changed
 
 - name: firewalld - reload (Archlinux + KDE)

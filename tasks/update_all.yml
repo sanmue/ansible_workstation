@@ -1,3 +1,5 @@
+
+### DistRepos
 - name: update repository index and update system (apt)
   tags: always,update
   apt:
@@ -8,16 +10,28 @@
   when: ansible_pkg_mgr == "apt"
   changed_when: False
 
+
 - name: update repository index and update system (zypper)
   tags: always,update
   zypper:
     update_cache: yes
     name: '*'
     state: dist-upgrade
-#  when: ansible_distribution == "Suse"
+    allow_vendor_change: true
+#    extra_args: '--allow-arch-change'
+#  when: ansible_distribution == "openSUSE Leap"
 #  when: ansible_os_family == "Suse"
   when: ansible_pkg_mgr == "zypper"
   changed_when: false
+
+#- name: Apply all available patches (zypper)
+#  community.general.zypper:
+#    name: '*'
+#    state: latest
+#    type: patch
+#  when: ansible_pkg_mgr == "zypper"
+#  changed_when: false
+
 
 - name: update repository index and update system (pacman)
   tags: always,update
@@ -27,6 +41,8 @@
   when: ansible_pkg_mgr == "pacman"
   changed_when: false
 
+
+### flatpak
 - name: update flatpak packages
   tags: always,update,flatpak
   command: flatpak update
@@ -36,14 +52,8 @@
     - env_datadirs.find("/var/lib/flatpak") == true
   changed_when: false
 
-- name: remove unused flatpak packages
-  tags: always,update,flatpak
-  command: flatpak uninstall --unused -y
-  when:
-    - env_datadirs is defined
-    - env_datadirs.find("/var/lib/flatpak") == true
-  changed_when: false
 
+### snaps
 # Snaps come with a built-in automatic update mechanism, whereby snaps are refreshed to a new version whenever there’s a new release in the Snap Store. Typically, the refresh occurs four times a day ...
 - name: update snap packages
   tags: always,update,snap
@@ -52,3 +62,4 @@
     - env_path is defined
     - env_path.find("/snap/bin") == true
   changed_when: false
+

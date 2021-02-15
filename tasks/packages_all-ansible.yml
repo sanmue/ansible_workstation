@@ -20,7 +20,7 @@
   when: ansible_pkg_mgr == "zypper"
 
 
-- name: install ansible
+- name: install ansible (all distros)
   tags: ansible
   package:
     state: latest

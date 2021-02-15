@@ -23,22 +23,23 @@
     - ansible_virtualization_role != "guest"
 # noch ohne nested virtualization
 
-- name: add user 'sandro' to group 'libvirt' (Suse,Archlinux)
+- name: add user 'sandro' to group 'libvirt' (openSUSE Leap,Archlinux)
   user:
     name: sandro
     groups: libvirt
     append: yes
   when: 
-    - ansible_distribution in ["Archlinux", "Suse"]
+    - ansible_distribution in ["Archlinux", "openSUSE Leap"]
     - ansible_virtualization_role != "guest"
 # noch ohne nested virtualization
 
-- name: add user 'sandro' to group 'kvm' (Suse,Archlinux)
+- name: add user 'sandro' to group 'kvm' (openSUSE Leap,Archlinux)
   user:
     name: sandro
     groups: kvm
     append: yes
   when: 
-    - ansible_distribution in ["Archlinux", "Suse"]
+    - ansible_distribution in ["Archlinux", "openSUSE Leap"]
     - ansible_virtualization_role != "guest"
 # noch ohne nested virtualization
+

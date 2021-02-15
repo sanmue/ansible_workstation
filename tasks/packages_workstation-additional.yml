@@ -4,8 +4,8 @@
     state: latest
     name:
       - vivaldi-stable
-  when:
-    - ansible_distribution in ["Ubuntu", "Suse"]
+  when: ansible_os_family == "Suse" or
+        ansible_distribution in ["Ubuntu"]
 
 - name: install additional packages for workstations (Archlinux)
   tags: workstation,arch
@@ -16,3 +16,4 @@
       - vivaldi-ffmpeg-codecs
   when:
     - ansible_distribution in ["Archlinux"]
+

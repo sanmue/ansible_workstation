@@ -4,18 +4,18 @@
   package:
     state: latest
     name:
+      - chrome-gnome-shell
       - gnome-shell-extensions
-      - gnome-tweaks
-      - gnome-tweak-tool
       - gnome-shell-extension-appindicator
       - gnome-shell-extension-gsconnect-browsers
-      - chrome-gnome-shell
+      - gnome-tweaks
+      - gnome-tweak-tool
   when:
     - env_desktop == "ubuntu:gnome"
 
 
 - name: Install gnome (shell extension) stuff (Archlinux + Gnome)
-  tags: workstation,gnome,ubuntu
+  tags: workstation,gnome,arch
   package:
     state: latest
     name:
@@ -36,5 +36,22 @@
       - gnome-tweaks
   when:
     - ansible_distribution == "Archlinux"
+    - env_desktop == "gnome"
+
+
+- name: Install gnome (shell extension) stuff (Suse + Gnome)
+  tags: workstation,gnome,suse
+  package:
+    state: latest
+    name:
+      - chrome-gnome-shell
+      - gnome-shell-extension-desktop-icons
+#      - gnome-shell-extension-user-theme
+      - gnome-shell-extension-common
+      - gnome-shell-extension-common-lang
+      - gnome-tweaks
+      - gnome-tweaks-lang
+  when:
+    - ansible_os_family == "Suse"
     - env_desktop == "gnome"
 

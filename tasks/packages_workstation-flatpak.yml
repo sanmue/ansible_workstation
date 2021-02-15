@@ -29,7 +29,7 @@
     - 'org.mozilla.Thunderbird'
     - 'org.signal.Signal'
   when:
-    - ansible_distribution in ["Ubuntu", "Suse"]    
+    - ansible_distribution in ["Ubuntu"]
     
 
 - name: install flatpak packages for workstations (Archlinux)
@@ -55,4 +55,23 @@
 #    - 'org.signal.Signal'
   when:
     - ansible_distribution in ["Archlinux"]
+
+
+- name: install flatpak packages for workstations (Suse)
+  tags: workstation,suse,flatpak
+  flatpak:
+    name: '{{ item }}'
+    state: present
+    method: system
+  with_items:
+    - 'com.belmoussaoui.Authenticator'
+    - 'com.ulduzsoft.Birdtray'
+    - 'de.willuhn.Jameica'
+    - 'io.atom.Atom'
+    - 'net.cozic.joplin_desktop'
+    - 'org.jitsi.jitsi-meet'
+    - 'org.signal.Signal'
+  when:
+#    - ansible_distribution == "openSUSE Leap"
+    - ansible_os_family == "Suse"
 
