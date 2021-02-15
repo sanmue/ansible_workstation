@@ -42,7 +42,7 @@
   - include: tasks/config_workstation-firewall.yml
   - include: tasks/config_all-services-misc.yml
   - include: tasks/config_all-users.yml
-  - include: tasks/config_all-cron.yml
+#  - include: tasks/config_all-cron.yml
   - include: tasks/cleanup_all.yml
 #  - include: tasks/reboot_all.yml
 
@@ -56,3 +56,4 @@
   - include: tasks/packages_workstation-gnomeshellExtensions.yml
   - include: tasks/config_workstation-gnomeshellExtension.yml
   - include: tasks/config_workstation-favorites.yml
+

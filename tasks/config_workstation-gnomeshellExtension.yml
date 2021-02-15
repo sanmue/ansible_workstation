@@ -1,6 +1,8 @@
-- name: copy and decypt extensions-sync.json to users home-config
+
+### Ubuntu
+- name: copy and decypt extensions-sync.json to users home-config (Ubuntu)
   copy:
-    src: files/extensions-sync.json
+    src: files/extSync-Ubuntu/extensions-sync.json
     dest: ~/.config
     owner: sandro
     group: sandro
@@ -8,3 +10,18 @@
     decrypt: yes
   when:
     - env_desktop == "ubuntu:gnome"
+
+
+### Archlinux, Manjaro
+- name: copy and decypt extensions-sync.json to users home-config (Manjaro)
+  copy:
+    src: files/extSync-Manjaro/extensions-sync.json
+    dest: ~/.config
+    owner: sandro
+    group: sandro
+    mode: u=rw,g=rw,o=r
+    decrypt: yes
+  when:
+    - ansible_distribution == "Archlinux"
+    - env_desktop == "gnome"
+

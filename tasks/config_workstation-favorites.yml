@@ -1,4 +1,9 @@
-- name: adding favorite apps to dock (Ubuntu/Gnome)
+
+######################
+### Ubuntu + Gnome ###
+######################
+
+- name: adding favorite apps to dock (Ubuntu + Gnome)
 # flatpak, snaps: whalebird
   command: gsettings set org.gnome.shell favorite-apps "['org.keepassxc.KeePassXC.desktop', 'firefox.desktop', 'vivaldi-stable.desktop', 'org.chromium.Chromium.desktop', 'org.mozilla.Thunderbird.desktop', 'org.gnome.gedit.desktop', 'org.libreoffice.LibreOffice.desktop', 'net.cozic.joplin_desktop.desktop', 'de.willuhn.Jameica.desktop', 'rhythmbox.desktop', 'whalebird_whalebird.desktop', 'org.signal.Signal.desktop', 'com.discordapp.Discord.desktop', 'nemo.desktop', 'org.gnome.Terminal.desktop', 'terminator.desktop', 'org.remmina.Remmina.desktop', 'snap-store_ubuntu-software.desktop']"
 # snaps, flatpak: jameica
@@ -8,13 +13,16 @@
 
 # TODO: remove (unnecessary) favorites first
 
-- name: copy and decypt extensions-sync.json to users home-config
-  copy:
-    src: files/extensions-sync.json
-    dest: ~/.config
-    owner: sandro
-    group: sandro
-    mode: u=rw,g=rw,o=r
-    decrypt: yes
+
+#######################
+### Manjaro + Gnome ###
+#######################
+
+- name: adding favorite apps to dock (Ubuntu + Gnome)
+  command: gsettings set org.gnome.shell favorite-apps "['org.gnome.Screenshot.desktop', 'org.keepassxc.KeePassXC.desktop', 'firefox.desktop', 'vivaldi-stable.desktop', 'chromium.desktop', 'org.gnome.Terminal.desktop', 'terminator.desktop', 'nemo.desktop', 'org.gnome.gedit.desktop', 'libreoffice-startcenter.desktop', 'anki.desktop', 'net.cozic.joplin_desktop.desktop', 'de.willuhn.Jameica.desktop', 'rhythmbox.desktop', 'org.jitsi.jitsi-meet.desktop', 'signal-desktop.desktop', 'discord.desktop', 'whalebird_whalebird.desktop', 'org.remmina.Remmina.desktop', 'virt-manager.desktop', 'gnome-control-center.desktop', 'org.manjaro.pamac.manager.desktop']"
   when:
-    - env_desktop == "ubuntu:gnome"
+    - ansible_distribution == "Archlinux"
+    - env_desktop == "gnome"
+
+# TODO: remove (unnecessary) favorites first
+

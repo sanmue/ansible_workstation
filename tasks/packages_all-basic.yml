@@ -6,7 +6,6 @@
       - clamav
       - curl
       - git
-
       - htop
       - lsb-release
       - nano
@@ -25,7 +24,7 @@
       - ufw
   when: ansible_distribution == "Ubuntu"
 
-- name: install basic packages (Archlinux, Suse)
+- name: install basic packages (Archlinux, Suse + KDE)
   tags: basic
   package:
     state: latest
@@ -37,3 +36,18 @@
       - openssh
   when:
     - ansible_distribution in ["Archlinux", "Suse"]
+    - env_desktop == "kde"
+
+- name: install basic packages (Archlinux + Gnome)
+  tags: basic
+  package:
+    state: latest
+    name:
+      - gpgme
+      - libgpg-error
+      - openssh
+      - ufw
+  when: 
+    - ansible_distribution == "Archlinux"
+    - env_desktop == "gnome"
+

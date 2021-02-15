@@ -1,5 +1,5 @@
 
-- name: Install gnome (shell extension) stuff (Ubuntu/Gnome)
+- name: Install gnome (shell extension) stuff (Ubuntu + Gnome)
   tags: workstation,gnome,ubuntu
   package:
     state: latest
@@ -12,3 +12,29 @@
       - chrome-gnome-shell
   when:
     - env_desktop == "ubuntu:gnome"
+
+
+- name: Install gnome (shell extension) stuff (Archlinux + Gnome)
+  tags: workstation,gnome,ubuntu
+  package:
+    state: latest
+    name:
+      - chrome-gnome-shell
+      - gnome-shell-extension-appindicator
+      - gnome-shell-extension-arcmenu
+      - gnome-shell-extension-dash-to-dock
+      - gnome-shell-extension-dash-to-panel
+      - gnome-shell-extension-desktop-icons-ng
+      - gnome-shell-extension-gamemode
+      - gnome-shell-extension-git
+      - gnome-shell-extension-gsconnect
+      - gnome-shell-extension-material-shell
+      - gnome-shell-extension-nightthemeswitcher
+      - gnome-shell-extension-pop-shell
+      - gnome-shell-extension-unite
+      - gnome-shell-extensions
+      - gnome-tweaks
+  when:
+    - ansible_distribution == "Archlinux"
+    - env_desktop == "gnome"
+

@@ -40,5 +40,5 @@
     append: yes
   when: 
     - ansible_distribution in ["Archlinux", "Suse"]
-#    - ansible_virtualization_role != "guest"
+    - ansible_virtualization_role != "guest"
 # noch ohne nested virtualization

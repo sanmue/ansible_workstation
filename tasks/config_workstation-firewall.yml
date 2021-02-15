@@ -1,4 +1,10 @@
-- name: UFW - allow KDE Connect / GSConnect (tcp)
+
+###########
+### UFW ###
+###########
+
+### UFW - allow
+- name: UFW - allow KDE Connect / GSConnect (tcp) (Ubuntu)
   ufw:
     rule: allow
     port: 1714:1764 
@@ -7,7 +13,19 @@
   when: ansible_distribution == "Ubuntu"
   register: firewall_ufw
 
-- name: UFW - allow KDE Connect / GSConnect (upd)
+- name: UFW - allow KDE Connect / GSConnect (tcp) (Archlinux + Gnome)
+  ufw:
+    rule: allow
+    port: 1714:1764 
+    proto: tcp
+    comment: KDE Connect / GSConnect
+  when: 
+    - ansible_distribution == "Archlinux"
+    - env_desktop == "gnome"
+  register: firewall_ufw
+
+
+- name: UFW - allow KDE Connect / GSConnect (upd) (Ubuntu)
   ufw:
     rule: allow
     port: 1714:1764
@@ -16,26 +34,72 @@
   when: ansible_distribution == "Ubuntu"
   register: firewall_ufw
 
-- name: UFW - reload
+- name: UFW - allow KDE Connect / GSConnect (upd) (Archlinux + Gnome)
+  ufw:
+    rule: allow
+    port: 1714:1764
+    proto: udp
+    comment: KDE Connect / GSConnect
+  when:
+    - ansible_distribution == "Archlinux"
+    - env_desktop == "gnome"
+  register: firewall_ufw
+
+
+### UFW - reload
+- name: UFW - reload (Ubuntu)
   ufw:
     state: reloaded
   when: ansible_distribution == "Ubuntu" and
         firewall_ufw.changed
 
+- name: UFW - reload (Archlinux + Gnome)
+  ufw:
+    state: reloaded
+  when: 
+    - ansible_distribution == "Archlinux"
+    - env_desktop == "gnome"
+    - firewall_ufw.changed
 
 
-- name: firewalld - allow KDE Connect
+#################
+### firewalld ###
+#################
+
+### firewalld - allow
+- name: firewalld - allow KDE Connect (Suse)
   firewalld:
     service: kdeconnect
     permanent: yes
     state: enabled
     immediate: yes
   when:
-    - ansible_distribution in ["Archlinux", "Suse"]
+    - ansible_distribution in ["Suse"]
   register: firewall_d
 
-- name: firewalld - reload
+- name: firewalld - allow KDE Connect (Archlinux + KDE)
+  firewalld:
+    service: kdeconnect
+    permanent: yes
+    state: enabled
+    immediate: yes
+  when:
+    - ansible_distribution in ["Archlinux"]
+    - env_desktop == "kde"
+  register: firewall_d
+
+
+### firewalld - reload
+- name: firewalld - reload (Suse)
   command: firewall-cmd --reload
   when:
-    - ansible_distribution in ["Archlinux", "Suse"]
+    - ansible_distribution in ["Suse"]
     - firewall_d.changed
+
+- name: firewalld - reload (Archlinux + KDE)
+  command: firewall-cmd --reload
+  when:
+    - ansible_distribution in ["Archlinux"]
+    - env_desktop == "kde"
+    - firewall_d.changed
+

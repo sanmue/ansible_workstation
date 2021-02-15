@@ -1,3 +1,6 @@
+
+# - gnome-shell-extensions... # -> separater Task (packages_workstation-gnomeshellstuff.yml
+
 - name: Install packages for workstations (basic/all)
   tags: workstation
   package:
@@ -18,13 +21,8 @@
       - syncthing
       - terminator
       - vlc
-#     libreoffice ggf. aktueller über snap oder flatpak:
-#      - libreoffice
-#      - libreoffice-help-de
-#      - libreoffice-l10n-de
-#      - libreoffice-pdfimport
 
-- name: Install packages for workstations (Ubuntu/Gnome)
+- name: Install packages for workstations (Ubuntu + Gnome)
   tags: workstation,gnome,ubuntu
   package:
     state: latest
@@ -37,7 +35,6 @@
       - exfat-utils
       - firefox
       - firefox-locale-de
-      - gnome-shell-extensions
       - gnome-software-plugin-flatpak
       - guake
       - gufw
@@ -53,11 +50,75 @@
       - rhythmbox
       - searchmonkey
   when: 
-#    - ansible_distribution == "Ubuntu"
+    - ansible_distribution == "Ubuntu"
     - env_desktop == "ubuntu:gnome"
 
-- name: Install packages for workstations (KDE Plasma / Archlinux, Suse)
-  tags: workstation,kde,suse,arch
+- name: Install packages for workstations (Archlinux + Gnome)
+  tags: workstation,gnome,arch
+  package:
+    state: latest
+    name:
+      - alacarte
+      - atom
+      - chromium
+      - dconf-editor
+      - deja-dup
+      - deluge # -> transmission-gtk
+      - discord
+      - evince
+      - exfat-utils
+      - firefox
+      - firefox-i18n-de
+      # ---
+      # firmware:
+      - alsa-firmware
+      - b43-fwcutter
+      - fwupd
+      - gnome-firmware
+      - linux-firmware
+      - manjaro-firmware
+      - sof-firmware
+      # ---
+      - foliate
+#      - flameshot
+      - geary
+      - gnome-disk-utility
+      - gnome-keyring
+      - manjaro-keyring
+      - archlinux-keyring
+      - seahorse
+      - gnome-maps
+      - gtkhash
+      - guake
+      - gufw
+      - hplip
+      - inkscape
+      - kdeconnect
+      - libreoffice-still
+      - libreoffice-still-de
+      - lshw
+      - malcontent
+      - nemo
+      - nemo-share
+      - nemo-terminal
+      - nextcloud-client
+      - pamac-flatpak-plugin
+      - rhythmbox
+      - signal-desktop
+#      - thunderbird
+#      - thunderbird-i18n-de
+      - timeshift
+      - timeshift-autosnap
+      - torbrowser-launcher
+#      - transmission-gtk # -> deluge
+      - totem # -> vlc
+#      - vlc - -> totem
+  when: 
+    - ansible_distribution == "Archlinux"
+    - env_desktop == "gnome"
+
+- name: Install packages for workstations (Archlinux,Suse + KDE Plasma)
+  tags: workstation,kde
   package:
     state: latest
     name:
@@ -70,10 +131,9 @@
       - yakuake
   when:
     - env_desktop == "kde"
-#  when:
-#    - ansible_distribution in ["Archlinux", "Suse"]
+    - ansible_distribution in ["Archlinux", "Suse"]
 
-- name: Install packages for workstations (KDE Plasma / Archlinux)
+- name: Install packages for workstations (Archlinux + KDE Plasma)
   tags: workstation,kde,arch
   package:
     state: latest
@@ -102,8 +162,8 @@
     - env_desktop == "kde"
     - ansible_distribution == "Archlinux"
 
-- name: Install packages for workstations (KDE Plasma / Suse)
-  tags: workstation,kde,arch
+- name: Install packages for workstations (KDE Plasma + Suse)
+  tags: workstation,kde,suse
   package:
     state: latest
     name:
@@ -112,4 +172,6 @@
     - env_desktop == "kde"
     - ansible_distribution == "Suse"
 
+
 #TODO: Suse (snap, ...)
+

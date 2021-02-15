@@ -1,3 +1,9 @@
+
+
+###
+# Copy GnomeShell Extension "Extensions Sync"-zipfile from files-folder, unzip, install, delete and activate
+###
+
 - name: GnomeShell Extension - Extensions Sync - create extension folder 
   tags: gnome
   file:
@@ -44,3 +50,4 @@
   command: gnome-extensions disable ubuntu-dock@ubuntu.com
   when:
     - env_desktop == "ubuntu:gnome"
+

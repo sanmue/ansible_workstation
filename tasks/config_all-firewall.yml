@@ -1,17 +1,26 @@
-- name: UFW - enable
+
+###########
+### UFW ###
+###########
+
+### UFW - enable
+- name: UFW - enable (Ubuntu)
   ufw:
     state: enabled
   when: ansible_distribution == "Ubuntu"
   register: firewall_ufw
 
-#- name: UFW - allow OpenSSH
-#  ufw:
-#    rule: limit
-#    name: OpenSSH
-#    comment: OpenSSH
-#  when: ansible_distribution == "Ubuntu"
+- name: UFW - enable (Archlinux + Gnome)
+  ufw:
+    state: enabled
+  when: 
+    - ansible_distribution == "Archlinux" 
+    - env_desktop == "gnome"
+  register: firewall_ufw
 
-- name: UFW - allow ssh
+
+### UFW - allow
+- name: UFW - allow ssh (Ubuntu)
   ufw:
     rule: limit
     port: ssh
@@ -20,31 +29,78 @@
   when: ansible_distribution == "Ubuntu"
   register: firewall_ufw
 
-- name: UFW - reload
+- name: UFW - allow ssh (Archlinux + Gnome)
+  ufw:
+    rule: limit
+    port: ssh
+    proto: tcp
+    comment: SSH
+  when: 
+    - ansible_distribution == "Archlinux"
+    - env_desktop == "gnome"
+  register: firewall_ufw
+
+
+### UFW - reload
+- name: UFW - reload (Ubuntu)
   ufw:
     state: reloaded
   when: ansible_distribution == "Ubuntu" and
         firewall_ufw.changed
 
+- name: UFW - reload (Archlinux + Gnome)
+  ufw:
+    state: reloaded
+  when: 
+    - ansible_distribution == "Archlinux"
+    - env_desktop == "gnome"
+    - firewall_ufw.changed
 
-- name: firewalld - enable
+
+#################
+### firewalld ###
+#################
+
+### firewalld - enable
+- name: firewalld - enable (Suse)
   service:
     enabled: yes
-#    state: started
     name: firewalld
   when:
-    - ansible_distribution in ["Archlinux", "Suse"]
+    - ansible_distribution in ["Suse"]
   register: firewall_d
 
-- name: firewalld - starting
+- name: firewalld - enable (Archlinux + KDE)
+  service:
+    enabled: yes
+    name: firewalld
+  when:
+    - ansible_distribution in ["Archlinux"]
+    - env_desktop == "kde"    
+  register: firewall_d
+
+
+### firewalld - start
+- name: firewalld - starting (Suse)
   systemd:
     state: started
     name: firewalld
   when:
-    - ansible_distribution in ["Archlinux", "Suse"]
+    - ansible_distribution in ["Suse"]
   register: firewall_d
-  
-- name: firewalld - allow ssh 
+
+- name: firewalld - starting (Archlinux + KDE)
+  systemd:
+    state: started
+    name: firewalld
+  when:
+    - ansible_distribution in ["Archlinux"]
+    - env_desktop == "kde"  
+  register: firewall_d
+
+
+### firewalld - allow
+- name: firewalld - allow ssh (Suse)
   firewalld:
     service: ssh
     permanent: yes
@@ -52,11 +108,33 @@
     immediate: yes
 #    zone: public
   when:
-    - ansible_distribution in ["Archlinux", "Suse"]
+    - ansible_distribution in ["Suse"]
   register: firewall_d
 
-- name: firewalld - reload
+- name: firewalld - allow ssh (Archlinux + KDE)
+  firewalld:
+    service: ssh
+    permanent: yes
+    state: enabled
+    immediate: yes
+#    zone: public
+  when:
+    - ansible_distribution in ["Archlinux"]
+    - env_desktop == "kde"
+  register: firewall_d
+
+
+### firewalld - reload
+- name: firewalld - reload (Suse)
+  command: firewall-cmd --reload
+  when:
+    - ansible_distribution in ["Suse"]
+    - firewall_d.changed
+    
+- name: firewalld - reload (Archlinux + KDE)
   command: firewall-cmd --reload
   when:
     - ansible_distribution in ["Archlinux", "Suse"]
+    - env_desktop == "kde"
     - firewall_d.changed
+
