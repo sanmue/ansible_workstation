@@ -11,8 +11,6 @@
   when:
     - env_desktop == "ubuntu:gnome"
 
-# TODO: remove (unnecessary) favorites first
-
 
 #######################
 ### Manjaro + Gnome ###
@@ -24,8 +22,6 @@
     - ansible_distribution == "Archlinux"
     - env_desktop == "gnome"
 
-# TODO: remove (unnecessary) favorites first
-
 
 ####################
 ### Suse + Gnome ###
@@ -36,6 +32,4 @@
   when: 
     - ansible_os_family == "Suse"
     - env_desktop == "gnome"
-
-# TODO: remove (unnecessary) favorites first
 

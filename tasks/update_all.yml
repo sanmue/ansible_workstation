@@ -1,5 +1,7 @@
 
+#############
 ### DistRepos
+#############
 - name: update repository index and update system (apt)
   tags: always,update
   apt:
@@ -9,6 +11,15 @@
 #  when: ansible_os_family == "Debian"
   when: ansible_pkg_mgr == "apt"
   changed_when: False
+
+
+- name: update repository index and update system (pacman)
+  tags: always,update
+  pacman:
+    update_cache: yes
+    upgrade: yes
+  when: ansible_pkg_mgr == "pacman"
+  changed_when: false
 
 
 - name: update repository index and update system (zypper)
@@ -34,16 +45,9 @@
 #  changed_when: false
 
 
-- name: update repository index and update system (pacman)
-  tags: always,update
-  pacman:
-    update_cache: yes
-    upgrade: yes
-  when: ansible_pkg_mgr == "pacman"
-  changed_when: false
-
-
+###########
 ### flatpak
+###########
 - name: update flatpak packages
   tags: always,update,flatpak
   command: flatpak update
@@ -53,8 +57,9 @@
     - env_datadirs.find("/var/lib/flatpak") == true
   changed_when: false
 
-
+#########
 ### snaps
+#########
 # Snaps come with a built-in automatic update mechanism, whereby snaps are refreshed to a new version whenever there’s a new release in the Snap Store. Typically, the refresh occurs four times a day ...
 - name: update snap packages
   tags: always,update,snap
