@@ -2,8 +2,9 @@
 ### Ubuntu
 - name: copy and decypt extensions-sync.json to users home-config (Ubuntu)
   copy:
-    src: files/extSync-Ubuntu/extensions-sync.json
-    dest: ~/.config
+#    src: files/extSync-Ubuntu/extensions-sync.json
+    src: files/gnomeshellExtensions/ubuntu_extensions-sync.json
+    dest: ~/.config/extensions-sync.json
     owner: sandro
     group: sandro
     mode: u=rw,g=rw,o=r
@@ -15,8 +16,9 @@
 ### Archlinux, Manjaro
 - name: copy and decypt extensions-sync.json to users home-config (Manjaro)
   copy:
-    src: files/extSync-Manjaro/extensions-sync.json
-    dest: ~/.config
+#    src: files/extSync-Manjaro/extensions-sync.json
+    src: files/gnomeshellExtensions/manjaro_extensions-sync
+    dest: ~/.config/extensions-sync.json
     owner: sandro
     group: sandro
     mode: u=rw,g=rw,o=r
