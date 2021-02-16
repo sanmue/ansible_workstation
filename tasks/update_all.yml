@@ -17,7 +17,8 @@
     update_cache: yes
     name: '*'
     state: dist-upgrade
-    allow_vendor_change: true
+#    extra_args: '--allow-vendor-change'
+#    allow_vendor_change: true # ab Version2.10?!
 #    extra_args: '--allow-arch-change'
 #  when: ansible_distribution == "openSUSE Leap"
 #  when: ansible_os_family == "Suse"

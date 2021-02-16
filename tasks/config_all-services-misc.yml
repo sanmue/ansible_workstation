@@ -15,13 +15,13 @@
   service:
     name: sshd
     state: started
-  when: ansible_distribution in ["Archlinux] or
+  when: ansible_distribution in ["Archlinux"] or
         ansible_os_family == "Suse"
 
 - name: Services - enable sshd (Archlinux, Suse)
   service:
     name: sshd
     enabled: yes
-  when: ansible_distribution in ["Archlinux] or
+  when: ansible_distribution in ["Archlinux"] or
         ansible_os_family == "Suse"
 

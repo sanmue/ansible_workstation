@@ -1,6 +1,6 @@
 - name: install VM QEMU/KVM (Ubuntu)
   tags: VM
-  apt:
+  package:
     state: latest
     name:
       - qemu-kvm
@@ -16,7 +16,7 @@
 
 - name: install VM QEMU/KVM (Archlinux)
   tags: VM
-  pacman:
+  package:
     state: latest
     name:
 #     for check:
@@ -41,7 +41,7 @@
 
 - name: install VM QEMU/KVM (Suse)
   tags: VM
-  pacman:
+  package:
     state: latest
     name:
       - bridge-utils

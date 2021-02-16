@@ -60,18 +60,6 @@
   when:
     - ansible_pkg_mgr == "zypper"
 
-- name: add repo for Vivaldi Browser (Suse)
-  tags: workstation,suse,addrepos,pre
-  zypper_repository:
-    name: vivaldi-repo
-    repo: 'https://repo.vivaldi.com/archive/vivaldi-suse.repo'
-    state: present
-    auto_import_keys: yes
-    autorefresh: yes
-    enabled: yes
-  when:
-    - ansible_pkg_mgr == "zypper"
-
 - name: add repo for snappy (openSUSE Leap 15.2)
   tags: workstation,suse,addrepos,pre,snap
   zypper_repository:
@@ -84,4 +72,35 @@
     enabled: yes
   when:
     - ansible_pkg_mgr == "zypper"
+
+# funktioniert so nicht bei .repo:
+- name: add repo for Vivaldi Browser (Suse)
+  tags: workstation,suse,addrepos,pre
+  zypper_repository:
+    name: vivaldi-repo
+#    repo: 'https://repo.vivaldi.com/archive/vivaldi-suse.repo'
+    repo: 'https://repo.vivaldi.com/archive/rpm/x86_64'
+    state: present
+    auto_import_keys: yes
+    autorefresh: yes
+    enabled: yes
+  when:
+    - ansible_pkg_mgr == "zypper"
+
+#- name: add repo for Vivaldi Browser (Suse)
+#  tags: workstation,suse,addrepos,pre
+#  get_url:
+#    url: https://repo.vivaldi.com/archive/vivaldi-suse.repo
+#    dest: /etc/zypp/repos.d/vivaldi.repo
+#  when:
+#    - ansible_os_family == "Suse"
+
+#- name: add repo for Vivaldi Browser (Suse)
+#  tags: workstation,suse,addrepos,pre
+#  command: zypper ar -g https://repo.vivaldi.com/archive/vivaldi-suse.repo
+#  args:
+#    creates: /etc/zypp/repos.d/vivaldi.repo
+#    # kommando nur ausführen, wenn "/etc/zypp/repos.d/vivaldi.repo" nicht vorhanden
+#  when:
+#    - ansible_pkg_mgr == "zypper"
 

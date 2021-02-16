@@ -1,5 +1,5 @@
 
-- name: Install gnome (shell extension) stuff (Ubuntu + Gnome)
+- name: Install gnomeshell extension stuff (Ubuntu + Gnome)
   tags: workstation,gnome,ubuntu
   package:
     state: latest
@@ -14,7 +14,7 @@
     - env_desktop == "ubuntu:gnome"
 
 
-- name: Install gnome (shell extension) stuff (Archlinux + Gnome)
+- name: Install gnomeshell extension stuff (Archlinux + Gnome)
   tags: workstation,gnome,arch
   package:
     state: latest
@@ -39,7 +39,7 @@
     - env_desktop == "gnome"
 
 
-- name: Install gnome (shell extension) stuff (Suse + Gnome)
+- name: Install gnomeshell extension stuff (Suse + Gnome)
   tags: workstation,gnome,suse
   package:
     state: latest
@@ -47,8 +47,8 @@
       - chrome-gnome-shell
       - gnome-shell-extension-desktop-icons
 #      - gnome-shell-extension-user-theme
-      - gnome-shell-extension-common
-      - gnome-shell-extension-common-lang
+      - gnome-shell-extensions-common
+      - gnome-shell-extensions-common-lang
       - gnome-tweaks
       - gnome-tweaks-lang
   when:

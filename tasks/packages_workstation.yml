@@ -134,14 +134,13 @@
       - chromium
       - dconf-editor
       - deja-dup
-#      - deluge # -> transmission-gtk
       - discord
       - eog
       - eog-plugin-exif-display
       - eog-plugin-map
       - eog-plugins
       - evince
-      - evolution # -> geary
+      - evolution
       - evolution-data-server
       - evolution-data-server-lang
       - evolution-lang
@@ -149,8 +148,6 @@
       - evolution-plugin-spamassassin
       - exfat-utils
       - firewall-config
-
-      # ---
       # firmware:
       - alsa-firmware
       - b43-fwcutter
@@ -159,8 +156,7 @@
       - kernel-firmware
 #      - linux-firmware
 #      - sof-firmware
-      # ---
-
+      #
       - foliate
 #      - flameshot
 #      - geary # -> evolution
@@ -184,7 +180,7 @@
       - gnome-maps-lang
       - gnome-photos
       - gnome-shell-search-provider-contacts
-      - gnome-shell-calendar # Evolution Kalender Unterstützung für GNOME Shell
+      - gnome-shell-calendar
       - guake
       - guake-lang
 #      - gtkhash
@@ -204,7 +200,7 @@
       - lshw
       - lshw-gui
       - lshw-lang
-      - malcontent
+#      - malcontent
       - MozillaFirefox
       - MozillaFirefox-translations-common
       - nemo
@@ -234,15 +230,19 @@
 #      - thunderbird # -> evolution
 #      - thunderbird-i18n-de
 #      - timeshift
- #     - timeshift-autosnap
+#      - timeshift-autosnap
       - torbrowser-launcher
       - transmission-common
-      - transmission-gtk # -> deluge
+      - transmission-gtk
       - transmission-gtk-lang
-      - totem # -> vlc
+      - totem
       - totem-lang
       - totem-plugins
 #      - vlc - -> totem
+      - snapper
+      - yast2-snapper
+      - snapper-zypp-plugin
+      - grub2-snapper-plugin
   when: 
     - ansible_os_family == "Suse"
     - env_desktop == "gnome"

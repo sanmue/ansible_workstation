@@ -6,9 +6,8 @@
 #    method: system
 
 
-#- name: install flatpak packages for workstations (all distros)
-- name: install flatpak packages for workstations (Ubuntu, Suse)
-  tags: workstation,ubuntu,suse,flatpak
+- name: install flatpak packages for workstations (Ubuntu)
+  tags: workstation,ubuntu,flatpak
   flatpak:
     name: '{{ item }}'
     state: present
