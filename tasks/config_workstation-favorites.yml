@@ -31,11 +31,11 @@
 ### Suse + Gnome ###
 ####################
 
-#- name: adding favorite apps to dock (Ubuntu + Gnome)
-#  command: gsettings set org.gnome.shell favorite-apps "['org.keepassxc.KeePassXC.desktop', 'firefox.desktop', 'vivaldi-stable.desktop', #'chromium.desktop', 'org.gnome.Terminal.desktop', 'terminator.desktop', 'nemo.desktop', 'org.gnome.gedit.desktop', 'libreoffice-#startcenter.desktop', 'anki.desktop', 'net.cozic.joplin_desktop.desktop', 'de.willuhn.Jameica.desktop', 'rhythmbox.desktop', #'org.jitsi.jitsi-meet.desktop', 'signal-desktop.desktop', 'discord.desktop', 'whalebird_whalebird.desktop', #'org.remmina.Remmina.desktop', 'virt-manager.desktop', 'gnome-control-center.desktop', 'org.manjaro.pamac.manager.desktop']"
-#  when: 
-#    - ansible_os_family == "Suse"
-#    - env_desktop == "gnome"
+- name: adding favorite apps to dock (Suse + Gnome)
+  command: gsettings set org.gnome.shell favorite-apps "['org.keepassxc.KeePassXC.desktop', 'firefox.desktop', 'vivaldi-stable.desktop', 'chromium-browser.desktop', 'org.gnome.Terminal.desktop', 'terminator.desktop', 'nemo.desktop', 'org.gnome.gedit.desktop', 'io.atom.Atom.desktop', 'org.gnome.Evolution.desktop', 'startcenter.desktop', 'anki.desktop', 'net.cozic.joplin_desktop.desktop', 'de.willuhn.Jameica.desktop', 'org.signal.Signal.desktop', 'org.jitsi.jitsi-meet.desktop', 'discord.desktop', 'whalebird_whalebird.desktop', 'org.gnome.Music.desktop', 'org.remmina.Remmina.desktop', 'virt-manager.desktop', 'org.gnome.tweaks.desktop', 'gnome-control-center.desktop', 'org.gnome.Software.desktop', 'org.opensuse.YaST.desktop']"
+  when: 
+    - ansible_os_family == "Suse"
+    - env_desktop == "gnome"
 
 # TODO: remove (unnecessary) favorites first
 
