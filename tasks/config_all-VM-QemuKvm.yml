@@ -3,8 +3,8 @@
   service:
     name: libvirtd
     state: started
-  when: 
-    - ansible_virtualization_role != "guest"
+  when: ansible_virtualization_role != "guest" # or
+#        ansible_os_family != "Suse"
 # noch ohne nested virtualization
 
 - name: enable libvirtd
@@ -13,8 +13,9 @@
     name: libvirtd
     #state: enabled
     enabled: yes
-  when:  
-    - ansible_virtualization_role != "guest"
+  when: ansible_virtualization_role != "guest" # or
+#        ansible_os_family != "Suse"
 # noch ohne nested virtualization
 
 #TODO: ggf. noch nested virtualization
+
