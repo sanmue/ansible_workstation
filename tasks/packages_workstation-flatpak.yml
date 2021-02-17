@@ -65,7 +65,7 @@
   with_items:
     - 'com.belmoussaoui.Authenticator'
 #    - 'com.ulduzsoft.Birdtray' # - evolution
-    - 'com.nextcloud.desktopclient.nextcloud'
+#    - 'com.nextcloud.desktopclient.nextcloud'
     - 'de.willuhn.Jameica'
     - 'io.atom.Atom'
     - 'net.cozic.joplin_desktop'

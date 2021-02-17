@@ -206,12 +206,14 @@
       - nemo-lang
       - nemo-extension-emblems
       - nemo-extension-gtkhash
-#      - nemo-extension-nextcloud
+      - nemo-extension-nextcloud
       - nemo-extension-preview
       - nemo-extension-seahorse
       - nemo-extension-share
       - nemo-extension-terminal
       - nemo-extensions-lang
+      - nextcloud-desktop
+      - nextcloud-desktop-lang
       - polari
       - polari-lang
       - rhythmbox
