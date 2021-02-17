@@ -1,0 +1,73 @@
+
+#########
+### Gnome
+#########
+
+#- name: Uninstall packages for workstations (Ubuntu + Gnome)
+#  tags: workstation,gnome,ubuntu
+#  package:
+#    state: absent
+#    name:
+#      - xxx
+#  when: 
+#    - ansible_distribution == "Ubuntu"
+#    - env_desktop == "ubuntu:gnome"
+
+
+#- name: Uninstall packages for workstations (Archlinux + Gnome)
+#  tags: workstation,gnome,arch
+#  package:
+#    state: absent
+#    name:
+#      - xxx
+#  when: 
+#    - ansible_distribution == "Archlinux"
+#    - env_desktop == "gnome"
+
+
+- name: Uninstall packages for workstations (Suse + Gnome)
+  tags: workstation,gnome,suse
+  package:
+    state: absent
+    name:
+      - gnome-calendar # -> evolution
+      - gnome-calendar-lang
+      - gnome-contacts # -> evolution
+      - gnome-contacts-lang
+      - gnome-music  # -> rhythmbox
+      - gnome-music-lang
+      - cheese
+      - cheese-lang
+      - mutt
+      - mutt-lang
+  when: 
+    - ansible_os_family == "Suse"
+    - env_desktop == "gnome"
+
+
+
+##############
+### KDE Plasma
+##############
+
+#- name: Uninstall packages for workstations (Archlinux + KDE Plasma)
+#  tags: workstation,kde,arch
+#  package:
+#    state: absent
+#    name:
+#      - xxx
+#  when:
+#    - env_desktop == "kde"
+#    - ansible_distribution == "Archlinux"
+
+
+#- name: Uninstall packages for workstations (KDE Plasma + Suse)
+#  tags: workstation,kde,suse
+#  package:
+#    state: absent
+#    name:
+#      - xxx
+#  when:
+#    - env_desktop == "kde"
+#    - ansible_os_family == "Suse"
+

@@ -166,10 +166,12 @@
       - gimp-help-de
       - gimp-lang
 #      - gimp-ufraw
-      - gnome-calendar
-      - gnome-calendar-lang
-      - gnome-contacts
-      - gnome-contacts-lang
+#      - gnome-calendar # -> evolution
+#      - gnome-calendar-lang # -> evolution
+#      - gnome-contacts # -> evolution
+#      - gnome-contacts-lang # -> evolution
+#      - gnome-music # -> Rhytmbox
+#      - gnome-music-lang
       - gnome-disk-utility
       - gnome-disk-utility-lang
       - gnome-documents
@@ -179,8 +181,6 @@
       - gnome-maps
       - gnome-maps-lang
       - gnome-photos
-      - gnome-shell-search-provider-contacts
-      - gnome-shell-calendar
       - guake
       - guake-lang
 #      - gtkhash
@@ -200,21 +200,20 @@
       - lshw
       - lshw-gui
       - lshw-lang
-#      - malcontent
       - MozillaFirefox
       - MozillaFirefox-translations-common
       - nemo
       - nemo-lang
       - nemo-extension-emblems
       - nemo-extension-gtkhash
-      - nemo-extension-nextcloud
+#      - nemo-extension-nextcloud
       - nemo-extension-preview
       - nemo-extension-seahorse
       - nemo-extension-share
       - nemo-extension-terminal
       - nemo-extensions-lang
-      - nextcloud-desktop
-      - nextcloud-desktop-lang
+      - polari
+      - polari-lang
       - rhythmbox
       - rhythmbox-lang
       - seahorse
@@ -235,10 +234,10 @@
       - transmission-common
       - transmission-gtk
       - transmission-gtk-lang
-      - totem
+      - totem # -> vlc
       - totem-lang
       - totem-plugins
-#      - vlc - -> totem
+#      - vlc # -> totem
       - snapper
       - yast2-snapper
       - snapper-zypp-plugin

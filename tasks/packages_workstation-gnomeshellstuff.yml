@@ -51,6 +51,9 @@
       - gnome-shell-extensions-common-lang
       - gnome-tweaks
       - gnome-tweaks-lang
+#
+#      - gnome-shell-search-provider-contacts
+#      - gnome-shell-calendar
   when:
     - ansible_os_family == "Suse"
     - env_desktop == "gnome"
