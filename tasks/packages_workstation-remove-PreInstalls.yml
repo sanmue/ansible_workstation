@@ -1,5 +1,5 @@
 
-# uninstall the preinstalled Software
+# remove unnecessary preinstalled Software
 
 #########
 ### Gnome
@@ -33,15 +33,10 @@
     state: absent
     name:
       - gnome-calendar # -> evolution
-      - gnome-calendar-lang
       - gnome-contacts # -> evolution
-      - gnome-contacts-lang
       - gnome-music  # -> rhythmbox
-      - gnome-music-lang
       - cheese
-      - cheese-lang
       - mutt
-      - mutt-lang
   when: 
     - ansible_os_family == "Suse"
     - env_desktop == "gnome"

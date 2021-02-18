@@ -25,7 +25,7 @@
   tags: startall
   tasks:
 #   ssh, ansible + Voraussetungen/Abhängigkeiten, git ... muss bereits vorhanden sein
-  - include: tasks/packages_workstation-remove.yml
+  - include: tasks/packages_workstation-remove-PreInstalls.yml
   - include: tasks/packages_workstation-basic.yml
   - include: tasks/packages_workstation-DEspecific.yml
   - include: tasks/packages_workstation-additional.yml
