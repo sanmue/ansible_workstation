@@ -49,7 +49,7 @@
       - ufw
   when: ansible_distribution == "Ubuntu"
 
-- name: install basic packages (Archlinux, Suse)
+- name: install basic packages (Archlinux)
   tags: basic, workstation, arch, suse
   package:
     state: latest
