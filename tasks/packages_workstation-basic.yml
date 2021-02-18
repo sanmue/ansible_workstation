@@ -79,3 +79,31 @@
       - firewalld
   when: ansible_os_family == "Suse"
 
+
+- name: Install basic - multimedia packages (Suse)
+  tags: workstation,gnome,suse
+  package:
+    state: latest
+    name:
+#     ggf. alternativ: https://software.opensuse.org/download/package?package=opensuse-codecs-installer&project=multimedia%3Aapps
+      - flac
+      - ffmpeg
+      - ffmpeg-4
+      - gstreamer-plugins-base
+      - gstreamer-plugins-good
+      - gstreamer-plugins-good-extra
+      - gstreamer-plugins-bad
+      - gstreamer-plugins-libav      
+      - gstreamer-plugins-ugly
+      - libavdevice58_10
+      - mpeg2dec
+      - mpeg4ip
+      - vlc-codec-gstreamer
+#     nur pacman-repo:
+      - gstreamer-plugins-ugly-orig-addon
+      - libdvdcss2
+      - libxvidcore4
+      - vlc-codecs
+  when: 
+    - ansible_os_family == "Suse"
+
