@@ -32,6 +32,7 @@
 #    allow_vendor_change: true # ab Version2.10?!
 #    extra_args: '--allow-arch-change'
 #  when: ansible_distribution == "openSUSE Leap"
+#  when: ansible_distribution == "openSUSE Tumbleweed"
 #  when: ansible_os_family == "Suse"
   when: ansible_pkg_mgr == "zypper"
   changed_when: false

@@ -48,9 +48,7 @@
       - gnome-shell-extension-desktop-icons
 #      - gnome-shell-extension-user-theme
       - gnome-shell-extensions-common
-      - gnome-shell-extensions-common-lang
       - gnome-tweaks
-      - gnome-tweaks-lang
 #
 #      - gnome-shell-search-provider-contacts
 #      - gnome-shell-calendar

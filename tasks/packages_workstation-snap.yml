@@ -1,6 +1,6 @@
 
-- name: install snap packages for workstations (all distros)
-  tags: workstation,ubuntu,suse,arch,snap
+- name: install snap packages for workstations (all distros, not Suse)
+  tags: workstation,ubuntu,arch,snap #,suse
   snap:
     state: present
     name:

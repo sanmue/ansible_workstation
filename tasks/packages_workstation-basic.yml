@@ -30,7 +30,7 @@
 #      - skanlite # eher bei KDE
 #      - snapd # bei Suse herausgenommen
 #      - syncthing
-      - terminator
+      - terminator # bei Suse+KDE nicht unbedingt notwendig -> Konsole
       - vlc
       - unzip
 

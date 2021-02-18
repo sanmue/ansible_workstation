@@ -42,7 +42,7 @@
     - ansible_virtualization_role != "guest"
 # noch ohne nested virtualization
 
-### TEST
+### TEST manuell statt pattern
 #- name: install VM QEMU/KVM (Suse)
 #  tags: VM
 #  package:

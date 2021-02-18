@@ -34,6 +34,9 @@
 ##########
 ### zypper
 ##########
+
+### Leap
+#-------
 - name: add Packman Repository (openSUSE Leap 15.2)
   tags: workstation,suse,addrepos,pre
   zypper_repository:
@@ -64,20 +67,58 @@
     - ansible_pkg_mgr == "zypper"
     - ansible_distribution == "openSUSE Leap"
 
-- name: add repo for snappy (openSUSE Leap 15.2)
-  tags: workstation,suse,addrepos,pre,snap
+#- name: add repo for snappy (openSUSE Leap 15.2)
+#  tags: workstation,suse,addrepos,pre,snap
+#  zypper_repository:
+#    name: snappy-repo
+##   Distri-Version noch hart codiert:
+#    repo: 'https://download.opensuse.org/repositories/system:/snappy/openSUSE_Leap_15.2'
+#    state: present
+#    auto_import_keys: yes
+#    autorefresh: yes
+#    enabled: yes
+#  when:
+#    - ansible_pkg_mgr == "zypper"
+#    - ansible_distribution == "openSUSE Leap"
+
+
+### Tumbleweed
+# ------------
+- name: add Packman Repository (Tumbleweed)
+  tags: workstation,suse,addrepos,pre
   zypper_repository:
-    name: snappy-repo
+    name: Packman Repository
 #   Distri-Version noch hart codiert:
-    repo: 'https://download.opensuse.org/repositories/system:/snappy/openSUSE_Leap_15.2'
+    repo: 'http://packman.inode.at/suse/openSUSE_Tumbleweed/Essentials'
+#    repo: 'http://packman.inode.at/suse/openSUSE_Tumbleweed/'
     state: present
     auto_import_keys: yes
     autorefresh: yes
     enabled: yes
+    priority: '40'
   when:
     - ansible_pkg_mgr == "zypper"
-    - ansible_distribution == "openSUSE Leap"
+    - ansible_distribution == "openSUSE Tumbleweed"
 
+- name: add Libdvdcss Repository (Tumbleweed)
+  tags: workstation,suse,addrepos,pre
+  zypper_repository:
+    name: Libdvdcss Repository
+#   Distri-Version noch hart codiert:
+    repo: 'http://opensuse-guide.org/repo/openSUSE_Tumbleweed/'
+    state: present
+    auto_import_keys: yes
+    autorefresh: yes
+    enabled: yes
+    priority: '40'
+  when:
+    - ansible_pkg_mgr == "zypper"
+    - ansible_distribution == "openSUSE Tumbleweed"
+
+
+# TODO: Vivaldi, oder einfach weglassen
+### Vivaldi Broser:
+-------------------
 ## funktioniert so nicht bei .repo: # ###
 #- name: add repo for Vivaldi Browser (Suse)
 #  tags: workstation,suse,addrepos,pre
