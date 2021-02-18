@@ -43,9 +43,9 @@
 #
 # dconf editor: /org/gnome/desktop/app-folders/folder-children
 
-- name: GNOME Shell Apps Dashboard - Categories (Suse + Gnome)
-  command: gsettings set org.gnome.desktop.app-folders folder-children "['AudioVideo', 'Development', 'Education', 'Game', 'Graphics', 'Network', 'Office', 'Science', 'Settings', 'System', 'Utility']"
-  when: 
-    - ansible_os_family == "Suse"
-    - env_desktop == "gnome"
+#- name: GNOME Shell Apps Dashboard - Categories (Suse + Gnome)
+#  command: gsettings set org.gnome.desktop.app-folders folder-children "['AudioVideo', 'Development', 'Education', 'Game', 'Graphics', 'Network', 'Office', 'Science', 'Settings', 'System', 'Utility']"
+#  when: 
+#    - ansible_os_family == "Suse"
+#    - env_desktop == "gnome"
 

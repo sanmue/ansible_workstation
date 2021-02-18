@@ -104,7 +104,7 @@
       - transmission-gtk # -> deluge
       - totem # -> vlc
 #      - vlc - -> totem
-      ufw
+      - ufw
   when: 
     - ansible_distribution == "Archlinux"
     - env_desktop == "gnome"
