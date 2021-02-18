@@ -13,5 +13,5 @@
 #      - signal-desktop
 #      - thunderbird
       - whalebird
-#  when: ansible_os_family != "Suse"
+  when: ansible_os_family != "Suse"
 
