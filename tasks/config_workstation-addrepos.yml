@@ -118,7 +118,7 @@
 
 # TODO: Vivaldi, oder einfach weglassen
 ### Vivaldi Broser:
--------------------
+# -----------------
 ## funktioniert so nicht bei .repo: # ###
 #- name: add repo for Vivaldi Browser (Suse)
 #  tags: workstation,suse,addrepos,pre
