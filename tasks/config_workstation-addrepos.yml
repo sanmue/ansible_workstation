@@ -38,6 +38,7 @@
   tags: workstation,suse,addrepos,pre
   zypper_repository:
     name: Packman Repository
+#   Dist.-Version noch hart codiert:
     repo: 'http://packman.inode.at/suse/openSUSE_Leap_15.2/'
     state: present
     auto_import_keys: yes
@@ -46,11 +47,13 @@
     priority: '40'
   when:
     - ansible_pkg_mgr == "zypper"
+    - ansible_distribution == "openSUSE Leap"
 
 - name: add Libdvdcss Repository (openSUSE Leap 15.2)
   tags: workstation,suse,addrepos,pre
   zypper_repository:
     name: Libdvdcss Repository
+#   Dist.-Version noch hart codiert:
     repo: 'http://opensuse-guide.org/repo/openSUSE_Leap_15.2/'
     state: present
     auto_import_keys: yes
@@ -59,21 +62,23 @@
     priority: '40'
   when:
     - ansible_pkg_mgr == "zypper"
+    - ansible_distribution == "openSUSE Leap"
 
-#- name: add repo for snappy (openSUSE Leap 15.2)
-#  tags: workstation,suse,addrepos,pre,snap
-#  zypper_repository:
-#    name: snappy-repo
-##   Version noch hart codiert:
-#    repo: 'https://download.opensuse.org/repositories/system:/snappy/openSUSE_Leap_15.2'
-#    state: present
-#    auto_import_keys: yes
-#    autorefresh: yes
-#    enabled: yes
-#  when:
-#    - ansible_pkg_mgr == "zypper"
+- name: add repo for snappy (openSUSE Leap 15.2)
+  tags: workstation,suse,addrepos,pre,snap
+  zypper_repository:
+    name: snappy-repo
+#   Dist.-Version noch hart codiert:
+    repo: 'https://download.opensuse.org/repositories/system:/snappy/openSUSE_Leap_15.2'
+    state: present
+    auto_import_keys: yes
+    autorefresh: yes
+    enabled: yes
+  when:
+    - ansible_pkg_mgr == "zypper"
+    - ansible_distribution == "openSUSE Leap"
 
-# funktioniert so nicht bei .repo:  XXX
+## funktioniert so nicht bei .repo: # ###
 #- name: add repo for Vivaldi Browser (Suse)
 #  tags: workstation,suse,addrepos,pre
 #  zypper_repository:

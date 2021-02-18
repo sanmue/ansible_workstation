@@ -1,10 +1,10 @@
-#- name: start and enable snapd (Suse)
-#  tags: workstation,suse,snap
-#  service:
-#    name: snapd
-#    state: started
-#    enabled: yes
-#  when: ansible_os_family == "Suse"
+- name: start and enable snapd (Suse)
+  tags: workstation,suse,snap
+  service:
+    name: snapd
+    state: started
+    enabled: yes
+  when: ansible_os_family == "Suse"
 
 #- name: start and enable snapd (Tumbleweed)
 #   tags: workstation,suse,snap 

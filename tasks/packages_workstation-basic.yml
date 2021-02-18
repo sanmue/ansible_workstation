@@ -28,7 +28,7 @@
       - remmina
       - rsync
 #      - skanlite # eher bei KDE
-#      - snapd  # tmp bei Suse herausgenommen
+      - snapd # bei Suse herausgenommen
 #      - syncthing
       - terminator
       - vlc
@@ -40,22 +40,11 @@
   package:
     state: latest
     name:
-
-      - snapd  # tmp bei Suse herausgenommen
-
       - gpg
       - openssh-client
       - ssh
       - ufw
   when: ansible_distribution == "Ubuntu"
-
-- name: install basic packages (Archlinux)
-  tags: basic, workstation, arch, suse
-  package:
-    state: latest
-    name:
-      - snapd  # tmp bei Suse herausgenommen
-  when: ansible_distribution in ["Archlinux"] 
 
 
 - name: install basic packages (Archlinux, Suse)
