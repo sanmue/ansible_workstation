@@ -135,10 +135,11 @@
 #
       # firmware:
       - alsa-firmware
-      - b43-fwcutter
+#      - b43-fwcutter
       - fwupd
       - gnome-firmware
-      - kernel-firmware
+#      - kernel-firmware # nich für Tumbleweed, dort u.a.: kernel-firmware-all, ...; sollte bereits inst. sein
+#
 #      - linux-firmware
 #      - sof-firmware
       #
