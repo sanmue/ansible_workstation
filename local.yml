@@ -4,7 +4,7 @@
   connection: local
 #  become: sandro
   become: no
-  tags: ansibleFacts,startall,pre
+  tags: startall,pre,ansibleFacts
   gather_facts: true
   pre_tasks:
   - include: tasks/config_workstation-getFacts.yml
@@ -16,7 +16,7 @@
   tags: startall,pre
   pre_tasks:
     - include: tasks/config_workstation-addrepos.yml
-    - include: tasks/update_all.yml
+    - include: tasks/all_update.yml
 
 
 - hosts: localhost
@@ -24,19 +24,16 @@
   become: true
   tags: startall
   tasks:
-
-#   ssh, ansible, git ... muss bereits vorhanden sein
-#  - include: tasks/packages_all-ansible.yml
+#   ssh, ansible + Voraussetungen/Abhängigkeiten, git ... muss bereits vorhanden sein
   - include: tasks/packages_workstation-remove.yml
-  - include: tasks/packages_all-basic.yml
-  - include: tasks/packages_workstation.yml
+  - include: tasks/packages_workstation-basic.yml
+  - include: tasks/packages_workstation-DEspecific.yml
   - include: tasks/packages_workstation-additional.yml
   - include: tasks/config_workstation-snap.yml
   - include: tasks/packages_workstation-snap.yml
   - include: tasks/config_workstation-flatpak.yml
   - include: tasks/packages_workstation-flatpak.yml
   - include: tasks/packages_workstation-gnomeshellstuff.yml
-  - include: tasks/packages_all-VM-QemuKvm.yml
   - include: tasks/packages_workstation-VM-QemuKvm.yml
   - include: tasks/config_all-VM-QemuKvm.yml
   - include: tasks/config_all-firewall.yml
@@ -44,17 +41,24 @@
   - include: tasks/config_all-services-misc.yml
   - include: tasks/config_all-users.yml
 #  - include: tasks/config_all-cron.yml
-  - include: tasks/cleanup_all.yml
-#  - include: tasks/reboot_all.yml
+  - include: tasks/all_cleanup.yml
 
 
 - hosts: localhost
   connection: local
 #  become: sandro
   become: no
-  tags: gnome,gnome-shell
+  tags: startall,gnome
   tasks:
   - include: tasks/packages_workstation-gnomeshellExtensions.yml
   - include: tasks/config_workstation-gnomeshellExtension.yml
   - include: tasks/config_workstation-favorites.yml
+
+
+#- hosts: localhost
+#  connection: local
+#  become: true
+#  tags: startall
+#  tasks:
+#  - include: tasks/all_reboot.yml
 

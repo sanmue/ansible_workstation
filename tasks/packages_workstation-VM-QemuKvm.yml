@@ -1,3 +1,105 @@
+
+# TODO: ggf. noch nested virtualization
+
+
+- name: install VM QEMU/KVM (Ubuntu)
+  tags: VM
+  package:
+    state: latest
+    name:
+      - qemu-kvm
+      - libvirt-daemon-system
+      - libvirt-clients
+      - bridge-utils
+      - virtinst
+  when: 
+    - ansible_distribution == "Ubuntu"
+    - ansible_virtualization_role != "guest"
+# noch ohne nested virtualization
+
+
+- name: install VM QEMU/KVM (Archlinux)
+  tags: VM
+  package:
+    state: latest
+    name:
+#     for check:
+      - dmidecode
+      - inxi      
+#     qemu, dependendies, ...:      
+      - bridge-utils
+      - dnsmasq
+      - ebtables
+      - edk2-ovmf # UEFI Support
+      - libvirt
+      - openbsd-netcat
+      - qemu
+      - samba
+      - vde2
+      - virt-install
+  when: 
+    - ansible_distribution == "Archlinux"
+    - ansible_virtualization_role != "guest"
+# noch ohne nested virtualization
+
+### TEST
+#- name: install VM QEMU/KVM (Suse)
+#  tags: VM
+#  package:
+#    state: latest
+#    name:
+#      - bridge-utils
+#      - dmidecode
+#      - dnsmasq
+#      - ebtables
+#      - guestfs-tools
+#      - inxi
+#      - libvirt
+#      - libvirt-client
+#      - libvirt-daemon
+#      - python-xml
+#      - qemu
+#      - qemu-ovmf-x86_64 # UEFI Support
+#      - qemu-kvm
+#      - qemu-tools
+#      - samba
+#      - rpm
+#      - vde2
+#      - virt-install
+##      - virt-v2v # Convert a virtual machine to run on KVM
+#      - yast2-vm
+#  when: 
+#    - ansible_os_family == "Suse"
+#    - ansible_virtualization_role != "guest"
+# noch ohne nested virtualization
+
+
+- name: install VM QEMU/KVM - zypper pattern (Suse)
+  tags: VM
+  zypper:
+    state: latest
+    type: pattern
+    name:
+      - kvm_server
+      - kvm_tools
+  when: 
+    - ansible_os_family == "Suse"
+    - ansible_virtualization_role != "guest"
+
+- name: install VM QEMU/KVM - lxc, uefi, yast-vm (Suse)
+  tags: VM
+  package:
+    state: latest
+    name:
+      - libvirt-daemon-lxc
+      - qemu-ovmf-x86_64
+      - yast2-vm
+  when: 
+    - ansible_os_family == "Suse"
+    - ansible_virtualization_role != "guest"
+# noch ohne nested virtualization
+
+
 - name: install VM QEMU/KVM - virt-manager/viewer (Workstation, all distros with DesktopEnv)
   tags: VM,workstation
   package:
@@ -8,7 +110,4 @@
   when: ansible_virtualization_role != "guest" # or
 #        ansible_os_family != "Suse"
 # noch ohne nested virtualization
-
-#TODO: ggf. noch nested virtualization
-#TODO: prüfen auf DesktopEnv
 

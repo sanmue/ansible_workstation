@@ -33,3 +33,19 @@
     - ansible_os_family == "Suse"
     - env_desktop == "gnome"
 
+
+### GNOME Shell Apps Dashboard - Categories
+# https://specifications.freedesktop.org/menu-spec/menu-spec-latest.html
+# A. Registered Categories
+#
+# https://github.com/BenJetson/gnome-dash-fix
+# https://www.gauthampdas.com/blog/tech/linux/enabling-categories-in-gnome-3-8-shell-application-menu#
+#
+# dconf editor: /org/gnome/desktop/app-folders/folder-children
+
+- name: GNOME Shell Apps Dashboard - Categories (Suse + Gnome)
+  command: gsettings set org.gnome.desktop.app-folders folder-children "['AudioVideo', 'Development', 'Education', 'Game', 'Graphics', 'Network', 'Office', 'Science', 'Settings', 'System', 'Utility']"
+  when: 
+    - ansible_os_family == "Suse"
+    - env_desktop == "gnome"
+

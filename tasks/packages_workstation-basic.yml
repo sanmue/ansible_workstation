@@ -1,0 +1,71 @@
+
+#######################################
+### NOT depending on Desktop Environmet 
+#######################################
+
+- name: Install packages for workstations (basic/all)
+  tags: basic, workstation, ubuntu, arch, suse
+  package:
+    state: latest
+    name:
+      - anki
+      - ansible
+      - clamav
+      - clamtk
+      - curl
+      - flatpak
+      - gimp
+      - gimp-help-de
+      - gparted
+      - grsync
+      - git
+      - htop
+#      - hyphen-de
+      - keepassxc
+      - lsb-release
+      - nano
+      - neofetch
+      - remmina
+      - rsync
+#      - skanlite # eher bei KDE
+      - snapd
+#      - syncthing
+      - terminator
+      - vlc
+      - unzip
+
+
+- name: install basic packages (Ubuntu)
+  tags: basic, ubuntu, workstation
+  package:
+    state: latest
+    name:
+      - gpg
+      - openssh-client
+      - ssh
+      - ufw
+  when: ansible_distribution == "Ubuntu"
+
+
+- name: install basic packages (Archlinux, Suse)
+  tags: basic, workstation, arch, suse
+  package:
+    state: latest
+    name:
+      - gnupg
+      - gpgme
+      - ebtables
+      - ipset
+      - openssh
+  when: ansible_distribution in ["Archlinux"] or ansible_os_family == "Suse"
+#    - ansible_distribution in ["Archlinux", "openSUSE Leap"]
+
+
+- name: install basic packages (Suse)
+  tags: basic, workstation, Suse
+  package:
+    state: latest
+    name:
+      - firewalld
+  when: ansible_os_family == "Suse"
+
