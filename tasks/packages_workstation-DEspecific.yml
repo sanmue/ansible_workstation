@@ -124,6 +124,7 @@
       - eog-plugin-exif-display
       - eog-plugin-map
       - eog-plugins
+      - epiphany
       - evince
       - evolution
       - evolution-data-server

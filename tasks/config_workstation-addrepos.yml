@@ -60,32 +60,32 @@
   when:
     - ansible_pkg_mgr == "zypper"
 
-- name: add repo for snappy (openSUSE Leap 15.2)
-  tags: workstation,suse,addrepos,pre,snap
-  zypper_repository:
-    name: snappy-repo
-#   Version noch hart codiert:
-    repo: 'https://download.opensuse.org/repositories/system:/snappy/openSUSE_Leap_15.2'
-    state: present
-    auto_import_keys: yes
-    autorefresh: yes
-    enabled: yes
-  when:
-    - ansible_pkg_mgr == "zypper"
+#- name: add repo for snappy (openSUSE Leap 15.2)
+#  tags: workstation,suse,addrepos,pre,snap
+#  zypper_repository:
+#    name: snappy-repo
+##   Version noch hart codiert:
+#    repo: 'https://download.opensuse.org/repositories/system:/snappy/openSUSE_Leap_15.2'
+#    state: present
+#    auto_import_keys: yes
+#    autorefresh: yes
+#    enabled: yes
+#  when:
+#    - ansible_pkg_mgr == "zypper"
 
-# funktioniert so nicht bei .repo:
-- name: add repo for Vivaldi Browser (Suse)
-  tags: workstation,suse,addrepos,pre
-  zypper_repository:
-    name: vivaldi-repo
-#    repo: 'https://repo.vivaldi.com/archive/vivaldi-suse.repo'
-    repo: 'https://repo.vivaldi.com/archive/rpm/x86_64'
-    state: present
-    auto_import_keys: yes
-    autorefresh: yes
-    enabled: yes
-  when:
-    - ansible_pkg_mgr == "zypper"
+# funktioniert so nicht bei .repo:  XXX
+#- name: add repo for Vivaldi Browser (Suse)
+#  tags: workstation,suse,addrepos,pre
+#  zypper_repository:
+#    name: vivaldi-repo
+##    repo: 'https://repo.vivaldi.com/archive/vivaldi-suse.repo'
+#    repo: 'https://repo.vivaldi.com/archive/rpm/x86_64'
+#    state: present
+#    auto_import_keys: yes
+#    autorefresh: yes
+#    enabled: yes
+#  when:
+#    - ansible_pkg_mgr == "zypper"
 
 #- name: add repo for Vivaldi Browser (Suse)
 #  tags: workstation,suse,addrepos,pre

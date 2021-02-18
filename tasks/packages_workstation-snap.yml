@@ -1,3 +1,4 @@
+
 - name: install snap packages for workstations (all distros)
   tags: workstation,ubuntu,suse,arch,snap
   snap:
@@ -12,4 +13,5 @@
 #      - signal-desktop
 #      - thunderbird
       - whalebird
+  when: ansible_os_family != "Suse"
 
