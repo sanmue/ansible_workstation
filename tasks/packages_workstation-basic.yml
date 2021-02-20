@@ -15,6 +15,7 @@
       - curl
       - flatpak
       - gimp
+      - gimp-lang
       - gimp-help-de
       - gparted
       - grsync
@@ -22,6 +23,7 @@
       - htop
 #      - hyphen-de
       - keepassxc
+      - keepassxc-lang
       - lsb-release
       - nano
       - neofetch
@@ -77,6 +79,9 @@
     state: latest
     name:
       - firewalld
+      - exfat-utils
+      - exfatprogs
+      - fuse-exfat
   when: ansible_os_family == "Suse"
 
 
@@ -99,7 +104,7 @@
       - mpeg2dec
       - mpeg4ip
       - vlc-codec-gstreamer
-#     nur pacman-repo:
+#     nur im pacman-repo:
       - gstreamer-plugins-ugly-orig-addon
       - libdvdcss2
       - libxvidcore4
