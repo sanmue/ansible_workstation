@@ -91,7 +91,7 @@
     name:
 #     ggf. alternativ: https://software.opensuse.org/download/package?package=opensuse-codecs-installer&project=multimedia%3Aapps
       - flac
-      - ffmpeg
+#      - ffmpeg
       - ffmpeg-4
       - gstreamer-plugins-base
       - gstreamer-plugins-good
@@ -102,12 +102,20 @@
       - libavdevice58_10
       - mpeg2dec
       - vlc-codec-gstreamer # -> versch. autom. Änderungen
-##     nur im pacman- oder libdvdcss-repo:
-      - gstreamer-plugins-ugly-orig-addon
-      - libdvdcss2
-      - libxvidcore4
-      - mpeg4ip
-#      - vlc-codecs # Konflikt mit standard-inst
   when:
     - ansible_os_family == "Suse"
+
+#- name: Install basic - multimedia packages - packman libdvdcss (Suse)
+#  tags: workstation,gnome,suse
+#  package:
+#    state: latest
+#    name:
+##     nur im pacman- oder libdvdcss-repo:
+#      - gstreamer-plugins-ugly-orig-addon
+#      - libdvdcss2
+#      - libxvidcore4
+#      - mpeg4ip
+##      - vlc-codecs # Konflikt mit standard-inst
+#  when:
+#    - ansible_os_family == "Suse"
 
