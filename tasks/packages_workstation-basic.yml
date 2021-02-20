@@ -80,7 +80,6 @@
     name:
       - firewalld
       - exfat-utils
-      - exfatprogs
       - fuse-exfat
   when: ansible_os_family == "Suse"
 
