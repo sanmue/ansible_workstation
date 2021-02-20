@@ -80,7 +80,7 @@
     name:
       - firewalld
 #      - exfatprogs # als ersatz für zuvor deinstallierte exfat-utils (wg. gparted)
-#      - fuse-exfat
+      - fuse-exfat
   when: ansible_os_family == "Suse"
 
 
