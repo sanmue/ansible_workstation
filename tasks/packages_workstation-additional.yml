@@ -1,5 +1,5 @@
 
-- name: install additional packages for workstations (Ubuntu,Suse)
+- name: install additional packages for workstations (Ubuntu, tmp. ohne Suse)
   tags: workstation,ubuntu,suse
   package:
     state: latest
