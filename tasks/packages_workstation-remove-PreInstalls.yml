@@ -37,7 +37,7 @@
       - gnome-music  # -> rhythmbox
       - cheese
       - mutt
-      - xfat-utils # ->xfatprogs wg. gparted
+#      - xfat-utils # ->xfatprogs wg. gparted
   when: 
     - ansible_os_family == "Suse"
     - env_desktop == "gnome"
