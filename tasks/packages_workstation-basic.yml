@@ -101,13 +101,13 @@
       - gstreamer-plugins-ugly
       - libavdevice58_10
       - mpeg2dec
-      - mpeg4ip
-      - vlc-codec-gstreamer
-#     nur im pacman-repo:
-      - gstreamer-plugins-ugly-orig-addon
-      - libdvdcss2
-      - libxvidcore4
-      - vlc-codecs
+##     nur im pacman-repo oder libdvdcss:
+#      - gstreamer-plugins-ugly-orig-addon
+#      - libdvdcss2
+#      - libxvidcore4
+#      - mpeg4ip
+#      - vlc-codecs
+#      - vlc-codec-gstreamer
   when: 
     - ansible_os_family == "Suse"
 

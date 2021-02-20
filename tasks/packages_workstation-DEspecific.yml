@@ -177,7 +177,7 @@
       - nemo-extension-preview
       - nemo-extension-seahorse
       - nemo-extension-share
-#      - nemo-extension-terminal
+      - nemo-extension-terminal
       - nextcloud-desktop
       - nextcloud-desktop-lang
       - polari
