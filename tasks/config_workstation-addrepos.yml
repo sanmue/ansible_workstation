@@ -47,7 +47,7 @@
     auto_import_keys: yes
     autorefresh: yes
     enabled: yes
-    priority: '40'
+    priority: '90'
   when:
     - ansible_pkg_mgr == "zypper"
     - ansible_distribution == "openSUSE Leap"
@@ -62,7 +62,7 @@
     auto_import_keys: yes
     autorefresh: yes
     enabled: yes
-    priority: '40'
+    priority: '90'
   when:
     - ansible_pkg_mgr == "zypper"
     - ansible_distribution == "openSUSE Leap"
@@ -95,7 +95,7 @@
     auto_import_keys: yes
     autorefresh: yes
     enabled: yes
-    priority: '40'
+    priority: '90'
   when:
     - ansible_pkg_mgr == "zypper"
     - ansible_distribution == "openSUSE Tumbleweed"
@@ -110,7 +110,7 @@
     auto_import_keys: yes
     autorefresh: yes
     enabled: yes
-    priority: '40'
+    priority: '90'
   when:
     - ansible_pkg_mgr == "zypper"
     - ansible_distribution == "openSUSE Tumbleweed"
