@@ -1,4 +1,7 @@
 
+# Unterscheidung noch nach Distro + Desktopenvirongment
+# da aktuell teilw. unterschiedliche Softwarequllen (Snap,Faltpak,Repo) und unterschiedliche Bezeichungen je Distro
+
 ######################
 ### Ubuntu + Gnome ###
 ######################
@@ -69,219 +72,224 @@
     - ansible_os_family == "Suse"
     - env_desktop == "gnome"
 
+
+############################
+### Gnome - alle Distros ###
+############################
+
 ### desktop settings:
 #   -----------------
-- name: set desktop interface - clock-format (Suse + Gnome)
+- name: set desktop interface - clock-format (Gnome)
 #  become_user: sandro
   dconf:
     key: "/org/gnome/desktop/interface/clock-format"
     value: "'24h'"
   when: 
-    - ansible_os_family == "Suse"
+#    - ansible_os_family == "Suse"
     - env_desktop == "gnome"
 
-- name: set desktop interface - clock-show-date (Suse + Gnome)
+- name: set desktop interface - clock-show-date (Gnome)
 #  become_user: sandro
   dconf:
     key: "/org/gnome/desktop/interface/clock-show-date"
     value: "'true'"
   when:
-    - ansible_os_family == "Suse"
+#    - ansible_os_family == "Suse"
     - env_desktop == "gnome"
 
-- name: set desktop interface - clock-show-weekdate (Suse + Gnome)
+- name: set desktop interface - clock-show-weekdate (Gnome)
 #  become_user: sandro
   dconf:
     key: "/org/gnome/desktop/interface/clock-show-weekday"
     value: "'true'"
   when:
-    - ansible_os_family == "Suse"
+#    - ansible_os_family == "Suse"
     - env_desktop == "gnome"
 
-- name: set desktop interface - gtk-theme (Suse + Gnome)
+- name: set desktop interface - gtk-theme (Gnome)
 #  become_user: sandro
   dconf:
     key: "/org/gnome/desktop/interface/gtk-theme"
     value: "'Adwaita-dark'"
   when:
-    - ansible_os_family == "Suse"
+#    - ansible_os_family == "Suse"
     - env_desktop == "gnome"
 
-- name: set desktop interface - show-battery-percentage (Suse + Gnome)
+- name: set desktop interface - show-battery-percentage (Gnome)
 #  become_user: sandro
   dconf:
     key: "/org/gnome/desktop/interface/show-battery-percentage"
     value: "'true'"
   when:
-    - ansible_os_family == "Suse"
+#    - ansible_os_family == "Suse"
     - env_desktop == "gnome"
 
-- name: set desktop calendar - show-weekdate in calendar (Suse + Gnome)
+- name: set desktop calendar - show-weekdate in calendar (Gnome)
 #  become_user: sandro
   dconf:
     key: "/org/gnome/desktop/calendar/show-weekdate"
     value: "'true'"
   when:
-    - ansible_os_family == "Suse"
+#    - ansible_os_family == "Suse"
     - env_desktop == "gnome"
 
-- name: set desktop input-sources - show-all-sources (Suse + Gnome)
+- name: set desktop input-sources - show-all-sources (Gnome)
 #  become_user: sandro
   dconf:
     key: "/org/gnome/desktop/input-sources/show-all-sources"
     value: "'true'"
   when:
-    - ansible_os_family == "Suse"
+#    - ansible_os_family == "Suse"
     - env_desktop == "gnome"
 
-- name: set desktop screensaver - idle-activation-enabled (Suse + Gnome)
+- name: set desktop screensaver - idle-activation-enabled (Gnome)
 #  become_user: sandro
   dconf:
     key: "/org/gnome/desktop/screensaver/idle-activation-enabled"
     value: "'true'"
   when:
-    - ansible_os_family == "Suse"
+#    - ansible_os_family == "Suse"
     - env_desktop == "gnome"
 
-- name: set desktop screensaver - lock-enabled (Suse + Gnome)
+- name: set desktop screensaver - lock-enabled (Gnome)
 #  become_user: sandro
   dconf:
     key: "/org/gnome/desktop/screensaver/lock-enabled"
     value: "'true'"
   when:
-    - ansible_os_family == "Suse"
+#    - ansible_os_family == "Suse"
     - env_desktop == "gnome"
 
-- name: set desktop screensaver - lock-delay (Suse + Gnome)
+- name: set desktop screensaver - lock-delay (Gnome)
 #  become_user: sandro
   dconf:
     key: "/org/gnome/desktop/screensaver/lock-delay"
-    value: "'4'"
+    value: "'0'"
   when:
-    - ansible_os_family == "Suse"
+#    - ansible_os_family == "Suse"
     - env_desktop == "gnome"
 
 
 ### power settings:
 #   ---------------
-- name: set power - power-button-action (Suse + Gnome)
+- name: set power - power-button-action (Gnome)
 #  become_user: sandro
   dconf:
     key: "/org/gnome/settings-daemon/plugins/power/power-button-action"
     value: "'nothing'"
   when:
-    - ansible_os_family == "Suse"
+#    - ansible_os_family == "Suse"
     - env_desktop == "gnome"
 
-- name: set power - sleep-inactive-ac-type (Suse + Gnome)
+- name: set power - sleep-inactive-ac-type (Gnome)
 #  become_user: sandro
   dconf:
     key: "/org/gnome/settings-daemon/plugins/power/sleep-inactive-ac-type"
     value: "'nothing'"
   when:
-    - ansible_os_family == "Suse"
+#    - ansible_os_family == "Suse"
     - env_desktop == "gnome"
 
-- name: set power - sleep-inactive-battery-type (Suse + Gnome)
+- name: set power - sleep-inactive-battery-type (Gnome)
 #  become_user: sandro
   dconf:
     key: "/org/gnome/settings-daemon/plugins/power/sleep-inactive-battery-type"
     value: "'nothing'"
   when:
-    - ansible_os_family == "Suse"
+#    - ansible_os_family == "Suse"
     - env_desktop == "gnome"
 
 
 ### nemo filebrowser -  preferences:
 #   --------------------------------
-- name: set nemo preferences - click-policy (Suse + Gnome)
+- name: set nemo preferences - click-policy (Gnome)
 #  become_user: sandro
   dconf:
     key: "/org/nemo/preferences/click-policy"
     value: "'double'"
   when:
-    - ansible_os_family == "Suse"
+#    - ansible_os_family == "Suse"
     - env_desktop == "gnome"
 
-- name: set nemo preferences - show-computer-icon-toolbar (Suse + Gnome)
+- name: set nemo preferences - show-computer-icon-toolbar (Gnome)
 #  become_user: sandro
   dconf:
     key: "/org/nemo/preferences/show-computer-icon-toolbar"
     value: "'true'"
   when:
-    - ansible_os_family == "Suse"
+#    - ansible_os_family == "Suse"
     - env_desktop == "gnome"
 
-- name: set nemo preferences - show-home-icon-toolbar (Suse + Gnome)
+- name: set nemo preferences - show-home-icon-toolbar (Gnome)
 #  become_user: sandro
   dconf:
     key: "/org/nemo/preferences/show-home-icon-toolbar"
     value: "'true'"
   when:
-    - ansible_os_family == "Suse"
+#    - ansible_os_family == "Suse"
     - env_desktop == "gnome"
 
-- name: set nemo preferences - show-list-view-icon-toolbar (Suse + Gnome)
+- name: set nemo preferences - show-list-view-icon-toolbar (Gnome)
 #  become_user: sandro
   dconf:
     key: "/org/nemo/preferences/show-list-view-icon-toolbar"
     value: "'true'"
   when:
-    - ansible_os_family == "Suse"
+#    - ansible_os_family == "Suse"
     - env_desktop == "gnome"
 
-- name: set nemo preferences - show-location-entry (Suse + Gnome)
+- name: set nemo preferences - show-location-entry (Gnome)
 #  become_user: sandro
   dconf:
     key: "/org/nemo/preferences/show-location-entry"
     value: "'true'"
   when:
-    - ansible_os_family == "Suse"
+#    - ansible_os_family == "Suse"
     - env_desktop == "gnome"
 
-- name: set nemo preferences - show-new-folder-icon-toolbar (Suse + Gnome)
+- name: set nemo preferences - show-new-folder-icon-toolbar (Gnome)
 #  become_user: sandro
   dconf:
     key: "/org/nemo/preferences/show-new-folder-icon-toolbar"
     value: "'true'"
   when:
-    - ansible_os_family == "Suse"
+#    - ansible_os_family == "Suse"
     - env_desktop == "gnome"
 
-- name: set nemo preferences - show-open-in-terminal-toolbar (Suse + Gnome)
+- name: set nemo preferences - show-open-in-terminal-toolbar ((Gnome)
 #  become_user: sandro
   dconf:
     key: "/org/nemo/preferences/show-open-in-terminal-toolbar"
     value: "'true'"
   when:
-    - ansible_os_family == "Suse"
+#    - ansible_os_family == "Suse"
     - env_desktop == "gnome"
 
-- name: set nemo preferences - show-reload-icon-toolbar (Suse + Gnome)
+- name: set nemo preferences - show-reload-icon-toolbar (Gnome)
 #  become_user: sandro
   dconf:
     key: "/org/nemo/preferences/show-reload-icon-toolbar"
     value: "'true'"
   when:
-    - ansible_os_family == "Suse"
+#    - ansible_os_family == "Suse"
     - env_desktop == "gnome"
 
-- name: set nemo preferences - show-show-thumbnails-toolbar (Suse + Gnome)
+- name: set nemo preferences - show-show-thumbnails-toolbar (Gnome)
 #  become_user: sandro
   dconf:
     key: "/org/nemo/preferences/show-show-thumbnails-toolbar"
     value: "'true'"
   when:
-    - ansible_os_family == "Suse"
+#    - ansible_os_family == "Suse"
     - env_desktop == "gnome"
 
 
 
 
-
-
-
+###########################################
 ### GNOME Shell Apps Dashboard - Categories
+###########################################
+#TODO
 # https://specifications.freedesktop.org/menu-spec/menu-spec-latest.html
 # A. Registered Categories
 #
