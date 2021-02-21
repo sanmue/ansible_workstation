@@ -95,7 +95,7 @@
 #  become_user: sandro
   dconf:
     key: "/org/gnome/desktop/interface/clock-show-date"
-    value: "'true'"
+    value: "true"
   when:
 #    - ansible_os_family == "Suse"
     - env_desktop == "gnome"
@@ -104,11 +104,13 @@
 #  become_user: sandro
   dconf:
     key: "/org/gnome/desktop/interface/clock-show-weekday"
-    value: "'true'"
+    value: "true"
   when:
 #    - ansible_os_family == "Suse"
     - env_desktop == "gnome"
 
+####################
+### gtk-theme:
 - name: set desktop interface - gtk-theme (Gnome)
 #  become_user: sandro
   dconf:
@@ -118,11 +120,34 @@
 #    - ansible_os_family == "Suse"
     - env_desktop == "gnome"
 
+### icon-theme:
+- name: copy icon-theme to userdir (Gnome)
+  become_user: sandro
+  copy:
+    src: "files/gnome/icons/Materia-Manjaro-Dark-2"
+    dest: "~/.icons/"
+    owner: sandro
+    group: users
+    mode: u=rwx,g=rwx,o=rwx
+  when:
+#    - ansible_os_family == "Suse"
+    - env_desktop == "gnome"
+
+- name: set desktop interface - icon-theme (Gnome)
+  become_user: sandro
+  dconf:
+    key: "/org/gnome/desktop/interface/icon-theme"
+    value: "'Materia-Manjaro-Dark-2'"
+  when:
+#    - ansible_os_family == "Suse"
+    - env_desktop == "gnome"
+####################
+
 - name: set desktop interface - show-battery-percentage (Gnome)
 #  become_user: sandro
   dconf:
     key: "/org/gnome/desktop/interface/show-battery-percentage"
-    value: "'true'"
+    value: "true"
   when:
 #    - ansible_os_family == "Suse"
     - env_desktop == "gnome"
@@ -131,7 +156,7 @@
 #  become_user: sandro
   dconf:
     key: "/org/gnome/desktop/calendar/show-weekdate"
-    value: "'true'"
+    value: "true"
   when:
 #    - ansible_os_family == "Suse"
     - env_desktop == "gnome"
@@ -140,7 +165,7 @@
 #  become_user: sandro
   dconf:
     key: "/org/gnome/desktop/input-sources/show-all-sources"
-    value: "'true'"
+    value: "true"
   when:
 #    - ansible_os_family == "Suse"
     - env_desktop == "gnome"
@@ -149,7 +174,7 @@
 #  become_user: sandro
   dconf:
     key: "/org/gnome/desktop/screensaver/idle-activation-enabled"
-    value: "'true'"
+    value: "true"
   when:
 #    - ansible_os_family == "Suse"
     - env_desktop == "gnome"
@@ -158,7 +183,7 @@
 #  become_user: sandro
   dconf:
     key: "/org/gnome/desktop/screensaver/lock-enabled"
-    value: "'true'"
+    value: "true"
   when:
 #    - ansible_os_family == "Suse"
     - env_desktop == "gnome"
@@ -202,6 +227,24 @@
 #    - ansible_os_family == "Suse"
     - env_desktop == "gnome"
 
+- name: set gnome  - Weather automatic-location (Gnome)
+#  become_user: sandro
+  dconf:
+    key: "/org/gnome/Weather/automatic-location"
+    value: "false"
+  when:
+#    - ansible_os_family == "Suse"
+    - env_desktop == "gnome"
+
+- name: set gnome  - Weather locations (Gnome)
+#  become_user: sandro
+  dconf:
+    key: "/org/gnome/Weather/locations"
+    value: "[<(uint32 2, <('Niederkirchen, Saarland', '', false, [(0.86339344922787564, 0.12656180196211969)], [(0.863065315111196, 0.13148146449914197)])>)>]"
+  when:
+#    - ansible_os_family == "Suse"
+    - env_desktop == "gnome"
+
 
 ### nemo filebrowser -  preferences:
 #   --------------------------------
@@ -218,7 +261,7 @@
 #  become_user: sandro
   dconf:
     key: "/org/nemo/preferences/show-computer-icon-toolbar"
-    value: "'true'"
+    value: "true"
   when:
 #    - ansible_os_family == "Suse"
     - env_desktop == "gnome"
@@ -227,7 +270,7 @@
 #  become_user: sandro
   dconf:
     key: "/org/nemo/preferences/show-home-icon-toolbar"
-    value: "'true'"
+    value: "true"
   when:
 #    - ansible_os_family == "Suse"
     - env_desktop == "gnome"
@@ -236,7 +279,7 @@
 #  become_user: sandro
   dconf:
     key: "/org/nemo/preferences/show-list-view-icon-toolbar"
-    value: "'true'"
+    value: "true"
   when:
 #    - ansible_os_family == "Suse"
     - env_desktop == "gnome"
@@ -245,7 +288,7 @@
 #  become_user: sandro
   dconf:
     key: "/org/nemo/preferences/show-location-entry"
-    value: "'true'"
+    value: "true"
   when:
 #    - ansible_os_family == "Suse"
     - env_desktop == "gnome"
@@ -254,7 +297,7 @@
 #  become_user: sandro
   dconf:
     key: "/org/nemo/preferences/show-new-folder-icon-toolbar"
-    value: "'true'"
+    value: "true"
   when:
 #    - ansible_os_family == "Suse"
     - env_desktop == "gnome"
@@ -263,7 +306,7 @@
 #  become_user: sandro
   dconf:
     key: "/org/nemo/preferences/show-open-in-terminal-toolbar"
-    value: "'true'"
+    value: "true"
   when:
 #    - ansible_os_family == "Suse"
     - env_desktop == "gnome"
@@ -272,7 +315,7 @@
 #  become_user: sandro
   dconf:
     key: "/org/nemo/preferences/show-reload-icon-toolbar"
-    value: "'true'"
+    value: "true"
   when:
 #    - ansible_os_family == "Suse"
     - env_desktop == "gnome"
@@ -281,7 +324,7 @@
 #  become_user: sandro
   dconf:
     key: "/org/nemo/preferences/show-show-thumbnails-toolbar"
-    value: "'true'"
+    value: "true"
   when:
 #    - ansible_os_family == "Suse"
     - env_desktop == "gnome"
