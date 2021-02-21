@@ -1,8 +1,8 @@
 - name: reboot system
   tags: reboot
 #  reboot:
-#    reboot_timeout: 5
-#    msg:
+#    reboot_timeout: 20
+#    msg: 'will reboot in 20 seconds'
   command: reboot
 #  command: reboot now
 #  command: systemctl reboot now

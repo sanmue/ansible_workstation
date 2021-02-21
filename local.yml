@@ -58,7 +58,7 @@
 #- hosts: localhost
 #  connection: local
 #  become: true
-#  tags: startall
+#  tags: startall,reboot
 #  tasks:
 #  - include: tasks/all_reboot.yml
 
