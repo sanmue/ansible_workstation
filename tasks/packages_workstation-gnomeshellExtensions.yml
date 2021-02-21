@@ -16,7 +16,7 @@
 - name: GnomeShell Extension - Extensions Sync - copy to extension folder
   tags: gnome
   copy:
-    src: files/gnomeshellExtensions/extensions-syncelhan.io.v11.shell-extension.zip
+    src: files/gnome/extensions-syncelhan.io.v11.shell-extension.zip
     dest: ~/.local/share/gnome-shell/extensions/extensions-sync@elhan.io
     remote_src: yes
   when: 

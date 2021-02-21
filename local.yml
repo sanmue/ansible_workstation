@@ -50,8 +50,8 @@
   become: no
   tags: startall,gnome
   tasks:
-  - include: tasks/packages_workstation-gnomeshellExtensions.yml
-  - include: tasks/config_workstation-gnomeshellExtension.yml
+#  - include: tasks/packages_workstation-gnomeshellExtensions.yml
+#  - include: tasks/config_workstation-gnomeshellExtension.yml
   - include: tasks/config_workstation-favorites.yml
 
 
