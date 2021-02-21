@@ -43,9 +43,11 @@
 #   -------------------
 - name: copy desktop-wallpaper file to local folder (Suse + Gnome)
 #  become_user: sandro
+  become: true
   copy:
     src: "files/gnome/gnome emboss 1440P.png"
-    dest: /usr/share/wallpapers/
+    dest: /usr/share/wallpapers/ # fatal [localhost] FAILED! => {"changed" false, "checksum" "27e95ecd12143f96d8c5cf6ae9fd8dc066547987", "msg" "Destination /usr/share/wallpapers not writable"}
+#    dest: /home/sandro/Bilder/
     owner: root
     group: root
     mode: u=rwx,g=rwx,o=rwx
@@ -59,6 +61,7 @@
   dconf:
     key: "/org/gnome/desktop/background/picture-uri"
     value: "'file:///usr/share/wallpapers/gnome emboss 1440P.png'"
+#    value: "'file:///home/sandro/Bilder/gnome emboss 1440P.png'"
   when:
     - ansible_os_family == "Suse"
     - env_desktop == "gnome"
