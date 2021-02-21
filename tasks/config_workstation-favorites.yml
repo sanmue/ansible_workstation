@@ -152,6 +152,15 @@
 #    - ansible_os_family == "Suse"
     - env_desktop == "gnome"
 
+- name: set desktop interface - locate-pointer (Gnome)
+#  become_user: sandro
+  dconf:
+    key: "/org/gnome/desktop/interface/locate-pointer"
+    value: "true"
+  when:
+#    - ansible_os_family == "Suse"
+    - env_desktop == "gnome"
+
 - name: set desktop calendar - show-weekdate in calendar (Gnome)
 #  become_user: sandro
   dconf:
@@ -197,6 +206,14 @@
 #    - ansible_os_family == "Suse"
     - env_desktop == "gnome"
 
+- name: set desktop wm preferences - button-layout (Gnome)
+#  become_user: sandro
+  dconf:
+    key: "/org/gnome/desktop/wm/preferences/button-layout"
+    value: "'appmenu:minimize,maximize,close'"
+  when:
+#    - ansible_os_family == "Suse"
+    - env_desktop == "gnome"
 
 ### power settings:
 #   ---------------
@@ -325,6 +342,157 @@
   dconf:
     key: "/org/nemo/preferences/show-show-thumbnails-toolbar"
     value: "true"
+  when:
+#    - ansible_os_family == "Suse"
+    - env_desktop == "gnome"
+
+
+### gnome shell extensions -  preferences:
+#   --------------------------------------
+
+### dash-to-dock:
+- name: set gnome shell extensions - dash-to-dock - custom-theme-shrink (Gnome)
+#  become_user: sandro
+  dconf:
+    key: "/org/gnome/shell/extensions/dash-to-dock/custom-theme-shrink"
+    value: "true"
+  when:
+#    - ansible_os_family == "Suse"
+    - env_desktop == "gnome"
+
+- name: set gnome shell extensions - dash-to-dock - height-fraction (Gnome)
+#  become_user: sandro
+  dconf:
+    key: "/org/gnome/shell/extensions/dash-to-dock/height-fraction"
+    value: "'0.94999999999999996'"
+  when:
+#    - ansible_os_family == "Suse"
+    - env_desktop == "gnome"
+
+- name: set gnome shell extensions - dash-to-dock - isolate-workspaces (Gnome)
+#  become_user: sandro
+  dconf:
+    key: "/org/gnome/shell/extensions/dash-to-dock/isolate-workspaces"
+    value: "true"
+  when:
+#    - ansible_os_family == "Suse"
+    - env_desktop == "gnome"
+
+- name: set gnome shell extensions - dash-to-dock - multi-monitor" (Gnome)
+#  become_user: sandro
+  dconf:
+    key: "/org/gnome/shell/extensions/dash-to-dock/multi-monitor"
+    value: "true"
+  when:
+#    - ansible_os_family == "Suse"
+    - env_desktop == "gnome"
+
+- name: set gnome shell extensions - dash-to-dock - running-indicator-style" (Gnome)
+#  become_user: sandro
+  dconf:
+    key: "/org/gnome/shell/extensions/dash-to-dock/running-indicator-style"
+    value: "'DOTS'"
+  when:
+#    - ansible_os_family == "Suse"
+    - env_desktop == "gnome"
+
+- name: set gnome shell extensions - dash-to-dock - scroll-action" (Gnome)
+#  become_user: sandro
+  dconf:
+    key: "/org/gnome/shell/extensions/dash-to-dock/scroll-action"
+    value: "'switch-workspace'"
+  when:
+#    - ansible_os_family == "Suse"
+    - env_desktop == "gnome"
+
+- name: set gnome shell extensions - dash-to-dock - scroll-action" (Gnome)
+#  become_user: sandro
+  dconf:
+    key: "/org/gnome/shell/extensions/dash-to-dock/scroll-action"
+    value: "'switch-workspace'"
+  when:
+#    - ansible_os_family == "Suse"
+    - env_desktop == "gnome"
+
+- name: set gnome shell extensions - dash-to-dock - show-mounts (Gnome)
+#  become_user: sandro
+  dconf:
+    key: "/org/gnome/shell/extensions/dash-to-dock/show-mounts"
+    value: "false"
+  when:
+#    - ansible_os_family == "Suse"
+    - env_desktop == "gnome"
+
+- name: set gnome shell extensions - dash-to-dock - show-trash (Gnome)
+#  become_user: sandro
+  dconf:
+    key: "/org/gnome/shell/extensions/dash-to-dock/show-trash"
+    value: "false"
+  when:
+#    - ansible_os_family == "Suse"
+    - env_desktop == "gnome"
+
+
+### openweather:
+- name: set gnome shell extensions - openweather - city (Gnome)
+#  become_user: sandro
+  dconf:
+    key: "/org/gnome/shell/extensions/openweather/city"
+    value: "'49.4641816,7.2484007>Niederkirchen, Kuseler Straße, Saal, Niederkirchen, Sankt Wendel, Landkreis St. Wendel, Saarland, 66606, Deutschland >-1 && 49.49342345,6.828330133618561>Nunkirchen, Wadern, Landkreis Merzig-Wadern, Saarland, Deutschland >-1'"
+  when:
+#    - ansible_os_family == "Suse"
+    - env_desktop == "gnome"
+
+- name: set gnome shell extensions - openweather - days-forecast (Gnome)
+#  become_user: sandro
+  dconf:
+    key: "/org/gnome/shell/extensions/openweather/days-forecast"
+    value: "'4'"
+  when:
+#    - ansible_os_family == "Suse"
+    - env_desktop == "gnome"
+
+- name: set gnome shell extensions - openweather - menu-alignment (Gnome)
+#  become_user: sandro
+  dconf:
+    key: "/org/gnome/shell/extensions/openweather/menu-alignment"
+    value: "'90.900000000000006'"
+  when:
+#    - ansible_os_family == "Suse"
+    - env_desktop == "gnome"
+
+- name: set gnome shell extensions - openweather - position-in-panel (Gnome)
+#  become_user: sandro
+  dconf:
+    key: "/org/gnome/shell/extensions/openweather/position-in-panel"
+    value: "'center'"
+  when:
+#    - ansible_os_family == "Suse"
+    - env_desktop == "gnome"
+
+- name: set gnome shell extensions - openweather - pressure-unit (Gnome)
+#  become_user: sandro
+  dconf:
+    key: "/org/gnome/shell/extensions/openweather/pressure-unit"
+    value: "'hPa'"
+  when:
+#    - ansible_os_family == "Suse"
+    - env_desktop == "gnome"
+
+- name: set gnome shell extensions - openweather - unit (Gnome)
+#  become_user: sandro
+  dconf:
+    key: "/org/gnome/shell/extensions/openweather/unit"
+    value: "'celsius'"
+  when:
+#    - ansible_os_family == "Suse"
+    - env_desktop == "gnome"
+
+- name: set gnome shell extensions - openweather - wind-speed-unit (Gnome)
+#  become_user: sandro
+  dconf:
+    key: "/org/gnome/shell/extensions/openweather/wind-speed-unit"
+    value: "'kph'"
   when:
 #    - ansible_os_family == "Suse"
     - env_desktop == "gnome"
