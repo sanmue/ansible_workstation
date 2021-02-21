@@ -52,7 +52,7 @@
   tasks:
 #  - include: tasks/packages_workstation-gnomeshellExtensions.yml
 #  - include: tasks/config_workstation-gnomeshellExtension.yml
-  - include: tasks/config_workstation-favorites.yml
+  - include: tasks/config_workstation-favoritesAndSettings.yml
 
 
 - hosts: localhost
