@@ -65,11 +65,11 @@
   - include: tasks/config_workstation-favoritesAndSettings.yml
 
 
-- hosts: localhost
-  connection: local
-  become: true
-  tags: startall,reboot
-  tasks:
+#- hosts: localhost
+#  connection: local
+#  become: true
+#  tags: startall,reboot
+#  tasks:
 #  - include: tasks/all_reboot.yml # da hier local/pull --> geht nicht
 # fatal: [localhost]: FAILED! => {"changed": false, "elapsed": 0, "msg": "Running reboot with local connection would reboot the control node.", "rebooted": false}
 
