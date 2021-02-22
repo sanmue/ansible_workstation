@@ -69,7 +69,8 @@
 ### firewalld - allow
 - name: firewalld - allow KDE Connect (Suse)
   firewalld:
-    service: kdeconnect-kde
+#    service: kdeconnect-kde
+    service: kdeconnect
     permanent: yes
     state: enabled
     immediate: yes

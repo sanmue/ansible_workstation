@@ -48,7 +48,7 @@
   - include: tasks/packages_workstation-suseMultimedia.yml
 # ---------------------------------
 #  ### sudo-ansible-user + cronjob:
-#  - include: tasks/config_all-users.yml
+#  - include: tasks/config_all-ansible-users.yml
 #  - include: tasks/config_all-cron.yml
 #
   - include: tasks/all_cleanup.yml

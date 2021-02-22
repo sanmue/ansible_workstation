@@ -143,6 +143,7 @@
     - env_desktop == "gnome"
 ####################
 
+### Desktop interface, calendar, sceensaver, ...:
 - name: set desktop interface - show-battery-percentage (Gnome)
 #  become_user: sandro
   dconf:
@@ -244,23 +245,25 @@
 #    - ansible_os_family == "Suse"
     - env_desktop == "gnome"
 
-- name: set gnome  - Weather automatic-location (Gnome)
-#  become_user: sandro
-  dconf:
-    key: "/org/gnome/Weather/automatic-location"
-    value: "false"
-  when:
-#    - ansible_os_family == "Suse"
-    - env_desktop == "gnome"
+### Gnome Wather:
+#   -------------
+#- name: set gnome  - Weather automatic-location (Gnome)
+##  become_user: sandro
+#  dconf:
+#    key: "/org/gnome/Weather/automatic-location"
+#    value: "false"
+#  when:
+##    - ansible_os_family == "Suse"
+#    - env_desktop == "gnome"
 
-- name: set gnome  - Weather locations (Gnome)
-#  become_user: sandro
-  dconf:
-    key: "/org/gnome/Weather/locations"
-    value: "[<(uint32 2, <('Niederkirchen, Saarland', '', false, [(0.86339344922787564, 0.12656180196211969)], [(0.863065315111196, 0.13148146449914197)])>)>]"
-  when:
-#    - ansible_os_family == "Suse"
-    - env_desktop == "gnome"
+#- name: set gnome  - Weather locations (Gnome)
+##  become_user: sandro
+#  dconf:
+#    key: "/org/gnome/Weather/locations"
+#    value: "[<(uint32 2, <('Niederkirchen, Saarland', '', false, [(0.86339344922787564, 0.12656180196211969)], [(0.863065315111196, 0.13148146449914197)])>)>]"
+#  when:
+##    - ansible_os_family == "Suse"
+#    - env_desktop == "gnome"
 
 
 ### nemo filebrowser -  preferences:
@@ -443,11 +446,20 @@
 #    - ansible_os_family == "Suse"
     - env_desktop == "gnome"
 
+- name: set gnome shell extensions - openweather - actual-city" (Gnome)
+#  become_user: sandro
+  dconf:
+    key: "/org/gnome/shell/extensions/openweather/actual-city"
+    value: "1"
+  when:
+#    - ansible_os_family == "Suse"
+    - env_desktop == "gnome"
+
 - name: set gnome shell extensions - openweather - days-forecast (Gnome)
 #  become_user: sandro
   dconf:
     key: "/org/gnome/shell/extensions/openweather/days-forecast"
-    value: "'4'"
+    value: "4"
   when:
 #    - ansible_os_family == "Suse"
     - env_desktop == "gnome"
@@ -456,7 +468,7 @@
 #  become_user: sandro
   dconf:
     key: "/org/gnome/shell/extensions/openweather/menu-alignment"
-    value: "'90.900000000000006'"
+    value: "80.099999999999994"
   when:
 #    - ansible_os_family == "Suse"
     - env_desktop == "gnome"

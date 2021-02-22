@@ -49,9 +49,8 @@
 #      - gnome-shell-extension-user-theme
       - gnome-shell-extensions-common
       - gnome-tweaks
-#
-#      - gnome-shell-search-provider-contacts
-#      - gnome-shell-calendar
+#      - gnome-shell-search-provider-contacts # "Gnome contacts" wird deinstallert, wg. evolution
+#      - gnome-shell-calendar                 # "Gnome calendar" wird deinstallert, wg. evolution
   when:
     - ansible_os_family == "Suse"
     - env_desktop == "gnome"
