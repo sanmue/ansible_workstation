@@ -12,7 +12,7 @@
   tags: workstation,gnome,suse
   zypper:
     state: latest
-    extra_args: "--from 'Haupt-Repository (OSS)'"
+#    extra_args: "--from 'Haupt-Repository (OSS)'"
     name:
 #     ggf. alternativ: https://software.opensuse.org/download/package?package=opensuse-codecs-installer&project=multimedia%3Aapps
       - flac
@@ -31,34 +31,41 @@
   when:
     - ansible_os_family == "Suse"
 
-- name: Install basic - multimedia packages - packman (Suse)
-  tags: workstation,gnome,suse
-  zypper:
-    state: latest
-    extra_args: "--from 'Packman Repository'"
-    name:
-#     nur im packman-repo:
-      - gstreamer-plugins-ugly-orig-addon
-      - libxvidcore4
-      - x265
-#      - libx265-192
-      - x264
-#      - libx264-161 
-      - mpeg4ip
-      - libmpeg4ip0 # ist eine Abhängikeit von "mpeg4ip"
-#     Problem:
-#      - vlc-codecs # Konflikt mit standard-inst, nach inst treten Systemprobleme bei reboot und shutdown auf
-  when:
-    - ansible_os_family == "Suse"
+#---------------
+### packman-repo
+#---------------
+#- name: Install basic - multimedia packages - packman (Suse)
+#  tags: workstation,gnome,suse
+#  zypper:
+#    state: latest
+#    extra_args: "--from 'Packman Repository'"
+#    name:
+#      - gstreamer-plugins-ugly-orig-addon
+#      - libxvidcore4
+#      - x265
+##      - libx265-192
+#      - x264
+##      - libx264-161 
+#      - mpeg4ip
+#      - libmpeg4ip0 # ist eine Abhängikeit von "mpeg4ip"
+##     --------
+## TODO: Check/Test
+##     Problem:
+##      - vlc-codecs # Konflikt mit standard-inst; + nach inst treten Systemprobleme bei reboot und shutdown auf
+#  when:
+#    - ansible_os_family == "Suse"
 
-- name: Install basic - multimedia packages - libdvdcss (Suse)
-  tags: workstation,gnome,suse
-  zypper:
-    state: latest
-    extra_args: "--from 'Libdvdcss Repository'"
-    name:
-#     nur libdvdcss-repo:
-      - libdvdcss2
-  when:
-    - ansible_os_family == "Suse"
+#-----------------
+### libdvdcss-repo
+#-----------------
+
+#- name: Install basic - multimedia packages - libdvdcss (Suse)
+#  tags: workstation,gnome,suse
+#  zypper:
+#    state: latest
+#    extra_args: "--from 'Libdvdcss Repository'"
+#    name:
+#      - libdvdcss2
+#  when:
+#    - ansible_os_family == "Suse"
 

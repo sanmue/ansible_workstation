@@ -1,0 +1,71 @@
+
+######################################
+### Suse Multimedia - additional repos
+######################################
+
+#-------
+### Leap
+#-------
+- name: add Packman Repository (openSUSE Leap 15.2)
+  tags: workstation,suse,addrepos,pre
+  zypper_repository:
+    name: Packman Repository
+#   Distri-Version noch hart codiert:
+    repo: 'http://packman.inode.at/suse/openSUSE_Leap_15.2/'
+    state: present
+    auto_import_keys: yes
+    autorefresh: yes
+    enabled: yes
+    priority: '90'
+  when:
+    - ansible_pkg_mgr == "zypper"
+    - ansible_distribution == "openSUSE Leap"
+
+- name: add Libdvdcss Repository (openSUSE Leap 15.2)
+  tags: workstation,suse,addrepos,pre
+  zypper_repository:
+    name: Libdvdcss Repository
+#   Distri-Version noch hart codiert:
+    repo: 'http://opensuse-guide.org/repo/openSUSE_Leap_15.2/'
+    state: present
+    auto_import_keys: yes
+    autorefresh: yes
+    enabled: yes
+    priority: '90'
+  when:
+    - ansible_pkg_mgr == "zypper"
+    - ansible_distribution == "openSUSE Leap"
+
+
+# ------------
+### Tumbleweed
+# ------------
+- name: add Packman Repository (Tumbleweed)
+  tags: workstation,suse,addrepos,pre
+  zypper_repository:
+    name: Packman Repository
+    repo: 'http://packman.inode.at/suse/openSUSE_Tumbleweed/Essentials'
+#    repo: 'http://packman.inode.at/suse/openSUSE_Tumbleweed/'
+    state: present
+    auto_import_keys: yes
+    autorefresh: yes
+    enabled: yes
+    priority: '90'
+  when:
+    - ansible_pkg_mgr == "zypper"
+    - ansible_distribution == "openSUSE Tumbleweed"
+
+- name: add Libdvdcss Repository (Tumbleweed)
+  tags: workstation,suse,addrepos,pre
+  zypper_repository:
+    name: Libdvdcss Repository
+    repo: 'http://opensuse-guide.org/repo/openSUSE_Tumbleweed/'
+    state: present
+    auto_import_keys: yes
+    autorefresh: yes
+    enabled: yes
+    priority: '90'
+  when:
+    - ansible_pkg_mgr == "zypper"
+    - ansible_distribution == "openSUSE Tumbleweed"
+

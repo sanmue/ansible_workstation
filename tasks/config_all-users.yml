@@ -14,28 +14,3 @@
     group: root
     mode: 0440
 
-
-######
-### VM
-######
-- name: add user 'sandro' to group 'kvm' (Ubuntu)
-  user:
-    name: sandro
-    groups: kvm
-    append: yes
-  when:
-    - ansible_distribution == "Ubuntu"
-    - ansible_virtualization_role != "guest"
-# noch ohne nested virtualization
-
-- name: add user 'sandro' to groups 'libvirt,kmv' (Suse,Archlinux)
-  user:
-    name: sandro
-# TODO check # gruppe wheel scheint bei Suse i.V.m. NetworkManger ein Neztwerkproblem zu lösen
-    groups: libvirt,kvm,wheel
-    append: yes
-  when: 
-    - ansible_distribution in ["Archlinux"] or ansible_os_family == "Suse"
-    - ansible_virtualization_role != "guest"
-# noch ohne nested virtualization
-
