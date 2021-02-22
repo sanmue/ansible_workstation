@@ -1,0 +1,64 @@
+
+############################
+### Multimedia-Packages Suse
+############################
+
+#Test
+#zypper install --from "Haupt-Repository (OSS)"  barcode
+#zypper install --from 'Haupt-Repository (OSS)' barcode
+
+
+- name: Install basic - multimedia packages (Suse)
+  tags: workstation,gnome,suse
+  zypper:
+    state: latest
+    extra_args: "--from 'Haupt-Repository (OSS)'"
+    name:
+#     ggf. alternativ: https://software.opensuse.org/download/package?package=opensuse-codecs-installer&project=multimedia%3Aapps
+      - flac
+#      - ffmpeg
+      - ffmpeg-4
+      - gstreamer-plugins-base
+      - gstreamer-plugins-good
+      - gstreamer-plugins-good-extra
+      - gstreamer-plugins-bad
+      - gstreamer-plugins-libav
+      - gstreamer-plugins-ugly
+      - libavdevice58_10
+      - libavcodec58_91
+      - mpeg2dec
+      - vlc-codec-gstreamer # -> versch. autom. Änderungen
+  when:
+    - ansible_os_family == "Suse"
+
+- name: Install basic - multimedia packages - packman (Suse)
+  tags: workstation,gnome,suse
+  zypper:
+    state: latest
+    extra_args: "--from 'Packman Repository'"
+    name:
+#     nur im packman-repo:
+      - gstreamer-plugins-ugly-orig-addon
+      - libxvidcore4
+      - x265
+#      - libx265-192
+      - x264
+#      - libx264-161 
+      - mpeg4ip
+      - libmpeg4ip0 # ist eine Abhängikeit von "mpeg4ip"
+#     Problem:
+#      - vlc-codecs # Konflikt mit standard-inst, nach inst treten Systemprobleme bei reboot und shutdown auf
+  when:
+    - ansible_os_family == "Suse"
+
+- name: Install basic - multimedia packages - libdvdcss (Suse)
+  tags: workstation,gnome,suse
+  zypper:
+    state: latest
+    extra_args: "--from 'Libdvdcss Repository'"
+    name:
+#     nur libdvdcss-repo:
+      - libdvdcss2
+  when:
+    - ansible_os_family == "Suse"
+
