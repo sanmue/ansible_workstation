@@ -15,7 +15,7 @@
       - curl
       - flatpak
       - gimp
-      - gimp-lang
+#      - gimp-lang # gibt es nicht bei ubuntu
       - gimp-help-de
       - gparted
       - grsync
@@ -23,7 +23,7 @@
       - htop
 #      - hyphen-de
       - keepassxc
-      - keepassxc-lang
+#      - keepassxc-lang # gibt es nicht bei ubuntu
       - lsb-release
       - nano
       - neofetch
