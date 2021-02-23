@@ -42,11 +42,19 @@
   package:
     state: latest
     name:
-      - snapd # bei Suse herausgenommen 
+      - snapd # bei Suse herausgenommen # bei Ubuntu schon vorhanden
       - gpg
       - openssh-client
       - ssh
       - ufw
+#     Miltimedia; entspechend libs sollten bereits installiert sein (wenn mei Installer ausgewählt wurde)
+#      - ffmpeg
+#      - x264
+#      - x265
+#      #- gstreamer - kram
+#      - ...
+# ---
+#       - youtube-dl
   when: ansible_distribution == "Ubuntu"
 
 

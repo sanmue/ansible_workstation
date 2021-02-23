@@ -15,3 +15,18 @@
       - whalebird
   when: ansible_os_family != "Suse"
 
+
+- name: install snap packages for workstations (Ubuntu)
+  tags: workstation,ubuntu,arch,snap #,suse
+  snap:
+    state: present
+    name:
+###   Firmware --------------
+#      - fwts
+      - fwupd
+      - gnome-firmware
+###   -----------------------
+  when:
+    - ansible_distribution == "Ubuntu"
+    - env_desktop == "ubuntu:gnome"
+

@@ -20,16 +20,21 @@
       - alacarte
       - dconf-cli
       - dconf-editor
-      - deluge
+#      - deluge # -> Treanmission in Standard-Inst bereits vorhanden
+      - epiphany-browser
       - exfat-fuse
       - exfat-utils
-      - firefox
+      - firefox # -> in Standard-Inst bereits vorhanden
       - firefox-locale-de
+      - gnome-shell-extension-gsconnect
+      - gnome-shell-extension-gsconnect-browsers
       - gnome-software-plugin-flatpak
-      - guake
+#      - gnome-weather
+#      - guake
       - gufw
       - hunspell-de-de-frami
       - inkscape
+#      - kdeconnect -> ? gnome-shell-extension-gsconnect ?
       - language-pack-gnome-de-base
       - language-pack-gnome-de
       - luckybackup
@@ -38,7 +43,9 @@
       - nextcloud-desktop
       - python3-psutil
       - rhythmbox
+#      - seahorse # bereits standardmäßig installiert
       - searchmonkey
+      - timeshift
   when: 
     - ansible_distribution == "Ubuntu"
     - env_desktop == "ubuntu:gnome"
@@ -57,6 +64,7 @@
 #      - deluge # -> transmission-gtk
       - discord
       - evince
+      - evolution
       - exfat-utils
       - firefox
       - firefox-i18n-de
@@ -72,7 +80,7 @@
       # ---
       - foliate
 #      - flameshot
-      - geary
+#      - geary -> evolution
       - gnome-disk-utility
       - gnome-keyring
       - manjaro-keyring

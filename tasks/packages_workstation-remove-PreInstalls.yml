@@ -5,15 +5,19 @@
 ### Gnome
 #########
 
-#- name: Uninstall packages for workstations (Ubuntu + Gnome)
-#  tags: workstation,gnome,ubuntu
-#  package:
-#    state: absent
-#    name:
-#      - xxx
-#  when: 
-#    - ansible_distribution == "Ubuntu"
-#    - env_desktop == "ubuntu:gnome"
+- name: Uninstall packages for workstations (Ubuntu + Gnome)
+  tags: workstation,gnome,ubuntu
+  package:
+    state: absent
+    name:
+      - aisleriot
+      - cheese
+      - gnome-calendar
+      - gnome-mahjongg
+      - gnome-todo
+  when: 
+    - ansible_distribution == "Ubuntu"
+    - env_desktop == "ubuntu:gnome"
 
 
 #- name: Uninstall packages for workstations (Archlinux + Gnome)
