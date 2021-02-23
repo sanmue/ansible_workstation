@@ -16,17 +16,17 @@
   when: ansible_os_family != "Suse"
 
 
-- name: install snap packages for workstations (Ubuntu)
-  tags: workstation,ubuntu,arch,snap #,suse
-  snap:
-    state: present
-    name:
+#- name: install snap packages for workstations (Ubuntu)
+#  tags: workstation,ubuntu,arch,snap #,suse
+#  snap:
+#    state: present
+#    name:
 ###   Firmware --------------
-#      - fwts
-      - fwupd
-      - gnome-firmware
+##      - fwts
+#      - fwupd
+#      - gnome-firmware
 ###   -----------------------
-  when:
-    - ansible_distribution == "Ubuntu"
-    - env_desktop == "ubuntu:gnome"
+#  when:
+#    - ansible_distribution == "Ubuntu"
+#    - env_desktop == "ubuntu:gnome"
 
