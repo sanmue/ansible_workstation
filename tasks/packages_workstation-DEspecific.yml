@@ -22,6 +22,13 @@
       - dconf-editor
 #      - deluge # -> Treanmission in Standard-Inst bereits vorhanden
       - epiphany-browser
+      - evolution
+      - evolution-ews
+      - evolution-indicator
+      - evolution-plugin-bogofilter
+      - evolution-plugin-pstimport
+      - evolution-plugin-spamassassin
+      - evolution-plugins
       - exfat-fuse
       - exfat-utils
       - firefox # -> in Standard-Inst bereits vorhanden
