@@ -42,7 +42,7 @@
   package:
     state: latest
     name:
-      - snapd # bei Suse herausgenommen # bei Ubuntu schon vorhanden
+#      - snapd # bei Suse herausgenommen # bei Ubuntu schon vorhanden
       - gpg
       - openssh-client
       - ssh

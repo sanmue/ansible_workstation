@@ -46,8 +46,7 @@
       - language-pack-gnome-de
       - luckybackup
       - nemo
-      - nemo-nextcloud
-      - nextcloud-desktop
+#      - nextcloud-desktop # -> flatpak
       - python3-psutil
       - rhythmbox
 #      - seahorse # bereits standardmäßig installiert

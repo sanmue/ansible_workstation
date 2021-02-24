@@ -1,24 +1,22 @@
 
+#################
+### favorite apps
+#################
 # Unterscheidung noch nach Distro + Desktopenvirongment
 # da aktuell teilw. unterschiedliche Softwarequllen (Snap,Faltpak,Repo) und unterschiedliche Bezeichungen je Distro
 
-######################
-### Ubuntu + Gnome ###
-######################
 
+### Ubuntu + Gnome ###
 - name: adding favorite apps to dock (Ubuntu + Gnome)
 # flatpak, snaps: whalebird
-  command: gsettings set org.gnome.shell favorite-apps "['org.keepassxc.KeePassXC.desktop', 'firefox.desktop', 'vivaldi-stable.desktop', 'org.chromium.Chromium.desktop', 'org.mozilla.Thunderbird.desktop', 'org.gnome.gedit.desktop', 'org.libreoffice.LibreOffice.desktop', 'net.cozic.joplin_desktop.desktop', 'de.willuhn.Jameica.desktop', 'rhythmbox.desktop', 'whalebird_whalebird.desktop', 'org.signal.Signal.desktop', 'com.discordapp.Discord.desktop', 'nemo.desktop', 'org.gnome.Terminal.desktop', 'terminator.desktop', 'org.remmina.Remmina.desktop', 'snap-store_ubuntu-software.desktop']"
+  command: gsettings set org.gnome.shell favorite-apps "['org.keepassxc.KeePassXC.desktop', 'firefox.desktop', 'org.gnome.Epiphany.desktop', 'org.chromium.Chromium.desktop', 'vivaldi-stable.desktop', 'org.gnome.Terminal.desktop', 'terminator.desktop', 'nemo.desktop', 'org.gnome.gedit.desktop', 'io.atom.Atom.desktop', 'org.libreoffice.LibreOffice.desktop', 'org.gnome.Evolution.desktop', 'net.cozic.joplin_desktop.desktop', 'de.willuhn.Jameica.desktop', 'rhythmbox.desktop', 'whalebird_whalebird.desktop', 'org.signal.Signal.desktop', 'com.discordapp.Discord.desktop', 'org.remmina.Remmina.desktop', 'virt-manager.desktop', 'snap-store_ubuntu-software.desktop']"
 # snaps, flatpak: jameica
 #  command: gsettings set org.gnome.shell favorite-apps "['org.keepassxc.KeePassXC.desktop', 'firefox.desktop', 'vivaldi-stable.desktop', 'chromium_chromium.desktop', 'thunderbird_thunderbird.desktop', 'org.gnome.gedit.desktop', 'libreoffice_libreoffice.desktop', 'joplin-james-carroll_joplin.desktop', 'de.willuhn.Jameica.desktop', 'rhythmbox.desktop', 'whalebird_whalebird.desktop', 'signal-desktop_signal-desktop.desktop', 'discord_discord.desktop', 'nemo.desktop', 'org.gnome.Terminal.desktop', 'terminator.desktop', 'virt-manager.desktop', 'org.remmina.Remmina.desktop', 'snap-store_ubuntu-software.desktop']"
   when:
     - env_desktop == "ubuntu:gnome"
 
 
-#######################
 ### Manjaro + Gnome ###
-#######################
-
 - name: adding favorite apps to dock (Ubuntu + Gnome)
   command: gsettings set org.gnome.shell favorite-apps "['org.keepassxc.KeePassXC.desktop', 'firefox.desktop', 'vivaldi-stable.desktop', 'chromium.desktop', 'org.gnome.Terminal.desktop', 'terminator.desktop', 'nemo.desktop', 'org.gnome.gedit.desktop', 'libreoffice-startcenter.desktop', 'anki.desktop', 'net.cozic.joplin_desktop.desktop', 'de.willuhn.Jameica.desktop', 'rhythmbox.desktop', 'org.jitsi.jitsi-meet.desktop', 'signal-desktop.desktop', 'discord.desktop', 'whalebird_whalebird.desktop', 'org.remmina.Remmina.desktop', 'virt-manager.desktop', 'gnome-control-center.desktop', 'org.manjaro.pamac.manager.desktop']"
   when:
@@ -26,12 +24,7 @@
     - env_desktop == "gnome"
 
 
-####################
 ### Suse + Gnome ###
-####################
-
-### favortite-apps:
-#   ---------------
 - name: adding favorite apps to dock (Suse + Gnome)
   command: gsettings set org.gnome.shell favorite-apps "['org.keepassxc.KeePassXC.desktop', 'firefox.desktop', 'org.gnome.Epiphany.desktop', 'vivaldi-stable.desktop', 'chromium-browser.desktop', 'org.gnome.Terminal.desktop', 'terminator.desktop', 'nemo.desktop', 'org.gnome.gedit.desktop', 'io.atom.Atom.desktop', 'org.gnome.Evolution.desktop', 'startcenter.desktop', 'anki.desktop', 'net.cozic.joplin_desktop.desktop', 'de.willuhn.Jameica.desktop', 'org.signal.Signal.desktop', 'org.jitsi.jitsi-meet.desktop', 'discord.desktop', 'whalebird_whalebird.desktop', 'rhythmbox.desktop', 'org.remmina.Remmina.desktop', 'virt-manager.desktop', 'org.gnome.Software.desktop', 'org.opensuse.YaST.desktop']"
   when:
@@ -39,14 +32,17 @@
     - env_desktop == "gnome"
 
 
-### desktop-background:
-#   -------------------
+######################
+### desktop-background
+######################
+
+### Suse + Gnome ###
 - name: copy desktop-wallpaper file to local folder (Suse + Gnome)
 #  become_user: sandro
   become: true
   copy:
-    src: "files/gnome/gnome emboss 1440P.png"
-    dest: /usr/share/wallpapers/ # fatal [localhost] FAILED! => {"changed" false, "checksum" "27e95ecd12143f96d8c5cf6ae9fd8dc066547987", "msg" "Destination /usr/share/wallpapers not writable"}
+    src: "files/gnome/gnome_embos_1440P.png"
+    dest: /usr/share/wallpapers/ # systemweit verfügbar
 #    dest: /home/sandro/Bilder/
     owner: root
     group: root
@@ -60,8 +56,8 @@
 #  become_user: sandro
   dconf:
     key: "/org/gnome/desktop/background/picture-uri"
-    value: "'file:///usr/share/wallpapers/gnome emboss 1440P.png'"
-#    value: "'file:///home/sandro/Bilder/gnome emboss 1440P.png'"
+    value: "'file:///usr/share/wallpapers/gnome_embos_1440P.png'"
+#    value: "'file:///home/sandro/Bilder/gnome_embos_1440P.png'"
   when:
     - ansible_os_family == "Suse"
     - env_desktop == "gnome"
@@ -76,12 +72,48 @@
     - env_desktop == "gnome"
 
 
-############################
-### Gnome - alle Distros ###
-############################
+### Ubuntu + Gnome ###
+- name: copy desktop-wallpaper file to local folder (Ubuntu + Gnome)
+#  become_user: sandro
+#  become: true
+  copy:
+    src: "files/gnome/gnome_embos_1440P.png"
+    dest: "/home/sandro/.local/share/backgrounds/gnome_emboss_1440P.png"
+    owner: sandro
+    group: sandro
+    mode: u=rwx,g=rwx,o=rwx
+#    mode: 0777
+  when:
+    - env_desktop == "ubuntu:gnome"
+    
+- name: set desktop - background (Suse + Gnome)
+#  become_user: sandro
+  dconf:
+    key: "/org/gnome/desktop/background/picture-uri"
+    value: "'file:///home/sandro/.local/share/backgrounds/gnome_emboss_1440P.png'"
+  when:
+    - env_desktop == "ubuntu:gnome"
 
-### desktop settings:
-#   -----------------
+- name: set desktop-wallpaper picture-options (Ubuntu + Gnome)
+#  become_user: sandro
+  dconf:
+    key: "/org/gnome/desktop/background/picture-options"
+    value: "'stretched'"
+  when:
+    - env_desktop == "ubuntu:gnome"
+
+- name: set show-desktop-icons (Ubuntu + Gnome)
+#  become_user: sandro
+  dconf:
+    key: "/org/gnome/desktop/background/show-desktop-icons"
+    value: "false"
+  when:
+    - env_desktop == "ubuntu:gnome"
+
+
+############################
+### weitere desktop settings
+### ------------------------
 - name: set desktop interface - clock-format (Gnome)
 #  become_user: sandro
   dconf:
@@ -89,7 +121,9 @@
     value: "'24h'"
   when: 
 #    - ansible_os_family == "Suse"
-    - env_desktop == "gnome"
+#    - env_desktop == "gnome"
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+    
 
 - name: set desktop interface - clock-show-date (Gnome)
 #  become_user: sandro
@@ -98,7 +132,7 @@
     value: "true"
   when:
 #    - ansible_os_family == "Suse"
-    - env_desktop == "gnome"
+    - env_desktop in ["gnome", "ubuntu:gnome"]
 
 - name: set desktop interface - clock-show-weekdate (Gnome)
 #  become_user: sandro
@@ -106,22 +140,32 @@
     key: "/org/gnome/desktop/interface/clock-show-weekday"
     value: "true"
   when:
-#    - ansible_os_family == "Suse"
-    - env_desktop == "gnome"
+    - env_desktop in ["gnome", "ubuntu:gnome"]
 
-####################
-### gtk-theme:
-- name: set desktop interface - gtk-theme (Gnome)
+
+### gtk-theme
+- name: set desktop interface - gtk-theme (Suse + Gnome)
 #  become_user: sandro
   dconf:
     key: "/org/gnome/desktop/interface/gtk-theme"
     value: "'Adwaita-dark'"
   when:
-#    - ansible_os_family == "Suse"
+    - ansible_os_family == "Suse"
     - env_desktop == "gnome"
 
+- name: set desktop interface - gtk-theme (Ubuntu + Gnome)
+#  become_user: sandro
+  dconf:
+    key: "/org/gnome/desktop/interface/gtk-theme"
+    value: "'Yaru-dark'"
+  when:
+    - env_desktop == "ubuntu:gnome"
+
+
 ### icon-theme:
-- name: copy icon-theme to userdir (Gnome)
+
+### Suse
+- name: copy icon-theme to userdir (Suse + Gnome)
   become_user: sandro
   copy:
     src: "files/gnome/icons/Materia-Manjaro-Dark-2"
@@ -130,8 +174,21 @@
     group: users
     mode: u=rwx,g=rwx,o=rwx
   when:
-#    - ansible_os_family == "Suse"
-    - env_desktop == "gnome"
+    - ansible_os_family == "Suse"
+    - env_desktop in ["gnome"]
+
+### Ubuntu
+- name: copy icon-theme to userdir (Ubuntu + Gnome)
+  become_user: sandro
+  copy:
+    src: "files/gnome/icons/Materia-Manjaro-Dark-2"
+    dest: "~/.icons/"
+    owner: sandro
+    group: sandro
+    mode: u=rwx,g=rwx,o=rwx
+  when:
+    - env_desktop in ["ubuntu:gnome"]
+
 
 - name: set desktop interface - icon-theme (Gnome)
   become_user: sandro
@@ -139,9 +196,8 @@
     key: "/org/gnome/desktop/interface/icon-theme"
     value: "'Materia-Manjaro-Dark-2'"
   when:
-#    - ansible_os_family == "Suse"
-    - env_desktop == "gnome"
-####################
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+
 
 ### Desktop interface, calendar, sceensaver, ...:
 - name: set desktop interface - show-battery-percentage (Gnome)
@@ -150,8 +206,7 @@
     key: "/org/gnome/desktop/interface/show-battery-percentage"
     value: "true"
   when:
-#    - ansible_os_family == "Suse"
-    - env_desktop == "gnome"
+    - env_desktop in ["gnome", "ubuntu:gnome"]
 
 - name: set desktop interface - locate-pointer (Gnome)
 #  become_user: sandro
@@ -159,8 +214,7 @@
     key: "/org/gnome/desktop/interface/locate-pointer"
     value: "true"
   when:
-#    - ansible_os_family == "Suse"
-    - env_desktop == "gnome"
+    - env_desktop in ["gnome", "ubuntu:gnome"]
 
 - name: set desktop calendar - show-weekdate in calendar (Gnome)
 #  become_user: sandro
@@ -168,8 +222,7 @@
     key: "/org/gnome/desktop/calendar/show-weekdate"
     value: "true"
   when:
-#    - ansible_os_family == "Suse"
-    - env_desktop == "gnome"
+    - env_desktop in ["gnome", "ubuntu:gnome"]
 
 - name: set desktop input-sources - show-all-sources (Gnome)
 #  become_user: sandro
@@ -177,8 +230,7 @@
     key: "/org/gnome/desktop/input-sources/show-all-sources"
     value: "true"
   when:
-#    - ansible_os_family == "Suse"
-    - env_desktop == "gnome"
+    - env_desktop in ["gnome", "ubuntu:gnome"]
 
 - name: set desktop screensaver - idle-activation-enabled (Gnome)
 #  become_user: sandro
@@ -186,8 +238,7 @@
     key: "/org/gnome/desktop/screensaver/idle-activation-enabled"
     value: "true"
   when:
-#    - ansible_os_family == "Suse"
-    - env_desktop == "gnome"
+    - env_desktop in ["gnome", "ubuntu:gnome"]
 
 - name: set desktop screensaver - lock-enabled (Gnome)
 #  become_user: sandro
@@ -195,8 +246,7 @@
     key: "/org/gnome/desktop/screensaver/lock-enabled"
     value: "true"
   when:
-#    - ansible_os_family == "Suse"
-    - env_desktop == "gnome"
+    - env_desktop in ["gnome", "ubuntu:gnome"]
 
 - name: set desktop screensaver - lock-delay (Gnome)
 #  become_user: sandro
@@ -204,8 +254,7 @@
     key: "/org/gnome/desktop/screensaver/lock-delay"
     value: "'0'"
   when:
-#    - ansible_os_family == "Suse"
-    - env_desktop == "gnome"
+    - env_desktop in ["gnome", "ubuntu:gnome"]
 
 - name: set desktop wm preferences - button-layout (Gnome)
 #  become_user: sandro
@@ -213,8 +262,7 @@
     key: "/org/gnome/desktop/wm/preferences/button-layout"
     value: "'appmenu:minimize,maximize,close'"
   when:
-#    - ansible_os_family == "Suse"
-    - env_desktop == "gnome"
+    - env_desktop in ["gnome", "ubuntu:gnome"]
 
 ### power settings:
 #   ---------------
@@ -224,8 +272,7 @@
     key: "/org/gnome/settings-daemon/plugins/power/power-button-action"
     value: "'nothing'"
   when:
-#    - ansible_os_family == "Suse"
-    - env_desktop == "gnome"
+    - env_desktop in ["gnome", "ubuntu:gnome"]
 
 - name: set power - sleep-inactive-ac-type (Gnome)
 #  become_user: sandro
@@ -233,8 +280,7 @@
     key: "/org/gnome/settings-daemon/plugins/power/sleep-inactive-ac-type"
     value: "'nothing'"
   when:
-#    - ansible_os_family == "Suse"
-    - env_desktop == "gnome"
+    - env_desktop in ["gnome", "ubuntu:gnome"]
 
 - name: set power - sleep-inactive-battery-type (Gnome)
 #  become_user: sandro
@@ -242,8 +288,7 @@
     key: "/org/gnome/settings-daemon/plugins/power/sleep-inactive-battery-type"
     value: "'nothing'"
   when:
-#    - ansible_os_family == "Suse"
-    - env_desktop == "gnome"
+    - env_desktop in ["gnome", "ubuntu:gnome"]
 
 ### Gnome Wather:
 #   -------------
@@ -266,6 +311,7 @@
 #    - env_desktop == "gnome"
 
 
+
 ### nemo filebrowser -  preferences:
 #   --------------------------------
 - name: set nemo preferences - click-policy (Gnome)
@@ -274,8 +320,7 @@
     key: "/org/nemo/preferences/click-policy"
     value: "'double'"
   when:
-#    - ansible_os_family == "Suse"
-    - env_desktop == "gnome"
+    - env_desktop in ["gnome", "ubuntu:gnome"]
 
 - name: set nemo preferences - show-computer-icon-toolbar (Gnome)
 #  become_user: sandro
@@ -283,8 +328,7 @@
     key: "/org/nemo/preferences/show-computer-icon-toolbar"
     value: "true"
   when:
-#    - ansible_os_family == "Suse"
-    - env_desktop == "gnome"
+    - env_desktop in ["gnome", "ubuntu:gnome"]
 
 - name: set nemo preferences - show-home-icon-toolbar (Gnome)
 #  become_user: sandro
@@ -292,8 +336,7 @@
     key: "/org/nemo/preferences/show-home-icon-toolbar"
     value: "true"
   when:
-#    - ansible_os_family == "Suse"
-    - env_desktop == "gnome"
+    - env_desktop in ["gnome", "ubuntu:gnome"]
 
 - name: set nemo preferences - show-list-view-icon-toolbar (Gnome)
 #  become_user: sandro
@@ -301,8 +344,7 @@
     key: "/org/nemo/preferences/show-list-view-icon-toolbar"
     value: "true"
   when:
-#    - ansible_os_family == "Suse"
-    - env_desktop == "gnome"
+    - env_desktop in ["gnome", "ubuntu:gnome"]
 
 - name: set nemo preferences - show-location-entry (Gnome)
 #  become_user: sandro
@@ -310,8 +352,7 @@
     key: "/org/nemo/preferences/show-location-entry"
     value: "true"
   when:
-#    - ansible_os_family == "Suse"
-    - env_desktop == "gnome"
+    - env_desktop in ["gnome", "ubuntu:gnome"]
 
 - name: set nemo preferences - show-new-folder-icon-toolbar (Gnome)
 #  become_user: sandro
@@ -319,8 +360,7 @@
     key: "/org/nemo/preferences/show-new-folder-icon-toolbar"
     value: "true"
   when:
-#    - ansible_os_family == "Suse"
-    - env_desktop == "gnome"
+    - env_desktop in ["gnome", "ubuntu:gnome"]
 
 - name: set nemo preferences - show-open-in-terminal-toolbar ((Gnome)
 #  become_user: sandro
@@ -328,8 +368,7 @@
     key: "/org/nemo/preferences/show-open-in-terminal-toolbar"
     value: "true"
   when:
-#    - ansible_os_family == "Suse"
-    - env_desktop == "gnome"
+    - env_desktop in ["gnome", "ubuntu:gnome"]
 
 - name: set nemo preferences - show-reload-icon-toolbar (Gnome)
 #  become_user: sandro
@@ -337,8 +376,7 @@
     key: "/org/nemo/preferences/show-reload-icon-toolbar"
     value: "true"
   when:
-#    - ansible_os_family == "Suse"
-    - env_desktop == "gnome"
+    - env_desktop in ["gnome", "ubuntu:gnome"]
 
 - name: set nemo preferences - show-show-thumbnails-toolbar (Gnome)
 #  become_user: sandro
@@ -346,8 +384,7 @@
     key: "/org/nemo/preferences/show-show-thumbnails-toolbar"
     value: "true"
   when:
-#    - ansible_os_family == "Suse"
-    - env_desktop == "gnome"
+    - env_desktop in ["gnome", "ubuntu:gnome"]
 
 
 ### gnome shell extensions -  preferences:
@@ -360,8 +397,7 @@
     key: "/org/gnome/shell/extensions/dash-to-dock/custom-theme-shrink"
     value: "true"
   when:
-#    - ansible_os_family == "Suse"
-    - env_desktop == "gnome"
+    - env_desktop in ["gnome", "ubuntu:gnome"]
 
 - name: set gnome shell extensions - dash-to-dock - height-fraction (Gnome)
 #  become_user: sandro
@@ -369,8 +405,7 @@
     key: "/org/gnome/shell/extensions/dash-to-dock/height-fraction"
     value: "'0.94999999999999996'"
   when:
-#    - ansible_os_family == "Suse"
-    - env_desktop == "gnome"
+    - env_desktop in ["gnome", "ubuntu:gnome"]
 
 - name: set gnome shell extensions - dash-to-dock - isolate-workspaces (Gnome)
 #  become_user: sandro
@@ -378,8 +413,7 @@
     key: "/org/gnome/shell/extensions/dash-to-dock/isolate-workspaces"
     value: "true"
   when:
-#    - ansible_os_family == "Suse"
-    - env_desktop == "gnome"
+    - env_desktop in ["gnome", "ubuntu:gnome"]
 
 - name: set gnome shell extensions - dash-to-dock - multi-monitor" (Gnome)
 #  become_user: sandro
@@ -387,8 +421,7 @@
     key: "/org/gnome/shell/extensions/dash-to-dock/multi-monitor"
     value: "true"
   when:
-#    - ansible_os_family == "Suse"
-    - env_desktop == "gnome"
+    - env_desktop in ["gnome", "ubuntu:gnome"]
 
 - name: set gnome shell extensions - dash-to-dock - running-indicator-style" (Gnome)
 #  become_user: sandro
@@ -396,8 +429,7 @@
     key: "/org/gnome/shell/extensions/dash-to-dock/running-indicator-style"
     value: "'DOTS'"
   when:
-#    - ansible_os_family == "Suse"
-    - env_desktop == "gnome"
+    - env_desktop in ["gnome", "ubuntu:gnome"]
 
 - name: set gnome shell extensions - dash-to-dock - scroll-action" (Gnome)
 #  become_user: sandro
@@ -405,8 +437,7 @@
     key: "/org/gnome/shell/extensions/dash-to-dock/scroll-action"
     value: "'switch-workspace'"
   when:
-#    - ansible_os_family == "Suse"
-    - env_desktop == "gnome"
+    - env_desktop in ["gnome", "ubuntu:gnome"]
 
 - name: set gnome shell extensions - dash-to-dock - scroll-action" (Gnome)
 #  become_user: sandro
@@ -414,8 +445,7 @@
     key: "/org/gnome/shell/extensions/dash-to-dock/scroll-action"
     value: "'switch-workspace'"
   when:
-#    - ansible_os_family == "Suse"
-    - env_desktop == "gnome"
+    - env_desktop in ["gnome", "ubuntu:gnome"]
 
 - name: set gnome shell extensions - dash-to-dock - show-mounts (Gnome)
 #  become_user: sandro
@@ -423,8 +453,7 @@
     key: "/org/gnome/shell/extensions/dash-to-dock/show-mounts"
     value: "false"
   when:
-#    - ansible_os_family == "Suse"
-    - env_desktop == "gnome"
+    - env_desktop in ["gnome", "ubuntu:gnome"]
 
 - name: set gnome shell extensions - dash-to-dock - show-trash (Gnome)
 #  become_user: sandro
@@ -432,8 +461,7 @@
     key: "/org/gnome/shell/extensions/dash-to-dock/show-trash"
     value: "false"
   when:
-#    - ansible_os_family == "Suse"
-    - env_desktop == "gnome"
+    - env_desktop in ["gnome", "ubuntu:gnome"]
 
 
 ### openweather:
@@ -443,8 +471,7 @@
     key: "/org/gnome/shell/extensions/openweather/city"
     value: "'49.4641816,7.2484007>Niederkirchen, Kuseler Straße, Saal, Niederkirchen, Sankt Wendel, Landkreis St. Wendel, Saarland, 66606, Deutschland >-1 && 49.49342345,6.828330133618561>Nunkirchen, Wadern, Landkreis Merzig-Wadern, Saarland, Deutschland >-1'"
   when:
-#    - ansible_os_family == "Suse"
-    - env_desktop == "gnome"
+    - env_desktop in ["gnome", "ubuntu:gnome"]
 
 - name: set gnome shell extensions - openweather - actual-city" (Gnome)
 #  become_user: sandro
@@ -452,8 +479,7 @@
     key: "/org/gnome/shell/extensions/openweather/actual-city"
     value: "1"
   when:
-#    - ansible_os_family == "Suse"
-    - env_desktop == "gnome"
+    - env_desktop in ["gnome", "ubuntu:gnome"]
 
 - name: set gnome shell extensions - openweather - days-forecast (Gnome)
 #  become_user: sandro
@@ -461,8 +487,7 @@
     key: "/org/gnome/shell/extensions/openweather/days-forecast"
     value: "4"
   when:
-#    - ansible_os_family == "Suse"
-    - env_desktop == "gnome"
+    - env_desktop in ["gnome", "ubuntu:gnome"]
 
 - name: set gnome shell extensions - openweather - menu-alignment (Gnome)
 #  become_user: sandro
@@ -470,8 +495,7 @@
     key: "/org/gnome/shell/extensions/openweather/menu-alignment"
     value: "80.099999999999994"
   when:
-#    - ansible_os_family == "Suse"
-    - env_desktop == "gnome"
+    - env_desktop in ["gnome", "ubuntu:gnome"]
 
 - name: set gnome shell extensions - openweather - position-in-panel (Gnome)
 #  become_user: sandro
@@ -479,8 +503,7 @@
     key: "/org/gnome/shell/extensions/openweather/position-in-panel"
     value: "'center'"
   when:
-#    - ansible_os_family == "Suse"
-    - env_desktop == "gnome"
+    - env_desktop in ["gnome", "ubuntu:gnome"]
 
 - name: set gnome shell extensions - openweather - pressure-unit (Gnome)
 #  become_user: sandro
@@ -488,8 +511,7 @@
     key: "/org/gnome/shell/extensions/openweather/pressure-unit"
     value: "'hPa'"
   when:
-#    - ansible_os_family == "Suse"
-    - env_desktop == "gnome"
+    - env_desktop in ["gnome", "ubuntu:gnome"]
 
 - name: set gnome shell extensions - openweather - unit (Gnome)
 #  become_user: sandro
@@ -497,8 +519,7 @@
     key: "/org/gnome/shell/extensions/openweather/unit"
     value: "'celsius'"
   when:
-#    - ansible_os_family == "Suse"
-    - env_desktop == "gnome"
+    - env_desktop in ["gnome", "ubuntu:gnome"]
 
 - name: set gnome shell extensions - openweather - wind-speed-unit (Gnome)
 #  become_user: sandro
@@ -506,9 +527,7 @@
     key: "/org/gnome/shell/extensions/openweather/wind-speed-unit"
     value: "'kph'"
   when:
-#    - ansible_os_family == "Suse"
-    - env_desktop == "gnome"
-
+    - env_desktop in ["gnome", "ubuntu:gnome"]
 
 
 
