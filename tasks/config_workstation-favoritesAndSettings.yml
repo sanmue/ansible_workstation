@@ -2,6 +2,7 @@
 ##################################################
 ### Disable Ubuntu dock- name: Disable ubuntu dock
 ##################################################
+# es wird angenommen, dass gnome extension "dash to dock" installiert ist
 - name: disable Ubuntu dock (Ubuntu + Gnome)
   tags: gnome
   command: gnome-extensions disable ubuntu-dock@ubuntu.com
