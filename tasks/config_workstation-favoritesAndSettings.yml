@@ -9,7 +9,10 @@
 ### Ubuntu + Gnome ###
 - name: adding favorite apps to dock (Ubuntu + Gnome)
 # flatpak, snaps: whalebird
-  command: gsettings set org.gnome.shell favorite-apps "['org.keepassxc.KeePassXC.desktop', 'firefox.desktop', 'org.gnome.Epiphany.desktop', 'org.chromium.Chromium.desktop', 'vivaldi-stable.desktop', 'org.gnome.Terminal.desktop', 'terminator.desktop', 'nemo.desktop', 'org.gnome.gedit.desktop', 'io.atom.Atom.desktop', 'org.libreoffice.LibreOffice.desktop', 'org.gnome.Evolution.desktop', 'net.cozic.joplin_desktop.desktop', 'de.willuhn.Jameica.desktop', 'rhythmbox.desktop', 'whalebird_whalebird.desktop', 'org.signal.Signal.desktop', 'com.discordapp.Discord.desktop', 'org.remmina.Remmina.desktop', 'virt-manager.desktop', 'snap-store_ubuntu-software.desktop']"
+#  command: gsettings set org.gnome.shell favorite-apps "['org.keepassxc.KeePassXC.desktop', 'firefox.desktop', 'org.gnome.Epiphany.desktop', 'org.chromium.Chromium.desktop', 'vivaldi-stable.desktop', 'org.gnome.Terminal.desktop', 'terminator.desktop', 'nemo.desktop', 'org.gnome.gedit.desktop', 'io.atom.Atom.desktop', 'org.libreoffice.LibreOffice.desktop', 'org.gnome.Evolution.desktop', 'net.cozic.joplin_desktop.desktop', 'de.willuhn.Jameica.desktop', 'rhythmbox.desktop', 'whalebird_whalebird.desktop', 'org.signal.Signal.desktop', 'com.discordapp.Discord.desktop', 'org.remmina.Remmina.desktop', 'virt-manager.desktop', 'snap-store_ubuntu-software.desktop']"
+### snap-store_ubuntu-software.desktop -> vorg.gnome.Software.desktop:
+  command: gsettings set org.gnome.shell favorite-apps "['org.keepassxc.KeePassXC.desktop', 'firefox.desktop', 'org.gnome.Epiphany.desktop', 'org.chromium.Chromium.desktop', 'vivaldi-stable.desktop', 'org.gnome.Terminal.desktop', 'terminator.desktop', 'nemo.desktop', 'org.gnome.gedit.desktop', 'io.atom.Atom.desktop', 'org.libreoffice.LibreOffice.desktop', 'org.gnome.Evolution.desktop', 'net.cozic.joplin_desktop.desktop', 'de.willuhn.Jameica.desktop', 'rhythmbox.desktop', 'whalebird_whalebird.desktop', 'org.signal.Signal.desktop', 'com.discordapp.Discord.desktop', 'org.remmina.Remmina.desktop', 'virt-manager.desktop', 'org.gnome.Software.desktop']"
+
 # snaps, flatpak: jameica
 #  command: gsettings set org.gnome.shell favorite-apps "['org.keepassxc.KeePassXC.desktop', 'firefox.desktop', 'vivaldi-stable.desktop', 'chromium_chromium.desktop', 'thunderbird_thunderbird.desktop', 'org.gnome.gedit.desktop', 'libreoffice_libreoffice.desktop', 'joplin-james-carroll_joplin.desktop', 'de.willuhn.Jameica.desktop', 'rhythmbox.desktop', 'whalebird_whalebird.desktop', 'signal-desktop_signal-desktop.desktop', 'discord_discord.desktop', 'nemo.desktop', 'org.gnome.Terminal.desktop', 'terminator.desktop', 'virt-manager.desktop', 'org.remmina.Remmina.desktop', 'snap-store_ubuntu-software.desktop']"
   when:
@@ -44,14 +47,16 @@
     src: "files/gnome/gnome_embos_1440P.png"
     dest: /usr/share/wallpapers/ # systemweit verfügbar
 #    dest: /home/sandro/Bilder/
+    remote_src: yes
     owner: root
     group: root
     mode: u=rwx,g=rwx,o=rwx
 #    mode: 0777
+
   when:
     - ansible_os_family == "Suse"
     - env_desktop == "gnome"
-    
+
 - name: set desktop - background (Suse + Gnome)
 #  become_user: sandro
   dconf:
@@ -79,13 +84,14 @@
   copy:
     src: "files/gnome/gnome_embos_1440P.png"
     dest: "/home/sandro/.local/share/backgrounds/gnome_emboss_1440P.png"
+    remote_src: yes
     owner: sandro
     group: sandro
     mode: u=rwx,g=rwx,o=rwx
 #    mode: 0777
   when:
     - env_desktop == "ubuntu:gnome"
-    
+
 - name: set desktop - background (Suse + Gnome)
 #  become_user: sandro
   dconf:
@@ -119,11 +125,11 @@
   dconf:
     key: "/org/gnome/desktop/interface/clock-format"
     value: "'24h'"
-  when: 
+  when:
 #    - ansible_os_family == "Suse"
 #    - env_desktop == "gnome"
     - env_desktop in ["gnome", "ubuntu:gnome"]
-    
+
 
 - name: set desktop interface - clock-show-date (Gnome)
 #  become_user: sandro
@@ -143,52 +149,73 @@
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
 
-### gtk-theme
-- name: set desktop interface - gtk-theme (Suse + Gnome)
-#  become_user: sandro
+### gtk-theme ###
+
+# all
+
+- name: create a directory for gtk-theme files in userdir (all + Gnome)
+  become_user: sandro
+  ansible.builtin.file:
+    path: "/home/sandro/.themes"
+    state: directory
+#    mode: '0755'
+  when:
+#    - ansible_os_family == "Suse"
+    - env_desktop in ["gnome","ubuntu:gnome"]
+
+- name: copy gtk-theme to userdir (all + Gnome)
+  become_user: sandro
+  unarchive:
+    src: "files/gnome/themes/MateriaBreath.zip"
+    dest: "/home/sandro/.themes/"
+    creates: "/home/sandro/.themes/MateriaBreath-dark" # tilde wird nicht unterstützt
+    remote_src: yes
+    keep_newer: yes
+#    owner: sandro
+#    group: users # Suse
+#    group: sandro # Ubuntu/Debian
+#    mode: u=rwx,g=rwx,o=rwx
+  when:
+#    - ansible_os_family == "Suse"
+    - env_desktop in ["gnome","ubuntu:gnome"]
+
+- name: set desktop interface - gtk-theme (all + Gnome)
+  become_user: sandro
   dconf:
     key: "/org/gnome/desktop/interface/gtk-theme"
-    value: "'Adwaita-dark'"
+    value: "'MateriaBreath-dark'"
   when:
-    - ansible_os_family == "Suse"
-    - env_desktop == "gnome"
+    - env_desktop in ["gnome","ubuntu:gnome"]
 
-- name: set desktop interface - gtk-theme (Ubuntu + Gnome)
-#  become_user: sandro
-  dconf:
-    key: "/org/gnome/desktop/interface/gtk-theme"
-    value: "'Yaru-dark'"
-  when:
-    - env_desktop == "ubuntu:gnome"
+# Suse  -'Adwaita-dark'
+#- name: set desktop interface - gtk-theme (Suse + Gnome)
+##  become_user: sandro
+#  dconf:
+#    key: "/org/gnome/desktop/interface/gtk-theme"
+#    value: "'Adwaita-dark'"
+#  when:
+#    - ansible_os_family == "Suse"
+#    - env_desktop == "gnome"
 
 
-### icon-theme:
+### icon-theme ###
 
-### Suse
+# all
 - name: copy icon-theme to userdir (Suse + Gnome)
   become_user: sandro
-  copy:
-    src: "files/gnome/icons/Materia-Manjaro-Dark-2"
-    dest: "~/.icons/"
-    owner: sandro
-    group: users
-    mode: u=rwx,g=rwx,o=rwx
+  unarchive:
+    src: "files/gnome/icons/Materia-Manjaro-Dark-2.zip"
+    dest: "/home/sandro/.icons/"
+    creates: "/home/sandro/.icons/Materia-Manjaro-Dark-2" # unterstützt keine tilde
+    remote_src: yes
+    keep_newer: yes
+#    owner: sandro
+#    group: users # suse
+#    group: sandro # ubuntu, debian
+#    mode: u=rwx,g=rwx,o=rwx
   when:
-    - ansible_os_family == "Suse"
-    - env_desktop in ["gnome"]
-
-### Ubuntu
-- name: copy icon-theme to userdir (Ubuntu + Gnome)
-  become_user: sandro
-  copy:
-    src: "files/gnome/icons/Materia-Manjaro-Dark-2"
-    dest: "~/.icons/"
-    owner: sandro
-    group: sandro
-    mode: u=rwx,g=rwx,o=rwx
-  when:
-    - env_desktop in ["ubuntu:gnome"]
-
+#    - ansible_os_family == "Suse"
+    - env_desktop in ["gnome","ubuntu:gnome"]
 
 - name: set desktop interface - icon-theme (Gnome)
   become_user: sandro
@@ -427,15 +454,7 @@
 #  become_user: sandro
   dconf:
     key: "/org/gnome/shell/extensions/dash-to-dock/running-indicator-style"
-    value: "'DOTS'"
-  when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
-
-- name: set gnome shell extensions - dash-to-dock - scroll-action" (Gnome)
-#  become_user: sandro
-  dconf:
-    key: "/org/gnome/shell/extensions/dash-to-dock/scroll-action"
-    value: "'switch-workspace'"
+    value: "'DEFAULT'"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -545,7 +564,6 @@
 
 #- name: GNOME Shell Apps Dashboard - Categories (Suse + Gnome)
 #  command: gsettings set org.gnome.desktop.app-folders folder-children "['AudioVideo', 'Development', 'Education', 'Game', 'Graphics', 'Network', 'Office', 'Science', 'Settings', 'System', 'Utility']"
-#  when: 
+#  when:
 #    - ansible_os_family == "Suse"
 #    - env_desktop == "gnome"
-

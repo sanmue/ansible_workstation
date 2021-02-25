@@ -1,48 +1,32 @@
 
+### Copy GnomeShell Extension "Extensions Sync" from files-folder userdir extensions folder
 
-###
-# Copy GnomeShell Extension "Extensions Sync"-zipfile from files-folder, unzip, install, delete and activate
-###
-
-- name: GnomeShell Extension - Extensions Sync - create extension folder 
+- name: GnomeShell Extension - Extensions Sync - create extension folder
+  become_user: sandro
   tags: gnome
   file:
-    path: ~/.local/share/gnome-shell/extensions/extensions-sync@elhan.io
+    path: /home/sandro/.local/share/gnome-shell/extensions/extensions-sync@elhan.io
     state: directory
     mode: u+rwx,g+rwx,o-rx
-  when: 
+  when:
     - env_desktop == "ubuntu:gnome"
 
-- name: GnomeShell Extension - Extensions Sync - copy to extension folder
-  tags: gnome
-  copy:
-    src: files/gnome/extensions-syncelhan.io.v11.shell-extension.zip
-    dest: ~/.local/share/gnome-shell/extensions/extensions-sync@elhan.io
-    remote_src: yes
-  when: 
-    - env_desktop == "ubuntu:gnome"
-
-- name: GnomeShell Extension - Extensions Sync - unzipping
+- name: GnomeShell Extension - Extensions Sync - unzipping to userdir extensions folder
+  become_user: sandro
   tags: gnome
   unarchive:
-    src: ~/.local/share/gnome-shell/extensions/extensions-sync@elhan.io/extensions-syncelhan.io.v11.shell-extension.zip
-    dest: ~/.local/share/gnome-shell/extensions/extensions-sync@elhan.io
+    src: files/gnome/extensions-syncelhan.io.v11.shell-extension.zip
+    dest: /home/sandro/.local/share/gnome-shell/extensions/extensions-sync@elhan.io/
+#    creates: /home/sandro/.local/share/gnome-shell/extensions/extensions-sync@elhan.io/icons # unterstützt keine tilde
     remote_src: yes
-  when: 
-    - env_desktop == "ubuntu:gnome"
-
-- name: GnomeShell Extension - Extensions Sync - delete zip-file
-  tags: gnome
-  file:
-    path: ~/.local/share/gnome-shell/extensions/extensions-sync@elhan.io/extensions-syncelhan.io.v11.shell-extension.zip
-    state: absent
-  when: 
+    keep_newer: yes
+  when:
     - env_desktop == "ubuntu:gnome"
 
 - name: GnomeShell Extension - Extensions Sync - aktivate Extension
   tags: gnome
   command: gnome-shell-extension-tool -e extensions-sync@elhan.io
-  when: 
+  when:
     - env_desktop == "ubuntu:gnome"
 
 - name: Disable ubuntu dock
@@ -50,4 +34,3 @@
   command: gnome-extensions disable ubuntu-dock@ubuntu.com
   when:
     - env_desktop == "ubuntu:gnome"
-

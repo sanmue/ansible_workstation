@@ -46,6 +46,7 @@
       - gpg
       - openssh-client
       - ssh
+      - virt-top
       - ufw
 #     Miltimedia; entspechend libs sollten bereits installiert sein (wenn mei Installer ausgewählt wurde)
 #      - ffmpeg

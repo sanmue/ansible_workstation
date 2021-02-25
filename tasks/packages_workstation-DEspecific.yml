@@ -33,8 +33,6 @@
       - exfat-utils
       - firefox # -> in Standard-Inst bereits vorhanden
       - firefox-locale-de
-      - gnome-shell-extension-gsconnect
-      - gnome-shell-extension-gsconnect-browsers
       - gnome-software-plugin-flatpak
 #      - gnome-weather
 #      - guake
