@@ -1,6 +1,5 @@
 
-### Copy GnomeShell Extension "Extensions Sync" from files-folder userdir extensions folder
-
+### Copy GnomeShell Extension "Extensions Sync" from files-folder to userdir extensions folder
 - name: GnomeShell Extension - Extensions Sync - create extension folder
   become_user: sandro
   tags: gnome
@@ -26,11 +25,5 @@
 - name: GnomeShell Extension - Extensions Sync - aktivate Extension
   tags: gnome
   command: gnome-shell-extension-tool -e extensions-sync@elhan.io
-  when:
-    - env_desktop == "ubuntu:gnome"
-
-- name: Disable ubuntu dock
-  tags: gnome
-  command: gnome-extensions disable ubuntu-dock@ubuntu.com
   when:
     - env_desktop == "ubuntu:gnome"

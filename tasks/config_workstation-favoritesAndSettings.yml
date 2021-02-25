@@ -1,10 +1,19 @@
 
+##################################################
+### Disable Ubuntu dock- name: Disable ubuntu dock
+##################################################
+- name: disable Ubuntu dock (Ubuntu + Gnome)
+  tags: gnome
+  command: gnome-extensions disable ubuntu-dock@ubuntu.com
+  when:
+    - env_desktop == "ubuntu:gnome"
+
+
 #################
 ### favorite apps
 #################
 # Unterscheidung noch nach Distro + Desktopenvirongment
 # da aktuell teilw. unterschiedliche Softwarequllen (Snap,Faltpak,Repo) und unterschiedliche Bezeichungen je Distro
-
 
 ### Ubuntu + Gnome ###
 - name: adding favorite apps to dock (Ubuntu + Gnome)
@@ -12,7 +21,6 @@
 #  command: gsettings set org.gnome.shell favorite-apps "['org.keepassxc.KeePassXC.desktop', 'firefox.desktop', 'org.gnome.Epiphany.desktop', 'org.chromium.Chromium.desktop', 'vivaldi-stable.desktop', 'org.gnome.Terminal.desktop', 'terminator.desktop', 'nemo.desktop', 'org.gnome.gedit.desktop', 'io.atom.Atom.desktop', 'org.libreoffice.LibreOffice.desktop', 'org.gnome.Evolution.desktop', 'net.cozic.joplin_desktop.desktop', 'de.willuhn.Jameica.desktop', 'rhythmbox.desktop', 'whalebird_whalebird.desktop', 'org.signal.Signal.desktop', 'com.discordapp.Discord.desktop', 'org.remmina.Remmina.desktop', 'virt-manager.desktop', 'snap-store_ubuntu-software.desktop']"
 ### snap-store_ubuntu-software.desktop -> vorg.gnome.Software.desktop:
   command: gsettings set org.gnome.shell favorite-apps "['org.keepassxc.KeePassXC.desktop', 'firefox.desktop', 'org.gnome.Epiphany.desktop', 'org.chromium.Chromium.desktop', 'vivaldi-stable.desktop', 'org.gnome.Terminal.desktop', 'terminator.desktop', 'nemo.desktop', 'org.gnome.gedit.desktop', 'io.atom.Atom.desktop', 'org.libreoffice.LibreOffice.desktop', 'org.gnome.Evolution.desktop', 'net.cozic.joplin_desktop.desktop', 'de.willuhn.Jameica.desktop', 'rhythmbox.desktop', 'whalebird_whalebird.desktop', 'org.signal.Signal.desktop', 'com.discordapp.Discord.desktop', 'org.remmina.Remmina.desktop', 'virt-manager.desktop', 'org.gnome.Software.desktop']"
-
 # snaps, flatpak: jameica
 #  command: gsettings set org.gnome.shell favorite-apps "['org.keepassxc.KeePassXC.desktop', 'firefox.desktop', 'vivaldi-stable.desktop', 'chromium_chromium.desktop', 'thunderbird_thunderbird.desktop', 'org.gnome.gedit.desktop', 'libreoffice_libreoffice.desktop', 'joplin-james-carroll_joplin.desktop', 'de.willuhn.Jameica.desktop', 'rhythmbox.desktop', 'whalebird_whalebird.desktop', 'signal-desktop_signal-desktop.desktop', 'discord_discord.desktop', 'nemo.desktop', 'org.gnome.Terminal.desktop', 'terminator.desktop', 'virt-manager.desktop', 'org.remmina.Remmina.desktop', 'snap-store_ubuntu-software.desktop']"
   when:
@@ -547,7 +555,6 @@
     value: "'kph'"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
-
 
 
 ###########################################
