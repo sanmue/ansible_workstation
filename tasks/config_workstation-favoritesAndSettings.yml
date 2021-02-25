@@ -1,7 +1,7 @@
 
-##################################################
-### Disable Ubuntu dock- name: Disable ubuntu dock
-##################################################
+#######################
+### Disable Ubuntu dock
+#######################
 # es wird angenommen, dass gnome extension "dash to dock" installiert ist
 - name: disable Ubuntu dock (Ubuntu + Gnome)
   tags: gnome
@@ -53,7 +53,7 @@
 #  become_user: sandro
   become: true
   copy:
-    src: "files/gnome/gnome_embos_1440P.png"
+    src: "files/gnome/background/gnome_embos_1440P.png"
     dest: /usr/share/wallpapers/ # systemweit verfügbar
 #    dest: /home/sandro/Bilder/
     remote_src: yes
@@ -91,7 +91,7 @@
 #  become_user: sandro
 #  become: true
   copy:
-    src: "files/gnome/gnome_embos_1440P.png"
+    src: "files/gnome/background/gnome_embos_1440P.png"
     dest: "/home/sandro/.local/share/backgrounds/gnome_emboss_1440P.png"
     remote_src: yes
     owner: sandro

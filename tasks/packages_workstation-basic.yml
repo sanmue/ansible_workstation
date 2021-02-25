@@ -1,6 +1,6 @@
 
 #######################################
-### NOT depending on Desktop Environmet 
+### NOT depending on Desktop Environmet
 #######################################
 
 - name: Install packages for workstations (basic/all)
@@ -17,6 +17,7 @@
       - gimp
 #      - gimp-lang # gibt es nicht bei ubuntu
       - gimp-help-de
+      - gitk
       - gparted
       - grsync
       - git
@@ -64,7 +65,7 @@
   package:
     state: latest
     name:
-      - snapd # bei Suse herausgenommen 
+      - snapd # bei Suse herausgenommen
   when: ansible_distribution in ["Archlinux"]
 
 
@@ -91,4 +92,3 @@
 #      - exfatprogs # als ersatz für zuvor deinstallierte exfat-utils (wg. gparted); wird aktuell nicht deinstalliert
       - fuse-exfat # empfohlene Abhängigkeit ist exfat-utils
   when: ansible_os_family == "Suse"
-

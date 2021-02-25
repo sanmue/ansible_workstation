@@ -3,7 +3,7 @@
 - name: copy and decypt extensions-sync.json to users home-config (Ubuntu)
   copy:
 #    src: files/extSync-Ubuntu/extensions-sync.json
-    src: files/gnome/ubuntu_extensions-sync.json
+    src: files/gnome/extensions/ubuntu_extensions-sync.json
     dest: ~/.config/extensions-sync.json
     owner: sandro
     group: sandro
@@ -17,7 +17,7 @@
 - name: copy and decypt extensions-sync.json to users home-config (Manjaro)
   copy:
 #    src: files/extSync-Manjaro/extensions-sync.json
-    src: files/gnome/manjaro_extensions-sync
+    src: files/gnome/extensions/manjaro_extensions-sync
     dest: ~/.config/extensions-sync.json
     owner: sandro
     group: sandro
@@ -26,6 +26,3 @@
   when:
     - ansible_distribution == "Archlinux"
     - env_desktop == "gnome"
-
-### TODO: ggf. auch für Suse
-

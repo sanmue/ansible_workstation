@@ -14,7 +14,7 @@
   become_user: sandro
   tags: gnome
   unarchive:
-    src: files/gnome/extensions-syncelhan.io.v11.shell-extension.zip
+    src: files/gnome/extensions/extensions-syncelhan.io.v11.shell-extension.zip
     dest: /home/sandro/.local/share/gnome-shell/extensions/extensions-sync@elhan.io/
 #    creates: /home/sandro/.local/share/gnome-shell/extensions/extensions-sync@elhan.io/icons # unterstützt keine tilde
     remote_src: yes
