@@ -4,7 +4,7 @@
   connection: local
 #  become: sandro
   become: no
-  tags: startall,pre,ansibleFacts
+  tags: always,pre,ansibleFacts
   gather_facts: true
   pre_tasks:
   - include: tasks/config_workstation-getFacts.yml
@@ -13,7 +13,7 @@
 - hosts: localhost
   connection: local
   become: true
-  tags: startall,pre
+  tags: always,pre
   pre_tasks:
     - include: tasks/config_workstation-addrepos.yml
     - include: tasks/all_update.yml
@@ -22,7 +22,7 @@
 - hosts: localhost
   connection: local
   become: true
-  tags: startall
+  tags: always
   tasks:
 #   ssh, ansible + Voraussetungen/Abhängigkeiten, git ... muss bereits vorhanden sein
   - include: tasks/packages_workstation-remove-PreInstalls.yml
@@ -47,7 +47,7 @@
 #  - include: tasks/config_workstation-addrepos-suseMultimedia.yml
   - include: tasks/packages_workstation-suseMultimedia.yml
 # ---------------------------------
-#  ### sudo-ansible-user + cronjob:
+# ### sudo-ansible-user + cronjob:
 #  - include: tasks/config_all-ansible-users.yml
 #  - include: tasks/config_all-cron.yml
 #
@@ -56,20 +56,27 @@
 
 - hosts: localhost
   connection: local
-#  become: sandro
+#  become_user: sandro
   become: no
-  tags: startall,gnome
+  tags: always,gnome
   tasks:
 #  - include: tasks/packages_workstation-gnomeshellExtensions.yml
 #  - include: tasks/config_workstation-gnomeshellExtension.yml
-  - include: tasks/config_workstation-favoritesAndSettings.yml
+  - include: tasks/config_workstation-desktopPreferences.yml
 
+
+- hosts: localhost
+  connection: local
+  become: no
+  tags: always,finalmsg
+  tasks:
+    - debug:
+        msg: "Please restart the system for the changes to take effect!"
 
 #- hosts: localhost
 #  connection: local
 #  become: true
-#  tags: startall,reboot
+#  tags: always,reboot
 #  tasks:
 #  - include: tasks/all_reboot.yml # da hier local/pull --> geht nicht
 # fatal: [localhost]: FAILED! => {"changed": false, "elapsed": 0, "msg": "Running reboot with local connection would reboot the control node.", "rebooted": false}
-

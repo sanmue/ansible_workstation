@@ -9,6 +9,16 @@
   when:
     - env_desktop == "ubuntu:gnome"
 
+## alternativ:
+#- name: set gnome shell disabled-extensions - ubuntu-dock (Ubuntu + Gnome)
+##  become_user: sandro
+#  dconf:
+#    key: "/org/gnome/shell/disabled-extensions"
+#    value: "['ubuntu-dock@ubuntu.com']"
+#  when:
+#    - env_desktop in ["ubuntu:gnome"]
+
+
 
 #################
 ### favorite apps
@@ -80,7 +90,7 @@
 #  become_user: sandro
   dconf:
     key: "/org/gnome/desktop/background/picture-options"
-    value: "'stretched'"
+    value: "'zoom'"
   when:
     - ansible_os_family == "Suse"
     - env_desktop == "gnome"
@@ -210,7 +220,19 @@
 ### icon-theme ###
 
 # all
-- name: copy icon-theme to userdir (Suse + Gnome)
+
+- name: create a directory for icon-theme files in userdir (all + Gnome)
+  become_user: sandro
+  ansible.builtin.file:
+    path: "/home/sandro/.icons"
+    state: directory
+#    mode: '0755'
+  when:
+#    - ansible_os_family == "Suse"
+    - env_desktop in ["gnome","ubuntu:gnome"]
+
+
+- name: copy icon-theme to userdir (all + Gnome)
   become_user: sandro
   unarchive:
     src: "files/gnome/icons/Materia-Manjaro-Dark-2.zip"
