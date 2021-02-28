@@ -187,12 +187,13 @@
 #    - ansible_os_family == "Suse"
     - env_desktop in ["gnome","ubuntu:gnome"]
 
-- name: copy gtk-theme to userdir (all + Gnome)
+
+- name: copy gtk-theme MateriaBreath-dark to userdir (all + Gnome)
 #  become_user: sandro
   unarchive:
     src: "files/gnome/themes/MateriaBreath.zip"
     dest: "/home/{{ env_user }}/.themes/"
-    creates: "/home/{{ env_user }}/.themes/MateriaBreath-dark" # tilde wird nicht unterstützt
+    creates: "/home/{{ env_user }}/.themes/MateriaBreath-dark" # creates unterstützt keine tilde
     remote_src: yes
     keep_newer: yes
 #    owner: sandro
@@ -203,11 +204,30 @@
 #    - ansible_os_family == "Suse"
     - env_desktop in ["gnome","ubuntu:gnome"]
 
-- name: set desktop interface - gtk-theme (all + Gnome)
+- name: copy gtk-theme Ultimate-Dark-(Flat)-Green to userdir (all + Gnome)
+#  become_user: sandro
+  unarchive:
+    src: "files/gnome/themes/Ultimate-Dark-(Flat)-Green.zip"
+    dest: "/home/{{ env_user }}/.themes/"
+    creates: /home/"{{ env_user }}"/.themes/Ultimate-Dark-(Flat)-Green # creates unterstützt keine tilde
+    remote_src: yes
+    keep_newer: yes
+#    owner: sandro
+#    group: users # suse
+#    group: sandro # ubuntu, debian
+#    mode: u=rwx,g=rwx,o=rwx
+  when:
+#    - ansible_os_family == "Suse"
+    - env_desktop in ["gnome","ubuntu:gnome"]
+
+
+#- name: set desktop interface - gtk-theme MateriaBreath-dark (all + Gnome)
+# bei theme "MateriaBreath-dark" sind die Optionskästchenen + Häkchen nicht zu sehen
+- name: set desktop interface - gtk-theme MateriaBreath-dark (all + Gnome)
 #  become_user: sandro
   dconf:
     key: "/org/gnome/desktop/interface/gtk-theme"
-    value: "'MateriaBreath-dark'"
+    value: "'Adwaita-dark'"
   when:
     - env_desktop in ["gnome","ubuntu:gnome"]
 
@@ -237,12 +257,12 @@
     - env_desktop in ["gnome","ubuntu:gnome"]
 
 
-- name: copy icon-theme to userdir (all + Gnome)
+- name: copy icon-theme Materia-Manjaro-Dark-2 to userdir (all + Gnome)
 #  become_user: sandro
   unarchive:
     src: "files/gnome/icons/Materia-Manjaro-Dark-2.zip"
     dest: "/home/{{ env_user }}/.icons/"
-    creates: /home/"{{ env_user }}"/.icons/Materia-Manjaro-Dark-2 # unterstützt keine tilde
+    creates: /home/"{{ env_user }}"/.icons/Materia-Manjaro-Dark-2 # creates unterstützt keine tilde
     remote_src: yes
     keep_newer: yes
 #    owner: sandro
@@ -253,7 +273,8 @@
 #    - ansible_os_family == "Suse"
     - env_desktop in ["gnome","ubuntu:gnome"]
 
-- name: set desktop interface - icon-theme (Gnome)
+
+- name: set desktop interface - icon-theme Materia-Manjaro-Dark-2 (Gnome)
 #  become_user: sandro
   dconf:
     key: "/org/gnome/desktop/interface/icon-theme"
@@ -452,7 +473,7 @@
 
 
 ### gedit -  preferences:
-#   --------------------------------
+#   ---------------------
 - name: set gedit preferences - scheme (Gnome)
 #  become_user: sandro
   dconf:
@@ -466,7 +487,7 @@
 ### gnome shell extensions -  preferences:
 #   --------------------------------------
 
-### dash-to-dock:
+### Dash to Dock:
 - name: set gnome shell extensions - dash-to-dock - custom-theme-shrink (Gnome)
 #  become_user: sandro
   dconf:
