@@ -92,6 +92,15 @@
 
 
 ### Ubuntu + Gnome ###
+- name: create a directory for desktop-wallpaper in local user-folder (Ubuntu + Gnome)
+#  become_user: sandro
+  ansible.builtin.file:
+    path: "/home/{{ env_user }}/.local/share/backgrounds"
+    state: directory
+#    mode: '0755'
+  when:
+    - env_desktop in ["ubuntu:gnome"]
+
 - name: copy desktop-wallpaper file to local user-folder (Ubuntu + Gnome)
 #  become_user: sandro
   copy:
@@ -105,22 +114,15 @@
   when:
     - env_desktop == "ubuntu:gnome"
 
-################################################################################
-################################################################################
-- name: set desktop - background (Suse + Gnome)
+- name: set desktop - background (Ubuntu + Gnome)
 #  become_user: sandro
   dconf:
     key: "/org/gnome/desktop/background/picture-uri"
-#    value: "'file:///home/sandro/.local/share/backgrounds/gnome_emboss_1440P.png'"
-    value: "file:///home/{{ env_user }}/.local/share/backgrounds/gnome_emboss_1440P.png"
+#    value: "'file:///home/USERNAME/.local/share/backgrounds/gnome_emboss_1440P.png'" # fix
+    value: '"file:///home/{{ env_user }}/.local/share/backgrounds/gnome_emboss_1440P.png"' # dyn
 #    state: present # standard
   when:
     - env_desktop == "ubuntu:gnome"
-
-#- debug:
-#    msg: "file:///home/{{ env_user }}/.local/share/backgrounds/gnome_emboss_1440P.png"
-################################################################################
-################################################################################
 
 - name: set desktop-wallpaper picture-options (Ubuntu + Gnome)
 #  become_user: sandro
