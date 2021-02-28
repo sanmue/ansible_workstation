@@ -1,8 +1,9 @@
 ---
 
+#   ssh, ansible + Voraussetungen/Abhängigkeiten, git ... muss bereits vorhanden sein
+
 - hosts: localhost
   connection: local
-#  become: sandro
   become: no
   tags: always,pre,ansibleFacts
   gather_facts: true
@@ -24,7 +25,6 @@
   become: true
   tags: always
   tasks:
-#   ssh, ansible + Voraussetungen/Abhängigkeiten, git ... muss bereits vorhanden sein
   - include: tasks/packages_workstation-remove-PreInstalls.yml
   - include: tasks/packages_workstation-basic.yml
   - include: tasks/packages_workstation-DEspecific.yml
@@ -51,27 +51,22 @@
 #  - include: tasks/config_all-ansible-users.yml
 #  - include: tasks/config_all-cron.yml
 #
+# ### cleanup:
   - include: tasks/all_cleanup.yml
 
 
 - hosts: localhost
   connection: local
 #  become_user: sandro
-  become: no
+  become: false
   tags: always,gnome
   tasks:
 #  - include: tasks/packages_workstation-gnomeshellExtensions.yml
 #  - include: tasks/config_workstation-gnomeshellExtension.yml
   - include: tasks/config_workstation-desktopPreferences.yml
 
-
-- hosts: localhost
-  connection: local
-  become: no
-  tags: always,finalmsg
-  tasks:
-    - debug:
-        msg: "Please restart the system for the changes to take effect!"
+  - debug:
+      msg: "Please restart the system for the changes to take effect!"
 
 #- hosts: localhost
 #  connection: local
