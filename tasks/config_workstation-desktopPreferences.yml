@@ -126,7 +126,7 @@
 #  become_user: sandro
   dconf:
     key: "/org/gnome/desktop/background/picture-options"
-    value: "'stretched'"
+    value: "'zoom'"
   when:
     - env_desktop == "ubuntu:gnome"
 
