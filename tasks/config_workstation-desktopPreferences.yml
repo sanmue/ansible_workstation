@@ -450,6 +450,19 @@
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
 
+
+### gedit -  preferences:
+#   --------------------------------
+- name: set gedit preferences - scheme (Gnome)
+#  become_user: sandro
+  dconf:
+    key: "/org/gnome/gedit/preferences/editor/scheme"
+    value: "'solarized-dark'"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+
+
+
 ### gnome shell extensions -  preferences:
 #   --------------------------------------
 
@@ -583,6 +596,7 @@
     value: "'kph'"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
+
 
 
 ###########################################
