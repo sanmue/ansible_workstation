@@ -1,22 +1,22 @@
 
 ### Copy GnomeShell Extension "Extensions Sync" from files-folder to userdir extensions folder
 - name: GnomeShell Extension - Extensions Sync - create extension folder
-  become_user: sandro
+  become_user: "{{ env_user }}"
   tags: gnome
   file:
-    path: /home/sandro/.local/share/gnome-shell/extensions/extensions-sync@elhan.io
+    path: "/home/{{ env_user }}/.local/share/gnome-shell/extensions/extensions-sync@elhan.io"
     state: directory
     mode: u+rwx,g+rwx,o-rx
   when:
     - env_desktop == "ubuntu:gnome"
 
 - name: GnomeShell Extension - Extensions Sync - unzipping to userdir extensions folder
-  become_user: sandro
+  become_user: "{{ env_user }}"
   tags: gnome
   unarchive:
     src: files/gnome/extensions/extensions-syncelhan.io.v11.shell-extension.zip
-    dest: /home/sandro/.local/share/gnome-shell/extensions/extensions-sync@elhan.io/
-#    creates: /home/sandro/.local/share/gnome-shell/extensions/extensions-sync@elhan.io/icons # unterstützt keine tilde
+    dest: "/home/{{ env_user }}/.local/share/gnome-shell/extensions/extensions-sync@elhan.io/"
+#    creates: /home/"{{ env_user }}"/.local/share/gnome-shell/extensions/extensions-sync@elhan.io/icons # unterstützt keine tilde
     remote_src: yes
     keep_newer: yes
   when:

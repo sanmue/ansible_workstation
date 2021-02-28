@@ -4,9 +4,9 @@
   copy:
 #    src: files/extSync-Ubuntu/extensions-sync.json
     src: files/gnome/extensions/ubuntu_extensions-sync.json
-    dest: ~/.config/extensions-sync.json
-    owner: sandro
-    group: sandro
+    dest: "/home/{{ env_user }}/.config/extensions-sync.json"
+    owner: "{{ env_user }}"
+    group: "{{ env_user }}"
     mode: u=rw,g=rw,o=r
     decrypt: yes
   when:
@@ -18,9 +18,9 @@
   copy:
 #    src: files/extSync-Manjaro/extensions-sync.json
     src: files/gnome/extensions/manjaro_extensions-sync
-    dest: ~/.config/extensions-sync.json
-    owner: sandro
-    group: sandro
+    dest: "/home/{{ env_user }}/.config/extensions-sync.json"
+    owner: "{{ env_user }}"
+    group: "{{ env_user }}"
     mode: u=rw,g=rw,o=r
     decrypt: yes
   when:

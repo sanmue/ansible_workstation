@@ -11,13 +11,12 @@
 
 ## alternativ:
 #- name: set gnome shell disabled-extensions - ubuntu-dock (Ubuntu + Gnome)
-##  become_user: sandro
+##  become_user: "{{ env_user }}"
 #  dconf:
 #    key: "/org/gnome/shell/disabled-extensions"
 #    value: "['ubuntu-dock@ubuntu.com']"
 #  when:
 #    - env_desktop in ["ubuntu:gnome"]
-
 
 
 #################
@@ -37,14 +36,12 @@
   when:
     - env_desktop == "ubuntu:gnome"
 
-
 ### Manjaro + Gnome ###
 - name: adding favorite apps to dock (Ubuntu + Gnome)
   command: gsettings set org.gnome.shell favorite-apps "['org.keepassxc.KeePassXC.desktop', 'firefox.desktop', 'vivaldi-stable.desktop', 'chromium.desktop', 'org.gnome.Terminal.desktop', 'terminator.desktop', 'nemo.desktop', 'org.gnome.gedit.desktop', 'libreoffice-startcenter.desktop', 'anki.desktop', 'net.cozic.joplin_desktop.desktop', 'de.willuhn.Jameica.desktop', 'rhythmbox.desktop', 'org.jitsi.jitsi-meet.desktop', 'signal-desktop.desktop', 'discord.desktop', 'whalebird_whalebird.desktop', 'org.remmina.Remmina.desktop', 'virt-manager.desktop', 'gnome-control-center.desktop', 'org.manjaro.pamac.manager.desktop']"
   when:
     - ansible_distribution == "Archlinux"
     - env_desktop == "gnome"
-
 
 ### Suse + Gnome ###
 - name: adding favorite apps to dock (Suse + Gnome)
@@ -59,19 +56,18 @@
 ######################
 
 ### Suse + Gnome ###
-- name: copy desktop-wallpaper file to local folder (Suse + Gnome)
+- name: copy desktop-wallpaper file to local system-folder (Suse + Gnome)
 #  become_user: sandro
   become: true
   copy:
     src: "files/gnome/background/gnome_embos_1440P.png"
     dest: /usr/share/wallpapers/ # systemweit verfügbar
-#    dest: /home/sandro/Bilder/
+#    dest: "/home/{{ env_user }}/Bilder/"
     remote_src: yes
     owner: root
     group: root
     mode: u=rwx,g=rwx,o=rwx
 #    mode: 0777
-
   when:
     - ansible_os_family == "Suse"
     - env_desktop == "gnome"
@@ -81,7 +77,6 @@
   dconf:
     key: "/org/gnome/desktop/background/picture-uri"
     value: "'file:///usr/share/wallpapers/gnome_embos_1440P.png'"
-#    value: "'file:///home/sandro/Bilder/gnome_embos_1440P.png'"
   when:
     - ansible_os_family == "Suse"
     - env_desktop == "gnome"
@@ -97,27 +92,35 @@
 
 
 ### Ubuntu + Gnome ###
-- name: copy desktop-wallpaper file to local folder (Ubuntu + Gnome)
+- name: copy desktop-wallpaper file to local user-folder (Ubuntu + Gnome)
 #  become_user: sandro
-#  become: true
   copy:
     src: "files/gnome/background/gnome_embos_1440P.png"
-    dest: "/home/sandro/.local/share/backgrounds/gnome_emboss_1440P.png"
+    dest: "/home/{{ env_user }}/.local/share/backgrounds/gnome_emboss_1440P.png"
     remote_src: yes
-    owner: sandro
-    group: sandro
+    owner: "{{ env_user }}"
+    group: "{{ env_user }}"
     mode: u=rwx,g=rwx,o=rwx
 #    mode: 0777
   when:
     - env_desktop == "ubuntu:gnome"
 
+################################################################################
+################################################################################
 - name: set desktop - background (Suse + Gnome)
 #  become_user: sandro
   dconf:
     key: "/org/gnome/desktop/background/picture-uri"
-    value: "'file:///home/sandro/.local/share/backgrounds/gnome_emboss_1440P.png'"
+#    value: "'file:///home/sandro/.local/share/backgrounds/gnome_emboss_1440P.png'"
+    value: "file:///home/{{ env_user }}/.local/share/backgrounds/gnome_emboss_1440P.png"
+#    state: present # standard
   when:
     - env_desktop == "ubuntu:gnome"
+
+#- debug:
+#    msg: "file:///home/{{ env_user }}/.local/share/backgrounds/gnome_emboss_1440P.png"
+################################################################################
+################################################################################
 
 - name: set desktop-wallpaper picture-options (Ubuntu + Gnome)
 #  become_user: sandro
@@ -173,9 +176,9 @@
 # all
 
 - name: create a directory for gtk-theme files in userdir (all + Gnome)
-  become_user: sandro
+#  become_user: sandro
   ansible.builtin.file:
-    path: "/home/sandro/.themes"
+    path: "/home/{{ env_user }}/.themes"
     state: directory
 #    mode: '0755'
   when:
@@ -183,11 +186,11 @@
     - env_desktop in ["gnome","ubuntu:gnome"]
 
 - name: copy gtk-theme to userdir (all + Gnome)
-  become_user: sandro
+#  become_user: sandro
   unarchive:
     src: "files/gnome/themes/MateriaBreath.zip"
-    dest: "/home/sandro/.themes/"
-    creates: "/home/sandro/.themes/MateriaBreath-dark" # tilde wird nicht unterstützt
+    dest: "/home/{{ env_user }}/.themes/"
+    creates: "/home/{{ env_user }}/.themes/MateriaBreath-dark" # tilde wird nicht unterstützt
     remote_src: yes
     keep_newer: yes
 #    owner: sandro
@@ -199,7 +202,7 @@
     - env_desktop in ["gnome","ubuntu:gnome"]
 
 - name: set desktop interface - gtk-theme (all + Gnome)
-  become_user: sandro
+#  become_user: sandro
   dconf:
     key: "/org/gnome/desktop/interface/gtk-theme"
     value: "'MateriaBreath-dark'"
@@ -222,9 +225,9 @@
 # all
 
 - name: create a directory for icon-theme files in userdir (all + Gnome)
-  become_user: sandro
+#  become_user: sandro
   ansible.builtin.file:
-    path: "/home/sandro/.icons"
+    path: "/home/{{ env_user }}/.icons"
     state: directory
 #    mode: '0755'
   when:
@@ -233,11 +236,11 @@
 
 
 - name: copy icon-theme to userdir (all + Gnome)
-  become_user: sandro
+#  become_user: sandro
   unarchive:
     src: "files/gnome/icons/Materia-Manjaro-Dark-2.zip"
-    dest: "/home/sandro/.icons/"
-    creates: "/home/sandro/.icons/Materia-Manjaro-Dark-2" # unterstützt keine tilde
+    dest: "/home/{{ env_user }}/.icons/"
+    creates: /home/"{{ env_user }}"/.icons/Materia-Manjaro-Dark-2 # unterstützt keine tilde
     remote_src: yes
     keep_newer: yes
 #    owner: sandro
@@ -249,7 +252,7 @@
     - env_desktop in ["gnome","ubuntu:gnome"]
 
 - name: set desktop interface - icon-theme (Gnome)
-  become_user: sandro
+#  become_user: sandro
   dconf:
     key: "/org/gnome/desktop/interface/icon-theme"
     value: "'Materia-Manjaro-Dark-2'"
