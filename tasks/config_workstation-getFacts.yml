@@ -16,6 +16,10 @@
   set_fact:
     env_path: "{{ ansible_facts['env']['PATH'] }}"
 
+- name: AnsibleFacts - Get PWD (PATH)
+  set_fact:
+    env_PWD: "{{ ansible_facts['env']['PWD'] }}"
+
 - name: AnsibleFacts - Get user (USER)
   set_fact:
     env_user: "{{ ansible_facts['env']['USER'] }}"
@@ -25,4 +29,5 @@
 #    msg: "env_desktop: {{ env_desktop }}"
 #    msg: "env_hostname: {{ env_hostname }}"
 #    msg: "env_path: {{ env_path }}"
+#    msg: "env_path: {{ env_PWD }}"
     msg: "env_user: {{ env_user }}"

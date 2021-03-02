@@ -484,6 +484,29 @@
 
 
 
+### gnome terminal - profiles and preferences:
+#   ------------------------------------------
+- name: set gnome terminal - profiles and preferences (Gnome)
+#  become_user: sandro
+#
+  script: "{{ env_PWD }}/tasks/config_workstation-desktopPreferences-terminal.sh" # funktioniert; ansible version 2.9
+#  ansible.builtin.script: "{{ env_PWD }}/tasks/config_workstation-desktopPreferences-terminal.sh" # ab ansible version 2.10
+#  ansible.builtin.script:  # ab ansible version 2.10
+#    cmd: "{{ env_PWD }}/tasks/config_workstation-desktopPreferences-terminal.sh"
+#
+#  command: "{{ env_PWD }}/tasks/config_workstation-desktopPreferences-terminal.sh" # funktioniert; ansible version 2.9
+#  ansible.builtin.command: "{{ env_PWD }}/tasks/config_workstation-desktopPreferences-terminal.sh" # ab ansible version 2.10
+#  ansible.builtin.command: # ab ansible version 2.10
+#    cmd: "{{ env_PWD }}/tasks/config_workstation-desktopPreferences-terminal.sh"
+# The command(s) will not be processed through the shell, so variables like $HOME and operations like "<", ">", "|", ";" and "&" will not work. Use the shell module if you need these features.
+#
+#  shell: "{{ env_PWD }}/tasks/config_workstation-desktopPreferences-terminal.sh" # funktioniert; ansible version 2.9
+#  ansible.builtin.shell: "{{ env_PWD }}/tasks/config_workstation-desktopPreferences-terminal.sh" # ab ansible version 2.10
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+
+
+
 ### gnome shell extensions -  preferences:
 #   --------------------------------------
 
@@ -620,10 +643,10 @@
 
 
 
-###########################################
-### GNOME Shell Apps Dashboard - Categories
-###########################################
-#TODO
+###############################################
+# TODO: GNOME Shell Apps Dashboard - Categories
+###############################################
+#
 # https://specifications.freedesktop.org/menu-spec/menu-spec-latest.html
 # A. Registered Categories
 #
