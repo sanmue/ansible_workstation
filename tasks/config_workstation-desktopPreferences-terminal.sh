@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # based on: https://askubuntu.com/questions/270469/how-can-i-create-a-new-profile-for-gnome-terminal-via-command-line
+# (gsettings: https://ncona.com/2019/11/configuring-gnome-terminal-programmatically/)
 
 dconfdir=/org/gnome/terminal/legacy/profiles:
 
@@ -31,7 +32,7 @@ dconf write "$dconfdir/:$id"/default-size-columns "100"
 dconf write "$dconfdir/:$id"/default-size-rows "28"
 
 # Set as default profile:
-dconf write "$dconfdir/:default" "'$id'"
+dconf write "$dconfdir/default" "'$id'"
 
 
 ######################################
@@ -55,10 +56,8 @@ dconf write "$dconfdir/:$id"/use-theme-colors "false"
 dconf write "$dconfdir/:$id"/default-size-columns "100"
 dconf write "$dconfdir/:$id"/default-size-rows "28"
 
-
 ################################################################################
 ################################################################################
-
 
 ### $ gsettings list-schemas | grep org.gnome.Terminal
 # org.gnome.Terminal.ProfilesList
@@ -68,8 +67,3 @@ dconf write "$dconfdir/:$id"/default-size-rows "28"
 # ['b1dcc9dd-5262-4d8d-a863-c897e6d979b9', 'dbf405e2-9686-4035-98c0-e23e25934e56']
 ### $ gsettings get org.gnome.Terminal.ProfilesList default
 #'b1dcc9dd-5262-4d8d-a863-c897e6d979b9'
-
-
-#profile=$(gsettings get org.gnome.Terminal.ProfilesList default)
-#profile=${profile:1:-1} # remove leading and trailing single quotes
-#gsettings set "org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:$profile/" default-size-columns 150
