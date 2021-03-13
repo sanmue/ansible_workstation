@@ -11,8 +11,10 @@
       - libvirt-daemon-system
       - libvirt-clients
       - bridge-utils
+      - libguestfs-tools
       - virtinst
-  when: 
+      - virt-top
+  when:
     - ansible_distribution == "Ubuntu"
     - ansible_virtualization_role != "guest"
 # noch ohne nested virtualization
@@ -25,8 +27,8 @@
     name:
 #     for check:
       - dmidecode
-      - inxi      
-#     qemu, dependendies, ...:      
+      - inxi
+#     qemu, dependendies, ...:
       - bridge-utils
       - dnsmasq
       - ebtables
@@ -37,7 +39,7 @@
       - samba
       - vde2
       - virt-install
-  when: 
+  when:
     - ansible_distribution == "Archlinux"
     - ansible_virtualization_role != "guest"
 # noch ohne nested virtualization
@@ -68,7 +70,7 @@
 #      - virt-install
 ##      - virt-v2v # Convert a virtual machine to run on KVM
 #      - yast2-vm
-#  when: 
+#  when:
 #    - ansible_os_family == "Suse"
 #    - ansible_virtualization_role != "guest"
 # noch ohne nested virtualization
@@ -82,7 +84,7 @@
     name:
       - kvm_server
       - kvm_tools
-  when: 
+  when:
     - ansible_os_family == "Suse"
     - ansible_virtualization_role != "guest"
 
@@ -94,7 +96,7 @@
       - libvirt-daemon-lxc
       - qemu-ovmf-x86_64
       - yast2-vm
-  when: 
+  when:
     - ansible_os_family == "Suse"
     - ansible_virtualization_role != "guest"
 # noch ohne nested virtualization
@@ -110,4 +112,3 @@
   when: ansible_virtualization_role != "guest" # or
 #        ansible_os_family != "Suse"
 # noch ohne nested virtualization
-

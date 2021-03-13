@@ -21,6 +21,7 @@
       - dconf-cli
       - dconf-editor
 #      - deluge # -> Treanmission in Standard-Inst bereits vorhanden
+      - deja-dup
       - epiphany-browser
       - evolution
       - evolution-ews
@@ -50,7 +51,7 @@
 #      - seahorse # bereits standardmäßig installiert
       - searchmonkey
       - timeshift
-  when: 
+  when:
     - ansible_distribution == "Ubuntu"
     - env_desktop == "ubuntu:gnome"
 
@@ -117,7 +118,7 @@
       - totem # -> vlc
 #      - vlc - -> totem
       - ufw
-  when: 
+  when:
     - ansible_distribution == "Archlinux"
     - env_desktop == "gnome"
 
@@ -126,7 +127,7 @@
   tags: workstation,gnome,suse
   package:
     state: latest
-    name: 
+    name:
       - alacarte
       - chromium
       - dconf-editor
@@ -174,7 +175,7 @@
       - inkscape-extensions-gimp
       - kdeconnect-kde
       - libreoffice
-      - libreoffice-filters-optional 
+      - libreoffice-filters-optional
       - libreoffice-gnome
       - libreoffice-l10n-de
 #      - libreoffice-mailmerge
@@ -215,7 +216,7 @@
       - yast2-snapper
       - snapper-zypp-plugin
       - grub2-snapper-plugin
-  when: 
+  when:
     - ansible_os_family == "Suse"
     - env_desktop == "gnome"
 
@@ -291,4 +292,3 @@
   when:
     - env_desktop == "kde"
     - ansible_os_family == "Suse"
-

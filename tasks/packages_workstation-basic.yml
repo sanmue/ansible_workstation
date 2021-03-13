@@ -44,6 +44,7 @@
     state: latest
     name:
 #      - snapd # bei Suse herausgenommen # bei Ubuntu schon vorhanden
+#      - fwupd # firmware update daemon # bereits standardm. installiert
       - gpg
       - openssh-client
       - ssh
