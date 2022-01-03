@@ -37,7 +37,6 @@
       - vlc
       - unzip
 
-
 - name: install basic packages (Ubuntu)
   tags: basic, ubuntu, workstation
   package:
@@ -48,7 +47,6 @@
       - gpg
       - openssh-client
       - ssh
-      - virt-top
       - ufw
 #     Miltimedia; entspechend libs sollten bereits installiert sein (wenn mei Installer ausgewählt wurde)
 #      - ffmpeg
@@ -59,6 +57,16 @@
 # ---
 #       - youtube-dl
   when: ansible_distribution == "Ubuntu"
+
+- name: install basic packages (Ubuntu + x11 display server)
+  tags: basic, ubuntu, workstation
+  package:
+    state: latest
+    name:
+      - xclip   # Voraussetzung für snap-package "espanso"
+  when:
+    - ansible_distribution == "Ubuntu"
+    - env_displayserver == "x11"
 
 
 - name: install basic packages (Archlinux)
