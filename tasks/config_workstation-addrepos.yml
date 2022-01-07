@@ -21,6 +21,21 @@
 #    - ansible_distribution == "Ubuntu"
     - ansible_pkg_mgr == "apt"
 
+- name: add repo for swtpm (Ubuntu <22)   # wg. VM: Win11 (TPM 2.0)
+  # https://launchpad.net/~smoser/+archive/ubuntu/swtpm
+  # https://launchpad.net/~stefanberger/+archive/ubuntu/swtpm
+  tags: workstation,ubuntu,addrepos,pre
+  apt_repository:
+    #repo: deb http://ppa.launchpad.net/smoser/swtpm/ubuntu focal main
+    repo: ppa:smoser/swtpm
+    state: present
+    update_cache: yes
+  when:
+    - ansible_pkg_mgr == "apt"
+    - ansible_distribution == "Ubuntu"
+    - ansible_distribution_major_version|int < 22
+      # ab Ubuntu 22.04 ist swtpm anscheinend in Standard-Repo mit drin
+
 - name: add repo for flatpak (Ubuntu)
   tags: workstation,ubuntu,addrepos,pre,flatpak
   apt_repository:
@@ -84,4 +99,3 @@
 #    # kommando nur ausführen, wenn "/etc/zypp/repos.d/vivaldi.repo" nicht vorhanden
 #  when:
 #    - ansible_pkg_mgr == "zypper"
-

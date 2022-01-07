@@ -14,6 +14,8 @@
       - libguestfs-tools
       - virtinst
       - virt-top
+      - swtpm        # wg. Win11: TPM 2.0;
+      - swtpm-tools  # zumin. bis Ubuntu < 22 ist ppa erforderlich (ppa:smoser/swtpm)
   when:
     - ansible_distribution == "Ubuntu"
     - ansible_virtualization_role != "guest"
