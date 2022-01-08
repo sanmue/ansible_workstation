@@ -29,6 +29,7 @@
     - 'org.libreoffice.LibreOffice'
 #    - 'org.mozilla.Thunderbird' --> evolution
     - 'org.signal.Signal'
+    - 'de.haeckerfelix.Shortwave'
   when:
     - ansible_distribution in ["Ubuntu"]
 
@@ -54,6 +55,7 @@
 #    - 'org.libreoffice.LibreOffice'
 #    - 'org.mozilla.Thunderbird'
 #    - 'org.signal.Signal'
+    - 'de.haeckerfelix.Shortwave'
   when:
     - ansible_distribution in ["Archlinux"]
 
@@ -73,7 +75,7 @@
     - 'net.cozic.joplin_desktop'
     - 'org.jitsi.jitsi-meet'
     - 'org.signal.Signal'
+    - 'de.haeckerfelix.Shortwave'
   when:
 #    - ansible_distribution == "openSUSE Leap"
     - ansible_os_family == "Suse"
-

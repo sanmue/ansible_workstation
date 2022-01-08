@@ -2,24 +2,25 @@
 #######
 ### apt
 #######
-- name: add apt signing key for repos (Ubuntu)
-  tags: workstation,ubuntu,addrepos,pre
-  apt_key:
-    url: https://repo.vivaldi.com/archive/linux_signing_key.pub
-    state: present
-  when:
-#    - ansible_distribution == "Ubuntu"
-    - ansible_pkg_mgr == "apt"
 
-- name: add repo for Vivaldi Browser (Ubuntu)
-  tags: workstation,ubuntu,addrepos,pre
-  apt_repository:
-    repo: deb https://repo.vivaldi.com/archive/deb/ stable main
-    state: present
-    update_cache: yes
-  when:
-#    - ansible_distribution == "Ubuntu"
-    - ansible_pkg_mgr == "apt"
+#- name: add apt signing key for repos (Ubuntu)
+#  tags: workstation,ubuntu,addrepos,pre
+#  apt_key:
+#    url: https://repo.vivaldi.com/archive/linux_signing_key.pub
+#    state: present
+#  when:
+##    - ansible_distribution == "Ubuntu"
+#    - ansible_pkg_mgr == "apt"
+
+#- name: add repo for Vivaldi Browser (Ubuntu)
+#  tags: workstation,ubuntu,addrepos,pre
+#  apt_repository:
+#    repo: deb https://repo.vivaldi.com/archive/deb/ stable main
+#    state: present
+#    update_cache: yes
+#  when:
+##    - ansible_distribution == "Ubuntu"
+#    - ansible_pkg_mgr == "apt"
 
 - name: add repo for swtpm (Ubuntu <22)   # wg. VM: Win11 (TPM 2.0)
   # https://launchpad.net/~smoser/+archive/ubuntu/swtpm
