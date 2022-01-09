@@ -35,6 +35,7 @@
     - ansible_pkg_mgr == "apt"
     - ansible_distribution == "Ubuntu"
     - ansible_distribution_major_version|int < 22
+    - ansible_virtualization_role != "guest"
       # ab Ubuntu 22.04 ist swtpm anscheinend in Standard-Repo mit drin
 
 - name: add repo for flatpak (Ubuntu)
