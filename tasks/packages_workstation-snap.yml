@@ -15,13 +15,13 @@
       - whalebird
   when: ansible_os_family != "Suse"
 
-- name: install snap packages (--classic) for workstations (all distros, not Suse)
-  tags: workstation,ubuntu,arch,snap #,suse
+- name: install snap packages (--classic) for workstations (all distros)
+  tags: workstation,ubuntu,arch,snap,suse
   snap:
     state: present
     name: espanso
     classic: yes
-  when: ansible_os_family != "Suse"
+
 # alternativ (https://newbedev.com/install-snap-packages-with-ansible):
 #- name: install heroku cli via snap
 #  command: snap install heroku --classic
