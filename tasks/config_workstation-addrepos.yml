@@ -38,6 +38,10 @@
     - ansible_virtualization_role != "guest"
       # ab Ubuntu 22.04 ist swtpm anscheinend in Standard-Repo mit drin
 
+- name: Add Apt signing key for Microsoft Teams repo
+  ansible.builtin.apt_key:
+    url: https://packages.microsoft.com/keys/microsoft.asc
+    state: present
 
 - name: add repo for Microsoft Teams (apt)
   tags: workstation,ubuntu,addrepos,pre

@@ -4,6 +4,7 @@
 # Skript ist mit root-rechten zu Starten
 
 repodir="dev"
+playbookdir="ansible_test"
 userid=$(whoami)
 
 # echo "Ich bin: ${userid}"
@@ -21,24 +22,30 @@ sudo apt-get update && sudo apt-get dist-upgrade -y && sudo apt-get install -y -
 echo "Aktiviere Firewall 'ufw' und erlaube ssh ..."
 sudo ufw enable && sudo ufw allow ssh comment 'SSH' && sudo ufw reload
 
-echo "Einrichten von git-config für ${userid} ..."
-#userid=$(read -r "UserID des (Git-)Anwenders mit Ansible-Playbook eingeben:")
-fullname=$(read -r "Name und Vorname eingeben:")
-email=$(read -r "E-Mail Adresse eingeben:")
-touch "/home/${userid}/.gitconfig"
-echo "[user]" >> "/home/${userid}/.gitconfig"
-echo "  email = ${email}" >> "/home/${userid}/.gitconfig"
-echo "  name = ${fullname}" >> "/home/${userid}/.gitconfig"
+echo "Einrichten von git-config für '${userid}' ..."
+read -rp "Name und Vorname eingeben: " fullname
+read -rp "E-Mail Adresse eingeben: " email
+#touch "/home/${userid}/.gitconfig"
+#echo "[user]" > "/home/${userid}/.gitconfig"
+#echo "  email = ${email}" >> "/home/${userid}/.gitconfig"
+#echo "  name = ${fullname}" >> "/home/${userid}/.gitconfig"
+git config --global user.name "${fullname}"
+git config --global user.email "${email}"
+echo "Git-config ist nun:" 
+git config --list
 
-echo "Erstelle neues Verzeichnis '${repodir}' im Home-Verzeichnis von '${userid}' ..."
-mkdir -p "/home/${userid}/dev"
+echo "Erstelle neues Verzeichnis '${repodir}' und Unterverzeichnis '${playbookdir}' im Home-Verzeichnis von '${userid}' ..."
+mkdir -p "/home/${userid}/${repodir}/${playbookdir}"
 
 echo "Clone git-Repo des Ansible-Playbooks ins Verzeichnis '${repodir}' ..."
 #cd "/home/${userid}/${repodir}"
-git clone git@github.com:sanmue/ansible_test.git "/home/${userid}/${repodir}"
+git clone git@github.com:sanmue/ansible_test.git "/home/${userid}/${repodir}/${playbookdir}"
 #cd "/home/${userid}/${repodir}"
 
 echo "Starte TEST des Playbooks ..."
 ansible-playbook "/home/${userid}/dev/ansible_test/local.yml" -v --ask-become-pass --check
 # bei verschllüsselten Daten:
 #ansible-playbook "/home/${userid}/dev/ansible_test/local.yml" -v -K -C --vault-password-file "/home/${userid}/.ansibleVaultKey"
+
+echo "Starte Playbook ..."
+ansible-playbook "/home/${userid}/dev/ansible_test/local.yml" -v --ask-become-pass
