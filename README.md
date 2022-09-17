@@ -1,2 +1,2 @@
 # ansible
-Test AutoConfig HomeClients
+Test autom. Installation HomeClients
