@@ -27,7 +27,7 @@
 #      - keepassxc-lang # gibt es nicht bei ubuntu
 #      - kitty   # gpu beschleunigtes terminal
       - lsb-release
-#      - nano
+#      - nano   # --> vim
       - neofetch
       - powershell   # repo wurde hinzugefügt
       - remmina
@@ -36,6 +36,7 @@
 #      - snapd # bei Suse herausgenommen
 #      - syncthing
       - terminator # bei Suse+KDE nicht unbedingt notwendig -> Konsole
+      - vim
       - vlc
       - unzip
 
