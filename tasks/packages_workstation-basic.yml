@@ -16,18 +16,20 @@
       - flatpak
       - gimp
 #      - gimp-lang # gibt es nicht bei ubuntu
-      - gimp-help-de
+#      - gimp-help-de
       - gitk
-      - gparted
+#      - gparted
       - grsync
       - git
       - htop
 #      - hyphen-de
       - keepassxc
 #      - keepassxc-lang # gibt es nicht bei ubuntu
+#      - kitty   # gpu beschleunigtes terminal
       - lsb-release
-      - nano
+#      - nano
       - neofetch
+      - powershell   # repo wurde hinzugefügt
       - remmina
       - rsync
 #      - skanlite # eher bei KDE

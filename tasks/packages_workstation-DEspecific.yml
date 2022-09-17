@@ -33,7 +33,9 @@
       - exfat-fuse
       - exfat-utils
       - firefox # -> in Standard-Inst bereits vorhanden
-      - firefox-locale-de
+#      - firefox-locale-de
+#      - firefox-locale-en
+      - gjs # fehlendes Paket, damit ab 22.04 der Monitor in Engergiesparmodus kann (Bildschirmausgabe wird ausgeschaltet nach längerer Inktivität)
       - gnome-software-plugin-flatpak
 #      - gnome-weather
 #      - guake
@@ -41,15 +43,18 @@
       - hunspell-de-de-frami
       - inkscape
 #      - kdeconnect -> ? gnome-shell-extension-gsconnect ?
-      - language-pack-gnome-de-base
-      - language-pack-gnome-de
-      - luckybackup
+#      - language-pack-gnome-de-base
+#      - language-pack-gnome-de
+      - language-pack-gnome-en-base
+      - language-pack-gnome-en
+#      - luckybackup
       - nemo
 #      - nextcloud-desktop # -> flatpak
       - python3-psutil
       - rhythmbox
 #      - seahorse # bereits standardmäßig installiert
-      - searchmonkey
+#      - searchmonkey
+      - teams   # Micosoft Teams (repo wurde hinzugefügt)
       - timeshift
   when:
     - ansible_distribution == "Ubuntu"

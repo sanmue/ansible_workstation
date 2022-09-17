@@ -19,7 +19,9 @@
   tags: workstation,ubuntu,arch,snap,suse
   snap:
     state: present
-    name: espanso
+    name: 
+      - espanso
+      - code   # Visual Studio Code
     classic: yes
 
 # alternativ (https://newbedev.com/install-snap-packages-with-ansible):

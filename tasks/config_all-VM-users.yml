@@ -3,7 +3,7 @@
 ### VM
 ######
 - name: add current user to group 'kvm' (Ubuntu)
-  user:
+  ansible.builtin.user:
     name: "{{ env_user }}"
     groups: kvm
     append: yes
@@ -13,9 +13,9 @@
 # noch ohne nested virtualization
 
 - name: add current user to groups 'libvirt,kmv' (Suse,Archlinux)
-  user:
+  ansible.builtin.user:
     name: "{{ env_user }}"
-# TODO check # Groblösung: Gruppe 'wheel' scheint bei Suse i.V.m. NetworkManger ein Neztwerkproblem zu lösen
+# TODO check # Groblösung: Gruppe 'wheel' scheint bei Suse i.V.m. NetworkManger ein Netzwerkproblem zu lösen
     groups: libvirt,kvm,wheel
     append: yes
   when:

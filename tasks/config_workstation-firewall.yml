@@ -25,7 +25,7 @@
   register: firewall_ufw
 
 
-- name: UFW - allow KDE Connect / GSConnect (upd) (Ubuntu)
+- name: UFW - allow KDE Connect / GSConnect (udp) (Ubuntu)
   ufw:
     rule: allow
     port: 1714:1764
@@ -34,7 +34,7 @@
   when: ansible_distribution == "Ubuntu"
   register: firewall_ufw
 
-- name: UFW - allow KDE Connect / GSConnect (upd) (Archlinux + Gnome)
+- name: UFW - allow KDE Connect / GSConnect (udp) (Archlinux + Gnome)
   ufw:
     rule: allow
     port: 1714:1764

@@ -14,7 +14,7 @@
 
 #- name: add repo for Vivaldi Browser (Ubuntu)
 #  tags: workstation,ubuntu,addrepos,pre
-#  apt_repository:
+#  ansible.builtin.apt_repository:
 #    repo: deb https://repo.vivaldi.com/archive/deb/ stable main
 #    state: present
 #    update_cache: yes
@@ -22,11 +22,11 @@
 ##    - ansible_distribution == "Ubuntu"
 #    - ansible_pkg_mgr == "apt"
 
-- name: add repo for swtpm (Ubuntu <22)   # wg. VM: Win11 (TPM 2.0)
+- name: add repo for swtpm (apt, Ubuntu <22)   # wg. VM: Win11 (TPM 2.0)
   # https://launchpad.net/~smoser/+archive/ubuntu/swtpm
   # https://launchpad.net/~stefanberger/+archive/ubuntu/swtpm
   tags: workstation,ubuntu,addrepos,pre
-  apt_repository:
+  ansible.builtin.apt_repository:
     #repo: deb http://ppa.launchpad.net/smoser/swtpm/ubuntu focal main
     repo: ppa:smoser/swtpm
     state: present
@@ -38,9 +38,28 @@
     - ansible_virtualization_role != "guest"
       # ab Ubuntu 22.04 ist swtpm anscheinend in Standard-Repo mit drin
 
-- name: add repo for flatpak (Ubuntu)
+
+- name: add repo for Microsoft Teams (apt)
+  tags: workstation,ubuntu,addrepos,pre
+  ansible.builtin.apt_repository:
+    repo: deb https://packages.microsoft.com/repos/ms-teams stable main
+    state: present
+#    update_cache: yes  # default ist yes, daher kann man es weglassen
+  when:
+    - ansible_pkg_mgr == "apt"
+
+
+- name: add repo for PowerShell (Ubuntu)
+  tags: workstation,ubuntu,addrepos,pre
+  ansible.builtin.apt_repository:
+    repo: "deb https://packages.microsoft.com/config/ubuntu/{{ env_lsb }}/packages-microsoft-prod.deb"
+    state: present
+  when:
+    - ansible_distribution == "Ubuntu"
+
+- name: add repo for flatpak (apt)
   tags: workstation,ubuntu,addrepos,pre,flatpak
-  apt_repository:
+  ansible.builtin.apt_repository:
     repo: ppa:alexlarsson/flatpak
     state: present
     update_cache: yes

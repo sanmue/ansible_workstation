@@ -30,6 +30,10 @@
   set_fact:
     env_user: "{{ ansible_facts['env']['USER'] }}"
 
+- name: AnsibleFacts - Get lsb lsb-release
+  set_fact:
+    env_lsb: "{{ ansible_facts['lsb']['release'] }}"   # z.B. bei Ubuntu 20.04: "20.04"
+
 - name: AnsibleFacts - Print variable
   debug:
 #    msg: "env_desktop: {{ env_desktop }}"

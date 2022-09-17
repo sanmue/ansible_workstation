@@ -14,22 +14,23 @@
     method: system
   with_items:
     - 'com.belmoussaoui.Authenticator'
-    - 'com.discordapp.Discord'
-    - 'com.github.johnfactotum.Foliate'
-    - 'com.github.micahflee.torbrowser-launcher'
-    - 'com.nextcloud.desktopclient.nextcloud'
-#    - 'com.ulduzsoft.Birdtray'  --> evolution
-    - 'de.willuhn.Jameica'
-    - 'io.atom.Atom'
-    - 'net.cozic.joplin_desktop'
     - 'org.chromium.Chromium'
+    - 'com.discordapp.Discord'
+    - 'org.gnome.Extensions'
+    - 'com.github.johnfactotum.Foliate'
+    - 'de.willuhn.Jameica'
     - 'org.jitsi.jitsi-meet'
+    - 'net.cozic.joplin_desktop'
     - 'org.keepassxc.KeePassXC'
     - 'org.ksnip.ksnip'   # im Ksnip-Editor können noch ergänzngen (Markieren, Rahemen, ... gemacht werden; im ggs. zu "Screenshot")
     - 'org.libreoffice.LibreOffice'
-#    - 'org.mozilla.Thunderbird' --> evolution
-    - 'org.signal.Signal'
+    - 'com.nextcloud.desktopclient.nextcloud'
     - 'de.haeckerfelix.Shortwave'
+    - 'org.signal.Signal'
+    - 'flathub io.bit3.ThreemaQT'
+    - 'com.github.micahflee.torbrowser-launcher'
+#    - 'com.ulduzsoft.Birdtray'  --> evolution
+#    - 'org.mozilla.Thunderbird' --> evolution
   when:
     - ansible_distribution in ["Ubuntu"]
 
