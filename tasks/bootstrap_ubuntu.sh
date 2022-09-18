@@ -25,17 +25,21 @@ sudo apt-get install -y --show-progress wget apt-transport-https software-proper
 echo "Aktiviere Firewall 'ufw' und erlaube ssh ..."
 sudo ufw enable && sudo ufw allow ssh comment 'SSH' && sudo ufw reload
 
-echo "Einrichten von git-config für '${userid}' ..."
-read -rp "Name und Vorname eingeben: " fullname
-read -rp "E-Mail Adresse eingeben: " email
-#touch "/home/${userid}/.gitconfig"
-#echo "[user]" > "/home/${userid}/.gitconfig"
-#echo "  email = ${email}" >> "/home/${userid}/.gitconfig"
-#echo "  name = ${fullname}" >> "/home/${userid}/.gitconfig"
-git config --global user.name "${fullname}"
-git config --global user.email "${email}"
-echo "Git-config ist nun:" 
-git config --list
+read -rp "Soll Git konfiguriert werden (git config Name+Mail) für '${userid}' (j/n): " gitconf
+if [ "${gitconf}" = 'j' ]; then
+    read -rp "Name und Vorname eingeben: " fullname
+    read -rp "E-Mail Adresse eingeben: " email
+    #touch "/home/${userid}/.gitconfig"
+    #echo "[user]" > "/home/${userid}/.gitconfig"
+    #echo "  email = ${email}" >> "/home/${userid}/.gitconfig"
+    #echo "  name = ${fullname}" >> "/home/${userid}/.gitconfig"
+    git config --global user.name "${fullname}"
+    git config --global user.email "${email}"
+    echo "Git-config ist nun:" 
+    git config --list
+else
+    echo "Git config wird übersprungen"
+fi
 
 echo "Erstelle neues Verzeichnis '${repodir}' und Unterverzeichnis '${playbookdir}' im Home-Verzeichnis von '${userid}' ..."
 mkdir -p "/home/${userid}/${repodir}/${playbookdir}"
