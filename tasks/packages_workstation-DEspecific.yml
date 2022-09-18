@@ -31,7 +31,7 @@
       - evolution-plugin-spamassassin
       - evolution-plugins
       - exfat-fuse
-      - exfat-utils
+#      - exfat-utils   # scheint es (bei/für Ubuntu 22.04) nicht (mehr) zu geben
       - firefox # -> in Standard-Inst bereits vorhanden
 #      - firefox-locale-de
 #      - firefox-locale-en
