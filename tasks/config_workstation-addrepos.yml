@@ -61,10 +61,10 @@
 # https://learn.microsoft.com/de-de/powershell/scripting/install/install-ubuntu?view=powershell-5.1#installation-via-package-repository
 # https://www.ntweekly.com/2021/04/07/ansible-playbook-install-powershell-7-on-ubuntu-server-20-04/
 - name: Download the Microsoft repository GPG keys (Ubuntu LTS)
-  ansible.builtin.apt_key:
+  ansible.builtin.get_url:
     url: "https://packages.microsoft.com/config/ubuntu/{{ env_lsb }}/packages-microsoft-prod.deb"
     dest: /tmp/packages-microsoft-prod.deb
-#    force_basic_auth: yes
+    force_basic_auth: yes
   when:
     - ansible_pkg_mgr == "apt"
     - ansible_distribution == "Ubuntu"
