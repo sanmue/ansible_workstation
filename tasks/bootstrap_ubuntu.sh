@@ -45,8 +45,8 @@ echo "Clone git-Repo des Ansible-Playbooks ins Verzeichnis '${repodir}' ..."
 git clone git@github.com:sanmue/ansible_test.git "/home/${userid}/${repodir}/${playbookdir}"
 #cd "/home/${userid}/${repodir}"
 
-echo "Starte TEST des Playbooks ..."
-ansible-playbook "/home/${userid}/dev/ansible_test/local.yml" -v --ask-become-pass --check
+#echo "Starte TEST des Playbooks ..."
+#ansible-playbook "/home/${userid}/dev/ansible_test/local.yml" -v --ask-become-pass --check
 # bei verschllüsselten Daten:
 #ansible-playbook "/home/${userid}/dev/ansible_test/local.yml" -v -K -C --vault-password-file "/home/${userid}/.ansibleVaultKey"
 
