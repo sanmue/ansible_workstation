@@ -10,7 +10,7 @@
       - gnome-shell-extension-gsconnect
       - gnome-shell-extension-gsconnect-browsers
       - gnome-tweaks
-      - gnome-tweak-tool
+#      - gnome-tweak-tool   # scheint nicht (merh) vorahnden (Ubuntu 22.04)
   when:
     - env_desktop == "ubuntu:gnome"
 
