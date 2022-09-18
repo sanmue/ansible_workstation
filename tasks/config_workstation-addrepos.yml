@@ -38,28 +38,56 @@
     - ansible_virtualization_role != "guest"
       # ab Ubuntu 22.04 ist swtpm anscheinend in Standard-Repo mit drin
 
+# https://learn.microsoft.com/en-us/microsoftteams/get-clients?tabs=Linux#desktop-clients
 - name: Add Apt signing key for Microsoft Teams repo
   ansible.builtin.apt_key:
-    url: https://packages.microsoft.com/keys/microsoft.asc
+    url: "https://packages.microsoft.com/keys/microsoft.asc"
     state: present
+  when:
+    - ansible_pkg_mgr == "apt"
+    - ansible_distribution == "Ubuntu"
 
 - name: add repo for Microsoft Teams (apt)
   tags: workstation,ubuntu,addrepos,pre
   ansible.builtin.apt_repository:
-    repo: deb https://packages.microsoft.com/repos/ms-teams stable main
+    repo: 'deb https://packages.microsoft.com/repos/ms-teams stable main'
     state: present
-#    update_cache: yes  # default ist yes, daher kann man es weglassen
+    update_cache: yes  # default ist yes, daher kann man es weglassen
   when:
     - ansible_pkg_mgr == "apt"
-
-
-- name: add repo for PowerShell (Ubuntu)
-  tags: workstation,ubuntu,addrepos,pre
-  ansible.builtin.apt_repository:
-    repo: "deb https://packages.microsoft.com/config/ubuntu/{{ env_lsb }}/packages-microsoft-prod.deb"
-    state: present
-  when:
     - ansible_distribution == "Ubuntu"
+
+# https://learn.microsoft.com/de-de/powershell/scripting/install/installing-powershell-on-linux?view=powershell-5.1#ubuntu
+# https://learn.microsoft.com/de-de/powershell/scripting/install/install-ubuntu?view=powershell-5.1#installation-via-package-repository
+# https://www.ntweekly.com/2021/04/07/ansible-playbook-install-powershell-7-on-ubuntu-server-20-04/
+- name: Download the Microsoft repository GPG keys
+  ansible.builtin.apt_key:
+    url: "https://packages.microsoft.com/config/ubuntu/{{ env_lsb }}/packages-microsoft-prod.deb"
+    dest: /tmp/packages-microsoft-prod.deb
+    force_basic_auth: yes
+  when:
+    - ansible_pkg_mgr == "apt"
+    - ansible_distribution == "Ubuntu"
+
+- name: Register the Microsoft repository GPG keys
+  command:
+    cmd: dpkg -i /tmp/packages-microsoft-prod.deb
+  when:
+    - ansible_pkg_mgr == "apt"
+    - ansible_distribution == "Ubuntu"
+
+- name: Update package lists
+  apt:
+    update_cache: yes 
+
+#- name: add repo for PowerShell (Ubuntu)
+#  tags: workstation,ubuntu,addrepos,pre
+#  ansible.builtin.apt_repository:
+#    repo: "deb https://packages.microsoft.com/config/ubuntu/{{ env_lsb }}/packages-microsoft-prod.deb"
+#    state: present
+#    update_cache: yes
+#  when:
+#    - ansible_distribution == "Ubuntu"
 
 - name: add repo for flatpak (apt)
   tags: workstation,ubuntu,addrepos,pre,flatpak
@@ -70,6 +98,8 @@
   when:
 #    - ansible_distribution == "Ubuntu"
     - ansible_pkg_mgr == "apt"
+
+
 
 ##########
 ### zypper

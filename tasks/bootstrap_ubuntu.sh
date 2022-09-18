@@ -19,6 +19,9 @@ userid=$(whoami)
 echo "Update Repos und Installation benoetigte Software ..."
 sudo apt-get update && sudo apt-get dist-upgrade -y && sudo apt-get install -y --show-progress git ansible chrome-gnome-shell ssh ufw
 
+echo "Installiere benötigte Packages für Installation von Microsoft PowerShell"
+sudo apt-get install -y --show-progress wget apt-transport-https software-properties-common
+
 echo "Aktiviere Firewall 'ufw' und erlaube ssh ..."
 sudo ufw enable && sudo ufw allow ssh comment 'SSH' && sudo ufw reload
 
