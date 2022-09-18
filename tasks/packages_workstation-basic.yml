@@ -9,7 +9,7 @@
     state: latest
     name:
       - anki
-      - ansible
+#      - ansible   # bereits installiert (bootstrap)
       - clamav
       - clamtk
       - curl
@@ -20,7 +20,7 @@
       - gitk
 #      - gparted
       - grsync
-      - git
+#      - git   # bereits installiert (bootstrap)
       - htop
 #      - hyphen-de
       - keepassxc

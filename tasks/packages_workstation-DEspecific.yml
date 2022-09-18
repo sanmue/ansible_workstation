@@ -25,7 +25,7 @@
       - epiphany-browser
       - evolution
       - evolution-ews
-      - evolution-indicator
+#      - evolution-indicator   # scheint es (bei/für Ubuntu 22.04) nicht (mehr) zu geben
       - evolution-plugin-bogofilter
       - evolution-plugin-pstimport
       - evolution-plugin-spamassassin
