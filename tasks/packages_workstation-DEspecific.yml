@@ -70,7 +70,7 @@
 #      - firefox # -> ab 22.04: als snap package
 #      - firefox-locale-de
 #      - firefox-locale-en
-    default_release: LP-PPA-mozillateam   # damit aus ppa installiert wird, und nicht wieder von ubuntu als snap
+    default_release: 'o=LP-PPA-mozillateam'   # damit aus ppa installiert wird, und nicht wieder von ubuntu als snap
     update_cache: yes
   when:
     - ansible_distribution == "Ubuntu"
