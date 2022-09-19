@@ -510,8 +510,8 @@
     creates: "/home/{{ env_user }}/.ansibleTerminalProfileSet"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
-    - ansible_facts['ansible_version']['major']|int = 2
-    - ansible_facts['ansible_version']['minor']|int = 9
+    - ansible_version.major = "2"
+    - ansible_version.minor = "9"
 
 
 - name: create flag - file .ansibleTerminalProfileSet (Gnome)
