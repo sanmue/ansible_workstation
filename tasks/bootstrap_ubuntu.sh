@@ -25,7 +25,7 @@ sudo apt-get install -y --show-progress wget apt-transport-https software-proper
 echo "Aktiviere Firewall 'ufw' und erlaube ssh ..."
 sudo ufw enable && sudo ufw allow ssh comment 'SSH' && sudo ufw reload
 
-read -rp "Soll Git konfiguriert werden (git config Name+Mail) für '${userid}' (j/n): " gitconf
+read -rp "Soll Git konfiguriert werden (git config Name+Mail) für '${userid}' (j/n)?: " gitconf
 if [ "${gitconf}" = 'j' ]; then
     read -rp "Name und Vorname eingeben: " fullname
     read -rp "E-Mail Adresse eingeben: " email
@@ -49,10 +49,15 @@ echo "Clone git-Repo des Ansible-Playbooks ins Verzeichnis '${repodir}' ..."
 git clone git@github.com:sanmue/ansible_test.git "/home/${userid}/${repodir}/${playbookdir}"
 #cd "/home/${userid}/${repodir}"
 
-#echo "Starte TEST des Playbooks ..."
-#ansible-playbook "/home/${userid}/dev/ansible_test/local.yml" -v --ask-become-pass --check
-# bei verschllüsselten Daten:
-#ansible-playbook "/home/${userid}/dev/ansible_test/local.yml" -v -K -C --vault-password-file "/home/${userid}/.ansibleVaultKey"
+read -rp "Soll TEST des Ansible-Playbooks durchgeführt werden (j/n)?: " testplay
+if [ "${testplay}" = 'j' ]; then
+    echo "Starte TEST des Playbooks ..."
+    ansible-playbook "/home/${userid}/dev/ansible_test/local.yml" -v --ask-become-pass --check
+    # bei verschllüsselten Daten:
+    #ansible-playbook "/home/${userid}/dev/ansible_test/local.yml" -v -K -C --vault-password-file "/home/${userid}/.ansibleVaultKey"
+else
+    echo "Test des Playbooks wird nicht durchgefürt"
+fi
 
-echo "Starte Playbook ..."
+echo "Starte Ansible-Playbook ..."
 ansible-playbook "/home/${userid}/dev/ansible_test/local.yml" -v --ask-become-pass

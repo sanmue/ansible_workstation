@@ -1,5 +1,5 @@
 
-- name: Install gnomeshell extension stuff (Ubuntu + Gnome)
+- name: Install gnomeshell extension stuff (Ubuntu >=22 + Gnome)
   tags: workstation,gnome,ubuntu
   package:
     state: latest
@@ -10,9 +10,19 @@
       - gnome-shell-extension-gsconnect
       - gnome-shell-extension-gsconnect-browsers
       - gnome-tweaks
-#      - gnome-tweak-tool   # scheint nicht (merh) vorahnden (Ubuntu 22.04)
   when:
     - env_desktop == "ubuntu:gnome"
+    - ansible_distribution_major_version|int >= 22
+
+- name: Install gnomeshell extension stuff (Ubuntu <22 + Gnome)
+  tags: workstation,gnome,ubuntu
+  package:
+    state: latest
+    name:
+      - gnome-tweak-tool   # scheint nicht (mehr) vorhanden in Ubuntu 22.04
+  when:
+    - env_desktop == "ubuntu:gnome"
+    - ansible_distribution_major_version|int < 22
 
 
 - name: Install gnomeshell extension stuff (Archlinux + Gnome)

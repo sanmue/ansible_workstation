@@ -3,7 +3,7 @@
 ### apt
 #######
 
-#- name: add apt signing key for repos (Ubuntu)
+#- name: add apt signing key for repos (apt, Ubuntu)
 #  tags: workstation,ubuntu,addrepos,pre
 #  apt_key:
 #    url: https://repo.vivaldi.com/archive/linux_signing_key.pub
@@ -22,7 +22,7 @@
 ##    - ansible_distribution == "Ubuntu"
 #    - ansible_pkg_mgr == "apt"
 
-- name: add repo for swtpm (apt, Ubuntu <22)   # wg. VM: Win11 (TPM 2.0)
+- name: add repo for swtpm (apt, Ubuntu <22, not VM)   # wg. VM: Win11 (TPM 2.0)
   # https://launchpad.net/~smoser/+archive/ubuntu/swtpm
   # https://launchpad.net/~stefanberger/+archive/ubuntu/swtpm
   tags: workstation,ubuntu,addrepos,pre
@@ -39,7 +39,7 @@
       # ab Ubuntu 22.04 ist swtpm anscheinend in Standard-Repo mit drin
 
 # https://learn.microsoft.com/en-us/microsoftteams/get-clients?tabs=Linux#desktop-clients
-- name: Add Apt signing key for Microsoft Teams repo (Ubuntu)
+- name: Add Apt signing key for Microsoft Teams repo (apt, Ubuntu)
   ansible.builtin.apt_key:
     url: "https://packages.microsoft.com/keys/microsoft.asc"
     state: present
@@ -47,7 +47,7 @@
     - ansible_pkg_mgr == "apt"
     - ansible_distribution == "Ubuntu"
 
-- name: add repo for Microsoft Teams (apt)
+- name: add repo for Microsoft Teams (apt, Ubuntu)
   tags: workstation,ubuntu,addrepos,pre
   ansible.builtin.apt_repository:
     repo: 'deb https://packages.microsoft.com/repos/ms-teams stable main'
@@ -60,7 +60,7 @@
 # https://learn.microsoft.com/de-de/powershell/scripting/install/installing-powershell-on-linux?view=powershell-5.1#ubuntu
 # https://learn.microsoft.com/de-de/powershell/scripting/install/install-ubuntu?view=powershell-5.1#installation-via-package-repository
 # https://www.ntweekly.com/2021/04/07/ansible-playbook-install-powershell-7-on-ubuntu-server-20-04/
-- name: Download the Microsoft repository GPG keys (Ubuntu LTS)
+- name: Download the Microsoft repository GPG keys (apt, Ubuntu LTS)
   ansible.builtin.get_url:
     url: "https://packages.microsoft.com/config/ubuntu/{{ env_lsb }}/packages-microsoft-prod.deb"
     dest: /tmp/packages-microsoft-prod.deb
@@ -69,7 +69,7 @@
     - ansible_pkg_mgr == "apt"
     - ansible_distribution == "Ubuntu"
 
-- name: Register the Microsoft repository GPG keys (Ubuntu)
+- name: Register the Microsoft repository GPG keys (apt, Ubuntu)
   command:
     cmd: dpkg -i /tmp/packages-microsoft-prod.deb
   when:
