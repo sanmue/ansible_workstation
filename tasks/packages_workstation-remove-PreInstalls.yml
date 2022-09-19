@@ -5,6 +5,29 @@
 ### Gnome
 #########
 
+# https://fostips.com/ubuntu-21-10-two-firefox-remove-snap/
+- name: Uninstall snap packages for workstation - Firefox (Ubuntu >20 + Gnome)
+  tags: workstation,ubuntu,arch,snap,suse
+  snap:
+    state: absent
+    name: 
+      - firefox
+  when:
+    - ansible_distribution == "Ubuntu"
+    - ansible_distribution_major_version|int > 20
+    - env_desktop == "ubuntu:gnome"
+
+- name: Uninstall packages for workstations Firefox (Ubuntu >20 + Gnome)
+  tags: workstation,gnome,ubuntu
+  package:
+    state: absent
+    name:
+      - firefox
+  when: 
+    - ansible_distribution == "Ubuntu"
+    - ansible_distribution_major_version|int > 20
+    - env_desktop == "ubuntu:gnome"
+
 - name: Uninstall packages for workstations (Ubuntu + Gnome)
   tags: workstation,gnome,ubuntu
   package:
@@ -19,16 +42,7 @@
     - ansible_distribution == "Ubuntu"
     - env_desktop == "ubuntu:gnome"
 
-- name: Uninstall snap packages for workstation (Ubuntu >20, Gnome)
-  tags: workstation,ubuntu,arch,snap,suse
-  snap:
-    state: absent
-    name: 
-      - firefox
-  when:
-    - ansible_distribution == "Ubuntu"
-    - ansible_distribution_major_version|int > 20
-    - env_desktop == "ubuntu:gnome"
+
 
 #- name: Uninstall packages for workstations (Archlinux + Gnome)
 #  tags: workstation,gnome,arch

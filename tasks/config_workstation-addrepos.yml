@@ -100,6 +100,8 @@
     - ansible_distribution_major_version|int < 18
     - ansible_pkg_mgr == "apt"
 
+
+# https://computingforgeeks.com/install-brave-web-browser-on-ubuntu-linux/
 - name: Add Apt signing key for Brave Web Browser (apt, Ubuntu)
   ansible.builtin.apt_key:
     url: "https://brave-browser-apt-release.s3.brave.com/brave-core.asc"
@@ -117,6 +119,20 @@
   when:
     - ansible_pkg_mgr == "apt"
     - ansible_distribution == "Ubuntu"
+
+
+# https://fostips.com/ubuntu-21-10-two-firefox-remove-snap/
+- name: add repo (Mozilla Team PPA) for Firefox (apt, Ubuntu >= 22)
+  tags: workstation,ubuntu,addrepos,pre
+  ansible.builtin.apt_repository:
+    repo: ppa:mozillateam/ppa
+    state: present
+    update_cache: yes
+  when:
+    - ansible_distribution == "Ubuntu"
+    - ansible_distribution_major_version|int >= 22
+    - ansible_pkg_mgr == "apt"
+
 
 
 
