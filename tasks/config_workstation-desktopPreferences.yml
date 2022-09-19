@@ -92,6 +92,16 @@
   when:
     - env_desktop == "ubuntu:gnome"
 
+- name: set desktop - background (Ubuntu + Gnome)
+#  become_user: sandro
+  dconf:
+    key: "/org/gnome/desktop/background/picture-uri-dark"
+    value: '"file:///home/{{ env_user }}/.local/share/backgrounds/brad-huchteman-stone-mountain.jpg"' # dyn
+#    state: present # standard
+  when:
+    - env_desktop == "ubuntu:gnome"
+
+
 - name: set desktop-wallpaper picture-options (Ubuntu + Gnome)
 #  become_user: sandro
   dconf:
