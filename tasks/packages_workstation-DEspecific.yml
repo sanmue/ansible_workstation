@@ -61,6 +61,22 @@
     - ansible_distribution == "Ubuntu"
     - env_desktop == "ubuntu:gnome"
 
+- name: Install packages for workstations - Firefox from MozillaTeam ppa (Ubuntu >=22 + Gnome)
+  tags: workstation,gnome,ubuntu
+  ansible.builtin.apt:
+    state: latest
+    name:
+      -firefox
+#      - firefox # -> ab 22.04: als snap package
+#      - firefox-locale-de
+#      - firefox-locale-en
+    default_release: LP-PPA-mozillateam   # damit aus ppa installiert wird, und nicht wieder von ubuntu als snap
+    update_cache: yes
+  when:
+    - ansible_distribution == "Ubuntu"
+    - ansible_distribution_major_version|int >= 22
+    - env_desktop == "ubuntu:gnome"
+
 
 - name: Install packages for workstations (Archlinux + Gnome)
   tags: workstation,gnome,arch
