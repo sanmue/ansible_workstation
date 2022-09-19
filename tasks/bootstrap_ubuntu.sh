@@ -22,6 +22,9 @@ sudo apt-get update && sudo apt-get dist-upgrade -y && sudo apt-get install -y -
 echo "Installiere benötigte Packages für Installation von Microsoft PowerShell"
 sudo apt-get install -y --show-progress wget apt-transport-https software-properties-common
 
+echo "Installiere noch fehlende, benötigte Packages für Installation von Brave Web Browser"
+sudo apt-get install -y --show-progress curl
+
 echo "Aktiviere Firewall 'ufw' und erlaube ssh ..."
 sudo ufw enable && sudo ufw allow ssh comment 'SSH' && sudo ufw reload
 
