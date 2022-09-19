@@ -67,12 +67,12 @@
     state: latest
     name:
 #      - firefox
-      - firefox-dev
+#      - firefox-dev
 #      - firefox # -> ab 22.04: als snap package
 #      - firefox-locale-de
 #      - firefox-locale-en
-#      - firefox-esr
-#      - firefox-esr-locale-en      
+      - firefox-esr
+      - firefox-esr-locale-en      
     default_release: 'o=LP-PPA-mozillateam'   # damit aus ppa installiert wird, und nicht wieder von ubuntu als snap
     update_cache: yes
   when:
