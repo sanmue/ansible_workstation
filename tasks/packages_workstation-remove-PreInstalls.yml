@@ -19,7 +19,7 @@
     - ansible_distribution == "Ubuntu"
     - env_desktop == "ubuntu:gnome"
 
-- name: Uninstall snap packages for workstation (Ubuntu <20, Gnome)
+- name: Uninstall snap packages for workstation (Ubuntu >20, Gnome)
   tags: workstation,ubuntu,arch,snap,suse
   snap:
     state: absent
