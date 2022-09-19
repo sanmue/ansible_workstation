@@ -92,7 +92,7 @@
   when:
     - env_desktop == "ubuntu:gnome"
 
-- name: set desktop - background (Ubuntu + Gnome)
+- name: set desktop - background (Ubuntu + Gnome dark)
 #  become_user: sandro
   dconf:
     key: "/org/gnome/desktop/background/picture-uri-dark"
