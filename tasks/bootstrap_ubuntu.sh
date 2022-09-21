@@ -45,12 +45,15 @@ else
 fi
 
 echo "Erstelle neues Verzeichnis '${repodir}' und Unterverzeichnis '${playbookdir}' im Home-Verzeichnis von '${userid}' ..."
-mkdir -p "/home/${userid}/${repodir}/${playbookdir}"
+if [ -d "/home/${userid}/${repodir}/${playbookdir}" ]; then
+    echo "Verzeichnis existiert bereits. Wird gelöscht und anschließend neu erstellt."
+    sudo rm -r "/home/${userid}/${repodir}/${playbookdir}" && mkdir -p "/home/${userid}/${repodir}/${playbookdir}"
+else
+    mkdir -p "/home/${userid}/${repodir}/${playbookdir}"
+fi
 
 echo "Clone git-Repo des Ansible-Playbooks ins Verzeichnis '${repodir}' ..."
-#cd "/home/${userid}/${repodir}"
 git clone git@github.com:sanmue/ansible_test.git "/home/${userid}/${repodir}/${playbookdir}"
-#cd "/home/${userid}/${repodir}"
 
 read -rp "Soll TEST des Ansible-Playbooks durchgeführt werden (j/n)?: " testplay
 if [ "${testplay}" = 'j' ]; then
