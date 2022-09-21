@@ -52,7 +52,7 @@ fi
 echo ""
 echo "Erstelle neues Verzeichnis '${repodir}' und Unterverzeichnis '${playbookdir}' im Home-Verzeichnis von '${userid}' ..."
 if [ -d "/home/${userid}/${repodir}/${playbookdir}" ]; then
-    echo "Verzeichnis existiert bereits. Wird gelöscht und anschließend neu erstellt."
+    echo "Verzeichnis '${playbookdir}' existiert bereits. Wird gelöscht und anschließend neu erstellt."
     sudo rm -r "/home/${userid}/${repodir}/${playbookdir}" && mkdir -p "/home/${userid}/${repodir}/${playbookdir}"
 else
     mkdir -p "/home/${userid}/${repodir}/${playbookdir}"
