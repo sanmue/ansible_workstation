@@ -187,9 +187,8 @@
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
 
-
 ### Appearance
-- name: set Appearance - Style - Color-sheme dark (Gnome)
+- name: set desktop interface - color-sheme - dark (Gnome)
   dconf:
     key: "/org/gnome/desktop/interface/color-scheme"
     value: "'prefer-dark'"
@@ -248,13 +247,14 @@
 
 ##- name: set desktop interface - gtk-theme MateriaBreath-dark (all + Gnome)
 ## bei theme "MateriaBreath-dark" sind die Optionskästchenen + Häkchen nicht zu sehen
-#- name: set desktop interface - gtk-theme MateriaBreath-dark (all + Gnome)
-##  become_user: sandro
-#  dconf:
-#    key: "/org/gnome/desktop/interface/gtk-theme"
+- name: set desktop interface - gtk-theme (all + Gnome)
+#  become_user: sandro
+  dconf:
+    key: "/org/gnome/desktop/interface/gtk-theme"
 #    value: "'Adwaita-dark'"
-#  when:
-#    - env_desktop in ["gnome","ubuntu:gnome"]
+    value: "'Yaru-prussiangreen-dark'"
+  when:
+    - env_desktop in ["gnome","ubuntu:gnome"]
 
 # Suse  -'Adwaita-dark'
 #- name: set desktop interface - gtk-theme (Suse + Gnome)
@@ -300,12 +300,15 @@
 
 
 #- name: set desktop interface - icon-theme Materia-Manjaro-Dark-2 (Gnome)
-##  become_user: sandro
-#  dconf:
+- name: set desktop interface - icon-theme (Gnome)
+#  become_user: sandro
+  dconf:
 #    key: "/org/gnome/desktop/interface/icon-theme"
 #    value: "'Materia-Manjaro-Dark-2'"
-#  when:
-#    - env_desktop in ["gnome", "ubuntu:gnome"]
+    key: "/org/gnome/desktop/interface/icon-theme"
+    value: "'Yaru-prussiangreen'"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
 
 
 ### Desktop interface, calendar, sceensaver, ...:
