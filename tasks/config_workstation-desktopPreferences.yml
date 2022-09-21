@@ -178,13 +178,24 @@
 #    - ansible_os_family == "Suse"
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set desktop interface - clock-show-weekdate (Gnome)
+- name: set desktop interface - clock-show-weekday (Gnome)
 #  become_user: sandro
   dconf:
     key: "/org/gnome/desktop/interface/clock-show-weekday"
     value: "true"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
+
+
+
+### Appearance
+- name: set Appearance - Style - Color-sheme dark (Gnome)
+  dconf:
+    key: "/org/gnome/desktop/interface/color-scheme"
+    value: "'prefer-dark'"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+
 
 
 ### gtk-theme ###
@@ -362,6 +373,7 @@
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
+
 ### power settings:
 #   ---------------
 - name: set power - power-button-action (Gnome)
@@ -387,6 +399,7 @@
     value: "'nothing'"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
+
 
 ### Gnome Wather:
 #   -------------
