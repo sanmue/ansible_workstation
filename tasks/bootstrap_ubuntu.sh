@@ -28,6 +28,7 @@ sudo apt-get install -y --show-progress curl
 echo "Aktiviere Firewall 'ufw' und erlaube ssh ..."
 sudo ufw enable && sudo ufw allow ssh comment 'SSH' && sudo ufw reload
 
+echo ""
 read -rp "Soll Git konfiguriert werden (git config Name+Mail) für '${userid}' (j/n)?: " gitconf
 if [ "${gitconf}" = 'j' ]; then
     read -rp "Name und Vorname eingeben: " fullname
@@ -44,6 +45,7 @@ else
     echo "Git config wird übersprungen"
 fi
 
+echo ""
 echo "Erstelle neues Verzeichnis '${repodir}' und Unterverzeichnis '${playbookdir}' im Home-Verzeichnis von '${userid}' ..."
 if [ -d "/home/${userid}/${repodir}/${playbookdir}" ]; then
     echo "Verzeichnis existiert bereits. Wird gelöscht und anschließend neu erstellt."
@@ -52,9 +54,11 @@ else
     mkdir -p "/home/${userid}/${repodir}/${playbookdir}"
 fi
 
+echo ""
 echo "Clone git-Repo des Ansible-Playbooks ins Verzeichnis '${repodir}' ..."
 git clone git@github.com:sanmue/ansible_test.git "/home/${userid}/${repodir}/${playbookdir}"
 
+echo ""
 read -rp "Soll TEST des Ansible-Playbooks durchgeführt werden (j/n)?: " testplay
 if [ "${testplay}" = 'j' ]; then
     echo "Starte TEST des Playbooks ..."
@@ -65,5 +69,6 @@ else
     echo "Test des Playbooks wird nicht durchgefürt"
 fi
 
+echo ""
 echo "Starte Ansible-Playbook ..."
 ansible-playbook "/home/${userid}/dev/ansible_test/local.yml" -v --ask-become-pass
