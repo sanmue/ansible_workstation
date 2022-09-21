@@ -59,7 +59,7 @@ else
 fi
 
 echo ""
-echo "Clone git-Repo des Ansible-Playbooks ins Verzeichnis '${repodir}' ..."
+echo "Clone git-Repo des Ansible-Playbooks ins Verzeichnis '${playbookdir}' ..."
 git clone git@github.com:sanmue/ansible_test.git "/home/${userid}/${repodir}/${playbookdir}"
 
 echo ""
