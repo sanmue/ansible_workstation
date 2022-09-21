@@ -45,7 +45,7 @@ dconf write "$dconfdir/:$id"/foreground-color "'rgb(0,255,0)'"
 dconf write "$dconfdir/:$id"/use-theme-colors "false"
 dconf write "$dconfdir/:$id"/default-size-columns "100"
 dconf write "$dconfdir/:$id"/default-size-rows "28"
-dconf write "$dconfdir/:$id"/font "Monospace 14"
+dconf write "$dconfdir/:$id"/font "'Monospace 14'"
 
 
 ######################################
@@ -57,7 +57,7 @@ dconf write "$dconfdir/:$id"/foreground-color "'rgb(213,0,0)'"
 dconf write "$dconfdir/:$id"/use-theme-colors "false"
 dconf write "$dconfdir/:$id"/default-size-columns "100"
 dconf write "$dconfdir/:$id"/default-size-rows "28"
-dconf write "$dconfdir/:$id"/font "Monospace 14"
+dconf write "$dconfdir/:$id"/font "'Monospace 14'"
 
 ################################################################################
 ################################################################################
