@@ -1,13 +1,32 @@
 #!/bin/bash
 
 # Kopieren des bootstrap-skripts auf die Zielmaschine
+# es kann ein Parameter übergeben werden: IP-Adresse der Zielmaschine
 
+
+# #####################
 # region Initialisation
-userid=$(whoami)
-read -rp "IP des Zielrechners eingeben: " targetIP
-#targetIP="192.168.122.237"
+# #####################
+if [ $# == 1 ]; then   # wenn EIN Argument (IP-Adresse) an skript übergeben wurde)
+    targetIP=$1
+else
+    read -rp "IP des Zielrechners eingeben: " targetIP
+fi
+#targetIP="192.168.122.211"
 
+userid=$(whoami)
+read -rp "Soll die aktuelle UserID '${userid}' auch auf dem Zielrechner verwendet werden (j/n)?: " aktUser
+if [ "${aktUser}" = "n" ]; then
+    read -rp "UserID auf Zielrechner angeben: " userid
+else
+    echo "Aktuelle UserID '${userid}' wird verwendet"
+fi
+
+
+# ###########
 # region main
+# ###########
+echo ""
 echo "Kopiere bootstrap-Skript ins Home-Verzeichnis von '${userid}' auf Zielrechner '${targetIP}' ..."
 #rsync -avPEzh --stats "bootstrap_ubuntu.sh" "${userid}@${targetIP}:~"
 rsync -avPEzh --stats --exclude={"bootstrap_copyToTarget.sh","config_workstation-desktopPreferences-terminal.sh","*.yml*"} --include="*.sh" "./" "${userid}@${targetIP}:~"
