@@ -7,7 +7,7 @@
 # #####################
 # region Initialisation
 # #####################
-if [ $# == 1 ]; then   # wenn EIN Argument (IP-Adresse) an skript übergeben wurde)
+if [ $# == 1 ]; then   # wenn Anzahl Argumente (die an Skript übergeben wurden) = 1 ist
     targetIP=$1
 else
     read -rp "IP des Zielrechners eingeben: " targetIP
