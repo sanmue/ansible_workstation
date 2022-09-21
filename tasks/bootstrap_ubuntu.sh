@@ -52,8 +52,8 @@ fi
 echo ""
 echo "Erstelle neues Verzeichnis '${repodir}' und Unterverzeichnis '${playbookdir}' im Home-Verzeichnis von '${userid}' ..."
 if [ -d "/home/${userid}/${repodir}/${playbookdir}" ]; then
-    echo "Verzeichnis '${playbookdir}' existiert bereits. Wird gelöscht und anschließend neu erstellt."
-    sudo rm -r "/home/${userid}/${repodir}/${playbookdir}" && mkdir -p "/home/${userid}/${repodir}/${playbookdir}"
+    echo "Verzeichnis '${playbookdir}' existiert bereits. Inhalt wird gelöscht."
+    sudo rm -r "/home/${userid}/${repodir}/${playbookdir}" # && mkdir -p "/home/${userid}/${repodir}/${playbookdir}"
 else
     mkdir -p "/home/${userid}/${repodir}/${playbookdir}"
 fi
@@ -67,7 +67,7 @@ read -rp "Soll TEST des Ansible-Playbooks durchgeführt werden (j/n)?: " testpla
 if [ "${testplay}" = 'j' ]; then
     echo "Starte TEST des Playbooks ..."
     ansible-playbook "/home/${userid}/dev/ansible_test/local.yml" -v --ask-become-pass --check
-    # bei verschllüsselten Daten:
+    # bei verschlüsselten Daten:
     #ansible-playbook "/home/${userid}/dev/ansible_test/local.yml" -v -K -C --vault-password-file "/home/${userid}/.ansibleVaultKey"
 else
     echo "Test des Playbooks wird nicht durchgefürt"
