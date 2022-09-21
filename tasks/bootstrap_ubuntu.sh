@@ -17,7 +17,7 @@ userid=$(whoami)
 #fi
 
 echo ""
-echo "Update Repos und Installation benoetigte Software ..."
+echo "Update Repos und Installation benoetigte Software (git,ansible,ssh,ufw,chrome-genome-shell)..."
 sudo apt-get update && sudo apt-get dist-upgrade -y && sudo apt-get install -y --show-progress git ansible chrome-gnome-shell ssh ufw
 
 echo ""
