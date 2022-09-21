@@ -31,6 +31,7 @@ dconf write "$dconfdir/:$id"/use-theme-colors "true"
 dconf write "$dconfdir/:$id"/default-size-columns "100"
 dconf write "$dconfdir/:$id"/default-size-rows "28"
 dconf write "$dconfdir/:$id"/font "'Monospace 14'"
+dconf write "$dconfdir/:$id"/use-system-font "false"
 
 # Set as default profile:
 dconf write "$dconfdir/default" "'$id'"
@@ -46,6 +47,7 @@ dconf write "$dconfdir/:$id"/use-theme-colors "false"
 dconf write "$dconfdir/:$id"/default-size-columns "100"
 dconf write "$dconfdir/:$id"/default-size-rows "28"
 dconf write "$dconfdir/:$id"/font "'Monospace 14'"
+dconf write "$dconfdir/:$id"/use-system-font "false"
 
 
 ######################################
@@ -58,6 +60,7 @@ dconf write "$dconfdir/:$id"/use-theme-colors "false"
 dconf write "$dconfdir/:$id"/default-size-columns "100"
 dconf write "$dconfdir/:$id"/default-size-rows "28"
 dconf write "$dconfdir/:$id"/font "'Monospace 14'"
+dconf write "$dconfdir/:$id"/use-system-font "false"
 
 ################################################################################
 ################################################################################
