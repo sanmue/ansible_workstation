@@ -30,7 +30,7 @@ dconf write "$dconfdir/:$id"/foreground-color "'rgb(131,148,150)'"
 dconf write "$dconfdir/:$id"/use-theme-colors "true"
 dconf write "$dconfdir/:$id"/default-size-columns "100"
 dconf write "$dconfdir/:$id"/default-size-rows "28"
-dconf write "$dconfdir/:$id"/font "Monospace 14"
+dconf write "$dconfdir/:$id"/font "'Monospace 14'"
 
 # Set as default profile:
 dconf write "$dconfdir/default" "'$id'"
