@@ -816,3 +816,161 @@
     value: "false"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
+
+
+
+# ##########################
+# ### Gnome Evolution (Mail)
+- name: set gnome - evolution - calendar - classify-private (Gnome)
+  dconf:
+    key: "/org/gnome/evolution/calendar/classify-private"
+    value: "true"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+
+- name: set gnome - evolution - calendar - compress-weekend (Gnome)
+  dconf:
+    key: "/org/gnome/evolution/calendar/compress-weekend"
+    value: "false"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+
+- name: set gnome - evolution - calendar - day-end-hour (Gnome)
+  dconf:
+    key: "/org/gnome/evolution/calendar/day-end-hour"
+    value: "16"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+
+- name: set gnome - evolution - calendar - day-start-hour (Gnome)
+  dconf:
+    key: "/org/gnome/evolution/calendar/day-start-hour"
+    value: "7"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+
+- name: set gnome - evolution - calendar - editor-show-timezone (Gnome)
+  dconf:
+    key: "/org/gnome/evolution/calendar/editor-show-timezone"
+    value: "true"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+
+- name: set gnome - evolution - calendar - prefer-new-item (Gnome)
+  dconf:
+    key: "/org/gnome/evolution/calendar/prefer-new-item"
+    value: "'event-new'"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+
+- name: set gnome - evolution - calendar - primary-memos (Gnome)
+  dconf:
+    key: "/org/gnome/evolution/calendar/primary-memos"
+    value: "'system-memo-list'"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+
+- name: set gnome - evolution - calendar - show-icons-month-view (Gnome)
+  dconf:
+    key: "/org/gnome/evolution/calendar/show-icons-month-view"
+    value: "true"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+
+- name: set gnome - evolution - calendar - show-week-numbers (Gnome)
+  dconf:
+    key: "/org/gnome/evolution/calendar/show-week-numbers"
+    value: "true"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+
+- name: set gnome - evolution - calendar - show-week-numbers (Gnome)
+  dconf:
+    key: "/org/gnome/evolution/calendar/use-24hour-format"
+    value: "true"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+
+- name: set gnome - evolution - mail - browser-close-on-reply-policy (Gnome)
+  dconf:
+    key: "/org/gnome/evolution/mail/browser-close-on-reply-policy"
+    value: "'never'"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+
+- name: set gnome - evolution - mail - composer-delay-outbox-flush (Gnome)
+  dconf:
+    key: "/org/gnome/evolution/mail/composer-delay-outbox-flush"
+    value: "0"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+
+- name: set gnome - evolution - mail - composer-show-bcc (Gnome)
+  dconf:
+    key: "/org/gnome/evolution/mail/composer-show-bcc"
+    value: "true"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+
+- name: set gnome - evolution - mail - composer-spell-languages (Gnome)
+  dconf:
+    key: "/org/gnome/evolution/mail/composer-spell-languages"
+    value: "['de_DE']"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+
+- name: set gnome - evolution - mail - composer-top-signature (Gnome)
+  dconf:
+    key: "/org/gnome/evolution/mail/composer-top-signature"
+    value: "true"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+
+- name: set gnome - evolution - mail - forward-style-name (Gnome)
+  dconf:
+    key: "/org/gnome/evolution/mail/forward-style-name"
+    value: "'inline'"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+
+- name: set gnome - evolution - mail - layout (Gnome)
+  dconf:
+    key: "/org/gnome/evolution/mail/layout"
+    value: "1"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+
+- name: set gnome - evolution - mail - mark-seen (Gnome)
+  dconf:
+    key: "/org/gnome/evolution/mail/mark-seen"
+    value: "false"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+
+- name: set gnome - evolution - mail - show-sender-photo (Gnome)
+  dconf:
+    key: "/org/gnome/evolution/mail/show-sender-photo"
+    value: "true"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+
+- name: set gnome - evolution - mail - show-to-do-bar (Gnome)
+  dconf:
+    key: "/org/gnome/evolution/mail/show-to-do-bar"
+    value: "false"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+
+- name: set gnome - evolution - mail - show-to-do-bar-sub (Gnome)
+  dconf:
+    key: "/org/gnome/evolution/mail/show-to-do-bar-sub"
+    value: "false"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+
+- name: set gnome - evolution - mail - to-do-bar-show-no-duedate-tasks (Gnome)
+  dconf:
+    key: "/org/gnome/evolution/mail/to-do-bar-show-no-duedate-tasks"
+    value: "true"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
