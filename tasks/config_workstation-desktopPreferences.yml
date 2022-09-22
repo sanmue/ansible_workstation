@@ -784,3 +784,35 @@
 #  when:
 #    - ansible_os_family == "Suse"
 #    - env_desktop == "gnome"
+
+
+
+# ################################
+# ### Gnome Epiphany (Web Browser)
+- name: set gnome - epiphany - aks-for-default (Gnome)
+  dconf:
+    key: "/org/gnome/epiphany/ask-for-default"
+    value: "false"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+
+- name: set gnome - epiphany - default-search-engine (Gnome)
+  dconf:
+    key: "/org/gnome/epiphany/default-search-engine"
+    value: "'DuckDuckGo'"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+
+- name: set gnome - epiphany - reader - color-scheme (Gnome)
+  dconf:
+    key: "/org/gnome/epiphany/reader/color-scheme"
+    value: "'dark'"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+
+- name: set gnome - epiphany - web - remember-passwords (Gnome)
+  dconf:
+    key: "/org/gnome/epiphany/web/remember-passwords"
+    value: "false"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
