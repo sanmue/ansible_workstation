@@ -33,7 +33,7 @@
 # ################
 # ### vim Settings
 - name: set vim config for user "sandro" (.vimrc) (all)
-  become_user: sandro
+#  become_user: sandro
   ansible.builtin.script: "{{ env_PWD }}/tasks/config_all-servcices-misc-vim.sh" # "ansible.builtin.script:" ab ansible version 2.10, davor nur "script:"
   args:
     creates: "/home/{{ env_user }}/.vimrc"

@@ -1,11 +1,22 @@
 #!/bin/bash
 
 # Grund-Konfiguration für vim
-echo "Erstelle Config-Datei für vim (.vimrc) in '$HOME' ..."
+#echo "Erstelle Config-Datei für vim (.vimrc) in allen vorhandenen User-Homeverzeichnissen..."
 
-touch "$HOME/.vimrc"
+#read -rp "Verzeichnispfad (absolut) angeben: " pathToDir
+#read -rp "Suchtiefe ab Verzeichnispfad angeben (>= 0): " searchdepth
+pathToDir="/home"
+searchdepth=1
+cfgFile=".vimrc"
 
-cat > "$HOME/.vimrc" << EOF
+#echo "Erstelle Liste der Vereichnisse in ${pathToDir} (Suchtiefe: ${searchdepth})"
+arrDir="$(find "${pathToDir}" -maxdepth "${searchdepth}" -mindepth "${searchdepth}" -type d)"
+#echo "${arrDir}"
+
+for dir in ${arrDir}; do
+touch "${dir}/${cfgFile}"
+
+cat > "${dir}/${cfgFile}" << EOF
 syntax on
 set ruler
 set number
@@ -19,3 +30,5 @@ set nocompatible
 colorscheme koehler
 
 EOF
+
+done
