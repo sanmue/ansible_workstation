@@ -4,7 +4,7 @@
 
 touch "$HOME/.vimrc"
 
-echo "Erstelle Konfig für vim gemäß Kurs-StyleGuide ..."
+echo "Erstelle Config-Datei für vim (.vimrc) in '$HOME' ..."
 cat > "$HOME/.vimrc" << EOF
 syntax on
 set ruler

@@ -119,8 +119,8 @@
 
 
 ### vim Settings
-- name: set vim config (all)
-#  become_user: sandro
+- name: set vim config for user "sandro" (.vimrc) (all)
+  become_user: sandro
 #
   ansible.builtin.script: "{{ env_PWD }}/tasks/config_workstation-basic-vim.sh" # ab ansible version 2.10
   args:
