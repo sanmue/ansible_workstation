@@ -643,7 +643,7 @@
 # Appearence - Dock - Panel mode: enable
 #  become_user: sandro
   dconf:
-    key: "/org/gnome/shell/extensions/dash-to-dock/extend-heigt"
+    key: "/org/gnome/shell/extensions/dash-to-dock/extend-height"
     value: "false"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
