@@ -630,6 +630,42 @@
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
+- name: set gnome shell extensions - dash-to-dock - dock-fixed (Gnome)
+# Appearence - Dock - Auot-hide the Dock: enable
+#  become_user: sandro
+  dconf:
+    key: "/org/gnome/shell/extensions/dash-to-dock/dock-fixed"
+    value: "false"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+
+- name: set gnome shell extensions - dash-to-dock - extend-height (Gnome)
+# Appearence - Dock - Panel mode: enable
+#  become_user: sandro
+  dconf:
+    key: "/org/gnome/shell/extensions/dash-to-dock/extend-heigt"
+    value: "false"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+
+- name: set gnome shell extensions - dash-to-dock - dash-max-icon-size (Gnome)
+# Appearence - Dock - Icon Size
+#  become_user: sandro
+  dconf:
+    key: "/org/gnome/shell/extensions/dash-to-dock/dash-max-icon-size"
+    value: "32"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+
+- name: set gnome shell extensions - dash-to-dock - multi-monitor (Gnome)
+# Appearence - Dock - Show on: All Displays
+#  become_user: sandro
+  dconf:
+    key: "/org/gnome/shell/extensions/dash-to-dock/multi-monitor "
+    value: "true"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+
 
 ### openweather:
 - name: set gnome shell extensions - openweather - city (Gnome)
