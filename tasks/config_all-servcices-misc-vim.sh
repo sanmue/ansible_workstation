@@ -1,10 +1,10 @@
 #!/bin/bash
 
 # Grund-Konfiguration für vim
+echo "Erstelle Config-Datei für vim (.vimrc) in '$HOME' ..."
 
 touch "$HOME/.vimrc"
 
-echo "Erstelle Config-Datei für vim (.vimrc) in '$HOME' ..."
 cat > "$HOME/.vimrc" << EOF
 syntax on
 set ruler

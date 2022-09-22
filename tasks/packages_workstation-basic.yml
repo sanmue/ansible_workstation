@@ -115,13 +115,3 @@
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
     - "ansible_version.full is version('2.10.0', '>=')"
-
-
-
-### vim Settings
-- name: set vim config for user "sandro" (.vimrc) (all)
-  become_user: sandro
-#
-  ansible.builtin.script: "{{ env_PWD }}/tasks/config_workstation-basic-vim.sh" # ab ansible version 2.10
-  args:
-    creates: "/home/{{ env_user }}/.vimrc"
