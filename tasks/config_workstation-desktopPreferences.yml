@@ -580,17 +580,17 @@
 # ### ding
 # https://ubuntuhandbook.org/index.php/2022/03/show-trash-ubuntu-2204-desktop/
 - name: set gnome shell extensions - ding - show-home (Gnome)
+# Settings - Appearance - Desktop Icons - Show Personal folder
   dconf:
-  # Settings - Appearance - Desktop Icons - Show Personal folder
-    key: "/org/gnome/shell/extensions/show-home"
+    key: "/org/gnome/shell/extensions/ding/show-home"
     value: "false"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
 - name: set gnome shell extensions - ding - start-corner (Gnome)
-  dconf:
   # Settings - Appearance - Desktop Icons - Position of New Icons
-    key: "/org/gnome/shell/extensions/start-corner"
+  dconf:
+    key: "/org/gnome/shell/extensions/ding/start-corner"
     value: "'top-left'"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
