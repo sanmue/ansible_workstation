@@ -562,15 +562,15 @@
 #    - "ansible_version.full is version('2.10.0', '>=')"
 
 
-- name: create flag - file .ansibleTerminalProfileSet (Gnome)
-  file:
-    path: "/home/{{ env_user }}/.ansibleTerminalProfileSet"
-    state: touch
-    mode: u=rw,g=r,o=r
-    modification_time: preserve
-    access_time: preserve
-  when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+#- name: create flag - file .ansibleTerminalProfileSet (Gnome)
+#  file:
+#    path: "/home/{{ env_user }}/.ansibleTerminalProfileSet"
+#    state: touch
+#    mode: u=rw,g=r,o=r
+#    modification_time: preserve
+#    access_time: preserve
+#  when:
+#    - env_desktop in ["gnome", "ubuntu:gnome"]
 
 
 
