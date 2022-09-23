@@ -527,7 +527,7 @@
 
 ### gnome terminal - profiles and preferences:
 #   ------------------------------------------
-#- name: set gnome terminal - profiles and preferences (Gnome, Ansible <2.10)
+# - name: set gnome terminal - profiles and preferences (Gnome, Ansible <2.10)
 ##  become_user: sandro
 ##
 #  script: "{{ env_PWD }}/tasks/config_workstation-desktopPreferences-terminal.sh" # funktioniert; ansible version 2.9
@@ -551,7 +551,7 @@
 ##    - "ansible_version.minor is version('9', '<=')"
 #    - "ansible_version.full is version('2.10.0', '<')"
 
-#- name: set gnome terminal - profiles and preferences (Gnome, Ansible >=2.10)
+# - name: set gnome terminal - profiles and preferences (Gnome, Ansible >=2.10)
 ##  become_user: sandro
 ##
 #  ansible.builtin.script: "{{ env_PWD }}/tasks/config_workstation-desktopPreferences-terminal.sh" # ab ansible version 2.10
@@ -562,7 +562,7 @@
 #    - "ansible_version.full is version('2.10.0', '>=')"
 
 
-#- name: create flag - file .ansibleTerminalProfileSet (Gnome)
+# - name: create flag - file .ansibleTerminalProfileSet (Gnome)
 #  file:
 #    path: "/home/{{ env_user }}/.ansibleTerminalProfileSet"
 #    state: touch
