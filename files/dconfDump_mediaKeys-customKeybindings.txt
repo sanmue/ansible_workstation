@@ -1,0 +1,64 @@
+[custom0]
+binding='<Primary><Alt>c'
+command='flatpak run org.chromium.Chromium'
+name='Chromium'
+
+[custom1]
+binding='<Primary><Alt>f'
+command='firefox'
+name='Firefox'
+
+[custom10]
+binding='<Primary><Alt>s'
+command='gnome-software'
+name='Software (Gnome-Software)'
+
+[custom11]
+binding='<Primary><Alt>o'
+command='flatpak run com.obsproject.Studio'
+name='OBS Studio'
+
+[custom12]
+binding='<Primary><Alt>b'
+command='brave-browser'
+name='Brave Browser'
+
+[custom2]
+binding='<Primary><Alt>x'
+command='kitty'
+name='Kitty'
+
+[custom3]
+binding='<Primary><Alt>k'
+command='flatpak run org.keepassxc.KeePassXC'
+name='KeePassXC'
+
+[custom4]
+binding='<Primary><Alt>a'
+command='flatpak run com.belmoussaoui.Authenticator'
+name='Authenticator'
+
+[custom5]
+binding='<Primary><Alt>e'
+command='nemo'
+name='Nemo'
+
+[custom6]
+binding='<Primary><Alt>g'
+command='gedit'
+name='gedit'
+
+[custom7]
+binding='<Primary><Alt>r'
+command='remmina'
+name='Remmina'
+
+[custom8]
+binding='<Primary><Alt>v'
+command='virt-manager'
+name='Virtual Machine Manager'
+
+[custom9]
+binding='<Primary><Alt>j'
+command='flatpak run net.cozic.joplin_desktop'
+name='Joplin'
