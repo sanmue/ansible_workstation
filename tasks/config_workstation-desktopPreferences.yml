@@ -389,7 +389,7 @@
 
 ### power settings:
 #   ---------------
-- name: set power - power-button-action (Gnome)
+- name: set settings-daemon - plugin - power - power-button-action (Gnome)
 #  become_user: sandro
   dconf:
     key: "/org/gnome/settings-daemon/plugins/power/power-button-action"
@@ -397,7 +397,7 @@
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set power - sleep-inactive-ac-type (Gnome)
+- name: set settings-daemon - plugin - power - sleep-inactive-ac-type (Gnome)
 #  become_user: sandro
   dconf:
     key: "/org/gnome/settings-daemon/plugins/power/sleep-inactive-ac-type"
@@ -405,11 +405,22 @@
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set power - sleep-inactive-battery-type (Gnome)
+- name: set settings-daemon - plugin - power - sleep-inactive-battery-type (Gnome)
 #  become_user: sandro
   dconf:
     key: "/org/gnome/settings-daemon/plugins/power/sleep-inactive-battery-type"
     value: "'nothing'"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+
+
+
+### set Display - Night Light
+- name: set settings-daemon - plugin - color - night-light-enabled (Gnome)
+#  become_user: sandro
+  dconf:
+    key: "/org/gnome/settings-daemon/plugins/color/night-light-enabled"
+    value: "true"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
