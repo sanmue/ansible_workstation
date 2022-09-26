@@ -497,8 +497,16 @@
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
+### Um zu prüfen, ob firefox-esr installiert ist:
+# https://dev.to/setevoy/ansible-check-if-a-package-installed-on-a-remote-system-4402
+# https://docs.ansible.com/ansible/latest/collections/ansible/builtin/package_facts_module.html
+- name: Gather the package facts
+  ansible.builtin.package_facts:
+    manager: auto
+###
+
 # - Firefox (custom2) - f
-- name: set settings-daemon - plugin - media-keys - Firefox,name (Gnome)
+- name: set settings-daemon - plugin - media-keys - firefox,name (Gnome)
   dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/name"
     value: "'Firefox'"
@@ -511,6 +519,15 @@
     value: "'firefox'"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
+    - "'firefox-esr' not in ansible_facts.packages"
+
+- name: set settings-daemon - plugin - media-keys - firefox-esr,command (Gnome)
+  dconf:
+    key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/command"
+    value: "'firefox-esr'"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - "'firefox-esr' in ansible_facts.packages"
 
 - name: set settings-daemon - plugin - media-keys - Firefox,binding (Gnome)
   dconf:
