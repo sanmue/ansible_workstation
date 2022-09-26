@@ -428,6 +428,9 @@
 
 ### set Keyboard Shortcuts
 # Settings - Keyboard - Keyboard Shortcuts
+# Alternative Möglichkeit: erstellte/vorhandene Keys eines Systems exportieren + wieder importieren per Skript:
+# - dconf dump /org/gnome/settings-daemon/plugins/media-keys/ > dconfDump_keyboardShortcuts.txt
+# - dconf load /org/gnome/settings-daemon/plugins/media-keys/ < dconfDump_keyboardShortcuts.txt 
 - name: set settings-daemon - plugin - media-keys - control-center (Gnome)
   dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/control-center"
@@ -450,57 +453,300 @@
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
 # set custom Keyboard Shortcuts:
-#
-#- name: set settings-daemon - plugin - media-keys - custom-keybindings (Part 1) (Gnome)
-#  dconf:
-#    key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings"
-#    value: "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom5/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom7/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom8/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom9/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom10/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom11/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom12/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom6/']"
-#  when:
-#    - env_desktop in ["gnome", "ubuntu:gnome"]
-
-#- name: set settings-daemon - plugin - media-keys - custom-keybindings (Part 2), create key (Gnome)
-#  ansible.builtin.command: "dconf write /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/"
-#  args:
-#    creates: "/home/{{ env_user }}/.ansibleCustomKeybindingsSet"
-#  when:
-#    - env_desktop in ["gnome", "ubuntu:gnome"]
-
-#- name: set settings-daemon - plugin - media-keys - custom-keybindings (Part 3),import from file (Gnome)
-#  ansible.builtin.command: "dconf load /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/ < {{ env_PWD }}/files/dconfDump_mediaKeys-customKeybindings.txt"
-#  when:
-#    - env_desktop in ["gnome", "ubuntu:gnome"]
-
-
-- name: set settings-daemon - plugin - media-keys - chromium,name (Gnome)
+# - Authenticator (custom0) - a
+- name: set settings-daemon - plugin - media-keys - Authenticator,name (Gnome)
   dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/name"
+    value: "'Authenticator'"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+
+- name: set settings-daemon - plugin - media-keys - Authenticator,command (Gnome)
+  dconf:
+    key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/command"
+    value: "'flatpak run com.belmoussaoui.Authenticator'"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+
+- name: set settings-daemon - plugin - media-keys - Authenticator,binding (Gnome)
+  dconf:
+    key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/binding"
+    value: "'<Primary><Alt>a'"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+
+# - KeepassXC (custom1) - k
+- name: set settings-daemon - plugin - media-keys - KeepassXC,name (Gnome)
+  dconf:
+    key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/name"
+    value: "'KeepassXC'"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+
+- name: set settings-daemon - plugin - media-keys - KeepassXC,command (Gnome)
+  dconf:
+    key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/command"
+    value: "'flatpak run org.keepassxc.KeePassXC'"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+
+- name: set settings-daemon - plugin - media-keys - KeepassXC,binding (Gnome)
+  dconf:
+    key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/binding"
+    value: "'<Primary><Alt>k'"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+
+# - Firefox (custom2) - f
+- name: set settings-daemon - plugin - media-keys - Firefox,name (Gnome)
+  dconf:
+    key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/name"
+    value: "'Firefox'"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+
+- name: set settings-daemon - plugin - media-keys - firefox,command (Gnome)
+  dconf:
+    key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/command"
+    value: "'firefox'"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+
+- name: set settings-daemon - plugin - media-keys - Firefox,binding (Gnome)
+  dconf:
+    key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/binding"
+    value: "'<Primary><Alt>f'"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+
+# - Chromium (custom3) - c
+- name: set settings-daemon - plugin - media-keys - chromium,name (Gnome)
+  dconf:
+    key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/name"
     value: "'Chromium'"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
 - name: set settings-daemon - plugin - media-keys - chromium,command(Gnome)
   dconf:
-    key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/command"
+    key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/command"
     value: "'flatpak run org.chromium.Chromium'"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
 - name: set settings-daemon - plugin - media-keys - chromium,binding (Gnome)
   dconf:
-    key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/binding"
+    key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/binding"
     value: "'<Primary><Alt>c'"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-# set/create list for custom-keybindings
-- name: set settings-daemon - plugin - media-keys - custom-keybindings,Listeintrag(Gnome)
+# - Brave Browser (custom4) - b
+- name: set settings-daemon - plugin - media-keys - Brave Browser,name (Gnome)
   dconf:
-    key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings"
-#    value: "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom5/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom7/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom8/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom9/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom10/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom11/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom12/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom6/']"
-    value: "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/']"
+    key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/name"
+    value: "'Brave Browser'"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
+- name: set settings-daemon - plugin - media-keys - Brave Browser,command(Gnome)
+  dconf:
+    key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/command"
+    value: "'brave-browser'"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+
+- name: set settings-daemon - plugin - media-keys - Brave Browser,binding (Gnome)
+  dconf:
+    key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/binding"
+    value: "'<Primary><Alt>b'"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+
+# - Nemo (custom5) - e
+- name: set settings-daemon - plugin - media-keys - Nemo,name (Gnome)
+  dconf:
+    key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom5/name"
+    value: "'Nemo'"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+
+- name: set settings-daemon - plugin - media-keys - Nemo,command(Gnome)
+  dconf:
+    key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom5/command"
+    value: "'nemo'"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+
+- name: set settings-daemon - plugin - media-keys - Nemo,binding (Gnome)
+  dconf:
+    key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom5/binding"
+    value: "'<Primary><Alt>e'"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+
+# - gedit (custom6) - g
+- name: set settings-daemon - plugin - media-keys - gedit,name (Gnome)
+  dconf:
+    key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom6/name"
+    value: "'gedit'"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+
+- name: set settings-daemon - plugin - media-keys - gedit,command(Gnome)
+  dconf:
+    key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom6/command"
+    value: "'gedit'"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+
+- name: set settings-daemon - plugin - media-keys - gedit,binding (Gnome)
+  dconf:
+    key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom6/binding"
+    value: "'<Primary><Alt>g'"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+
+# - Libre Office (custom7) - l
+- name: set settings-daemon - plugin - media-keys - Libre Office,name (Gnome)
+  dconf:
+    key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom7/name"
+    value: "'Libre Office'"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+
+- name: set settings-daemon - plugin - media-keys - Libre Office,command(Gnome)
+  dconf:
+    key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom7/command"
+    value: "'flatpak run org.libreoffice.LibreOffice'"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+
+- name: set settings-daemon - plugin - media-keys - Libre Office,binding (Gnome)
+  dconf:
+    key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom7/binding"
+    value: "'<Primary><Alt>l'"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+
+# - VSCode (custom8) - m
+- name: set settings-daemon - plugin - media-keys - VSCode,name (Gnome)
+  dconf:
+    key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom8/name"
+    value: "'VSCode'"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+
+- name: set settings-daemon - plugin - media-keys - VSCode,command(Gnome)
+  dconf:
+    key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom8/command"
+    value: "'code'"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+
+- name: set settings-daemon - plugin - media-keys - VSCode,binding (Gnome)
+  dconf:
+    key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom8/binding"
+    value: "'<Primary><Alt>m'"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+
+# - Joplin (custom9) - j
+- name: set settings-daemon - plugin - media-keys - Joplin,name (Gnome)
+  dconf:
+    key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom9/name"
+    value: "'Joplin'"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+
+- name: set settings-daemon - plugin - media-keys - Joplin,command(Gnome)
+  dconf:
+    key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom9/command"
+    value: "'flatpak run net.cozic.joplin_desktop'"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+
+- name: set settings-daemon - plugin - media-keys - Joplin,binding (Gnome)
+  dconf:
+    key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom9/binding"
+    value: "'<Primary><Alt>j'"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+
+# - Remmina (custom10) - r
+- name: set settings-daemon - plugin - media-keys - Remmina,name (Gnome)
+  dconf:
+    key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom10/name"
+    value: "'Remmina'"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+
+- name: set settings-daemon - plugin - media-keys - Remmina,command(Gnome)
+  dconf:
+    key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom10/command"
+    value: "'remmina'"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+
+- name: set settings-daemon - plugin - media-keys - Remmina,binding (Gnome)
+  dconf:
+    key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom10/binding"
+    value: "'<Primary><Alt>r'"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+
+# - Virtual Machine Manager (custom11) - v
+- name: set settings-daemon - plugin - media-keys - Virtual Machine Manager,name (Gnome)
+  dconf:
+    key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom11/name"
+    value: "'Virtual Machine Manager'"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+
+- name: set settings-daemon - plugin - media-keys - Virtual Machine Manager,command(Gnome)
+  dconf:
+    key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom11/command"
+    value: "'virt-manager'"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+
+- name: set settings-daemon - plugin - media-keys - Virtual Machine Manager,binding (Gnome)
+  dconf:
+    key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom11/binding"
+    value: "'<Primary><Alt>v'"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+
+# - Gnome Software (custom12) - s
+- name: set settings-daemon - plugin - media-keys - Gnome Software,name (Gnome)
+  dconf:
+    key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom12/name"
+    value: "'Gnome Software'"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+
+- name: set settings-daemon - plugin - media-keys - Gnome Software,command(Gnome)
+  dconf:
+    key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom12/command"
+    value: "'gnome-software'"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+
+- name: set settings-daemon - plugin - media-keys - Gnome Software,binding (Gnome)
+  dconf:
+    key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom12/binding"
+    value: "'<Primary><Alt>s'"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+
+
+# - set/create list for configured custom-keybindings
+- name: set settings-daemon - plugin - media-keys - custom-keybindings (Gnome)
+  dconf:
+    key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings"
+    value: "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom5/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom6/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom7/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom8/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom9/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom10/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom11/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom12/']"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
 
 
 
