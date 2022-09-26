@@ -426,7 +426,7 @@
 
 
 
-### set Keyboard Shortcuts - Night Light
+### set Keyboard Shortcuts
 # Settings - Keyboard - Keyboard Shortcuts
 - name: set settings-daemon - plugin - media-keys - control-center (Gnome)
   dconf:
@@ -434,27 +434,6 @@
     value: "['<Primary><Alt>p']"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
-
-
-- name: set settings-daemon - plugin - media-keys - custom-keybindings (Part 1) (Gnome)
-  dconf:
-    key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings"
-    value: "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom5/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom7/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom8/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom9/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom10/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom11/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom12/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom6/']"
-  when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
-
-- name: set settings-daemon - plugin - media-keys - custom-keybindings (Part 2), create key (Gnome)
-  ansible.builtin.command: "dconf write /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/"
-  args:
-    creates: "/home/{{ env_user }}/.ansibleCustomKeybindingsSet"
-  when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
-
-- name: set settings-daemon - plugin - media-keys - custom-keybindings (Part 3),import from file (Gnome)
-  ansible.builtin.command: "dconf load /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/ < {{ env_PWD }}/files/dconfDump_mediaKeys-customKeybindings.txt"
-  when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
-
 
 - name: set settings-daemon - plugin - media-keys - email (Gnome)
   dconf:
@@ -470,9 +449,53 @@
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
+# set custom Keyboard Shortcuts:
+#
+#- name: set settings-daemon - plugin - media-keys - custom-keybindings (Part 1) (Gnome)
+#  dconf:
+#    key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings"
+#    value: "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom5/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom7/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom8/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom9/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom10/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom11/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom12/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom6/']"
+#  when:
+#    - env_desktop in ["gnome", "ubuntu:gnome"]
+
+#- name: set settings-daemon - plugin - media-keys - custom-keybindings (Part 2), create key (Gnome)
+#  ansible.builtin.command: "dconf write /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/"
+#  args:
+#    creates: "/home/{{ env_user }}/.ansibleCustomKeybindingsSet"
+#  when:
+#    - env_desktop in ["gnome", "ubuntu:gnome"]
+
+#- name: set settings-daemon - plugin - media-keys - custom-keybindings (Part 3),import from file (Gnome)
+#  ansible.builtin.command: "dconf load /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/ < {{ env_PWD }}/files/dconfDump_mediaKeys-customKeybindings.txt"
+#  when:
+#    - env_desktop in ["gnome", "ubuntu:gnome"]
 
 
-### Gnome Wather:
+- name: set settings-daemon - plugin - media-keys - chromium,name (Gnome)
+  dconf:
+    key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/name"
+    value: "'Chromium'"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+
+- name: set settings-daemon - plugin - media-keys - chromium,command(Gnome)
+  dconf:
+    key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/command"
+    value: "'flatpak run org.chromium.Chromium'"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+
+- name: set settings-daemon - plugin - media-keys - chromium,binding (Gnome)
+  dconf:
+    key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/binding"
+    value: "'<Primary><Alt>c'"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+
+
+
+
+### Gnome Weather:
 #   -------------
 #- name: set gnome  - Weather automatic-location (Gnome)
 ##  become_user: sandro
