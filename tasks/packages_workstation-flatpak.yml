@@ -27,7 +27,7 @@
     - 'com.nextcloud.desktopclient.nextcloud'
     - 'de.haeckerfelix.Shortwave'
     - 'org.signal.Signal'
-    - 'ch.threema.threema-web-desktop'
+#    - 'ch.threema.threema-web-desktop'   # This application is no longer maintained, please use the official Desktop Client https://threema.ch/en/blog/posts/threema-for-desktop
     - 'com.github.micahflee.torbrowser-launcher'
 #    - 'com.ulduzsoft.Birdtray'  --> evolution
 #    - 'org.mozilla.Thunderbird' --> evolution
