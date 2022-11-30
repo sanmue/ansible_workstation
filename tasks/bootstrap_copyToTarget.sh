@@ -52,4 +52,4 @@ rsync -Pv "/home/${userid}/.ssh/${gitKeyFile}" "${userid}@${targetIP}:~/.ssh"
 echo ""
 echo "Kopiervorgang beendet."
 
-#test
+#test2
