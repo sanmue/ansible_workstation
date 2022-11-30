@@ -35,15 +35,15 @@ rsync -avPEzh --stats --exclude={"bootstrap_copyToTarget.sh","config_workstation
 # https://unix.stackexchange.com/questions/307862/rsync-include-only-certain-files-types-excluding-some-directories
 
 
-# Copy ssh-KeyFile to target
-sshKeyFile="id_ed25519.pub"
+# Copy login ssh-KeyFile to target
+sshKeyFile="id_ed25519_loginTest.pub"
 echo ""
-echo "Kopiere ssh-KeyFile '${sshKeyFile}' ins Home-Verzeichnis von '${userid}' auf Zielrechner '${targetIP}' ..."
+echo "Kopiere login ssh-KeyFile '${sshKeyFile}' ins Home-Verzeichnis von '${userid}' auf Zielrechner '${targetIP}' ..."
 ssh-copy-id -i "/home/${userid}/.ssh/${sshKeyFile}" "${userid}@${targetIP}"
 
 
 # Copy public git-KeyFile to target
-gitKeyFile="id_ed25519.pub"
+gitKeyFile="id_ed25519_loginTest.pub"
 echo ""
 echo "Kopiere public git-KeyFile '${gitKeyFile}' ins Home-Verzeichnis von '${userid}' auf Zielrechner '${targetIP}' ..."
 rsync -Pv "/home/${userid}/.ssh/${gitKeyFile}" "${userid}@${targetIP}:~/.ssh"
