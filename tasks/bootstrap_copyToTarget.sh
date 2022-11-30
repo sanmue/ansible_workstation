@@ -43,7 +43,7 @@ ssh-copy-id -i "/home/${userid}/.ssh/${sshKeyFile}" "${userid}@${targetIP}"
 
 
 # Copy public git-KeyFile to target
-gitKeyFile="id_ed25519_loginTest.pub"
+gitKeyFile="id_ed25519_githubTest.pub"
 echo ""
 echo "Kopiere public git-KeyFile '${gitKeyFile}' ins Home-Verzeichnis von '${userid}' auf Zielrechner '${targetIP}' ..."
 rsync -Pv "/home/${userid}/.ssh/${gitKeyFile}" "${userid}@${targetIP}:~/.ssh"
@@ -51,5 +51,3 @@ rsync -Pv "/home/${userid}/.ssh/${gitKeyFile}" "${userid}@${targetIP}:~/.ssh"
 
 echo ""
 echo "Kopiervorgang beendet."
-
-#test2
