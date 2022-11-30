@@ -31,16 +31,23 @@ echo ""
 echo "Kopiere bootstrap-Skript ins Home-Verzeichnis von '${userid}' auf Zielrechner '${targetIP}' ..."
 #rsync -avPEzh --stats "bootstrap_ubuntu.sh" "${userid}@${targetIP}:~"
 rsync -avPEzh --stats --exclude={"bootstrap_copyToTarget.sh","config_workstation-desktopPreferences-terminal.sh","config_all-servcices-misc-vim.sh","*.yml*"} --include="*.sh" "./" "${userid}@${targetIP}:~"
-
 #rsync -avPEzh --stats --include="*.sh" --exclude={"bootstrap_copyToTarget.sh","config_workstation-desktopPreferences-terminal.sh","*.yml*"} "./" "${userid}@${targetIP}:~"   # kopiert nicht nur alle .sh außer den excludeten, sondern auch die excludeten mit (warum?):
 # https://unix.stackexchange.com/questions/307862/rsync-include-only-certain-files-types-excluding-some-directories
 
-# Copy git-KeyFile to target
+
+# Copy ssh-KeyFile to target
+sshKeyFile="id_ed25519.pub"
+echo ""
+echo "Kopiere ssh-KeyFile '${sshKeyFile}' ins Home-Verzeichnis von '${userid}' auf Zielrechner '${targetIP}' ..."
+ssh-copy-id -i "/home/${userid}/.ssh/${sshKeyFile}" "${userid}@${targetIP}"
+
+
+# Copy public git-KeyFile to target
 gitKeyFile="id_ed25519.pub"
+echo ""
+echo "Kopiere public git-KeyFile '${gitKeyFile}' ins Home-Verzeichnis von '${userid}' auf Zielrechner '${targetIP}' ..."
+rsync -Pv "/home/${userid}/.ssh/${gitKeyFile}" "${userid}@${targetIP}:~/.ssh"
+
 
 echo ""
-echo "Kopiere git-KeyFile '${gitKeyFile}' ins Home-Verzeichnis von '${userid}' auf Zielrechner '${targetIP}' ..."
-ssh-copy-id -i "/home/${userid}/.ssh/${gitKeyFile}" "${userid}@${targetIP}"
-
-echo ""
-echo "Kopiervorgang beendet beendet."
+echo "Kopiervorgang beendet."
