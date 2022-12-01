@@ -1,18 +1,22 @@
 #!/bin/bash
 
+# -------------------------------------------------------------------
 # Kopieren des bootstrap-skripts auf die Zielmaschine
 # es kann ein Parameter übergeben werden: IP-Adresse der Zielmaschine
-
+# -------------------------------------------------------------------
 
 # #####################
 # region Initialisation
 # #####################
+
+# IP-Adresse Ziel
 if [ $# == 1 ]; then   # wenn Anzahl Argumente (die an Skript übergeben wurden) = 1 ist
     targetIP=$1
 else
     read -rp "IP des Zielrechners eingeben: " targetIP
 fi
 
+# UserID
 userid=$(whoami)
 read -rp "Soll die aktuelle UserID '${userid}' auch auf dem Zielrechner verwendet werden (j/n)?: " useCurrentUserId
 if [ "${useCurrentUserId}" = "n" ]; then
@@ -20,6 +24,10 @@ if [ "${useCurrentUserId}" = "n" ]; then
 else
     echo "Aktuelle UserID '${userid}' wird verwendet"
 fi
+
+# ssh keys
+sshKeyFile="id_ed25519_loginTest.pub"
+gitKeyFile="id_ed25519_githubTest.pub"
 
 
 # ###########
@@ -36,14 +44,12 @@ rsync -avPEzh --stats --exclude={"bootstrap_copyToTarget.sh","config_workstation
 
 
 # Copy login ssh-KeyFile to target
-sshKeyFile="id_ed25519_loginTest.pub"
 echo ""
 echo "Kopiere login ssh-KeyFile '${sshKeyFile}' ins Home-Verzeichnis von '${userid}' auf Zielrechner '${targetIP}' ..."
 ssh-copy-id -i "/home/${userid}/.ssh/${sshKeyFile}" "${userid}@${targetIP}"
 
 
 # Copy public git-KeyFile to target
-gitKeyFile="id_ed25519_githubTest.pub"
 echo ""
 echo "Kopiere public git-KeyFile '${gitKeyFile}' ins Home-Verzeichnis von '${userid}' auf Zielrechner '${targetIP}' ..."
 rsync -Pv "/home/${userid}/.ssh/${gitKeyFile}" "${userid}@${targetIP}:~/.ssh"
