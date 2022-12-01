@@ -56,7 +56,7 @@
 #      - seahorse # bereits standardmäßig installiert
 #      - searchmonkey
       - steam
-      - teams   # Micosoft Teams (repo wurde hinzugefügt)
+#      - teams   # Micosoft Teams (repo wurde hinzugefügt)
       - timeshift
   when:
     - ansible_distribution == "Ubuntu"
