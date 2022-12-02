@@ -34,6 +34,9 @@ EOF
 
 
     # Ändern Besitzer der config-datei:
-    chown "${dir}:${dir} ${pathToDir}/${dir}/${cfgFile}"   # aktueller Anwender (id enspricht Name des aktuellen Verzeichnisses); sonst wäre es "root"
+    # ${dir} ist z.B. /home/sandro
+    username=$(echo "${dir}" | cut -d '/' -f 2)   # -f 2: das 2. Element (=username)
+
+    chown "${username}:${username} ${dir}/${cfgFile}"   # aktueller Anwender (id enspricht Name des aktuellen Verzeichnisses); sonst wäre es "root"
 
 done
