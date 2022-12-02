@@ -14,8 +14,9 @@ arrDir="$(find "${pathToDir}" -maxdepth "${searchdepth}" -mindepth "${searchdept
 #echo "${arrDir}"
 
 for dir in ${arrDir}; do
-touch "${dir}/${cfgFile}"
+    touch "${dir}/${cfgFile}"
 
+    # nächster Teil darf nicht eingerückt werden:
 cat > "${dir}/${cfgFile}" << EOF
 syntax on
 set ruler
@@ -30,5 +31,9 @@ set nocompatible
 colorscheme koehler
 
 EOF
+
+
+    # Ändern Besitzer der config-datei:
+    chown "${dir}:${dir} ${pathToDir}/${dir}/${cfgFile}"   # aktueller Anwender (id enspricht Name des aktuellen Verzeichnisses); sonst wäre es "root"
 
 done
