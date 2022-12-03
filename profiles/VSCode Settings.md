@@ -1,9 +1,10 @@
 # VSCode Settings
 ## Extension: Sync Settings
+### Config git-repo
 - "Sync Settings" - Settings
   - Aufruf in VSCode:
     - `STRG + SHIFT + P`
-    - `>Sync Settings: open the repository Settings'`
+    - `>Sync Settings: open the repository Settings`
   - Pfad im Dateisystem:
     - Path: /home/sandro/.config/Code/User/globalStorage/zokugun.sync-settings
     - File: settings.yml:
@@ -18,3 +19,11 @@ repository:
   branch: main
 #   # how to personalize the commit messages at https://github.com/zokugun/vscode-sync-settings/blob/master/docs/commit-messages.md
 ```
+
+### Config importieren
+- `STRG + SHIFT + P`
+- `>Sync Settings: Download (repository -> user)`
+
+### Config expoertieren
+- `STRG + SHIFT + P`
+- `>Sync Settings: Upload (user -> repository)`
