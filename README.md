@@ -4,6 +4,7 @@
 und
 
 # VSCode Settings - Extension: Sync Settings
+- git-Verzeichnis: profiles/main
 ## "Sync Settings" - Settings:
 ### Config git-repo
 - Aufruf in VSCode:
