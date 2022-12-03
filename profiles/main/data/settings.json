@@ -1,0 +1,25 @@
+{
+    "workbench.colorTheme": "Default Dark+",
+    "telemetry.telemetryLevel": "error",
+    "files.defaultLanguage": "powershell",
+    "files.encoding": "utf8bom",
+    "workbench.startupEditor": "none",
+    "editor.minimap.enabled": false,
+    "kite.showWelcomeNotificationOnStartup": false,
+    "workbench.iconTheme": "vscode-icons",
+    "editor.guides.bracketPairs": "active",
+    "editor.bracketPairColorization.enabled": true,
+    "powershell.codeFormatting.autoCorrectAliases": true,
+    "powershell.codeFormatting.trimWhitespaceAroundPipe": true,
+    "powershell.codeFormatting.useConstantStrings": true,
+    "powershell.codeFormatting.useCorrectCasing": true,
+    "powershell.codeFormatting.preset": "OTBS",
+    "powershell.codeFormatting.pipelineIndentationStyle": "IncreaseIndentationForFirstPipeline",
+    "remote.SSH.connectTimeout": 30,
+    "gitlens.defaultDateLocale": "de-DE",
+    "redhat.telemetry.enabled": true,
+    "terminal.integrated.env.linux": {
+    
+    },
+    "syncSettings.hostname": "{{hostname}}"
+}
