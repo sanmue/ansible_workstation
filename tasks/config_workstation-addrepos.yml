@@ -134,8 +134,8 @@
     - ansible_distribution_major_version|int >= 22
     - ansible_pkg_mgr == "apt"
 
-- name: Fix deprecation warning bei apt-update 'Key is stored in legacy trusted.gpg keyring' (Ubuntu >=22, Gnome, Ansible >=2.10)
-  ansible.builtin.script: "{{ env_PWD }}/tasks/config_workstation-addrepos-ubuntuFixKeyring.sh"
+- name: Fix apt-update deprecation warning + Set Repo Prio (Ubuntu >=22, Gnome, Ansible >=2.10)
+  ansible.builtin.script: "{{ env_PWD }}/tasks/config_workstation-addrepos-ubuntu.sh"
   when:
     - ansible_distribution == "Ubuntu"
     - ansible_distribution_major_version|int >= 22        # Ubuntu 22.04 has transitioned from using /etc/apt/trusted.gpg to using individual .gpg files located in /etc/apt/trusted.gpg.d

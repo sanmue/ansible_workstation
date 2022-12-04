@@ -15,5 +15,5 @@ for KEY in $( \
     | sudo gpg --dearmour -o "/etc/apt/trusted.gpg.d/imported-from-trusted-gpg-${K}.gpg"
 done
 
-# cleanup:
+# once every ppa has caught up, this needs to be cleaned up again:
 #rm -f /etc/apt/trusted.gpg.d/imported-from-trusted-gpg-*.gpg
