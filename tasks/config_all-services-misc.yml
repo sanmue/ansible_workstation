@@ -42,8 +42,8 @@
 # neu (via global config-file):
 - name: Set (Copy) vim global config (all)
   ansible.builtin.copy:
-    src: "{{ env_PWD }}/files/.vimrc.local"
-    dest: /etc/vim/.vimrc.local
+    src: "{{ env_PWD }}/files/vimrc.local"
+    dest: /etc/vim/vimrc.local
     owner: root
     group: root
     mode: '0644'
