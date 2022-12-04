@@ -53,15 +53,18 @@ fi
 echo ""
 echo "Erstelle neues Verzeichnis '${repodir}' und Unterverzeichnis '${playbookdir}' im Home-Verzeichnis von '${userid}' ..."
 if [ -d "/home/${userid}/${repodir}/${playbookdir}" ]; then
-    echo "Verzeichnis '${playbookdir}' existiert bereits. Inhalt wird gelöscht."
-    sudo rm -r "/home/${userid}/${repodir}/${playbookdir}" # && mkdir -p "/home/${userid}/${repodir}/${playbookdir}"
+    echo "Verzeichnis '${playbookdir}' existiert bereits."
+    #sudo rm -r "/home/${userid}/${repodir}/${playbookdir}" # && mkdir -p "/home/${userid}/${repodir}/${playbookdir}"
+    cd "/home/${userid}/${repodir}/${playbookdir}"
+    git pull origin
+    cd
 else
     mkdir -p "/home/${userid}/${repodir}/${playbookdir}"
-fi
 
-echo ""
-echo "Clone github-Repo des Ansible-Playbooks ins Verzeichnis '${playbookdir}' ..."
-git clone ${githubOnlineRepo} "/home/${userid}/${repodir}/${playbookdir}"
+    echo ""
+    echo "Clone github-Repo des Ansible-Playbooks ins Verzeichnis '${playbookdir}' ..."
+    git clone ${githubOnlineRepo} "/home/${userid}/${repodir}/${playbookdir}"
+fi
 
 echo ""
 read -rp "Soll TEST des Ansible-Playbooks durchgeführt werden (j/n)?: " testplay
