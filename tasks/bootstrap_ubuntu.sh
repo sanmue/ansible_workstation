@@ -1,11 +1,12 @@
 #!/bin/bash
 
 # Installieren benötigte Software zur Ausführung der autom. Inst. über Ansible
-# Skript ist mit root-rechten zu Starten
+# Skript ist mit root-Rechten zu Starten
 
 repodir="dev"
 playbookdir="ansible_test"
 userid=$(whoami)
+githubsource="git@github.com:sanmue/ansible_test.git"
 
 # echo "Ich bin: ${userid}"
 #if [ "${userid}" != "root" ]; then 
@@ -59,8 +60,8 @@ else
 fi
 
 echo ""
-echo "Clone git-Repo des Ansible-Playbooks ins Verzeichnis '${playbookdir}' ..."
-git clone git@github.com:sanmue/ansible_test.git "/home/${userid}/${repodir}/${playbookdir}"
+echo "Clone github-Repo des Ansible-Playbooks ins Verzeichnis '${playbookdir}' ..."
+git clone ${githubsource} "/home/${userid}/${repodir}/${playbookdir}"
 
 echo ""
 read -rp "Soll TEST des Ansible-Playbooks durchgeführt werden (j/n)?: " testplay
@@ -70,7 +71,7 @@ if [ "${testplay}" = 'j' ]; then
     # bei verschlüsselten Daten:
     #ansible-playbook "/home/${userid}/dev/ansible_test/local.yml" -v -K -C --vault-password-file "/home/${userid}/.ansibleVaultKey"
 else
-    echo "Test des Playbooks wird nicht durchgefürt"
+    echo "TEST des Playbooks wird NICHT durchgefürt"
 fi
 
 echo ""
