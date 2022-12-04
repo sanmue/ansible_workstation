@@ -32,8 +32,20 @@
 
 # ################
 # ### vim Settings
-- name: set vim config for user "sandro" (.vimrc) (all)
-#  become_user: sandro
-  ansible.builtin.script: "{{ env_PWD }}/tasks/config_all-servcices-misc-vim.sh" # "ansible.builtin.script:" ab ansible version 2.10, davor nur "script:"
-  args:
-    creates: "/home/{{ env_user }}/.vimrc"
+# ---
+# alt:
+#- name: set vim config for user "sandro" (.vimrc) (all)
+#  ansible.builtin.script: "{{ env_PWD }}/tasks/config_all-servcices-misc-vim.sh" # "ansible.builtin.script:" ab ansible version 2.10, davor nur "script:"
+#  args:
+#    creates: "/home/{{ env_user }}/.vimrc"
+# ---
+# neu (via global config-file):
+- name: Set (Copy) vim global config (all)
+  ansible.builtin.copy:
+    src: "{{ env_PWD }}/files/.vimrc.local"
+    dest: /etc/vim/.vimrc.local
+    owner: root
+    group: root
+    mode: '0644'
+    #mode: u=rw,g=r,o=r
+    backup: yes

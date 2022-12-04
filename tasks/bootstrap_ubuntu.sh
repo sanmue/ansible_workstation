@@ -67,13 +67,15 @@ echo ""
 read -rp "Soll TEST des Ansible-Playbooks durchgeführt werden (j/n)?: " testplay
 if [ "${testplay}" = 'j' ]; then
     echo "Starte TEST des Playbooks ..."
-    ansible-playbook "/home/${userid}/dev/ansible_test/local.yml" -v --ask-become-pass --check
+    ansible-playbook "/home/${userid}/${repodir}/${playbookdir}/local.yml" -v --ask-become-pass --check
     # bei verschlüsselten Daten:
-    #ansible-playbook "/home/${userid}/dev/ansible_test/local.yml" -v -K -C --vault-password-file "/home/${userid}/.ansibleVaultKey"
+    #ansible-playbook "/home/${userid}/${repodir}/${playbookdir}/local.yml" -v -K -C --vault-password-file "/home/${userid}/.ansibleVaultKey"
 else
     echo "TEST des Playbooks wird NICHT durchgefürt"
 fi
 
 echo ""
 echo "Starte Ansible-Playbook ..."
-ansible-playbook "/home/${userid}/dev/ansible_test/local.yml" -v --ask-become-pass
+ansible-playbook "/home/${userid}/${repodir}/${playbookdir}/local.yml" -v --ask-become-pass
+# bei verschlüsselten Daten:
+#ansible-playbook "/home/${userid}/${repodir}/${playbookdir}/local.yml" -v -K --vault-password-file "/home/${userid}/.ansibleVaultKey"

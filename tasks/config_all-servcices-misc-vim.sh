@@ -1,5 +1,12 @@
 #!/bin/bash
 
+###
+# wird nicht mehr verwendet, globale config für vim nun über files/.vimrc.local
+# welche nach /etc/vim/ kopiert wird
+###
+
+
+
 # Grund-Konfiguration für vim
 #echo "Erstelle Config-Datei für vim (.vimrc) in allen vorhandenen User-Homeverzeichnissen..."
 
