@@ -1,8 +1,10 @@
 #!/bin/bash
 
 # -------------------------------------------------------------------
-# Kopieren des bootstrap-skripts auf die Zielmaschine
-# es kann ein Parameter übergeben werden: IP-Adresse der Zielmaschine
+# TestLab
+# Kopiere bootstrap-skript von aktuellem System auf die Zielmaschine
+# mögliche Übergabe-Parameter: 
+#   - IP-Adresse der Zielmaschine
 # -------------------------------------------------------------------
 
 # #####################
@@ -26,8 +28,9 @@ else
 fi
 
 # ssh keys
-sshKeyFile="id_ed25519_loginTest.pub"
-gitKeyFile="id_ed25519_githubTest.pub"
+sshKeyFile="id_ed25519_loginTest"
+gitKeyFile="id_ed25519_githubTest"
+pubFileType=".pub"   # public ssh key
 
 
 # ###########
@@ -35,24 +38,36 @@ gitKeyFile="id_ed25519_githubTest.pub"
 # ###########
 
 # Copy bootstrap-Skript to target
-echo ""
+echo "----------------------------------------"
 echo "Kopiere bootstrap-Skript ins Home-Verzeichnis von '${userid}' auf Zielrechner '${targetIP}' ..."
 #rsync -avPEzh --stats "bootstrap_ubuntu.sh" "${userid}@${targetIP}:~"
-rsync -avPEzh --stats --exclude={"bootstrap_copyToTarget.sh","config_workstation-desktopPreferences-terminal.sh","config_all-servcices-misc-vim.sh","*.yml*"} --include="*.sh" "./" "${userid}@${targetIP}:~"
 #rsync -avPEzh --stats --include="*.sh" --exclude={"bootstrap_copyToTarget.sh","config_workstation-desktopPreferences-terminal.sh","*.yml*"} "./" "${userid}@${targetIP}:~"   # kopiert nicht nur alle .sh außer den excludeten, sondern auch die excludeten mit (warum?):
 # https://unix.stackexchange.com/questions/307862/rsync-include-only-certain-files-types-excluding-some-directories
+# current:
+#rsync -avPEzh --stats --exclude={"bootstrap_copyToTarget.sh","config_workstation-desktopPreferences-terminal.sh","config_all-servcices-misc-vim.sh","*.yml*"} --include="*.sh" "./" "${userid}@${targetIP}:~"
+rsync -PEzhv --stats --exclude={"bootstrap_copyToTarget.sh","config_workstation-desktopPreferences-terminal.sh","config_all-servcices-misc-vim.sh","*.yml*"} --include="*.sh" "./" "${userid}@${targetIP}:~"
 
 
 # Copy login ssh-KeyFile to target
-echo ""
-echo "Kopiere login ssh-KeyFile '${sshKeyFile}' ins Home-Verzeichnis von '${userid}' auf Zielrechner '${targetIP}' ..."
-ssh-copy-id -i "/home/${userid}/.ssh/${sshKeyFile}" "${userid}@${targetIP}"
+echo "----------------------------------------"
+echo "Kopiere public ssh-KeyFile (logon) '${sshKeyFile}${pubFileType}' ins ssh-Verzeichnis von '${userid}' auf Zielrechner '${targetIP}' ..."
+ssh-copy-id -i "/home/${userid}/.ssh/${sshKeyFile}${pubFileType}" "${userid}@${targetIP}"
 
 
-# Copy public git-KeyFile to target
-echo ""
-echo "Kopiere public git-KeyFile '${gitKeyFile}' ins Home-Verzeichnis von '${userid}' auf Zielrechner '${targetIP}' ..."
-rsync -Pv "/home/${userid}/.ssh/${gitKeyFile}" "${userid}@${targetIP}:~/.ssh"
+# Copy public + pivate git-KeyFile to target
+echo "----------------------------------------"
+echo "Kopiere public + private ssh-KeyFile (git) '${gitKeyFile}' ins ssh-Verzeichnis von '${userid}' auf Zielrechner '${targetIP}' ..."
+rsync -PEzhv "/home/${userid}/.ssh/${gitKeyFile}" "${userid}@${targetIP}:~/.ssh"
+rsync -PEzhv "/home/${userid}/.ssh/${gitKeyFile}${pubFileType}" "${userid}@${targetIP}:~/.ssh"
+
+# Importiere ssh-KeyFile (git)
+# - nicht (mehr) notwendigt, da privaten ssh-KeyFile (git) auch kopiere (s.o.)
+# - damit wird in Gnome "seahorse" ("Passwords and Keys") der Key korrekt vertraut/aufgeführt
+#echo "----------------------------------------"
+#echo "Importiere ssh-KeyFile (git) '${gitKeyFile}' für '${userid}' auf Zielrechner '${targetIP}' ..."
+#lokale Variante (ungestestet, Variablen sind zu ersetzen): #sudo -u "${userid}" "ssh-add ~/.ssh/${gitKeyFile}"
+#remote-Variante (ungestestet, evtl. wird bei Befehlsteil "...{gitKeyFile}..." auf Zielsystem nicht bakannt sein): 
+#   #ssh "${userid}@${targetIP}" "ssh-add ~/.ssh/${gitKeyFile}"
 
 
 echo ""
