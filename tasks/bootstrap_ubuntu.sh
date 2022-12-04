@@ -6,7 +6,7 @@
 repodir="dev"
 playbookdir="ansible_test"
 userid=$(whoami)
-githubsource="git@github.com:sanmue/ansible_test.git"
+githubOnlineRepo="git@github.com:sanmue/ansible_test.git"
 
 # echo "Ich bin: ${userid}"
 #if [ "${userid}" != "root" ]; then 
@@ -61,7 +61,7 @@ fi
 
 echo ""
 echo "Clone github-Repo des Ansible-Playbooks ins Verzeichnis '${playbookdir}' ..."
-git clone ${githubsource} "/home/${userid}/${repodir}/${playbookdir}"
+git clone ${githubOnlineRepo} "/home/${userid}/${repodir}/${playbookdir}"
 
 echo ""
 read -rp "Soll TEST des Ansible-Playbooks durchgeführt werden (j/n)?: " testplay
