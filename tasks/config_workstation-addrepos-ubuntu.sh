@@ -14,6 +14,25 @@ for KEY in $( \
     apt-key export "${K}" \
     | sudo gpg --dearmour -o "/etc/apt/trusted.gpg.d/imported-from-trusted-gpg-${K}.gpg"
 done
-
 # once every ppa has caught up, this needs to be cleaned up again:
 #rm -f /etc/apt/trusted.gpg.d/imported-from-trusted-gpg-*.gpg
+
+
+
+# Set PPA Priority for Mozillateam and block Firefox from Ubuntu’s own repository
+dir="/etc/apt/preferences.d"
+mozfile="99mozillateamppa"
+
+touch "${dir}/${mozfile}"
+
+# nächster Teil darf nicht eingerückt werden:
+cat > "${dir}/${mozfile}" << EOF
+Package: firefox*
+Pin: release o=LP-PPA-mozillateam
+Pin-Priority: 501
+
+Package: firefox*
+Pin: release o=Ubuntu
+Pin-Priority: -1
+
+EOF
