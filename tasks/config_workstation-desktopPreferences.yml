@@ -926,6 +926,7 @@
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
 
+
 ### bashrc - add additional Paths:
 #   ------------------------------
 - name: bashrc - Insert/Update additional paths
@@ -953,8 +954,6 @@
 
 
 
-
-
 ### gnome shell extensions -  preferences:
 #   --------------------------------------
 
@@ -975,7 +974,6 @@
     value: "'top-left'"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
-
 
 
 
