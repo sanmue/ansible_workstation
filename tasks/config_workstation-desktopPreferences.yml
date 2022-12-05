@@ -932,8 +932,9 @@
   ansible.builtin.blockinfile:
     path: "/home/{{ env_user }}/.bashrc"
     backup: yes
-    marker: "<!-- {mark} ANSIBLE MANAGED BLOCK -->"
+    marker: "### {mark} ANSIBLE MANAGED BLOCK ###"
     block: |
+      ------------------------------------
       ### nvm (Node Version Manager)
       # https://github.com/nvm-sh/nvm
       # https://linuxize.com/post/how-to-install-node-js-on-ubuntu-22-04/
