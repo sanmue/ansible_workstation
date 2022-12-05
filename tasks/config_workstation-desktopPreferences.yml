@@ -926,6 +926,30 @@
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
 
+### bashrc - add additional Paths:
+#   ------------------------------
+- name: bashrc - Insert/Update additional paths
+  ansible.builtin.blockinfile:
+    path: "/home/{{ env_user }}/.bashrc"
+    backup: yes
+    marker: "<!-- {mark} ANSIBLE MANAGED BLOCK -->"
+    block: |
+      ### nvm (Node Version Manager)
+      # https://github.com/nvm-sh/nvm
+      # https://linuxize.com/post/how-to-install-node-js-on-ubuntu-22-04/
+      export NVM_DIR="$HOME/.nvm"
+      [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+      [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+      ### pyenv
+      ### https://ostechnix.com/pyenv-python-version-management-made-easier/
+      export PATH="$HOME/.pyenv/bin:$PATH"
+      eval "$(pyenv init -)"
+      eval "$(pyenv virtualenv-init -)"
+
+      export PATH=/home/sandro/.local/bin:$PATH
+
+
 
 ### gnome shell extensions -  preferences:
 #   --------------------------------------
