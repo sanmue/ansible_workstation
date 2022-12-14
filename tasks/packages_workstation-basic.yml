@@ -104,7 +104,7 @@
 - name: install basic packages - Download Installer-Skript for Pyenv (Ubuntu)
   tags: basic, ubuntu, workstation
   ansible.builtin.get_url:
-    url: curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer
+    url: https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer
     dest: /tmp/pyenv-installer.sh
     mode: u=rwx,g=rwx,o=rwx
   when: ansible_distribution == "Ubuntu"
