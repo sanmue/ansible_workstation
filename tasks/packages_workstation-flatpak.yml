@@ -14,6 +14,7 @@
     method: system
   with_items:
     - 'com.belmoussaoui.Authenticator'
+    - 'com.brave.Browser'
     - 'org.chromium.Chromium'
     - 'com.discordapp.Discord'
     - 'org.gnome.Extensions'
