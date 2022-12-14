@@ -51,6 +51,22 @@
       - openssh-client
       - ssh
       - ufw
+#     Pyenv
+#     https://ostechnix.com/pyenv-python-version-management-made-easier/
+      - make
+      - build-essential
+      - libssl-dev
+      - zlib1g-dev
+      - libbz2-dev
+      - libreadline-dev
+      - libsqlite3-dev
+      - wget
+      - curl
+      - llvm
+      - libncurses5-dev
+      - libncursesw5-dev
+      - xz-utils
+      - tk-dev
 #     Miltimedia; entspechend libs sollten bereits installiert sein (wenn mei Installer ausgewählt wurde)
 #      - ffmpeg
 #      - x264
@@ -60,6 +76,36 @@
 # ---
 #       - youtube-dl
   when: ansible_distribution == "Ubuntu"
+
+- name: install basic packages - prereqesites for Pyenv (Ubuntu)
+  tags: basic, ubuntu, workstation
+  package:
+    state: latest
+    name:
+#     Pyenv
+#     https://ostechnix.com/pyenv-python-version-management-made-easier/
+      - make
+      - build-essential
+      - libssl-dev
+      - zlib1g-dev
+      - libbz2-dev
+      - libreadline-dev
+      - libsqlite3-dev
+      - wget
+      - curl
+      - llvm
+      - libncurses5-dev
+      - libncursesw5-dev
+      - xz-utils
+      - tk-dev
+  when: ansible_distribution == "Ubuntu"
+
+- name: install basic packages - Pyenv (Ubuntu)
+  tags: basic, ubuntu, workstation
+  ansible.builtin.script:
+    cmd: curl -L https://raw.githubusercontent.com/pyenv/pyenv-installer/master/bin/pyenv-installer | bash
+  when: ansible_distribution == "Ubuntu"
+
 
 - name: install basic packages (Ubuntu + x11 display server)
   tags: basic, ubuntu, workstation
