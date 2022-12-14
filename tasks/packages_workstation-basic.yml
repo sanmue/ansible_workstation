@@ -113,6 +113,8 @@
   tags: basic, ubuntu, workstation
   ansible.builtin.script:
     cmd: /tmp/pyenv-installer.sh
+  become: true
+  become_user: "{{ env_user }}"
   when: ansible_distribution == "Ubuntu"
 
 
