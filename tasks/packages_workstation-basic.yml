@@ -84,6 +84,7 @@
     name:
 #     Pyenv
 #     https://ostechnix.com/pyenv-python-version-management-made-easier/
+#     https://github.com/pyenv/pyenv-installer
       - make
       - build-essential
       - libssl-dev
@@ -100,10 +101,18 @@
       - tk-dev
   when: ansible_distribution == "Ubuntu"
 
-- name: install basic packages - Pyenv (Ubuntu)
+- name: install basic packages - Download Installer-Skript for Pyenv (Ubuntu)
+  tags: basic, ubuntu, workstation
+  ansible.builtin.get_url:
+    url: curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer
+    dest: /tmp/pyenv-installer.sh
+    mode: u=rwx,g=rwx,o=rwx
+  when: ansible_distribution == "Ubuntu"
+
+- name: install basic packages - Execute Installer-Skript for Pyenv (Ubuntu)
   tags: basic, ubuntu, workstation
   ansible.builtin.script:
-    cmd: "curl https://pyenv.run | bash"
+    cmd: /tmp/pyenv-installer.sh
   when: ansible_distribution == "Ubuntu"
 
 
