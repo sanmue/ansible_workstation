@@ -69,11 +69,11 @@
     name:
 #      - firefox              # ab Ubuntu 22.04: Standard als snap package installiert (Probleme: z.B. Keepassxc Erweiterung)
 #      - firefox-dev
-#      - firefox               # wenn alles korrekt vorher konfiguriert wurde, wird Firefox aus mozillateam ppa als deb-package installiert
+      - firefox               # wenn alles korrekt vorher konfiguriert wurde, wird Firefox aus mozillateam ppa als deb-package installiert
 #      - firefox-locale-de
-#      - firefox-locale-en
-      - firefox-esr
-      - firefox-esr-locale-en      
+      - firefox-locale-en
+#      - firefox-esr
+#      - firefox-esr-locale-en      
     default_release: 'o=LP-PPA-mozillateam'   # damit aus ppa installiert wird, und nicht wieder von ubuntu als snap
     update_cache: yes
   when:
