@@ -103,7 +103,7 @@
 - name: install basic packages - Pyenv (Ubuntu)
   tags: basic, ubuntu, workstation
   ansible.builtin.script:
-    cmd: 'curl -L https://raw.githubusercontent.com/pyenv/pyenv-installer/master/bin/pyenv-installer | bash'
+    cmd: "curl https://pyenv.run | bash"
   when: ansible_distribution == "Ubuntu"
 
 
