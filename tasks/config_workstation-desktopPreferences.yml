@@ -61,7 +61,6 @@
 
 ### Ubuntu + Gnome ###
 - name: create a directory for desktop-wallpaper in local user-folder (Ubuntu + Gnome)
-#  become_user: sandro
   ansible.builtin.file:
     path: "/home/{{ env_user }}/.local/share/backgrounds"
     state: directory
@@ -70,7 +69,6 @@
     - env_desktop in ["ubuntu:gnome"]
 
 - name: copy desktop-wallpaper file to local user-folder (Ubuntu + Gnome)
-#  become_user: sandro
   copy:
 #    src: "files/gnome/background/gnome_embos_1440P.png"
     src: "files/gnome/background/brad-huchteman-stone-mountain.jpg"
@@ -80,12 +78,11 @@
     owner: "{{ env_user }}"
     group: "{{ env_user }}"
     mode: u=rwx,g=rwx,o=rwx
-#    mode: 0777
+#    mode: '0777'
   when:
     - env_desktop == "ubuntu:gnome"
 
 - name: set desktop - background (Ubuntu + Gnome)
-#  become_user: sandro
   dconf:
     key: "/org/gnome/desktop/background/picture-uri"
 #    value: "'file:///home/USERNAME/.local/share/backgrounds/gnome_emboss_1440P.png'" # fix
@@ -96,7 +93,6 @@
     - env_desktop == "ubuntu:gnome"
 
 - name: set desktop - background (Ubuntu + Gnome dark)
-#  become_user: sandro
   dconf:
     key: "/org/gnome/desktop/background/picture-uri-dark"
     value: '"file:///home/{{ env_user }}/.local/share/backgrounds/brad-huchteman-stone-mountain.jpg"' # dyn
@@ -106,7 +102,6 @@
 
 
 - name: set desktop-wallpaper picture-options (Ubuntu + Gnome)
-#  become_user: sandro
   dconf:
     key: "/org/gnome/desktop/background/picture-options"
     value: "'zoom'"
@@ -114,7 +109,6 @@
     - env_desktop == "ubuntu:gnome"
 
 - name: set show-desktop-icons (Ubuntu + Gnome)
-#  become_user: sandro
   dconf:
     key: "/org/gnome/desktop/background/show-desktop-icons"
     value: "false"
@@ -125,7 +119,6 @@
 
 ### Suse + Gnome ###
 - name: copy desktop-wallpaper file to local system-folder (Suse + Gnome)
-#  become_user: sandro
   become: true
   copy:
     src: "files/gnome/background/gnome_embos_1440P.png"
@@ -135,13 +128,12 @@
     owner: root
     group: root
     mode: u=rwx,g=rwx,o=rwx
-#    mode: 0777
+#    mode: '0777'
   when:
     - ansible_os_family == "Suse"
     - env_desktop == "gnome"
 
 - name: set desktop - background (Suse + Gnome)
-#  become_user: sandro
   dconf:
     key: "/org/gnome/desktop/background/picture-uri"
     value: "'file:///usr/share/wallpapers/gnome_embos_1440P.png'"
@@ -150,7 +142,6 @@
     - env_desktop == "gnome"
 
 - name: set desktop-wallpaper picture-options (Suse + Gnome)
-#  become_user: sandro
   dconf:
     key: "/org/gnome/desktop/background/picture-options"
     value: "'zoom'"
@@ -164,7 +155,6 @@
 ### weitere desktop settings
 ### ------------------------
 - name: set desktop interface - clock-format (Gnome)
-#  become_user: sandro
   dconf:
     key: "/org/gnome/desktop/interface/clock-format"
     value: "'24h'"
@@ -175,7 +165,6 @@
 
 
 - name: set desktop interface - clock-show-date (Gnome)
-#  become_user: sandro
   dconf:
     key: "/org/gnome/desktop/interface/clock-show-date"
     value: "true"
@@ -184,7 +173,6 @@
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
 - name: set desktop interface - clock-show-weekday (Gnome)
-#  become_user: sandro
   dconf:
     key: "/org/gnome/desktop/interface/clock-show-weekday"
     value: "true"
@@ -208,7 +196,6 @@
 # all
 
 #- name: create a directory for gtk-theme files in userdir (all + Gnome)
-##  become_user: sandro
 #  ansible.builtin.file:
 #    path: "/home/{{ env_user }}/.themes"
 #    state: directory
@@ -219,7 +206,6 @@
 
 
 #- name: copy gtk-theme MateriaBreath-dark to userdir (all + Gnome)
-##  become_user: sandro
 #  unarchive:
 #    src: "files/gnome/themes/MateriaBreath.zip"
 #    dest: "/home/{{ env_user }}/.themes/"
@@ -235,7 +221,6 @@
 #    - env_desktop in ["gnome","ubuntu:gnome"]
 
 #- name: copy gtk-theme Ultimate-Dark-(Flat)-Green to userdir (all + Gnome)
-##  become_user: sandro
 #  unarchive:
 #    src: "files/gnome/themes/Ultimate-Dark-(Flat)-Green.zip"
 #    dest: "/home/{{ env_user }}/.themes/"
@@ -255,7 +240,6 @@
 ##- name: set desktop interface - gtk-theme MateriaBreath-dark (all + Gnome)
 ## bei theme "MateriaBreath-dark" sind die Optionskästchenen + Häkchen nicht zu sehen
 - name: set desktop interface - gtk-theme (all + Gnome)
-#  become_user: sandro
   dconf:
     key: "/org/gnome/desktop/interface/gtk-theme"
 #    value: "'Adwaita-dark'"
@@ -266,7 +250,6 @@
 
 # Suse  -'Adwaita-dark'
 #- name: set desktop interface - gtk-theme (Suse + Gnome)
-##  become_user: sandro
 #  dconf:
 #    key: "/org/gnome/desktop/interface/gtk-theme"
 #    value: "'Adwaita-dark'"
@@ -280,7 +263,6 @@
 # all
 
 #- name: create a directory for icon-theme files in userdir (all + Gnome)
-##  become_user: sandro
 #  ansible.builtin.file:
 #    path: "/home/{{ env_user }}/.icons"
 #    state: directory
@@ -291,7 +273,6 @@
 
 
 #- name: copy icon-theme Materia-Manjaro-Dark-2 to userdir (all + Gnome)
-##  become_user: sandro
 #  unarchive:
 #    src: "files/gnome/icons/Materia-Manjaro-Dark-2.zip"
 #    dest: "/home/{{ env_user }}/.icons/"
@@ -310,7 +291,6 @@
 
 #- name: set desktop interface - icon-theme Materia-Manjaro-Dark-2 (Gnome)
 - name: set desktop interface - icon-theme (Gnome)
-#  become_user: sandro
   dconf:
 #    key: "/org/gnome/desktop/interface/icon-theme"
 #    value: "'Materia-Manjaro-Dark-2'"
@@ -323,7 +303,6 @@
 
 ### Desktop interface, calendar, sceensaver, ...:
 - name: set desktop interface - show-battery-percentage (Gnome)
-#  become_user: sandro
   dconf:
     key: "/org/gnome/desktop/interface/show-battery-percentage"
     value: "true"
@@ -331,7 +310,6 @@
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
 - name: set desktop interface - locate-pointer (Gnome)
-#  become_user: sandro
   dconf:
     key: "/org/gnome/desktop/interface/locate-pointer"
     value: "true"
@@ -339,7 +317,6 @@
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
 - name: set desktop calendar - show-weekdate in calendar (Gnome)
-#  become_user: sandro
   dconf:
     key: "/org/gnome/desktop/calendar/show-weekdate"
     value: "true"
@@ -347,7 +324,6 @@
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
 - name: set desktop input-sources - show-all-sources (Gnome)
-#  become_user: sandro
   dconf:
     key: "/org/gnome/desktop/input-sources/show-all-sources"
     value: "true"
@@ -355,7 +331,6 @@
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
 - name: set desktop screensaver - idle-activation-enabled (Gnome)
-#  become_user: sandro
   dconf:
     key: "/org/gnome/desktop/screensaver/idle-activation-enabled"
     value: "true"
@@ -363,7 +338,6 @@
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
 - name: set desktop screensaver - lock-enabled (Gnome)
-#  become_user: sandro
   dconf:
     key: "/org/gnome/desktop/screensaver/lock-enabled"
     value: "true"
@@ -371,7 +345,6 @@
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
 - name: set desktop screensaver - lock-delay (Gnome)
-#  become_user: sandro
   dconf:
     key: "/org/gnome/desktop/screensaver/lock-delay"
     value: "'0'"
@@ -379,7 +352,6 @@
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
 - name: set desktop wm preferences - button-layout (Gnome)
-#  become_user: sandro
   dconf:
     key: "/org/gnome/desktop/wm/preferences/button-layout"
     value: "'appmenu:minimize,maximize,close'"
@@ -391,7 +363,6 @@
 ### power settings:
 #   ---------------
 - name: set settings-daemon - plugin - power - power-button-action (Gnome)
-#  become_user: sandro
   dconf:
     key: "/org/gnome/settings-daemon/plugins/power/power-button-action"
     value: "'nothing'"
@@ -399,7 +370,6 @@
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
 - name: set settings-daemon - plugin - power - sleep-inactive-ac-type (Gnome)
-#  become_user: sandro
   dconf:
     key: "/org/gnome/settings-daemon/plugins/power/sleep-inactive-ac-type"
     value: "'nothing'"
@@ -407,7 +377,6 @@
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
 - name: set settings-daemon - plugin - power - sleep-inactive-battery-type (Gnome)
-#  become_user: sandro
   dconf:
     key: "/org/gnome/settings-daemon/plugins/power/sleep-inactive-battery-type"
     value: "'nothing'"
@@ -418,7 +387,6 @@
 
 ### set Display - Night Light
 - name: set settings-daemon - plugin - color - night-light-enabled (Gnome)
-#  become_user: sandro
   dconf:
     key: "/org/gnome/settings-daemon/plugins/color/night-light-enabled"
     value: "true"
@@ -771,7 +739,6 @@
 ### Gnome Weather:
 #   -------------
 #- name: set gnome  - Weather automatic-location (Gnome)
-##  become_user: sandro
 #  dconf:
 #    key: "/org/gnome/Weather/automatic-location"
 #    value: "false"
@@ -780,7 +747,6 @@
 #    - env_desktop == "gnome"
 
 #- name: set gnome  - Weather locations (Gnome)
-##  become_user: sandro
 #  dconf:
 #    key: "/org/gnome/Weather/locations"
 #    value: "[<(uint32 2, <('Niederkirchen, Saarland', '', false, [(0.86339344922787564, 0.12656180196211969)], [(0.863065315111196, 0.13148146449914197)])>)>]"
@@ -793,7 +759,6 @@
 ### nemo filebrowser -  preferences:
 #   --------------------------------
 - name: set nemo preferences - click-policy (Gnome)
-#  become_user: sandro
   dconf:
     key: "/org/nemo/preferences/click-policy"
     value: "'double'"
@@ -801,7 +766,6 @@
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
 - name: set nemo preferences - show-computer-icon-toolbar (Gnome)
-#  become_user: sandro
   dconf:
     key: "/org/nemo/preferences/show-computer-icon-toolbar"
     value: "true"
@@ -809,7 +773,6 @@
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
 - name: set nemo preferences - show-home-icon-toolbar (Gnome)
-#  become_user: sandro
   dconf:
     key: "/org/nemo/preferences/show-home-icon-toolbar"
     value: "true"
@@ -817,7 +780,6 @@
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
 - name: set nemo preferences - show-list-view-icon-toolbar (Gnome)
-#  become_user: sandro
   dconf:
     key: "/org/nemo/preferences/show-list-view-icon-toolbar"
     value: "true"
@@ -825,7 +787,6 @@
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
 - name: set nemo preferences - show-location-entry (Gnome)
-#  become_user: sandro
   dconf:
     key: "/org/nemo/preferences/show-location-entry"
     value: "true"
@@ -833,7 +794,6 @@
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
 - name: set nemo preferences - show-new-folder-icon-toolbar (Gnome)
-#  become_user: sandro
   dconf:
     key: "/org/nemo/preferences/show-new-folder-icon-toolbar"
     value: "true"
@@ -841,7 +801,6 @@
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
 - name: set nemo preferences - show-open-in-terminal-toolbar ((Gnome)
-#  become_user: sandro
   dconf:
     key: "/org/nemo/preferences/show-open-in-terminal-toolbar"
     value: "true"
@@ -849,7 +808,6 @@
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
 - name: set nemo preferences - show-reload-icon-toolbar (Gnome)
-#  become_user: sandro
   dconf:
     key: "/org/nemo/preferences/show-reload-icon-toolbar"
     value: "true"
@@ -857,7 +815,6 @@
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
 - name: set nemo preferences - show-show-thumbnails-toolbar (Gnome)
-#  become_user: sandro
   dconf:
     key: "/org/nemo/preferences/show-show-thumbnails-toolbar"
     value: "true"
@@ -869,7 +826,6 @@
 ### gedit -  preferences:
 #   ---------------------
 - name: set gedit preferences - scheme (Gnome)
-#  become_user: sandro
   dconf:
     key: "/org/gnome/gedit/preferences/editor/scheme"
     value: "'solarized-dark'"
@@ -881,7 +837,6 @@
 ### gnome terminal - profiles and preferences:
 #   ------------------------------------------
 - name: set gnome terminal - profiles and preferences (Gnome, Ansible <2.10)
-##  become_user: sandro
 ##
   script: "{{ env_PWD }}/tasks/config_workstation-desktopPreferences-terminal.sh" # funktioniert; ansible version 2.9
 ##  ansible.builtin.script: "{{ env_PWD }}/tasks/config_workstation-desktopPreferences-terminal.sh" # ab ansible version 2.10
@@ -905,7 +860,6 @@
     - "ansible_version.full is version('2.10.0', '<')"
 
 - name: set gnome terminal - profiles and preferences (Gnome, Ansible >=2.10)
-##  become_user: sandro
 ##
   ansible.builtin.script: "{{ env_PWD }}/tasks/config_workstation-desktopPreferences-terminal.sh" # ab ansible version 2.10
   args:
@@ -979,7 +933,6 @@
 
 ### Dash to Dock:
 - name: set gnome shell extensions - dash-to-dock - custom-theme-shrink (Gnome)
-#  become_user: sandro
   dconf:
     key: "/org/gnome/shell/extensions/dash-to-dock/custom-theme-shrink"
     value: "true"
@@ -987,7 +940,6 @@
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
 - name: set gnome shell extensions - dash-to-dock - height-fraction (Gnome)
-#  become_user: sandro
   dconf:
     key: "/org/gnome/shell/extensions/dash-to-dock/height-fraction"
     value: "'0.94999999999999996'"
@@ -995,7 +947,6 @@
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
 - name: set gnome shell extensions - dash-to-dock - isolate-workspaces (Gnome)
-#  become_user: sandro
   dconf:
     key: "/org/gnome/shell/extensions/dash-to-dock/isolate-workspaces"
     value: "true"
@@ -1003,7 +954,6 @@
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
 - name: set gnome shell extensions - dash-to-dock - multi-monitor" (Gnome)
-#  become_user: sandro
   dconf:
     key: "/org/gnome/shell/extensions/dash-to-dock/multi-monitor"
     value: "true"
@@ -1011,7 +961,6 @@
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
 - name: set gnome shell extensions - dash-to-dock - running-indicator-style" (Gnome)
-#  become_user: sandro
   dconf:
     key: "/org/gnome/shell/extensions/dash-to-dock/running-indicator-style"
     value: "'DEFAULT'"
@@ -1019,7 +968,6 @@
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
 - name: set gnome shell extensions - dash-to-dock - scroll-action" (Gnome)
-#  become_user: sandro
   dconf:
     key: "/org/gnome/shell/extensions/dash-to-dock/scroll-action"
     value: "'switch-workspace'"
@@ -1027,7 +975,6 @@
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
 - name: set gnome shell extensions - dash-to-dock - show-mounts (Gnome)
-#  become_user: sandro
   dconf:
     key: "/org/gnome/shell/extensions/dash-to-dock/show-mounts"
     value: "false"
@@ -1035,7 +982,6 @@
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
 - name: set gnome shell extensions - dash-to-dock - show-trash (Gnome)
-#  become_user: sandro
   dconf:
     key: "/org/gnome/shell/extensions/dash-to-dock/show-trash"
     value: "false"
@@ -1044,7 +990,6 @@
 
 - name: set gnome shell extensions - dash-to-dock - dock-fixed (Gnome)
 # Appearence - Dock - Auot-hide the Dock: enable
-#  become_user: sandro
   dconf:
     key: "/org/gnome/shell/extensions/dash-to-dock/dock-fixed"
     value: "false"
@@ -1053,7 +998,6 @@
 
 - name: set gnome shell extensions - dash-to-dock - extend-height (Gnome)
 # Appearence - Dock - Panel mode: enable
-#  become_user: sandro
   dconf:
     key: "/org/gnome/shell/extensions/dash-to-dock/extend-height"
     value: "false"
@@ -1062,7 +1006,6 @@
 
 - name: set gnome shell extensions - dash-to-dock - dash-max-icon-size (Gnome)
 # Appearence - Dock - Icon Size
-#  become_user: sandro
   dconf:
     key: "/org/gnome/shell/extensions/dash-to-dock/dash-max-icon-size"
     value: "32"
@@ -1071,7 +1014,6 @@
 
 - name: set gnome shell extensions - dash-to-dock - multi-monitor (Gnome)
 # Appearence - Dock - Show on: All Displays
-#  become_user: sandro
   dconf:
     key: "/org/gnome/shell/extensions/dash-to-dock/multi-monitor "
     value: "true"
@@ -1081,7 +1023,6 @@
 
 ### openweather:
 - name: set gnome shell extensions - openweather - city (Gnome)
-#  become_user: sandro
   dconf:
     key: "/org/gnome/shell/extensions/openweather/city"
     value: "'49.4641816,7.2484007>Niederkirchen, Kuseler Straße, Saal, Niederkirchen, Sankt Wendel, Landkreis St. Wendel, Saarland, 66606, Deutschland >-1 && 49.49342345,6.828330133618561>Nunkirchen, Wadern, Landkreis Merzig-Wadern, Saarland, Deutschland >-1'"
@@ -1089,7 +1030,6 @@
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
 - name: set gnome shell extensions - openweather - actual-city" (Gnome)
-#  become_user: sandro
   dconf:
     key: "/org/gnome/shell/extensions/openweather/actual-city"
     value: "1"
@@ -1097,7 +1037,6 @@
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
 - name: set gnome shell extensions - openweather - days-forecast (Gnome)
-#  become_user: sandro
   dconf:
     key: "/org/gnome/shell/extensions/openweather/days-forecast"
     value: "4"
@@ -1105,7 +1044,6 @@
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
 - name: set gnome shell extensions - openweather - menu-alignment (Gnome)
-#  become_user: sandro
   dconf:
     key: "/org/gnome/shell/extensions/openweather/menu-alignment"
     value: "80.099999999999994"
@@ -1113,7 +1051,6 @@
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
 - name: set gnome shell extensions - openweather - position-in-panel (Gnome)
-#  become_user: sandro
   dconf:
     key: "/org/gnome/shell/extensions/openweather/position-in-panel"
     value: "'center'"
@@ -1121,7 +1058,6 @@
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
 - name: set gnome shell extensions - openweather - pressure-unit (Gnome)
-#  become_user: sandro
   dconf:
     key: "/org/gnome/shell/extensions/openweather/pressure-unit"
     value: "'hPa'"
@@ -1129,7 +1065,6 @@
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
 - name: set gnome shell extensions - openweather - unit (Gnome)
-#  become_user: sandro
   dconf:
     key: "/org/gnome/shell/extensions/openweather/unit"
     value: "'celsius'"
@@ -1137,7 +1072,6 @@
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
 - name: set gnome shell extensions - openweather - wind-speed-unit (Gnome)
-#  become_user: sandro
   dconf:
     key: "/org/gnome/shell/extensions/openweather/wind-speed-unit"
     value: "'kph'"
