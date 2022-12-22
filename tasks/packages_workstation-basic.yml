@@ -114,7 +114,7 @@
   ansible.builtin.script:
     cmd: /tmp/pyenv-installer.sh
   args:
-    creates: /home/{{ env_user }}/.pyenv   # Run only if .pyenv does not exist
+    creates: /home/{{ env_user }}/.pyenv   # Run only if '.pyenv'-directory does not alrady exist (from previous run)
   become: true
   become_user: "{{ env_user }}"
   when: ansible_distribution == "Ubuntu"
