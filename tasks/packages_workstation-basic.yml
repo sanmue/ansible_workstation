@@ -113,6 +113,8 @@
   tags: basic, ubuntu, workstation
   ansible.builtin.script:
     cmd: /tmp/pyenv-installer.sh
+  args:
+    creates: /home/{{ env_user }}/.pyenv   # Run only if .pyenv does not exist
   become: true
   become_user: "{{ env_user }}"
   when: ansible_distribution == "Ubuntu"
