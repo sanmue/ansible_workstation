@@ -101,8 +101,8 @@
     - ansible_distribution == "Ubuntu"
 
 - name: Install Visual Studio Code - Extension 'Sync Settings' by zokugun (Ubuntu)
-  ansible.builtin.script:
-    cmd: "code --install-extension zokugun.sync-settings && code --install-extension zokugun.cron-tasks"
+  ansible.builtin.shell:
+    cmd: code --install-extension zokugun.sync-settings && code --install-extension zokugun.cron-tasks
   when:
     - ansible_distribution == "Ubuntu"
 
