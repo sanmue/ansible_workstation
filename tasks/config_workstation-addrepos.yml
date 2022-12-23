@@ -101,14 +101,6 @@
 #    - ansible_distribution_major_version|int < 18
 #    - ansible_pkg_mgr == "apt"
 
-- name: Add the flathub flatpak repository remote, system (All Distros)
-  tags: workstation,ubuntu,suse,arch,flatpak
-  flatpak_remote:
-    name: flathub
-    state: present
-    flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo
-    method: system
-
 
 # https://computingforgeeks.com/install-brave-web-browser-on-ubuntu-linux/
 # umgestellt auf flatpak
