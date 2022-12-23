@@ -20,6 +20,8 @@ done
 
 # Set PPA Priority for Mozillateam and block Firefox from Ubuntu’s own repository
 # Quelle: https://fostips.com/ubuntu-21-10-two-firefox-remove-snap/#rb-Step-2-Install-back-the-classic-Firefox-Deb-package
+#
+# # Anmerkung: wird nicht mehr benötigt, da aktuell als flatpak installiert wird
 dir="/etc/apt/preferences.d"
 mozfile="99mozillateamppa"
 

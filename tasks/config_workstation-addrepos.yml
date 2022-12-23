@@ -132,6 +132,8 @@
 
 
 # https://fostips.com/ubuntu-21-10-two-firefox-remove-snap/
+#
+# Anmerkung: wird nicht mehr benötigt, da aktuell als flatpak installiert wird
 - name: add repo (Mozilla Team PPA) for Firefox (apt, Ubuntu >= 22)
   tags: workstation,ubuntu,addrepos,pre
   ansible.builtin.apt_repository:
@@ -142,6 +144,7 @@
     - ansible_distribution == "Ubuntu"
     - ansible_distribution_major_version|int >= 22
     - ansible_pkg_mgr == "apt"
+
 
 - name: Fix apt-update deprecation warning + Set Repo Prio (Ubuntu >=22, Gnome, Ansible >=2.10)
   ansible.builtin.script: "{{ env_PWD }}/tasks/config_workstation-addrepos-ubuntu.sh"
