@@ -100,7 +100,7 @@
     - ansible_pkg_mgr == "apt"
     - ansible_distribution == "Ubuntu"
 
-- name: Install Visual Studio Code - Extension 'Sync Settings' by zokugun (Ubuntu)
+- name: Install Visual Studio Code - Extension 'Sync Settings'+'Cron Tasks' by zokugun (Ubuntu)
   ansible.builtin.shell:
     cmd: code --install-extension zokugun.sync-settings && code --install-extension zokugun.cron-tasks
   become: true
