@@ -29,7 +29,6 @@ repository:
 - `STRG + SHIFT + P`
 - `>Sync Settings: Download (repository -> user)`
 
-## Config expoertieren
+## Config exportieren
 - `STRG + SHIFT + P`
 - `>Sync Settings: Upload (user -> repository)`
-
