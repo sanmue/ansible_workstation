@@ -82,6 +82,23 @@
 #    - env_desktop == "ubuntu:gnome"
 
 
+- name: Download Visual Studio Code deb-package (Ubuntu)
+  ansible.builtin.get_url:
+    url: "https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64"
+    dest: /tmp/code.deb
+    force_basic_auth: yes
+  when:
+    - ansible_distribution == "Ubuntu"
+
+- name: Install Visual Studio Code deb-package (Ubuntu)
+  ansible.builtin.apt:
+    deb: /tmp/code.deb
+  when:
+    - ansible_pkg_mgr == "apt"
+    - ansible_distribution == "Ubuntu"
+
+
+
 - name: Install packages for workstations (Archlinux + Gnome)
   tags: workstation,gnome,arch
   package:
