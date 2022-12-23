@@ -860,7 +860,6 @@
     - "ansible_version.full is version('2.10.0', '<')"
 
 - name: set gnome terminal - profiles and preferences (Gnome, Ansible >=2.10)
-##
   ansible.builtin.script: "{{ env_PWD }}/tasks/config_workstation-desktopPreferences-terminal.sh" # ab ansible version 2.10
   args:
     creates: "/home/{{ env_user }}/.ansibleTerminalProfileSet"
