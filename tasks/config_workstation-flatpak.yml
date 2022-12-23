@@ -9,9 +9,3 @@
 #    method: system
 #
 ### --- ENDE - Moved to: config_workstation-addrepos.yml --- #
-
-
-- name: Install VS Code - extension 'Sync Settings' by zokugun (all)
-  tags: workstation,ubuntu,suse,arch,flatpak
-  ansible.builtin.script:
-    cmd: code --install zokugun.sync-settings && code --install zokugun.cron-tasks
