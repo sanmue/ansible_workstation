@@ -90,16 +90,24 @@
 #  when:
 #    - ansible_distribution == "Ubuntu"
 
-- name: add repo for flatpak (apt, Ubuntu < 18)
-  tags: workstation,ubuntu,addrepos,pre,flatpak
-  ansible.builtin.apt_repository:
-    repo: ppa:alexlarsson/flatpak
+#- name: add repo for flatpak (apt, Ubuntu < 18)
+#  tags: workstation,ubuntu,addrepos,pre,flatpak
+#  ansible.builtin.apt_repository:
+#    repo: ppa:alexlarsson/flatpak
+#    state: present
+#    update_cache: yes
+#  when:
+#    - ansible_distribution == "Ubuntu"
+#    - ansible_distribution_major_version|int < 18
+#    - ansible_pkg_mgr == "apt"
+
+- name: Add the flathub flatpak repository remote, system (All Distros)
+  tags: workstation,ubuntu,suse,arch,flatpak
+  flatpak_remote:
+    name: flathub
     state: present
-    update_cache: yes
-  when:
-    - ansible_distribution == "Ubuntu"
-    - ansible_distribution_major_version|int < 18
-    - ansible_pkg_mgr == "apt"
+    flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo
+    method: system
 
 
 # https://computingforgeeks.com/install-brave-web-browser-on-ubuntu-linux/
