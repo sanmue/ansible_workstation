@@ -21,7 +21,7 @@
     - 'org.mozilla.firefox'
     - 'com.github.johnfactotum.Foliate'
     - 'de.willuhn.Jameica'
-    - 'org.jitsi.jitsi-meet'
+    #- 'org.jitsi.jitsi-meet'
     - 'net.cozic.joplin_desktop'
     - 'org.keepassxc.KeePassXC'
     - 'org.ksnip.ksnip'   # im Ksnip-Editor können noch ergänzngen (Markieren, Rahemen, ... gemacht werden; im ggs. zu "Screenshot")
@@ -53,7 +53,7 @@
 #    - 'io.atom.Atom'
     - 'net.cozic.joplin_desktop'
 #    - 'org.chromium.Chromium'
-    - 'org.jitsi.jitsi-meet'
+#    - 'org.jitsi.jitsi-meet'
 #    - 'org.ksnip.ksnip'
 #    - 'org.libreoffice.LibreOffice'
 #    - 'org.mozilla.Thunderbird'
@@ -74,9 +74,9 @@
 #    - 'com.ulduzsoft.Birdtray' # -> evolution
 #    - 'com.nextcloud.desktopclient.nextcloud'
     - 'de.willuhn.Jameica'
-    - 'io.atom.Atom'
+#    - 'io.atom.Atom'
     - 'net.cozic.joplin_desktop'
-    - 'org.jitsi.jitsi-meet'
+#    - 'org.jitsi.jitsi-meet'
     - 'org.signal.Signal'
     - 'de.haeckerfelix.Shortwave'
   when:
