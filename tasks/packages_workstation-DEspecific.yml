@@ -102,7 +102,7 @@
 
 - name: Install Visual Studio Code - Extension 'Sync Settings' by zokugun (Ubuntu)
   ansible.builtin.script:
-    cmd: code --install zokugun.sync-settings && code --install zokugun.cron-tasks
+    cmd: "code --install zokugun.sync-settings && code --install zokugun.cron-tasks"
   when:
     - ansible_distribution == "Ubuntu"
 
