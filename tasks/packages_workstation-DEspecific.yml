@@ -87,17 +87,24 @@
   ansible.builtin.get_url:
     url: "https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64"
     dest: /tmp/code.deb
-    force_basic_auth: yes
+#    force_basic_auth: yes
+    force: false
   when:
     - ansible_distribution == "Ubuntu"
 
-- name: Install Visual Studio Code deb-package (Ubuntu)
+- name: Install Visual Studio Code deb-package (Ubuntu, apt)
+  tags: workstation,ubuntu,apt
   ansible.builtin.apt:
     deb: /tmp/code.deb
   when:
     - ansible_pkg_mgr == "apt"
     - ansible_distribution == "Ubuntu"
 
+- name: Install Visual Studio Code - Extension 'Sync Settings' by zokugun (Ubuntu)
+  ansible.builtin.script:
+    cmd: code --install zokugun.sync-settings && code --install zokugun.cron-tasks
+  when:
+    - ansible_distribution == "Ubuntu"
 
 
 - name: Install packages for workstations (Archlinux + Gnome)
