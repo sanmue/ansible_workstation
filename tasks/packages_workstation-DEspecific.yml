@@ -56,6 +56,7 @@
 #      - seahorse # bereits standardmäßig installiert
 #      - searchmonkey
       - steam
+      - syncthing
 #      - teams   # Micosoft Teams (repo wurde hinzugefügt)
       - timeshift
   when:
