@@ -101,12 +101,22 @@
     - ansible_distribution == "Ubuntu"
 
 - name: Install Visual Studio Code - Extension 'Sync Settings' by zokugun (Ubuntu)
+  tags: workstation,ubuntu
   ansible.builtin.shell:
     cmd: code --install-extension zokugun.sync-settings
   become: true
   become_user: "{{ env_user }}"
   when:
     - ansible_distribution == "Ubuntu"
+
+- name: Set/Copy Visual Studio Code settings-file for Extension 'Sync Settings' (Ubuntu, deb)
+  tags: workstation,ubuntu
+  ansible.builtin.copy:
+    src: ./files/VSCode_Extension_Sync-Settings_settings.yml
+    dest: /home/{{ env_user }}/.config/Code/User/globalStorage/zokugun.sync-settings/settings.yml   # Pfad bei Install des VS Code deb-Pakets
+    owner: "{{ env_user }}"
+    group: "{{ env_user }}"
+    mode: u=rw
 
 
 - name: Install packages for workstations (Archlinux + Gnome)
