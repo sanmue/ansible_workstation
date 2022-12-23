@@ -98,7 +98,7 @@ workbench.activity.placeholderViewlets: "[{\"id\":\"workbench.view.explorer\",\
 workbench.auxiliarybar.pinnedPanels: '[{"id":"workbench.views.service.auxiliarybar.daebbee6-a5e7-4e72-80c9-f8255b50cbe8","name":"GitLens","pinned":true,"visible":true}]'
 workbench.auxiliarybar.size: "300"
 workbench.auxiliaryBar.size: "300"
-workbench.editor.languageDetectionOpenedLanguages.global: '[["ignore",true],["json",true],["markdown",true],["powershell",true],["plaintext",true],["jsonc",true],["shellscript",true],["yaml",true]]'
+workbench.editor.languageDetectionOpenedLanguages.global: '[["ignore",true],["json",true],["powershell",true],["markdown",true],["log",true],["ansible",true],["plaintext",true],["shellscript",true],["jsonc",true],["yaml",true]]'
 workbench.explorer.views.state.hidden: '[{"id":"outline","isHidden":false},{"id":"timeline","isHidden":false},{"id":"workbench.explorer.openEditorsView","isHidden":false},{"id":"workbench.explorer.emptyView","isHidden":false},{"id":"npm","isHidden":true},{"id":"workbench.explorer.fileView","isHidden":false}]'
 workbench.grid.height: "1347"
 workbench.grid.size: '{"height":1099,"width":1280}'
