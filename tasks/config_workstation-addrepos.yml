@@ -67,15 +67,31 @@
     dest: /tmp/packages-microsoft-prod.deb
     force_basic_auth: yes
   when:
-    - ansible_pkg_mgr == "apt"
+
     - ansible_distribution == "Ubuntu"
 
 - name: Register the Microsoft repository GPG keys (apt, Ubuntu)
   command:
     cmd: dpkg -i /tmp/packages-microsoft-prod.deb
   when:
+    - ansible_distribution == "Ubuntu"
+
+
+- name: Download Visual Studio Code deb-package (Ubuntu)
+  ansible.builtin.get_url:
+    url: "https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64"
+    dest: /tmp/code.deb
+    force_basic_auth: yes
+  when:
+    - ansible_distribution == "Ubuntu"
+
+- name: Install Visual Studio Code deb-package (Ubuntu)
+  ansible.builtin.apt:
+    deb: /tmp/code.deb
+  when:
     - ansible_pkg_mgr == "apt"
     - ansible_distribution == "Ubuntu"
+
 
 - name: Update package lists
   apt:
