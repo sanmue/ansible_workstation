@@ -109,6 +109,15 @@
   when:
     - ansible_distribution == "Ubuntu"
 
+- name: Start Visual Studio Code in background (Ubuntu)
+  tags: workstation,ubuntu
+  ansible.builtin.shell:
+    cmd: code   # damit im Home-Verzeichnis der Config-Pfad von VS Code erstellt wird + später die settings.yml dorthin kopiert werden kann
+  become: true
+  become_user: "{{ env_user }}"
+  when:
+    - ansible_distribution == "Ubuntu"
+
 - name: Set/Copy Visual Studio Code settings-file for Extension 'Sync Settings' (Ubuntu, deb)
   tags: workstation,ubuntu
   ansible.builtin.copy:
@@ -117,6 +126,8 @@
     owner: "{{ env_user }}"
     group: "{{ env_user }}"
     mode: u=rw
+  when:
+    - ansible_distribution == "Ubuntu"
 
 
 - name: Install packages for workstations (Archlinux + Gnome)
