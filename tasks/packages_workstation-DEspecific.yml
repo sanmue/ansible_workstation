@@ -125,7 +125,7 @@
 - name: Close Visual Studio Code (Ubuntu)
   tags: workstation,ubuntu
   ansible.builtin.shell:
-    cmd: pkill -15 code
+    cmd: pkill -15 code   # Signal: "-15" entspricht "SIGTERM" : Abschließen und beenden des Programms
   become: true
   become_user: "{{ env_user }}"
   when:
