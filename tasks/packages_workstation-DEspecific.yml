@@ -118,6 +118,10 @@
   when:
     - ansible_distribution == "Ubuntu"
 
+- name: Wait until Visual Studio Code Ext. 'Sync Settings' Standard Config-File is present before continuing
+  ansible.builtin.wait_for:
+    path: home/{{ env_user }}/.config/Code/User/globalStorage/zokugun.sync-settings/settings.yml
+
 - name: Close Visual Studio Code (Ubuntu)
   tags: workstation,ubuntu
   ansible.builtin.shell:
