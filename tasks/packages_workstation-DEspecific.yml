@@ -122,14 +122,14 @@
   ansible.builtin.wait_for:
     path: /home/{{ env_user }}/.config/Code/User/globalStorage/zokugun.sync-settings/settings.yml
 
-- name: Close Visual Studio Code (Ubuntu)
-  tags: workstation,ubuntu
-  ansible.builtin.shell:
-    cmd: pkill -15 code   # Signal: "-15" entspricht "SIGTERM" : Abschließen und beenden des Programms
-  become: true
-  become_user: "{{ env_user }}"
-  when:
-    - ansible_distribution == "Ubuntu"
+#- name: Close Visual Studio Code (Ubuntu)
+#  tags: workstation,ubuntu
+#  ansible.builtin.shell:
+#    cmd: pkill -15 code   # Signal: "-15" entspricht "SIGTERM" : Abschließen und beenden des Programms
+#  become: true
+#  become_user: "{{ env_user }}"
+#  when:
+#    - ansible_distribution == "Ubuntu"
 
 - name: Set/Copy Visual Studio Code settings-file for Extension 'Sync Settings' (Ubuntu, deb)
   tags: workstation,ubuntu
