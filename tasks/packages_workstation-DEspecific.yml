@@ -109,10 +109,19 @@
   when:
     - ansible_distribution == "Ubuntu"
 
-- name: Start Visual Studio Code in background (Ubuntu)
+- name: Start Visual Studio Code (Ubuntu)
   tags: workstation,ubuntu
   ansible.builtin.shell:
     cmd: code   # damit im Home-Verzeichnis der Config-Pfad von VS Code erstellt wird + später die settings.yml dorthin kopiert werden kann
+  become: true
+  become_user: "{{ env_user }}"
+  when:
+    - ansible_distribution == "Ubuntu"
+
+- name: Close Visual Studio Code (Ubuntu)
+  tags: workstation,ubuntu
+  ansible.builtin.shell:
+    cmd: pkill code &
   become: true
   become_user: "{{ env_user }}"
   when:
