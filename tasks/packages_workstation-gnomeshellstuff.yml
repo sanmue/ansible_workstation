@@ -9,7 +9,7 @@
       - gnome-shell-extension-appindicator
       - gnome-shell-extension-gsconnect
       - gnome-shell-extension-gsconnect-browsers
-      - gnome-shell-extension-manager
+      #- gnome-shell-extension-manager   # Flatpak is the recommended way to install Extension Manager (see: https://github.com/mjakeman/extension-manager)
       - gnome-tweaks
   when:
     - env_desktop == "ubuntu:gnome"
