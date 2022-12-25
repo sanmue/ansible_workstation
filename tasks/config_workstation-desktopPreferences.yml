@@ -21,7 +21,7 @@
 - name: copy autostart file for Nextcloud Client (flatpak) to local user-folder (Ubuntu + Gnome)
   ansible.builtin.copy:
     src: "files/gnome/Gnome_AutostartApp_User_NextcloudClient.desktop"
-    dest: "/home/{{ env_user }}/.config/autostart/"
+    dest: "/home/{{ env_user }}/.config/autostart/NextcloudClient.desktop"
     remote_src: yes
     owner: "{{ env_user }}"
     group: "{{ env_user }}"
