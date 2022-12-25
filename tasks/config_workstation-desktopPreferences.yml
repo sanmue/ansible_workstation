@@ -1,4 +1,41 @@
 
+# #######################################
+# ### Gnome Autostart Apps - Current User
+#
+# config for all Users see: https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/desktop_migration_and_administration_guide/user-sessions#autostart-applications
+# #######################################
+
+### autostart directory
+- name: Create autostart directory for current user if it does not exist
+  ansible.builtin.file:
+    path: /home/{{ env_user }}/.config/autostart
+    state: directory
+    become: true
+    become_user: "{{ env_user }}"
+    owner: "{{ env_user }}"
+    group: "{{ env_user }}"
+    mode: u=rwx
+    #mode: '0700'
+  when:
+    - env_desktop == "ubuntu:gnome"
+
+### Nextcloud Desktop Client
+- name: copy autostart file for Nextcloud Client to local user-folder (Ubuntu + Gnome)
+  ansible.builtin.copy:
+    src: "files/gnome/Gnome_AutostartApp_User_NextcloudClient.desktop"
+    dest: "/home/{{ env_user }}/.config/autostart/"
+    remote_src: yes
+    become: true
+    becoem_user: "{{ env_user }}"
+    owner: "{{ env_user }}"
+    group: "{{ env_user }}"
+    mode: u=rw,g=rw,o=r
+#    mode: '0664'
+  when:
+    - env_desktop == "ubuntu:gnome"
+
+
+
 #######################
 ### Disable Ubuntu dock
 #######################
@@ -35,24 +72,23 @@
 # snaps, flatpak: jameica
 #  command: gsettings set org.gnome.shell favorite-apps "['org.keepassxc.KeePassXC.desktop', 'firefox.desktop', 'vivaldi-stable.desktop', 'chromium_chromium.desktop', 'thunderbird_thunderbird.desktop', 'org.gnome.gedit.desktop', 'libreoffice_libreoffice.desktop', 'joplin-james-carroll_joplin.desktop', 'de.willuhn.Jameica.desktop', 'rhythmbox.desktop', 'whalebird_whalebird.desktop', 'signal-desktop_signal-desktop.desktop', 'discord_discord.desktop', 'nemo.desktop', 'org.gnome.Terminal.desktop', 'terminator.desktop', 'virt-manager.desktop', 'org.remmina.Remmina.desktop', 'snap-store_ubuntu-software.desktop']"
 #  command: gsettings set org.gnome.shell favorite-apps "['com.belmoussaoui.Authenticator.desktop', 'org.keepassxc.KeePassXC.desktop', 'firefox.desktop', 'firefox-esr.desktop', 'org.chromium.Chromium.desktop', 'brave-browser.desktop', 'org.gnome.Epiphany.desktop', 'org.gnome.Evolution.desktop', 'org.gnome.Terminal.desktop', 'nemo.desktop', 'org.gnome.gedit.desktop', 'org.libreoffice.LibreOffice.desktop', 'code_code.desktop', 'anki.desktop', 'net.cozic.joplin_desktop.desktop', 'de.willuhn.Jameica.desktop', 'rhythmbox.desktop', 'de.haeckerfelix.Shortwave.desktop', 'org.signal.Signal.desktop', 'teams.desktop', 'org.remmina.Remmina.desktop', 'virt-manager.desktop']"
-  command: gsettings set org.gnome.shell favorite-apps "['com.belmoussaoui.Authenticator.desktop', 'org.keepassxc.KeePassXC.desktop', 'firefox.desktop', 'firefox-esr.desktop', 'org.mozilla.firefox.desktop', 'org.chromium.Chromium.desktop', 'brave-browser.desktop', 'com.brave.Browser.desktop', 'org.gnome.Epiphany.desktop', 'org.gnome.Evolution.desktop', 'org.gnome.Terminal.desktop', 'nemo.desktop', 'org.gnome.gedit.desktop', 'org.libreoffice.LibreOffice.desktop', 'code_code.desktop', 'code.desktop', 'anki.desktop', 'net.cozic.joplin_desktop.desktop', 'de.willuhn.Jameica.desktop', 'rhythmbox.desktop', 'de.haeckerfelix.Shortwave.desktop', 'org.signal.Signal.desktop', 'org.remmina.Remmina.desktop', 'virt-manager.desktop']"
+  ansible.builtin.command: gsettings set org.gnome.shell favorite-apps "['com.belmoussaoui.Authenticator.desktop', 'org.keepassxc.KeePassXC.desktop', 'firefox.desktop', 'firefox-esr.desktop', 'org.mozilla.firefox.desktop', 'org.chromium.Chromium.desktop', 'brave-browser.desktop', 'com.brave.Browser.desktop', 'org.gnome.Epiphany.desktop', 'org.gnome.Evolution.desktop', 'org.gnome.Terminal.desktop', 'nemo.desktop', 'org.gnome.gedit.desktop', 'org.libreoffice.LibreOffice.desktop', 'code_code.desktop', 'code.desktop', 'anki.desktop', 'net.cozic.joplin_desktop.desktop', 'de.willuhn.Jameica.desktop', 'rhythmbox.desktop', 'de.haeckerfelix.Shortwave.desktop', 'org.signal.Signal.desktop', 'org.remmina.Remmina.desktop', 'virt-manager.desktop']"
   when:
     - env_desktop == "ubuntu:gnome"
 
 ### Manjaro + Gnome ###
 - name: adding favorite apps to dock (Manjaro + Gnome)
-  command: gsettings set org.gnome.shell favorite-apps "['com.belmoussaoui.Authenticator.desktop', 'org.keepassxc.KeePassXC.desktop', 'firefox.desktop', 'chromium.desktop', 'org.gnome.Terminal.desktop', 'terminator.desktop', 'nemo.desktop', 'org.gnome.gedit.desktop', 'libreoffice-startcenter.desktop', 'anki.desktop', 'net.cozic.joplin_desktop.desktop', 'de.willuhn.Jameica.desktop', 'rhythmbox.desktop', 'de.haeckerfelix.Shortwave.desktop', 'signal-desktop.desktop', 'discord.desktop', 'whalebird_whalebird.desktop', 'org.remmina.Remmina.desktop', 'virt-manager.desktop', 'gnome-control-center.desktop', 'org.manjaro.pamac.manager.desktop']"
+  ansible.builtin.command: gsettings set org.gnome.shell favorite-apps "['com.belmoussaoui.Authenticator.desktop', 'org.keepassxc.KeePassXC.desktop', 'firefox.desktop', 'chromium.desktop', 'org.gnome.Terminal.desktop', 'terminator.desktop', 'nemo.desktop', 'org.gnome.gedit.desktop', 'libreoffice-startcenter.desktop', 'anki.desktop', 'net.cozic.joplin_desktop.desktop', 'de.willuhn.Jameica.desktop', 'rhythmbox.desktop', 'de.haeckerfelix.Shortwave.desktop', 'signal-desktop.desktop', 'discord.desktop', 'whalebird_whalebird.desktop', 'org.remmina.Remmina.desktop', 'virt-manager.desktop', 'gnome-control-center.desktop', 'org.manjaro.pamac.manager.desktop']"
   when:
     - ansible_distribution == "Archlinux"
     - env_desktop == "gnome"
 
 ### Suse + Gnome ###
 - name: adding favorite apps to dock (Suse + Gnome)
-  command: gsettings set org.gnome.shell favorite-apps "['com.belmoussaoui.Authenticator.desktop', 'org.keepassxc.KeePassXC.desktop', 'firefox.desktop', 'org.gnome.Epiphany.desktop', 'chromium-browser.desktop', 'org.gnome.Terminal.desktop', 'terminator.desktop', 'nemo.desktop', 'org.gnome.gedit.desktop', 'io.atom.Atom.desktop', 'org.gnome.Evolution.desktop', 'startcenter.desktop', 'anki.desktop', 'net.cozic.joplin_desktop.desktop', 'de.willuhn.Jameica.desktop', 'org.signal.Signal.desktop', 'discord.desktop', 'whalebird_whalebird.desktop', 'rhythmbox.desktop', 'de.haeckerfelix.Shortwave.desktop', 'org.remmina.Remmina.desktop', 'virt-manager.desktop', 'org.gnome.Software.desktop', 'org.opensuse.YaST.desktop']"
+  ansible.builtin.command: gsettings set org.gnome.shell favorite-apps "['com.belmoussaoui.Authenticator.desktop', 'org.keepassxc.KeePassXC.desktop', 'firefox.desktop', 'org.gnome.Epiphany.desktop', 'chromium-browser.desktop', 'org.gnome.Terminal.desktop', 'terminator.desktop', 'nemo.desktop', 'org.gnome.gedit.desktop', 'io.atom.Atom.desktop', 'org.gnome.Evolution.desktop', 'startcenter.desktop', 'anki.desktop', 'net.cozic.joplin_desktop.desktop', 'de.willuhn.Jameica.desktop', 'org.signal.Signal.desktop', 'discord.desktop', 'whalebird_whalebird.desktop', 'rhythmbox.desktop', 'de.haeckerfelix.Shortwave.desktop', 'org.remmina.Remmina.desktop', 'virt-manager.desktop', 'org.gnome.Software.desktop', 'org.opensuse.YaST.desktop']"
   when:
     - ansible_os_family == "Suse"
     - env_desktop == "gnome"
-
 
 
 ######################
@@ -69,7 +105,7 @@
     - env_desktop in ["ubuntu:gnome"]
 
 - name: copy desktop-wallpaper file to local user-folder (Ubuntu + Gnome)
-  copy:
+  ansible.builtin.copy:
 #    src: "files/gnome/background/gnome_embos_1440P.png"
     src: "files/gnome/background/brad-huchteman-stone-mountain.jpg"
 #    dest: "/home/{{ env_user }}/.local/share/backgrounds/gnome_emboss_1440P.png"

@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Exec=flatpak run com.nextcloud.desktopclient.nextcloud
+Hidden=false
+NoDisplay=false
+X-GNOME-Autostart-enabled=true
+Name[en_US]=Nextcloud Desktop Client
+Name=Nextcloud Desktop Client
+Comment[en_US]=Autostart Nextcloud Desktop Client on Logon
+Comment=Autostart Nextcloud Desktop Client on Logon
