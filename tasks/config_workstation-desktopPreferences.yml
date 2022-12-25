@@ -10,8 +10,6 @@
   ansible.builtin.file:
     path: /home/{{ env_user }}/.config/autostart
     state: directory
-    become: true
-    become_user: "{{ env_user }}"
     owner: "{{ env_user }}"
     group: "{{ env_user }}"
     mode: u=rwx
@@ -25,8 +23,6 @@
     src: "files/gnome/Gnome_AutostartApp_User_NextcloudClient.desktop"
     dest: "/home/{{ env_user }}/.config/autostart/"
     remote_src: yes
-    become: true
-    becoem_user: "{{ env_user }}"
     owner: "{{ env_user }}"
     group: "{{ env_user }}"
     mode: u=rw,g=rw,o=r
