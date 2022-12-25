@@ -113,6 +113,8 @@
   tags: workstation,ubuntu
   ansible.builtin.shell:
     cmd: code   # damit im Home-Verzeichnis der Config-Pfad von VS Code erstellt wird + später die settings.yml dorthin kopiert werden kann
+  args:
+      creates: /home/{{ env_user }}/.config/Code/User/globalStorage/zokugun.sync-settings/settings.yml   # nur ausführen, wenn nicht bereits z.B. in vorhergehendem Lauf gestartet/erstellt wurde
   become: true
   become_user: "{{ env_user }}"
   when:
