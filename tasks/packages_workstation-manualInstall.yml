@@ -1,0 +1,85 @@
+﻿
+#   ----------------------------------------
+### Install from locally downloades packages
+#   ----------------------------------------
+
+######################
+### Visual Studio Code
+######################
+
+- name: Download Visual Studio Code deb-package (Ubuntu)
+  ansible.builtin.get_url:
+    url: "https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64"
+    dest: /tmp/code.deb
+#    force_basic_auth: yes
+    force: false
+  when:
+    - ansible_distribution == "Ubuntu"
+
+- name: Install Visual Studio Code deb-package (Ubuntu, apt)
+  tags: workstation,ubuntu,apt
+  ansible.builtin.apt:
+    deb: /tmp/code.deb
+  when:
+    - ansible_pkg_mgr == "apt"
+    - ansible_distribution == "Ubuntu"
+
+- name: Install Visual Studio Code - Extension 'Sync Settings' by zokugun (Ubuntu)
+  tags: workstation,ubuntu
+  ansible.builtin.shell:
+    cmd: code --install-extension zokugun.sync-settings
+  become: true
+  become_user: "{{ env_user }}"
+  when:
+    - ansible_distribution == "Ubuntu"
+
+- name: Start Visual Studio Code (Ubuntu)
+  tags: workstation,ubuntu
+  ansible.builtin.shell:
+    cmd: code   # damit im Home-Verzeichnis der Config-Pfad von VS Code erstellt wird + später die settings.yml dorthin kopiert werden kann
+  args:
+      creates: /home/{{ env_user }}/.config/Code/User/globalStorage/zokugun.sync-settings/settings.yml   # nur ausführen, wenn nicht bereits z.B. in vorhergehendem Lauf gestartet/erstellt wurde
+  become: true
+  become_user: "{{ env_user }}"
+  when:
+    - ansible_distribution == "Ubuntu"
+
+- name: Wait until Visual Studio Code Ext. 'Sync Settings' Standard Config-File is present before continuing
+  ansible.builtin.wait_for:
+    path: /home/{{ env_user }}/.config/Code/User/globalStorage/zokugun.sync-settings/settings.yml
+#    path: /home/{{ env_user }}/.config/Code/User/globalStorage/zokugun.sync-settings/   # funktioniert auch mit Ordner
+
+#- name: Close Visual Studio Code (Ubuntu)
+#  tags: workstation,ubuntu
+#  ansible.builtin.shell:
+#    cmd: pkill -15 code   # Signal: "-15" entspricht "SIGTERM" : Abschließen und beenden des Programms
+#  become: true
+#  become_user: "{{ env_user }}"
+#  when:
+#    - ansible_distribution == "Ubuntu"
+
+- name: Set/Copy Visual Studio Code settings-file for Extension 'Sync Settings' (Ubuntu, deb)
+  tags: workstation,ubuntu
+  ansible.builtin.copy:
+    src: ./files/VSCode_Extension_Sync-Settings_settings.yml
+    dest: /home/{{ env_user }}/.config/Code/User/globalStorage/zokugun.sync-settings/settings.yml   # Pfad bei Install des VS Code deb-Pakets (nicht bei flatpakod oder snap)
+    owner: "{{ env_user }}"
+    group: "{{ env_user }}"
+    mode: u=rw
+  when:
+    - ansible_distribution == "Ubuntu"
+
+
+
+#####################################
+### Citrix Workspace App (ICA-Client)
+#####################################
+
+- name: Install Certificates for Citrix Workspace App (ICA-Client) from Mozilla cert-folder + pem-convert
+  # requires installed Mozilla Firefox (was installed via a previous task)
+  ansible.builtin.script:
+    cmd: packages_workstation-manualInstall-CitrixWorkspaceApp.sh
+
+- name: TODO - Download and install Citrix Workspace App + USB Support Package
+  ansible.builtin.debug:
+    msg: "Source: https://www.citrix.com/downloads/workspace-app/linux/"
