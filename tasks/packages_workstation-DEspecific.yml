@@ -48,6 +48,7 @@
 #      - language-pack-gnome-de
       - language-pack-gnome-en-base
       - language-pack-gnome-en
+      - libidn11-dev   # benötigt für Citrix Workspace app (ica client)
 #      - luckybackup
       - nemo
 #      - nextcloud-desktop # -> flatpak
