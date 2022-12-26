@@ -19,3 +19,15 @@
 
 #TODO: ggf. noch nested virtualization
 
+
+- name: create virtual network Lab-DFS
+  tags: VM
+  ansible.builtin.shell:
+    cmd: virsh net-define files/netdump_Lab-DFS.xml && virsh net-autostart Lab-DFS
+  when: ansible_virtualization_role != "guest"
+
+- name: create virtual network Lab-Linux
+  tags: VM
+  ansible.builtin.shell:
+    cmd: virsh net-define files/netdump_Lab-Linux.xml && virsh net-autostart Lab-Linux
+  when: ansible_virtualization_role != "guest"
