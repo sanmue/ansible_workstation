@@ -12,6 +12,7 @@
       - libvirt-clients
       - bridge-utils
       - libguestfs-tools
+      - libosinfo-bin
       - virtinst
       - virt-top
       - swtpm        # wg. Win11: TPM 2.0;
