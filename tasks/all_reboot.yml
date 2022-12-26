@@ -1,10 +1,14 @@
-- name: reboot system
-  tags: reboot
-  reboot:
-    reboot_timeout: 10
-    msg: "ansible: rebooting in 10 seconds !!!"
-    test_command: "ansible: reboot successful"
+#- name: reboot system
+#  tags: reboot
+#  reboot:
+#    reboot_timeout: 10
+#    msg: "ansible: rebooting in 10 seconds !!!"
+#    test_command: "ansible: reboot successful"
 #  command: reboot
 #  command: reboot now
 #  command: systemctl reboot now
 
+- name: reboot system
+  tags: reboot
+  ansible.builtin.shell:
+    cmd: reboot
