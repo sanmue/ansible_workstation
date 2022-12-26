@@ -10,6 +10,7 @@
     name:
       - anki
 #      - ansible   # bereits installiert (bootstrap)
+      - ansible-lint   # für z.B. ansible extension in VS Code
       - clamav
       - clamtk
       - curl
