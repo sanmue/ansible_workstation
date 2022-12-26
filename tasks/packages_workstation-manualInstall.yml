@@ -36,7 +36,7 @@
 - name: Start Visual Studio Code (Ubuntu)
   tags: workstation,ubuntu
   ansible.builtin.shell:
-    cmd: code   # damit im Home-Verzeichnis der Config-Pfad von VS Code erstellt wird + später die settings.yml dorthin kopiert werden kann
+    cmd: code "$@" 2>/dev/null &  # damit im Home-Verzeichnis der Config-Pfad von VS Code erstellt wird + später die settings.yml dorthin kopiert werden kann
   args:
       creates: /home/{{ env_user }}/.config/Code/User/globalStorage/zokugun.sync-settings/settings.yml   # nur ausführen, wenn nicht bereits z.B. in vorhergehendem Lauf gestartet/erstellt wurde
   become: true
@@ -46,8 +46,8 @@
 
 - name: Wait until Visual Studio Code Ext. 'Sync Settings' Standard Config-File is present before continuing
   ansible.builtin.wait_for:
-    path: /home/{{ env_user }}/.config/Code/User/globalStorage/zokugun.sync-settings/settings.yml
-#    path: /home/{{ env_user }}/.config/Code/User/globalStorage/zokugun.sync-settings/   # funktioniert auch mit Ordner
+    path: /home/{{ env_user }}/.config/Code/User/globalStorage/zokugun.sync-settings/settings.yml   #Datei
+    #path: /home/{{ env_user }}/.config/Code/User/globalStorage/zokugun.sync-settings/               # Ordner
 
 #- name: Close Visual Studio Code (Ubuntu)
 #  tags: workstation,ubuntu
