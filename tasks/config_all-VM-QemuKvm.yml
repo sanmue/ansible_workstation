@@ -3,9 +3,7 @@
   service:
     name: libvirtd
     state: started
-  when: ansible_virtualization_role != "guest" # or
-#        ansible_os_family != "Suse"
-# noch ohne nested virtualization
+  when: ansible_virtualization_role != "guest"
 
 - name: enable libvirtd
   tags: VM
@@ -13,21 +11,23 @@
     name: libvirtd
     #state: enabled
     enabled: yes
-  when: ansible_virtualization_role != "guest" # or
-#        ansible_os_family != "Suse"
-# noch ohne nested virtualization
-
-#TODO: ggf. noch nested virtualization
+  when: ansible_virtualization_role != "guest" 
 
 
-- name: create virtual network Lab-DFS
+- name: create virtual networks
   tags: VM
   ansible.builtin.shell:
-    cmd: virsh net-define files/VM/netdump_Lab-DFS.xml && virsh net-autostart Lab-DFS
+    cmd: ls "files/VM/netdump_*.xml" | xargs -I % sh -c "virsh net-define files/VM/%"
   when: ansible_virtualization_role != "guest"
 
-- name: create virtual network Lab-Linux
-  tags: VM
-  ansible.builtin.shell:
-    cmd: virsh net-define files/VM/netdump_Lab-Linux.xml && virsh net-autostart Lab-Linux
-  when: ansible_virtualization_role != "guest"
+#- name: create virtual network Lab-DFS
+#  tags: VM
+#  ansible.builtin.shell:
+#    cmd: virsh net-define files/VM/netdump_Lab-DFS.xml && virsh net-autostart Lab-DFS
+#  when: ansible_virtualization_role != "guest"
+
+#- name: create virtual network Lab-Linux
+#  tags: VM
+#  ansible.builtin.shell:
+#    cmd: virsh net-define files/VM/netdump_Lab-Linux.xml && virsh net-autostart Lab-Linux
+#  when: ansible_virtualization_role != "guest"
