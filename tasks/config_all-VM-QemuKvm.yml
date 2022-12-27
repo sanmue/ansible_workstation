@@ -48,5 +48,6 @@
   tags: VM
   ansible.builtin.shell:
     chdir: files/VM/
-    cmd: ls dump_*.xml | xargs -I % sh -c "virsh create %"
+    #cmd: ls dump_*.xml | xargs -I % sh -c "virsh create %"   # create: creates + starts vm
+    cmd: ls dump_*.xml | xargs -I % sh -c "virsh define %"    # define: just creates, does not start vm
   when: ansible_virtualization_role != "guest"
