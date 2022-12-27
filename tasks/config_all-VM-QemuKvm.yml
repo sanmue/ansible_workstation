@@ -17,7 +17,7 @@
 - name: create virtual networks
   tags: VM
   ansible.builtin.shell:
-    cmd: ls "files/VM/netdump_*.xml" | xargs -I % sh -c "virsh net-define files/VM/%"
+    cmd: ls files/VM/netdump_*.xml | xargs -I % sh -c "virsh net-define %"
   when: ansible_virtualization_role != "guest"
 
 #- name: create virtual network Lab-DFS
