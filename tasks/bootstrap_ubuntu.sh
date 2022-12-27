@@ -6,6 +6,8 @@
 repodir="dev"
 playbookdir="ansible_test"
 userid=$(whoami)
+defaultDomain=universalaccount.de
+defaultMail=${userid}@${defaultDomain}
 githubOnlineRepo="git@github.com:sanmue/ansible_test.git"
 
 # echo "Ich bin: ${userid}"
@@ -33,22 +35,29 @@ echo ""
 echo "Aktiviere Firewall 'ufw' und erlaube ssh ..."
 sudo ufw enable && sudo ufw allow ssh comment 'SSH' && sudo ufw reload
 
+#echo ""
+#read -rp "Soll Git konfiguriert werden (git config Name+Mail) für '${userid}' (j/n)?: " gitconf
+#if [ "${gitconf}" = 'j' ]; then
+#    read -rp "Name und Vorname eingeben: " fullname
+#    read -rp "E-Mail Adresse eingeben: " email
+#    #touch "/home/${userid}/.gitconfig"
+#    #echo "[user]" > "/home/${userid}/.gitconfig"
+#    #echo "  email = ${email}" >> "/home/${userid}/.gitconfig"
+#    #echo "  name = ${fullname}" >> "/home/${userid}/.gitconfig"
+#    git config --global user.name "${fullname}"
+#    git config --global user.email "${email}"
+#    echo "Git-config ist nun:" 
+#    git config --list
+#else
+#    echo "Git config wird übersprungen"
+#fi
+
 echo ""
-read -rp "Soll Git konfiguriert werden (git config Name+Mail) für '${userid}' (j/n)?: " gitconf
-if [ "${gitconf}" = 'j' ]; then
-    read -rp "Name und Vorname eingeben: " fullname
-    read -rp "E-Mail Adresse eingeben: " email
-    #touch "/home/${userid}/.gitconfig"
-    #echo "[user]" > "/home/${userid}/.gitconfig"
-    #echo "  email = ${email}" >> "/home/${userid}/.gitconfig"
-    #echo "  name = ${fullname}" >> "/home/${userid}/.gitconfig"
-    git config --global user.name "${fullname}"
-    git config --global user.email "${email}"
-    echo "Git-config ist nun:" 
-    git config --list
-else
-    echo "Git config wird übersprungen"
-fi
+echo "Erstelle git config mit Name '${userid}' und Mailadresse '${defaultMail}'..."
+git config --global user.name "${userid}"
+git config --global user.email "${defaultMail}"
+echo "Git-config ist nun:" 
+git config --list
 
 echo ""
 echo "Erstelle neues Verzeichnis '${repodir}' und Unterverzeichnis '${playbookdir}' im Home-Verzeichnis von '${userid}' ..."
@@ -68,16 +77,16 @@ echo "Clone github-Repo des Ansible-Playbooks ins Verzeichnis '${playbookdir}' .
 git clone ${githubOnlineRepo} "/home/${userid}/${repodir}/${playbookdir}"
 
 
-echo ""
-read -rp "Soll TEST des Ansible-Playbooks durchgeführt werden (j/n)?: " testplay
-if [ "${testplay}" = 'j' ]; then
-    echo "Starte TEST des Playbooks ..."
-    ansible-playbook "/home/${userid}/${repodir}/${playbookdir}/local.yml" -v --ask-become-pass --check
-    # bei verschlüsselten Daten:
-    #ansible-playbook "/home/${userid}/${repodir}/${playbookdir}/local.yml" -v -K -C --vault-password-file "/home/${userid}/.ansibleVaultKey"
-else
-    echo "TEST des Playbooks wird NICHT durchgefürt"
-fi
+#echo ""
+#read -rp "Soll TEST des Ansible-Playbooks durchgeführt werden (j/n)?: " testplay
+#if [ "${testplay}" = 'j' ]; then
+#    echo "Starte TEST des Playbooks ..."
+#    ansible-playbook "/home/${userid}/${repodir}/${playbookdir}/local.yml" -v --ask-become-pass --check
+#    # bei verschlüsselten Daten:
+#    #ansible-playbook "/home/${userid}/${repodir}/${playbookdir}/local.yml" -v -K -C --vault-password-file "/home/${userid}/.ansibleVaultKey"
+#else
+#    echo "TEST des Playbooks wird NICHT durchgefürt"
+#fi
 
 echo ""
 echo "Starte Ansible-Playbook ..."
