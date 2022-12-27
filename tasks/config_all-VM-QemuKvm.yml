@@ -14,6 +14,12 @@
   when: ansible_virtualization_role != "guest" 
 
 
+- name: destroy/undefine default virtual network
+  tags: VM
+  ansible.builtin.shell:
+    cmd: virsh net-destroy default && virsh net-undefine default
+  when: ansible_virtualization_role != "guest"
+
 - name: create virtual networks
   tags: VM
   ansible.builtin.shell:
