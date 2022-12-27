@@ -6,8 +6,8 @@
 repodir="dev"
 playbookdir="ansible_test"
 userid=$(whoami)
-defaultDomain=universalaccount.de
-defaultMail=${userid}@${defaultDomain}
+defaultDomain="universalaccount.de"
+defaultMail="${userid}@${defaultDomain}"
 githubOnlineRepo="git@github.com:sanmue/ansible_test.git"
 
 # echo "Ich bin: ${userid}"
