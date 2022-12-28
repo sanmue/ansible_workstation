@@ -76,9 +76,8 @@
 
 - name: redefine + set current virtual machine snapshots
   tags: VM
-  ansible.builtin.shell:
-    chdir: files/VM/
-    cmd: vm_snapshotcreate-redefine.sh
+  ansible.builtin.script:
+    cmd: files/VM/vm_snapshotcreate-redefine.sh
   args:
     creates: /home/{{ env_user }}/.vm_qemu-kvm_created
   when: ansible_virtualization_role != "guest"
