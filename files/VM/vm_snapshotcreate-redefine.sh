@@ -16,7 +16,7 @@ for snapshotfile in ${snapshotfileList}; do
 	#echo "- snapshot: ${snapshot}"
 
 	# snapshot-create --redefine
-	virsh snapshot-create "${domain}" -xmlfile "${snapshotfile}" --redefine
+	virsh snapshot-create "${domain}" --xmlfile "${snapshotfile}" --redefine
 done
 
 
@@ -28,8 +28,9 @@ snapshotcurrentfileList=$(ls snapshotcurrent_*)
 
 for snapshotcurrentfile in ${snapshotcurrentfileList}; do
 	#echo "- snapshotcurrentfile: ${snapshotcurrentfile}"
-	domain=$(echo "${snapshotcurrentfile}" | cut -d _ -f 2 | cut -d . -f 1)
-	#echo "- domain: ${domain} "
+	#domain=$(echo "${snapshotcurrentfile}" | cut -d _ -f 2 | cut -d . -f 1)   # Problem bei domain 'ubuntu22.04' wegen 'xxx22.04.txt"
+	domain=$(echo "${snapshotcurrentfile}" | cut -d _ -f 2 | awk '{print substr($0,1,length-4)}')   # letzte 4 Zeichen abschneiden (.txt)
+	echo "- domain: ${domain}"
 	snapshotcurrent=$(cat "${snapshotcurrentfile}")
 	#echo "- snapshotcurrent: ${snapshotcurrent}"
 
