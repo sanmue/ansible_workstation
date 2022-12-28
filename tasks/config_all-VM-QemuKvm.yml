@@ -14,12 +14,16 @@
   when: ansible_virtualization_role != "guest" 
 
 
+##############################################
+### Create virtual networks + virtual machines
+# https://serverfault.com/questions/434064/correct-way-to-move-kvm-vm
+
 - name: destroy/undefine default virtual network
   tags: VM
   ansible.builtin.shell:
     cmd: virsh net-destroy default && virsh net-undefine default
   args:
-    creates: /home/{{ env_user }}/.VM_QemuKvm_created
+    creates: /home/{{ env_user }}/.vm_qemu-kvm_created
   when: ansible_virtualization_role != "guest"
 
 - name: create virtual networks
@@ -29,7 +33,7 @@
     chdir: files/VM/
     cmd: ls netdump_*.xml | xargs -I % sh -c "virsh net-define %"   # nur Dateiname, da vorher in Verzeichnis gewechselt und dann erst ls
   args:
-    creates: /home/{{ env_user }}/.VM_QemuKvm_created
+    creates: /home/{{ env_user }}/.vm_qemu-kvm_created
   when: ansible_virtualization_role != "guest"
 
 - name: start all virtual networks
@@ -39,7 +43,7 @@
     cmd: ls netdump_*.xml | xargs -I % sh -c "echo % | cut -d _ -f 2" | xargs -I % sh -c "echo % | cut -d . -f 1" | xargs -I % sh -c "virsh net-start %"
     #z.B.:  netdump_default.xml                        default.xml                                 default                            virsh net-autostart default
   args:
-    creates: /home/{{ env_user }}/.VM_QemuKvm_created
+    creates: /home/{{ env_user }}/.vm_qemu-kvm_created
   when: ansible_virtualization_role != "guest"
 
 - name: autostart all virtual networks
@@ -48,7 +52,7 @@
     chdir: files/VM/
     cmd: ls netdump_*.xml | xargs -I % sh -c "echo % | cut -d _ -f 2" | xargs -I % sh -c "echo % | cut -d . -f 1" | xargs -I % sh -c "virsh net-autostart %"
   args:
-    creates: /home/{{ env_user }}/.VM_QemuKvm_created
+    creates: /home/{{ env_user }}/.vm_qemu-kvm_created
   when: ansible_virtualization_role != "guest"
 
 
@@ -56,17 +60,34 @@
   tags: VM
   ansible.builtin.shell:
     chdir: files/VM/
-    #cmd: ls dump_*.xml | xargs -I % sh -c "virsh create %"   # create: creates + starts vm
-    cmd: ls dump_*.xml | xargs -I % sh -c "virsh define %"    # define: just creates, does not start vm
+    cmd: ls dump_*.xml | xargs -I % sh -c "virsh define %"    # 'virsh define': just creates, does not start vm; 'virsh create': creates + starts vm
   args:
-    creates: /home/{{ env_user }}/.VM_QemuKvm_created
+    creates: /home/{{ env_user }}/.vm_qemu-kvm_created
+  when: ansible_virtualization_role != "guest"
+
+
+#- name: redefine virtual machine snapshots
+#  tags: VM
+#  ansible.builtin.script:
+#    cmd: files/vm_snapshotcreate-redefine.sh
+#  args:
+#    creates: /home/{{ env_user }}/.vm_qemu-kvm_created
+#  when: ansible_virtualization_role != "guest"
+
+- name: redefine + set current virtual machine snapshots
+  tags: VM
+  ansible.builtin.shell:
+    chdir: files/VM/
+    cmd: vm_snapshotcreate-redefine.sh
+  args:
+    creates: /home/{{ env_user }}/.vm_qemu-kvm_created
   when: ansible_virtualization_role != "guest"
 
 
 - name: set flag - VM-stuff Qemu-Kvm created
   tags: VM
   ansible.builtin.file:
-    path: /home/{{ env_user }}/.VM_QemuKvm_created
+    path: /home/{{ env_user }}/.vm_qemu-kvm_created
     state: touch
     modification_time: preserve
   when: ansible_virtualization_role != "guest"
