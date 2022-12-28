@@ -67,22 +67,22 @@
   when: ansible_virtualization_role != "guest"
 
 
-#- name: redefine + set current virtual machine snapshots (Qemu-Kvm)
-#  tags: VM
-#  ansible.builtin.script:
-#    cmd: files/VM/vm_snapshotcreate-redefine.sh
-#  args:
-#    creates: /home/{{ env_user }}/.vm_qemu-kvm_created
-#  when: ansible_virtualization_role != "guest"
-
 - name: redefine + set current virtual machine snapshots (Qemu-Kvm)
   tags: VM
-  ansible.builtin.shell:
-    chdir: "/home/{{ env_user }}/dev/ansible_test/files/VM/"
-    cmd: vm_snapshotcreate-redefine.sh
+  ansible.builtin.script:
+    cmd: files/VM/vm_snapshotcreate-redefine.sh
   args:
     creates: /home/{{ env_user }}/.vm_qemu-kvm_created
   when: ansible_virtualization_role != "guest"
+
+#- name: redefine + set current virtual machine snapshots (Qemu-Kvm)
+#  tags: VM
+#  ansible.builtin.shell:
+#    chdir: "/home/{{ env_user }}/dev/ansible_test/files/VM/"
+#    cmd: vm_snapshotcreate-redefine.sh
+#  args:
+#    creates: /home/{{ env_user }}/.vm_qemu-kvm_created
+#  when: ansible_virtualization_role != "guest"
 
 
 - name: create 'flag-file' indicating VM-stuff was created (Qemu-Kvm)
