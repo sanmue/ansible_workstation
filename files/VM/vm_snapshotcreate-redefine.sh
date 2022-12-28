@@ -16,7 +16,7 @@ for snapshotfile in ${snapshotfileList}; do
 	#echo "- snapshot: ${snapshot}"
 
 	# snapshot-create --redefine
-	virsh snapshot-create --redefine "${domain}" "${snapshotfile}"
+	virsh snapshot-create "${domain}" -xmlfile "${snapshotfile}" --redefine
 done
 
 
