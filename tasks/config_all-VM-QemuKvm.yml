@@ -78,7 +78,7 @@
 - name: redefine + set current virtual machine snapshots (Qemu-Kvm)
   tags: VM
   ansible.builtin.shell:
-    chdir: files/VM/
+    chdir: ../files/VM/
     cmd: vm_snapshotcreate-redefine.sh
   args:
     creates: /home/{{ env_user }}/.vm_qemu-kvm_created
