@@ -42,9 +42,9 @@ fi
 
 
 ### ensure hypervisor supports directory-based storage pools:
-supportfsstorage=$(virsh pool-capabilities | grep "'dir' supported='yes'")   # wenn ja, ausgabe: <pool type='dir' supported='yes'>
-#echo  ${supportfsstorage}
-if [[ "${supportfsstorage}" != *"yes"* ]]; then
+supportstoragetype=$(virsh pool-capabilities | grep "'dir' supported='yes'")   # wenn ja, ausgabe: <pool type='dir' supported='yes'>
+#echo  ${supportstoragetype}
+if [[ "${supportstoragetype}" != *"yes"* ]]; then
 	echo "directory-based storage pools not supported, exit program."
 	echo "directory-based storage pools not supported, exit program." >> "/home/${user}/.error_vm_storagepool.txt"
 	exit 1
