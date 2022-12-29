@@ -66,5 +66,5 @@ else
 	virsh pool-autostart ${fsstoragedir}
 fi
 
-virsh pool-list --al
+virsh pool-list --all
 
