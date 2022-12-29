@@ -45,8 +45,7 @@ fi
 supportstoragetype=$(virsh pool-capabilities | grep "'dir' supported='yes'")   # wenn ja, ausgabe: <pool type='dir' supported='yes'>
 #echo  ${supportstoragetype}
 if [[ "${supportstoragetype}" != *"yes"* ]]; then
-	echo "directory-based storage pools not supported, exit program."
-	echo "directory-based storage pools not supported, exit program." >> "/home/${user}/.error_vm_storagepool.txt"
+	echo "directory-based storage pools not supported, exit program." | tee "/home/${user}/.error_vm_storagepool.txt"
 	exit 1
 fi
 
@@ -59,8 +58,7 @@ echo "pool-build..."
 virsh pool-build ${storagedir}
 
 if [[ $(virsh pool-list --all | grep ${storagedir}) != *"${storagedir}"*  ]]; then
-	echo "storage pool '${storagedir}' wurde nicht angelegt"
-	echo "storage pool '${storagedir}' wurde nicht angelegt" >> "/home/${user}/${errorfile}"
+	echo "storage pool '${storagedir}' wurde nicht angelegt" | tee -a "/home/${user}/${errorfile}"
 else
 	echo "pool-start..."
 	virsh pool-start ${storagedir}
