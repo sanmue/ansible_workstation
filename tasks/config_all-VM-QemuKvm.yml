@@ -77,6 +77,16 @@
   when: ansible_virtualization_role != "guest"
 
 
+- name: create storage pool 'Downloads' for env_user (Qemu-Kvm)
+  tags: VM
+  ansible.builtin.shell:
+    chdir: "/home/{{ env_user }}/dev/ansible_test/files/VM/"
+    cmd: ./vm_storage_pool-define.sh {{ env_user }}
+  args:
+    creates: /home/{{ env_user }}/.vm_qemu-kvm_created
+  when: ansible_virtualization_role != "guest"
+
+
 - name: create 'flag-file' indicating VM-stuff was created (Qemu-Kvm)
   tags: VM
   ansible.builtin.file:
@@ -84,3 +94,4 @@
     state: touch
     modification_time: preserve
   when: ansible_virtualization_role != "guest"
+
