@@ -49,8 +49,8 @@ fi
 
 
 ### create storage pool:
-echo "pool-define as '${fsstoragedir}' on '/dev/nvme0n1p3' in '$homepath'..."
-virsh pool-define-as ${fsstoragedir} --source-dev /dev/nvme0n1p3 --target "${fsstoragepath}"
+echo "pool-define-as..."
+virsh pool-define-as ${fsstoragedir} fs --source-dev /dev/nvme0n1p3 --target "${fsstoragepath}"
 
 echo "pool-build..."
 virsh pool-build ${fsstoragedir}
@@ -65,4 +65,6 @@ else
 	echo "pool-autostart..."
 	virsh pool-autostart ${fsstoragedir}
 fi
+
+virsh pool-list --al
 
