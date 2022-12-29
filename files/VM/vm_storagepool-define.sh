@@ -1,10 +1,17 @@
 #!/bin/bash
 
-###
-### create storage pool for user '${user}': /home/user/Downloads
-### parameter: user (default: 'sandro')
+### --------------------------------------------------------------------
+### create storage pool for user (directory-based, /home/user/Downloads)
+#   - parameter: user (default: 'sandro')
+#   - Quellen:
+#		- https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9/html/configuring_and_managing_virtualization/managing-storage-for-virtual-machines_configuring-and-managing-virtualization#creating-directory-based-storage-pools-using-the-cli_assembly_managing-virtual-machine-storage-pools-using-the-cli
+# 		- https://www.tecmint.com/manage-kvm-storage-volumes-and-pools/
+### --------------------------------------------------------------------
 
-#path=$(pwd)
+
+### parameter, variablen:
+#currentpath=$(pwd)
+#user=$(whoami)
 user=""
 errorfile=".error_vm_storagepool.txt"
 
@@ -16,12 +23,14 @@ else
 	user="sandro"   # standardwert
 	echo "standardwert '${user}' wird für user-id verwendet"
 fi
-
 #echo "user-id ist: '${user}'"
 
 homepath="/home/${user}"
 fsstoragedir="Downloads"
 fsstoragepath="${homepath}/${fsstoragedir}"
+
+
+### check fsstoragepath:
 if [ -d "${fsstoragepath}" ]; then
 	echo "fsstoragepath: '${fsstoragepath}'"
 else
@@ -32,14 +41,8 @@ else
 fi
 
 
-########################################
-### create filesystem-based storage pool
-########################################
-# https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9/html/configuring_and_managing_virtualization/managing-storage-for-virtual-machines_configuring-and-managing-virtualization#creating-filesystem-based-storage-pools-using-the-cli_assembly_managing-virtual-machine-storage-pools-using-the-cli
-# https://www.tecmint.com/manage-kvm-storage-volumes-and-pools/
-
 ### ensure hypervisor supports filesystem-based storage pools:
-supportfsstorage=$(virsh pool-capabilities | grep "'fs' supported='yes'")   # wenn ja, ausgabe: <pool type='fs' supported='yes'>
+supportfsstorage=$(virsh pool-capabilities | grep "'dir' supported='yes'")   # wenn ja, ausgabe: <pool type='fs' supported='yes'>
 #echo  ${supportfsstorage}
 if [[ "${supportfsstorage}" != *"yes"* ]]; then
 	echo "filesystem-based storage pools not supported, exit program."
@@ -50,7 +53,7 @@ fi
 
 ### create storage pool:
 echo "pool-define-as..."
-virsh pool-define-as ${fsstoragedir} fs --source-dev /dev/nvme0n1p3 --target "${fsstoragepath}"
+virsh pool-define-as ${fsstoragedir} dir --source-dev /dev/nvme0n1p3 --target "${fsstoragepath}"
 
 echo "pool-build..."
 virsh pool-build ${fsstoragedir}
@@ -66,5 +69,6 @@ else
 	virsh pool-autostart ${fsstoragedir}
 fi
 
+echo "pool-list:"
 virsh pool-list --all
 
