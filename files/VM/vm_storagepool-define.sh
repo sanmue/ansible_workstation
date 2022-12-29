@@ -26,47 +26,47 @@ fi
 #echo "user-id ist: '${user}'"
 
 homepath="/home/${user}"
-fsstoragedir="Downloads"
-fsstoragepath="${homepath}/${fsstoragedir}"
+storagedir="Downloads"
+storagepath="${homepath}/${storagedir}"
 
 
-### check fsstoragepath:
-if [ -d "${fsstoragepath}" ]; then
-	echo "fsstoragepath: '${fsstoragepath}'"
+### check storagepath:
+if [ -d "${storagepath}" ]; then
+	echo "storagepath: '${storagepath}'"
 else
-	echo "gewünschter fsstoragepath '${fsstoragepath}' nicht vorhanden"
-	echo "home-verzeichnis für user '${user}' inkl. '${fsstoragedir}'-verzeichnis bitte anlegen (lassen) oder anderen user verwenden"
+	echo "gewünschter storagepath '${storagepath}' nicht vorhanden"
+	echo "home-verzeichnis für user '${user}' inkl. '${storagedir}'-verzeichnis bitte anlegen (lassen) oder anderen user verwenden"
 	echo "Programm wird beendet"
 	exit 1
 fi
 
 
-### ensure hypervisor supports filesystem-based storage pools:
+### ensure hypervisor supports directory-based storage pools:
 supportfsstorage=$(virsh pool-capabilities | grep "'dir' supported='yes'")   # wenn ja, ausgabe: <pool type='fs' supported='yes'>
 #echo  ${supportfsstorage}
 if [[ "${supportfsstorage}" != *"yes"* ]]; then
-	echo "filesystem-based storage pools not supported, exit program."
-	echo "filesystem-based storage pools not supported, exit program." >> "/home/${user}/.error_vm_storagepool.txt"
+	echo "directory-based storage pools not supported, exit program."
+	echo "directory-based storage pools not supported, exit program." >> "/home/${user}/.error_vm_storagepool.txt"
 	exit 1
 fi
 
 
 ### create storage pool:
 echo "pool-define-as..."
-virsh pool-define-as ${fsstoragedir} dir --source-dev /dev/nvme0n1p3 --target "${fsstoragepath}"
+virsh pool-define-as ${storagedir} dir --source-dev /dev/nvme0n1p3 --target "${storagepath}"
 
 echo "pool-build..."
-virsh pool-build ${fsstoragedir}
+virsh pool-build ${storagedir}
 
-if [[ $(virsh pool-list --all | grep ${fsstoragedir}) != *"${fsstoragedir}"*  ]]; then
-	echo "storage pool '${fsstoragedir}' wurde nicht angelegt"
-	echo "storage pool '${fsstoragedir}' wurde nicht angelegt" >> "/home/${user}/${errorfile}"
+if [[ $(virsh pool-list --all | grep ${storagedir}) != *"${storagedir}"*  ]]; then
+	echo "storage pool '${storagedir}' wurde nicht angelegt"
+	echo "storage pool '${storagedir}' wurde nicht angelegt" >> "/home/${user}/${errorfile}"
 else
 	echo "pool-start..."
-	virsh pool-start ${fsstoragedir}
+	virsh pool-start ${storagedir}
 
 	echo "pool-autostart..."
-	virsh pool-autostart ${fsstoragedir}
+	virsh pool-autostart ${storagedir}
 fi
 
 echo "pool-list:"
