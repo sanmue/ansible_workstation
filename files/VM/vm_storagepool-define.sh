@@ -57,7 +57,7 @@ nvmessdpath="/dev/nvme0n1p3"
 if [ -d ${nvmessdpath} ]; then
 	virsh pool-define-as ${storagedir} dir --source-dev ${nvmessdpath} --target "${storagepath}"
 else
-	echo "source-dev path '${nvmessdpath}'" | tee -a "/home/${user}/${errorfile}"
+	echo "source-dev path '${nvmessdpath}' nicht vorhanden." | tee -a "/home/${user}/${errorfile}"
 	echo "programm wird beendet"
 	exit 1
 fi
