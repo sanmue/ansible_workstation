@@ -52,7 +52,15 @@ fi
 
 ### create storage pool:
 echo "pool-define-as..."
-virsh pool-define-as ${storagedir} dir --source-dev /dev/nvme0n1p3 --target "${storagepath}"
+nvmessdpath="/dev/nvme0n1p3"
+
+if [ -d ${nvmessdpath} ]; then
+	virsh pool-define-as ${storagedir} dir --source-dev ${nvmessdpath} --target "${storagepath}"
+else
+	echo "source-dev path '${nvmessdpath}'" | tee -a "/home/${user}/${errorfile}"
+	echo "programm wird beendet"
+	exit 1
+fi
 
 echo "pool-build..."
 virsh pool-build ${storagedir}
