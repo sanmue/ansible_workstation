@@ -52,12 +52,16 @@ fi
 
 ### create storage pool:
 echo "pool-define-as..."
-nvmessdpath="/dev/nvme0n1p3"
+osdevice="nvme0n1p"   # Anfang Device-Bezeichnung bei Nvme-SSDs
+#nvmessdpath="/dev/nvme0n1p3"
+nvmessdpath=$(ls /dev/${osdevice}?* | tail -n 1)
 
-if [ -d ${nvmessdpath} ]; then
-	virsh pool-define-as ${storagedir} dir --source-dev ${nvmessdpath} --target "${storagepath}"
+#if [[ $(ls /dev/ | grep ${nvmessdpath}) == *"${nvmessdpath}"* ]]; then
+if [ -n "${nvmessdpath}" ]; then   # -n: if string length is not zero
+	virsh pool-define-as ${storagedir} dir --source-dev "${nvmessdpath}" --target "${storagepath}"
 else
-	echo "source-dev path '${nvmessdpath}' nicht vorhanden." | tee -a "/home/${user}/${errorfile}"
+	#echo "source-dev path '${nvmessdpath}' nicht vorhanden." | tee -a "/home/${user}/${errorfile}"
+	echo "Nvme-SSD osdevice ('${osdevice}x') nicht vorhanden." | tee -a "/home/${user}/${errorfile}"
 	echo "programm wird beendet"
 	exit 1
 fi
