@@ -17,11 +17,11 @@ errorfile=".error_vm_storagepool.txt"
 
 echo "Anzahl übergebene Parameter: '$#'"
 if [ $# -gt 0 ]; then 
-	echo "Erster Parameter '$1' wird als user-id verwendet"
+	echo "Erster Parameter '$1' wird als User-Id verwendet"
 	user=$1
 else
 	user="sandro"   # standardwert
-	echo "standardwert '${user}' wird für user-id verwendet"
+	echo "Standardwert '${user}' wird für User-Id verwendet"
 fi
 #echo "user-id ist: '${user}'"
 
@@ -32,11 +32,11 @@ storagepath="${homepath}/${storagedir}"
 
 ### check storagepath:
 if [ -d "${storagepath}" ]; then
-	echo "storagepath: '${storagepath}'"
+	echo "Storagepath: '${storagepath}'"
 else
-	echo "gewünschter storagepath '${storagepath}' nicht vorhanden"
-	echo "home-verzeichnis für user '${user}' inkl. '${storagedir}'-verzeichnis bitte anlegen (lassen) oder anderen user verwenden"
-	echo "Programm wird beendet"
+	echo "Gewünschter storagepath '${storagepath}' nicht vorhanden."
+	echo "Home-Verzeichnis für User '${user}' inkl. '${storagedir}'-Verzeichnis bitte anlegen (lassen) oder anderen User verwenden."
+	echo "Programm wird beendet."
 	exit 1
 fi
 
@@ -45,24 +45,25 @@ fi
 supportstoragetype=$(virsh pool-capabilities | grep "'dir' supported='yes'")   # wenn ja, ausgabe: <pool type='dir' supported='yes'>
 #echo  ${supportstoragetype}
 if [[ "${supportstoragetype}" != *"yes"* ]]; then
-	echo "directory-based storage pools not supported, exit program." | tee "/home/${user}/.error_vm_storagepool.txt"
+	echo "Directory-based storage pools not supported, exit program." | tee "/home/${user}/.error_vm_storagepool.txt"
 	exit 1
 fi
 
 
 ### create storage pool:
 echo "pool-define-as..."
-osdevice="nvme0n1p"   # Anfang Device-Bezeichnung bei Nvme-SSDs
+osssddevice="nvme0n1p"   # Anfang Device-Bezeichnung bei Nvme-SSDs
 #nvmessdpath="/dev/nvme0n1p3"
-nvmessdpath=$(ls /dev/${osdevice}?* | tail -n 1)
+#nvmessdpath=$(ls /dev/${osssddevice}? | tail -n 1)   # davon ausgehend, dass es nicht mehr als 9 Partitionen gibt und der letzte Treffer die OS-Partition ist, auf die der Storage Pool soll
+nvmessdpath=$(find /dev/ -name "${osssddevice}?" | tail -n 1)
 
 #if [[ $(ls /dev/ | grep ${nvmessdpath}) == *"${nvmessdpath}"* ]]; then
 if [ -n "${nvmessdpath}" ]; then   # -n: if string length is not zero
 	virsh pool-define-as ${storagedir} dir --source-dev "${nvmessdpath}" --target "${storagepath}"
 else
 	#echo "source-dev path '${nvmessdpath}' nicht vorhanden." | tee -a "/home/${user}/${errorfile}"
-	echo "Nvme-SSD osdevice ('${osdevice}x') nicht vorhanden." | tee -a "/home/${user}/${errorfile}"
-	echo "programm wird beendet"
+	echo "Nvme-SSD osssddevice ('${osssddevice}x') nicht vorhanden." | tee -a "/home/${user}/${errorfile}"
+	echo "Programm wird beendet."
 	exit 1
 fi
 
@@ -70,7 +71,7 @@ echo "pool-build..."
 virsh pool-build ${storagedir}
 
 if [[ $(virsh pool-list --all | grep ${storagedir}) != *"${storagedir}"*  ]]; then
-	echo "storage pool '${storagedir}' wurde nicht angelegt" | tee -a "/home/${user}/${errorfile}"
+	echo "Storage pool '${storagedir}' wurde nicht angelegt." | tee -a "/home/${user}/${errorfile}"
 else
 	echo "pool-start..."
 	virsh pool-start ${storagedir}
