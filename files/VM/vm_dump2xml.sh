@@ -23,22 +23,26 @@ echo "  |"
 domainList=$(virsh list --all --name)
 
 for domain in ${domainList}; do
-	echo "  -- domain: ${domain}"
+	echo "  -- domain: '${domain}'"
 	
 	# snapshot-dumpxml
-	snapshotList=$(virsh snapshot-list --name "${domain}")
+	snapshotList=$(virsh snapshot-list "${domain}" --name --topological)   #nur Name der Snapshots, in korrekter Reihenfolge
 	if [ -z "${snapshotList}" ]; then   # wenn leer
 		echo -e "     |_snapshot:\e[0;33m keine Snapshots vorhanden\e[0;37m"
                                  #ab hier rote Schrift             ab hier weiße Schrift
 	else
+		echo "     Exportiere sortierte Namensliste der Snapshots in Datei..."
+		echo "${snapshotList}" > "snapshotList_${domain}.txt"
+
+		echo "     Exportiere die einzelnen Snapshots in eine Datei..."
 		for snapshot in ${snapshotList}; do
-			echo "     |_snapshot: ${snapshot}"
+			echo "     |_snapshot-dumpxml: '${snapshot}'"
 			virsh snapshot-dumpxml "${domain}" "${snapshot}" > "${exportPath}/snapshotdump_${domain}_${snapshot}.xml"
 		done
 
 	#snapshot-current
 		snapshotcurrent=$(virsh snapshot-current --name "${domain}")
-		echo "     |_snapshotcurrent: ${snapshotcurrent}"
+		echo "     |_snapshotcurrent: '${snapshotcurrent}'"
 		echo "${snapshotcurrent}" > "${exportPath}/snapshotcurrent_${domain}.txt"
 
 	fi
