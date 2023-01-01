@@ -30,7 +30,7 @@ for snapshotfile in ${snapshotfileList}; do
 	domainSnapshotList=$(cat "${snapshotfile}")
 	if [ -n "${domainSnapshotList}" ]; then
 		for snapshot in ${domainSnapshotList}; do echo
-			snapshotdumpfile="snapshotdump_${domain}_${snapshot}.xlm"
+			snapshotdumpfile="snapshotdump_${domain}_${snapshot}.xml"
 			
 			# snapshot-create --redefine
 			virsh snapshot-create "${domain}" --xmlfile "${snapshotdumpfile}" --redefine
