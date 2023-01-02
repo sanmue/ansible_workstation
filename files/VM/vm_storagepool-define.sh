@@ -71,7 +71,7 @@ if [ -n "${nvmessdpath}" ]; then   # -n: if string length is not zero
 
 	if [ "${found}" == 'nein' ]; then
 		echo "pool-define-as..."
-		virsh pool-define-as ${storagedir} dir --source-dev "${nvmessdpath}" --target "${storagepath}"
+		virsh pool-define-as ${storagedir} dir --source-dev "${nvmessdpath}" --target "${storagepath}"   # Create the storage pool definition 
 	fi	
 else
 	#echo "source-dev path '${nvmessdpath}' nicht vorhanden." | tee -a "/home/${user}/${errorfile}"
@@ -81,7 +81,8 @@ else
 fi
 
 ### check Anlage Storage Pool
-if [[ $(virsh pool-list --all | grep ${storagedir}) != *"${storagedir}"*  ]]; then   # einfache Prüfung, ggf. false Positives
+if [[ $(virsh pool-list --all | grep ${storagedir}) != *"${storagedir}"*  ]]; then  # Verify the storage pool is listed 
+																					# einfache Prüfung, ggf. false Positives
 	echo "Storage pool '${storagedir}' wurde nicht angelegt." | tee -a "/home/${user}/${errorfile}"
 	echo "Programm wird beendet"
 	exit 1
@@ -90,17 +91,22 @@ else
 	storagepoolState=$(virsh pool-list --all | grep -F "${storagedir}" | xargs | cut -d " " -f 2)
 	if [ "${storagepoolState}" != "active" ]; then
 		echo "pool-build..."
-		virsh pool-build ${storagedir}
+		virsh pool-build ${storagedir}   # Create the local directory
 
 		echo "pool-start..."
-		virsh pool-start ${storagedir}
+		virsh pool-start ${storagedir}   # Start the storage pool
 	else
 		echo "Storage Pool '${storagedir}' bereits active, 'pool-build' und 'pool-start' werden übersprungen."
 	fi
 
 	echo "pool-autostart..."
-	virsh pool-autostart ${storagedir}
+	virsh pool-autostart ${storagedir}   # Turn on autostart
 fi
+
+
+echo "poo-info:"
+virsh pool-info ${storagedir}   ### Show/Verify the storage pool configuration
+
 
 echo "pool-list aktuell:"
 virsh pool-list --all
