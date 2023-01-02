@@ -47,16 +47,32 @@ if [[ "${supportstoragetype}" != *"yes"* ]]; then
 	exit 1
 fi
 
+### ausgabe aktueller Stand Storage pool
+echo "pool-list aktuell:"
+virsh pool-list --all
+storagepoolList=$(virsh pool-list --all --name)
 
 ### create storage pool:
-echo "pool-define-as..."
 osssddevice="nvme0n1p"   # Anfang Device-Bezeichnung bei Nvme-SSDs
 #nvmessdpath=$(ls /dev/${osssddevice}? | tail -n 1)   # z.B.: /dev/nvme0n1p4"; davon ausgehend, dass es nicht mehr als 9 Partitionen gibt und der letzte Treffer die OS-Partition ist, auf die der Storage Pool soll
 nvmessdpath=$(find /dev/ -name "${osssddevice}?" | tail -n 1)   # Alternative mit find
 
 #if [[ $(ls /dev/ | grep ${nvmessdpath}) == *"${nvmessdpath}"* ]]; then
 if [ -n "${nvmessdpath}" ]; then   # -n: if string length is not zero
-	virsh pool-define-as ${storagedir} dir --source-dev "${nvmessdpath}" --target "${storagepath}"
+
+	found='nein'
+	for storagepool in ${storagepoolList}; do   # Prüfen, ob storagedir (storage pool) 'Downloads' bereits vorhanden
+		if [ "${storagepool}" == "${storagedir}" ]; then
+			found='ja'
+			echo "Storage Pool '${storagedir}' bereis vorhanden."
+			break
+		fi
+	done
+
+	if [ "${found}" == 'nein' ]; then
+		echo "pool-define-as..."
+		virsh pool-define-as ${storagedir} dir --source-dev "${nvmessdpath}" --target "${storagepath}"
+	fi	
 else
 	#echo "source-dev path '${nvmessdpath}' nicht vorhanden." | tee -a "/home/${user}/${errorfile}"
 	echo "Nvme-SSD osssddevice ('${osssddevice}x') nicht vorhanden." | tee -a "/home/${user}/${errorfile}"
@@ -64,19 +80,28 @@ else
 	exit 1
 fi
 
-echo "pool-build..."
-virsh pool-build ${storagedir}
-
+### check Anlage Storage Pool
 if [[ $(virsh pool-list --all | grep ${storagedir}) != *"${storagedir}"*  ]]; then   # einfache Prüfung, ggf. false Positives
 	echo "Storage pool '${storagedir}' wurde nicht angelegt." | tee -a "/home/${user}/${errorfile}"
+	echo "Programm wird beendet"
+	exit 1
 else
-	echo "pool-start..."
-	virsh pool-start ${storagedir}
+	### check Storage Pool State
+	storagepoolState=$(virsh pool-list --all | grep -F "${storagedir}" | xargs | cut -d " " -f 2)
+	if [ "${storagepoolState}" != "active" ]; then
+		echo "pool-build..."
+		virsh pool-build ${storagedir}
+
+		echo "pool-start..."
+		virsh pool-start ${storagedir}
+	else
+		echo "Storage Pool '${storagedir}' bereits active, 'pool-build' und 'pool-start' werden übersprungen."
+	fi
 
 	echo "pool-autostart..."
 	virsh pool-autostart ${storagedir}
 fi
 
-echo "pool-list:"
+echo "pool-list aktuell:"
 virsh pool-list --all
 
