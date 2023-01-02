@@ -24,11 +24,6 @@ for snapshotfile in ${snapshotfileList}; do
 			
 			# snapshot-create --redefine
 			existingDomainSnapshotList=$(virsh snapshot-list "${domain}" --name --topological)
-
-			#if [[ "${snapshot}" == *"${existingDomainSnapshotList}"* ]]; then ...   # einfache Abfrage, ggf. false positives
-			#if [[ "${snapshot}" =~ ${existingDomainSnapshotList} ]]; then ...
-
-			
 			for existingSnapshot in $existingDomainSnapshotList; do
 				found=''
 				if [ "${snapshot}" != "${existingSnapshot}" ]; then
@@ -41,7 +36,7 @@ for snapshotfile in ${snapshotfileList}; do
 			done
 
 			echo "found: ${found}"
-			if [ "${found}" = 'nein' ]; then
+			if [ "${found}" == 'nein' ]; then
 				echo "found innerhalb if: ${found}"
 				virsh snapshot-create "${domain}" --xmlfile "${snapshotdumpfile}" --redefine
 			fi
