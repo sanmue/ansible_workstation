@@ -28,18 +28,20 @@ for snapshotfile in ${snapshotfileList}; do
 			#if [[ "${snapshot}" == *"${existingDomainSnapshotList}"* ]]; then ...   # einfache Abfrage, ggf. false positives
 			#if [[ "${snapshot}" =~ ${existingDomainSnapshotList} ]]; then ...
 
-			found=""
+			
 			for existingSnapshot in $existingDomainSnapshotList; do
+				found=''
 				if [ "${snapshot}" != "${existingSnapshot}" ]; then
-					found="false"
+					found='nein'
 				else
-					found="true"
+					found='ja'
 					echo "Snapshot '${snapshot}' für domain '${domain}' existiert bereits."
 				fi
 			done
 
 			echo "found: ${found}"
-			if [ "${found}" = 'false' ]; then
+			if [ "${found}" = 'nein' ]; then
+				echo "found innerhalb if: ${found}"
 				virsh snapshot-create "${domain}" --xmlfile "${snapshotdumpfile}" --redefine
 			fi
 		done
