@@ -95,14 +95,14 @@ if [ -n "${domainList}" ]; then
 		fi
 
 ### delete snapshots
-		snapshotList=$(virsh snapshot-list ${domain} --name)
+		snapshotList=$(virsh snapshot-list "${domain}" --name)
 		if [ -n "${snapshotList}" ]; then
 			echo "- delete snapshots, Domain '${domain}'..."
 			for snapshot in ${snapshotList}; do
 				virsh snapshot-delete "${domain}" --snapshotname "${snapshot}"
 			done
 		else
-			echo "Domain '${domain}’ hat keine Snapshots."	
+			echo "Domain '${domain}' hat keine Snapshots."	
 		fi
 ### delete VMs
 		echo "- undefine..."
@@ -121,8 +121,7 @@ virsh list --all
 ### delete vmflag-file (ansible) for VM-Stuff
 vmflagfile=".vm_qemu-kvm_created"
 
-if [ "~/${vmflagfile}" ]; then
-	echo -e "\nDeleting file '${vmflagfile}"
+if [ -e "${HOME}/${vmflagfile}" ]; then
+	echo -e "\nDeleting file '${vmflagfile}'"
 	rm -f ~/${vmflagfile}
 fi
-
