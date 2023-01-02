@@ -119,9 +119,9 @@ virsh list --all
 
 
 ### delete vmflag-file (ansible) for VM-Stuff
-vmflagfile=".vm_qemu-kvm_created"
+vmflagfile="$HOME/.vm_qemu-kvm_created"
 
-if [ -e "${HOME}/${vmflagfile}" ]; then
+if [ -e "${vmflagfile}" ]; then
 	echo -e "\nDeleting file '${vmflagfile}'"
-	rm -f ~/${vmflagfile}
+	rm -f "${vmflagfile}"
 fi
