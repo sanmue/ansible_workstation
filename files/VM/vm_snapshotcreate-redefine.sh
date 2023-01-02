@@ -39,7 +39,7 @@ for snapshotfile in ${snapshotfileList}; do
 			done
 
 			echo "found: ${found}"
-			if [ "${found}" == 'false' ]; then
+			if [ "${found}" = 'false' ]; then
 				virsh snapshot-create "${domain}" --xmlfile "${snapshotdumpfile}" --redefine
 			fi
 		done
