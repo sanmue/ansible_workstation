@@ -45,6 +45,7 @@
   - include: tasks/packages_workstation-VM-QemuKvm.yml
   - include: tasks/config_all-VM-QemuKvm.yml
   - include: tasks/config_all-VM-users.yml
+  - include: tasks/config_all-VM-QemuKvm-create.yml
 # ----------------------
 # ### Suse - Multimedia:
 #  - include: tasks/config_workstation-addrepos-suseMultimedia.yml
