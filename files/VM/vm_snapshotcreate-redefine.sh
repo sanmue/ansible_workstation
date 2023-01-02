@@ -8,16 +8,6 @@
 snapshotfileList=$(ls snapshotdump_*)
 #echo "${snapshotfileList}"
 
-#echo -e "\nredefine snapshots:"
-#for snapshotfile in ${snapshotfileList}; do
-#	#echo "- snapshotfile: ${snapshotfile}"          # z.B. snapshotdump_ubuntu22.04_init.xml
-#	domain=$(echo "${snapshotfile}" | cut -d _ -f 2) # 2. Teilstück:     ubuntu22.04
-#	echo "- domain: ${domain}"
-#
-#	# snapshot-create --redefine
-#	virsh snapshot-create "${domain}" --xmlfile "${snapshotfile}" --redefine
-#done
-
 snapshotfileList=$(ls snapshotList_*)
 #echo "${snapshotfileList}"
 
