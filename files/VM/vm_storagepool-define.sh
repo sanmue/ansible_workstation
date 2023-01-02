@@ -12,7 +12,7 @@
 ### parameter, variablen:
 #currentpath=$(pwd)
 #user=$(whoami)
-user=""
+user="sandro"    # Standardwert, wird ggf. durch übergebenen Parameter geändert.
 errorfile=".error_vm_storagepool.txt"
 
 echo "Anzahl übergebene Parameter: '$#'"
@@ -20,21 +20,19 @@ if [ $# -gt 0 ]; then
 	echo "Erster Parameter '$1' wird als User-Id verwendet"
 	user=$1
 else
-	user="sandro"   # standardwert
-	echo "Standardwert '${user}' wird für User-Id verwendet"
+	echo "Standardwert '${user}' wird als User-Id verwendet"
 fi
-#echo "user-id ist: '${user}'"
 
+
+### check storagepath:
 homepath="/home/${user}"
 storagedir="Downloads"
 storagepath="${homepath}/${storagedir}"
 
-
-### check storagepath:
 if [ -d "${storagepath}" ]; then
 	echo "Storagepath: '${storagepath}'"
 else
-	echo "Gewünschter storagepath '${storagepath}' nicht vorhanden."
+	echo "Gewünschter Storagepath '${storagepath}' nicht vorhanden."
 	echo "Home-Verzeichnis für User '${user}' inkl. '${storagedir}'-Verzeichnis bitte anlegen (lassen) oder anderen User verwenden."
 	echo "Programm wird beendet."
 	exit 1
@@ -53,9 +51,8 @@ fi
 ### create storage pool:
 echo "pool-define-as..."
 osssddevice="nvme0n1p"   # Anfang Device-Bezeichnung bei Nvme-SSDs
-#nvmessdpath="/dev/nvme0n1p3"
-#nvmessdpath=$(ls /dev/${osssddevice}? | tail -n 1)   # davon ausgehend, dass es nicht mehr als 9 Partitionen gibt und der letzte Treffer die OS-Partition ist, auf die der Storage Pool soll
-nvmessdpath=$(find /dev/ -name "${osssddevice}?" | tail -n 1)
+#nvmessdpath=$(ls /dev/${osssddevice}? | tail -n 1)   # z.B.: /dev/nvme0n1p4"; davon ausgehend, dass es nicht mehr als 9 Partitionen gibt und der letzte Treffer die OS-Partition ist, auf die der Storage Pool soll
+nvmessdpath=$(find /dev/ -name "${osssddevice}?" | tail -n 1)   # Alternative mit find
 
 #if [[ $(ls /dev/ | grep ${nvmessdpath}) == *"${nvmessdpath}"* ]]; then
 if [ -n "${nvmessdpath}" ]; then   # -n: if string length is not zero
@@ -70,7 +67,7 @@ fi
 echo "pool-build..."
 virsh pool-build ${storagedir}
 
-if [[ $(virsh pool-list --all | grep ${storagedir}) != *"${storagedir}"*  ]]; then
+if [[ $(virsh pool-list --all | grep ${storagedir}) != *"${storagedir}"*  ]]; then   # einfache Prüfung, ggf. false Positives
 	echo "Storage pool '${storagedir}' wurde nicht angelegt." | tee -a "/home/${user}/${errorfile}"
 else
 	echo "pool-start..."
