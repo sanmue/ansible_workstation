@@ -80,6 +80,8 @@
 #  - include: tasks/all_reboot.yml # da hier local/pull --> geht nicht
 # fatal: [localhost]: FAILED! => {"changed": false, "elapsed": 0, "msg": "Running reboot with local connection would reboot the control node.", "rebooted": false}
 
+### "all_reboot.yml" geändert auf ansible.builtin.shell, cmd: reboot
+### (und damit nicht mehr reboot über ansible-Modul (s.o.))
 #- hosts: localhost
 #  connection: local
 #  become: true
