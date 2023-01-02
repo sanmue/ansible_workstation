@@ -24,12 +24,20 @@ for snapshotfile in ${snapshotfileList}; do
 			
 			# snapshot-create --redefine
 			existingDomainSnapshotList=$(virsh snapshot-list "${domain}" --name --topological)
-			if [[ "${snapshot}" == *"${existingDomainSnapshotList}"* ]]; then   # einfache Abfrage, ggf. false positives
-			#if [[ "${snapshot}" =~ ${existingDomainSnapshotList} ]]; then
-				echo "Snapshot '${snapshot}' für domain '${domain}' existiert bereits."
-			else
-				virsh snapshot-create "${domain}" --xmlfile "${snapshotdumpfile}" --redefine
-			fi
+			for existingSnapshot in $existingDomainSnapshotList; do
+				if [ "${snapshot}" != "${existingSnapshot}" ]; then
+					virsh snapshot-create "${domain}" --xmlfile "${snapshotdumpfile}" --redefine
+				else
+					echo "Snapshot '${snapshot}' für domain '${domain}' existiert bereits."
+				fi
+			done
+
+			#if [[ "${snapshot}" == *"${existingDomainSnapshotList}"* ]]; then   # einfache Abfrage, ggf. false positives
+			##if [[ "${snapshot}" =~ ${existingDomainSnapshotList} ]]; then
+			#	echo "Snapshot '${snapshot}' für domain '${domain}' existiert bereits."
+			#else
+			#	virsh snapshot-create "${domain}" --xmlfile "${snapshotdumpfile}" --redefine
+			#fi
 		done
 	else
 		echo "snapshotfile '${snapshotfile}' enthält keine Einträge."
