@@ -39,8 +39,8 @@
   - include: tasks/config_all-services-misc.yml
   - include: tasks/config_all-settings-misc.yml
 # ----------------------------------------------------------
-# ### Installation lokale heruntergeladener Pakete:
-  - include: tasks/packages_workstation-manualInstall.yml
+# ### Installation lokal heruntergeladener Pakete:
+  - include: tasks/packages_workstation-localPackageInstall.yml
 # --------------------
 # ### Virtualisierung:
   - include: tasks/packages_workstation-VM-QemuKvm.yml
