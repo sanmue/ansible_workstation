@@ -104,7 +104,7 @@ else
 fi
 
 
-echo "poo-info:"
+echo "pool-info zu '${storagedir}':"
 virsh pool-info ${storagedir}   ### Show/Verify the storage pool configuration
 
 
