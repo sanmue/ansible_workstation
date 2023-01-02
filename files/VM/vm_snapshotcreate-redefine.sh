@@ -36,6 +36,7 @@ for snapshotfile in ${snapshotfileList}; do
 				else
 					found='ja'
 					echo "Snapshot '${snapshot}' für domain '${domain}' existiert bereits."
+					break
 				fi
 			done
 
