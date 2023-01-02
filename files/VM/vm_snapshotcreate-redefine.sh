@@ -27,9 +27,9 @@ for snapshotfile in ${snapshotfileList}; do
 	domain=$(echo "${snapshotfile}" | cut -d _ -f 2 | awk '{print substr($0,1,length-4)}')   # -> 'ubuntu22.04' (2. Teilstück + letzte 4 Zeichen abschneiden (.txt))
 	echo "- domain: ${domain}"
 
-	domainSnapshotList=$(cat "${snapshotfile}")
-	if [ -n "${domainSnapshotList}" ]; then
-		for snapshot in ${domainSnapshotList}; do echo
+	domainSnapshotfileList=$(cat "${snapshotfile}")
+	if [ -n "${domainSnapshotfileList}" ]; then
+		for snapshot in ${domainSnapshotfileList}; do echo
 			snapshotdumpfile="snapshotdump_${domain}_${snapshot}.xml"
 			
 			# snapshot-create --redefine
