@@ -81,8 +81,8 @@
 - name: Install Certificates for Citrix Workspace App (ICA-Client) from Mozilla cert-folder + pem-convert
   # requires installed Mozilla Firefox (was installed via a previous task)
   ansible.builtin.script:
-    cmd: packages_workstation-manualInstall-CitrixWorkspaceApp.sh
+    cmd: config_workstation-localPackageInstall-CitrixWorkspaceApp.sh
 
 - name: TODO - Download and install Citrix Workspace App + USB Support Package
   ansible.builtin.debug:
-    msg: "Source: https://www.citrix.com/downloads/workspace-app/linux/"
+    msg: "Download from: https://www.citrix.com/downloads/workspace-app/linux/"
