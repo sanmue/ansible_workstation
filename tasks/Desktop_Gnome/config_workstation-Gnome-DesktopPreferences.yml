@@ -869,19 +869,19 @@
 ### gnome terminal - profiles and preferences:
 #   ------------------------------------------
 - name: set gnome terminal - profiles and preferences (Gnome, Ansible <2.10)
-  script: "{{ env_PWD }}/tasks/config_workstation-Gnome-DesktopPreferences-terminal.sh" # funktioniert; ansible version 2.9
-##  ansible.builtin.script: "{{ env_PWD }}/tasks/config_workstation-Gnome-DesktopPreferences-terminal.sh" # ab ansible version 2.10
+  script: "{{ env_PWD }}/tasks/Desktop_Gnome/config_workstation-Gnome-DesktopPreferences-terminal.sh" # funktioniert; ansible version 2.9
+##  ansible.builtin.script: "{{ env_PWD }}/tasks/Desktop_Gnome/config_workstation-Gnome-DesktopPreferences-terminal.sh" # ab ansible version 2.10
 ##  ansible.builtin.script:  # ab ansible version 2.10
-##    cmd: "{{ env_PWD }}/tasks/config_workstation-Gnome-DesktopPreferences-terminal.sh"
+##    cmd: "{{ env_PWD }}/tasks/Desktop_Gnome/config_workstation-Gnome-DesktopPreferences-terminal.sh"
 ##
-##  command: "{{ env_PWD }}/tasks/config_workstation-Gnome-DesktopPreferences-terminal.sh" # funktioniert; ansible version 2.9
-##  ansible.builtin.command: "{{ env_PWD }}/tasks/config_workstation-Gnome-DesktopPreferences-terminal.sh" # ab ansible version 2.10
+##  command: "{{ env_PWD }}/tasks/Desktop_Gnome/config_workstation-Gnome-DesktopPreferences-terminal.sh" # funktioniert; ansible version 2.9
+##  ansible.builtin.command: "{{ env_PWD }}/tasks/Desktop_Gnome/config_workstation-Gnome-DesktopPreferences-terminal.sh" # ab ansible version 2.10
 ##  ansible.builtin.command: # ab ansible version 2.10
-##    cmd: "{{ env_PWD }}/tasks/config_workstation-Gnome-DesktopPreferences-terminal.sh"
+##    cmd: "{{ env_PWD }}/tasks/Desktop_Gnome/config_workstation-Gnome-DesktopPreferences-terminal.sh"
 ## The command(s) will not be processed through the shell, so variables like $HOME and operations like "<", ">", "|", ";" and "&" will not work. Use the shell module if you need these features.
 ##
-##  shell: "{{ env_PWD }}/tasks/config_workstation-Gnome-DesktopPreferences-terminal.sh" # funktioniert; ansible version 2.9
-##  ansible.builtin.shell: "{{ env_PWD }}/tasks/config_workstation-Gnome-DesktopPreferences-terminal.sh" # ab ansible version 2.10
+##  shell: "{{ env_PWD }}/tasks/Desktop_Gnome/config_workstation-Gnome-DesktopPreferences-terminal.sh" # funktioniert; ansible version 2.9
+##  ansible.builtin.shell: "{{ env_PWD }}/tasks/Desktop_Gnome/config_workstation-Gnome-DesktopPreferences-terminal.sh" # ab ansible version 2.10
   args:
     creates: "/home/{{ env_user }}/.ansibleTerminalProfileSet"
   when:
@@ -891,7 +891,7 @@
     - "ansible_version.full is version('2.10.0', '<')"
 
 - name: set gnome terminal - profiles and preferences (Gnome, Ansible >=2.10)
-  ansible.builtin.script: "{{ env_PWD }}/tasks/config_workstation-Gnome-DesktopPreferences-terminal.sh" # ab ansible version 2.10
+  ansible.builtin.script: "{{ env_PWD }}/tasks/Desktop_Gnome/config_workstation-Gnome-DesktopPreferences-terminal.sh" # ab ansible version 2.10
   args:
     creates: "/home/{{ env_user }}/.ansibleTerminalProfileSet"
   when:

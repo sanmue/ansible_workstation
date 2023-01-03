@@ -74,9 +74,9 @@
 #  become: false
   tags: always,gnome
   tasks:
-#  - include: tasks/packages_workstation-Gnome-GnomeshellExtensions.yml
-#  - include: tasks/config_workstation-Gnome-GnomeshellExtension.yml
-  - include: tasks/config_workstation-Gnome-DesktopPreferences.yml
+#  - include: tasks/Desktop_Gnome/packages_workstation-Gnome-GnomeshellExtensions.yml
+#  - include: tasks/Desktop_Gnome/config_workstation-Gnome-GnomeshellExtensions.yml
+  - include: tasks/Desktop_Gnome/config_workstation-Gnome-DesktopPreferences.yml
 
   - debug:
       msg: "Please restart the system for the changes to take effect!"
