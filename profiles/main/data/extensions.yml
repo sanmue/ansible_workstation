@@ -80,6 +80,8 @@ enabled:
     uuid: 2061917f-f76a-458a-8da9-f162de22b97e
   - id: richie5um2.vscode-sort-json
     uuid: 3fb77af3-b8b3-4cb9-9137-f555bd80e2b1
+  - id: rogalmic.bash-debug
+    uuid: f4f0748b-9f86-461e-84f9-73bf2e1f91c2
   - id: samuelcolvin.jinjahtml
     uuid: 8b477a76-974c-403d-a454-58028c1709d1
   - id: shd101wyy.markdown-preview-enhanced
