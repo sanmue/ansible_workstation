@@ -19,20 +19,16 @@ githubOnlineRepo="git@github.com:sanmue/ansible_test.git"
 #    exit 0
 #fi
 
-echo ""
-echo "Update Repos und Installation benoetigte Software (git,ansible,ssh,ufw,chrome-genome-shell)..."
+echo -e "\nUpdate Repos und Installation benoetigte Software (git,ansible,ssh,ufw,chrome-genome-shell)..."
 sudo apt-get update && sudo apt-get dist-upgrade -y && sudo apt-get install -y --show-progress git ansible chrome-gnome-shell ssh ufw
 
-echo ""
-echo "Installiere benötigte Packages für Installation von Microsoft PowerShell"
+echo -e "\nInstalliere benötigte Packages für Installation von Microsoft PowerShell"
 sudo apt-get install -y --show-progress wget apt-transport-https software-properties-common
 
-echo ""
-echo "Installiere noch fehlende, benötigte Packages für Installation von Brave Web Browser"
+echo -e "\nInstalliere noch fehlende, benötigte Packages für Installation von Brave Web Browser"
 sudo apt-get install -y --show-progress curl
 
-echo ""
-echo "Aktiviere Firewall 'ufw' und erlaube ssh ..."
+echo -e "\nAktiviere Firewall 'ufw' und erlaube ssh ..."
 sudo ufw enable && sudo ufw allow ssh comment 'SSH' && sudo ufw reload
 
 #echo ""
@@ -52,17 +48,15 @@ sudo ufw enable && sudo ufw allow ssh comment 'SSH' && sudo ufw reload
 #    echo "Git config wird übersprungen"
 #fi
 
-echo ""
-echo "Erstelle git config mit Name '${userid}' und Mailadresse '${defaultMail}'..."
+echo -e "\nErstelle git config mit Name '${userid}' und Mailadresse '${defaultMail}'..."
 git config --global user.name "${userid}"
 git config --global user.email "${defaultMail}"
 echo "Git-config ist nun:" 
 git config --list
 
-echo ""
-echo "Erstelle neues Verzeichnis '${repodir}' und Unterverzeichnis '${playbookdir}' im Home-Verzeichnis von '${userid}' ..."
+echo -e "\nErstelle neues Verzeichnis '${repodir}' und Unterverzeichnis '${playbookdir}' im Home-Verzeichnis von '${userid}' ..."
 if [ -d "/home/${userid}/${repodir}/${playbookdir}" ]; then
-    echo "Verzeichnis '${playbookdir}' existiert bereits."
+    echo "Verzeichnis '${playbookdir}' existiert bereits, wird gelöscht."
     sudo rm -r "/home/${userid}/${repodir}/${playbookdir}" # && mkdir -p "/home/${userid}/${repodir}/${playbookdir}"
     #cd "/home/${userid}/${repodir}/${playbookdir}"
     #git pull origin
@@ -71,11 +65,8 @@ else
     mkdir -p "/home/${userid}/${repodir}/${playbookdir}"
 fi
 
-
-echo ""
-echo "Clone github-Repo des Ansible-Playbooks ins Verzeichnis '${playbookdir}' ..."
+echo -e "\nClone github-Repo des Ansible-Playbooks ins Verzeichnis '${playbookdir}' ..."
 git clone ${githubOnlineRepo} "/home/${userid}/${repodir}/${playbookdir}"
-
 
 #echo ""
 #read -rp "Soll TEST des Ansible-Playbooks durchgeführt werden (j/n)?: " testplay
@@ -88,8 +79,7 @@ git clone ${githubOnlineRepo} "/home/${userid}/${repodir}/${playbookdir}"
 #    echo "TEST des Playbooks wird NICHT durchgefürt"
 #fi
 
-echo ""
-echo "Starte Ansible-Playbook ..."
+echo -e "\nStarte Ansible-Playbook ..."
 ansible-playbook "/home/${userid}/${repodir}/${playbookdir}/local.yml" -v --ask-become-pass
 # bei verschlüsselten Daten:
 #ansible-playbook "/home/${userid}/${repodir}/${playbookdir}/local.yml" -v -K --vault-password-file "/home/${userid}/.ansibleVaultKey"
