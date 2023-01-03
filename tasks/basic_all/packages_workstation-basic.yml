@@ -164,3 +164,24 @@
 #      - exfatprogs # als ersatz für zuvor deinstallierte exfat-utils (wg. gparted); wird aktuell nicht deinstalliert
       - fuse-exfat # empfohlene Abhängigkeit ist exfat-utils
   when: ansible_os_family == "Suse"
+
+
+#- name: install Vivaldi Browser (Ubuntu, tmp. ohne Suse)
+#  tags: workstation,ubuntu,suse
+#  package:
+#    state: latest
+#    name:
+#      - vivaldi-stable
+##  when: ansible_os_family == "Suse" or
+##        ansible_distribution in ["Ubuntu"]
+#  when: ansible_distribution in ["Ubuntu"]
+
+#- name: iinstall Vivaldi Browser (Archlinux)
+#  tags: workstation,arch
+#  package:
+#    state: latest
+#    name:
+#      - vivaldi
+#      - vivaldi-ffmpeg-codecs
+#  when:
+#    - ansible_distribution in ["Archlinux"]

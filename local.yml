@@ -31,7 +31,6 @@
   - include: tasks/Gnome/packages_workstation-Gnome.yml
   - include: tasks/PlasmaKDE/packages_workstation-PlasmaKDE.yml
 
-  - include: tasks/packages_workstation-additional.yml
   - include: tasks/config_workstation-snap.yml
   - include: tasks/packages_workstation-snap.yml
   - include: tasks/config_workstation-flatpak.yml
