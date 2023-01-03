@@ -55,10 +55,10 @@
   - include: tasks/basic_all/config_all-settings-misc.yml
 # ----------------------------------------------------------
 # ### Virtualisierung:
-  - include: tasks/packages_workstation-VM-QemuKvm.yml
-  - include: tasks/config_all-VM-daemon.yml
-  - include: tasks/config_all-VM-users.yml
-  - include: tasks/config_all-VM-QemuKvm-create.yml
+  - include: tasks/VM/packages_workstation-VM-QemuKvm.yml
+  - include: tasks/VM/config_all-VM-daemon.yml
+  - include: tasks/VM/config_all-VM-users.yml
+  - include: tasks/VM/config_all-VM-QemuKvm-create.yml
 # ----------------------------------------------------------
 # ### sudo-ansible-user + cronjob:
 #  - include: tasks/config_all-ansible-users.yml
