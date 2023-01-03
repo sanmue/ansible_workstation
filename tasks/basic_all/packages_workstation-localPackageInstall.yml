@@ -80,7 +80,8 @@
 
 - name: Install Certificates for Citrix Workspace App (ICA-Client) from Mozilla cert-folder + pem-convert
   # requires installed Mozilla Firefox (was installed via a previous task)
-  ansible.builtin.script:
+  ansible.builtin.shell:
+    chdir: basic_all/
     cmd: config_workstation-localPackageInstall-CitrixWorkspaceApp.sh
   when:
     - ansible_distribution == "Ubuntu"
