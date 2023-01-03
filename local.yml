@@ -24,16 +24,16 @@
   tags: always
   tasks:
   # ### Entferne nicht benötigter, pre-installed packages:
-  - include: tasks/Gnome/packages_workstation-Gnome-remove-PreInstalls.yml
-  - include: tasks/PlasmaKDE/packages_workstation-PlasmaKDE-remove-PreInstalls.yml
+  - include: tasks/Desktop_Gnome/packages_workstation-Gnome-remove-PreInstalls.yml
+  - include: tasks/Desktop_Plasma/packages_workstation-Plasma-remove-PreInstalls.yml
   # ----------------------------------------------------------
   # ### Installation Software-Packages (inklusive snap + flatpak):
     # - repo
   - include: tasks/basic_all/packages_workstation-basic.yml
-  - include: tasks/Gnome/packages_workstation-Gnome.yml
-  - include: tasks/PlasmaKDE/packages_workstation-PlasmaKDE.yml
+  - include: tasks/Desktop_Gnome/packages_workstation-Gnome.yml
+  - include: tasks/Desktop_Plasma/packages_workstation-Plasma.yml
     # - gnomeshell
-  - include: tasks/Gnome/packages_workstation-gnomeshellstuff.yml
+  - include: tasks/Desktop_Gnome/packages_workstation-gnomeshellstuff.yml
     # - flatpak
   - include: tasks/flatpakSnap/config_workstation-flatpak.yml
   - include: tasks/flatpakSnap/packages_workstation-flatpak.yml
