@@ -14,8 +14,8 @@
   become: true
   tags: always,pre
   pre_tasks:
-    - include: tasks/basic_all/config_workstation-addrepos.yml
-    - include: tasks/all_update.yml
+  - include: tasks/basic_all/config_workstation-addrepos.yml
+  - include: tasks/basic_all/all_update.yml
 
 
 - hosts: localhost
@@ -23,9 +23,12 @@
   become: true
   tags: always
   tasks:
+  # ### Entferne nicht benötigter, pre-installed packages:
   - include: tasks/Gnome/packages_workstation-Gnome-remove-PreInstalls.yml
   - include: tasks/PlasmaKDE/packages_workstation-PlasmaKDE-remove-PreInstalls.yml
-  - include: tasks/packages_workstation-basic.yml
+  # ### Installation Software-Packages (incl. snap + flatpak):
+  - include: tasks/basic_all/packages_workstation-basic.yml
+
   - include: tasks/packages_workstation-DesktopenvSpecific.yml
   - include: tasks/packages_workstation-additional.yml
   - include: tasks/config_workstation-snap.yml
@@ -33,6 +36,7 @@
   - include: tasks/config_workstation-flatpak.yml
   - include: tasks/packages_workstation-flatpak.yml
   - include: tasks/packages_workstation-gnomeshellstuff.yml
+  # ### Config Firewall und Services:
   - include: tasks/config_all-firewall.yml
   - include: tasks/config_workstation-firewall.yml
   - include: tasks/config_all-services-misc.yml
