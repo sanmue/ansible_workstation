@@ -6,7 +6,7 @@
   tags: always,pre,ansibleFacts
   gather_facts: true
   pre_tasks:
-  - include: tasks/config_workstation-getFacts.yml
+  - include: tasks/basic_all/config_workstation-ansibleFactsVariables.yml
 
 
 - hosts: localhost
