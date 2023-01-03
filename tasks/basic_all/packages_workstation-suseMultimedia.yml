@@ -9,7 +9,7 @@
 
 
 - name: Install basic - multimedia packages (Suse)
-  tags: workstation,gnome,suse
+  tags: workstation,suse
   zypper:
     state: latest
 #    extra_args: "--from 'Haupt-Repository (OSS)'"
