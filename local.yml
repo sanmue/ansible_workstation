@@ -1,7 +1,5 @@
 ---
 
-#   ssh, ansible + Voraussetungen/Abhängigkeiten, git ... muss bereits vorhanden sein
-
 - hosts: localhost
   connection: local
   become: no
