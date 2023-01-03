@@ -65,7 +65,7 @@
 #  - include: tasks/basic_all/config_all-cron.yml
 # ----------------------------------------------------------
 # ### cleanup:
-  - include: tasks/all_cleanup.yml
+  - include: tasks/basic_all/all_cleanup.yml
 
 
 - hosts: localhost
