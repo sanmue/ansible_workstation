@@ -26,10 +26,11 @@
   # ### Entferne nicht benötigter, pre-installed packages:
   - include: tasks/Gnome/packages_workstation-Gnome-remove-PreInstalls.yml
   - include: tasks/PlasmaKDE/packages_workstation-PlasmaKDE-remove-PreInstalls.yml
-  # ### Installation Software-Packages (incl. snap + flatpak):
+  # ### Installation Software-Packages (inklusive snap + flatpak):
   - include: tasks/basic_all/packages_workstation-basic.yml
+  - include: tasks/Gnome/packages_workstation-Gnome.yml
+  - include: tasks/PlasmaKDE/packages_workstation-PlasmaKDE.yml
 
-  - include: tasks/packages_workstation-DesktopenvSpecific.yml
   - include: tasks/packages_workstation-additional.yml
   - include: tasks/config_workstation-snap.yml
   - include: tasks/packages_workstation-snap.yml
