@@ -5,6 +5,44 @@
 ### Gnome
 #########
 
+- name: Uninstall packages for workstations (Gnome, all)
+  tags: workstation,gnome
+  package:
+    state: absent
+    name:
+      - cheese
+      - gnome-calendar
+  when: 
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+
+
+- name: Uninstall preinstalled distro-packages for workstations (Suse + Gnome)
+  tags: workstation,gnome,suse
+  package:
+    state: absent
+    name:
+#      - exfat-utils # -> exfatprogs wg. gparted
+      - gnome-contacts 
+      - gnome-music  # -> rhythmbox
+      - mutt
+  when: 
+    - ansible_os_family == "Suse"
+    - env_desktop == "gnome"
+
+
+- name: Uninstall packages for workstations (Ubuntu + Gnome)
+  tags: workstation,gnome,ubuntu
+  package:
+    state: absent
+    name:
+      - aisleriot
+      - gnome-mahjongg
+      - gnome-todo
+  when: 
+    - ansible_distribution == "Ubuntu"
+    - env_desktop == "ubuntu:gnome"
+
+
 # https://fostips.com/ubuntu-21-10-two-firefox-remove-snap/
 - name: Uninstall snap packages for workstation - Firefox (Ubuntu >20 + Gnome)
   tags: workstation,ubuntu,arch,snap,suse
@@ -27,45 +65,6 @@
     - ansible_distribution == "Ubuntu"
     - ansible_distribution_major_version|int > 20
     - env_desktop == "ubuntu:gnome"
-
-
-- name: Uninstall packages for workstations (Gnome, all)
-  tags: workstation,gnome
-  package:
-    state: absent
-    name:
-      - cheese
-      - gnome-calendar
-  when: 
-    - env_desktop in ["gnome","ubuntu:gnome"]
-
-
-- name: Uninstall packages for workstations (Ubuntu + Gnome)
-  tags: workstation,gnome,ubuntu
-  package:
-    state: absent
-    name:
-      - aisleriot
-      - gnome-mahjongg
-      - gnome-todo
-  when: 
-    - ansible_distribution == "Ubuntu"
-    - env_desktop == "ubuntu:gnome"
-
-
-- name: Uninstall preinstalled distro-packages for workstations (Suse + Gnome)
-  tags: workstation,gnome,suse
-  package:
-    state: absent
-    name:
-#      - exfat-utils # -> exfatprogs wg. gparted
-      - gnome-contacts 
-      - gnome-music  # -> rhythmbox
-      - mutt
-  when: 
-    - ansible_os_family == "Suse"
-    - env_desktop == "gnome"
-
 
 #- name: Uninstall packages for workstations (Archlinux + Gnome)
 #  tags: workstation,gnome,arch
