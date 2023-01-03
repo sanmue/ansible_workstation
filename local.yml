@@ -14,7 +14,7 @@
   become: true
   tags: always,pre
   pre_tasks:
-    - include: tasks/config_workstation-addrepos.yml
+    - include: tasks/basic_all/config_workstation-addrepos.yml
     - include: tasks/all_update.yml
 
 
