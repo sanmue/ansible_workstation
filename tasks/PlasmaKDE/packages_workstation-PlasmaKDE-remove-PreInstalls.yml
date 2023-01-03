@@ -1,0 +1,28 @@
+
+# remove unnecessary preinstalled Software
+
+##############
+### KDE Plasma
+##############
+
+#- name: Uninstall packages for workstations (Archlinux + KDE Plasma)
+#  tags: workstation,kde,arch
+#  package:
+#    state: absent
+#    name:
+#      - xxx
+#  when:
+#    - env_desktop == "kde"
+#    - ansible_distribution == "Archlinux"
+
+
+#- name: Uninstall packages for workstations (KDE Plasma + Suse)
+#  tags: workstation,kde,suse
+#  package:
+#    state: absent
+#    name:
+#      - xxx
+#  when:
+#    - env_desktop == "kde"
+#    - ansible_os_family == "Suse"
+

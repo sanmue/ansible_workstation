@@ -23,7 +23,8 @@
   become: true
   tags: always
   tasks:
-  - include: tasks/packages_workstation-remove-PreInstalls.yml
+  - include: tasks/Gnome/packages_workstation-Gnome-remove-PreInstalls.yml
+  - include: tasks/PlasmaKDE/packages_workstation-PlasmaKDE-remove-PreInstalls.yml
   - include: tasks/packages_workstation-basic.yml
   - include: tasks/packages_workstation-DesktopenvSpecific.yml
   - include: tasks/packages_workstation-additional.yml
