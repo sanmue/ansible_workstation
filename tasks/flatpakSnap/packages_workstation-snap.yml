@@ -21,8 +21,9 @@
     state: present
     name: 
       - espanso
-#      - code   # Visual Studio Code; geändert auf: deb / Microsoft repo
+#      - code   # Ubuntu: Visual Studio Code; geändert auf: deb / Microsoft repo
     classic: yes
+
 
 # alternativ (https://newbedev.com/install-snap-packages-with-ansible):
 #- name: install heroku cli via snap
