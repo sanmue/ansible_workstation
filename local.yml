@@ -24,8 +24,8 @@
   tags: always
   tasks:
   # ### Entferne nicht benötigter, pre-installed packages:
-  - include: tasks/Desktop_Gnome/packages_workstation-Gnome-remove-PreInstalls.yml
-  - include: tasks/Desktop_Plasma/packages_workstation-Plasma-remove-PreInstalls.yml
+  - include: tasks/Desktop_Gnome/packages_workstation-Gnome-removePreInstalls.yml
+  - include: tasks/Desktop_Plasma/packages_workstation-Plasma-removePreInstalls.yml
   # ----------------------------------------------------------
   # ### Installation Software-Packages (inklusive snap + flatpak):
     # - repo
@@ -74,9 +74,9 @@
 #  become: false
   tags: always,gnome
   tasks:
-#  - include: tasks/packages_workstation-gnomeshellExtensions.yml
-#  - include: tasks/config_workstation-gnomeshellExtension.yml
-  - include: tasks/config_workstation-desktopPreferences.yml
+#  - include: tasks/packages_workstation-Gnome-GnomeshellExtensions.yml
+#  - include: tasks/config_workstation-Gnome-GnomeshellExtension.yml
+  - include: tasks/config_workstation-Gnome-DesktopPreferences.yml
 
   - debug:
       msg: "Please restart the system for the changes to take effect!"
