@@ -12,11 +12,12 @@
     - ansible_distribution == "Ubuntu"
 
 - name: AnsibleFacts - Get datadirs (XDG_DATA_DIRS)
+  # In Archlinux/KDE anscheinend nicht vorhanden
   set_fact:
     env_datadirs: "{{ ansible_facts['env']['XDG_DATA_DIRS'] }}"
   when:
     - ansible_distribution == "Ubuntu"
-#   In Archlinux/KDE anscheinend nicht vorhanden
+
 
 - name: AnsibleFacts - Get path (PATH)
   set_fact:
@@ -38,6 +39,9 @@
   debug:
 #    msg: "env_desktop: {{ env_desktop }}"
 #    msg: "env_hostname: {{ env_hostname }}"
+#    msg: "env_displayserver: {{ env_displayserver }}"
+#    msg: "env_datadirs: {{ env_datadirs }}"
 #    msg: "env_path: {{ env_path }}"
-#    msg: "env_path: {{ env_PWD }}"
+#    msg: "env_PWD: {{ env_PWD }}"
     msg: "env_user: {{ env_user }}"
+#    msg: "env_lsb: {{ env_lsb }}"
