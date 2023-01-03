@@ -87,7 +87,7 @@
 #  become: true
 #  tags: always,reboot
 #  tasks:
-#  - include: tasks/all_reboot.yml # da hier local/pull --> geht nicht
+#  - include: tasks/basic_all/all_reboot.yml # da hier local/pull --> geht nicht
 # fatal: [localhost]: FAILED! => {"changed": false, "elapsed": 0, "msg": "Running reboot with local connection would reboot the control node.", "rebooted": false}
 
 ### "all_reboot.yml" geändert auf ansible.builtin.shell, cmd: reboot
@@ -97,4 +97,4 @@
 #  become: true
 #  tags: always,reboot
 #  tasks:
-#  - include: tasks/all_reboot.yml
+#  - include: tasks/basic_all/all_reboot.yml
