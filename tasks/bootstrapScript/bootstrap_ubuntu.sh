@@ -20,7 +20,7 @@ githubOnlineRepo="git@github.com:sanmue/ansible_test.git"
 #fi
 
 echo -e "\nUpdate Repos und Installation benoetigte Software (git,ansible,ssh,ufw,chrome-genome-shell)..."
-sudo apt-get update && sudo apt-get dist-upgrade -y && sudo apt-get install -y --show-progress git ansible chrome-gnome-shell ssh ufw
+sudo apt-get update && sudo apt-get dist-upgrade -y && sudo apt-get install -y --show-progress rsync git ansible chrome-gnome-shell ssh ufw
 
 echo -e "\nInstalliere benötigte Packages für Installation von Microsoft PowerShell"
 sudo apt-get install -y --show-progress wget apt-transport-https software-properties-common
