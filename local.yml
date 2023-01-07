@@ -23,29 +23,27 @@
   become: true
   tags: always
   tasks:
-  # ### Entferne nicht benötigter, pre-installed packages:
+  # ### Entfernen nicht benötigter, vorinstallierter Paktet:
   - include: tasks/Desktop_Gnome/packages_workstation-Gnome-removePreInstalls.yml
   - include: tasks/Desktop_Plasma/packages_workstation-Plasma-removePreInstalls.yml
   # ----------------------------------------------------------
   # ### Installation Software-Packages (inklusive snap + flatpak):
-    # - repo
+  # - repo:
   - include: tasks/basic_all/packages_workstation-basic.yml
   - include: tasks/Desktop_Gnome/packages_workstation-Gnome.yml
   - include: tasks/Desktop_Plasma/packages_workstation-Plasma.yml
-    # - gnomeshell
+  # - gnomeshell:
   - include: tasks/Desktop_Gnome/packages_workstation-gnomeshellstuff.yml
-    # - flatpak
+  # - flatpak:
   - include: tasks/flatpakSnap/config_workstation-flatpak.yml
   - include: tasks/flatpakSnap/packages_workstation-flatpak.yml
-    # - snap
+    # - snap:
   - include: tasks/flatpakSnap/config_workstation-snap.yml
   - include: tasks/flatpakSnappackages_workstation-snap.yml
-  # ----------------------------------------------------------
-  # ### Suse - Multimedia:
-  #  - include: tasks/basic_all/config_workstation-addrepos-suseMultimedia.yml
+  # - Suse - Multimedia:
+  #- include: tasks/basic_all/config_workstation-addrepos-suseMultimedia.yml
   - include: tasks/basic_all/packages_workstation-suseMultimedia.yml
-  # ----------------------------------------------------------
-  # ### Installation lokal heruntergeladener Pakete:
+  # Installation lokal heruntergeladener Pakete:
   - include: tasks/basic_all/packages_workstation-localPackageInstall.yml
   # ----------------------------------------------------------
   # ### Config Firewall, Services, sonstige Settings:
@@ -53,29 +51,29 @@
   - include: tasks/basic_all/config_workstation-firewall.yml
   - include: tasks/basic_all/config_all-services-misc.yml
   - include: tasks/basic_all/config_all-settings-misc.yml
-# ----------------------------------------------------------
-# ### Virtualisierung:
+  # ----------------------------------------------------------
+  # ### Virtualisierung:
   - include: tasks/VM/packages_workstation-VM-QemuKvm.yml
   - include: tasks/VM/config_all-VM-daemon.yml
   - include: tasks/VM/config_all-VM-users.yml
   - include: tasks/VM/config_all-VM-QemuKvm-create.yml
-# ----------------------------------------------------------
-# ### sudo-ansible-user + cronjob:
-#  - include: tasks/basic_all/config_all-ansible-users.yml
-#  - include: tasks/basic_all/config_all-cron.yml
-# ----------------------------------------------------------
-# ### cleanup:
+  # ----------------------------------------------------------
+  # ### sudo-ansible-user + cronjob:
+  #- include: tasks/basic_all/config_all-ansible-users.yml
+  #- include: tasks/basic_all/config_all-cron.yml
+  # ----------------------------------------------------------
+  # ### cleanup:
   - include: tasks/basic_all/all_cleanup.yml
 
 
 - hosts: localhost
   connection: local
+  #become: false
   become_user: "{{ env_user }}"
-#  become: false
   tags: always,gnome
   tasks:
-#  - include: tasks/Desktop_Gnome/packages_workstation-Gnome-GnomeshellExtensions.yml
-#  - include: tasks/Desktop_Gnome/config_workstation-Gnome-GnomeshellExtensions.yml
+  #- include: tasks/Desktop_Gnome/packages_workstation-Gnome-GnomeshellExtensions.yml
+  #- include: tasks/Desktop_Gnome/config_workstation-Gnome-GnomeshellExtensions.yml
   - include: tasks/Desktop_Gnome/config_workstation-Gnome-DesktopPreferences.yml
 
   - debug:
