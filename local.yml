@@ -23,7 +23,7 @@
   become: true
   tags: always
   tasks:
-  # ### Entfernen nicht benötigter, vorinstallierter Paktet:
+  # ### Entfernen nicht benötigter, vorinstallierter Pakete:
   - include: tasks/Desktop_Gnome/packages_workstation-Gnome-removePreInstalls.yml
   - include: tasks/Desktop_Plasma/packages_workstation-Plasma-removePreInstalls.yml
   # ----------------------------------------------------------
