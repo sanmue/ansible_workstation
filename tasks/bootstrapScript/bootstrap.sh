@@ -123,7 +123,8 @@ echo -e "\nErstelle git config mit Name '${userid}' und Mailadresse '${defaultMa
 git config --global user.name "${userid}"
 git config --global user.email "${defaultMail}"
 echo "Git-config ist nun:" 
-git config --list
+#git config --list   #bei openSUSE wird .gitconfig in vi geöffnet
+cat "/home/${userid}/.gitconfig"
 
 #echo ""
 #read -rp "Soll Git konfiguriert werden (git config Name+Mail) für '${userid}' (j/n)?: " gitconf
@@ -162,7 +163,7 @@ fi
 ### Clone Git-Repo des Ansible Playbook ins lokale Ansible Playbook-Verzeichnis
 ### ---
 echo -e "\nClone github-Repo des Ansible-Playbook nach '/home/${userid}/${repodir}/${playbookdir}' ..."
-if [[ -n $(ls -I 'known_hosts' -I 'known_hosts.old' "/home/${userid}/${sshkeydir}") ]] ; then   #einfacher Test; ggf. ssh-key für gitOnlineRepo trotzdem nicht vorhanden
+if [[ -n $(ls -I 'known_hosts' -I 'known_hosts.old' -I 'authorized_keys' "/home/${userid}/${sshkeydir}") ]] ; then   #einfacher Test; ggf. ssh-key für gitOnlineRepo trotzdem nicht vorhanden
     git clone "${gitOnlineRepo}" "/home/${userid}/${repodir}/${playbookdir}"
 else
     echo "SSH-Key - Verzeichnis '/home/${userid}/${sshkeydir}' scheint keine SSH-Keys zu enthalten."
