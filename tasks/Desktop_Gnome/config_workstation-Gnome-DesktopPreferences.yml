@@ -61,13 +61,6 @@
 
 ### Ubuntu + Gnome ###
 - name: adding favorite apps to dock (Ubuntu + Gnome)
-# flatpak, snaps: whalebird
-#  command: gsettings set org.gnome.shell favorite-apps "['org.keepassxc.KeePassXC.desktop', 'firefox.desktop', 'org.gnome.Epiphany.desktop', 'org.chromium.Chromium.desktop', 'vivaldi-stable.desktop', 'org.gnome.Terminal.desktop', 'terminator.desktop', 'nemo.desktop', 'org.gnome.gedit.desktop', 'io.atom.Atom.desktop', 'org.libreoffice.LibreOffice.desktop', 'org.gnome.Evolution.desktop', 'net.cozic.joplin_desktop.desktop', 'de.willuhn.Jameica.desktop', 'rhythmbox.desktop', 'whalebird_whalebird.desktop', 'org.signal.Signal.desktop', 'com.discordapp.Discord.desktop', 'org.remmina.Remmina.desktop', 'virt-manager.desktop', 'snap-store_ubuntu-software.desktop']"
-### snap-store_ubuntu-software.desktop -> vorg.gnome.Software.desktop:
-#  command: gsettings set org.gnome.shell favorite-apps "['com.belmoussaoui.Authenticator.desktop', 'org.keepassxc.KeePassXC.desktop', 'firefox.desktop', 'org.chromium.Chromium.desktop', 'org.gnome.Epiphany.desktop', 'org.gnome.Evolution.desktop', 'org.gnome.Terminal.desktop', 'terminator.desktop', 'nemo.desktop', 'org.gnome.gedit.desktop', 'io.atom.Atom.desktop', 'org.libreoffice.LibreOffice.desktop', 'anki.desktop', 'net.cozic.joplin_desktop.desktop', 'org.qownnotes.QOwnNotes.desktop', 'de.willuhn.Jameica.desktop', 'rhythmbox.desktop', 'de.haeckerfelix.Shortwave.desktop', 'org.signal.Signal.desktop', 'whalebird_whalebird.desktop', 'com.discordapp.Discord.desktop', 'org.remmina.Remmina.desktop', 'virt-manager.desktop', 'org.gnome.Software.desktop']"
-# snaps, flatpak: jameica
-#  command: gsettings set org.gnome.shell favorite-apps "['org.keepassxc.KeePassXC.desktop', 'firefox.desktop', 'vivaldi-stable.desktop', 'chromium_chromium.desktop', 'thunderbird_thunderbird.desktop', 'org.gnome.gedit.desktop', 'libreoffice_libreoffice.desktop', 'joplin-james-carroll_joplin.desktop', 'de.willuhn.Jameica.desktop', 'rhythmbox.desktop', 'whalebird_whalebird.desktop', 'signal-desktop_signal-desktop.desktop', 'discord_discord.desktop', 'nemo.desktop', 'org.gnome.Terminal.desktop', 'terminator.desktop', 'virt-manager.desktop', 'org.remmina.Remmina.desktop', 'snap-store_ubuntu-software.desktop']"
-#  command: gsettings set org.gnome.shell favorite-apps "['com.belmoussaoui.Authenticator.desktop', 'org.keepassxc.KeePassXC.desktop', 'firefox.desktop', 'firefox-esr.desktop', 'org.chromium.Chromium.desktop', 'brave-browser.desktop', 'org.gnome.Epiphany.desktop', 'org.gnome.Evolution.desktop', 'org.gnome.Terminal.desktop', 'nemo.desktop', 'org.gnome.gedit.desktop', 'org.libreoffice.LibreOffice.desktop', 'code_code.desktop', 'anki.desktop', 'net.cozic.joplin_desktop.desktop', 'de.willuhn.Jameica.desktop', 'rhythmbox.desktop', 'de.haeckerfelix.Shortwave.desktop', 'org.signal.Signal.desktop', 'teams.desktop', 'org.remmina.Remmina.desktop', 'virt-manager.desktop']"
   ansible.builtin.command: gsettings set org.gnome.shell favorite-apps "['com.belmoussaoui.Authenticator.desktop', 'org.keepassxc.KeePassXC.desktop', 'firefox.desktop', 'firefox-esr.desktop', 'org.mozilla.firefox.desktop', 'org.chromium.Chromium.desktop', 'brave-browser.desktop', 'com.brave.Browser.desktop', 'org.gnome.Epiphany.desktop', 'org.gnome.Evolution.desktop', 'org.gnome.Terminal.desktop', 'nemo.desktop', 'org.gnome.gedit.desktop', 'org.libreoffice.LibreOffice.desktop', 'code_code.desktop', 'code.desktop', 'anki.desktop', 'net.cozic.joplin_desktop.desktop', 'de.willuhn.Jameica.desktop', 'rhythmbox.desktop', 'de.haeckerfelix.Shortwave.desktop', 'org.signal.Signal.desktop', 'org.remmina.Remmina.desktop', 'virt-manager.desktop']"
   when:
     - env_desktop == "ubuntu:gnome"
@@ -102,10 +95,8 @@
 
 - name: copy desktop-wallpaper file to local user-folder (Ubuntu + Gnome)
   ansible.builtin.copy:
-#    src: "files/gnome/background/gnome_embos_1440P.png"
-    src: "files/gnome/background/brad-huchteman-stone-mountain.jpg"
-#    dest: "/home/{{ env_user }}/.local/share/backgrounds/gnome_emboss_1440P.png"
-    dest: "/home/{{ env_user }}/.local/share/backgrounds/brad-huchteman-stone-mountain.jpg"
+    src: "files/gnome/background/brad-huchteman-stone-mountain.jpg"                         # oder: "gnome_embos_1440P.png"
+    dest: "/home/{{ env_user }}/.local/share/backgrounds/brad-huchteman-stone-mountain.jpg" # oder: "gnome_embos_1440P.png"
     remote_src: yes
     owner: "{{ env_user }}"
     group: "{{ env_user }}"
@@ -117,18 +108,16 @@
 - name: set desktop - background (Ubuntu + Gnome)
   dconf:
     key: "/org/gnome/desktop/background/picture-uri"
-#    value: "'file:///home/USERNAME/.local/share/backgrounds/gnome_emboss_1440P.png'" # fix
-#    value: '"file:///home/{{ env_user }}/.local/share/backgrounds/gnome_emboss_1440P.png"' # dyn
-    value: '"file:///home/{{ env_user }}/.local/share/backgrounds/brad-huchteman-stone-mountain.jpg"' # dyn
-#    state: present # standard
+    value: '"file:///home/{{ env_user }}/.local/share/backgrounds/brad-huchteman-stone-mountain.jpg"' # oder: "gnome_embos_1440P.png"
+#    state: present   #standard
   when:
     - env_desktop == "ubuntu:gnome"
 
 - name: set desktop - background (Ubuntu + Gnome dark)
   dconf:
     key: "/org/gnome/desktop/background/picture-uri-dark"
-    value: '"file:///home/{{ env_user }}/.local/share/backgrounds/brad-huchteman-stone-mountain.jpg"' # dyn
-#    state: present # standard
+    value: '"file:///home/{{ env_user }}/.local/share/backgrounds/brad-huchteman-stone-mountain.jpg"' # oder: "gnome_embos_1440P.png"
+#    state: present   #standard
   when:
     - env_desktop == "ubuntu:gnome"
 
@@ -154,8 +143,7 @@
   become: true
   copy:
     src: "files/gnome/background/gnome_embos_1440P.png"
-    dest: /usr/share/wallpapers/ # systemweit verfügbar
-#    dest: "/home/{{ env_user }}/Bilder/"
+    dest: /usr/share/wallpapers/ # systemweit verfügbar; lokal: dest: "/home/{{ env_user }}/Bilder/"
     remote_src: yes
     owner: root
     group: root
