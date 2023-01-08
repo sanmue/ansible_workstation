@@ -52,15 +52,6 @@
 #    - ansible_distribution == "Ubuntu"
 
 
-- name: Fix apt-update deprecation warning + Set Repo Prio (Ubuntu >=22, Gnome, Ansible >=2.10)
-  ansible.builtin.script: "{{ env_PWD }}/tasks/basic_all/config_workstation-addrepos-ubuntu.sh"
-  when:
-    - ansible_distribution == "Ubuntu"
-    - ansible_distribution_major_version|int >= 22        # Ubuntu 22.04 has transitioned from using /etc/apt/trusted.gpg to using individual .gpg files located in /etc/apt/trusted.gpg.d
-    - env_desktop in ["gnome", "ubuntu:gnome"]
-    - "ansible_version.full is version('2.10.0', '>=')"   # 'ansible.builtin.script' ab ansible version 2.10 (welche bei Ubutnu 22.04 installiert wird)
-
-
 - name: add repo for swtpm (apt, Ubuntu <22, not VM)   # wg. VM: Win11 (TPM 2.0)
   # https://launchpad.net/~smoser/+archive/ubuntu/swtpm
   # https://launchpad.net/~stefanberger/+archive/ubuntu/swtpm
@@ -152,6 +143,15 @@
 #  when:
 #    - ansible_pkg_mgr == "apt"
 #    - ansible_distribution == "Ubuntu"
+
+
+- name: Set PPA Priority for Mozillateam and block Firefox from Ubuntus own repository (Ubuntu >= 22)
+  ansible.builtin.script: "{{ env_PWD }}/tasks/basic_all/config_workstation-addrepos-ubuntu.sh"
+  when:
+    - ansible_distribution == "Ubuntu"
+    - ansible_distribution_major_version|int >= 22        # Ubuntu 22.04 has transitioned from using /etc/apt/trusted.gpg to using individual .gpg files located in /etc/apt/trusted.gpg.d
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - "ansible_version.full is version('2.10.0', '>=')"   # 'ansible.builtin.script' ab ansible version 2.10 (welche bei Ubutnu 22.04 installiert wird)
 
 
 

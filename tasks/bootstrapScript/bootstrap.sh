@@ -86,13 +86,8 @@ case ${os} in
         #echo -e "\nInstalliere benötigte Packages für Installation von Microsoft PowerShell"
         # https://learn.microsoft.com/en-us/powershell/scripting/install/install-other-linux?view=powershell-7.3
         # https://en.opensuse.org/PowerShell
-        #
         # PowerShell is not provided by any official openSUSE repositories. ...ways for Leap and Tumbleweed:
-        # - Install directly from RPM
-        # - Install binaries from tar.gz (tarball)
-        # - Install using "sudo dotnet tool install --global powershell" command
-        #   - benötigt vorherige Installation von "dotnet" CLI
-        # bzw.:
+        # - Install directly from RPM; Install binaries from tar.gz; Install using "sudo dotnet tool install --global powershell" command
         # - snap-package (https://snapcraft.io/install/powershell/opensuse)
 
         echo -e "\nInstalliere noch fehlende, benötigte Packages für Installation von Brave Web Browser"

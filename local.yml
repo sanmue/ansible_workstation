@@ -15,6 +15,7 @@
   tags: always,pre
   pre_tasks:
   - include: tasks/basic_all/config_workstation-addrepos.yml
+  - include: tasks/fix/config_workstation-addrepos-ubuntu-fix.yml
   - include: tasks/basic_all/all_update.yml
 
 
