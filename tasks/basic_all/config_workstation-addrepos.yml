@@ -18,6 +18,14 @@
     - ansible_distribution_major_version|int >= 22
     - ansible_pkg_mgr == "apt"
 
+- name: Set PPA Priority for Mozillateam and block Firefox from Ubuntus own repository (Ubuntu >= 22)
+  ansible.builtin.script: "{{ env_PWD }}/tasks/basic_all/config_workstation-addrepos-ubuntu.sh"
+  when:
+    - ansible_distribution == "Ubuntu"
+    - ansible_distribution_major_version|int >= 22        # Ubuntu 22.04 has transitioned from using /etc/apt/trusted.gpg to using individual .gpg files located in /etc/apt/trusted.gpg.d
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - "ansible_version.full is version('2.10.0', '>=')"   # 'ansible.builtin.script' ab ansible version 2.10 (welche bei Ubutnu 22.04 installiert wird)
+
 
 # PowerShell
 # https://learn.microsoft.com/de-de/powershell/scripting/install/installing-powershell-on-linux?view=powershell-5.1#ubuntu
@@ -143,16 +151,6 @@
 #  when:
 #    - ansible_pkg_mgr == "apt"
 #    - ansible_distribution == "Ubuntu"
-
-
-- name: Set PPA Priority for Mozillateam and block Firefox from Ubuntus own repository (Ubuntu >= 22)
-  ansible.builtin.script: "{{ env_PWD }}/tasks/basic_all/config_workstation-addrepos-ubuntu.sh"
-  when:
-    - ansible_distribution == "Ubuntu"
-    - ansible_distribution_major_version|int >= 22        # Ubuntu 22.04 has transitioned from using /etc/apt/trusted.gpg to using individual .gpg files located in /etc/apt/trusted.gpg.d
-    - env_desktop in ["gnome", "ubuntu:gnome"]
-    - "ansible_version.full is version('2.10.0', '>=')"   # 'ansible.builtin.script' ab ansible version 2.10 (welche bei Ubutnu 22.04 installiert wird)
-
 
 
 ##########
