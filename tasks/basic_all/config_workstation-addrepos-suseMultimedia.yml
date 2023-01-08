@@ -6,12 +6,12 @@
 #-------
 ### Leap
 #-------
-- name: add Packman Repository (openSUSE Leap 15.2)
+- name: add Packman Repository (openSUSE Leap)
   tags: workstation,suse,addrepos,pre
   zypper_repository:
     name: Packman Repository
-#   Distri-Version noch hart codiert:
-    repo: 'http://packman.inode.at/suse/openSUSE_Leap_15.2/'
+    #repo: 'http://packman.inode.at/suse/openSUSE_Leap_15.2/'
+    repo: "http://packman.inode.at/suse/openSUSE_Leap_{{ distribution_version }}/"
     state: present
     auto_import_keys: yes
     autorefresh: yes
@@ -21,12 +21,12 @@
     - ansible_pkg_mgr == "zypper"
     - ansible_distribution == "openSUSE Leap"
 
-- name: add Libdvdcss Repository (openSUSE Leap 15.2)
+- name: add Libdvdcss Repository (openSUSE Leap)
   tags: workstation,suse,addrepos,pre
   zypper_repository:
     name: Libdvdcss Repository
-#   Distri-Version noch hart codiert:
-    repo: 'http://opensuse-guide.org/repo/openSUSE_Leap_15.2/'
+    #repo: 'http://opensuse-guide.org/repo/openSUSE_Leap_15.2/'
+    repo: "http://opensuse-guide.org/repo/openSUSE_Leap_{{ distribution_version }}/"
     state: present
     auto_import_keys: yes
     autorefresh: yes

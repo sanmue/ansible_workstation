@@ -1,42 +1,50 @@
 
-- name: AnsibleFacts - Get desktop environment (XDG_CURRENT_DESKTOP)
+- name: AnsibleFacts - Get desktop environment (XDG_CURRENT_DESKTOP) (all)
   set_fact:
     env_desktop: "{{ ansible_facts['env']['XDG_CURRENT_DESKTOP']|lower }}"   # z.B. "ubuntu:GNOME"
 #    env_desktop: "{{ lookup('env','XDG_CURRENT_DESKTOP')|lower }}"
     env_hostname: "{{ ansible_facts['hostname'] }}"
 
-- name: AnsibleFacts - Get display server (XDG_SESSION_TYPE)
+- name: AnsibleFacts - Get display server (XDG_SESSION_TYPE) (all)
   set_fact:
-    env_displayserver: "{{ ansible_facts['env']['XDG_SESSION_TYPE']|lower }}"   # z.B. "x11"
-  when:
-    - ansible_distribution == "Ubuntu"
+    env_displayserver: "{{ ansible_facts['env']['XDG_SESSION_TYPE']|lower }}"   # z.B. "x11" oder "wayland"
 
-- name: AnsibleFacts - Get datadirs (XDG_DATA_DIRS)
+- name: AnsibleFacts - Get datadirs (XDG_DATA_DIRS) (all but Arch)
   # In Archlinux/KDE anscheinend nicht vorhanden
   set_fact:
     env_datadirs: "{{ ansible_facts['env']['XDG_DATA_DIRS'] }}"   # z.B.: "/usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop"
   when:
-    - ansible_distribution == "Ubuntu"
+    - ansible_distribution != "Arch"
 
-
-- name: AnsibleFacts - Get path (PATH)
+- name: AnsibleFacts - Get path (PATH) (all)
   set_fact:
     env_path: "{{ ansible_facts['env']['PATH'] }}"   # z.B.: "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin"
 
-- name: AnsibleFacts - Get PWD (PATH)
+- name: AnsibleFacts - Get PWD (PATH) (all)
   set_fact:
     env_PWD: "{{ ansible_facts['env']['PWD'] }}"   # z.B.: "/home/sandro/dev"
 
-- name: AnsibleFacts - Get user (USER)
+- name: AnsibleFacts - Get user (USER) (all)
   set_fact:
     env_user: "{{ ansible_facts['env']['USER'] }}"   # z.B.: "sandro"
 
-- name: AnsibleFacts - Get lsb lsb-release
+- name: AnsibleFacts - Get lsb lsb-release (Ubuntu)
   set_fact:
     env_lsb: "{{ ansible_facts['lsb']['release'] }}"   # z.B. bei Ubuntu 20.04: "20.04"
     #env_lsbmajor: "{{ ansible_facts['lsb']['major_release'] }}"   # z.B. bei Ubuntu 20.04: "20"
+  when:
+    - ansible_distribution == "Ubuntu"
 
-- name: AnsibleFacts - Print variable
+- name: AnsibleFacts - Get distribution version (all)
+  set_fact:
+    distribution_version: "{{ ansible_facts['distribution']['version'] }}"   # z.B. bei Ubuntu 20.04: "20.04"
+
+- name: AnsibleFacts - Get distribution major version (all)
+  set_fact:
+    distribution_major_version: "{{ ansible_facts['distribution']['major']['version'] }}"   # z.B. bei Ubuntu 20.04: "20"
+
+
+- name: AnsibleFacts - Print variable (all)
   debug:
 #    msg: "env_desktop: {{ env_desktop }}"
 #    msg: "env_hostname: {{ env_hostname }}"
@@ -47,3 +55,5 @@
     msg: "env_user: {{ env_user }}"
 #    msg: "env_lsb: {{ env_lsb }}"
 #    msg: "env_lsbmajor: {{ env_lsbmajor }}"
+#    #msg: "distribution_version: {{ distribution_version }}"
+#    msg: "env_distribution_major_version: {{ distribution_major_version }}"
