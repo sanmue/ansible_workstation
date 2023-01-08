@@ -16,7 +16,7 @@ sshkeydir=".ssh"
 userid=$(whoami)   # oder: userid=${USER}
 defaultDomain="universalaccount.de"
 defaultMail="${userid}@${defaultDomain}"
-githubOnlineRepo="git@github.com:sanmue/ansible_test.git"
+gitOnlineRepo="git@github.com:sanmue/ansible_test.git"
 os=""
 oslist=("Ubuntu" "openSUSE" "Arch" "Manjaro")   # aktuell berücksichtige Betriebssysteme
 
@@ -161,8 +161,15 @@ fi
 ### ---
 ### Clone Git-Repo des Ansible Playbook ins lokale Ansible Playbook-Verzeichnis
 ### ---
-echo -e "\nClone github-Repo des Ansible-Playbooks ins Verzeichnis '${playbookdir}' ..."
-git clone ${githubOnlineRepo} "/home/${userid}/${repodir}/${playbookdir}"
+echo -e "\nClone github-Repo des Ansible-Playbook nach '/home/${userid}/${repodir}/${playbookdir}' ..."
+if [[ -n $(ls -I 'known_hosts' -I 'known_hosts.old' "/home/${userid}/${sshkeydir}") ]] ; then   #einfacher Test; ggf. ssh-key für gitOnlineRepo trotzdem nicht vorhanden
+    git clone "${gitOnlineRepo}" "/home/${userid}/${repodir}/${playbookdir}"
+else
+    echo "SSH-Key - Verzeichnis '/home/${userid}/${sshkeydir}' scheint keine SSH-Keys zu enthalten."
+    echo "Bitte erforderliche(n) SSH-Key hinzufügen."
+    read -r -p "Programmende, bitte Eingabetaste drücken."
+    exit 0
+fi
 
 
 ### ---
