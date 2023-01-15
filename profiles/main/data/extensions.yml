@@ -4,6 +4,8 @@ enabled:
     uuid: 37d7747f-e652-4eac-83de-f2939f7e2121
   - id: batisteo.vscode-django
     uuid: 4b41a5a8-170e-4156-b2c0-10efb270abbc
+  - id: chouzz.vscode-better-align
+    uuid: f5a6ecde-96ce-4fde-8744-ab88c7727069
   - id: donjayamanne.python-environment-manager
     uuid: 0c9f60fd-5588-42f7-9176-e80c3ae111ec
   - id: eamodio.gitlens
@@ -102,8 +104,6 @@ enabled:
     uuid: 9ccc1dd7-7ec4-4a46-bd4f-7d7b8b9d322a
   - id: waderyan.gitblame
     uuid: 2335b326-c334-4e81-bc51-c408fcec6e7c
-  - id: wwm.better-align
-    uuid: 8bd90cfe-8edd-4b92-b992-2337fdc06604
   - id: yzhang.markdown-all-in-one
     uuid: 98790d67-10fa-497c-9113-f6c7489207b2
   - id: zokugun.cron-tasks
