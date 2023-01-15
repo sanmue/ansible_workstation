@@ -1,5 +1,5 @@
-# ansible
-- Test automatisierte Installation HomeClients
+# ansible_workstation
+- Lab automatisierte Installation Home-Workstation
 
 # Zusätzliche Infos
 ## VS Code - Extension "Sync Settings"

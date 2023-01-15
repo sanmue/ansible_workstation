@@ -16,7 +16,7 @@ sshkeydir=".ssh"
 userid=$(whoami)   # oder: userid=${USER}
 defaultDomain="universalaccount.de"
 defaultMail="${userid}@${defaultDomain}"
-gitOnlineRepo="git@github.com:sanmue/ansible_test.git"
+gitOnlineRepo="git@github.com:sanmue/ansible_workstation.git"
 os=""
 oslist=("Ubuntu" "openSUSE" "Arch" "Manjaro")   # aktuell berücksichtige Betriebssysteme
 
