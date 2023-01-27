@@ -40,7 +40,7 @@
   - include: tasks/flatpakSnap/packages_workstation-flatpak.yml
     # - snap:
   - include: tasks/flatpakSnap/config_workstation-snap.yml
-  - include: tasks/flatpakSnappackages_workstation-snap.yml
+  - include: tasks/flatpakSnap/packages_workstation-snap.yml
   # - Suse - Multimedia:
   #- include: tasks/basic_all/config_workstation-addrepos-suseMultimedia.yml
   - include: tasks/basic_all/packages_workstation-suseMultimedia.yml
