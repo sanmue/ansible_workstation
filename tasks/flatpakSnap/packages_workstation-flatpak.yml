@@ -14,12 +14,12 @@
     method: system
   with_items:
     - 'com.belmoussaoui.Authenticator'
-    - 'com.brave.Browser'
+#    - 'com.brave.Browser'   # aus brave-repo
     - 'org.chromium.Chromium'
     - 'com.discordapp.Discord'
     - 'org.gnome.Extensions'
     - 'com.mattjakeman.ExtensionManager'
-    - 'org.mozilla.firefox'
+#    - 'org.mozilla.firefox'   # aus mozillateam ppa-repo
     - 'com.github.johnfactotum.Foliate'
     - 'de.willuhn.Jameica'
     #- 'org.jitsi.jitsi-meet'

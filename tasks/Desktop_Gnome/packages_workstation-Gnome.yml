@@ -28,9 +28,9 @@
       - evolution-plugins
       - exfat-fuse
 #      - exfat-utils   # scheint es (bei/für Ubuntu 22.04) nicht (mehr) zu geben
-#      - firefox # -> in Standard-Inst bereits vorhanden (ab 22.04: als snap package)
+      - firefox # -> in Standard-Inst bereits vorhanden (ab 22.04: als snap package)
 #      - firefox-locale-de
-#      - firefox-locale-en
+      - firefox-locale-en
       - gjs # fehlendes Paket, damit ab 22.04 der Monitor in Engergiesparmodus kann (Bildschirmausgabe wird ausgeschaltet nach längerer Inktivität)
       - gnome-software-plugin-flatpak
 #      - gnome-weather
@@ -80,7 +80,7 @@
 
 
 ### Visual Studio Code - Install
-### - moved to ...-manualInstall.ym.
+### - moved to ...-manualInstall.yml
 
 
 - name: Install packages for workstations (Archlinux + Gnome)

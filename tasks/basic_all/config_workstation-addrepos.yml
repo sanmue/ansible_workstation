@@ -99,6 +99,27 @@
 #    - ansible_distribution == "Ubuntu"
 
 
+# Brave Browser
+# https://computingforgeeks.com/install-brave-web-browser-on-ubuntu-linux/
+- name: Add Apt signing key for Brave Web Browser (apt, Ubuntu)
+  ansible.builtin.apt_key:
+    url: "https://brave-browser-apt-release.s3.brave.com/brave-core.asc"
+    state: present
+  when:
+    - ansible_pkg_mgr == "apt"
+    - ansible_distribution == "Ubuntu"
+
+- name: add repo for Brave Web Browser (apt, Ubuntu)
+  tags: workstation,ubuntu,addrepos,pre
+  ansible.builtin.apt_repository:
+    repo: 'deb [arch=amd64] https://brave-browser-apt-release.s3.brave.com stable main'
+    state: present
+    update_cache: yes
+  when:
+    - ansible_pkg_mgr == "apt"
+    - ansible_distribution == "Ubuntu"
+
+
 #- name: add apt signing key for Vivaldi Browser repos (apt, Ubuntu)
 #  tags: workstation,ubuntu,addrepos,pre
 #  apt_key:
@@ -119,38 +140,7 @@
 #    - ansible_pkg_mgr == "apt"
 
 
-#- name: add repo for flatpak (apt, Ubuntu < 18)
-#  tags: workstation,ubuntu,addrepos,pre,flatpak
-#  ansible.builtin.apt_repository:
-#    repo: ppa:alexlarsson/flatpak
-#    state: present
-#    update_cache: yes
-#  when:
-#    - ansible_distribution == "Ubuntu"
-#    - ansible_distribution_major_version|int < 18
-#    - ansible_pkg_mgr == "apt"
 
-
-# Brave Browser umgestellt auf flatpak
-#
-# https://computingforgeeks.com/install-brave-web-browser-on-ubuntu-linux/
-#- name: Add Apt signing key for Brave Web Browser (apt, Ubuntu)
-#  ansible.builtin.apt_key:
-#    url: "https://brave-browser-apt-release.s3.brave.com/brave-core.asc"
-#    state: present
-#  when:
-#    - ansible_pkg_mgr == "apt"
-#    - ansible_distribution == "Ubuntu"
-
-#- name: add repo for Brave Web Browser (apt, Ubuntu)
-#  tags: workstation,ubuntu,addrepos,pre
-#  ansible.builtin.apt_repository:
-#    repo: 'deb [arch=amd64] https://brave-browser-apt-release.s3.brave.com stable main'
-#    state: present
-#    update_cache: yes
-#  when:
-#    - ansible_pkg_mgr == "apt"
-#    - ansible_distribution == "Ubuntu"
 
 
 ##########
