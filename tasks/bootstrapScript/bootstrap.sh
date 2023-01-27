@@ -16,9 +16,9 @@ sshkeydir=".ssh"
 userid=$(whoami)   # oder: userid=${USER}
 defaultDomain="universalaccount.de"
 defaultMail="${userid}@${defaultDomain}"
-gitOnlineRepo="git@github.com:sanmue/ansible_workstation.git"
+gitOnlineRepo="git@github.com:sanmue/${playbookdir}.git"
 os=""
-oslist=("Ubuntu" "openSUSE" "Arch" "Manjaro")   # aktuell berücksichtige Betriebssysteme
+oslist=("Ubuntu" "openSUSE" "Manjaro")   # aktuell berücksichtige Betriebssysteme
 
 
 # echo "Ich bin: ${userid}"
