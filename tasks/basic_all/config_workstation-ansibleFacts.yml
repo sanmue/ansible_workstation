@@ -37,12 +37,11 @@
 
 - name: AnsibleFacts - Get distribution version (all)
   set_fact:
-    #distribution_version: "{{ ansible_facts['distribution']['version'] }}"   # z.B. bei Ubuntu 20.04: "20.04"
     distribution_version: "{{ ansible_facts['distribution_version'] }}"   # z.B. bei Ubuntu 20.04: "20.04"
 
 - name: AnsibleFacts - Get distribution major version (all)
   set_fact:
-    distribution_major_version: "{{ ansible_facts['distribution']['major']['version'] }}"   # z.B. bei Ubuntu 20.04: "20"
+    distribution_major_version: "{{ ansible_facts['distribution_major_version'] }}"   # z.B. bei Ubuntu 20.04: "20"
 
 
 - name: AnsibleFacts - Print variable (all)
