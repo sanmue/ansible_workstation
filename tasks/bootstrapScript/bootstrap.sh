@@ -11,7 +11,7 @@
 ### Variablen
 ### ---
 repodir="dev"
-playbookdir="ansible_test"
+playbookdir="ansible_workstation"
 sshkeydir=".ssh"
 userid=$(whoami)   # oder: userid=${USER}
 defaultDomain="universalaccount.de"
