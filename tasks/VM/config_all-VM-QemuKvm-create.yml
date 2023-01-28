@@ -30,8 +30,8 @@
   tags: VM
   ansible.builtin.shell:
     chdir: files/VM/
-    cmd: ls netdump_*.xml | xargs -I % sh -c "echo % | cut -d _ -f 2" | xargs -I % sh -c "echo % | cut -d . -f 1" | xargs -I % sh -c "virsh net-start %"
-    #z.B.:  netdump_default.xml                        default.xml                                 default                            virsh net-start default
+    cmd: ls netdump_*.xml | xargs -I % sh -c "echo % | cut -d _ -f 2" | xargs -I % sh -c "echo % | cut -d . -f 1" | xargs -I % sh -c "if [[ ! %='default' ]]; then virsh net-start %"
+    #z.B.:  netdump_default.xml                        default.xml                                 default                                                         virsh net-start default
   args:
     creates: /home/{{ env_user }}/.vm_qemu-kvm_created
   when: ansible_virtualization_role != "guest"
