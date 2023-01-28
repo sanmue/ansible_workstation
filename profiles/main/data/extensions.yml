@@ -12,6 +12,8 @@ enabled:
     uuid: 4de763bd-505d-4978-9575-2b7696ecf94e
   - id: ecmel.vscode-html-css
     uuid: aaee577c-f062-495a-9816-0cbd442f1d25
+  - id: esbenp.prettier-vscode
+    uuid: 96fa4707-6983-4489-b7c5-d5ffdfdcce90
   - id: fabianlauer.vs-code-xml-format
     uuid: 7752d5d1-7dab-46f8-bc86-ffca8c2d33e7
   - id: foxundermoon.shell-format
@@ -28,8 +30,6 @@ enabled:
     uuid: dc0c1188-c7d7-4267-bf2e-5052430a62a7
   - id: KevinRose.vsc-python-indent
     uuid: f3cbfb84-b1e1-40ff-b70f-877253461260
-  - id: kiteco.kite
-    uuid: d697a7e8-00fa-4039-9067-4b69a9a90f6e
   - id: LouisWT.regexp-preview
     uuid: 5a755e10-8942-4d75-bb56-6d7435d3b500
   - id: mads-hartmann.bash-ide-vscode

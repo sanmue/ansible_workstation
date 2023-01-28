@@ -1,11 +1,28 @@
 eamodio.gitlens: '{"gitlens:views:welcome:visible":true,"gitlens:premium:subscription":{"v":1,"data":{"plan":{"actual":{"id":"free","name":"GitLens","startedOn":"2022-11-30T07:47:05.973Z"},"effective":{"id":"free","name":"GitLens","startedOn":"2022-11-30T07:47:05.973Z"}},"state":0}},"gitlens:version":"13.2.0","gitlens:synced:version":"13.2.0","gitlens:plus:migratedAuthentication":true,"gitlens:home:status:pinned":false,"gitlens:usages":{"graphWebview:shown":{"count":1,"firstUsedAt":1670083733256,"lastUsedAt":1670083747242},"commitDetailsView:shown":{"count":1,"firstUsedAt":1670088716228,"lastUsedAt":1670088845597},"commitsView:shown":{"count":11,"firstUsedAt":1670088733143,"lastUsedAt":1673170242142},"fileHistoryView:shown":{"count":9,"firstUsedAt":1671801595474,"lastUsedAt":1673170242143}},"gitlens:views:commitDetails:dismissed":["sidebar"]}'
 mhutchie.git-graph: '{"lastKnownGitPath":"git"}'
+ms-python.python: '{"PYTHON_GLOBAL_STORAGE_KEYS":[{"key":"isRemoteGlobalSettingCopiedKey","defaultValue":false},{"key":"PYTHON_ENV_INFO_CACHE","defaultValue":[]},{"key":"PYTHON_EXTENSION_GLOBAL_STORAGE_KEYS","defaultValue":[]},{"key":"PythonTensorBoardWebviewPreferredViewGroup","defaultValue":-1},{"key":"preferredGlobalPyInterpreter"},{"key":"PYTHON_ENV_INFO_CACHE","defaultValue":[]},{"key":"VSCode.ABExp.FeatureData","defaultValue":{"features":[]}}],"PYTHON_ENV_INFO_CACHE":[{"name":"","location":"","kind":"global-other","executable":{"filename":"/bin/python3","sysPrefix":"/usr","ctime":1674907282940,"mtime":1660819144000},"display":"Python
+  3.10.6
+  64-bit","version":{"major":3,"minor":10,"micro":6,"release":{"level":"final","serial":0},"sysVersion":"3.10.6
+  (main, Nov 14 2022, 16:10:14) [GCC
+  11.3.0]"},"arch":3,"distro":{"org":""},"source":["path env
+  var"],"id":"/bin/python3","detailedDisplayName":"Python 3.10.6
+  64-bit"},{"name":"","location":"","kind":"global-other","executable":{"filename":"/usr/bin/python3","sysPrefix":"/usr","ctime":1674907282940,"mtime":1660819144000},"display":"Python
+  3.10.6
+  64-bit","version":{"major":3,"minor":10,"micro":6,"release":{"level":"final","serial":0},"sysVersion":"3.10.6
+  (main, Nov 14 2022, 16:10:14) [GCC
+  11.3.0]"},"arch":3,"distro":{"org":""},"source":["path env
+  var"],"id":"/usr/bin/python3","detailedDisplayName":"Python 3.10.6
+  64-bit"}],"preferredGlobalPyInterpreter":{"id":"/bin/python3","sysPrefix":"/usr","envType":"Global","envName":"","envPath":"","path":"/bin/python3","architecture":3,"sysVersion":"3.10.6
+  (main, Nov 14 2022, 16:10:14) [GCC
+  11.3.0]","version":{"raw":"3.10.6","major":3,"minor":10,"patch":6,"build":[],"prerelease":["final","0"]},"displayName":"Python
+  3.10.6 64-bit","detailedDisplayName":"Python 3.10.6
+  64-bit"},"isRemoteGlobalSettingCopiedKey":true,"pylanceDefaultPromptMemento":true}'
 ms-python.vscode-pylance: '{"insidersChannel":"off"}'
 ms-toolsai.jupyter: '{"JupyterDetectionTelemetrySentMementoKey":true,"INTERPRETER_PATH_WAS_SELECTED_FOR_JUPYTER_SERVER":true}'
 ms-vscode.powershell: '{"powerShellExtensionVersion":"2021.12.0"}'
 rangav.vscode-thunder-client: '{"tc.version-key":"2.0.2"}'
-vscode-icons-team.vscode-icons: '{"vsicons":{"version":"12.0.1","status":2,"welcomeShown":true}}'
-workbench.activity.pinnedViewlets2: '[{"id":"workbench.view.explorer","pinned":true,"visible":true,"order":0},{"id":"workbench.view.search","pinned":true,"visible":true,"order":1},{"id":"workbench.view.scm","pinned":true,"visible":true,"order":2},{"id":"workbench.view.debug","pinned":true,"visible":true,"order":3},{"id":"workbench.view.extensions","pinned":true,"visible":true,"order":4},{"id":"workbench.view.remote","pinned":true,"visible":true,"order":4},{"id":"workbench.view.extension.test","pinned":true,"visible":true,"order":6},{"id":"workbench.view.extension.references-view","pinned":true,"visible":false,"order":7},{"id":"workbench.view.extension.PowerShell","pinned":true,"visible":true,"order":12},{"id":"workbench.view.extension.jupyter","pinned":true,"visible":true,"order":9},{"id":"workbench.view.extension.PowerShellCommandExplorer","pinned":true,"visible":false,"order":12},{"id":"workbench.view.extension.gitlens","pinned":true,"visible":true,"order":8},{"id":"workbench.view.extension.package-explorer","pinned":true,"visible":true,"order":10},{"id":"workbench.view.extension.todo-tree-container","pinned":true,"visible":true,"order":11},{"id":"workbench.view.extension.thunder-client","pinned":true,"visible":true,"order":13},{"id":"workbench.view.sync","pinned":true,"visible":false},{"id":"workbench.view.editSessions","pinned":true,"visible":false},{"id":"userDataProfiles","pinned":true,"visible":false}]'
+vscode-icons-team.vscode-icons: '{"vsicons":{"version":"12.2.0","status":2,"welcomeShown":true}}'
+workbench.activity.pinnedViewlets2: '[{"id":"workbench.view.explorer","pinned":true,"visible":true,"order":0},{"id":"workbench.view.search","pinned":true,"visible":true,"order":1},{"id":"workbench.view.scm","pinned":true,"visible":true,"order":2},{"id":"workbench.view.debug","pinned":true,"visible":true,"order":3},{"id":"workbench.view.extensions","pinned":true,"visible":true,"order":4},{"id":"workbench.view.remote","pinned":true,"visible":true,"order":4},{"id":"workbench.view.extension.test","pinned":true,"visible":true,"order":6},{"id":"workbench.view.extension.references-view","pinned":true,"visible":false,"order":7},{"id":"workbench.view.extension.PowerShell","pinned":true,"visible":true,"order":12},{"id":"workbench.view.extension.jupyter","pinned":true,"visible":true,"order":11},{"id":"workbench.view.extension.PowerShellCommandExplorer","pinned":true,"visible":false,"order":12},{"id":"workbench.view.extension.gitlens","pinned":true,"visible":true,"order":9},{"id":"workbench.view.extension.package-explorer","pinned":true,"visible":true,"order":8},{"id":"workbench.view.extension.todo-tree-container","pinned":true,"visible":true,"order":10},{"id":"workbench.view.extension.thunder-client","pinned":true,"visible":true,"order":13},{"id":"workbench.view.sync","pinned":true,"visible":false},{"id":"workbench.view.editSessions","pinned":true,"visible":false},{"id":"userDataProfiles","pinned":true,"visible":false}]'
 workbench.activity.placeholderViewlets: "[{\"id\":\"workbench.view.explorer\",\
   \"themeIcon\":{\"id\":\"explorer-view-icon\"},\"name\":\"Explorer\",\"isBuilt\
   in\":true,\"views\":[{\"when\":\"openEditorsVisible\"},{},{},{\"when\":\"time\
@@ -16,7 +33,8 @@ workbench.activity.placeholderViewlets: "[{\"id\":\"workbench.view.explorer\",\
   Control\",\"isBuiltin\":true,\"views\":[{\"when\":\"scm.providerCount &&
   scm.providerCount != '0'\"},{},{\"when\":\"!gitlens:disabled &&
   !gitlens:hasVirtualFolders\"},{\"when\":\"!gitlens:disabled\"},{\"when\":\"!g\
-  itlens:disabled\"},{\"when\":\"!gitlens:disabled &&
+  itlens:disabled\"},{\"when\":\"!gitlens:disabled\"},{\"when\":\"!gitlens:disa\
+  bled &&
   !gitlens:hasVirtualFolders\"},{\"when\":\"!gitlens:disabled\"},{\"when\":\"!g\
   itlens:disabled\"},{\"when\":\"!gitlens:disabled &&
   !gitlens:hasVirtualFolders\"},{\"when\":\"!gitlens:disabled\"},{\"when\":\"gi\
@@ -76,11 +94,11 @@ workbench.activity.placeholderViewlets: "[{\"id\":\"workbench.view.explorer\",\
   TH%%/donjayamanne.python-environment-manager-1.0.4/resources/logo.svg\",\"sch\
   eme\":\"file\"},\"name\":\"Python\",\"isBuiltin\":false,\"views\":[{}]},{\"id\
   \":\"workbench.view.extension.todo-tree-container\",\"iconUrl\":{\"$mid\":1,\
-  \"path\":\"%%EXTENSION_DATA_PATH%%/gruntfuggly.todo-tree-0.0.220/resources/to\
+  \"path\":\"%%EXTENSION_DATA_PATH%%/gruntfuggly.todo-tree-0.0.222/resources/to\
   do-tree-container.svg\",\"scheme\":\"file\"},\"name\":\"TODOs\",\"isBuiltin\"\
   :false,\"views\":[{\"when\":\"!todo-tree-is-empty\"}]},{\"id\":\"workbench.vi\
   ew.extension.thunder-client\",\"iconUrl\":{\"$mid\":1,\"path\":\"%%EXTENSION_\
-  DATA_PATH%%/rangav.vscode-thunder-client-2.3.0/images/thunder-client.svg\",\"\
+  DATA_PATH%%/rangav.vscode-thunder-client-2.3.4/images/thunder-client.svg\",\"\
   scheme\":\"file\"},\"name\":\"Thunder
   Client\",\"isBuiltin\":false,\"views\":[{}]},{\"id\":\"workbench.view.sync\",\
   \"themeIcon\":{\"id\":\"settings-sync-view-icon\"},\"name\":\"Settings
@@ -97,7 +115,7 @@ workbench.activity.placeholderViewlets: "[{\"id\":\"workbench.view.explorer\",\
   Changes\",\"isBuiltin\":true,\"views\":[{\"when\":\"editSessionsShowView\"}]}\
   ,{\"id\":\"userDataProfiles\",\"themeIcon\":{\"id\":\"defaultProfile-icon\"},\
   \"name\":\"Profiles\",\"isBuiltin\":true,\"views\":[]}]"
-workbench.auxiliarybar.pinnedPanels: '[{"id":"workbench.views.service.auxiliarybar.daebbee6-a5e7-4e72-80c9-f8255b50cbe8","name":"GitLens","pinned":true,"visible":true}]'
+workbench.auxiliarybar.pinnedPanels: "[]"
 workbench.auxiliarybar.size: "300"
 workbench.auxiliaryBar.size: "300"
 workbench.editor.languageDetectionOpenedLanguages.global: '[["ignore",true],["json",true],["log",true],["jsonc",true],["xml",true],["ansible",true],["powershell",true],["plaintext",true],["shellscript",true],["markdown",true],["yaml",true]]'
@@ -119,7 +137,7 @@ workbench.panel.size: "369"
 workbench.scm.views.state.hidden: '[{"id":"workbench.scm.repositories","isHidden":true},{"id":"workbench.scm","isHidden":false},{"id":"gitlens.views.commits","isHidden":false},{"id":"gitlens.views.repositories","isHidden":true},{"id":"gitlens.views.fileHistory","isHidden":false},{"id":"gitlens.views.lineHistory","isHidden":true},{"id":"gitlens.views.branches","isHidden":false},{"id":"gitlens.views.remotes","isHidden":false},{"id":"gitlens.views.stashes","isHidden":false},{"id":"gitlens.views.tags","isHidden":false},{"id":"gitlens.views.worktrees","isHidden":false},{"id":"gitlens.views.contributors","isHidden":true},{"id":"gitlens.views.searchAndCompare","isHidden":false},{"id":"gitlens.views.commitDetails","isHidden":false}]'
 workbench.sidebar.size: "473"
 workbench.sideBar.size: "434"
-workbench.statusbar.hidden: '["status.workspaceTrust.1634842969938","status.workspaceTrust.93976367225b4bab62ac8b9e7942afa6","status.workspaceTrust.1650188496931","status.workspaceTrust.ca24624f38659381c3ecf0ef04c06309","status.workspaceTrust.1663182526629","status.workspaceTrust.baebb6f0ef22dbe1e8ce112a9de5fe30","status.workspaceTrust.1664214597977","status.workspaceTrust.1665209142819","status.workspaceTrust.3b9d7b4e664446a50a737aa976370424","status.workspaceTrust.1665650298592","status.workspaceTrust.8d76b064c50e7dbb9f648c576b1ce416","status.workspaceTrust.1669794554484","status.workspaceTrust.1671801565856","status.workspaceTrust.1673597594514","status.workspaceTrust.1673628993933","status.workspaceTrust.1673639929598","status.workspaceTrust.36760d17b8d8ec5609826562da9c1432","status.workspaceTrust.1673823497238","status.workspaceTrust.cbfb194f0646a8d22068e12c176e89ee"]'
+workbench.statusbar.hidden: '["status.workspaceTrust.1634842969938","status.workspaceTrust.93976367225b4bab62ac8b9e7942afa6","status.workspaceTrust.1650188496931","status.workspaceTrust.ca24624f38659381c3ecf0ef04c06309","status.workspaceTrust.1663182526629","status.workspaceTrust.baebb6f0ef22dbe1e8ce112a9de5fe30","status.workspaceTrust.1664214597977","status.workspaceTrust.1665209142819","status.workspaceTrust.3b9d7b4e664446a50a737aa976370424","status.workspaceTrust.1665650298592","status.workspaceTrust.8d76b064c50e7dbb9f648c576b1ce416","status.workspaceTrust.1669794554484","status.workspaceTrust.1671801565856","status.workspaceTrust.1673597594514","status.workspaceTrust.1673628993933","status.workspaceTrust.1673639929598","status.workspaceTrust.36760d17b8d8ec5609826562da9c1432","status.workspaceTrust.1673823497238","status.workspaceTrust.cbfb194f0646a8d22068e12c176e89ee","status.workspaceTrust.1674909054697"]'
 workbench.telemetryOptOutShown: "true"
 workbench.view.debug.state.hidden: '[{"id":"workbench.debug.welcome","isHidden":false},{"id":"workbench.debug.variablesView","isHidden":false},{"id":"workbench.debug.watchExpressionsView","isHidden":false},{"id":"workbench.debug.callStackView","isHidden":false},{"id":"workbench.debug.loadedScriptsView","isHidden":false},{"id":"workbench.debug.breakPointsView","isHidden":false},{"id":"jsBrowserBreakpoints","isHidden":false},{"id":"jsExcludedCallers","isHidden":false}]'
 workbench.view.extension.gitlens.state.hidden: '[{"id":"gitlens.views.home","isHidden":false}]'
@@ -136,7 +154,7 @@ workbench.view.extensions.state.hidden: '[{"id":"workbench.views.extensions.inst
 workbench.view.remote.state.hidden: '[{"id":"targetsContainers","isHidden":false},{"id":"detailsContainers","isHidden":false},{"id":"devVolumes","isHidden":false},{"id":"sshHosts","isHidden":false},{"id":"targetsWsl","isHidden":false},{"id":"remoteTargets","isHidden":false}]'
 workbench.view.search.state.hidden: '[{"id":"workbench.view.search","isHidden":false}]'
 workbench.views.extensions.installed.empty: "372"
-workbench.views.extensions.installed.size: "55"
+workbench.views.extensions.installed.size: "54"
 workbench.views.service.auxiliarybar.daebbee6-a5e7-4e72-80c9-f8255b50cbe8.state.hidden: '[{"id":"gitlens.views.commitDetails","isHidden":false}]'
 workbench.welcomePage.walkthroughMetadata: '[["ms-python.python#pythonWelcome",{"firstSeen":1634843230248,"stepIDs":["python.installPythonWin","python.installPythonMac","python.installPythonLinux","python.selectInterpreter","python.runAndDebug","python.learnMore"],"manaullyOpened":false}],["ms-python.python#pythonDataScienceWelcome",{"firstSeen":1634843230249,"stepIDs":["python.installPythonWinDS","python.installPythonMacDS","python.installPythonLinuxDS","python.openFolderMac","python.openFolder","python.createNewNotebook","python.openInteractiveWindow","python.dataScienceLearnMore"],"manaullyOpened":false}],["ms-python.python#pythonWelcomeWithDS",{"firstSeen":1649442311501,"stepIDs":["python.installPythonWin","python.installPythonMac","python.installPythonLinux","python.createPythonFile","python.selectInterpreter","python.runAndDebug","python.learnMoreWithDS"],"manaullyOpened":false}],["ms-toolsai.jupyter#jupyterWelcome",{"firstSeen":1649442311501,"stepIDs":["jupyter.createNewNotebook","jupyter.selectKernel","jupyter.exploreAndDebug","jupyter.dataScienceLearnMore"],"manaullyOpened":false}]]'
 zokugun.cron-tasks: '{"version":"0.1.2"}'
