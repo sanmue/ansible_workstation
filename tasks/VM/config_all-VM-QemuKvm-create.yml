@@ -59,7 +59,7 @@
 - name: redefine + set current virtual machine snapshots (Qemu-Kvm)
   tags: VM
   ansible.builtin.shell:
-    chdir: "/home/{{ env_user }}/dev/ansible_test/files/VM/"
+    chdir: files/VM/
     cmd: ./vm_snapshotcreate-redefine.sh
   args:
     creates: /home/{{ env_user }}/.vm_qemu-kvm_created
@@ -69,7 +69,7 @@
 - name: create storage pool 'Downloads' for env_user (Qemu-Kvm)
   tags: VM
   ansible.builtin.shell:
-    chdir: "/home/{{ env_user }}/dev/ansible_test/files/VM/"
+    chdir: files/VM/
     cmd: ./vm_storagepool-define.sh {{ env_user }}
   args:
     creates: /home/{{ env_user }}/.vm_qemu-kvm_created
