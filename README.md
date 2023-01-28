@@ -1,5 +1,5 @@
-# ansible_workstation
-- Lab automatisierte Installation Home-Workstation
+# ansible_workstation Install
+- TestLab automatisierte Installation Workstation
 
 # Infos
 ## Login / Startscript
