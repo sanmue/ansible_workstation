@@ -20,7 +20,7 @@
 - in VS Code:
   - `STRG + SHIFT + P`
   - `>Sync Settings: Download (repository -> user)`
-### Config exportieren von git-repo
+### Config exportieren ins git-repo
 - in VS Code:
   - `STRG + SHIFT + P`
   - `>Sync Settings: Upload (user -> repository)`
