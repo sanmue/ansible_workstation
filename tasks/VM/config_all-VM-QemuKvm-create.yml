@@ -19,9 +19,10 @@
 - name: create virtual networks (Qemu-Kvm)
   tags: VM
   ansible.builtin.shell:
-    #cmd: ls files/VM/netdump_*.xml | xargs -I % sh -c "virsh net-define %"   # Dateiname inkl. Pfad
-    chdir: files/VM/
-    cmd: ls netdump_*.xml | xargs -I % sh -c "virsh net-define %"   # nur Dateiname, da vorher in Verzeichnis gewechselt und dann erst ls
+    cmd: ls files/VM/netdump_*.xml | cut -d/ -f3 | xargs -I % sh -c "virsh net-define %"   # ls files/VM/netdump_*.xml: Dateiname inkl. Pfad
+    #oder:
+    #chdir: files/VM/
+    #cmd: ls netdump_*.xml | xargs -I % sh -c "virsh net-define %"   # nur Dateiname, da vorher in Verzeichnis gewechselt und dann erst ls
   args:
     creates: /home/{{ env_user }}/.vm_qemu-kvm_created
   when: ansible_virtualization_role != "guest"
