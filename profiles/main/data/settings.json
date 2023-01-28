@@ -1,6 +1,6 @@
 {
     "workbench.colorTheme": "Default Dark+",
-    "telemetry.telemetryLevel": "error",
+    "telemetry.telemetryLevel": "off",
     "files.defaultLanguage": "powershell",
     "files.encoding": "utf8bom",
     "workbench.startupEditor": "none",
@@ -17,7 +17,7 @@
     "powershell.codeFormatting.pipelineIndentationStyle": "IncreaseIndentationForFirstPipeline",
     "remote.SSH.connectTimeout": 30,
     "gitlens.defaultDateLocale": "de-DE",
-    "redhat.telemetry.enabled": true,
+    "redhat.telemetry.enabled": false,
     "terminal.integrated.env.linux": {
     
     },
