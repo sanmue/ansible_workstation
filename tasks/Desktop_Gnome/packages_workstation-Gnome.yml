@@ -13,7 +13,7 @@
     state: latest
     name:
       - alacarte
-#      - brave-browser
+      - brave-browser
       - dconf-cli
       - dconf-editor
 #      - deluge # -> Tranmission in Standard-Inst bereits vorhanden
