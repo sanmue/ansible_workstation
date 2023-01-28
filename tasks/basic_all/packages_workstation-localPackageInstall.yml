@@ -82,7 +82,7 @@
   # requires installed Mozilla Firefox (was installed via a previous task)
   ansible.builtin.shell:
     chdir: basic_all/
-    cmd: config_workstation-localPackageInstall-CitrixWorkspaceApp.sh
+    cmd: "./config_workstation-localPackageInstall-CitrixWorkspaceApp.sh"
   when:
     - ansible_distribution == "Ubuntu"
 
