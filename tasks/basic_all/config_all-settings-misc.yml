@@ -1,6 +1,10 @@
 
-# ################
-# ### vim Settings
+# #######
+# ### vim
+# #######
+
+# ----------------
+# ### VIM Settings
 
 # alt:
 #- name: set vim config for user "sandro" (.vimrc) (all)
@@ -18,3 +22,23 @@
     mode: '0644'
     #mode: u=rw,g=r,o=r
     backup: yes
+
+# ---------------
+# ### VIM plugins
+
+# - https://github.com/dense-analysis/ale
+- name: Create folder for vim git-plugins (all)
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.script:
+    cmd: mkdir -p /home/{{ env_user }}/.vim/pack/git-plugins/start
+  args:
+    creates: /home/{{ env_user }}/.vim/pack/git-plugins/start
+
+- name: Install (git clone) vim plugin - Linter ALE (all)
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.git:
+    repo: https://github.com/dense-analysis/ale.git
+    dest: /home/{{ env_user }}/.vim/pack/git-plugins/start
+    depth: 1

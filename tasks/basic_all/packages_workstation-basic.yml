@@ -33,6 +33,7 @@
       - powershell   # repo wurde hinzugefügt
       - remmina
       - rsync
+      - shellcheck
 #      - skanlite # eher bei KDE
 #      - snapd # bei Suse herausgenommen
 #      - syncthing
