@@ -66,13 +66,13 @@ echo "Verwendetes OS: ${os}"
 ### ---
 case ${os} in
     Debian*)
-        if [[ ! $(grep 'sudo' '/etc/group') = *"${userid}"* ]]; then 
+        if [[ ! $(grep sudo /etc/group) = *"${userid}"* ]]; then 
             echo "Füge User '${userid}' der sudo-Gruppe hinzu"
             su -l root --command "usermod -aG sudo ${userid}"
 
             echo "Erzwinge ausloggen des aktuellen Users, sudo-Gruppeneintrag greift nach Neuanmeldung."
             read -rp "Bitte Eingabe-Taste drücken, um fortzufahren."
-            su -l root --command "pkill -KILL -u ${userid}"
+            pkill -KILL -u "${userid}"
         fi
 
         echo -e "\nUpdate Repos und Installation benoetigte Software (git,ansible,ssh,ufw,chrome-genome-shell)..."
