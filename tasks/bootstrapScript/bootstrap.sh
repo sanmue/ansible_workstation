@@ -18,7 +18,7 @@ defaultDomain="universalaccount.de"
 defaultMail="${userid}@${defaultDomain}"
 gitOnlineRepo="git@github.com:sanmue/${playbookdir}.git"
 os=""
-oslist=("Ubuntu" "openSUSE" "Manjaro")   # aktuell berücksichtige Betriebssysteme
+oslist=("Ubuntu" "Debian" "openSUSE" "Manjaro")   # aktuell berücksichtige Betriebssysteme
 
 
 # echo "Ich bin: ${userid}"
@@ -65,7 +65,33 @@ echo "Verwendetes OS: ${os}"
 ### Installation initial benötigter Pakete abhängig von Betriebssystem:
 ### ---
 case ${os} in
-    Ubuntu* | Debian*)
+    Debian*)
+        if [[ ! $(grep 'sudo' '/etc/group') = *"${userid}"* ]]; then 
+            echo "Füge User '${userid}' der sudo-Gruppe hinzu"
+            su -l root --command "usermod -aG sudo ${userid}"
+
+            echo "Erzwinge ausloggen des aktuellen Users, sudo-Gruppeneintrag greift nach Neuanmeldung."
+            read -rp "Bitte Eingabe-Taste drücken, um fortzufahren."
+            su -l root --command "pkill -KILL -u ${userid}"
+        fi
+
+        echo -e "\nUpdate Repos und Installation benoetigte Software (git,ansible,ssh,ufw,chrome-genome-shell)..."
+        sudo apt-get update && sudo apt-get dist-upgrade -y && sudo apt-get install -y --show-progress rsync git ansible chrome-gnome-shell openssh-client openssh-server ufw
+
+        echo -e "\nInstalliere benötigte Packages für Installation von Microsoft PowerShell"
+        sudo apt-get install -y --show-progress wget apt-transport-https software-properties-common
+
+        echo -e "\nInstalliere noch fehlende, benötigte Packages für Installation von Brave Web Browser"
+        sudo apt-get install -y --show-progress curl
+
+        echo -e "\nStarte + Aktiviere ssh ..."
+        sudo systemclt start ssh && sudo systemctl enable ssh
+
+        echo -e "\nAktiviere Firewall 'ufw' und erlaube ssh ..."
+        sudo ufw enable && sudo ufw allow ssh comment 'SSH' && sudo ufw reload
+    ;;
+
+    Ubuntu*)
         echo -e "\nUpdate Repos und Installation benoetigte Software (git,ansible,ssh,ufw,chrome-genome-shell)..."
         sudo apt-get update && sudo apt-get dist-upgrade -y && sudo apt-get install -y --show-progress rsync git ansible chrome-gnome-shell ssh ufw
 
@@ -97,7 +123,7 @@ case ${os} in
         sudo systemctl enable firewalld && sudo systemctl start firewalld && sudo firewall-cmd --zone=public --add-service=ssh --permanent && sudo firewall-cmd --reload
     ;;
 
-    Arch* | Manjaro*)
+    Manjaro*)
         echo "TODO: Bootstrap Arch-Linux"   #TODO
         read -r -p "Eingabe-Taste drücken zum Beenden"
         exit 0
