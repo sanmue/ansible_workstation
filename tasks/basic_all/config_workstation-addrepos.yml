@@ -5,26 +5,25 @@
 
 # https://fostips.com/ubuntu-21-10-two-firefox-remove-snap/
 #
-# Anmerkung: wird eigentlich nicht mehr benötigt, da aktuell als flatpak installiert wird
-#            Verbleib, da ggf. wieder umstelle
-- name: add repo (Mozilla Team PPA) for Firefox (apt, Ubuntu >= 22)
-  tags: workstation,ubuntu,addrepos,pre
-  ansible.builtin.apt_repository:
-    repo: ppa:mozillateam/ppa
-    state: present
-    update_cache: yes
-  when:
-    - ansible_distribution == "Ubuntu"
-    - ansible_distribution_major_version|int >= 22
-    - ansible_pkg_mgr == "apt"
+# Anmerkung: wird aktuell nicht mehr benötigt, da als flatpak installiert wird
+#- name: add repo (Mozilla Team PPA) for Firefox (apt, Ubuntu >= 22)
+#  tags: workstation,ubuntu,addrepos,pre
+#  ansible.builtin.apt_repository:
+#    repo: ppa:mozillateam/ppa
+#    state: present
+#    update_cache: yes
+#  when:
+#    - ansible_distribution == "Ubuntu"
+#    - ansible_distribution_major_version|int >= 22
+#    - ansible_pkg_mgr == "apt"
 
-- name: Set PPA Priority for Mozillateam and block Firefox from Ubuntus own repository (Ubuntu >= 22)
-  ansible.builtin.script: "{{ env_PWD }}/tasks/basic_all/config_workstation-addrepos-ubuntu.sh"
-  when:
-    - ansible_distribution == "Ubuntu"
-    - ansible_distribution_major_version|int >= 22        # Ubuntu 22.04 has transitioned from using /etc/apt/trusted.gpg to using individual .gpg files located in /etc/apt/trusted.gpg.d
-    - env_desktop in ["gnome", "ubuntu:gnome"]
-    - "ansible_version.full is version('2.10.0', '>=')"   # 'ansible.builtin.script' ab ansible version 2.10 (welche bei Ubutnu 22.04 installiert wird)
+#- name: Set PPA Priority for Mozillateam and block Firefox from Ubuntus own repository (Ubuntu >= 22)
+#  ansible.builtin.script: "{{ env_PWD }}/tasks/basic_all/config_workstation-addrepos-ubuntu.sh"
+#  when:
+#    - ansible_distribution == "Ubuntu"
+#    - ansible_distribution_major_version|int >= 22        # Ubuntu 22.04 has transitioned from using /etc/apt/trusted.gpg to using individual .gpg files located in /etc/apt/trusted.gpg.d
+#    - env_desktop in ["gnome", "ubuntu:gnome"]
+#    - "ansible_version.full is version('2.10.0', '>=')"   # 'ansible.builtin.script' ab ansible version 2.10 (welche bei Ubutnu 22.04 installiert wird)
 
 
 # PowerShell

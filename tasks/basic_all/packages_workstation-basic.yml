@@ -26,18 +26,17 @@
 #      - hyphen-de
       - keepassxc
 #      - keepassxc-lang # gibt es nicht bei ubuntu
-#      - kitty   # gpu beschleunigtes terminal
+      - kitty   # gpu beschleunigtes terminal
       - lsb-release
 #      - nano   # --> vim
       - neofetch
       - powershell   # repo wurde hinzugefügt
-      - remmina
       - rsync
       - shellcheck
 #      - skanlite # eher bei KDE
 #      - snapd # bei Suse herausgenommen
 #      - syncthing
-      - terminator # bei Suse+KDE nicht unbedingt notwendig -> Konsole
+#      - terminator # bei Suse+KDE nicht unbedingt notwendig -> Konsole
       - vim
       - vlc
       - unzip
@@ -152,6 +151,7 @@
       - ebtables
       - ipset
       - openssh
+      - remmina
   when: ansible_distribution in ["Archlinux"] or ansible_os_family == "Suse"
 #    - ansible_distribution in ["Archlinux", "openSUSE Leap"]
 
