@@ -2,7 +2,7 @@
 
 - hosts: localhost
   connection: local
-  become: no
+  become: false
   tags: always,pre,ansibleFacts
   gather_facts: true
   pre_tasks:
@@ -42,7 +42,7 @@
   - include: tasks/flatpakSnap/config_workstation-snap.yml
   - include: tasks/flatpakSnap/packages_workstation-snap.yml
   # - Suse - Multimedia:
-  #- include: tasks/basic_all/config_workstation-addrepos-suseMultimedia.yml
+  # - include: tasks/basic_all/config_workstation-addrepos-suseMultimedia.yml
   - include: tasks/basic_all/packages_workstation-suseMultimedia.yml
   # Installation lokal heruntergeladener Pakete:
   - include: tasks/basic_all/packages_workstation-localPackageInstall.yml
@@ -60,8 +60,8 @@
   - include: tasks/VM/config_all-VM-QemuKvm-create.yml
   # ----------------------------------------------------------
   # ### sudo-ansible-user + cronjob:
-  #- include: tasks/basic_all/config_all-ansible-users.yml
-  #- include: tasks/basic_all/config_all-cron.yml
+  # - include: tasks/basic_all/config_all-ansible-users.yml
+  # - include: tasks/basic_all/config_all-cron.yml
   # ----------------------------------------------------------
   # ### cleanup:
   - include: tasks/basic_all/all_cleanup.yml
@@ -69,29 +69,31 @@
 
 - hosts: localhost
   connection: local
-  #become: false
+  become: true
   become_user: "{{ env_user }}"
   tags: always,gnome
   tasks:
-  #- include: tasks/Desktop_Gnome/packages_workstation-Gnome-GnomeshellExtensions.yml
-  #- include: tasks/Desktop_Gnome/config_workstation-Gnome-GnomeshellExtensions.yml
+  # - include: tasks/Desktop_Gnome/packages_workstation-Gnome-GnomeshellExtensions.yml
+  # - include: tasks/Desktop_Gnome/config_workstation-Gnome-GnomeshellExtensions.yml
   - include: tasks/Desktop_Gnome/config_workstation-Gnome-DesktopPreferences.yml
 
-  - debug:
+
+  - name: Write Message
+    debug:
       msg: "Please restart the system for the changes to take effect!"
 
 
-#- hosts: localhost
+# - hosts: localhost
 #  connection: local
 #  become: true
 #  tags: always,reboot
 #  tasks:
 #  - include: tasks/basic_all/all_reboot.yml # da hier local/pull --> geht nicht
-# fatal: [localhost]: FAILED! => {"changed": false, "elapsed": 0, "msg": "Running reboot with local connection would reboot the control node.", "rebooted": false}
+#  FAILED! => {"changed": false, "elapsed": 0, "msg": "Running reboot with local connection would reboot the control node.", "rebooted": false}
 
 ### "all_reboot.yml" geändert auf ansible.builtin.shell, cmd: reboot
 ### (und damit nicht mehr reboot über ansible-Modul (s.o.))
-#- hosts: localhost
+# - hosts: localhost
 #  connection: local
 #  become: true
 #  tags: always,reboot

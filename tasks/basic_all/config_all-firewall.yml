@@ -13,7 +13,7 @@
 - name: UFW - enable (Archlinux + Gnome)
   ufw:
     state: enabled
-  when: 
+  when:
     - ansible_distribution == "Archlinux" 
     - env_desktop == "gnome"
   register: firewall_ufw
@@ -35,7 +35,7 @@
     port: ssh
     proto: tcp
     comment: SSH
-  when: 
+  when:
     - ansible_distribution == "Archlinux"
     - env_desktop == "gnome"
   register: firewall_ufw
@@ -51,7 +51,7 @@
 - name: UFW - reload (Archlinux + Gnome)
   ufw:
     state: reloaded
-  when: 
+  when:
     - ansible_distribution == "Archlinux"
     - env_desktop == "gnome"
     - firewall_ufw.changed
