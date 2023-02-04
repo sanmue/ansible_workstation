@@ -100,23 +100,26 @@
 
 # Brave Browser
 # https://computingforgeeks.com/install-brave-web-browser-on-ubuntu-linux/
-- name: Add Apt signing key for Brave Web Browser (apt, Ubuntu)
-  ansible.builtin.apt_key:
-    url: "https://brave-browser-apt-release.s3.brave.com/brave-core.asc"
-    state: present
-  when:
-    - ansible_pkg_mgr == "apt"
-    - ansible_distribution == "Ubuntu"
+#
+# umgestellt auf flatpak
+#
+#- name: Add Apt signing key for Brave Web Browser (apt, Ubuntu)
+#  ansible.builtin.apt_key:
+#    url: "https://brave-browser-apt-release.s3.brave.com/brave-core.asc"
+#    state: present
+#  when:
+#    - ansible_pkg_mgr == "apt"
+#    - ansible_distribution == "Ubuntu"
 
-- name: add repo for Brave Web Browser (apt, Ubuntu)
-  tags: workstation,ubuntu,addrepos,pre
-  ansible.builtin.apt_repository:
-    repo: 'deb [arch=amd64] https://brave-browser-apt-release.s3.brave.com stable main'
-    state: present
-    update_cache: yes
-  when:
-    - ansible_pkg_mgr == "apt"
-    - ansible_distribution == "Ubuntu"
+#- name: add repo for Brave Web Browser (apt, Ubuntu)
+#  tags: workstation,ubuntu,addrepos,pre
+#  ansible.builtin.apt_repository:
+#    repo: 'deb [arch=amd64] https://brave-browser-apt-release.s3.brave.com stable main'
+#    state: present
+#    update_cache: yes
+#  when:
+#    - ansible_pkg_mgr == "apt"
+#    - ansible_distribution == "Ubuntu"
 
 
 #- name: add apt signing key for Vivaldi Browser repos (apt, Ubuntu)
