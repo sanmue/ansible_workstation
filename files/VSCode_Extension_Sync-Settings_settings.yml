@@ -37,7 +37,7 @@ repository:
   type: git
 #   # url of the remote git repository to sync with, required
 #   url: git@github.com:username/settings.git
-  url: git@github.com:sanmue/ansible_test.git
+  url: git@github.com:sanmue/ansible_workstation.git
 #   # branch to sync on, optional (set to `master` by default)
   branch: main
 #   # how to personalize the commit messages at https://github.com/zokugun/vscode-sync-settings/blob/master/docs/commit-messages.md
