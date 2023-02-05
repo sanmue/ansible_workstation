@@ -9,14 +9,22 @@ mozfile="99mozillateamppa"
 
 touch "${dir}/${mozfile}"
 
-cat > "${dir}/${mozfile}" << EOF
-Package: firefox*
-Pin: release o=LP-PPA-mozillateam
-Pin-Priority: 501
+#cat > "${dir}/${mozfile}" << EOF
+#Package: firefox*
+#Pin: release o=LP-PPA-mozillateam
+#Pin-Priority: 501
+#
+#Package: firefox*
+#Pin: release o=Ubuntu
+#Pin-Priority: -1
+#
+#EOF
 
+
+# Block Firefox from Ubuntu’s own repository
+cat > "${dir}/${mozfile}" << EOF
 Package: firefox*
 Pin: release o=Ubuntu
 Pin-Priority: -1
 
 EOF
-
