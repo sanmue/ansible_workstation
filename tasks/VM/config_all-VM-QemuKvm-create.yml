@@ -67,14 +67,16 @@
   when: ansible_virtualization_role != "guest"
 
 
-- name: create storage pool 'Downloads' for env_user (Qemu-Kvm)
-  tags: VM
-  ansible.builtin.shell:
-    chdir: files/VM/
-    cmd: ./vm_storagepool-define.sh {{ env_user }}
-  args:
-    creates: /home/{{ env_user }}/.vm_qemu-kvm_created
-  when: ansible_virtualization_role != "guest"
+# TODO: anpassen / festlegen System-Device; aktuell nur für 1 nvme-SSD passend
+#
+#- name: create storage pool 'Downloads' for env_user (Qemu-Kvm)
+#  tags: VM
+#  ansible.builtin.shell:
+#    chdir: files/VM/
+#    cmd: ./vm_storagepool-define.sh {{ env_user }}
+#  args:
+#    creates: /home/{{ env_user }}/.vm_qemu-kvm_created
+#  when: ansible_virtualization_role != "guest"
 
 
 - name: create 'flag-file' indicating VM-stuff was created (Qemu-Kvm)

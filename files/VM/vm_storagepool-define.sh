@@ -64,7 +64,7 @@ if [ -n "${nvmessdpath}" ]; then   # -n: if string length is not zero
 	for storagepool in ${storagepoolList}; do   # Prüfen, ob storagedir (storage pool) 'Downloads' bereits vorhanden
 		if [ "${storagepool}" == "${storagedir}" ]; then
 			found='ja'
-			echo "Storage Pool '${storagedir}' bereis vorhanden."
+			echo "Storage Pool '${storagedir}' bereits vorhanden."
 			break
 		fi
 	done
