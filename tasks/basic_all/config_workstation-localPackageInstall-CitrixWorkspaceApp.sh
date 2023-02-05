@@ -23,7 +23,7 @@ fi
 
 # copy mozilla firefox certificates to Citrix ICAClient cacerts folder
 if [ ! -d "${citrixCertPath}" ]; then
-	sudo mkdir -p ${citrixCertPath}
+	sudo mkdir -p "${citrixCertPath}"
 fi
 sudo rsync -aPhxv "${mozillaCertPath}/" "${citrixCertPath}/"
 
