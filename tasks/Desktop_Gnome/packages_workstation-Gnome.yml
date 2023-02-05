@@ -55,6 +55,7 @@
       - syncthing
 #      - teams   # Micosoft Teams (repo wurde hinzugefügt)
       - timeshift
+      - transmisison   # torrent client
   when:
     - ansible_distribution == "Ubuntu"
     - env_desktop == "ubuntu:gnome"
