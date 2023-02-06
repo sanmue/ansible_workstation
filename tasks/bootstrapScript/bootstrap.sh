@@ -62,7 +62,7 @@ echo "Verwendetes OS: ${os}"
 
 
 ### ---
-### Installation initial benötigter Pakete abhängig von Betriebssystem:
+### Installation initial benötigter Pakete und Services abhängig von Betriebssystem:
 ### ---
 case ${os} in
     Manjaro*)
