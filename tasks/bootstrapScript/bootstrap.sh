@@ -74,7 +74,7 @@ case ${os} in
         fi
 
         echo -e "\nUpdate und Installation benoetigte Software (git, ansible, openssh, ufw)..."
-        sudo pacman -Syu rsync git ansible openssh ufw ufw-extras vim
+        sudo pacman -Syu --needed --noconfirm rsync git ansible openssh ufw ufw-extras vim
 
         echo -e "\nAktiviere Firewall 'ufw' und erlaube ssh ..."
         sudo systemctl enable ufw.service && sudo ufw enable && sudo ufw allow ssh comment 'SSH' && sudo ufw reload
