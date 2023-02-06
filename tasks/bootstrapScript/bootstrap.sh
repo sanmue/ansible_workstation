@@ -18,7 +18,7 @@ defaultDomain="universalaccount.de"
 defaultMail="${userid}@${defaultDomain}"
 gitOnlineRepo="git@github.com:sanmue/${playbookdir}.git"
 os=""
-oslist=("Ubuntu" "Debian" "openSUSE" "Manjaro")   # aktuell berücksichtige Betriebssysteme
+oslist=("Ubuntu" "Manjaro")   # aktuell berücksichtige Betriebssysteme
 
 
 # echo "Ich bin: ${userid}"
@@ -65,6 +65,34 @@ echo "Verwendetes OS: ${os}"
 ### Installation initial benötigter Pakete abhängig von Betriebssystem:
 ### ---
 case ${os} in
+    Manjaro*)
+        echo -e "\nCustomize mirror pool + full refresh of the package database and update all packages on the system..."
+        sudo pacman-mirrors --country Germany,France,Austria && sudo pacman -Syyu
+
+        echo -e "\nUpdate und Installation benoetigte Software (git, ansible, openssh, ufw)..."
+        sudo pacman -Syu rsync git openssh ufw ufw-extras vim
+
+        echo -e "\nAktiviere Firewall 'ufw' und erlaube ssh ..."
+        sudo systemctl enable ufw.service && sudo ufw enable && sudo ufw allow ssh comment 'SSH' && sudo ufw reload
+
+        echo -e "\nStarte und aktiviere sshd.service..."
+        sudo systemctl start sshd.service && sudo systemctl enable sshd.service 
+    ;;
+
+    Ubuntu*)
+        echo -e "\nUpdate Repos und Installation benoetigte Software (git,ansible,ssh,ufw,chrome-genome-shell)..."
+        sudo apt-get update && sudo apt-get dist-upgrade -y && sudo apt-get install -y --show-progress rsync git ansible chrome-gnome-shell ssh ufw
+
+        echo -e "\nInstalliere benötigte Packages für Installation von Microsoft PowerShell"
+        sudo apt-get install -y --show-progress wget apt-transport-https software-properties-common
+
+        echo -e "\nInstalliere noch fehlende, benötigte Packages für Installation von Brave Web Browser"
+        sudo apt-get install -y --show-progress curl
+
+        echo -e "\nAktiviere Firewall 'ufw' und erlaube ssh ..."
+        sudo ufw enable && sudo ufw allow ssh comment 'SSH' && sudo ufw reload
+    ;;
+
     Debian*)
         if [[ ! $(grep sudo /etc/group) = *"${userid}"* ]]; then 
             echo "Füge User '${userid}' der sudo-Gruppe hinzu"
@@ -91,20 +119,6 @@ case ${os} in
         sudo ufw enable && sudo ufw allow ssh comment 'SSH' && sudo ufw reload
     ;;
 
-    Ubuntu*)
-        echo -e "\nUpdate Repos und Installation benoetigte Software (git,ansible,ssh,ufw,chrome-genome-shell)..."
-        sudo apt-get update && sudo apt-get dist-upgrade -y && sudo apt-get install -y --show-progress rsync git ansible chrome-gnome-shell ssh ufw
-
-        echo -e "\nInstalliere benötigte Packages für Installation von Microsoft PowerShell"
-        sudo apt-get install -y --show-progress wget apt-transport-https software-properties-common
-
-        echo -e "\nInstalliere noch fehlende, benötigte Packages für Installation von Brave Web Browser"
-        sudo apt-get install -y --show-progress curl
-
-        echo -e "\nAktiviere Firewall 'ufw' und erlaube ssh ..."
-        sudo ufw enable && sudo ufw allow ssh comment 'SSH' && sudo ufw reload
-    ;;
-
     openSUSE*)
         echo -e "\nUpdate Repos und Installation benoetigte Software (git,ansible,ssh,firewalld)..."
         sudo zypper refresh && sudo zypper dist-upgrade -y --details && sudo zypper install -y --details rsync git ansible openssh firewalld
@@ -113,9 +127,9 @@ case ${os} in
         # https://learn.microsoft.com/en-us/powershell/scripting/install/install-other-linux?view=powershell-7.3
         # https://en.opensuse.org/PowerShell
         # PowerShell is not provided by any official openSUSE repositories. ...ways for Leap and Tumbleweed:
-        # - Install directly from RPM; Install binaries from tar.gz; Install using "sudo dotnet tool install --global powershell" command
-        # - snap-package (https://snapcraft.io/install/powershell/opensuse)
-
+        # Möglichkeit 1: snap-package (https://snapcraft.io/install/powershell/opensuse)
+        # Möglichkeit 2: Install directly from RPM; Install binaries from tar.gz; Install using "sudo dotnet tool install --global powershell" command
+        
         echo -e "\nInstalliere noch fehlende, benötigte Packages für Installation von Brave Web Browser"
         sudo apt-get install -y --details curl
 
@@ -123,11 +137,6 @@ case ${os} in
         sudo systemctl enable firewalld && sudo systemctl start firewalld && sudo firewall-cmd --zone=public --add-service=ssh --permanent && sudo firewall-cmd --reload
     ;;
 
-    Manjaro*)
-        echo "TODO: Bootstrap Arch-Linux"   #TODO
-        read -r -p "Eingabe-Taste drücken zum Beenden"
-        exit 0
-    ;;
 
     *)
         echo "Unbehandelter Fall: switch os - default-switch Zweig"
