@@ -66,8 +66,10 @@ echo "Verwendetes OS: ${os}"
 ### ---
 case ${os} in
     Manjaro*)
-        echo -e "\nCustomize mirror pool + full refresh of the package database and update all packages on the system..."
-        sudo pacman-mirrors --country Germany,France,Austria && sudo pacman -Syyu
+        if [ ! -f "/home/${userid}/.bootstrapLogout" ]; then
+            echo -e "\nCustomize mirror pool + full refresh of the package database and update all packages on the system..."
+            sudo pacman-mirrors --country Germany,France,Austria && sudo pacman -Syyu
+        fi
 
         echo -e "\nUpdate und Installation benoetigte Software (git, ansible, openssh, ufw)..."
         sudo pacman -Syu rsync git ansible openssh ufw ufw-extras vim
@@ -80,7 +82,7 @@ case ${os} in
 
         if [ ! -f "/home/${userid}/.bootstrapLogout" ]; then
             touch "/home/${userid}/.bootstrapLogout"
-            
+
             echo "Erzwinge ausloggen des aktuellen Users. Bitte ansschließend einfach wieder anmelden und Skript neu starten."
             read -rp "Bitte Eingabe-Taste drücken, um fortzufahren."
             pkill -KILL -u "${userid}"
