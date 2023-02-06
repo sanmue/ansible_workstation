@@ -66,7 +66,9 @@ echo "Verwendetes OS: ${os}"
 ### ---
 case ${os} in
     Manjaro*)
-        if [ ! -f "/home/${userid}/.bootstrapLogout" ]; then
+        if [ ! -f "/home/${userid}/.bootstrapMirrorPool" ]; then
+            touch "/home/${userid}/.bootstrapMirrorPool"
+
             echo -e "\nCustomize mirror pool + full refresh of the package database and update all packages on the system..."
             sudo pacman-mirrors --country Germany,France,Austria && sudo pacman -Syyu
         fi
