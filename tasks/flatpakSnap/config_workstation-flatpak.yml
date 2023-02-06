@@ -1,8 +1,11 @@
 
-- name: Add the flathub flatpak repository remote, system (All Distros)
-  tags: workstation,ubuntu,suse,arch,flatpak
+- name: Add the flathub flatpak repository remote, system (Ubuntu)
+  tags: workstation,ubuntu, flatpak
   flatpak_remote:
     name: flathub
     state: present
     flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo
     method: system
+  when:
+    - ansible_distribution == "Ubuntu"
+  

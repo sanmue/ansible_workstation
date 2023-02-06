@@ -66,15 +66,18 @@ echo "Verwendetes OS: ${os}"
 ### ---
 case ${os} in
     Manjaro*)
-        if [ ! -f "/home/${userid}/.bootstrapMirrorPool" ]; then
-            touch "/home/${userid}/.bootstrapMirrorPool"
+        #if [ ! -f "/home/${userid}/.bootstrapMirrorPool" ]; then
+            #touch "/home/${userid}/.bootstrapMirrorPool"
 
             echo -e "\nCustomize mirror pool + full refresh of the package database and update all packages on the system..."
             sudo pacman-mirrors --country Germany,France,Austria && sudo pacman -Syyu
-        fi
+        #fi
 
-        echo -e "\nUpdate und Installation benoetigte Software (git, ansible, openssh, ufw)..."
+        echo -e "\nInstallation initial benoetigte Software (git, ansible, openssh, ufw)..."
         sudo pacman -Syu --needed --noconfirm rsync git ansible openssh ufw ufw-extras vim
+
+        echo -e "\nInstallation benoetigte Software zur Installation von AUR-Packages..."
+        sudo pacman -Syu --needed --noconfirm base-devel
 
         echo -e "\nAktiviere Firewall 'ufw' und erlaube ssh ..."
         sudo systemctl enable ufw.service && sudo ufw enable && sudo ufw allow ssh comment 'SSH' && sudo ufw reload

@@ -1,7 +1,24 @@
+###########
+### Manjaro
+###########
 
-#######
-### apt
-#######
+- name: Enable AUR support for pamac gui (Manjaro)
+  ansible.builtin.shell:
+    cmd: sudo sed -Ei '/EnableAUR/s/^#//' /etc/pamac.conf
+  when:
+    - ansible_distribution == "Archlinux"
+
+- name: Enable check for updates from AUR in pamac (Manjaro)
+  ansible.builtin.shell:
+    cmd: sudo sed -Ei '/CheckAURUpdates/s/^#//' /etc/pamac.conf
+  when:
+    - ansible_distribution == "Archlinux"
+
+
+
+##########
+### Ubuntu
+##########
 
 # https://fostips.com/ubuntu-21-10-two-firefox-remove-snap/
 #
@@ -151,25 +168,3 @@
 #  when:
 ##    - ansible_distribution == "Ubuntu"
 #    - ansible_pkg_mgr == "apt"
-
-
-
-
-
-##########
-### zypper
-##########
-
-#- name: add repo for snappy (openSUSE Leap 15.2)
-#  tags: workstation,suse,addrepos,pre,snap
-#  zypper_repository:
-#    name: snappy-repo
-##   Distri-Version noch hart codiert:
-#    repo: 'https://download.opensuse.org/repositories/system:/snappy/openSUSE_Leap_15.2'
-#    state: present
-#    auto_import_keys: yes
-#    autorefresh: yes
-#    enabled: yes
-#  when:
-#    - ansible_pkg_mgr == "zypper"
-#    - ansible_distribution == "openSUSE Leap"
