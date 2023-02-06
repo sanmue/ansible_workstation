@@ -22,28 +22,6 @@
   changed_when: false
 
 
-- name: update repository index and update system (zypper)
-  tags: always,update
-  zypper:
-    update_cache: yes
-    name: '*'
-    state: dist-upgrade
-#    extra_args: '--allow-vendor-change'
-#    allow_vendor_change: true # ab Version2.10?!
-#    extra_args: '--allow-arch-change'
-#  when: ansible_distribution == "openSUSE Leap"
-#  when: ansible_distribution == "openSUSE Tumbleweed"
-#  when: ansible_os_family == "Suse"
-  when: ansible_pkg_mgr == "zypper"
-  changed_when: false
-
-#- name: Apply all available patches (zypper)
-#  community.general.zypper:
-#    name: '*'
-#    state: latest
-#    type: patch
-#  when: ansible_pkg_mgr == "zypper"
-#  changed_when: false
 
 
 ###########
@@ -61,7 +39,8 @@
 #########
 ### snaps
 #########
-# Snaps come with a built-in automatic update mechanism, whereby snaps are refreshed to a new version whenever there’s a new release in the Snap Store. Typically, the refresh occurs four times a day ...
+# Snaps come with a built-in automatic update mechanism, whereby snaps are refreshed to a new version whenever there’s a new release in the Snap Store. 
+# Typically, the refresh occurs four times a day ...
 - name: update snap packages
   tags: always,update,snap
   command: snap refresh
