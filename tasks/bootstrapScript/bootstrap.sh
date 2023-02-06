@@ -78,8 +78,9 @@ case ${os} in
         echo -e "\nStarte und aktiviere sshd.service..."
         sudo systemctl start sshd.service && sudo systemctl enable sshd.service
 
-        touch "/home/${userid}/.bootstrapLogout"
         if [ ! -f "/home/${userid}/.bootstrapLogout" ]; then
+            touch "/home/${userid}/.bootstrapLogout"
+            
             echo "Erzwinge ausloggen des aktuellen Users. Bitte ansschließend einfach wieder anmelden und Skript neu starten."
             read -rp "Bitte Eingabe-Taste drücken, um fortzufahren."
             pkill -KILL -u "${userid}"
