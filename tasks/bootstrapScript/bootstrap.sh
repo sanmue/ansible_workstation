@@ -70,18 +70,25 @@ case ${os} in
         sudo pacman-mirrors --country Germany,France,Austria && sudo pacman -Syyu
 
         echo -e "\nUpdate und Installation benoetigte Software (git, ansible, openssh, ufw)..."
-        sudo pacman -Syu rsync git openssh ufw ufw-extras vim
+        sudo pacman -Syu rsync git ansible openssh ufw ufw-extras vim
 
         echo -e "\nAktiviere Firewall 'ufw' und erlaube ssh ..."
         sudo systemctl enable ufw.service && sudo ufw enable && sudo ufw allow ssh comment 'SSH' && sudo ufw reload
 
         echo -e "\nStarte und aktiviere sshd.service..."
-        sudo systemctl start sshd.service && sudo systemctl enable sshd.service 
+        sudo systemctl start sshd.service && sudo systemctl enable sshd.service
+
+        touch "/home/${userid}/.bootstrapLogout"
+        if [ ! -f "/home/${userid}/.bootstrapLogout" ]; then
+            echo "Erzwinge ausloggen des aktuellen Users. Bitte ansschließend einfach wieder anmelden und Skript neu starten."
+            read -rp "Bitte Eingabe-Taste drücken, um fortzufahren."
+            pkill -KILL -u "${userid}"
+        fi
     ;;
 
     Ubuntu*)
         echo -e "\nUpdate Repos und Installation benoetigte Software (git,ansible,ssh,ufw,chrome-genome-shell)..."
-        sudo apt-get update && sudo apt-get dist-upgrade -y && sudo apt-get install -y --show-progress rsync git ansible chrome-gnome-shell ssh ufw
+        sudo apt-get update && sudo apt-get dist-upgrade -y && sudo apt-get install -y --show-progress rsync git ansible chrome-gnome-shell ssh ufw vim
 
         echo -e "\nInstalliere benötigte Packages für Installation von Microsoft PowerShell"
         sudo apt-get install -y --show-progress wget apt-transport-https software-properties-common
@@ -104,7 +111,7 @@ case ${os} in
         fi
 
         echo -e "\nUpdate Repos und Installation benoetigte Software (git,ansible,ssh,ufw,chrome-genome-shell)..."
-        sudo apt-get update && sudo apt-get dist-upgrade -y && sudo apt-get install -y --show-progress rsync git ansible chrome-gnome-shell openssh-client openssh-server ufw
+        sudo apt-get update && sudo apt-get dist-upgrade -y && sudo apt-get install -y --show-progress rsync git ansible chrome-gnome-shell openssh-client openssh-server ufw vim
 
         echo -e "\nInstalliere benötigte Packages für Installation von Microsoft PowerShell"
         sudo apt-get install -y --show-progress wget apt-transport-https software-properties-common
@@ -121,7 +128,7 @@ case ${os} in
 
     openSUSE*)
         echo -e "\nUpdate Repos und Installation benoetigte Software (git,ansible,ssh,firewalld)..."
-        sudo zypper refresh && sudo zypper dist-upgrade -y --details && sudo zypper install -y --details rsync git ansible openssh firewalld
+        sudo zypper refresh && sudo zypper dist-upgrade -y --details && sudo zypper install -y --details rsync git ansible openssh firewalld vim
 
         #echo -e "\nInstalliere benötigte Packages für Installation von Microsoft PowerShell"
         # https://learn.microsoft.com/en-us/powershell/scripting/install/install-other-linux?view=powershell-7.3
