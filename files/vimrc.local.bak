@@ -1,3 +1,6 @@
+" global vim configuration 
+" standard global config to be found at: '/etc/vim/vimrc'
+" it sources 'vimrc.local' in same folder (if readable) via: 'source /etc/vim/vimrc.local'
 
 " Vim5 and later versions support syntax highlighting.
 syntax on

@@ -13,7 +13,7 @@
 #    creates: "/home/{{ env_user }}/.vimrc"
 
 # neu (via global config-file):
-- name: Set (Copy) vim global config (all)
+- name: Set (Copy) vim global config (ubuntu)
   ansible.builtin.copy:
     src: "{{ env_PWD }}/files/vimrc.local"
     dest: /etc/vim/vimrc.local
@@ -22,6 +22,27 @@
     mode: '0644'
     #mode: u=rw,g=r,o=r
     backup: yes
+  when:
+    - ansible_distribution == "Ubuntu"
+
+
+- name: Set vim global config (Archlinux)
+  ansible.builtin.shell:
+    cmd: "cat {{ env_PWD }}/files/vimrc.local >> /etc/vimrc"
+    args:
+      creates: /home/{{ env_user }}/.vimGlobalConfigDone
+  when:
+    - ansible_distribution == "Archlinux"
+
+- name: Set flag for vim global config done (Archlinux)
+  ansible.builtin.file:
+    path: /home/{{ env_user }}/.vimGlobalConfigDone
+    state: touch
+    modification_time: preserve
+    access_time: preserve
+  when:
+    - ansible_distribution == "Archlinux"
+
 
 # ---------------
 # ### VIM plugins
