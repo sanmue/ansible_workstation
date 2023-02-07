@@ -1,29 +1,25 @@
+- name: Install gnomeshell extension stuff (Gnome, all)
+  tags: workstation,gnome,ubuntu
+  package:
+    state: latest
+    name:
+      - gnome-shell-extensions
+      - gnome-shell-extension-appindicator
+      - gnome-shell-extension-gsconnect
+      - gnome-tweaks
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+
 
 - name: Install gnomeshell extension stuff (Ubuntu >=22 + Gnome)
   tags: workstation,gnome,ubuntu
   package:
     state: latest
     name:
-      - chrome-gnome-shell
-      - gnome-shell-extensions
-      - gnome-shell-extension-appindicator
-      - gnome-shell-extension-gsconnect
       - gnome-shell-extension-gsconnect-browsers
-      #- gnome-shell-extension-manager   # Flatpak is the recommended way to install Extension Manager (see: https://github.com/mjakeman/extension-manager)
-      - gnome-tweaks
   when:
     - env_desktop == "ubuntu:gnome"
     - ansible_distribution_major_version|int >= 22
-
-- name: Install gnomeshell extension stuff (Ubuntu <22 + Gnome)
-  tags: workstation,gnome,ubuntu
-  package:
-    state: latest
-    name:
-      - gnome-tweak-tool   # scheint nicht (mehr) vorhanden in Ubuntu 22.04
-  when:
-    - env_desktop == "ubuntu:gnome"
-    - ansible_distribution_major_version|int < 22
 
 
 - name: Install gnomeshell extension stuff (Archlinux + Gnome)
@@ -31,39 +27,12 @@
   package:
     state: latest
     name:
-      - chrome-gnome-shell
-      - gnome-shell-extension-appindicator
-      - gnome-shell-extension-arcmenu
       - gnome-shell-extension-dash-to-dock
-      - gnome-shell-extension-dash-to-panel
-      - gnome-shell-extension-desktop-icons-ng
-      - gnome-shell-extension-gamemode
-      - gnome-shell-extension-git
-      - gnome-shell-extension-gsconnect
-      - gnome-shell-extension-material-shell
-      - gnome-shell-extension-nightthemeswitcher
-      - gnome-shell-extension-pop-shell
-      - gnome-shell-extension-unite
-      - gnome-shell-extensions
-      - gnome-tweaks
+      #- gnome-shell-extension-dash-to-panel   # Extension for GNOME shell to combine the dash and main panel
+      #- gnome-shell-extension-gamemode   # GNOME Shell extension for Feral Interactive's GameMode
+      #- gnome-shell-extension-material-shell   # A modern desktop interface for Linux extending GNOME Shell
+      #- gnome-shell-extension-nightthemeswitcher   # A GNOME Shell extension to make your desktop easy on the eye, day and night.
+      #- gnome-shell-extension-pop-shell   # GNOME Shell extension for advanced tiling window management
   when:
     - ansible_distribution == "Archlinux"
     - env_desktop == "gnome"
-
-
-- name: Install gnomeshell extension stuff (Suse + Gnome)
-  tags: workstation,gnome,suse
-  package:
-    state: latest
-    name:
-      - chrome-gnome-shell
-      - gnome-shell-extension-desktop-icons
-#      - gnome-shell-extension-user-theme
-      - gnome-shell-extensions-common
-      - gnome-tweaks
-#      - gnome-shell-search-provider-contacts # "Gnome contacts" wird deinstallert, wg. evolution
-#      - gnome-shell-calendar                 # "Gnome calendar" wird deinstallert, wg. evolution
-  when:
-    - ansible_os_family == "Suse"
-    - env_desktop == "gnome"
-
