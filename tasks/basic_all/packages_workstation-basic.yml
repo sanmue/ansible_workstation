@@ -37,7 +37,7 @@
       - neofetch
       - rsync   # bereits installiert (bootstrap)
       - shellcheck
-      #- skanlite   # eher bei Plasma Desktop
+      #- skanlite   # bei KDE Plasma Desktop
       - steam
       - syncthing
       #- terminator   # Terminal emulator that supports tabs and grids
