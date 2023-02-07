@@ -8,4 +8,23 @@
     method: system
   when:
     - ansible_distribution == "Ubuntu"
-  
+
+
+
+- name: Enable flatpak for pamac (Archlinux)
+  tags: workstation,arch,flatpak
+  become: true
+  become_user: root
+  ansible.builtin.shell:
+    cmd: sed -Ei '/EnableFlatpak/s/^#//' /etc/pamac.conf
+  when:
+    - ansible_distribution == "Archlinux"
+
+- name: Enable flatpak updates for pamac (Archlinux)
+  tags: workstation,arch,flatpak
+  become: true
+  become_user: root
+  ansible.builtin.shell:
+    cmd: sed -Ei '/CheckFlatpakUpdates/s/^#//' /etc/pamac.conf
+  when:
+    - ansible_distribution == "Archlinux"

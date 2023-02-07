@@ -1,14 +1,14 @@
-###########
-### Manjaro
-###########
+#######################
+### Archlinux (Manjaro)
+#######################
 
-- name: Enable AUR support for pamac gui (Manjaro)
+- name: Enable AUR support for pamac gui (Archlinux)
   ansible.builtin.shell:
     cmd: sudo sed -Ei '/EnableAUR/s/^#//' /etc/pamac.conf
   when:
     - ansible_distribution == "Archlinux"
 
-- name: Enable check for updates from AUR in pamac (Manjaro)
+- name: Enable check updates for AUR packages in pamac (Archlinux)
   ansible.builtin.shell:
     cmd: sudo sed -Ei '/CheckAURUpdates/s/^#//' /etc/pamac.conf
   when:

@@ -6,10 +6,24 @@
     method: system
   with_items:
     - 'com.belmoussaoui.Authenticator'
+    - 'com.github.tchx84.Flatseal'
     - 'de.willuhn.Jameica'
     - 'net.cozic.joplin_desktop'
     - 'de.haeckerfelix.Shortwave'
 
+
+- name: install flatpak packages (Extension Manager) for Gnome (Gnome, all)
+  tags: workstation,arch,flatpak
+  flatpak:
+    name: '{{ item }}'
+    state: present
+    method: system
+  with_items:
+    - 'org.gnome.Extensions'
+    - 'com.mattjakeman.ExtensionManager'
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+    
 
 - name: install flatpak packages for workstations (Archlinux)
   tags: workstation,arch,flatpak
@@ -33,8 +47,6 @@
     - 'com.brave.Browser'
     - 'org.chromium.Chromium'
     - 'com.discordapp.Discord'
-    - 'org.gnome.Extensions'
-    - 'com.mattjakeman.ExtensionManager'
     - 'org.mozilla.firefox'
     - 'com.github.johnfactotum.Foliate'
     - 'org.keepassxc.KeePassXC'

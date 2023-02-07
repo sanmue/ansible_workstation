@@ -28,17 +28,16 @@
   - include: tasks/Desktop_Gnome/packages_workstation-Gnome-removePreInstalls.yml
   - include: tasks/Desktop_Plasma/packages_workstation-Plasma-removePreInstalls.yml
   # ----------------------------------------------------------
-  # ### Installation Software-Packages (inklusive snap + flatpak):
+  # ### Installation Software-Packages
   # - repo:
   - include: tasks/basic_all/packages_workstation-basic.yml
-  - include: tasks/Desktop_Gnome/packages_workstation-Gnome.yml
   - include: tasks/Desktop_Plasma/packages_workstation-Plasma.yml
-  # - gnomeshell:
+  - include: tasks/Desktop_Gnome/packages_workstation-Gnome.yml
   - include: tasks/Desktop_Gnome/packages_workstation-gnomeshellstuff.yml
   # - flatpak:
   - include: tasks/flatpakSnap/config_workstation-flatpak.yml
   - include: tasks/flatpakSnap/packages_workstation-flatpak.yml
-    # - snap:
+  # - snap:
   - include: tasks/flatpakSnap/config_workstation-snap.yml
   - include: tasks/flatpakSnap/packages_workstation-snap.yml
   # Installation lokal heruntergeladener Pakete:
