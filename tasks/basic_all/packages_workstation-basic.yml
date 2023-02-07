@@ -28,12 +28,12 @@
       - htop
       - hunspell
       #- hyphen-de
-      - inkscape
       - kdeconnect
       - keepassxc
       - kitty   # gpu beschleunigtes terminal
       - lsb-release
       - make
+      #- man-pages-de
       - neofetch
       - rsync   # bereits installiert (bootstrap)
       - shellcheck
@@ -47,7 +47,10 @@
       - vlc
       - unzip
       - wget
+      #
+      # --- Firewall
       - ufw   # bereits installiert (bootstrap)
+      #- firewalld   # ggf. ändern
       #
       # ---------
       # firmware:
@@ -127,9 +130,10 @@
       - torbrowser-launcher
       - vim-ansible
       #
-      # flatpak-plugin für pamac:
-      #- pamac-flatpak-plugin   # scheint es (unter diesem Namen) nicht mehr zu geben
+      # -----------------------------------
+      # flatpak- und snap-plugin für pamac:
       - libpamac-flatpak-plugin
+      - pamac-snap-plugin
       #
       # ---------
       # firmware:

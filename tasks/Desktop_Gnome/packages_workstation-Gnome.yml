@@ -16,6 +16,7 @@
       - gnome-disk-utility
       - gnome-keyring
       - gtkhash
+      - inkscape   # Plasma: Krita
       #- kdeconnect   # -> ? gnome-shell-extension-gsconnect ?
       - rhythmbox
       - seahorse   # bereits standardmäßig installiert
