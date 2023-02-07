@@ -1,8 +1,19 @@
-- name: add ansible-pull cron job
-  tags: cron
-  cron:
-    name: ansible auto-provision
-    user: s_ansible
-    minute: "*/10"
-    job: ansible-pull -o -U https://github.com/sanmue/ansible_test.git
 
+#- name: add ansible-pull cron job
+#  tags: cron
+#  cron:
+#    name: ansible auto-provision
+#    user: s_ansible
+#    minute: "*/10"
+#    job: ansible-pull -o -U https://github.com/sanmue/ansible_test.git
+
+
+# Für Manjaro; bei Arch: reflector nutzen
+- name: Create Cronjob to update pacman-mirrors (Archlinux)
+  ansible.builtin.cron:
+    name: "Update pacman-mirrors every month"
+    special_time: monthly
+    user: root
+    job: "pacman-mirrors --country Germany,France,Austria && pacman -Syyu"
+  when:
+    - ansible_distribution == "Archlinux"

@@ -3,6 +3,32 @@
 ### Install from locally downloades packages
 #   ----------------------------------------
 
+#####################################
+### Citrix Workspace App (ICA-Client)
+#####################################
+
+- name: Install Certificates for Citrix Workspace App (ICA-Client) from Mozilla cert-folder + pem-convert (Ubuntu)
+  # requires installed Mozilla Firefox (was installed via a previous task)
+  ansible.builtin.shell:
+    #chdir: tasks/basic_all/
+    #cmd: ./config_workstation-localPackageInstall-CitrixWorkspaceApp.sh
+    cmd: ./tasks/basic_all/config_workstation-localPackageInstall-CitrixWorkspaceApp.sh
+  when:
+    - ansible_distribution == "Ubuntu"
+
+- name: TODO - Download and install Citrix Workspace App + USB Support Package (Ubuntu)
+  ansible.builtin.debug:
+    msg: "TODO: download from 'https://www.citrix.com/downloads/workspace-app/linux/'"
+  when:
+    - ansible_distribution == "Ubuntu"
+
+- name: Download and install Citrix Workspace App (icaclient) from AUR (Archlinux)
+  ansible.builtin.shell:
+    cmd: pamac build --no-confirm icaclient
+  when:
+    - ansible_distribution == "Archlinux"
+
+
 ######################
 ### Visual Studio Code
 ######################
@@ -72,23 +98,3 @@
   when:
     - ansible_distribution == "Ubuntu"
 
-
-
-#####################################
-### Citrix Workspace App (ICA-Client)
-#####################################
-
-- name: Install Certificates for Citrix Workspace App (ICA-Client) from Mozilla cert-folder + pem-convert
-  # requires installed Mozilla Firefox (was installed via a previous task)
-  ansible.builtin.shell:
-    #chdir: tasks/basic_all/
-    #cmd: ./config_workstation-localPackageInstall-CitrixWorkspaceApp.sh
-    cmd: ./tasks/basic_all/config_workstation-localPackageInstall-CitrixWorkspaceApp.sh
-  when:
-    - ansible_distribution == "Ubuntu"
-
-- name: TODO - Download and install Citrix Workspace App + USB Support Package
-  ansible.builtin.debug:
-    msg: "TODO: download from 'https://www.citrix.com/downloads/workspace-app/linux/'"
-  when:
-    - ansible_distribution == "Ubuntu"

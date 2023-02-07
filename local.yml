@@ -57,7 +57,7 @@
   # ----------------------------------------------------------
   # ### sudo-ansible-user + cronjob:
   # - include: tasks/basic_all/config_all-ansible-users.yml
-  # - include: tasks/basic_all/config_all-cron.yml
+  - include: tasks/basic_all/config_all-cron.yml
   # ----------------------------------------------------------
   # ### cleanup:
   - include: tasks/basic_all/all_cleanup.yml
