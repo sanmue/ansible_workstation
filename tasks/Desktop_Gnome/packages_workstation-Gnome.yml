@@ -90,6 +90,7 @@
     name:
       - alacarte
       - atom
+      - brave-browser
       - chromium
       - dconf-editor
       - deja-dup
@@ -101,18 +102,8 @@
       - firefox
       - firefox-i18n-de
       # ---
-      # firmware:
-      - alsa-firmware
-      - b43-fwcutter
-      - fwupd
-      - gnome-firmware
-      - linux-firmware
-      - manjaro-firmware
-      - sof-firmware
-      # ---
       - foliate
-#      - flameshot
-#      - geary -> evolution
+#      - flameshot   # -> ksnip
       - gnome-disk-utility
       - gnome-keyring
       - manjaro-keyring
@@ -125,19 +116,20 @@
       - hplip
       - inkscape
       - kdeconnect
+      - ksnip
       - libreoffice-still
       - libreoffice-still-de
+      - libreoffice-still-en
       - lshw
       - malcontent
       - nemo
       - nemo-share
       - nemo-terminal
       - nextcloud-client
-      - pamac-flatpak-plugin
+      #- pamac-flatpak-plugin   # scheint es (unter diesem Namen) nicht mehr zu geben
+      - libpamac-flatpak-plugin
       - rhythmbox
       - signal-desktop
-#      - thunderbird
-#      - thunderbird-i18n-de
       - timeshift
       - timeshift-autosnap
       - torbrowser-launcher
@@ -145,6 +137,15 @@
       - totem # -> vlc
 #      - vlc - -> totem
       - ufw
+      # ---
+      # firmware:
+      - alsa-firmware
+      - b43-fwcutter
+      - fwupd
+      - gnome-firmware
+      - linux-firmware
+      - manjaro-firmware
+      - sof-firmware
   when:
     - ansible_distribution == "Archlinux"
     - env_desktop == "gnome"

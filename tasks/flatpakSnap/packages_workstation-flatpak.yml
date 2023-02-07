@@ -1,42 +1,14 @@
-#- name: install flatpak packages for workstations (all Distros)
-#  tags: workstation,ubuntu,suse,arch,flatpak
-#  flatpak:
-#    name: ['de.willuhn.Jameica','io.atom.Atom']
-#    state: present
-#    method: system
-
-
-- name: install flatpak packages for workstations (Ubuntu)
-  tags: workstation,ubuntu,flatpak
+- name: install flatpak packages for workstations (all)
+  tags: workstation,flatpak
   flatpak:
     name: '{{ item }}'
     state: present
     method: system
   with_items:
     - 'com.belmoussaoui.Authenticator'
-    - 'com.brave.Browser'
-    - 'org.chromium.Chromium'
-    - 'com.discordapp.Discord'
-    - 'org.gnome.Extensions'
-    - 'com.mattjakeman.ExtensionManager'
-    - 'org.mozilla.firefox'   # aus mozillateam ppa-repo
-    - 'com.github.johnfactotum.Foliate'
     - 'de.willuhn.Jameica'
-    #- 'org.jitsi.jitsi-meet'
     - 'net.cozic.joplin_desktop'
-    - 'org.keepassxc.KeePassXC'
-    - 'org.ksnip.ksnip'   # im Ksnip-Editor können noch ergänzngen (Markieren, Rahemen, ... gemacht werden; im ggs. zu "Screenshot")
-    - 'org.libreoffice.LibreOffice'
-    - 'com.nextcloud.desktopclient.nextcloud'
-    - 'org.remmina.Remmina'
     - 'de.haeckerfelix.Shortwave'
-    - 'org.signal.Signal'
-#    - 'ch.threema.threema-web-desktop'   # This application is no longer maintained, please use the official Desktop Client https://threema.ch/en/blog/posts/threema-for-desktop
-    - 'com.github.micahflee.torbrowser-launcher'
-#    - 'com.ulduzsoft.Birdtray'  --> evolution
-#    - 'org.mozilla.Thunderbird' --> evolution
-  when:
-    - ansible_distribution in ["Ubuntu"]
 
 
 - name: install flatpak packages for workstations (Archlinux)
@@ -46,41 +18,31 @@
     state: present
     method: system
   with_items:
-    - 'com.belmoussaoui.Authenticator'
-#    - 'com.discordapp.Discord'
-#    - 'com.github.johnfactotum.Foliate'
-#    - 'com.github.micahflee.torbrowser-launcher'
-    - 'com.ulduzsoft.Birdtray'
-    - 'de.willuhn.Jameica'
-#    - 'io.atom.Atom'
-    - 'net.cozic.joplin_desktop'
-#    - 'org.chromium.Chromium'
-#    - 'org.jitsi.jitsi-meet'
-#    - 'org.ksnip.ksnip'
-#    - 'org.libreoffice.LibreOffice'
-#    - 'org.mozilla.Thunderbird'
-#    - 'org.signal.Signal'
-    - 'de.haeckerfelix.Shortwave'
+    - 'net.ankiweb.Anki'
   when:
     - ansible_distribution in ["Archlinux"]
 
 
-- name: install flatpak packages for workstations (Suse)
-  tags: workstation,suse,flatpak
+- name: install flatpak packages for workstations (Ubuntu)
+  tags: workstation,ubuntu,flatpak
   flatpak:
     name: '{{ item }}'
     state: present
     method: system
   with_items:
-    - 'com.belmoussaoui.Authenticator'
-#    - 'com.ulduzsoft.Birdtray' # -> evolution
-#    - 'com.nextcloud.desktopclient.nextcloud'
-    - 'de.willuhn.Jameica'
-#    - 'io.atom.Atom'
-    - 'net.cozic.joplin_desktop'
-#    - 'org.jitsi.jitsi-meet'
+    - 'com.brave.Browser'
+    - 'org.chromium.Chromium'
+    - 'com.discordapp.Discord'
+    - 'org.gnome.Extensions'
+    - 'com.mattjakeman.ExtensionManager'
+    - 'org.mozilla.firefox'
+    - 'com.github.johnfactotum.Foliate'
+    - 'org.keepassxc.KeePassXC'
+    - 'org.ksnip.ksnip'   # im Ksnip-Editor können noch ergänzngen (Markieren, Rahemen, ... gemacht werden; im ggs. zu "Screenshot")
+    - 'org.libreoffice.LibreOffice'
+    - 'com.nextcloud.desktopclient.nextcloud'
+    - 'org.remmina.Remmina'
     - 'org.signal.Signal'
-    - 'de.haeckerfelix.Shortwave'
+    - 'com.github.micahflee.torbrowser-launcher'
   when:
-#    - ansible_distribution == "openSUSE Leap"
-    - ansible_os_family == "Suse"
+    - ansible_distribution in ["Ubuntu"]

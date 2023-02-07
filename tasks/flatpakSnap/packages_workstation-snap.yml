@@ -1,47 +1,15 @@
 
-- name: install snap packages for workstations (all distros, not Suse)
-  tags: workstation,ubuntu,arch,snap #,suse
+- name: install snap packages for workstations (all)
+  tags: workstation,ubuntu,arch,snap
   snap:
     state: present
     name:
-#      - chromium
-#      - discord
-#      - gdu-disk-usage-analyzer
-#      - joplin-james-carroll
-#      - ksnip
-#      - libreoffice
-#      - signal-desktop
-#      - thunderbird
       - whalebird
-  when: ansible_os_family != "Suse"
 
-- name: install snap packages (--classic) for workstations (all distros)
-  tags: workstation,ubuntu,arch,snap,suse
+- name: install snap packages --classic for workstations (all)
+  tags: workstation,ubuntu,arch,snap
   snap:
     state: present
     name: 
       - espanso
-#      - code   # Ubuntu: Visual Studio Code; geändert auf: deb / Microsoft repo
     classic: yes
-
-
-# alternativ (https://newbedev.com/install-snap-packages-with-ansible):
-#- name: install heroku cli via snap
-#  command: snap install heroku --classic
-#
-
-#- name: install snap packages for workstations (Ubuntu)
-#  tags: workstation,ubuntu,arch,snap #,suse
-#  snap:
-#    state: present
-#    name:
-###   Firmware --------------
-##      - fwts
-#      - fwupd
-#      - gnome-firmware
-###   -----------------------
-#  when:
-#    - ansible_distribution == "Ubuntu"
-#    - env_desktop == "ubuntu:gnome"
-
-# for i in $(snap connections | grep gtk-common-themes:gtk-3-themes | awk '{print $2}'); do sudo snap connect $i yaru-colors:gtk-3-themes; done && for i in $(snap connections | grep gtk-common-themes:gtk-2-themes | awk '{print $2}'); do sudo snap connect $i yaru-colors:gtk-2-themes; done && for i in $(snap connections | grep gtk-common-themes:icon-themes | awk '{print $2}'); do sudo snap connect $i yaru-colors:icon-themes; done
