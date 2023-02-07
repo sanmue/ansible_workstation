@@ -1,15 +1,25 @@
 
 - name: install snap packages for workstations (all)
   tags: workstation,ubuntu,arch,snap
-  snap:
+  community.general.snap:
     state: present
     name:
       - whalebird
 
 - name: install snap packages --classic for workstations (all)
   tags: workstation,ubuntu,arch,snap
-  snap:
+  community.general.snap:
     state: present
     name: 
       - espanso
-    classic: yes
+    classic: true
+
+- name: install snap packages --classic for workstations (Archlinux)
+  tags: workstation,ubuntu,arch,snap
+  community.general.snap:
+    state: present
+    name: 
+      - powershell
+    classic: true
+  when:
+    - ansible_distribution == "Archlinux"

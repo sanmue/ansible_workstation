@@ -1,26 +1,30 @@
-#- name: start and enable snapd (Suse)
-#  tags: workstation,suse,snap
-#  service:
-#    name: snapd
-#    state: started
-#    enabled: yes
-#  when: ansible_os_family == "Suse"
-
-#- name: start and enable snapd (Tumbleweed)
-#   tags: workstation,suse,snap 
-#   service:
-#     name: snapd-apparmor
-#     state: started
-#   when: ansible_distribution == "openSUSE Tumbleweed" # Name prüfen
 
 - name: start and enable snapd (Archlinux)  
   tags: workstation,arch,snap
   service:
     name: snapd.socket
-#    name: snapd
     state: started
     enabled: yes
   when: ansible_distribution == "Archlinux"
+
+- name: enable classic snap support (Archlinux)
+  tags: workstation,arch,snap
+  become: true
+  become_user: root
+  ansible.builtin.shell:
+    cmd: ln -s /var/lib/snapd/snap /snap
+  when:
+    - ansible_distribution == "Archlinux"
+
+- name: Enable snap for pamac (Archlinux)
+  tags: workstation,arch,snap
+  become: true
+  become_user: root
+  ansible.builtin.shell:
+    cmd: sed -Ei '/EnableSnap/s/^#//' /etc/pamac.conf
+  when:
+    - ansible_distribution == "Archlinux"
+
 
 
 # https://stackoverflow.com/questions/56560173/ansible-how-to-add-modify-path-variable-in-centos
@@ -38,4 +42,3 @@
 #      line: 'PATH=\1\2:{{ snapd_path }}\3'
 #      backrefs: yes
 #    when: lookup('file', '/etc/environment') is search('^\s*PATH\s*=')
-
