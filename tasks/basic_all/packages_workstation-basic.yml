@@ -3,43 +3,85 @@
 ### NOT depending on Desktop Environmet
 #######################################
 
-- name: Install packages for workstations (basic/all)
-  tags: basic, workstation, ubuntu, arch, suse
+- name: Install basic packages for workstations (all)
+  tags: basic, workstation, ubuntu, arch
   package:
     state: latest
     name:
-      - anki
-#      - ansible   # bereits installiert (bootstrap)
+      - ansible   # bereits installiert (bootstrap)
       - ansible-lint   # für z.B. ansible extension in VS Code
       - clamav
       - clamtk
       - curl
       - flatpak
       - gimp
-#      - gimp-lang # gibt es nicht bei ubuntu
-#      - gimp-help-de
-      - gitk
-#      - gparted
+      - gimp-help-en
       - grsync
-#      - git   # bereits installiert (bootstrap)
+      - git   # bereits installiert (bootstrap)
       - htop
 #      - hyphen-de
       - keepassxc
-#      - keepassxc-lang # gibt es nicht bei ubuntu
       - kitty   # gpu beschleunigtes terminal
       - lsb-release
-#      - nano   # --> vim
+      - make
       - neofetch
-      - powershell   # repo wurde hinzugefügt
       - rsync
       - shellcheck
-#      - skanlite # eher bei KDE
-#      - snapd # bei Suse herausgenommen
-#      - syncthing
-#      - terminator # bei Suse+KDE nicht unbedingt notwendig -> Konsole
+#      - skanlite   # eher bei KDE
+      - syncthing
+#      - terminator   # Terminal emulator that supports tabs and grids
+      - snapd
       - vim
       - vlc
       - unzip
+      - wget
+
+
+- name: install basic packages for snapper on btrfs filesystem (all)
+  tags: basic, workstation, arch
+  package:
+    state: latest
+    name:
+      ### for btrfs filesystem:
+      - snapper           # A tool for managing BTRFS and LVM snapshots. It can create, diff and restore snapshots and provides timelined auto-snapping.
+      - snapper-gui       # GUI for snapper, a tool for Linux filesystem snapshot management
+      # >>> You must create a default config with snapper cli named root first.
+      # >>> Run 'snapper -c root create-config /' as root
+  when: 
+    - ansible_mounts[mount]  == "/"
+    - ansible_mounts[fstype] == "btrfs"
+
+- name: install additional packages for snapper on btrfs filesystem (Archlinux)
+  tags: basic, workstation, arch
+  package:
+    state: latest
+    name:
+      ### additional packages for btrfs filesystem:
+      - btrfs-assistant   # An application for managing BTRFS subvolumes and Snapper snapshots
+      - snap-pac          # Pacman hooks that use snapper to create pre/post btrfs snapshots like openSUSE's YaST
+      - snap-sync         # Use snapper snapshots to backup to external drive
+  when: 
+    - ansible_mounts[mount]  == "/"
+    - ansible_mounts[fstype] == "btrfs"
+    - ansible_distribution in ["Archlinux"]
+
+
+- name: install basic packages (Archlinux)
+  tags: basic, workstation, arch
+  package:
+    state: latest
+    name:
+      - base-devel   # insbes. wg. AUR Paketen
+      - code   # The Open Source build of Visual Studio Code (vscode) editor
+      - gnupg
+      - gpgme
+#      - ipset
+      - openssh
+      - pyenv
+      - remmina
+      - vim-ansible
+  when: ansible_distribution in ["Archlinux"]
+
 
 - name: install basic packages (Ubuntu)
   tags: basic, ubuntu, workstation
@@ -48,21 +90,21 @@
     name:
 #      - snapd # bei Suse herausgenommen # bei Ubuntu schon vorhanden
 #      - fwupd # firmware update daemon # bereits standardm. installiert
+      - anki
+      - gitk
       - gpg
       - openssh-client
+      - powershell   # repo wurde hinzugefügt
       - ssh
       - ufw
 #     Pyenv
 #     https://ostechnix.com/pyenv-python-version-management-made-easier/
-      - make
       - build-essential
       - libssl-dev
       - zlib1g-dev
       - libbz2-dev
       - libreadline-dev
       - libsqlite3-dev
-      - wget
-      - curl
       - llvm
       - libncurses5-dev
       - libncursesw5-dev
@@ -86,6 +128,8 @@
 #     Pyenv
 #     https://ostechnix.com/pyenv-python-version-management-made-easier/
 #     https://github.com/pyenv/pyenv-installer
+#
+#     manche Pakete sind schon installiert (s.o.)
       - make
       - build-essential
       - libssl-dev
@@ -132,42 +176,8 @@
     - env_displayserver == "x11"
 
 
-- name: install basic packages (Archlinux)
-  tags: basic, workstation, arch
-  package:
-    state: latest
-    name:
-      - snapd # bei Suse herausgenommen
-  when: ansible_distribution in ["Archlinux"]
 
-
-- name: install basic packages (Archlinux, Suse)
-  tags: basic, workstation, arch, suse
-  package:
-    state: latest
-    name:
-      - gnupg
-      - gpgme
-      - ebtables
-      - ipset
-      - openssh
-      - remmina
-  when: ansible_distribution in ["Archlinux"] or ansible_os_family == "Suse"
-#    - ansible_distribution in ["Archlinux", "openSUSE Leap"]
-
-
-- name: install basic packages (Suse)
-  tags: basic, workstation, Suse
-  package:
-    state: latest
-    name:
-      - firewalld
-#      - exfatprogs # als ersatz für zuvor deinstallierte exfat-utils (wg. gparted); wird aktuell nicht deinstalliert
-      - fuse-exfat # empfohlene Abhängigkeit ist exfat-utils
-  when: ansible_os_family == "Suse"
-
-
-#- name: install Vivaldi Browser (Ubuntu, tmp. ohne Suse)
+#- name: install Vivaldi Browser (Ubuntu)
 #  tags: workstation,ubuntu,suse
 #  package:
 #    state: latest
@@ -177,7 +187,7 @@
 ##        ansible_distribution in ["Ubuntu"]
 #  when: ansible_distribution in ["Ubuntu"]
 
-#- name: iinstall Vivaldi Browser (Archlinux)
+#- name: install Vivaldi Browser (Archlinux)
 #  tags: workstation,arch
 #  package:
 #    state: latest
