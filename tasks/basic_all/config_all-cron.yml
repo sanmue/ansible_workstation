@@ -14,6 +14,6 @@
     name: "Update pacman-mirrors every month"
     special_time: monthly
     user: root
-    job: "pacman-mirrors --country Germany,France,Austria && pacman -Syyu"
+    job: "pacman-mirrors -c all && pacman-mirrors --country Germany,France,Austria,Switzerland,Netherlands && sudo pacman -Syyu"
   when:
     - ansible_distribution == "Archlinux"
