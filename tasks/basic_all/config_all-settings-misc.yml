@@ -95,7 +95,7 @@
   become: true
   become_user: "{{ env_user }}"
   when:
-    - ansible_distribution in [Archlinux"]
+    - ansible_distribution in ["Archlinux"]
 
 - name: Wait until 'Visual Studio Code' Extension 'Sync Settings' Standard Config-File is present before continuing (Ubuntu)
   ansible.builtin.wait_for:
