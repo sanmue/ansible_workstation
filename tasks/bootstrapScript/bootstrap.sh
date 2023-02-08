@@ -66,12 +66,12 @@ echo "Verwendetes OS: ${os}"
 ### ---
 case ${os} in
     Manjaro*)
-        #if [ ! -f "/home/${userid}/.bootstrapMirrorPool" ]; then
-            #touch "/home/${userid}/.bootstrapMirrorPool"
+        if [ ! -f "/home/${userid}/.bootstrapMirrorPool" ]; then
+            touch "/home/${userid}/.bootstrapMirrorPool"
 
             echo -e "\nReset custom mirror list + customize mirror pool + full refresh of the package database and update all packages on the system..."
             sudo pacman-mirrors -c all && pacman-mirrors --country Germany,France,Austria,Switzerland,Netherlands && sudo pacman -Syyu
-        #fi
+        fi
 
         echo -e "\nInstallation initial benoetigte Software (git, ansible, openssh, ufw)..."
         sudo pacman -Syu --needed --noconfirm rsync git ansible openssh ufw ufw-extras vim
