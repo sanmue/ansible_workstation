@@ -29,7 +29,7 @@
 - name: Set vim global config (Archlinux)
   ansible.builtin.copy:
     src: "{{ env_PWD }}/files/vimrc_arch"
-    dest: /etc/vim/vimrc
+    dest: /etc/vimrc
     owner: root
     group: root
     mode: '0644'
