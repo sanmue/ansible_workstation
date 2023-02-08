@@ -59,3 +59,75 @@
     repo: https://github.com/dense-analysis/ale.git
     dest: /home/{{ env_user }}/.vim/pack/git-plugins/start
     depth: 1
+
+
+
+######################
+### Visual Studio Code
+######################
+
+- name: Install 'Visual Studio Code' bzw 'Code-OSS' - Extension 'Sync Settings' by zokugun (Ubuntu, Arch)
+  tags: workstation,ubuntu
+  ansible.builtin.shell:
+    cmd: code --install-extension zokugun.sync-settings
+  become: true
+  become_user: "{{ env_user }}"
+  when:
+    - ansible_distribution in ["Ubuntu", "Archlinux"]
+
+- name: Start 'Visual Studio Code' bzw 'Code-OSS' (Ubuntu, Arch)
+  tags: workstation,ubuntu
+  ansible.builtin.shell:
+    cmd: code >/dev/null 2>&1 &  # damit im Home-Verzeichnis der Config-Pfad von VS Code erstellt wird + später die settings.yml dorthin kopiert werden kann
+  args:
+      creates: /home/{{ env_user }}/.config/Code/User/globalStorage/zokugun.sync-settings/settings.yml   # nur ausführen, wenn nicht bereits z.B. in vorhergehendem Lauf gestartet/erstellt wurde
+  become: true
+  become_user: "{{ env_user }}"
+  when:
+    - ansible_distribution in ["Ubuntu", "Archlinux"]
+
+- name: Wait until 'Visual Studio Code' Ext. 'Sync Settings' Standard Config-File is present before continuing (Ubuntu)
+  ansible.builtin.wait_for:
+    path: /home/{{ env_user }}/.config/Code/User/globalStorage/zokugun.sync-settings/settings.yml   #Datei
+    #path: /home/{{ env_user }}/.config/Code/User/globalStorage/zokugun.sync-settings/               # Ordner
+  when:
+    - ansible_distribution == "Ubuntu"
+
+- name: Wait until 'C'ode-OSS' Ext. 'Sync Settings' Standard Config-File is present before continuing (Arch)
+  ansible.builtin.wait_for:
+    path: "/home/{{ env_user }}/.config/Code - OSS/User/globalStorage/zokugun.sync-settings/settings.yml"   # Datei
+    #path: /home/{{ env_user }}/.config/Code/User/globalStorage/zokugun.sync-settings/               # Ordner
+  when:
+    - ansible_distribution == "Archlinux"
+
+#- name: Close Visual Studio Code (Ubuntu)
+#  tags: workstation,ubuntu
+#  ansible.builtin.shell:
+#    cmd: pkill -15 code   # Signal: "-15" entspricht "SIGTERM" : Abschließen und beenden des Programms
+#    #cmd: killall code
+#  become: true
+#  become_user: "{{ env_user }}"
+#  when:
+#    - ansible_distribution == "Ubuntu"
+
+- name: Set/Copy Visual Studio Code settings-file for Extension 'Sync Settings' (Ubuntu)
+  tags: workstation,ubuntu
+  ansible.builtin.copy:
+    src: ./files/VSCode_Extension_Sync-Settings_settings.yml
+    dest: /home/{{ env_user }}/.config/Code/User/globalStorage/zokugun.sync-settings/settings.yml   # Pfad bei Install des VS Code deb-Pakets (nicht bei flatpakod oder snap)
+    owner: "{{ env_user }}"
+    group: "{{ env_user }}"
+    mode: u=rw
+  when:
+    - ansible_distribution == "Ubuntu"
+
+- name: Set/Copy 'Code - OSS' settings-file for Extension 'Sync Settings' (Arch)
+  tags: workstation,ubuntu
+  ansible.builtin.copy:
+    src: ./files/VSCode_Extension_Sync-Settings_settings.yml
+    dest: "/home/{{ env_user }}/.config/Code - OSS//User/globalStorage/zokugun.sync-settings/settings.yml"   # Pfad bei Install des VS Code deb-Pakets (nicht bei flatpakod oder snap)
+    owner: "{{ env_user }}"
+    group: "{{ env_user }}"
+    mode: u=rw
+  when:
+    - ansible_distribution == "Archlinux"
