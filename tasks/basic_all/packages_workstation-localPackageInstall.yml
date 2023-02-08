@@ -24,9 +24,12 @@
 
 - name: Download and install Citrix Workspace App (icaclient) from AUR (Archlinux)
   ansible.builtin.shell:
-    cmd: pamac build --no-confirm icaclient
+    cmd: "pamac build --no-confirm icaclient && touch /home/{{ env_user }}/.icaclientInstalled"
+  args:
+    creates: "/home/{{ env_user }}/.icaclientInstalled"
   when:
     - ansible_distribution == "Archlinux"
+
 
 
 ######################
