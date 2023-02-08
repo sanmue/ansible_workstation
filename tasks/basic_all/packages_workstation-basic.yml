@@ -61,7 +61,7 @@
 
 - name: check if btrfs filesystem an register result in variable (all)
   tags: basic, workstation
-  ansible.builtin.command: mount -a | grep "^/dev" | grep "on / " | grep "btrfs"
+  ansible.builtin.command: mount -a | grep "^/dev" | grep "on / " | grep "btrfs" 2>/dev/null
   register: rootFsIsBtrfs
   ignore_errors: true
 
