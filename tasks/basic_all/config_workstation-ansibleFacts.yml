@@ -14,7 +14,7 @@
   set_fact:
     env_datadirs: "{{ ansible_facts['env']['XDG_DATA_DIRS'] }}"   # z.B.: "/usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop"
   when:
-    - ansible_distribution != "Arch"
+    - ansible_distribution != "Archlinux"
 
 - name: AnsibleFacts - Get path (PATH) (all)
   set_fact:
