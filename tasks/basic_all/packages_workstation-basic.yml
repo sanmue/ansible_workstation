@@ -70,9 +70,10 @@
       - snapper-gui       # GUI for snapper, a tool for Linux filesystem snapshot management
       # >>> You must create a default config with snapper cli named root first.
       # >>> Run 'snapper -c root create-config /' as root
+  with_items: ansible_mounts
   when: 
-    - ansible_mounts.mount  == "/"
-    - ansible_mounts.fstype == "btrfs"
+    - item.mount  == '/''
+    - item.fstype == 'btrfs'
 
 - name: install additional packages for snapper on btrfs filesystem (Archlinux)
   tags: basic, workstation, arch
@@ -84,9 +85,10 @@
       - snap-pac          # Pacman hooks that use snapper to create pre/post btrfs snapshots like openSUSE's YaST
       - snap-sync         # Use snapper snapshots to backup to external drive
       - timeshift-autosnap-manjaro
+  with_items: ansible_mounts
   when: 
-    - ansible_mounts.mount  == "/"
-    - ansible_mounts.fstype == "btrfs"
+    - item.mount  == '/''
+    - item.fstype == 'btrfs'
     - ansible_distribution in ["Archlinux"]
 
 
