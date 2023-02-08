@@ -128,7 +128,7 @@
       - code   # The Open Source build of Visual Studio Code (vscode) editor
       - discord
       #- evolution-on   # Tray plugin for the Evolution email client
-      - exfat-utils
+      #- exfat-utils   # exfat-utils and exfatprogs are in conflict
       - firefox
       - firefox-i18n-en-us
       #- flameshot   # -> ksnip
