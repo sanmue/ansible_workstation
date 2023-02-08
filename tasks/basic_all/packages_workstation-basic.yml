@@ -59,9 +59,14 @@
       - linux-firmware
 
 
+- name: check if btrfs filesystem an register result in variable (all)
+  tags: basic, workstation
+  ansible.builtin.command: mount | grep "^/dev" | grep "on / " | grep "btrfs"
+  register: rootFsIsBtrfs
+
 
 - name: install basic packages for snapper on btrfs filesystem (all)
-  tags: basic, workstation, arch
+  tags: basic, workstation
   package:
     state: latest
     name:
@@ -70,10 +75,20 @@
       - snapper-gui       # GUI for snapper, a tool for Linux filesystem snapshot management
       # >>> You must create a default config with snapper cli named root first.
       # >>> Run 'snapper -c root create-config /' as root
-  with_items: ansible_mounts
-  when: item.mount  == '/home' 
-    #- item.mount  == '/home'
+  #with_items: ansible_mounts
+  when: 
+    #- item.mount  == '/'
     #- item.fstype == 'btrfs'
+    - rootFsIsBtrfs != ''
+
+- name: create a default config with snapper cli (all)
+  tags: basic, workstation
+  ansible.builtin.command: snapper -c root create-config /
+  #with_items: ansible_mounts
+  when: 
+    #- item.mount  == '/'
+    #- item.fstype == 'btrfs'
+    - rootFsIsBtrfs != ''
 
 - name: install additional packages for snapper on btrfs filesystem (Archlinux)
   tags: basic, workstation, arch
@@ -85,10 +100,11 @@
       - snap-pac          # Pacman hooks that use snapper to create pre/post btrfs snapshots like openSUSE's YaST
       - snap-sync         # Use snapper snapshots to backup to external drive
       - timeshift-autosnap-manjaro
-  with_items: ansible_mounts
+  #with_items: ansible_mounts
   when: 
-    - item.mount  == '/home'
-    - item.fstype == 'btrfs'
+    #- item.mount  == '/'
+    #- item.fstype == 'btrfs'
+    - rootFsIsBtrfs != ''
     - ansible_distribution in ["Archlinux"]
 
 
