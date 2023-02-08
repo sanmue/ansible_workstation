@@ -205,13 +205,14 @@
 
 ##- name: set desktop interface - gtk-theme MateriaBreath-dark (all + Gnome)
 ## bei theme "MateriaBreath-dark" sind die Optionskästchenen + Häkchen nicht zu sehen
-- name: set desktop interface - gtk-theme (Gnome)
+- name: set desktop interface - gtk-theme (Gnome, Ubuntu)
   dconf:
     key: "/org/gnome/desktop/interface/gtk-theme"
     #    value: "'Adwaita-dark'"
     value: "'Yaru-prussiangreen-dark'"
   when:
     - env_desktop in ["gnome","ubuntu:gnome"]
+    - ansible_distribution in ["Ubuntu"]
 
 # Suse  -'Adwaita-dark'
 #- name: set desktop interface - gtk-theme (Suse + Gnome)
@@ -251,7 +252,7 @@
 #    - env_desktop in ["gnome","ubuntu:gnome"]
 
 #- name: set desktop interface - icon-theme Materia-Manjaro-Dark-2 (Gnome)
-- name: set desktop interface - icon-theme (Gnome)
+- name: set desktop interface - icon-theme (Gnome, Ubuntu)
   dconf:
     #    key: "/org/gnome/desktop/interface/icon-theme"
     #    value: "'Materia-Manjaro-Dark-2'"
@@ -259,6 +260,7 @@
     value: "'Yaru-prussiangreen'"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
+    - ansible_distribution in ["Ubuntu"]
 
 ### Desktop interface, calendar, sceensaver, ...:
 - name: set desktop interface - show-battery-percentage (Gnome)
