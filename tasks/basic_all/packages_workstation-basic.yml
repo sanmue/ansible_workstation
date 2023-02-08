@@ -81,7 +81,7 @@
     #- item.fstype == 'btrfs'
     - rootFsIsBtrfs != ''
 
-- name: create a default config with snapper cli (all)
+- name: create a default config for '/' with snapper cli named 'root' (all)
   tags: basic, workstation
   ansible.builtin.command: snapper -c root create-config /
   #with_items: ansible_mounts
