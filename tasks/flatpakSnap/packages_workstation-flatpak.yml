@@ -1,5 +1,5 @@
 - name: install flatpak packages for workstations (all)
-  tags: workstation,flatpak
+  tags: workstation,ubuntu,arch,flatpak
   flatpak:
     name: '{{ item }}'
     state: present
@@ -13,7 +13,7 @@
 
 
 - name: install flatpak packages (Extension Manager) for Gnome (Gnome, all)
-  tags: workstation,arch,flatpak
+  tags: workstation,ubuntu,arch,flatpak
   flatpak:
     name: '{{ item }}'
     state: present

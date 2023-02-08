@@ -65,7 +65,6 @@
   register: rootFsIsBtrfs
   ignore_errors: true
 
-
 - name: install basic packages for snapper on btrfs filesystem (all)
   tags: basic, workstation
   package:
@@ -84,7 +83,7 @@
 
 - name: check if default snapper config 'root' for '/' already exists (all)
   tags: basic, workstation
-  ansible.builtin.command: sudo snapper list-configs | grep root
+  ansible.builtin.command: sudo snapper list-configs | grep root 2>/dev/null
   register: snapperDefaultConfigExists
   ignore_errors: true
 
