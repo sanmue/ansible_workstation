@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Application
-Exec=nextcloud
+Exec=flatpak run com.nextcloud.desktopclient.nextcloud
 Hidden=false
 NoDisplay=false
 X-GNOME-Autostart-enabled=true

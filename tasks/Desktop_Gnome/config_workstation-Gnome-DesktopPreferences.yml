@@ -1,11 +1,9 @@
-
 # #######################################
 # ### Gnome Autostart Apps - Current User
 #
 # config for all Users see: https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/desktop_migration_and_administration_guide/user-sessions#autostart-applications
 # #######################################
 
-### autostart directory
 - name: Create autostart directory for current user if it does not exist
   ansible.builtin.file:
     path: /home/{{ env_user }}/.config/autostart
@@ -15,10 +13,21 @@
     mode: u=rwx
     #mode: '0700'
   when:
+    - env_desktop in ["ubuntu", "ubuntu:gnome"]
+- name: copy autostart file for Nextcloud Client (flatpak) to local user-folder (Ubuntu + Gnome)
+  ansible.builtin.copy:
+    src: "files/gnome/Gnome_AutostartApp_User_NextcloudClient_flatpak.desktop"
+    dest: "/home/{{ env_user }}/.config/autostart/NextcloudClient.desktop"
+    remote_src: yes
+    owner: "{{ env_user }}"
+    group: "{{ env_user }}"
+    mode: u=rw,g=rw,o=r
+  #    mode: '0664'
+  when:
     - env_desktop == "ubuntu:gnome"
 
 ### Nextcloud Desktop Client
-- name: copy autostart file for Nextcloud Client (flatpak) to local user-folder (Ubuntu + Gnome)
+- name: copy autostart file for Nextcloud Client to local user-folder (Arch + Gnome)
   ansible.builtin.copy:
     src: "files/gnome/Gnome_AutostartApp_User_NextcloudClient.desktop"
     dest: "/home/{{ env_user }}/.config/autostart/NextcloudClient.desktop"
@@ -26,11 +35,10 @@
     owner: "{{ env_user }}"
     group: "{{ env_user }}"
     mode: u=rw,g=rw,o=r
-#    mode: '0664'
+  #    mode: '0664'
   when:
-    - env_desktop == "ubuntu:gnome"
-
-
+    - env_desktop == "gnome"
+    - ansible_distribution == "Archlinux"
 
 #######################
 ### Disable Ubuntu dock
@@ -51,125 +59,74 @@
 #  when:
 #    - env_desktop in ["ubuntu:gnome"]
 
-
-
 #################
 ### favorite apps
 #################
-# Unterscheidung noch nach Distro + Desktopenvirongment
-# da aktuell teilw. unterschiedliche Softwarequllen (Snap,Faltpak,Repo) und unterschiedliche Bezeichungen je Distro
 
-### Ubuntu + Gnome ###
 - name: adding favorite apps to dock (Ubuntu + Gnome)
   ansible.builtin.command: gsettings set org.gnome.shell favorite-apps "['com.belmoussaoui.Authenticator.desktop', 'org.keepassxc.KeePassXC.desktop', 'firefox.desktop', 'firefox-esr.desktop', 'org.mozilla.firefox.desktop', 'org.chromium.Chromium.desktop', 'brave-browser.desktop', 'com.brave.Browser.desktop', 'org.gnome.Epiphany.desktop', 'org.gnome.Evolution.desktop', 'org.gnome.Terminal.desktop', 'nemo.desktop', 'org.gnome.gedit.desktop', 'org.libreoffice.LibreOffice.desktop', 'code_code.desktop', 'code.desktop', 'anki.desktop', 'net.cozic.joplin_desktop.desktop', 'de.willuhn.Jameica.desktop', 'rhythmbox.desktop', 'de.haeckerfelix.Shortwave.desktop', 'org.signal.Signal.desktop', 'org.remmina.Remmina.desktop', 'virt-manager.desktop']"
   when:
     - env_desktop == "ubuntu:gnome"
 
-### Manjaro + Gnome ###
-- name: adding favorite apps to dock (Manjaro + Gnome)
+- name: adding favorite apps to dock (Archlinux + Gnome)
   ansible.builtin.command: gsettings set org.gnome.shell favorite-apps "['com.belmoussaoui.Authenticator.desktop', 'org.keepassxc.KeePassXC.desktop', 'firefox.desktop', 'chromium.desktop', 'org.gnome.Terminal.desktop', 'terminator.desktop', 'nemo.desktop', 'org.gnome.gedit.desktop', 'libreoffice-startcenter.desktop', 'anki.desktop', 'net.cozic.joplin_desktop.desktop', 'de.willuhn.Jameica.desktop', 'rhythmbox.desktop', 'de.haeckerfelix.Shortwave.desktop', 'signal-desktop.desktop', 'discord.desktop', 'whalebird_whalebird.desktop', 'org.remmina.Remmina.desktop', 'virt-manager.desktop', 'gnome-control-center.desktop', 'org.manjaro.pamac.manager.desktop']"
   when:
+    - env_desktop == "gnome"
     - ansible_distribution == "Archlinux"
-    - env_desktop == "gnome"
-
-### Suse + Gnome ###
-- name: adding favorite apps to dock (Suse + Gnome)
-  ansible.builtin.command: gsettings set org.gnome.shell favorite-apps "['com.belmoussaoui.Authenticator.desktop', 'org.keepassxc.KeePassXC.desktop', 'firefox.desktop', 'org.gnome.Epiphany.desktop', 'chromium-browser.desktop', 'org.gnome.Terminal.desktop', 'terminator.desktop', 'nemo.desktop', 'org.gnome.gedit.desktop', 'io.atom.Atom.desktop', 'org.gnome.Evolution.desktop', 'startcenter.desktop', 'anki.desktop', 'net.cozic.joplin_desktop.desktop', 'de.willuhn.Jameica.desktop', 'org.signal.Signal.desktop', 'discord.desktop', 'whalebird_whalebird.desktop', 'rhythmbox.desktop', 'de.haeckerfelix.Shortwave.desktop', 'org.remmina.Remmina.desktop', 'virt-manager.desktop', 'org.gnome.Software.desktop', 'org.opensuse.YaST.desktop']"
-  when:
-    - ansible_os_family == "Suse"
-    - env_desktop == "gnome"
-
 
 ######################
 ### desktop-background
 ######################
 
-### Ubuntu + Gnome ###
-- name: create a directory for desktop-wallpaper in local user-folder (Ubuntu + Gnome)
+- name: create a directory for desktop-wallpaper in local user-folder (Gnome)
   ansible.builtin.file:
     path: "/home/{{ env_user }}/.local/share/backgrounds"
     state: directory
-#    mode: '0755'
+  #    mode: '0755'
   when:
-    - env_desktop in ["ubuntu:gnome"]
+    - env_desktop in ["ubuntu", "ubuntu:gnome"]
 
-- name: copy desktop-wallpaper file to local user-folder (Ubuntu + Gnome)
+- name: copy desktop-wallpaper file to local user-folder (Gnome)
   ansible.builtin.copy:
-    src: "files/gnome/background/brad-huchteman-stone-mountain.jpg"                         # oder: "gnome_embos_1440P.png"
-    dest: "/home/{{ env_user }}/.local/share/backgrounds/brad-huchteman-stone-mountain.jpg" # oder: "gnome_embos_1440P.png"
+    src: "files/gnome/background/brad-huchteman-stone-mountain.jpg" 
+    dest: "/home/{{ env_user }}/.local/share/backgrounds/brad-huchteman-stone-mountain.jpg"
     remote_src: yes
     owner: "{{ env_user }}"
     group: "{{ env_user }}"
     mode: u=rwx,g=rwx,o=rwx
-#    mode: '0777'
+  #    mode: '0777'
   when:
-    - env_desktop == "ubuntu:gnome"
+    - env_desktop in ["ubuntu", "ubuntu:gnome"]
 
-- name: set desktop - background (Ubuntu + Gnome)
+- name: set desktop - background (Gnome)
   dconf:
     key: "/org/gnome/desktop/background/picture-uri"
-    value: '"file:///home/{{ env_user }}/.local/share/backgrounds/brad-huchteman-stone-mountain.jpg"' # oder: "gnome_embos_1440P.png"
-#    state: present   #standard
+    value: '"file:///home/{{ env_user }}/.local/share/backgrounds/brad-huchteman-stone-mountain.jpg"'
+  #    state: present   # standard-wert
   when:
-    - env_desktop == "ubuntu:gnome"
+    - env_desktop in ["ubuntu", "ubuntu:gnome"]
 
-- name: set desktop - background (Ubuntu + Gnome dark)
+- name: set desktop - dark background (Gnome)
   dconf:
     key: "/org/gnome/desktop/background/picture-uri-dark"
-    value: '"file:///home/{{ env_user }}/.local/share/backgrounds/brad-huchteman-stone-mountain.jpg"' # oder: "gnome_embos_1440P.png"
-#    state: present   #standard
+    value: '"file:///home/{{ env_user }}/.local/share/backgrounds/brad-huchteman-stone-mountain.jpg"'
+  #    state: present   # standard-wert
   when:
-    - env_desktop == "ubuntu:gnome"
+    - env_desktop in ["ubuntu", "ubuntu:gnome"]
 
-
-- name: set desktop-wallpaper picture-options (Ubuntu + Gnome)
+- name: set desktop-wallpaper picture-options (Gnome)
   dconf:
     key: "/org/gnome/desktop/background/picture-options"
     value: "'zoom'"
   when:
-    - env_desktop == "ubuntu:gnome"
+    - env_desktop in ["ubuntu", "ubuntu:gnome"]
 
-- name: set show-desktop-icons (Ubuntu + Gnome)
+- name: set show-desktop-icons (Gnome)
   dconf:
     key: "/org/gnome/desktop/background/show-desktop-icons"
     value: "false"
   when:
-    - env_desktop == "ubuntu:gnome"
-
-
-
-### Suse + Gnome ###
-- name: copy desktop-wallpaper file to local system-folder (Suse + Gnome)
-  become: true
-  copy:
-    src: "files/gnome/background/gnome_embos_1440P.png"
-    dest: /usr/share/wallpapers/ # systemweit verfügbar; lokal: dest: "/home/{{ env_user }}/Bilder/"
-    remote_src: yes
-    owner: root
-    group: root
-    mode: u=rwx,g=rwx,o=rwx
-#    mode: '0777'
-  when:
-    - ansible_os_family == "Suse"
-    - env_desktop == "gnome"
-
-- name: set desktop - background (Suse + Gnome)
-  dconf:
-    key: "/org/gnome/desktop/background/picture-uri"
-    value: "'file:///usr/share/wallpapers/gnome_embos_1440P.png'"
-  when:
-    - ansible_os_family == "Suse"
-    - env_desktop == "gnome"
-
-- name: set desktop-wallpaper picture-options (Suse + Gnome)
-  dconf:
-    key: "/org/gnome/desktop/background/picture-options"
-    value: "'zoom'"
-  when:
-    - ansible_os_family == "Suse"
-    - env_desktop == "gnome"
-
-
+    - env_desktop in ["ubuntu", "ubuntu:gnome"]
 
 ############################
 ### weitere desktop settings
@@ -179,17 +136,16 @@
     key: "/org/gnome/desktop/interface/clock-format"
     value: "'24h'"
   when:
-#    - ansible_os_family == "Suse"
-#    - env_desktop == "gnome"
+    #    - ansible_os_family == "Suse"
+    #    - env_desktop == "gnome"
     - env_desktop in ["gnome", "ubuntu:gnome"]
-
 
 - name: set desktop interface - clock-show-date (Gnome)
   dconf:
     key: "/org/gnome/desktop/interface/clock-show-date"
     value: "true"
   when:
-#    - ansible_os_family == "Suse"
+    #    - ansible_os_family == "Suse"
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
 - name: set desktop interface - clock-show-weekday (Gnome)
@@ -199,8 +155,6 @@
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-
-
 ### Appearance
 - name: set desktop interface - color-sheme - dark (Gnome)
   dconf:
@@ -208,8 +162,6 @@
     value: "'prefer-dark'"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
-
-
 
 ### gtk-theme ###
 
@@ -223,7 +175,6 @@
 #  when:
 ##    - ansible_os_family == "Suse"
 #    - env_desktop in ["gnome","ubuntu:gnome"]
-
 
 #- name: copy gtk-theme MateriaBreath-dark to userdir (all + Gnome)
 #  unarchive:
@@ -255,18 +206,15 @@
 ##    - ansible_os_family == "Suse"
 #    - env_desktop in ["gnome","ubuntu:gnome"]
 
-
-
 ##- name: set desktop interface - gtk-theme MateriaBreath-dark (all + Gnome)
 ## bei theme "MateriaBreath-dark" sind die Optionskästchenen + Häkchen nicht zu sehen
-- name: set desktop interface - gtk-theme (all + Gnome)
+- name: set desktop interface - gtk-theme (Gnome)
   dconf:
     key: "/org/gnome/desktop/interface/gtk-theme"
-#    value: "'Adwaita-dark'"
+    #    value: "'Adwaita-dark'"
     value: "'Yaru-prussiangreen-dark'"
   when:
     - env_desktop in ["gnome","ubuntu:gnome"]
-
 
 # Suse  -'Adwaita-dark'
 #- name: set desktop interface - gtk-theme (Suse + Gnome)
@@ -276,7 +224,6 @@
 #  when:
 #    - ansible_os_family == "Suse"
 #    - env_desktop == "gnome"
-
 
 ### icon-theme ###
 
@@ -290,7 +237,6 @@
 #  when:
 ##    - ansible_os_family == "Suse"
 #    - env_desktop in ["gnome","ubuntu:gnome"]
-
 
 #- name: copy icon-theme Materia-Manjaro-Dark-2 to userdir (all + Gnome)
 #  unarchive:
@@ -307,19 +253,15 @@
 ##    - ansible_os_family == "Suse"
 #    - env_desktop in ["gnome","ubuntu:gnome"]
 
-
-
 #- name: set desktop interface - icon-theme Materia-Manjaro-Dark-2 (Gnome)
 - name: set desktop interface - icon-theme (Gnome)
   dconf:
-#    key: "/org/gnome/desktop/interface/icon-theme"
-#    value: "'Materia-Manjaro-Dark-2'"
+    #    key: "/org/gnome/desktop/interface/icon-theme"
+    #    value: "'Materia-Manjaro-Dark-2'"
     key: "/org/gnome/desktop/interface/icon-theme"
     value: "'Yaru-prussiangreen'"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
-
-
 
 ### Desktop interface, calendar, sceensaver, ...:
 - name: set desktop interface - show-battery-percentage (Gnome)
@@ -378,8 +320,6 @@
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-
-
 ### power settings:
 #   ---------------
 - name: set settings-daemon - plugin - power - power-button-action (Gnome)
@@ -403,8 +343,6 @@
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-
-
 ### set Display - Night Light
 - name: set settings-daemon - plugin - color - night-light-enabled (Gnome)
   dconf:
@@ -413,13 +351,11 @@
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-
-
 ### set Keyboard Shortcuts
 # Settings - Keyboard - Keyboard Shortcuts
 # Alternative Möglichkeit: erstellte/vorhandene Keys eines Systems exportieren + wieder importieren per Skript:
 # - dconf dump /org/gnome/settings-daemon/plugins/media-keys/ > dconfDump_keyboardShortcuts.txt
-# - dconf load /org/gnome/settings-daemon/plugins/media-keys/ < dconfDump_keyboardShortcuts.txt 
+# - dconf load /org/gnome/settings-daemon/plugins/media-keys/ < dconfDump_keyboardShortcuts.txt
 - name: set settings-daemon - plugin - media-keys - control-center (Gnome)
   dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/control-center"
@@ -745,7 +681,6 @@
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-
 # - set/create list for configured custom-keybindings
 - name: set settings-daemon - plugin - media-keys - custom-keybindings (Gnome)
   dconf:
@@ -753,8 +688,6 @@
     value: "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom5/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom6/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom7/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom8/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom9/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom10/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom11/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom12/']"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
-
-
 
 ### Gnome Weather:
 #   -------------
@@ -773,8 +706,6 @@
 #  when:
 ##    - ansible_os_family == "Suse"
 #    - env_desktop == "gnome"
-
-
 
 ### nemo filebrowser -  preferences:
 #   --------------------------------
@@ -841,8 +772,6 @@
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-
-
 ### gedit -  preferences:
 #   ---------------------
 - name: set gedit preferences - scheme (Gnome)
@@ -852,30 +781,28 @@
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-
-
 ### gnome terminal - profiles and preferences:
 #   ------------------------------------------
 - name: set gnome terminal - profiles and preferences (Gnome, Ansible <2.10)
   script: "{{ env_PWD }}/tasks/Desktop_Gnome/config_workstation-Gnome-DesktopPreferences-terminal.sh" # funktioniert; ansible version 2.9
-##  ansible.builtin.script: "{{ env_PWD }}/tasks/Desktop_Gnome/config_workstation-Gnome-DesktopPreferences-terminal.sh" # ab ansible version 2.10
-##  ansible.builtin.script:  # ab ansible version 2.10
-##    cmd: "{{ env_PWD }}/tasks/Desktop_Gnome/config_workstation-Gnome-DesktopPreferences-terminal.sh"
-##
-##  command: "{{ env_PWD }}/tasks/Desktop_Gnome/config_workstation-Gnome-DesktopPreferences-terminal.sh" # funktioniert; ansible version 2.9
-##  ansible.builtin.command: "{{ env_PWD }}/tasks/Desktop_Gnome/config_workstation-Gnome-DesktopPreferences-terminal.sh" # ab ansible version 2.10
-##  ansible.builtin.command: # ab ansible version 2.10
-##    cmd: "{{ env_PWD }}/tasks/Desktop_Gnome/config_workstation-Gnome-DesktopPreferences-terminal.sh"
-## The command(s) will not be processed through the shell, so variables like $HOME and operations like "<", ">", "|", ";" and "&" will not work. Use the shell module if you need these features.
-##
-##  shell: "{{ env_PWD }}/tasks/Desktop_Gnome/config_workstation-Gnome-DesktopPreferences-terminal.sh" # funktioniert; ansible version 2.9
-##  ansible.builtin.shell: "{{ env_PWD }}/tasks/Desktop_Gnome/config_workstation-Gnome-DesktopPreferences-terminal.sh" # ab ansible version 2.10
+  ##  ansible.builtin.script: "{{ env_PWD }}/tasks/Desktop_Gnome/config_workstation-Gnome-DesktopPreferences-terminal.sh" # ab ansible version 2.10
+  ##  ansible.builtin.script:  # ab ansible version 2.10
+  ##    cmd: "{{ env_PWD }}/tasks/Desktop_Gnome/config_workstation-Gnome-DesktopPreferences-terminal.sh"
+  ##
+  ##  command: "{{ env_PWD }}/tasks/Desktop_Gnome/config_workstation-Gnome-DesktopPreferences-terminal.sh" # funktioniert; ansible version 2.9
+  ##  ansible.builtin.command: "{{ env_PWD }}/tasks/Desktop_Gnome/config_workstation-Gnome-DesktopPreferences-terminal.sh" # ab ansible version 2.10
+  ##  ansible.builtin.command: # ab ansible version 2.10
+  ##    cmd: "{{ env_PWD }}/tasks/Desktop_Gnome/config_workstation-Gnome-DesktopPreferences-terminal.sh"
+  ## The command(s) will not be processed through the shell, so variables like $HOME and operations like "<", ">", "|", ";" and "&" will not work. Use the shell module if you need these features.
+  ##
+  ##  shell: "{{ env_PWD }}/tasks/Desktop_Gnome/config_workstation-Gnome-DesktopPreferences-terminal.sh" # funktioniert; ansible version 2.9
+  ##  ansible.builtin.shell: "{{ env_PWD }}/tasks/Desktop_Gnome/config_workstation-Gnome-DesktopPreferences-terminal.sh" # ab ansible version 2.10
   args:
     creates: "/home/{{ env_user }}/.ansibleTerminalProfileSet"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
-##    - "ansible_version.major is version('2', '=')"
-##    - "ansible_version.minor is version('9', '<=')"
+    ##    - "ansible_version.major is version('2', '=')"
+    ##    - "ansible_version.minor is version('9', '<=')"
     - "ansible_version.full is version('2.10.0', '<')"
 
 - name: set gnome terminal - profiles and preferences (Gnome, Ansible >=2.10)
@@ -886,7 +813,6 @@
     - env_desktop in ["gnome", "ubuntu:gnome"]
     - "ansible_version.full is version('2.10.0', '>=')"
 
-
 - name: create flag - file .ansibleTerminalProfileSet (Gnome)
   file:
     path: "/home/{{ env_user }}/.ansibleTerminalProfileSet"
@@ -896,8 +822,6 @@
     access_time: preserve
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
-
-
 
 ### bashrc - add additional Paths:
 #   ------------------------------
@@ -926,15 +850,13 @@
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-
-
 ### gnome shell extensions -  preferences:
 #   --------------------------------------
 
 # ### ding
 # https://ubuntuhandbook.org/index.php/2022/03/show-trash-ubuntu-2204-desktop/
 - name: set gnome shell extensions - ding - show-home (Gnome)
-# Settings - Appearance - Desktop Icons - Show Personal folder
+  # Settings - Appearance - Desktop Icons - Show Personal folder
   dconf:
     key: "/org/gnome/shell/extensions/ding/show-home"
     value: "false"
@@ -948,8 +870,6 @@
     value: "'top-left'"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
-
-
 
 ### Dash to Dock:
 - name: set gnome shell extensions - dash-to-dock - custom-theme-shrink (Gnome)
@@ -1009,7 +929,7 @@
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
 - name: set gnome shell extensions - dash-to-dock - dock-fixed (Gnome)
-# Appearence - Dock - Auot-hide the Dock: enable
+  # Appearence - Dock - Auot-hide the Dock: enable
   dconf:
     key: "/org/gnome/shell/extensions/dash-to-dock/dock-fixed"
     value: "false"
@@ -1017,7 +937,7 @@
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
 - name: set gnome shell extensions - dash-to-dock - extend-height (Gnome)
-# Appearence - Dock - Panel mode: enable
+  # Appearence - Dock - Panel mode: enable
   dconf:
     key: "/org/gnome/shell/extensions/dash-to-dock/extend-height"
     value: "false"
@@ -1025,7 +945,7 @@
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
 - name: set gnome shell extensions - dash-to-dock - dash-max-icon-size (Gnome)
-# Appearence - Dock - Icon Size
+  # Appearence - Dock - Icon Size
   dconf:
     key: "/org/gnome/shell/extensions/dash-to-dock/dash-max-icon-size"
     value: "32"
@@ -1033,13 +953,12 @@
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
 - name: set gnome shell extensions - dash-to-dock - multi-monitor (Gnome)
-# Appearence - Dock - Show on: All Displays
+  # Appearence - Dock - Show on: All Displays
   dconf:
     key: "/org/gnome/shell/extensions/dash-to-dock/multi-monitor "
     value: "true"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
-
 
 ### openweather:
 - name: set gnome shell extensions - openweather - city (Gnome)
@@ -1098,8 +1017,6 @@
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-
-
 ###############################################
 # TODO: GNOME Shell Apps Dashboard - Categories
 ###############################################
@@ -1117,8 +1034,6 @@
 #  when:
 #    - ansible_os_family == "Suse"
 #    - env_desktop == "gnome"
-
-
 
 # ################################
 # ### Gnome Epiphany (Web Browser)
@@ -1149,8 +1064,6 @@
     value: "false"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
-
-
 
 # ##########################
 # ### Gnome Evolution (Mail)
