@@ -778,10 +778,11 @@
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
+
 ### gnome terminal - profiles and preferences:
 #   ------------------------------------------
-- name: set gnome terminal - profiles and preferences (Gnome, Ubuntu, Ansible <2.10)
-  script: "{{ env_PWD }}/tasks/Desktop_Gnome/config_workstation-Gnome-DesktopPreferences-terminal.sh" # funktioniert; ansible version 2.9
+- name: set gnome terminal - profiles and preferences (Gnome, Ubuntu)
+  ansible.builtin.script: "{{ env_PWD }}/tasks/Desktop_Gnome/config_workstation-Gnome-DesktopPreferences-terminal.sh" # funktioniert; ansible version 2.9
   ##  ansible.builtin.script: "{{ env_PWD }}/tasks/Desktop_Gnome/config_workstation-Gnome-DesktopPreferences-terminal.sh" # ab ansible version 2.10
   ##  ansible.builtin.script:  # ab ansible version 2.10
   ##    cmd: "{{ env_PWD }}/tasks/Desktop_Gnome/config_workstation-Gnome-DesktopPreferences-terminal.sh"
@@ -800,16 +801,7 @@
     - env_desktop in ["gnome", "ubuntu:gnome"]
     ##    - "ansible_version.major is version('2', '=')"
     ##    - "ansible_version.minor is version('9', '<=')"
-    - "ansible_version.full is version('2.10.0', '<')"
-    - ansible_distribution in ["Ubuntu"]
-
-- name: set gnome terminal - profiles and preferences (Gnome, Ubuntu, Ansible >=2.10)
-  ansible.builtin.script: "{{ env_PWD }}/tasks/Desktop_Gnome/config_workstation-Gnome-DesktopPreferences-terminal.sh" # ab ansible version 2.10
-  args:
-    creates: "/home/{{ env_user }}/.ansibleTerminalProfileSet"
-  when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
-    - "ansible_version.full is version('2.10.0', '>=')"
+    #- "ansible_version.full is version('2.10.0', '>=')"
     - ansible_distribution in ["Ubuntu"]
 
 - name: create flag - file .ansibleTerminalProfileSet (Gnome)
