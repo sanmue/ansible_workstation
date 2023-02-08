@@ -71,9 +71,9 @@
       # >>> You must create a default config with snapper cli named root first.
       # >>> Run 'snapper -c root create-config /' as root
   with_items: ansible_mounts
-  when: 
-    - item.mount  == '/home'
-    - item.fstype == 'btrfs'
+  when: item.mount  == '/home' 
+    #- item.mount  == '/home'
+    #- item.fstype == 'btrfs'
 
 - name: install additional packages for snapper on btrfs filesystem (Archlinux)
   tags: basic, workstation, arch
