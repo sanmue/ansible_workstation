@@ -148,7 +148,7 @@
       - nextcloud-client
       - openssh   # bereits installiert (bootstrap)
       - psutils   # A set of postscript utilities
-      #- python-psutil
+      - python-psutil
       - pyenv
       - remmina
       - signal-desktop
