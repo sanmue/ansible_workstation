@@ -130,7 +130,7 @@
       #- evolution-on   # Tray plugin for the Evolution email client
       - exfat-utils
       - firefox
-      - firefox-i18n-en
+      - firefox-i18n-en-us
       #- flameshot   # -> ksnip
       - foliate
       - gnupg
