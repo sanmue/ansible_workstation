@@ -72,7 +72,7 @@
       # >>> Run 'snapper -c root create-config /' as root
   with_items: ansible_mounts
   when: 
-    - item.mount  == '/''
+    - item.mount  == '/'
     - item.fstype == 'btrfs'
 
 - name: install additional packages for snapper on btrfs filesystem (Archlinux)
@@ -87,7 +87,7 @@
       - timeshift-autosnap-manjaro
   with_items: ansible_mounts
   when: 
-    - item.mount  == '/''
+    - item.mount  == '/'
     - item.fstype == 'btrfs'
     - ansible_distribution in ["Archlinux"]
 
