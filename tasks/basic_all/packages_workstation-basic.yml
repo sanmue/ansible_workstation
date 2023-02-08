@@ -63,6 +63,7 @@
   tags: basic, workstation
   ansible.builtin.command: mount | grep "^/dev" | grep "on / " | grep "btrfs"
   register: rootFsIsBtrfs
+  ignore_errors: true
 
 
 - name: install basic packages for snapper on btrfs filesystem (all)
