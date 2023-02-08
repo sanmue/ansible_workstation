@@ -140,8 +140,8 @@
       # ipset
       - ksnip
       - libreoffice-still
-      - libreoffice-still-de
-      - libreoffice-still-en
+      #- libreoffice-still-de
+      - libreoffice-still-en-gb
       - linux-steam-integration
       - lshw
       - malcontent   # Parental control support for applications
