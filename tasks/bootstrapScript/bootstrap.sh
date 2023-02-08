@@ -69,8 +69,8 @@ case ${os} in
         #if [ ! -f "/home/${userid}/.bootstrapMirrorPool" ]; then
             #touch "/home/${userid}/.bootstrapMirrorPool"
 
-            echo -e "\nCustomize mirror pool + full refresh of the package database and update all packages on the system..."
-            sudo pacman-mirrors --country Germany,France,Austria && sudo pacman -Syyu
+            echo -e "\nReset custom mirror list + customize mirror pool + full refresh of the package database and update all packages on the system..."
+            sudo pacman-mirrirs -c all && pacman-mirrors --country Germany,France,Austria,Switzerland,Netherlands && sudo pacman -Syyu
         #fi
 
         echo -e "\nInstallation initial benoetigte Software (git, ansible, openssh, ufw)..."
