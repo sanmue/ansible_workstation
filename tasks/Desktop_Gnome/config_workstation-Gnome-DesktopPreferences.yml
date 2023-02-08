@@ -13,7 +13,8 @@
     mode: u=rwx
     #mode: '0700'
   when:
-    - env_desktop in ["ubuntu", "ubuntu:gnome"]
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+
 - name: copy autostart file for Nextcloud Client (flatpak) to local user-folder (Ubuntu + Gnome)
   ansible.builtin.copy:
     src: "files/gnome/Gnome_AutostartApp_User_NextcloudClient_flatpak.desktop"
@@ -25,6 +26,7 @@
   #    mode: '0664'
   when:
     - env_desktop == "ubuntu:gnome"
+    - ansible_distribution == "Ubuntu"
 
 ### Nextcloud Desktop Client
 - name: copy autostart file for Nextcloud Client to local user-folder (Arch + Gnome)
@@ -63,16 +65,11 @@
 ### favorite apps
 #################
 
-- name: adding favorite apps to dock (Ubuntu + Gnome)
-  ansible.builtin.command: gsettings set org.gnome.shell favorite-apps "['com.belmoussaoui.Authenticator.desktop', 'org.keepassxc.KeePassXC.desktop', 'firefox.desktop', 'firefox-esr.desktop', 'org.mozilla.firefox.desktop', 'org.chromium.Chromium.desktop', 'brave-browser.desktop', 'com.brave.Browser.desktop', 'org.gnome.Epiphany.desktop', 'org.gnome.Evolution.desktop', 'org.gnome.Terminal.desktop', 'nemo.desktop', 'org.gnome.gedit.desktop', 'org.libreoffice.LibreOffice.desktop', 'code_code.desktop', 'code.desktop', 'anki.desktop', 'net.cozic.joplin_desktop.desktop', 'de.willuhn.Jameica.desktop', 'rhythmbox.desktop', 'de.haeckerfelix.Shortwave.desktop', 'org.signal.Signal.desktop', 'org.remmina.Remmina.desktop', 'virt-manager.desktop']"
+- name: adding favorite apps to dock (Gnome, all)
+  ansible.builtin.command: gsettings set org.gnome.shell favorite-apps "['com.belmoussaoui.Authenticator.desktop', 'org.keepassxc.KeePassXC.desktop', 'firefox.desktop', 'firefox-esr.desktop', 'org.mozilla.firefox.desktop', 'chromium.desktop','org.chromium.Chromium.desktop', 'brave-browser.desktop', 'com.brave.Browser.desktop', 'org.gnome.Epiphany.desktop', 'org.gnome.Evolution.desktop', 'org.gnome.Terminal.desktop', 'nemo.desktop', 'org.gnome.gedit.desktop', 'org.libreoffice.LibreOffice.desktop', 'libreoffice-startcenter.desktop', 'code_code.desktop', 'code.desktop', 'anki.desktop', 'net.cozic.joplin_desktop.desktop', 'de.willuhn.Jameica.desktop', 'rhythmbox.desktop', 'de.haeckerfelix.Shortwave.desktop', 'org.signal.Signal.desktop', 'org.remmina.Remmina.desktop', 'virt-manager.desktop']"
   when:
-    - env_desktop == "ubuntu:gnome"
+    - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: adding favorite apps to dock (Archlinux + Gnome)
-  ansible.builtin.command: gsettings set org.gnome.shell favorite-apps "['com.belmoussaoui.Authenticator.desktop', 'org.keepassxc.KeePassXC.desktop', 'firefox.desktop', 'chromium.desktop', 'org.gnome.Terminal.desktop', 'terminator.desktop', 'nemo.desktop', 'org.gnome.gedit.desktop', 'libreoffice-startcenter.desktop', 'anki.desktop', 'net.cozic.joplin_desktop.desktop', 'de.willuhn.Jameica.desktop', 'rhythmbox.desktop', 'de.haeckerfelix.Shortwave.desktop', 'signal-desktop.desktop', 'discord.desktop', 'whalebird_whalebird.desktop', 'org.remmina.Remmina.desktop', 'virt-manager.desktop', 'gnome-control-center.desktop', 'org.manjaro.pamac.manager.desktop']"
-  when:
-    - env_desktop == "gnome"
-    - ansible_distribution == "Archlinux"
 
 ######################
 ### desktop-background
@@ -84,7 +81,7 @@
     state: directory
   #    mode: '0755'
   when:
-    - env_desktop in ["ubuntu", "ubuntu:gnome"]
+    - env_desktop in ["gnome", "ubuntu:gnome"]
 
 - name: copy desktop-wallpaper file to local user-folder (Gnome)
   ansible.builtin.copy:
@@ -96,7 +93,7 @@
     mode: u=rwx,g=rwx,o=rwx
   #    mode: '0777'
   when:
-    - env_desktop in ["ubuntu", "ubuntu:gnome"]
+    - env_desktop in ["gnome", "ubuntu:gnome"]
 
 - name: set desktop - background (Gnome)
   dconf:
@@ -104,7 +101,7 @@
     value: '"file:///home/{{ env_user }}/.local/share/backgrounds/brad-huchteman-stone-mountain.jpg"'
   #    state: present   # standard-wert
   when:
-    - env_desktop in ["ubuntu", "ubuntu:gnome"]
+    - env_desktop in ["gnome", "ubuntu:gnome"]
 
 - name: set desktop - dark background (Gnome)
   dconf:
@@ -112,21 +109,21 @@
     value: '"file:///home/{{ env_user }}/.local/share/backgrounds/brad-huchteman-stone-mountain.jpg"'
   #    state: present   # standard-wert
   when:
-    - env_desktop in ["ubuntu", "ubuntu:gnome"]
+    - env_desktop in ["gnome", "ubuntu:gnome"]
 
 - name: set desktop-wallpaper picture-options (Gnome)
   dconf:
     key: "/org/gnome/desktop/background/picture-options"
     value: "'zoom'"
   when:
-    - env_desktop in ["ubuntu", "ubuntu:gnome"]
+    - env_desktop in ["gnome", "ubuntu:gnome"]
 
 - name: set show-desktop-icons (Gnome)
   dconf:
     key: "/org/gnome/desktop/background/show-desktop-icons"
     value: "false"
   when:
-    - env_desktop in ["ubuntu", "ubuntu:gnome"]
+    - env_desktop in ["gnome", "ubuntu:gnome"]
 
 ############################
 ### weitere desktop settings
