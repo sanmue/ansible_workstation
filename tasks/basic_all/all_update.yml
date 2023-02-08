@@ -9,8 +9,9 @@
     update_cache: yes
 #  when: ansible_distribution == "Ubuntu"
 #  when: ansible_os_family == "Debian"
-  when: ansible_pkg_mgr == "apt"
-  changed_when: False
+  when: 
+    - ansible_pkg_mgr == "apt"
+  changed_when: false
 
 
 - name: update repository index and update system (pacman)
@@ -18,7 +19,8 @@
   pacman:
     update_cache: yes
     upgrade: yes
-  when: ansible_pkg_mgr == "pacman"
+  when: 
+    - ansible_pkg_mgr == "pacman"
   changed_when: false
 
 

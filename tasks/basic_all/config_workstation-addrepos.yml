@@ -74,7 +74,9 @@
 
 - name: Update package lists
   apt:
-    update_cache: yes 
+    update_cache: yes
+  when: 
+    - ansible_pkg_mgr == "apt"
 
 # neu: s.o.
 #- name: add repo for PowerShell (Ubuntu)
