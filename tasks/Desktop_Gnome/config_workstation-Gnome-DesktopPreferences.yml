@@ -771,6 +771,14 @@
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
+- name: set nemo extensions - nemo terminal - default-visible (Gnome)
+  dconf:
+    key: "org.nemo.extensions.nemo-terminal default-visible"
+    value: "false"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+
+
 ### gedit -  preferences:
 #   ---------------------
 - name: set gedit preferences - scheme (Gnome)
@@ -873,6 +881,45 @@
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
+- name: set gnome shell extensions - dash-to-dock - dash-max-icon-size (Gnome)
+  # Appearence - Dock - Icon Size
+  dconf:
+    key: "/org/gnome/shell/extensions/dash-to-dock/dash-max-icon-size"
+    value: "32"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+
+- name: set gnome shell extensions - dash-to-dock - disable-overview-on-startup (Gnome)
+  dconf:
+    key: "/org/gnome/shell/extensions/dash-to-dock/disable-overview-on-startup"
+    value: "false"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+
+- name: set gnome shell extensions - dash-to-dock - dock-fixed (Gnome)
+  # Appearence - Dock - Auot-hide the Dock: enable
+  dconf:
+    key: "/org/gnome/shell/extensions/dash-to-dock/dock-fixed"
+    value: "false"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+
+- name: set gnome shell extensions - dash-to-dock - dock-position (Gnome)
+  # Appearence - Dock - Auot-hide the Dock: enable
+  dconf:
+    key: "/org/gnome/shell/extensions/dash-to-dock/dock-position"
+    value: "'LEFT'"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+
+- name: set gnome shell extensions - dash-to-dock - extend-height (Gnome)
+  # Appearence - Dock - Panel mode: enable
+  dconf:
+    key: "/org/gnome/shell/extensions/dash-to-dock/extend-height"
+    value: "false"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+
 - name: set gnome shell extensions - dash-to-dock - height-fraction (Gnome)
   dconf:
     key: "/org/gnome/shell/extensions/dash-to-dock/height-fraction"
@@ -915,44 +962,27 @@
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
+- name: set gnome shell extensions - dash-to-dock - show-mounts (Gnome)
+  dconf:
+    key: "/org/gnome/shell/extensions/dash-to-dock/show-mounts"
+    value: "false"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+
+- name: set gnome shell extensions - dash-to-dock - show-mounts-only-mounted (Gnome)
+  dconf:
+    key: "org.gnome.shell.extensions.dash-to-dock show-mounts-only-mounted"
+    value: "false"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+
 - name: set gnome shell extensions - dash-to-dock - show-trash (Gnome)
   dconf:
-    key: "/org/gnome/shell/extensions/dash-to-dock/show-trash"
+    key: "org.gnome.shell.extensions.dash-to-dock show-trash"
     value: "false"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set gnome shell extensions - dash-to-dock - dock-fixed (Gnome)
-  # Appearence - Dock - Auot-hide the Dock: enable
-  dconf:
-    key: "/org/gnome/shell/extensions/dash-to-dock/dock-fixed"
-    value: "false"
-  when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
-
-- name: set gnome shell extensions - dash-to-dock - extend-height (Gnome)
-  # Appearence - Dock - Panel mode: enable
-  dconf:
-    key: "/org/gnome/shell/extensions/dash-to-dock/extend-height"
-    value: "false"
-  when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
-
-- name: set gnome shell extensions - dash-to-dock - dash-max-icon-size (Gnome)
-  # Appearence - Dock - Icon Size
-  dconf:
-    key: "/org/gnome/shell/extensions/dash-to-dock/dash-max-icon-size"
-    value: "32"
-  when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
-
-- name: set gnome shell extensions - dash-to-dock - multi-monitor (Gnome)
-  # Appearence - Dock - Show on: All Displays
-  dconf:
-    key: "/org/gnome/shell/extensions/dash-to-dock/multi-monitor "
-    value: "true"
-  when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
 
 ### openweather:
 - name: set gnome shell extensions - openweather - city (Gnome)
