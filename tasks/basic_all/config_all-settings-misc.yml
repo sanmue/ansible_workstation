@@ -114,7 +114,7 @@
 
 ## da sich die Extension unter Arch nicht so installieren lässt: Verzeichnis der Extension manuell erstellen,
 ## damit unten die config-datei dorthin kopiert werden kann
-- name: Erstelle hilfsweise manuell 'Sync Settings' Extension Pfad für 'Code - OSS' (Arch)
+- name: Erstelle hilfsweise manuell 'Sync Settings' Extension Ordner für 'Code - OSS' (Arch)
   tags: workstation,arch
   ansible.builtin.file:
     path: "/home/{{ env_user }}/.config/Code - OSS//User/globalStorage/zokugun.sync-settings"
@@ -123,7 +123,7 @@
   become: true
   become_user: "{{ env_user }}"
   when:
-    - ansible_distribution in [Archlinux"]
+    - ansible_distribution in ["Archlinux"]
 
 
 #- name: Close Visual Studio Code (Ubuntu)
