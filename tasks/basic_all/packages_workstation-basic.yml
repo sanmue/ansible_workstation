@@ -61,7 +61,7 @@
 
 - name: check if btrfs filesystem an register result in variable (all)
   tags: basic, workstation
-  ansible.builtin.command: mount | grep "^/dev" | grep "on / " | grep "btrfs"
+  ansible.builtin.command: mount -a | grep "^/dev" | grep "on / " | grep "btrfs"
   register: rootFsIsBtrfs
   ignore_errors: true
 
@@ -82,6 +82,12 @@
     #- item.fstype == 'btrfs'
     - rootFsIsBtrfs != ''
 
+- name: check if default snapper config 'root' for '/' already exists (all)
+  tags: basic, workstation
+  ansible.builtin.command: sudo snapper list-configs | grep root
+  register: snapperDefaultConfigExists
+  ignore_errors: true
+
 - name: create a default config for '/' with snapper cli named 'root' (all)
   tags: basic, workstation
   ansible.builtin.command: snapper -c root create-config /
@@ -90,6 +96,7 @@
     #- item.mount  == '/'
     #- item.fstype == 'btrfs'
     - rootFsIsBtrfs != ''
+    - snapperDefaultConfigExists == ''
 
 - name: install additional packages for snapper on btrfs filesystem (Archlinux)
   tags: basic, workstation, arch
