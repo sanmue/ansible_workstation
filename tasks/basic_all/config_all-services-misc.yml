@@ -39,7 +39,7 @@
 # You may get a notification that clamd was not notified. This is normal because we haven't started the service yet.
 #
 - name: update clamav database (Ubuntu, Arch)
-  ansible.buitin.shell:
+  ansible.builtin.shell:
     cmd: freshclam
   when: ansible_distribution in ["Ubuntu", "Archlinux"]
 
