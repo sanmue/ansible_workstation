@@ -47,6 +47,7 @@
       - vlc
       - unzip
       - wget
+      - xdg-utils
       #
       # --- Firewall
       - ufw   # bereits installiert (bootstrap)
