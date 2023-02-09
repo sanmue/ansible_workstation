@@ -52,7 +52,7 @@
 - name: copy desktop launcher file for Syncthing start to local user-folder (Arch + Gnome)
   ansible.builtin.copy:
     src: "files/gnome/Gnome_DesktopLauncher_User_syncthing-start.desktop"
-    dest: "/home/{{ env_user }}/.local/share/syncthing-start.desktop"
+    dest: "/home/{{ env_user }}/.local/share/applications/syncthing-start.desktop"
     remote_src: yes
     owner: "{{ env_user }}"
     group: "{{ env_user }}"
@@ -64,7 +64,7 @@
 - name: copy desktop launcher file for Syncthing WebGUI to local user-folder (Arch + Gnome)
   ansible.builtin.copy:
     src: "files/gnome/Gnome_DesktopLauncher_User_syncthing-WebGUI.desktop"
-    dest: "/home/{{ env_user }}/.local/share/syncthing-WebGUI.desktop"
+    dest: "/home/{{ env_user }}/.local/share/applications/syncthing-WebGUI.desktop"
     remote_src: yes
     owner: "{{ env_user }}"
     group: "{{ env_user }}"
