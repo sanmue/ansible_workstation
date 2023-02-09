@@ -1,29 +1,70 @@
 
 # ##############
 # ### SSH / SSHD
+# ### ##########
 - name: services - start ssh (Ubuntu)
-  service:
+  ansible.builtin.service:
     name: ssh
     state: started
   when: ansible_distribution in ["Ubuntu"]
 
 - name: services - enable ssh (Ubuntu)
-  service: 
+  ansible.builtin.service: 
     name: ssh
     enabled: yes
   when: ansible_distribution in ["Ubuntu"]
 
 
-- name: services - start sshd (Archlinux, Suse)
-  service:
+- name: services - start sshd (Archlinux)
+  ansible.builtin.service:
     name: sshd
     state: started
-  when: ansible_distribution in ["Archlinux"] or
-        ansible_os_family == "Suse"
+  when: ansible_distribution in ["Archlinux"]
 
-- name: Services - enable sshd (Archlinux, Suse)
-  service:
+- name: Services - enable sshd (Archlinux)
+  ansible.builtin.service:
     name: sshd
     enabled: yes
-  when: ansible_distribution in ["Archlinux"] or
-        ansible_os_family == "Suse"
+  when: ansible_distribution in ["Archlinux"]
+
+
+# ##########
+# ### ClamAV
+# ### ######
+
+# Arch-Wiki/ManjaroWiki: https://wiki.archlinux.org/title/ClamAV bzw. https://wiki.manjaro.org/index.php/ClamAV
+# You will need to run freshclam before starting the service for the first time 
+# or you will run into trouble/errors which will prevent ClamAV from starting correctly.
+#
+# You may get a notification that clamd was not notified. This is normal because we haven't started the service yet.
+#
+- name: update clamav database (Ubuntu, Arch)
+  ansible.buitin.shell:
+    cmd: freshclam
+  when: ansible_distribution in ["Ubuntu", "Archlinux"]
+
+
+- name: Services - Start clamav-daemon.service (Ubuntu, Arch)
+  ansible.builtin.service:
+    name: clamav-daemon.service
+    state: started
+  when: ansible_distribution in ["Ubuntu", "Archlinux"]
+
+- name: Services - enable clamav-daemon.service (Ubuntu, Arch)
+  ansible.builtin.service:
+    name: clamav-daemon.service
+    enabled: yes
+  when: ansible_distribution in ["Ubuntu", "Archlinux"]
+
+
+- name: Services - Start clamav-freshclam.service (Ubuntu, Arch)
+  ansible.builtin.service:
+    name: clamav-freshclam.service
+    state: started
+  when: ansible_distribution in ["Ubuntu", "Archlinux"]
+
+- name: Services - enable clamav-freshclam.service (Ubuntu, Arch)
+  ansible.builtin.service:
+    name: clamav-freshclam.service
+    enabled: yes
+  when: ansible_distribution in ["Ubuntu", "Archlinux"]

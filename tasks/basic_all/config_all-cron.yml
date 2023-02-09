@@ -8,7 +8,10 @@
 #    job: ansible-pull -o -U https://github.com/sanmue/ansible_test.git
 
 
-# Für Manjaro; bei Arch: reflector nutzen
+### ##############
+### Pacman-Mirrors
+### ##############
+# Für Manjaro; bei Arch: alternativ reflector nutzen
 - name: Create Cronjob to update pacman-mirrors (Archlinux)
   ansible.builtin.cron:
     name: "Update pacman-mirrors every month"
@@ -17,3 +20,26 @@
     job: "pacman-mirrors -c all && pacman-mirrors --country Germany,France,Austria,Switzerland,Netherlands && pacman -Syyu"
   when:
     - ansible_distribution == "Archlinux"
+
+
+### ######
+### ClamAV
+### ######
+
+- name: Create Cronjob to update ClamAV database (Archlinux)
+  ansible.builtin.cron:
+    name: "Update ClamAV database"
+    special_time: daily
+    user: clamav
+    job: "/usr/bin/freshclam --quiet"
+  when:
+    - ansible_distribution in ["Ubuntu", "Archlinux"]
+
+- name: Create Cronjob to scan home-folder (Archlinux)
+  ansible.builtin.cron:
+    name: "scan home-folder"
+    special_time: weekly
+    user: clamav
+    job: /usr/bin/clamdscan --fdpass --multiscan --exclude-dir="$HOME/.clam/quarantine" --move="$HOME/.clam/quarantine" --log="$HOME/.clam/logs/$(date +\%Y\%m\%d)-weekly.log" $HOME 2>/dev/null 1>&2
+  when:
+    - ansible_distribution in ["Ubuntu", "Archlinux"]
