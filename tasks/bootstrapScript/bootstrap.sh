@@ -203,10 +203,10 @@ if [ -d "/home/${userid}/${repodir}/${playbookdir}" ]; then
     echo "Verzeichnis für repo '/home/${userid}/${repodir}/' existiert bereits, führe 'git pull origin' aus..."
     cd "/home/${userid}/${repodir}/${playbookdir}" && git pull origin
 else
-    echo "Erstelle Verzeichnis '${playbookdir}' unter '/home/${userid}/${repodir}/' für git repo"
+    echo "Erstelle Verzeichnis '${playbookdir}' unter '/home/${userid}/${repodir}/' für git repo..."
     mkdir -p "/home/${userid}/${repodir}/${playbookdir}"
 
-    echo "Clone git-repo lokal nach '/home/${userid}/${repodir}/${playbookdir}'"
+    echo "Clone git-repo lokal nach '/home/${userid}/${repodir}/${playbookdir}'..."
     git clone "${gitOnlineRepo}" "/home/${userid}/${repodir}/${playbookdir}"
 fi
 
