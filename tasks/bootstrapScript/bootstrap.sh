@@ -198,7 +198,7 @@ fi
 ### ---
 ### Git-repo mit Ansible Playbook herunterladen (clone oder pull)
 ### ---
-echo -e "\nGit-repo mit Ansible Playbook herunterladen (clone oder pull) ..."
+echo -e "\nGit-repo mit Ansible Playbook herunterladen oder aktualisieren (clone oder pull) ..."
 if [ -d "/home/${userid}/${repodir}/${playbookdir}" ]; then
     echo "Verzeichnis für repo '/home/${userid}/${repodir}/' existiert bereits, führe 'git pull origin' aus..."
     cd "/home/${userid}/${repodir}/${playbookdir}" && git pull origin
