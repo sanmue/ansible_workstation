@@ -63,12 +63,12 @@
 
 - name: bashrc - check status (root, all)
   ansible.builtin.stat:
-    path: "/home/root/.bashrc"
+    path: "/root/.bashrc"
   register: statBashrcRoot
 
 - name: bashrc - create (root, all)
   ansible.builtin.file:
-    path: "/home/root/.bashrc"
+    path: "/root/.bashrc"
     state: touch
   when:
     - ansible_distribution in ["Ubuntu", "Archlinux"]
@@ -76,7 +76,7 @@
 
 - name: bashrc - Insert/Update additional paths and config (root, all)
   ansible.builtin.blockinfile:
-    path: "/home/root/.bashrc"
+    path: "/root/.bashrc"
     backup: yes
     marker: "### {mark} ANSIBLE MANAGED BLOCK ###"
     block: |
@@ -154,12 +154,12 @@
 
 - name: zshrc - check status (root, all)
   ansible.builtin.stat:
-    path: "/home/root/.zshrc"
+    path: "/root/.zshrc"
   register: statZshrcRoot
 
 - name: zshrc - create (root, all)
   ansible.builtin.file:
-    path: "/home/root/.zshrc"
+    path: "/root/.zshrc"
     state: touch
   when:
     - ansible_distribution in ["Ubuntu", "Archlinux"]
@@ -167,7 +167,7 @@
 
 - name: zshrc - Insert/Update additional paths and config (root, all)
   ansible.builtin.blockinfile:
-    path: "/home/root/.zshrc"
+    path: "/root/.zshrc"
     backup: yes
     marker: "### {mark} ANSIBLE MANAGED BLOCK ###"
     block: |
