@@ -125,7 +125,7 @@
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-############################
+
 ### weitere desktop settings
 ### ------------------------
 - name: set desktop interface - clock-format (Gnome)
@@ -262,6 +262,7 @@
     - env_desktop in ["gnome", "ubuntu:gnome"]
     - ansible_distribution in ["Ubuntu"]
 
+
 ### Desktop interface, calendar, sceensaver, ...:
 - name: set desktop interface - show-battery-percentage (Gnome)
   dconf:
@@ -319,6 +320,7 @@
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
+
 ### power settings:
 #   ---------------
 - name: set settings-daemon - plugin - power - power-button-action (Gnome)
@@ -350,11 +352,18 @@
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
+
 ### set Keyboard Shortcuts
+### ----------------------
+#
 # Settings - Keyboard - Keyboard Shortcuts
 # Alternative Möglichkeit: erstellte/vorhandene Keys eines Systems exportieren + wieder importieren per Skript:
 # - dconf dump /org/gnome/settings-daemon/plugins/media-keys/ > dconfDump_keyboardShortcuts.txt
 # - dconf load /org/gnome/settings-daemon/plugins/media-keys/ < dconfDump_keyboardShortcuts.txt
+
+# Primary = STRG links
+
+# - control-center - p
 - name: set settings-daemon - plugin - media-keys - control-center (Gnome)
   dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/control-center"
@@ -362,6 +371,7 @@
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
+# - email- q
 - name: set settings-daemon - plugin - media-keys - email (Gnome)
   dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/email"
@@ -369,6 +379,7 @@
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
+# - www (Standard-Browser) - w
 - name: set settings-daemon - plugin - media-keys - www (Gnome)
   dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/www"
@@ -377,6 +388,8 @@
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
 # set custom Keyboard Shortcuts:
+# ------------------------------
+
 # - Authenticator (custom0) - a
 - name: set settings-daemon - plugin - media-keys - Authenticator,name (Gnome)
   dconf:
@@ -407,12 +420,21 @@
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set settings-daemon - plugin - media-keys - KeepassXC,command (Gnome)
+- name: set settings-daemon - plugin - media-keys - KeepassXC,command (Gnome, Ubuntu, flatpak)
   dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/command"
     value: "'flatpak run org.keepassxc.KeePassXC'"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
+    - ansible_distribution == "Ubuntu"
+
+- name: set settings-daemon - plugin - media-keys - KeepassXC,command (Gnome, Arch)
+  dconf:
+    key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/command"
+    value: "'KeePassXC'"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - ansible_distribution == "Archlinux"
 
 - name: set settings-daemon - plugin - media-keys - KeepassXC,binding (Gnome)
   dconf:
@@ -468,12 +490,21 @@
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set settings-daemon - plugin - media-keys - chromium,command(Gnome)
+- name: set settings-daemon - plugin - media-keys - chromium,command (Gnome, Ubuntu, flatpak)
   dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/command"
     value: "'flatpak run org.chromium.Chromium'"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
+    - ansible_distribution == "Ubuntu"
+
+- name: set settings-daemon - plugin - media-keys - chromium,command (Gnome, Arch)
+  dconf:
+    key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/command"
+    value: "'chromium'"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - ansible_distribution == "Archlinux"
 
 - name: set settings-daemon - plugin - media-keys - chromium,binding (Gnome)
   dconf:
@@ -490,12 +521,21 @@
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set settings-daemon - plugin - media-keys - Brave Browser,command(Gnome)
+- name: set settings-daemon - plugin - media-keys - Brave Browser,command (Gnome, Ubuntu)
   dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/command"
     value: "'brave-browser'"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
+    - ansible_distribution == "Ubuntu"
+
+- name: set settings-daemon - plugin - media-keys - Brave Browser,command (Gnome, Arch)
+  dconf:
+    key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/command"
+    value: "'brave'"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - ansible_distribution == "Archlinux"
 
 - name: set settings-daemon - plugin - media-keys - Brave Browser,binding (Gnome)
   dconf:
@@ -512,7 +552,7 @@
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set settings-daemon - plugin - media-keys - Nemo,command(Gnome)
+- name: set settings-daemon - plugin - media-keys - Nemo,command (Gnome)
   dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom5/command"
     value: "'nemo'"
@@ -534,7 +574,7 @@
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set settings-daemon - plugin - media-keys - gedit,command(Gnome)
+- name: set settings-daemon - plugin - media-keys - gedit,command (Gnome)
   dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom6/command"
     value: "'gedit'"
@@ -556,12 +596,21 @@
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set settings-daemon - plugin - media-keys - Libre Office,command(Gnome)
+- name: set settings-daemon - plugin - media-keys - Libre Office,command (Gnome, Ubuntu, flatpak)
   dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom7/command"
     value: "'flatpak run org.libreoffice.LibreOffice'"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
+    - ansible_distribution == "Ubuntu"
+
+- name: set settings-daemon - plugin - media-keys - Libre Office,command (Gnome, Arch)
+  dconf:
+    key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom7/command"
+    value: "'libreoffice'"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - ansible_distribution == "Archlinux"
 
 - name: set settings-daemon - plugin - media-keys - Libre Office,binding (Gnome)
   dconf:
@@ -570,15 +619,24 @@
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-# - VSCode (custom8) - m
-- name: set settings-daemon - plugin - media-keys - VSCode,name (Gnome)
+# - VSCode / Code OSS (custom8) - m
+- name: set settings-daemon - plugin - media-keys - VSCode,name (Gnome, Ubuntu)
   dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom8/name"
     value: "'VSCode'"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
+    - ansible_distribution == "Ubuntu"
 
-- name: set settings-daemon - plugin - media-keys - VSCode,command(Gnome)
+- name: set settings-daemon - plugin - media-keys - CodeOSS,name (Gnome, Arch)
+  dconf:
+    key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom8/name"
+    value: "'Code OSS'"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - ansible_distribution == "Ubuntu"
+
+- name: set settings-daemon - plugin - media-keys - VSCode CodeOSS,command (Gnome)
   dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom8/command"
     value: "'code'"
@@ -600,7 +658,7 @@
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set settings-daemon - plugin - media-keys - Joplin,command(Gnome)
+- name: set settings-daemon - plugin - media-keys - Joplin,command (Gnome)
   dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom9/command"
     value: "'flatpak run net.cozic.joplin_desktop'"
@@ -658,29 +716,60 @@
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-# - Gnome Software (custom12) - s
-- name: set settings-daemon - plugin - media-keys - Gnome Software,name (Gnome)
+# - Software Center 'Gnome Software' (Ubuntu) (custom12) - s
+- name: set settings-daemon - plugin - media-keys - Gnome Software,name (Gnome, Ubuntu)
   dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom12/name"
     value: "'Gnome Software'"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
+    - ansible_distribution == "Ubuntu"
 
-- name: set settings-daemon - plugin - media-keys - Gnome Software,command(Gnome)
+- name: set settings-daemon - plugin - media-keys - Gnome Software,command (Gnome, Ubuntu)
   dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom12/command"
     value: "'gnome-software'"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
+    - ansible_distribution == "Ubuntu"
 
-- name: set settings-daemon - plugin - media-keys - Gnome Software,binding (Gnome)
+- name: set settings-daemon - plugin - media-keys - Gnome Software,binding (Gnome, Ubuntu)
   dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom12/binding"
     value: "'<Primary><Alt>s'"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
+    - ansible_distribution == "Ubuntu"
 
-# - set/create list for configured custom-keybindings
+# - Software Center 'Pamac-Manager' (Arch) (custom12) - s
+- name: set settings-daemon - plugin - media-keys - Pamac Manager,name (Gnome, Arch)
+  dconf:
+    key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom12/name"
+    value: "'Pamac-Manager'"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - ansible_distribution == "Archlinux"
+
+- name: set settings-daemon - plugin - media-keys - Pamac Managercommand (Gnome, Arch)
+  dconf:
+    key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom12/command"
+    value: "'pamac-manager'"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - ansible_distribution == "Archlinux"
+
+- name: set settings-daemon - plugin - media-keys - Pamac Manager,binding (Gnome, Arch)
+  dconf:
+    key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom12/binding"
+    value: "'<Primary><Alt>s'"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - ansible_distribution == "Archlinux"
+
+
+### ---------------------------------------------------
+### - set/create list for configured custom-keybindings
+### ---------------------------------------------------
 - name: set settings-daemon - plugin - media-keys - custom-keybindings (Gnome)
   dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings"
@@ -688,8 +777,10 @@
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
+
 ### Gnome Weather:
 #   -------------
+#
 #- name: set gnome  - Weather automatic-location (Gnome)
 #  dconf:
 #    key: "/org/gnome/Weather/automatic-location"
