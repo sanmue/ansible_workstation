@@ -10,9 +10,19 @@
     state: absent
     name:
       - gnome-calendar
+  when: 
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+
+- name: Uninstall packages for workstations (Gnome, Arch)
+  tags: workstation,gnome
+  package:
+    state: absent
+    name:
+      - nano-syntax-highlighting
       - nano
   when: 
     - env_desktop in ["gnome", "ubuntu:gnome"]
+    - ansible_distribution in ["Archlinux"]
 
 
 - name: Uninstall packages for workstations (Ubuntu + Gnome)
@@ -24,6 +34,7 @@
       - cheese
       - gnome-mahjongg
       - gnome-todo
+      - nano
   when: 
     - ansible_distribution == "Ubuntu"
     - env_desktop == "ubuntu:gnome"
