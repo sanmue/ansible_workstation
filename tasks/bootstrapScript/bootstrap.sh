@@ -182,31 +182,32 @@ cat "/home/${userid}/.gitconfig"
 
 
 ### ---
-### (Neu-)Erstellen Verzeichnis für Ansible Playbook im Home-Verzeichnis aktueller User
+### Checke ssh-keys (einfache Prüfung)
 ### ---
-echo -e "\nErstelle neues Verzeichnis '${repodir}' und Unterverzeichnis '${playbookdir}' im Home-Verzeichnis von '${userid}' ..."
-if [ -d "/home/${userid}/${repodir}/${playbookdir}" ]; then
-    echo "Verzeichnis '${playbookdir}' existiert bereits, wird gelöscht."
-    sudo rm -r "/home/${userid}/${repodir}/${playbookdir}" # && mkdir -p "/home/${userid}/${repodir}/${playbookdir}"
-    #cd "/home/${userid}/${repodir}/${playbookdir}"
-    #git pull origin
-    #cd
+echo -e "\nPrüfe auf ssh-keys..."
+if [[ -n $(ls -I 'known_hosts' -I 'known_hosts.old' -I 'authorized_keys' "/home/${userid}/${sshkeydir}") ]] ; then   #einfacher Test; ggf. ssh-key für gitOnlineRepo trotzdem nicht vorhanden
+    echo "SSH-Key - Verzeichnis '/home/${userid}/${sshkeydir}' enthält SSH-Keys."
 else
-    mkdir -p "/home/${userid}/${repodir}/${playbookdir}"
+    echo "SSH-Key - Verzeichnis '/home/${userid}/${sshkeydir}' scheint keine SSH-Keys zu enthalten."
+    echo "Bitte erforderliche(n) SSH-Key hinzufügen, das sonst das git-repo nicht heruntergeladen werden kann."
+    read -r -p "Programmende, bitte Eingabetaste drücken."
+    exit 0
 fi
 
 
 ### ---
-### Clone Git-Repo des Ansible Playbook ins lokale Ansible Playbook-Verzeichnis
+### Git-repo mit Ansible Playbook herunterladen (clone oder pull)
 ### ---
-echo -e "\nClone github-Repo des Ansible-Playbook nach '/home/${userid}/${repodir}/${playbookdir}' ..."
-if [[ -n $(ls -I 'known_hosts' -I 'known_hosts.old' -I 'authorized_keys' "/home/${userid}/${sshkeydir}") ]] ; then   #einfacher Test; ggf. ssh-key für gitOnlineRepo trotzdem nicht vorhanden
-    git clone "${gitOnlineRepo}" "/home/${userid}/${repodir}/${playbookdir}"
+echo -e "\nGit-repo mit Ansible Playbook herunterladen (clone oder pull) ..."
+if [ -d "/home/${userid}/${repodir}/${playbookdir}" ]; then
+    echo "Verzeichnis für repo '/home/${userid}/${repodir}/' existiert bereits, führe 'git pull origin' aus..."
+    cd "/home/${userid}/${repodir}/${playbookdir}" && git pull origin
 else
-    echo "SSH-Key - Verzeichnis '/home/${userid}/${sshkeydir}' scheint keine SSH-Keys zu enthalten."
-    echo "Bitte erforderliche(n) SSH-Key hinzufügen."
-    read -r -p "Programmende, bitte Eingabetaste drücken."
-    exit 0
+    echo "Erstelle Verzeichnis '${playbookdir}' unter '/home/${userid}/${repodir}/' für git repo"
+    mkdir -p "/home/${userid}/${repodir}/${playbookdir}"
+
+    echo "Clone git-repo lokal nach '/home/${userid}/${repodir}/${playbookdir}'"
+    git clone "${gitOnlineRepo}" "/home/${userid}/${repodir}/${playbookdir}"
 fi
 
 
