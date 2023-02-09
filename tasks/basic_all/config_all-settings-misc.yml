@@ -251,6 +251,8 @@
     repo: https://github.com/dense-analysis/ale.git
     dest: /home/{{ env_user }}/.vim/pack/git-plugins/start
     depth: 1
+    update: true
+    clone: true
 
 
 
