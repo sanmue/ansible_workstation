@@ -971,14 +971,14 @@
 
 - name: set gnome shell extensions - dash-to-dock - show-mounts-only-mounted (Gnome)
   dconf:
-    key: "org.gnome.shell.extensions.dash-to-dock show-mounts-only-mounted"
+    key: "/org.gnome.shell.extensions.dash-to-dock show-mounts-only-mounted"
     value: "false"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
 - name: set gnome shell extensions - dash-to-dock - show-trash (Gnome)
   dconf:
-    key: "org.gnome.shell.extensions.dash-to-dock show-trash"
+    key: "/org.gnome.shell.extensions.dash-to-dock show-trash"
     value: "false"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
@@ -1041,9 +1041,9 @@
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-###############################################
-# TODO: GNOME Shell Apps Dashboard - Categories
-###############################################
+####################################################
+# TODO: ggf. GNOME Shell Apps Dashboard - Categories
+####################################################
 #
 # https://specifications.freedesktop.org/menu-spec/menu-spec-latest.html
 # A. Registered Categories
