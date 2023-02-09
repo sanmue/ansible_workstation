@@ -1,15 +1,14 @@
 
-- name: start libvirtd
+- name: start libvirtd (all)
   tags: VM
   service:
-    name: libvirtd
+    name: libvirtd.service
     state: started
   when: ansible_virtualization_role != "guest"
 
-- name: enable libvirtd
+- name: enable libvirtd (all)
   tags: VM
   service:
-    name: libvirtd
-    #state: enabled
+    name: libvirtd.service
     enabled: yes
   when: ansible_virtualization_role != "guest" 
