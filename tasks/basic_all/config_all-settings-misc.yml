@@ -209,9 +209,9 @@
   ansible.builtin.blockinfile:
     path: "/etc/vim/vimrc.local"
     backup: yes
-    marker: "### {mark} ANSIBLE MANAGED BLOCK ###"
+    marker: '"### {mark} ANSIBLE MANAGED BLOCK ###'
     block: |
-      #
+      "#
       " Vim5 and later versions support syntax highlighting.
       syntax on
 
@@ -241,7 +241,7 @@
       " set expandtab		" On pressing tab, insert spaces
       set hlsearch		" Highlight all search results
       set undolevels=1000	" Number of undo levels
-      #
+      "#
   when:
     - ansible_distribution == "Ubuntu"
 
@@ -250,9 +250,9 @@
   ansible.builtin.blockinfile:
     path: "/etc/vimrc"
     backup: yes
-    marker: "### {mark} ANSIBLE MANAGED BLOCK ###"
+    marker: '"### {mark} ANSIBLE MANAGED BLOCK ###'
     block: |
-      #
+      "#
       " Vim5 and later versions support syntax highlighting.
       syntax on
 
@@ -282,7 +282,7 @@
       " set expandtab		" On pressing tab, insert spaces
       set hlsearch		" Highlight all search results
       set undolevels=1000	" Number of undo levels
-      #
+      "#
   when:
     - ansible_distribution == "Archlinux"
 
