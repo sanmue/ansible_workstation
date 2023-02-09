@@ -1,7 +1,7 @@
 
 # TODO: ggf. noch nested virtualization
 
-- name: install VM QEMU/KVM (Ubuntu)
+- name: install VM QEMU/KVM (Ubuntu, not VM guest)
   tags: VM
   package:
     state: latest
@@ -21,7 +21,7 @@
     - ansible_virtualization_role != "guest"
 
 
-- name: install VM QEMU/KVM (Archlinux)
+- name: install VM QEMU/KVM (Archlinux, not VM guest)
   tags: VM
   package:
     state: latest
@@ -41,7 +41,7 @@
     - ansible_virtualization_role != "guest"
 
 
-- name: install VM QEMU/KVM - virt-manager/viewer (all)
+- name: install VM QEMU/KVM - virt-manager/viewer (all, not VM guest)
   tags: VM,workstation
   package:
     state: latest
