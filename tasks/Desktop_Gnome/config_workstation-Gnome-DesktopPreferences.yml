@@ -1035,7 +1035,7 @@
 - name: set gnome shell extensions - dash-to-dock - running-indicator-style" (Gnome)
   dconf:
     key: "/org/gnome/shell/extensions/dash-to-dock/running-indicator-style"
-    value: "'DEFAULT'"
+    value: "'DOTS'"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
