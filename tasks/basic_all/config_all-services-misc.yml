@@ -42,7 +42,7 @@
   ansible.builtin.shell:
     cmd: freshclam && touch /home/{{ env_user }}/.freshclamInitialStartExecuted
   args:
-    crates: /home/{{ env_user }}/.freshclamInitialStartExecuted
+    creates: /home/{{ env_user }}/.freshclamInitialStartExecuted
   when: ansible_distribution in ["Ubuntu", "Archlinux"]
 
 
