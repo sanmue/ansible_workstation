@@ -864,7 +864,7 @@
 
 - name: set nemo extensions - nemo terminal - default-visible (Gnome)
   dconf:
-    key: "/org.nemo.extensions.nemo-terminal.default-visible"
+    key: "/org/nemo/extensions/nemo-terminal/default-visible"
     value: "false"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
@@ -1062,14 +1062,14 @@
 
 - name: set gnome shell extensions - dash-to-dock - show-mounts-only-mounted (Gnome)
   dconf:
-    key: "/org.gnome.shell.extensions.dash-to-dock show-mounts-only-mounted"
+    key: "/org/gnome/shell/extensions/dash-to-dock/show-mounts-only-mounted"
     value: "false"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
 - name: set gnome shell extensions - dash-to-dock - show-trash (Gnome)
   dconf:
-    key: "/org.gnome.shell.extensions.dash-to-dock show-trash"
+    key: "/org/gnome/shell/extensions/dash-to-dock/show-trash"
     value: "false"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
