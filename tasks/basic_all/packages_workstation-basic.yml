@@ -276,9 +276,9 @@
   package:
     state: latest
     name:
-      - xclip   # Voraussetzung für snap-package "espanso"
+      - xclip   # Command line interface to the X11 clipboard   # Voraussetzung für snap-package "espanso"
   when:
-    - ansible_distribution == "Ubuntu"
+    - ansible_distribution in ["Ubuntu", "Archlinux"]
     - env_displayserver == "x11"
 
 
