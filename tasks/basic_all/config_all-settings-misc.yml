@@ -39,7 +39,8 @@
       ### pyenv
       ### -----
       #
-      ### https://ostechnix.com/pyenv-python-version-management-made-easier/
+      # https://ostechnix.com/pyenv-python-version-management-made-easier/
+      #
       export PATH="$HOME/.pyenv/bin:$PATH"
       eval "$(pyenv init -)"
       eval "$(pyenv virtualenv-init -)"
@@ -56,6 +57,7 @@
       ### -----------------------------------------
       #
       export PATH=/home/{{ env_user }}/.local/bin:$PATH
+      #
   when:
     #- env_desktop in ["gnome", "ubuntu:gnome"]
     - ansible_distribution in ["Ubuntu", "Archlinux"]
@@ -80,12 +82,14 @@
     backup: yes
     marker: "### {mark} ANSIBLE MANAGED BLOCK ###"
     block: |
+      #
       ### ------------------------------
       ### vim als Standard Editor setzen
       ### -------------------------------
       #
       export VISUAL=vim
       export EDITOR="${VISUAL}"
+      #
   when:
     #- env_desktop in ["gnome", "ubuntu:gnome"]
     - ansible_distribution in ["Ubuntu", "Archlinux"]
@@ -130,7 +134,8 @@
       ### pyenv
       ### -----
       #
-      ### https://ostechnix.com/pyenv-python-version-management-made-easier/
+      # https://ostechnix.com/pyenv-python-version-management-made-easier/
+      #
       export PATH="$HOME/.pyenv/bin:$PATH"
       eval "$(pyenv init -)"
       eval "$(pyenv virtualenv-init -)"
@@ -147,6 +152,7 @@
       ### -----------------------------------------
       #
       export PATH=/home/{{ env_user }}/.local/bin:$PATH
+      #
   when:
     #- env_desktop in ["gnome", "ubuntu:gnome"]
     - ansible_distribution in ["Ubuntu", "Archlinux"]
@@ -171,12 +177,14 @@
     backup: yes
     marker: "### {mark} ANSIBLE MANAGED BLOCK ###"
     block: |
+      #
       ### ------------------------------
       ### vim als Standard Editor setzen
       ### -------------------------------
       #
       export VISUAL=vim
       export EDITOR="${VISUAL}"
+      #
   when:
     #- env_desktop in ["gnome", "ubuntu:gnome"]
     - ansible_distribution in ["Ubuntu", "Archlinux"]

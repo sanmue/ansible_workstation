@@ -1,7 +1,6 @@
 
 # TODO: ggf. noch nested virtualization
 
-
 - name: install VM QEMU/KVM (Ubuntu)
   tags: VM
   package:
@@ -20,7 +19,6 @@
   when:
     - ansible_distribution == "Ubuntu"
     - ansible_virtualization_role != "guest"
-# noch ohne nested virtualization
 
 
 - name: install VM QEMU/KVM (Archlinux)
@@ -28,27 +26,22 @@
   package:
     state: latest
     name:
-#     for check:
-      - dmidecode
-      - inxi
-#     qemu, dependendies, ...:
-      - bridge-utils
-      - dnsmasq
-      - ebtables
-      - edk2-ovmf # UEFI Support
-      - libvirt
-      - openbsd-netcat
+      - bridge-utils      # Utilities for configuring the Linux ethernet bridge
+      - dnsmasq           # Lightweight, easy to configure DNS forwarder and DHCP server
+      - iptables-nft      # Linux kernel packet control tool (using nft interface)
+      - edk2-ovmf         # UEFI Support # Firmware for Virtual Machines
+      - libvirt           # API for controlling virtualization engines (openvz,kvm,qemu,virtualbox,xen,etc)
+      - openbsd-netcat    # TCP/IP swiss army knife. OpenBSD variant. # network piping application
       - qemu
-      - samba
-      - vde2
-      - virt-install
+      - swtpm             # Libtpms-based TPM emulator with socket, character device, and Linux CUSE interface
+      - vde2              # Virtual Distributed Ethernet for emulators like qemu
+      - virt-install      # Command line tool for creating new KVM , Xen, or Linux container guests using the libvirt hypervisor
   when:
     - ansible_distribution == "Archlinux"
     - ansible_virtualization_role != "guest"
-# noch ohne nested virtualization
 
 
-- name: install VM QEMU/KVM - virt-manager/viewer (Workstation, all distros with DesktopEnv)
+- name: install VM QEMU/KVM - virt-manager/viewer (all)
   tags: VM,workstation
   package:
     state: latest

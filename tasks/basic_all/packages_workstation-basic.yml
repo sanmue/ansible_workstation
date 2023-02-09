@@ -14,6 +14,7 @@
       - clamtk
       - curl
       - deja-dup   # A trivial-to-use personal backup tool to protect against accidental data loss
+      - dmidecode
       - evolution
       - evolution-bogofilter
       - evolution-ews   # MS Exchange integration through Exchange Web Services
@@ -28,6 +29,7 @@
       - htop
       - hunspell
       #- hyphen-de
+      - inxi
       - kdeconnect
       - keepassxc
       - kitty   # gpu beschleunigtes terminal
@@ -36,6 +38,8 @@
       #- man-pages-de
       - neofetch
       - rsync   # bereits installiert (bootstrap)
+      #- samba   # für VM: File sharing between host and Windows guest; https://wiki.manjaro.org/index.php/Virt-manager/en
+      #- manjaro-settings-samba   # Adds an smb.conf file for Manjaro and enables samba
       - shellcheck
       #- skanlite   # bei KDE Plasma Desktop
       - steam
