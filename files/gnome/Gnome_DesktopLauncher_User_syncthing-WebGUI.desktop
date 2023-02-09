@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Syncthing WebGUI
+Name[en_US]=Syncthing WebGUI
+Comment=Open Syncthing GUI in Browser, Syncthing must be startet first
+Exec=xdg-open http://127.0.0.1:8384/
+Icon=syncthing
+Terminal=false
+Type=Application
+Keywords=syncthing;sync;synchronization;replication;
+Categories=Utility;

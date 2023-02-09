@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Syncthing Start
+Name[en_US]=Syncthing Start
+Comment=Open Source Continuous Replication / Cluster Synchronization Thing
+Exec=syncthing
+Icon=syncthing
+Terminal=false
+Type=Application
+Keywords=syncthing;sync;synchronization;replication;
+Categories=Utility;

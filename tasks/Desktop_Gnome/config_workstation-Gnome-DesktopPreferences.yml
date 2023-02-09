@@ -4,17 +4,20 @@
 # config for all Users see: https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/desktop_migration_and_administration_guide/user-sessions#autostart-applications
 # #######################################
 
+### Autostart-Verzeichnis erstellen (aktueller User):
+### -------------------------------------------------
 - name: Create autostart directory for current user if it does not exist
   ansible.builtin.file:
     path: /home/{{ env_user }}/.config/autostart
     state: directory
     owner: "{{ env_user }}"
     group: "{{ env_user }}"
-    mode: u=rwx
-    #mode: '0700'
+    mode: u=rwx   #mode: '0700'
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
+### Autostart-Programme:
+### --------------------
 - name: copy autostart file for Nextcloud Client (flatpak) to local user-folder (Ubuntu + Gnome)
   ansible.builtin.copy:
     src: "files/gnome/Gnome_AutostartApp_User_NextcloudClient_flatpak.desktop"
@@ -22,13 +25,11 @@
     remote_src: yes
     owner: "{{ env_user }}"
     group: "{{ env_user }}"
-    mode: u=rw,g=rw,o=r
-  #    mode: '0664'
+    mode: u=rw,g=rw,o=r   #mode: '0664'
   when:
     - env_desktop == "ubuntu:gnome"
     - ansible_distribution == "Ubuntu"
 
-### Nextcloud Desktop Client
 - name: copy autostart file for Nextcloud Client to local user-folder (Arch + Gnome)
   ansible.builtin.copy:
     src: "files/gnome/Gnome_AutostartApp_User_NextcloudClient.desktop"
@@ -36,11 +37,42 @@
     remote_src: yes
     owner: "{{ env_user }}"
     group: "{{ env_user }}"
-    mode: u=rw,g=rw,o=r
-  #    mode: '0664'
+    mode: u=rw,g=rw,o=r   #mode: '0664'
   when:
     - env_desktop == "gnome"
     - ansible_distribution == "Archlinux"
+
+
+###########################
+### Create Desktop Launcher
+###########################
+
+### Syncthing
+### ---------
+- name: copy desktop launcher file for Syncthing start to local user-folder (Arch + Gnome)
+  ansible.builtin.copy:
+    src: "files/gnome/Gnome_DesktopLauncher_User_syncthing-start.desktop"
+    dest: "/home/{{ env_user }}/.local/share/syncthing-start.desktop"
+    remote_src: yes
+    owner: "{{ env_user }}"
+    group: "{{ env_user }}"
+    mode: u=rw,g=r,o=r   #mode: '0644'
+  when:
+    - env_desktop == "gnome"
+    - ansible_distribution == "Archlinux"
+
+- name: copy desktop launcher file for Syncthing WebGUI to local user-folder (Arch + Gnome)
+  ansible.builtin.copy:
+    src: "files/gnome/Gnome_DesktopLauncher_User_syncthing-WebGUI.desktop"
+    dest: "/home/{{ env_user }}/.local/share/syncthing-WebGUI.desktop"
+    remote_src: yes
+    owner: "{{ env_user }}"
+    group: "{{ env_user }}"
+    mode: u=rw,g=r,o=r   #mode: '0644'
+  when:
+    - env_desktop == "gnome"
+    - ansible_distribution == "Archlinux"
+
 
 #######################
 ### Disable Ubuntu dock
@@ -60,6 +92,7 @@
 #    value: "['ubuntu-dock@ubuntu.com']"
 #  when:
 #    - env_desktop in ["ubuntu:gnome"]
+
 
 #################
 ### favorite apps
