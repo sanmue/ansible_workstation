@@ -96,8 +96,7 @@
     #- item.mount  == '/'
     #- item.fstype == 'btrfs'
     - rootFsIsBtrfs != ''
-    #- snapperDefaultConfigExists is not defined or snapperDefaultConfigExists == ''
-    - not snapperDefaultConfigExists.stderr
+    - snapperDefaultConfigExists is not defined or snapperDefaultConfigExists == ''
 
 - name: install additional packages for snapper on btrfs filesystem (Archlinux)
   tags: basic, workstation, arch
