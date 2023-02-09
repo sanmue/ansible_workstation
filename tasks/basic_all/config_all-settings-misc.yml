@@ -200,33 +200,89 @@
 
 # alt:
 #- name: set vim config for user "sandro" (.vimrc) (all)
-#  ansible.builtin.script: "{{ env_PWD }}/tasks/config_all-settings-misc-vim.sh" # ab ansible version 2.10, davor nur "script:"
+#  ansible.builtin.script: "{{ env_PWD }}/tasks/config_all-settings-misc-vim.sh"
 #  args:
 #    creates: "/home/{{ env_user }}/.vimrc"
 
-# neu (via global config-file):
-- name: Set (Copy) vim global config (ubuntu)
-  ansible.builtin.copy:
-    src: "{{ env_PWD }}/files/vimrc_ubuntu.local"
-    dest: /etc/vim/vimrc.local
-    owner: root
-    group: root
-    mode: '0644'
-    #mode: u=rw,g=r,o=r
+
+- name: Set vim global config (ubuntu)
+  ansible.builtin.blockinfile:
+    path: "/etc/vim/vimrc.local"
     backup: yes
+    marker: "### {mark} ANSIBLE MANAGED BLOCK ###"
+    block: |
+      #
+      " Vim5 and later versions support syntax highlighting.
+      syntax on
+
+      " If using a dark background within the editing area and syntax highlighting
+      " turn on this option as well
+      set background=dark
+
+      " The following are commented out as they cause vim to behave a lot
+      " differently from regular Vi. They are highly recommended though.
+      set showcmd			" Show (partial) command in status line.
+      set showmatch		" Show matching brackets.
+      set ignorecase		" Do case insensitive matching
+      set smartcase		" Do smart case matching
+      set incsearch		" Incremental search
+      set autowrite		" Automatically save before commands like :next and :make
+      set hidden			" Hide buffers when they are abandoned
+      set mouse=a			" Enable mouse usage (all modes)
+
+      " weitere Settings:
+      colorscheme koehler
+      set number			" Show line numbers
+      set ruler			" Show row and column ruler information
+      " set list
+      set nocompatible
+      set tabstop=4		" show existing tab with 4 spaces width
+      set shiftwidth=4	" Number of auto-indent spaces; when indentig with '>', use 4 spaces
+      " set expandtab		" On pressing tab, insert spaces
+      set hlsearch		" Highlight all search results
+      set undolevels=1000	" Number of undo levels
+      #
   when:
     - ansible_distribution == "Ubuntu"
 
 
-- name: Set vim global config (Archlinux)
-  ansible.builtin.copy:
-    src: "{{ env_PWD }}/files/vimrc_arch"
-    dest: /etc/vimrc
-    owner: root
-    group: root
-    mode: '0644'
-    #mode: u=rw,g=r,o=r
+- name: Set vim global config (arch)
+  ansible.builtin.blockinfile:
+    path: "/etc/vimrc"
     backup: yes
+    marker: "### {mark} ANSIBLE MANAGED BLOCK ###"
+    block: |
+      #
+      " Vim5 and later versions support syntax highlighting.
+      syntax on
+
+      " If using a dark background within the editing area and syntax highlighting
+      " turn on this option as well
+      set background=dark
+
+      " The following are commented out as they cause vim to behave a lot
+      " differently from regular Vi. They are highly recommended though.
+      set showcmd			" Show (partial) command in status line.
+      set showmatch		" Show matching brackets.
+      set ignorecase		" Do case insensitive matching
+      set smartcase		" Do smart case matching
+      set incsearch		" Incremental search
+      set autowrite		" Automatically save before commands like :next and :make
+      set hidden			" Hide buffers when they are abandoned
+      set mouse=a			" Enable mouse usage (all modes)
+
+      " weitere Settings:
+      colorscheme koehler
+      set number			" Show line numbers
+      set ruler			" Show row and column ruler information
+      " set list
+      set nocompatible
+      set tabstop=4		" show existing tab with 4 spaces width
+      set shiftwidth=4	" Number of auto-indent spaces; when indentig with '>', use 4 spaces
+      " set expandtab		" On pressing tab, insert spaces
+      set hlsearch		" Highlight all search results
+      set undolevels=1000	" Number of undo levels
+      #
   when:
     - ansible_distribution == "Archlinux"
 
