@@ -773,7 +773,7 @@
 
 - name: set nemo extensions - nemo terminal - default-visible (Gnome)
   dconf:
-    key: "org.nemo.extensions.nemo-terminal.default-visible"
+    key: "/org.nemo.extensions.nemo-terminal.default-visible"
     value: "false"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
