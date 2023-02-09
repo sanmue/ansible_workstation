@@ -60,7 +60,7 @@
       - linux-firmware
 
 
-- name: check if btrfs filesystem an register result in variable (all)
+- name: check if btrfs filesystem + register result in variable (all)
   tags: basic, workstation
   ansible.builtin.command: mount | grep "^/dev" | grep "on / " | grep "btrfs"
   register: rootFsIsBtrfs
@@ -96,7 +96,7 @@
     #- item.mount  == '/'
     #- item.fstype == 'btrfs'
     - rootFsIsBtrfs != ''
-    - snapperDefaultConfigExists == ''
+    - snapperDefaultConfigExists is not defined or snapperDefaultConfigExists == ''
 
 - name: install additional packages for snapper on btrfs filesystem (Archlinux)
   tags: basic, workstation, arch
