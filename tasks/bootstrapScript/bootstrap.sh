@@ -70,7 +70,7 @@ case ${os} in
             touch "/home/${userid}/.bootstrapMirrorPool"
 
             echo -e "\nReset custom mirror list + customize mirror pool + full refresh of the package database and update all packages on the system..."
-            sudo pacman-mirrors -c all && sudo pacman-mirrors --country Germany,France,Austria,Switzerland,Netherlands && sudo pacman -Syyu
+            sudo pacman-mirrors -c all && sudo pacman-mirrors --country Germany,France,Austria,Switzerland,Netherlands && sudo pacman -Syyu --noconfirm 
         fi
 
         echo -e "\nInstallation initial benoetigte Software (git, ansible, openssh, ufw)..."
