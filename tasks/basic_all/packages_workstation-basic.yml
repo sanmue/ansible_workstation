@@ -94,8 +94,9 @@
 
 - name: create a default config for '/' with snapper cli named 'root' (all)
   tags: basic, workstation
-  ansible.builtin.command: snapper -c root create-config /
+  ansible.builtin.command: snapper -c root create-config / && touch /home/{{ env_user }}/.snapperDefaultRootConfigCreated
   #with_items: ansible_mounts
+  creates: /home/{{ env_user }}/.snapperDefaultRootConfigCreated
   when: 
     #- item.mount  == '/'
     #- item.fstype == 'btrfs'
