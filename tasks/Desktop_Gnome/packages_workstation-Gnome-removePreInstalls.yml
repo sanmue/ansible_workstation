@@ -10,7 +10,7 @@
     state: absent
     name:
       - gnome-calendar
-      - nemo
+      - nano
   when: 
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
