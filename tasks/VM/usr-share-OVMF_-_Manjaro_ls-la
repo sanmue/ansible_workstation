@@ -1,0 +1,37 @@
+/usr/share [Ausgabe für OVMF]:
+------------------------------
+lrwxrwxrwx 1 root root 15 27. Nov 22:32 OVMF -> /usr/share/edk2
+
+
+/usr/share/OVMF:
+----------------
+total 0
+drwxr-xr-x 1 root root   14 10. Feb 10:56 .
+drwxr-xr-x 1 root root 5522 10. Feb 10:56 ..
+drwxr-xr-x 1 root root  298 10. Feb 10:56 ia32
+drwxr-xr-x 1 root root  344 10. Feb 10:56 x64
+
+
+/usr/share/OVMF/x64
+-------------------
+total 29408
+drwxr-xr-x 1 root root     344 10. Feb 10:56 .
+drwxr-xr-x 1 root root      14 10. Feb 10:56 ..
+-rw-r--r-- 1 root root 4194304 27. Nov 22:32 MICROVM.4m.fd
+-rw-r--r-- 1 root root 2097152 27. Nov 22:32 MICROVM.fd
+-rw-r--r-- 1 root root 4194304 27. Nov 22:32 OVMF.4m.fd
+-rw-r--r-- 1 root root 3653632 27. Nov 22:32 OVMF_CODE.4m.fd
+-rw-r--r-- 1 root root 3653632 27. Nov 22:32 OVMF_CODE.csm.4m.fd
+-rw-r--r-- 1 root root 1966080 27. Nov 22:32 OVMF_CODE.csm.fd
+-rw-r--r-- 1 root root 1966080 27. Nov 22:32 OVMF_CODE.fd
+-rw-r--r-- 1 root root 3653632 27. Nov 22:32 OVMF_CODE.secboot.4m.fd
+-rw-r--r-- 1 root root 1966080 27. Nov 22:32 OVMF_CODE.secboot.fd
+-rw-r--r-- 1 root root 2097152 27. Nov 22:32 OVMF.fd
+-rw-r--r-- 1 root root  540672 27. Nov 22:32 OVMF_VARS.4m.fd
+-rw-r--r-- 1 root root  131072 27. Nov 22:32 OVMF_VARS.fd
+
+
+/usr/share/edk2:
+----------------
+- gleicher Inhalt wie unter /usr/share/OVMF
+

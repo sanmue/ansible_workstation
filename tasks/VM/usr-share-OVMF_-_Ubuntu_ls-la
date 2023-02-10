@@ -1,0 +1,17 @@
+/usr/share/OVMF
+
+total 12832
+drwxr-xr-x   2 root root    4096 Feb  4 15:23 .
+drwxr-xr-x 325 root root   12288 Feb  9 09:47 ..
+-rw-r--r--   1 root root 3653632 Sep 13 05:05 OVMF_CODE_4M.fd
+lrwxrwxrwx   1 root root      23 Sep 13 05:05 OVMF_CODE_4M.ms.fd -> OVMF_CODE_4M.secboot.fd
+-rw-r--r--   1 root root 3653632 Sep 13 05:05 OVMF_CODE_4M.secboot.fd
+lrwxrwxrwx   1 root root      23 Sep 13 05:05 OVMF_CODE_4M.snakeoil.fd -> OVMF_CODE_4M.secboot.fd
+-rw-r--r--   1 root root 1966080 Sep 13 05:05 OVMF_CODE.fd
+lrwxrwxrwx   1 root root      20 Sep 13 05:05 OVMF_CODE.ms.fd -> OVMF_CODE.secboot.fd
+-rw-r--r--   1 root root 1966080 Sep 13 05:05 OVMF_CODE.secboot.fd
+-rw-r--r--   1 root root  540672 Sep 13 05:05 OVMF_VARS_4M.fd
+-rw-r--r--   1 root root  540672 Sep 13 05:05 OVMF_VARS_4M.ms.fd
+-rw-r--r--   1 root root  540672 Sep 13 05:05 OVMF_VARS_4M.snakeoil.fd
+-rw-r--r--   1 root root  131072 Sep 13 05:05 OVMF_VARS.fd
+-rw-r--r--   1 root root  131072 Sep 13 05:05 OVMF_VARS.ms.fd
