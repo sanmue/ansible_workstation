@@ -33,9 +33,8 @@
       - edk2-ovmf         # UEFI Support # Firmware for Virtual Machines
       - libguestfs        # Access and modify virtual machine disk images
       - libvirt           # # API for controlling virtualization engines (openvz,kvm,qemu,virtualbox,xen,etc)
-      #- community/libvirt # wenn - libvirt' nicht eindeutig
       - openbsd-netcat    # TCP/IP swiss army knife. OpenBSD variant. # network piping application
-      #- qemu              # hier muss aus 3 Optionen ausgewählt werden (base, desktop, full)
+      #- qemu              # hier muss aus 3 Optionen ausgewählt werden (base, desktop, full), daher funktionert nicht so
       #- qemu-base         # A basic QEMU setup for headless environments
       - qemu-desktop      # A QEMU setup for desktop environments
       #- qemu-full         # A Full QEMU setup
