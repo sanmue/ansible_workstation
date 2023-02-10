@@ -6,7 +6,7 @@
 ## Login / Startscript
 - Login am System mit Standard-User (mit sudo-Rechten) und
 - "bootstrap.sh" ausführen (im Verzeichnis: tasks/bootstrapScript)
-## VS Code - Extension "Sync Settings"
+## 'Visual Studio Code' bzw. 'Code - OSS' - Extension "Sync Settings"
 ### Config git-repo als Ablageziel der Einstellungen von VS Code
 - in VS Code:
   - `STRG + SHIFT + P`
