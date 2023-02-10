@@ -40,7 +40,7 @@ fi
 
 
 ### ensure hypervisor supports directory-based storage pools:
-supportstoragetype=$(virsh pool-capabilities | grep "'dir' supported='yes'")   # wenn ja, ausgabe: <pool type='dir' supported='yes'>
+supportstoragetype=$(sudo virsh pool-capabilities | grep "'dir' supported='yes'")   # wenn ja, ausgabe: <pool type='dir' supported='yes'>
 #echo  ${supportstoragetype}
 if [[ "${supportstoragetype}" != *"yes"* ]]; then
 	echo "Directory-based storage pools not supported, exit program." | tee "/home/${user}/.error_vm_storagepool.txt"
@@ -49,13 +49,13 @@ fi
 
 ### ausgabe aktueller Stand Storage pool
 echo "pool-list aktuell:"
-virsh pool-list --all
-storagepoolList=$(virsh pool-list --all --name)
+sudo virsh pool-list --all   # Terminal-Ausgabe
+storagepoolList=$(sudo virsh pool-list --all --name)
 
 ### create storage pool:
 osssddevice="nvme0n1p"   # Anfang Device-Bezeichnung bei Nvme-SSDs
 #nvmessdpath=$(ls /dev/${osssddevice}? | tail -n 1)   # z.B.: /dev/nvme0n1p4"; davon ausgehend, dass es nicht mehr als 9 Partitionen gibt und der letzte Treffer die OS-Partition ist, auf die der Storage Pool soll
-nvmessdpath=$(find /dev/ -name "${osssddevice}?" | tail -n 1)   # Alternative mit find
+nvmessdpath=$(sudo find /dev/ -name "${osssddevice}?" | tail -n 1)   # Alternative mit find
 
 #if [[ $(ls /dev/ | grep ${nvmessdpath}) == *"${nvmessdpath}"* ]]; then
 if [ -n "${nvmessdpath}" ]; then   # -n: if string length is not zero
@@ -71,7 +71,7 @@ if [ -n "${nvmessdpath}" ]; then   # -n: if string length is not zero
 
 	if [ "${found}" == 'nein' ]; then
 		echo "pool-define-as..."
-		virsh pool-define-as ${storagedir} dir --source-dev "${nvmessdpath}" --target "${storagepath}"   # Create the storage pool definition 
+		sudo virsh pool-define-as ${storagedir} dir --source-dev "${nvmessdpath}" --target "${storagepath}"   # Create the storage pool definition 
 	fi	
 else
 	#echo "source-dev path '${nvmessdpath}' nicht vorhanden." | tee -a "/home/${user}/${errorfile}"
@@ -81,33 +81,33 @@ else
 fi
 
 ### check Anlage Storage Pool
-if [[ $(virsh pool-list --all | grep ${storagedir}) != *"${storagedir}"*  ]]; then  # Verify the storage pool is listed 
+if [[ $(sudo virsh pool-list --all | grep ${storagedir}) != *"${storagedir}"*  ]]; then  # Verify the storage pool is listed 
 																					# einfache Prüfung, ggf. false Positives
 	echo "Storage pool '${storagedir}' wurde nicht angelegt." | tee -a "/home/${user}/${errorfile}"
 	echo "Programm wird beendet"
 	exit 1
 else
 	### check Storage Pool State
-	storagepoolState=$(virsh pool-list --all | grep -F "${storagedir}" | xargs | cut -d " " -f 2)
+	storagepoolState=$(sudo virsh pool-list --all | grep -F "${storagedir}" | xargs | cut -d " " -f 2)
 	if [ "${storagepoolState}" != "active" ]; then
 		echo "pool-build..."
-		virsh pool-build ${storagedir}   # Create the local directory
+		sudo virsh pool-build ${storagedir}   # Create the local directory
 
 		echo "pool-start..."
-		virsh pool-start ${storagedir}   # Start the storage pool
+		sudo virsh pool-start ${storagedir}   # Start the storage pool
 	else
-		echo "Storage Pool '${storagedir}' bereits active, 'pool-build' und 'pool-start' werden übersprungen."
+		echo "Storage Pool '${storagedir}' bereits 'active', 'pool-build' und 'pool-start' werden übersprungen."
 	fi
 
 	echo "pool-autostart..."
-	virsh pool-autostart ${storagedir}   # Turn on autostart
+	sudo virsh pool-autostart ${storagedir}   # Turn on autostart
 fi
 
 
 echo "pool-info zu '${storagedir}':"
-virsh pool-info ${storagedir}   ### Show/Verify the storage pool configuration
+sudo virsh pool-info ${storagedir}   ### Show/Verify the storage pool configuration
 
 
 echo "pool-list aktuell:"
-virsh pool-list --all
+sudo virsh pool-list --all
 

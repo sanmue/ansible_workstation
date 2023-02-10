@@ -4,8 +4,8 @@ exportPath=$(pwd)
 
 # net-dumpxml networks:
 echo "- net-dumpxml networks..."
-virsh net-list --name   # nur für Ausgabe
-virsh net-list --name | xargs -I % sh -c "virsh net-dumpxml % > ${exportPath}/netdump_%.xml"
+sudo virsh net-list --name   # nur für Ausgabe
+sudo virsh net-list --name | xargs -I % sh -c "sudo virsh net-dumpxml % > ${exportPath}/netdump_%.xml"
 #if [ -f "${exportPath}/netdump_default.xml" ]; then
 #	rm "${exportPath}/netdump_default.xml"
 #fi
@@ -13,20 +13,20 @@ virsh net-list --name | xargs -I % sh -c "virsh net-dumpxml % > ${exportPath}/ne
 
 # dumpxml virtual machines:
 echo "- dumpxml virtual machines..."
-virsh list --all --name   # nur für Ausgabe
-virsh list --all --name | xargs -I % sh -c "virsh dumpxml % > ${exportPath}/dump_%.xml"
+sudo virsh list --all --name   # nur für Ausgabe
+sudo virsh list --all --name | xargs -I % sh -c "sudo virsh dumpxml % > ${exportPath}/dump_%.xml"
 
 
 # snapshot-dumpxml + snapshot-current
 echo "- snapshot-dumpxml + snapshot-current..."
 echo "  |"
-domainList=$(virsh list --all --name)
+domainList=$(sudo virsh list --all --name)
 
 for domain in ${domainList}; do
 	echo "  -- domain: '${domain}'"
 	
 	# snapshot-dumpxml
-	snapshotList=$(virsh snapshot-list "${domain}" --name --topological)   #nur Name der Snapshots, in korrekter Reihenfolge
+	snapshotList=$(sudo virsh snapshot-list "${domain}" --name --topological)   #nur Name der Snapshots, in korrekter Reihenfolge
 	if [ -z "${snapshotList}" ]; then   # wenn leer
 		echo -e "     |_snapshot:\e[0;33m keine Snapshots vorhanden\e[0;37m"
                                  #ab hier rote Schrift             ab hier weiße Schrift
@@ -37,11 +37,11 @@ for domain in ${domainList}; do
 		echo "     Exportiere die einzelnen Snapshots in eine Datei..."
 		for snapshot in ${snapshotList}; do
 			echo "     |_snapshot-dumpxml: '${snapshot}'"
-			virsh snapshot-dumpxml "${domain}" "${snapshot}" > "${exportPath}/snapshotdump_${domain}_${snapshot}.xml"
+			sudo virsh snapshot-dumpxml "${domain}" "${snapshot}" | tee "${exportPath}/snapshotdump_${domain}_${snapshot}.xml" 1>/dev/null
 		done
 
 	#snapshot-current
-		snapshotcurrent=$(virsh snapshot-current --name "${domain}")
+		snapshotcurrent=$(sudo virsh snapshot-current --name "${domain}")
 		echo "     |_snapshotcurrent: '${snapshotcurrent}'"
 		echo "${snapshotcurrent}" > "${exportPath}/snapshotcurrent_${domain}.txt"
 

@@ -23,7 +23,7 @@ for snapshotfile in ${snapshotfileList}; do
 			snapshotdumpfile="snapshotdump_${domain}_${snapshot}.xml"
 			
 			# snapshot-create --redefine
-			existingDomainSnapshotList=$(virsh snapshot-list "${domain}" --name --topological)
+			existingDomainSnapshotList=$(sudo virsh snapshot-list "${domain}" --name --topological)
 			found='nein'   # Init mit Standardwert
 			for existingSnapshot in $existingDomainSnapshotList; do   	# zuerst prüfen, ob der Snapshot nicht innerhalb eines vorhergehendne Laufs schon existiert
 																		# ansonsten würde wieder neu definiert. Funktioniert, gefällt aber nicht
@@ -35,7 +35,7 @@ for snapshotfile in ${snapshotfileList}; do
 			done
 
 			if [ "${found}" == 'nein' ]; then
-				virsh snapshot-create "${domain}" --xmlfile "${snapshotdumpfile}" --redefine
+				sudo virsh snapshot-create "${domain}" --xmlfile "${snapshotdumpfile}" --redefine
 			fi
 		done
 	else
@@ -60,6 +60,6 @@ for snapshotcurrentfile in ${snapshotcurrentfileList}; do
 	snapshotcurrent=$(cat "${snapshotcurrentfile}")
 	#echo "- snapshotcurrent: ${snapshotcurrent}"
 
-	virsh snapshot-current "${domain}" "${snapshotcurrent}"   # keine Überprüfung, ob bereits in vorhergehendem Lauf gesetzt wurde; wir ggf. einfach nochmal gesetzt
+	sudo virsh snapshot-current "${domain}" "${snapshotcurrent}"   # keine Überprüfung, ob bereits in einem vorhergehendem Durchlauf gesetzt wurde; wird ggf. einfach nochmal gesetzt
 done
 
