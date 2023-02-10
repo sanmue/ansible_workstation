@@ -28,7 +28,7 @@
     name:
       - bridge-utils      # Utilities for configuring the Linux ethernet bridge
       - dnsmasq           # Lightweight, easy to configure DNS forwarder and DHCP server
-      - iptables-nft      # conflicts with 'iptables' (installiert, wird über bootstrap.sh geändert und auch schon installiert)
+      - iptables-nft      # conflicts with 'iptables' ('iptables" ist installiert (Standard), wird über bootstrap.sh geändert und durch iptables-nft ersetzt)
                           # Linux kernel packet control tool (using nft interface)
       - edk2-ovmf         # UEFI Support # Firmware for Virtual Machines
       - libguestfs        # Access and modify virtual machine disk images
