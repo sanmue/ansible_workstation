@@ -1,5 +1,6 @@
 # ansible_workstation Install
 - TestLab automatisierte Installation Workstation
+- Ubuntu oder Manjaro mit Gnome-Desktop
 
 # Infos
 ## Login / Startscript
