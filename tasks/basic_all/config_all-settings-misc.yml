@@ -16,51 +16,94 @@
   when:
     - ansible_distribution in ["Ubuntu", "Archlinux"]
     - not statBashrcUser.stat.exists
-    #- statBashrcUser.stat.exists == false
+    #oder: - statBashrcUser.stat.exists == false
 
-- name: bashrc - Insert/Update additional paths and config (User, all)
+- name: bashrc - Insert/Update additional paths and config - nvm (User, all)
   ansible.builtin.blockinfile:
     path: "/home/{{ env_user }}/.bashrc"
     backup: yes
-    marker: "### {mark} ANSIBLE MANAGED BLOCK ###"
+    marker: "### {mark} 'nvm' - ANSIBLE MANAGED BLOCK ###"
     block: |
-      #
-      ### --------------------------
-      ### nvm (Node Version Manager)
-      ### --------------------------
-      #
+      # --------------------------
+      # nvm (Node Version Manager)
+      # --------------------------
       # https://github.com/nvm-sh/nvm
       # https://linuxize.com/post/how-to-install-node-js-on-ubuntu-22-04/
+      #
       export NVM_DIR="$HOME/.nvm"
       [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
       [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+  when:
+    - ansible_distribution in ["Ubuntu", "Archlinux"]
 
-      ### -----
-      ### pyenv
-      ### -----
-      #
+- name: bashrc - Insert/Update additional paths and config - vim (User, all)
+  ansible.builtin.blockinfile:
+    path: "/home/{{ env_user }}/.bashrc"
+    backup: yes
+    marker: "### {mark} 'vim' ANSIBLE MANAGED BLOCK ###"
+    block: |
+      # ------------------------------
+      # vim als Standard Editor setzen
+      # -------------------------------
+      export VISUAL=vim
+      export EDITOR="${VISUAL}"
+  when:
+    - ansible_distribution in ["Ubuntu", "Archlinux"]
+
+- name: bashrc - Insert/Update additional paths and config - user-bin (User, all)
+  ansible.builtin.blockinfile:
+    path: "/home/{{ env_user }}/.bashrc"
+    backup: yes
+    marker: "### {mark} 'user-bin' ANSIBLE MANAGED BLOCK ###"
+    block: |
+      # ------------------------------------------
+      # Benutzer-bin Verzeichnis an PATH anhängen:
+      # ------------------------------------------
+      export PATH=/home/{{ env_user }}/.local/bin:$PATH
+  when:
+    - ansible_distribution in ["Ubuntu", "Archlinux"]
+
+- name: bashrc - Insert/Update additional paths and config - pyenv (User, Ubuntu)
+  ansible.builtin.blockinfile:
+    path: "/home/{{ env_user }}/.bashrc"
+    backup: yes
+    marker: "### {mark} 'pyenv' ANSIBLE MANAGED BLOCK ###"
+    block: |
+      # -----
+      # pyenv
+      # -----
       # https://ostechnix.com/pyenv-python-version-management-made-easier/
       #
       export PATH="$HOME/.pyenv/bin:$PATH"
       eval "$(pyenv init -)"
       eval "$(pyenv virtualenv-init -)"
-
-      ### ------------------------------
-      ### vim als Standard Editor setzen
-      ### -------------------------------
-      #
-      export VISUAL=vim
-      export EDITOR="${VISUAL}"
-
-      ### -----------------------------------------
-      ### Benutzer-bin Verzeichnis PATH hinzufügen:
-      ### -----------------------------------------
-      #
-      export PATH=/home/{{ env_user }}/.local/bin:$PATH
-      #
   when:
-    #- env_desktop in ["gnome", "ubuntu:gnome"]
-    - ansible_distribution in ["Ubuntu", "Archlinux"]
+    - ansible_distribution in ["Ubuntu"]
+
+- name: bashrc - initial command 'pyenv init' - pyenv (User, Arch)
+  become: true
+  become_user: {{ env_user }}
+  ansible.builtin.shell:
+    cmd: pyenv init >/dev/null && touch /home/{{ env_user }}/.pyenvinitExecuted
+  args:
+    creates: /home/{{ env_user }}/.pyenvinitExecuted
+  when:
+    - ansible_distribution in ["Archlinux"]
+
+- name: bashrc - Insert/Update additional paths and config - pyenv (User, Arch)
+  ansible.builtin.blockinfile:
+    path: "/home/{{ env_user }}/.bashrc"
+    backup: yes
+    marker: "### {mark} 'pyenv' ANSIBLE MANAGED BLOCK ###"
+    block: |
+      # -----
+      # pyenv
+      # -----
+      export PYENV_ROOT="$HOME/.pyenv"
+      command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+      eval "$(pyenv init -)"
+  when:
+    - ansible_distribution in ["Archlinux"]
 
 
 - name: bashrc - check status (root, all)
@@ -80,19 +123,16 @@
   ansible.builtin.blockinfile:
     path: "/root/.bashrc"
     backup: yes
-    marker: "### {mark} ANSIBLE MANAGED BLOCK ###"
+    marker: "### {mark} 'vim' ANSIBLE MANAGED BLOCK ###"
     block: |
-      #
-      ### ------------------------------
-      ### vim als Standard Editor setzen
-      ### -------------------------------
-      #
+      # ------------------------------
+      # vim als Standard Editor setzen
+      # -------------------------------
       export VISUAL=vim
       export EDITOR="${VISUAL}"
-      #
   when:
-    #- env_desktop in ["gnome", "ubuntu:gnome"]
     - ansible_distribution in ["Ubuntu", "Archlinux"]
+
 
 
 #######################################
@@ -103,7 +143,7 @@
 - name: zshrc - check status (User, all)
   ansible.builtin.stat:
     path: "/home/{{ env_user }}/.zshrc"
-  register: statZshrcUser
+  register: statzshrcUser
 
 - name: zshrc - create (User, all)
   ansible.builtin.file:
@@ -111,57 +151,101 @@
     state: touch
   when:
     - ansible_distribution in ["Ubuntu", "Archlinux"]
-    - not statZshrcUser.stat.exists
+    - not statzshrcUser.stat.exists
+    #oder: - statzshrcUser.stat.exists == false
 
-- name: zshrc - Insert/Update additional paths and config (User, all)
+- name: zshrc - Insert/Update additional paths and config - nvm (User, all)
   ansible.builtin.blockinfile:
     path: "/home/{{ env_user }}/.zshrc"
     backup: yes
-    marker: "### {mark} ANSIBLE MANAGED BLOCK ###"
+    marker: "### {mark} 'nvm' - ANSIBLE MANAGED BLOCK ###"
     block: |
-      #
-      ### --------------------------
-      ### nvm (Node Version Manager)
-      ### --------------------------
-      #
+      # --------------------------
+      # nvm (Node Version Manager)
+      # --------------------------
       # https://github.com/nvm-sh/nvm
       # https://linuxize.com/post/how-to-install-node-js-on-ubuntu-22-04/
+      #
       export NVM_DIR="$HOME/.nvm"
       [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
       [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+  when:
+    - ansible_distribution in ["Ubuntu", "Archlinux"]
 
-      ### -----
-      ### pyenv
-      ### -----
-      #
+- name: zshrc - Insert/Update additional paths and config - vim (User, all)
+  ansible.builtin.blockinfile:
+    path: "/home/{{ env_user }}/.zshrc"
+    backup: yes
+    marker: "### {mark} 'vim' ANSIBLE MANAGED BLOCK ###"
+    block: |
+      # ------------------------------
+      # vim als Standard Editor setzen
+      # -------------------------------
+      export VISUAL=vim
+      export EDITOR="${VISUAL}"
+  when:
+    - ansible_distribution in ["Ubuntu", "Archlinux"]
+
+- name: zshrc - Insert/Update additional paths and config - user-bin (User, all)
+  ansible.builtin.blockinfile:
+    path: "/home/{{ env_user }}/.zshrc"
+    backup: yes
+    marker: "### {mark} 'user-bin' ANSIBLE MANAGED BLOCK ###"
+    block: |
+      # ------------------------------------------
+      # Benutzer-bin Verzeichnis an PATH anhängen:
+      # ------------------------------------------
+      export PATH=/home/{{ env_user }}/.local/bin:$PATH
+  when:
+    - ansible_distribution in ["Ubuntu", "Archlinux"]
+
+- name: zshrc - Insert/Update additional paths and config - pyenv (User, Ubuntu)
+  ansible.builtin.blockinfile:
+    path: "/home/{{ env_user }}/.zshrc"
+    backup: yes
+    marker: "### {mark} 'pyenv' ANSIBLE MANAGED BLOCK ###"
+    block: |
+      # -----
+      # pyenv
+      # -----
       # https://ostechnix.com/pyenv-python-version-management-made-easier/
       #
       export PATH="$HOME/.pyenv/bin:$PATH"
       eval "$(pyenv init -)"
       eval "$(pyenv virtualenv-init -)"
-
-      ### ------------------------------
-      ### vim als Standard Editor setzen
-      ### -------------------------------
-      #
-      export VISUAL=vim
-      export EDITOR="${VISUAL}"
-
-      ### -----------------------------------------
-      ### Benutzer-bin Verzeichnis PATH hinzufügen:
-      ### -----------------------------------------
-      #
-      export PATH=/home/{{ env_user }}/.local/bin:$PATH
-      #
   when:
-    #- env_desktop in ["gnome", "ubuntu:gnome"]
-    - ansible_distribution in ["Ubuntu", "Archlinux"]
+    - ansible_distribution in ["Ubuntu"]
+
+- name: zshrc - initial command 'pyenv init' - pyenv (User, Arch)
+  become: true
+  become_user: {{ env_user }}
+  ansible.builtin.shell:
+    cmd: pyenv init >/dev/null && touch /home/{{ env_user }}/.pyenvinitExecuted
+  args:
+    creates: /home/{{ env_user }}/.pyenvinitExecuted
+  when:
+    - ansible_distribution in ["Archlinux"]
+
+- name: zshrc - Insert/Update additional paths and config - pyenv (User, Arch)
+  ansible.builtin.blockinfile:
+    path: "/home/{{ env_user }}/.zshrc"
+    backup: yes
+    marker: "### {mark} 'pyenv' ANSIBLE MANAGED BLOCK ###"
+    block: |
+      # -----
+      # pyenv
+      # -----
+      export PYENV_ROOT="$HOME/.pyenv"
+      command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+      eval "$(pyenv init -)"
+  when:
+    - ansible_distribution in ["Archlinux"]
 
 
 - name: zshrc - check status (root, all)
   ansible.builtin.stat:
     path: "/root/.zshrc"
-  register: statZshrcRoot
+  register: statBashrcRoot
 
 - name: zshrc - create (root, all)
   ansible.builtin.file:
@@ -169,24 +253,20 @@
     state: touch
   when:
     - ansible_distribution in ["Ubuntu", "Archlinux"]
-    - not statZshrcRoot.stat.exists
+    - not statBashrcRoot.stat.exists
 
 - name: zshrc - Insert/Update additional paths and config (root, all)
   ansible.builtin.blockinfile:
     path: "/root/.zshrc"
     backup: yes
-    marker: "### {mark} ANSIBLE MANAGED BLOCK ###"
+    marker: "### {mark} 'vim' ANSIBLE MANAGED BLOCK ###"
     block: |
-      #
-      ### ------------------------------
-      ### vim als Standard Editor setzen
-      ### -------------------------------
-      #
+      # ------------------------------
+      # vim als Standard Editor setzen
+      # -------------------------------
       export VISUAL=vim
       export EDITOR="${VISUAL}"
-      #
   when:
-    #- env_desktop in ["gnome", "ubuntu:gnome"]
     - ansible_distribution in ["Ubuntu", "Archlinux"]
 
 
