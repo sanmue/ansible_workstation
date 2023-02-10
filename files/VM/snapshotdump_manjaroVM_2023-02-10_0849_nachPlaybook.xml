@@ -1,37 +1,36 @@
 <domainsnapshot>
-  <name>init</name>
-  <description>user &quot;sandro&quot; + Mitgl. Gruppe &quot;sudo&quot; + ssh key; 
-Hostname &quot;debian11-102.local&quot;; 
-&quot;/etc/hosts&quot; angepasst: 127.0.1.1 debian11-102.local debian11-102,
-inkl. IPv4 - Hostname andere VMs; 
-statische IP: 10.0.3.102 auf 2. Netzwerkkarte</description>
+  <name>2023-02-10_0849_nachPlaybook</name>
   <state>shutoff</state>
-  <creationTime>1656776583</creationTime>
+  <parent>
+    <name>2023-02-09_1921_preTasks</name>
+  </parent>
+  <creationTime>1676015364</creationTime>
   <memory snapshot='no'/>
   <disks>
     <disk name='vda' snapshot='internal'/>
     <disk name='sda' snapshot='no'/>
   </disks>
   <domain type='kvm'>
-    <name>debian11-102</name>
-    <uuid>8d1a5f68-3994-46f2-bb6a-faa3bb15cf9e</uuid>
+    <name>manjaroVM</name>
+    <uuid>aea19926-a379-4eda-b5e2-d5973177861f</uuid>
     <metadata>
       <libosinfo:libosinfo xmlns:libosinfo="http://libosinfo.org/xmlns/libvirt/domain/1.0">
-        <libosinfo:os id="http://debian.org/debian/10"/>
+        <libosinfo:os id="http://manjaro.org/manjaro/rolling"/>
       </libosinfo:libosinfo>
     </metadata>
-    <memory unit='KiB'>2097152</memory>
-    <currentMemory unit='KiB'>2097152</currentMemory>
+    <memory unit='KiB'>8388608</memory>
+    <currentMemory unit='KiB'>4194304</currentMemory>
     <vcpu placement='static'>2</vcpu>
     <os>
-      <type arch='x86_64' machine='pc-q35-4.2'>hvm</type>
+      <type arch='x86_64' machine='pc-q35-6.2'>hvm</type>
+      <boot dev='hd'/>
     </os>
     <features>
       <acpi/>
       <apic/>
       <vmport state='off'/>
     </features>
-    <cpu mode='host-model' check='partial'/>
+    <cpu mode='host-passthrough' check='none' migratable='on'/>
     <clock offset='utc'>
       <timer name='rtc' tickpolicy='catchup'/>
       <timer name='pit' tickpolicy='delay'/>
@@ -47,24 +46,19 @@ statische IP: 10.0.3.102 auf 2. Netzwerkkarte</description>
     <devices>
       <emulator>/usr/bin/qemu-system-x86_64</emulator>
       <disk type='file' device='disk'>
-        <driver name='qemu' type='qcow2'/>
-        <source file='/var/lib/libvirt/images/debian11-102.qcow2'/>
+        <driver name='qemu' type='qcow2' discard='unmap'/>
+        <source file='/var/lib/libvirt/images/manjaroVM.qcow2'/>
         <target dev='vda' bus='virtio'/>
-        <boot order='2'/>
         <address type='pci' domain='0x0000' bus='0x04' slot='0x00' function='0x0'/>
       </disk>
       <disk type='file' device='cdrom'>
         <driver name='qemu' type='raw'/>
         <target dev='sda' bus='sata'/>
         <readonly/>
-        <boot order='1'/>
         <address type='drive' controller='0' bus='0' target='0' unit='0'/>
       </disk>
       <controller type='usb' index='0' model='qemu-xhci' ports='15'>
         <address type='pci' domain='0x0000' bus='0x02' slot='0x00' function='0x0'/>
-      </controller>
-      <controller type='sata' index='0'>
-        <address type='pci' domain='0x0000' bus='0x00' slot='0x1f' function='0x2'/>
       </controller>
       <controller type='pci' index='0' model='pcie-root'/>
       <controller type='pci' index='1' model='pcie-root-port'>
@@ -102,20 +96,52 @@ statische IP: 10.0.3.102 auf 2. Netzwerkkarte</description>
         <target chassis='7' port='0x16'/>
         <address type='pci' domain='0x0000' bus='0x00' slot='0x02' function='0x6'/>
       </controller>
+      <controller type='pci' index='8' model='pcie-root-port'>
+        <model name='pcie-root-port'/>
+        <target chassis='8' port='0x17'/>
+        <address type='pci' domain='0x0000' bus='0x00' slot='0x02' function='0x7'/>
+      </controller>
+      <controller type='pci' index='9' model='pcie-root-port'>
+        <model name='pcie-root-port'/>
+        <target chassis='9' port='0x18'/>
+        <address type='pci' domain='0x0000' bus='0x00' slot='0x03' function='0x0' multifunction='on'/>
+      </controller>
+      <controller type='pci' index='10' model='pcie-root-port'>
+        <model name='pcie-root-port'/>
+        <target chassis='10' port='0x19'/>
+        <address type='pci' domain='0x0000' bus='0x00' slot='0x03' function='0x1'/>
+      </controller>
+      <controller type='pci' index='11' model='pcie-root-port'>
+        <model name='pcie-root-port'/>
+        <target chassis='11' port='0x1a'/>
+        <address type='pci' domain='0x0000' bus='0x00' slot='0x03' function='0x2'/>
+      </controller>
+      <controller type='pci' index='12' model='pcie-root-port'>
+        <model name='pcie-root-port'/>
+        <target chassis='12' port='0x1b'/>
+        <address type='pci' domain='0x0000' bus='0x00' slot='0x03' function='0x3'/>
+      </controller>
+      <controller type='pci' index='13' model='pcie-root-port'>
+        <model name='pcie-root-port'/>
+        <target chassis='13' port='0x1c'/>
+        <address type='pci' domain='0x0000' bus='0x00' slot='0x03' function='0x4'/>
+      </controller>
+      <controller type='pci' index='14' model='pcie-root-port'>
+        <model name='pcie-root-port'/>
+        <target chassis='14' port='0x1d'/>
+        <address type='pci' domain='0x0000' bus='0x00' slot='0x03' function='0x5'/>
+      </controller>
+      <controller type='sata' index='0'>
+        <address type='pci' domain='0x0000' bus='0x00' slot='0x1f' function='0x2'/>
+      </controller>
       <controller type='virtio-serial' index='0'>
         <address type='pci' domain='0x0000' bus='0x03' slot='0x00' function='0x0'/>
       </controller>
       <interface type='network'>
-        <mac address='52:54:00:b6:5e:c7'/>
+        <mac address='52:54:00:a3:1a:b7'/>
         <source network='default'/>
         <model type='virtio'/>
         <address type='pci' domain='0x0000' bus='0x01' slot='0x00' function='0x0'/>
-      </interface>
-      <interface type='network'>
-        <mac address='52:54:00:9b:cf:e4'/>
-        <source network='linuxlab-nat'/>
-        <model type='virtio'/>
-        <address type='pci' domain='0x0000' bus='0x07' slot='0x00' function='0x0'/>
       </interface>
       <serial type='pty'>
         <target type='isa-serial' port='0'>
@@ -138,7 +164,7 @@ statische IP: 10.0.3.102 auf 2. Netzwerkkarte</description>
       </input>
       <input type='mouse' bus='ps2'/>
       <input type='keyboard' bus='ps2'/>
-      <graphics type='spice' autoport='yes' keymap='de'>
+      <graphics type='spice' autoport='yes'>
         <listen type='address'/>
         <image compression='off'/>
       </graphics>
@@ -147,7 +173,7 @@ statische IP: 10.0.3.102 auf 2. Netzwerkkarte</description>
       </sound>
       <audio id='1' type='spice'/>
       <video>
-        <model type='qxl' ram='65536' vram='65536' vgamem='16384' heads='1' primary='yes'/>
+        <model type='virtio' heads='1' primary='yes'/>
         <address type='pci' domain='0x0000' bus='0x00' slot='0x01' function='0x0'/>
       </video>
       <redirdev bus='usb' type='spicevmc'>
