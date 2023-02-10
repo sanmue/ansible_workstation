@@ -216,15 +216,16 @@
   when:
     - ansible_distribution in ["Ubuntu"]
 
-- name: zshrc - initial command 'pyenv init' - pyenv (User, Arch)
-  become: true
-  become_user: "{{ env_user }}"
-  ansible.builtin.shell:
-    cmd: pyenv init >/dev/null && touch /home/{{ env_user }}/.pyenvinitExecuted
-  args:
-    creates: /home/{{ env_user }}/.pyenvinitExecuted
-  when:
-    - ansible_distribution in ["Archlinux"]
+#- name: zshrc - initial command 'pyenv init' - pyenv (User, Arch)
+#  become: true
+#  become_user: "{{ env_user }}"
+#  ansible.builtin.shell:
+#    cmd: pyenv init >/dev/null && touch /home/{{ env_user }}/.pyenvinitExecuted
+#  args:
+#    creates: /home/{{ env_user }}/.pyenvinitExecuted
+#  ignore_errors: true
+#  when:
+#    - ansible_distribution in ["Archlinux"]
 
 - name: zshrc - Insert/Update additional paths and config - pyenv (User, Arch)
   ansible.builtin.blockinfile:
