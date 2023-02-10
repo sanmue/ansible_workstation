@@ -16,7 +16,7 @@
   when:
     - ansible_distribution == "Ubuntu"
 
-- name: TODO - Download and install Citrix Workspace App + USB Support Package (Ubuntu)
+- name: TODO - Download and install Citrix Workspace App + USB Support Package (Arch)
   ansible.builtin.debug:
     msg: "TODO: download from 'https://www.citrix.com/downloads/workspace-app/linux/'"
   when:
