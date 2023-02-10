@@ -12,6 +12,7 @@
   community.libvirt.virt_net:
     state: active   # ansonsten läuft nächster Schritt "destroy/undefine default virtual network" auf Fehler
     name: default
+  when: ansible_virtualization_role != "guest"
 
 - name: destroy/undefine 'default' virtual network (Qemu-Kvm)
   # da alle virtuellen Netzwerke aus den dump-files erstellt werden und 'default' dann schon da wäre (-> Fehler)
