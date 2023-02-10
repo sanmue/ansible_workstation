@@ -218,7 +218,7 @@
 
 - name: zshrc - initial command 'pyenv init' - pyenv (User, Arch)
   become: true
-  become_user: {{ env_user }}
+  become_user: "{{ env_user }}"
   ansible.builtin.shell:
     cmd: pyenv init >/dev/null && touch /home/{{ env_user }}/.pyenvinitExecuted
   args:
