@@ -30,13 +30,13 @@
       - dnsmasq           # Lightweight, easy to configure DNS forwarder and DHCP server
       - iptables-nft      # Linux kernel packet control tool (using nft interface)
       - edk2-ovmf         # UEFI Support # Firmware for Virtual Machines
-      - libguestfs        # Access and modify virtual machine disk images
-      - libvirt           # API for controlling virtualization engines (openvz,kvm,qemu,virtualbox,xen,etc)
+      #- libguestfs        # Access and modify virtual machine disk images
+      #- libvirt           # API for controlling virtualization engines (openvz,kvm,qemu,virtualbox,xen,etc)
       - openbsd-netcat    # TCP/IP swiss army knife. OpenBSD variant. # network piping application
       - qemu
       - swtpm             # Libtpms-based TPM emulator with socket, character device, and Linux CUSE interface
       - vde2              # Virtual Distributed Ethernet for emulators like qemu
-      - virt-install      # Command line tool for creating new KVM , Xen, or Linux container guests using the libvirt hypervisor
+      #- virt-install      # Command line tool for creating new KVM , Xen, or Linux container guests using the libvirt hypervisor
   when:
     - ansible_distribution == "Archlinux"
     - ansible_virtualization_role != "guest"
