@@ -989,7 +989,7 @@
 - name: set gnome shell extensions - dash-to-dock - disable-overview-on-startup (Gnome)
   dconf:
     key: "/org/gnome/shell/extensions/dash-to-dock/disable-overview-on-startup"
-    value: "false"
+    value: "true"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 

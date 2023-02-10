@@ -84,6 +84,11 @@ case ${os} in
 
         echo -e "\nStarte und aktiviere sshd.service..."
         sudo systemctl start sshd.service && sudo systemctl enable sshd.service
+
+        echo -e "\nVM - Qemu/KVM: Wiki empfiehlt inst. von 'iptables-nft'"
+        echo -e "\nBitte manuell bestätigen, dass 'iptables' (und 'inxi') gelöscht und 'iptables-nft' installiert wird"
+        echo -e "\nAnmerkung: 'inxi' wird im Rahmen basis-inst wieder installiert"
+        sudo pacman -Syu --needed --noconfirm iptables-nft
     ;;
 
     Ubuntu*)
