@@ -48,7 +48,7 @@
 - name: VM - install virtio-drivers for Windows guests (Archlinux, not VM guest)
   tags: VM
   ansible.builtin.shell:
-    cmd: sudo pamac build virtio-win && touch /home/{{ env_user }}/.VM_virtioDriversInstalled
+    cmd: sudo pamac build --no-confirm virtio-win && touch /home/{{ env_user }}/.VM_virtioDriversInstalled
   args:
     creates: /home/{{ env_user }}/.VM_virtioDriversInstalled
   when:
