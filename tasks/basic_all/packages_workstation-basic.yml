@@ -15,6 +15,7 @@
       - curl
       - deja-dup   # A trivial-to-use personal backup tool to protect against accidental data loss
       - dmidecode
+      - eslint   # An AST-based pattern checker for JavaScript (für VS Code / Code - OSS Extension)
       - evolution
       - evolution-bogofilter
       - evolution-ews   # MS Exchange integration through Exchange Web Services
