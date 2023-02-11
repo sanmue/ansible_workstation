@@ -1,20 +1,21 @@
 ##############################################
-### Create virtual machines including:
+# Create:
+#   - virtual machines
 #   - Networks
-#   - Storage Pools
+#   - Storage Pools (02/2023: tmp. auskommentiert, siehe to do)
 #   - Snapshots
-### 
+############################################## 
 # https://serverfault.com/questions/434064/correct-way-to-move-kvm-vm
 # https://unix.stackexchange.com/questions/628454/how-can-i-migrate-backup-restore-a-virt-manager-snapshot
-###
 
-- name: Ensure that 'default' network is active (Qemu-Kvm)
+
+- name: VM - Ensure that 'default' network is active (Qemu-Kvm)
   community.libvirt.virt_net:
     state: active   # ansonsten läuft nächster Schritt "destroy/undefine default virtual network" auf Fehler
     name: default
   when: ansible_virtualization_role != "guest"
 
-- name: destroy/undefine 'default' virtual network (Qemu-Kvm)
+- name: VM - destroy/undefine 'default' virtual network (Qemu-Kvm)
   # da alle virtuellen Netzwerke aus den dump-files erstellt werden und 'default' dann schon da wäre (-> Fehler)
   tags: VM
   ansible.builtin.shell:
@@ -23,7 +24,7 @@
     creates: /home/{{ env_user }}/.vm_qemu-kvm_created
   when: ansible_virtualization_role != "guest"
 
-- name: create virtual networks (Qemu-Kvm)
+- name: VM - create virtual networks (Qemu-Kvm)
   tags: VM
   ansible.builtin.shell:
     cmd: ls files/VM/netdump_*.xml | xargs -I % sh -c "virsh net-define %"   # ls files/VM/netdump_*.xml: Dateiname inkl. Pfad
@@ -34,7 +35,7 @@
     creates: /home/{{ env_user }}/.vm_qemu-kvm_created
   when: ansible_virtualization_role != "guest"
 
-- name: start all virtual networks (Qemu-Kvm)
+- name: VM - start all virtual networks (Qemu-Kvm)
   tags: VM
   ansible.builtin.shell:
     chdir: files/VM/
@@ -44,7 +45,7 @@
     creates: /home/{{ env_user }}/.vm_qemu-kvm_created
   when: ansible_virtualization_role != "guest"
 
-- name: autostart all virtual networks (Qemu-Kvm)
+- name: VM - autostart all virtual networks (Qemu-Kvm)
   tags: VM
   ansible.builtin.shell:
     chdir: files/VM/
@@ -54,7 +55,7 @@
   when: ansible_virtualization_role != "guest"
 
 
-- name: create virtual machines (Qemu-Kvm)
+- name: VM - create virtual machines (Qemu-Kvm)
   tags: VM
   ansible.builtin.shell:
     chdir: files/VM/
@@ -64,7 +65,7 @@
   when: ansible_virtualization_role != "guest"
 
 
-- name: redefine + set current virtual machine snapshots (Qemu-Kvm)
+- name: VM - redefine + set current virtual machine snapshots (Qemu-Kvm)
   tags: VM
   ansible.builtin.shell:
     chdir: files/VM/
@@ -86,7 +87,7 @@
 #  when: ansible_virtualization_role != "guest"
 
 
-- name: create 'flag-file' indicating VM-stuff was created (Qemu-Kvm)
+- name: VM - create 'flag-file' indicating VM-stuff was created (Qemu-Kvm)
   tags: VM
   ansible.builtin.file:
     path: /home/{{ env_user }}/.vm_qemu-kvm_created

@@ -1,0 +1,7 @@
+
+- name: Fix - VM - create UEFI-Secureboot Links (OVMF) wenn VMs aus Ubuntu (Qemu-Kvm, Arch)
+  ansible.builtin.script: "{{ env_pwd }}/tasks/fix/config_all-VM-QemuKvm-create_OVMF_Manjaro_fix.sh"
+  when: 
+    - ansible_virtualization_role != "guest"
+    - ansible_distribution in ["Archlinux"]
+

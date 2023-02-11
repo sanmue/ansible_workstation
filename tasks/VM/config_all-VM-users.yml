@@ -1,5 +1,5 @@
 
-- name: add current user to group 'kvm' (Ubuntu)
+- name: VM - add current user to group 'kvm' (Ubuntu)
   ansible.builtin.user:
     name: "{{ env_user }}"
     groups: kvm
@@ -9,7 +9,7 @@
     - ansible_virtualization_role != "guest"
 
 
-- name: add current user to groups 'libvirt,kvm' (Archlinux)
+- name: VM - add current user to groups 'libvirt,kvm' (Archlinux)
   ansible.builtin.user:
     name: "{{ env_user }}"
     groups: libvirt,kvm   #,wheel   # TODO check # Groblösung: Gruppe 'wheel' scheint bei Suse i.V.m. NetworkManger ein Netzwerkproblem zu lösen

@@ -394,9 +394,9 @@
 
 
 
-######################
-### Visual Studio Code
-######################
+###################################
+### Visual Studio Code / Code - OSS
+###################################
 
 - name: Install 'Visual Studio Code' bzw 'Code-OSS' - Extension 'Sync Settings' by zokugun (Ubuntu)
   tags: workstation,ubuntu
@@ -407,7 +407,7 @@
   when:
     - ansible_distribution in ["Ubuntu"]   # hat unter Arch (mit ' Code - OSS') nicht funktioniert
 
-- name: Start 'Visual Studio Code' (Ubuntu)
+- name: Start 'Visual Studio Code' bzw 'Code-OSS' (Ubuntu)
   tags: workstation,ubuntu
   ansible.builtin.shell:
     cmd: code >/dev/null 2>&1 &  # damit im Home-Verzeichnis der Config-Pfad von VS Code erstellt wird + später die settings.yml dorthin kopiert werden kann
