@@ -54,6 +54,7 @@
   - include: tasks/VM/config_all-VM-daemon.yml
   - include: tasks/VM/config_all-VM-users.yml
   - include: tasks/VM/config_all-VM-QemuKvm-create.yml
+  - include: tasks/fix/config_all-VM-QemuKvm-create_fix.yml
   # ----------------------------------------------------------
   # ### sudo-ansible-user + cronjob:
   # - include: tasks/basic_all/config_all-ansible-users.yml
