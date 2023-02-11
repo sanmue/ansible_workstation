@@ -89,6 +89,12 @@ case ${os} in
         echo -e "Bestätige, dass 'iptables' (und 'inxi') gelöscht und 'iptables-nft' installiert wird"
         echo -e "Anmerkung: 'inxi' wird im Rahmen basis-inst wieder installiert"
         sudo pacman -Syu iptables-nft
+
+        #- name: Download and install Citrix Workspace App (icaclient) from AUR (Archlinux)
+        #  ansible.builtin.shell:
+        #    cmd: "sudo pamac build --no-confirm icaclient && touch /home/{{ env_user }}/.icaclientInstalled"
+        echo -e "\nInstall Citrix Workspace App (icaclient) from AUR"
+        sudo pamac build --no-confirm icaclient && touch /home/${userid}/.icaclientInstalled
     ;;
 
     Ubuntu*)

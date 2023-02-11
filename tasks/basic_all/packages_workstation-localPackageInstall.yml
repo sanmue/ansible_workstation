@@ -16,19 +16,28 @@
   when:
     - ansible_distribution == "Ubuntu"
 
-- name: TODO - Download and install Citrix Workspace App + USB Support Package (Arch)
+- name: TODO - Download and install Citrix Workspace App + USB Support Package (Ubuntu)
   ansible.builtin.debug:
     msg: "TODO: download from 'https://www.citrix.com/downloads/workspace-app/linux/'"
   when:
     - ansible_distribution == "Ubuntu"
 
-- name: Download and install Citrix Workspace App (icaclient) from AUR (Archlinux)
-  ansible.builtin.shell:
-    cmd: "sudo pamac build --no-confirm icaclient && touch /home/{{ env_user }}/.icaclientInstalled"
-  args:
-    creates: "/home/{{ env_user }}/.icaclientInstalled"
-  when:
-    - ansible_distribution == "Archlinux"
+
+### Archlinux/Manjaro: ins bootstrap-script aufenommen
+
+#- name: TODO - Download and install Citrix Workspace App (icaclient) from AUR (Arch)
+#  ansible.builtin.debug:
+#    msg: "TODO: Install from AUR: 'sudo pamac build --no-confirm icaclient'"
+#  when:
+#    - ansible_distribution == "Archlinux"
+
+#- name: Download and install Citrix Workspace App (icaclient) from AUR (Archlinux)
+#  ansible.builtin.shell:
+#    cmd: "sudo pamac build --no-confirm icaclient && touch /home/{{ env_user }}/.icaclientInstalled"
+#  args:
+#    creates: "/home/{{ env_user }}/.icaclientInstalled"
+#  when:
+#    - ansible_distribution == "Archlinux"
 
 
 
