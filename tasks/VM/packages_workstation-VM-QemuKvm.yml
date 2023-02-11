@@ -45,15 +45,16 @@
     - ansible_distribution == "Archlinux"
     - ansible_virtualization_role != "guest"
 
-- name: VM - install virtio-drivers for Windows guests (Archlinux, not VM guest)
-  tags: VM
-  ansible.builtin.shell:
-    cmd: sudo pamac build --no-confirm virtio-win && touch /home/{{ env_user }}/.VM_virtioDriversInstalled
-  args:
-    creates: /home/{{ env_user }}/.VM_virtioDriversInstalled
-  when:
-    - ansible_distribution == "Archlinux"
-    - ansible_virtualization_role != "guest"
+# auskommentiert: dauert bei Install zu lange oder funktioniert nicht richtig
+#- name: VM - install (download) virtio-drivers for Windows guests from AUR (Archlinux, not VM guest)
+#  tags: VM
+#  ansible.builtin.shell:
+#    cmd: sudo pamac build --no-confirm virtio-win && touch /home/{{ env_user }}/.VM_virtioDriversInstalled
+#  args:
+#    creates: /home/{{ env_user }}/.VM_virtioDriversInstalled
+#  when:
+#    - ansible_distribution == "Archlinux"
+#    - ansible_virtualization_role != "guest"
 
 - name: VM - install VM QEMU/KVM - virt-manager/viewer (all, not VM guest)
   tags: VM,workstation
