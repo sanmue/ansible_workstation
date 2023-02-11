@@ -279,8 +279,8 @@
   when: ansible_distribution == "Ubuntu"
 
 
-- name: install basic packages (Ubuntu + x11 display server)
-  tags: basic, ubuntu, workstation
+- name: install basic packages (all + x11 display server)
+  tags: basic, ubuntu, arch, workstation
   package:
     state: latest
     name:
