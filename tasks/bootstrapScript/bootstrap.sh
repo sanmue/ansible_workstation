@@ -94,7 +94,7 @@ case ${os} in
         #  ansible.builtin.shell:
         #    cmd: "sudo pamac build --no-confirm icaclient && touch /home/{{ env_user }}/.icaclientInstalled"
         echo -e "\nInstall Citrix Workspace App (icaclient) from AUR"
-        sudo pamac build --no-confirm icaclient && touch /home/${userid}/.icaclientInstalled
+        sudo pamac build icaclient && touch /home/${userid}/.icaclientInstalled
     ;;
 
     Ubuntu*)
