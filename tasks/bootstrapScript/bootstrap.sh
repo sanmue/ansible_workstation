@@ -90,9 +90,6 @@ case ${os} in
         echo -e "Anmerkung: 'inxi' wird im Rahmen basis-inst wieder installiert"
         sudo pacman -Syu iptables-nft
 
-        #- name: Download and install Citrix Workspace App (icaclient) from AUR (Archlinux)
-        #  ansible.builtin.shell:
-        #    cmd: "sudo pamac build --no-confirm icaclient && touch /home/{{ env_user }}/.icaclientInstalled"
         echo -e "\nInstall Citrix Workspace App (icaclient) from AUR"
         sudo pamac build icaclient && touch /home/${userid}/.icaclientInstalled
     ;;
@@ -240,3 +237,22 @@ echo -e "\nStarte Ansible-Playbook ..."
 ansible-playbook "/home/${userid}/${repodir}/${playbookdir}/local.yml" -v --ask-become-pass
 # bei verschlüsselten Daten:
 #ansible-playbook "/home/${userid}/${repodir}/${playbookdir}/local.yml" -v -K --vault-password-file "/home/${userid}/.ansibleVaultKey"
+
+
+
+### ---
+### Archlinux/Manjaro: VM - Installation virtio-win from AUR
+### ---
+case ${os} in
+    Manjaro*)
+        echo -e "\nVM - Installation virtio-win from AUR"
+        sudo pamac build virtio-win && touch /home/{{ env_user }}/.VM_virtioDriversInstalled
+    ;;
+
+    *)
+        echo "Unbehandelter Fall: switch os - virtio-win - default-switch Zweig"
+        read -r -p "Eingabe-Taste drücken zum Beenden"
+        exit 0
+    ;;
+esac
+
