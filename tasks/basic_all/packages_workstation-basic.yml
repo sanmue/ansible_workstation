@@ -161,6 +161,7 @@
       - pyenv
       - remmina
       - signal-desktop
+      - steam-native-runtime   # Native replacement for the Steam runtime using system libraries (installiert benötigte 32bit libs)
       - torbrowser-launcher
       - vim-ansible
       #
