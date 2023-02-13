@@ -10,7 +10,7 @@
 ### ---
 ### Variablen
 ### ---
-repodir="dev"
+repodir="ansible-install"
 playbookdir="ansible_workstation"
 playbook="local.yml"
 sshkeydir=".ssh"
