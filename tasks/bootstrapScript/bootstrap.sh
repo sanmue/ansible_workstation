@@ -12,6 +12,7 @@
 ### ---
 repodir="dev"
 playbookdir="ansible_workstation"
+playbook="local.yml"
 sshkeydir=".ssh"
 userid=$(whoami)   # oder: userid=${USER}
 defaultDomain="universalaccount.de"
@@ -226,17 +227,17 @@ fi
 #read -rp "Soll TEST des Ansible-Playbooks durchgeführt werden (j/n)?: " testplay
 #if [ "${testplay}" = 'j' ]; then
 #    echo "Starte TEST des Playbooks ..."
-#    ansible-playbook "/home/${userid}/${repodir}/${playbookdir}/local.yml" -v --ask-become-pass --check
+#    ansible-playbook "/home/${userid}/${repodir}/${playbookdir}/${playbook}" -v --ask-become-pass --check
 #    # bei verschlüsselten Daten:
-#    #ansible-playbook "/home/${userid}/${repodir}/${playbookdir}/local.yml" -v -K -C --vault-password-file "/home/${userid}/.ansibleVaultKey"
+#    #ansible-playbook "/home/${userid}/${repodir}/${playbookdir}/${playbook}" -v -K -C --vault-password-file "/home/${userid}/.ansibleVaultKey"
 #else
 #    echo "TEST des Playbooks wird NICHT durchgefürt"
 #fi
 
 echo -e "\nStarte Ansible-Playbook ..."
-ansible-playbook "/home/${userid}/${repodir}/${playbookdir}/local.yml" -v --ask-become-pass
+ansible-playbook "/home/${userid}/${repodir}/${playbookdir}/${playbook}" -v --ask-become-pass
 # bei verschlüsselten Daten:
-#ansible-playbook "/home/${userid}/${repodir}/${playbookdir}/local.yml" -v -K --vault-password-file "/home/${userid}/.ansibleVaultKey"
+#ansible-playbook "/home/${userid}/${repodir}/${playbookdir}/${playbook}" -v -K --vault-password-file "/home/${userid}/.ansibleVaultKey"
 
 
 
@@ -246,7 +247,7 @@ ansible-playbook "/home/${userid}/${repodir}/${playbookdir}/local.yml" -v --ask-
 case ${os} in
     Manjaro*)
         echo -e "\nVM - Installation virtio-win from AUR"
-        sudo pamac build virtio-win && touch /home/{{ env_user }}/.VM_virtioDriversInstalled
+        sudo pamac build virtio-win && touch "/home/${userid}/.VM_virtioDriversInstalled"
     ;;
 
     *)
