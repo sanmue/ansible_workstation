@@ -90,9 +90,6 @@ case ${os} in
         echo -e "Bestätige, dass 'iptables' (und 'inxi') gelöscht und 'iptables-nft' installiert wird"
         echo -e "Anmerkung: 'inxi' wird im Rahmen basis-inst wieder installiert"
         sudo pacman -Syu iptables-nft
-
-        echo -e "\nInstall Citrix Workspace App (icaclient) from AUR"
-        sudo pamac build icaclient && touch /home/${userid}/.icaclientInstalled
     ;;
 
     Ubuntu*)
@@ -235,18 +232,21 @@ fi
 #fi
 
 echo -e "\nStarte Ansible-Playbook ..."
-ansible-playbook "/home/${userid}/${repodir}/${playbookdir}/${playbook}" -v --ask-become-pass
+ansible-playbook "/home/${userid}/${repodir}/${playbookdir}/${playbook}" -v -K
 # bei verschlüsselten Daten:
 #ansible-playbook "/home/${userid}/${repodir}/${playbookdir}/${playbook}" -v -K --vault-password-file "/home/${userid}/.ansibleVaultKey"
 
 
 
 ### ---
-### Archlinux/Manjaro: VM - Installation virtio-win from AUR
+### Archlinux/Manjaro: weitere Installationen
 ### ---
 case ${os} in
     Manjaro*)
-        echo -e "\nVM - Installation virtio-win from AUR"
+        echo -e "\nInstall Citrix Workspace App (icaclient) from AUR (Arch)"
+        sudo pamac build icaclient && touch "/home/${userid}/.icaclientInstalled"
+
+        echo -e "\nVM - Installation virtio-win from AUR (Arch)"
         sudo pamac build virtio-win && touch "/home/${userid}/.VM_virtioDriversInstalled"
     ;;
 
