@@ -3,7 +3,7 @@
   <uuid>20ef78dc-bdba-457b-91c5-37a89f45ba47</uuid>
   <metadata>
     <libosinfo:libosinfo xmlns:libosinfo="http://libosinfo.org/xmlns/libvirt/domain/1.0">
-      <libosinfo:os id="http://redhat.com/rhel/8.2"/>
+      <libosinfo:os id="http://rockylinux.org/rocky/9"/>
     </libosinfo:libosinfo>
   </metadata>
   <memory unit='KiB'>2097152</memory>
