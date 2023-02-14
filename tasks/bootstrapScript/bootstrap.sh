@@ -252,7 +252,7 @@ case ${os} in
     ;;
 
     *)
-        echo "Unbehandelter Fall: switch os - virtio-win - default-switch Zweig"
+        echo "Unbehandelter Fall: switch os - Arch weitere Installationen - default-switch Zweig"
         read -r -p "Eingabe-Taste drücken zum Beenden"
         exit 0
     ;;
