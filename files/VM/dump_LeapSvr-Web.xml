@@ -4,7 +4,7 @@
   <description>Basisinstall ohne spezielle Config</description>
   <metadata>
     <libosinfo:libosinfo xmlns:libosinfo="http://libosinfo.org/xmlns/libvirt/domain/1.0">
-      <libosinfo:os id="http://opensuse.org/opensuse/unknown"/>
+      <libosinfo:os id="http://opensuse.org/opensuse/15.4"/>
     </libosinfo:libosinfo>
   </metadata>
   <memory unit='KiB'>2097152</memory>

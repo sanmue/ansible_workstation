@@ -3,7 +3,7 @@
   <uuid>16672e22-c599-4733-b5f3-895c0d68cf44</uuid>
   <metadata>
     <libosinfo:libosinfo xmlns:libosinfo="http://libosinfo.org/xmlns/libvirt/domain/1.0">
-      <libosinfo:os id="http://debian.org/debian/10"/>
+      <libosinfo:os id="http://debian.org/debian/11"/>
     </libosinfo:libosinfo>
   </metadata>
   <memory unit='KiB'>2097152</memory>

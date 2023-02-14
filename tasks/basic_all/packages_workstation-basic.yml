@@ -15,6 +15,7 @@
       - curl
       - deja-dup   # A trivial-to-use personal backup tool to protect against accidental data loss
       - dmidecode
+      - eslint   # An AST-based pattern checker for JavaScript (für VS Code / Code - OSS Extension)
       - evolution
       - evolution-bogofilter
       - evolution-ews   # MS Exchange integration through Exchange Web Services
@@ -160,6 +161,7 @@
       - pyenv
       - remmina
       - signal-desktop
+      - steam-native-runtime   # Native replacement for the Steam runtime using system libraries (installiert benötigte 32bit libs)
       - torbrowser-launcher
       - vim-ansible
       #
@@ -279,8 +281,8 @@
   when: ansible_distribution == "Ubuntu"
 
 
-- name: install basic packages (Ubuntu + x11 display server)
-  tags: basic, ubuntu, workstation
+- name: install basic packages (all + x11 display server)
+  tags: basic, ubuntu, arch, workstation
   package:
     state: latest
     name:

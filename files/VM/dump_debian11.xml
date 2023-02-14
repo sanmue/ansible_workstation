@@ -7,7 +7,7 @@ Hostname &quot;debian11.local&quot;;
 statische IP: 10.0.3.100 auf 2. Netzwerkkarte</description>
   <metadata>
     <libosinfo:libosinfo xmlns:libosinfo="http://libosinfo.org/xmlns/libvirt/domain/1.0">
-      <libosinfo:os id="http://debian.org/debian/10"/>
+      <libosinfo:os id="http://debian.org/debian/11"/>
     </libosinfo:libosinfo>
   </metadata>
   <memory unit='KiB'>2097152</memory>

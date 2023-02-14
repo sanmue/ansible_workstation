@@ -10,8 +10,9 @@
 ### ---
 ### Variablen
 ### ---
-repodir="dev"
+repodir="ansible-install"
 playbookdir="ansible_workstation"
+playbook="local.yml"
 sshkeydir=".ssh"
 userid=$(whoami)   # oder: userid=${USER}
 defaultDomain="universalaccount.de"
@@ -223,14 +224,36 @@ fi
 #read -rp "Soll TEST des Ansible-Playbooks durchgeführt werden (j/n)?: " testplay
 #if [ "${testplay}" = 'j' ]; then
 #    echo "Starte TEST des Playbooks ..."
-#    ansible-playbook "/home/${userid}/${repodir}/${playbookdir}/local.yml" -v --ask-become-pass --check
+#    ansible-playbook "/home/${userid}/${repodir}/${playbookdir}/${playbook}" -v --ask-become-pass --check
 #    # bei verschlüsselten Daten:
-#    #ansible-playbook "/home/${userid}/${repodir}/${playbookdir}/local.yml" -v -K -C --vault-password-file "/home/${userid}/.ansibleVaultKey"
+#    #ansible-playbook "/home/${userid}/${repodir}/${playbookdir}/${playbook}" -v -K -C --vault-password-file "/home/${userid}/.ansibleVaultKey"
 #else
 #    echo "TEST des Playbooks wird NICHT durchgefürt"
 #fi
 
 echo -e "\nStarte Ansible-Playbook ..."
-ansible-playbook "/home/${userid}/${repodir}/${playbookdir}/local.yml" -v --ask-become-pass
+ansible-playbook "/home/${userid}/${repodir}/${playbookdir}/${playbook}" -v -K
 # bei verschlüsselten Daten:
-#ansible-playbook "/home/${userid}/${repodir}/${playbookdir}/local.yml" -v -K --vault-password-file "/home/${userid}/.ansibleVaultKey"
+#ansible-playbook "/home/${userid}/${repodir}/${playbookdir}/${playbook}" -v -K --vault-password-file "/home/${userid}/.ansibleVaultKey"
+
+
+
+### ---
+### Archlinux/Manjaro: weitere Installationen
+### ---
+case ${os} in
+    Manjaro*)
+        echo -e "\nInstall Citrix Workspace App (icaclient) from AUR (Arch)"
+        sudo pamac build icaclient && touch "/home/${userid}/.icaclientInstalled"
+
+        echo -e "\nVM - Installation virtio-win from AUR (Arch)"
+        sudo pamac build virtio-win && touch "/home/${userid}/.VM_virtioDriversInstalled"
+    ;;
+
+    *)
+        echo "Unbehandelter Fall: switch os - virtio-win - default-switch Zweig"
+        read -r -p "Eingabe-Taste drücken zum Beenden"
+        exit 0
+    ;;
+esac
+
