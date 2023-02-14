@@ -240,13 +240,14 @@ ansible-playbook "/home/${userid}/${repodir}/${playbookdir}/${playbook}" -v -K
 
 ### ---
 ### Archlinux/Manjaro: weitere Installationen
+### - am Schluss, damit nicht aufhalten
 ### ---
 case ${os} in
     Manjaro*)
         echo -e "\nInstall Citrix Workspace App (icaclient) from AUR (Arch)"
         sudo pamac build icaclient && touch "/home/${userid}/.icaclientInstalled"
 
-        echo -e "\nVM - Installation virtio-win from AUR (Arch)"
+        echo -e "\nVM - Get virtio-win from AUR (Arch)"
         sudo pamac build virtio-win && touch "/home/${userid}/.VM_virtioDriversInstalled"
     ;;
 
