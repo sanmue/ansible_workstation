@@ -247,8 +247,11 @@ case ${os} in
         echo -e "\nInstall Citrix Workspace App (icaclient) from AUR (Arch)"
         sudo pamac build icaclient && touch "/home/${userid}/.icaclientInstalled"
 
-        echo -e "\nVM - Get virtio-win from AUR (Arch)"
+        echo -e "\nVM - Install virtio-win image from AUR (Arch)"
         sudo pamac build virtio-win && touch "/home/${userid}/.VM_virtioDriversInstalled"
+
+        echo -e "\nInstall Microsoft TTF Fonts from AUR (Arch)"
+        sudo pamac build --no-confirm ttf-ms-fonts && touch "/home/${userid}/.ttfMsFontsInstalled"
     ;;
 
     *)
