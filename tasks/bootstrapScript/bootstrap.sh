@@ -251,7 +251,7 @@ case ${os} in
         sudo pamac build virtio-win && touch "/home/${userid}/.VM_virtioDriversInstalled"
 
         echo -e "\nInstall Microsoft TTF Fonts from AUR (Arch)"
-        sudo pamac build --no-confirm ttf-ms-fonts && touch "/home/${userid}/.ttfMsFontsInstalled"
+        sudo pamac build ttf-ms-fonts && touch "/home/${userid}/.ttfMsFontsInstalled"
     ;;
 
     *)
