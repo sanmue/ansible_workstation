@@ -1,16 +1,17 @@
 ---
 
-- name: AnsibleFactsVars
+- name: Ansible Facts and Vars
   hosts: localhost
   connection: local
   become: false
   tags: always,pre,ansibleFacts
   gather_facts: true
   pre_tasks:
-  - ansible.builtin.import_tasks: tasks/basic_all/config_workstation-ansibleFacts.yml
+    - name: AnsibleFactsAndVars
+      ansible.builtin.import_tasks: tasks/basic_all/config_workstation-ansibleFacts.yml
 
 
-- name: Pre-config
+- name: Config Repos
   hosts: localhost
   connection: local
   become: true
@@ -22,7 +23,7 @@
 
 
 - name: Main Install
-  hosts: localhost  
+  hosts: localhost
   connection: local
   become: true
   tags: always
