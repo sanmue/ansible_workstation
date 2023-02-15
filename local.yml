@@ -1,6 +1,7 @@
 ---
 
-- hosts: localhost
+- name: AnsibleFactsVars
+  hosts: localhost
   connection: local
   become: false
   tags: always,pre,ansibleFacts
@@ -9,7 +10,8 @@
   - ansible.builtin.import_tasks: tasks/basic_all/config_workstation-ansibleFacts.yml
 
 
-- hosts: localhost
+- name: Pre-config
+  hosts: localhost
   connection: local
   become: true
   tags: always,pre
@@ -19,7 +21,8 @@
   - ansible.builtin.import_tasks: tasks/basic_all/all_update.yml
 
 
-- hosts: localhost
+- name: Main Install
+  hosts: localhost  
   connection: local
   become: true
   tags: always
@@ -64,7 +67,8 @@
   - ansible.builtin.import_tasks: tasks/basic_all/all_cleanup.yml
 
 
-- hosts: localhost
+- name: DesktopPreferences
+  hosts: localhost
   connection: local
   become: true
   become_user: "{{ env_user }}"
@@ -75,7 +79,7 @@
   - ansible.builtin.import_tasks: tasks/Desktop_Gnome/config_workstation-Gnome-DesktopPreferences.yml
 
 
-  - name: Write Message
+  - name: Write final message
     ansible.builtin.debug:
       msg: "Please restart the system for the changes to take effect!"
 
