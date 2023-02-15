@@ -1,8 +1,7 @@
-
 - name: AnsibleFacts - Get desktop environment (XDG_CURRENT_DESKTOP) (all)
   set_fact:
     env_desktop: "{{ ansible_facts['env']['XDG_CURRENT_DESKTOP']|lower }}"   # z.B. "ubuntu:GNOME"
-#    env_desktop: "{{ lookup('env','XDG_CURRENT_DESKTOP')|lower }}"
+    # env_desktop: "{{ lookup('env','XDG_CURRENT_DESKTOP')|lower }}"
     env_hostname: "{{ ansible_facts['hostname'] }}"
 
 - name: AnsibleFacts - Get display server (XDG_SESSION_TYPE) (all)
@@ -18,7 +17,8 @@
 
 - name: AnsibleFacts - Get path (PATH) (all)
   set_fact:
-    env_path: "{{ ansible_facts['env']['PATH'] }}"   # z.B.: "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin"
+    env_path: "{{ ansible_facts['env']['PATH'] }}"   
+    # z.B.: "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin"
 
 - name: AnsibleFacts - Get PWD (PATH) (all)
   set_fact:
@@ -31,7 +31,7 @@
 - name: AnsibleFacts - Get lsb lsb-release (Ubuntu)
   set_fact:
     env_lsb: "{{ ansible_facts['lsb']['release'] }}"   # z.B. bei Ubuntu 20.04: "20.04"
-    #env_lsbmajor: "{{ ansible_facts['lsb']['major_release'] }}"   # z.B. bei Ubuntu 20.04: "20"
+    # env_lsbmajor: "{{ ansible_facts['lsb']['major_release'] }}"   # z.B. bei Ubuntu 20.04: "20"
   when:
     - ansible_distribution == "Ubuntu"
 
