@@ -2,9 +2,16 @@
 # ### Syncthing
 # ### #########
 
+# funktioniert so wohl nur mit root-rechten, nicht für User (findet service nicht)
+# - name: Start + Enable Syncthing Service (systemd) for user (Ubuntu, Arch)
+#  ansible.builtin.service:
+#    name: syncthing.service
+#    state: started
+#    enabled: true
+#  when: ansible_distribution in ["Ubuntu", "Archlinux"]
+
+
 - name: Start + Enable Syncthing Service (systemd) for user (Ubuntu, Arch)
-  ansible.builtin.service:
-    name: syncthing.service
-    state: started
-    enabled: true
+  ansible.builtin.shell:
+    cmd: systemctl --user enable syncthing.service && systemctl --user start syncthing.service
   when: ansible_distribution in ["Ubuntu", "Archlinux"]
