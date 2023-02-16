@@ -7,8 +7,7 @@
   gather_facts: true
   pre_tasks:
     #- name: AnsibleFactsAndVars
-    ansible.builtin.import_tasks: 
-      - tasks/basic_all/config_workstation-ansibleFacts.yml
+    - ansible.builtin.import_tasks: tasks/basic_all/config_workstation-ansibleFacts.yml
 
 
 - name: Config Repos
