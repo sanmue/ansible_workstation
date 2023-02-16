@@ -19,8 +19,8 @@
     - name: ConfigRepos
       ansible.builtin.import_tasks:
         - tasks/basic_all/config_workstation-addrepos.yml
-        - tasks/fix/config_workstation-addrepos-ubuntu-fix.yml
-        - tasks/basic_all/all_update.yml
+        #- tasks/fix/config_workstation-addrepos-ubuntu-fix.yml
+        #- tasks/basic_all/all_update.yml
 
 
 - name: Main Install
