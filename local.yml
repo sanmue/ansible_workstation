@@ -6,8 +6,8 @@
   become: false
   gather_facts: true
   pre_tasks:
-    - name: GatherFactsVars ConfigRepos
-      ansible.builtin.import_tasks: 
+    # - name: GatherFactsVars ConfigRepos
+    - ansible.builtin.import_tasks: 
         - tasks/basic_all/config_workstation-ansibleFacts.yml
         - tasks/basic_all/config_workstation-addrepos.yml
         - tasks/fix/config_workstation-addrepos-ubuntu-fix.yml
