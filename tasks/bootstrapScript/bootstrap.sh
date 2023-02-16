@@ -258,7 +258,7 @@ if [ "${installAUR}" == "j" ]; then
         ;;
 
         *)
-            echo "Unbehandelter Fall: switch os - Arch weitere Installationen - default-switch Zweig"
+            echo -e "\nUnbehandelter Fall: switch os - Arch weitere Installationen - default-switch Zweig"
             read -r -p "Eingabe-Taste drücken zum Beenden"
             exit 0
         ;;
