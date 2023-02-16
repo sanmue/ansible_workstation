@@ -6,7 +6,9 @@
   become: false
   gather_facts: true
   pre_tasks:
-    - ansible.builtin.import_tasks: tasks/basic_all/config_workstation-ansibleFacts.yml
+    - name: ConfigRepos
+      ansible.builtin.import_tasks: 
+        - tasks/basic_all/config_workstation-ansibleFacts.yml
 
 
 - name: Config Repos
