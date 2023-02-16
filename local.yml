@@ -1,6 +1,6 @@
 ---
 
-- name: Ansible Facts and Vars
+- name: Gather facts+vars + config repos
   hosts: localhost
   connection: local
   become: false
@@ -9,18 +9,20 @@
     - name: ConfigRepos
       ansible.builtin.import_tasks: 
         - tasks/basic_all/config_workstation-ansibleFacts.yml
-
-
-- name: Config Repos
-  hosts: localhost
-  connection: local
-  become: true
-  pre_tasks:
-    - name: ConfigRepos
-      ansible.builtin.import_tasks:
         - tasks/basic_all/config_workstation-addrepos.yml
-        #- tasks/fix/config_workstation-addrepos-ubuntu-fix.yml
-        #- tasks/basic_all/all_update.yml
+        - tasks/fix/config_workstation-addrepos-ubuntu-fix.yml
+        - tasks/basic_all/all_update.yml
+
+#- name: Config Repos
+#  hosts: localhost
+#  connection: local
+#  become: true
+#  pre_tasks:
+#    - name: ConfigRepos
+#      ansible.builtin.import_tasks:
+#        - tasks/basic_all/config_workstation-addrepos.yml
+#        - tasks/fix/config_workstation-addrepos-ubuntu-fix.yml
+#        - tasks/basic_all/all_update.yml
 
 
 - name: Main Install
