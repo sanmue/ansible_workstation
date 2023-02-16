@@ -242,22 +242,26 @@ ansible-playbook "/home/${userid}/${repodir}/${playbookdir}/${playbook}" -v -K
 ### Archlinux/Manjaro: weitere Installationen
 ### - am Schluss, damit nicht aufhalten
 ### ---
-case ${os} in
-    Manjaro*)
-        echo -e "\nInstall Citrix Workspace App (icaclient) from AUR (Arch)"
-        sudo pamac build icaclient && touch "/home/${userid}/.icaclientInstalled"
+read -r -p "Install from AUR: Citrix ICAClient, virtio-win, MS TTF Fonts? (j=ja, sonstige Eingabe: nein)" installAUR
 
-        echo -e "\nVM - Install virtio-win image from AUR (Arch)"
-        sudo pamac build virtio-win && touch "/home/${userid}/.VM_virtioDriversInstalled"
+if [ "${installAUR}" == "j" ]; then
+    case ${os} in
+        Manjaro*)
+            echo -e "\nInstall Citrix Workspace App (icaclient) from AUR (Arch)"
+            sudo pamac build icaclient && touch "/home/${userid}/.icaclientInstalled"
 
-        echo -e "\nInstall Microsoft TTF Fonts from AUR (Arch)"
-        sudo pamac build ttf-ms-fonts && touch "/home/${userid}/.ttfMsFontsInstalled"
-    ;;
+            echo -e "\nVM - Install virtio-win image from AUR (Arch)"
+            sudo pamac build virtio-win && touch "/home/${userid}/.VM_virtioDriversInstalled"
 
-    *)
-        echo "Unbehandelter Fall: switch os - Arch weitere Installationen - default-switch Zweig"
-        read -r -p "Eingabe-Taste drücken zum Beenden"
-        exit 0
-    ;;
-esac
+            echo -e "\nInstall Microsoft TTF Fonts from AUR (Arch)"
+            sudo pamac build ttf-ms-fonts && touch "/home/${userid}/.ttfMsFontsInstalled"
+        ;;
+
+        *)
+            echo "Unbehandelter Fall: switch os - Arch weitere Installationen - default-switch Zweig"
+            read -r -p "Eingabe-Taste drücken zum Beenden"
+            exit 0
+        ;;
+    esac
+fi
 
