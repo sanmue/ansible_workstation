@@ -1,158 +1,172 @@
+# ##########################
+# ## Create Desktop Launcher
+# ##########################
+
+# ### Syncthing
+# ### ---------
+- name: Copy desktop launcher file for 'Syncthing start' to local user-folder (Arch + Gnome)
+  ansible.builtin.copy:
+    src: "files/gnome/Gnome_DesktopLauncher_User_syncthing-start.desktop"
+    dest: "/home/{{ env_user }}/.local/share/applications/syncthing-start.desktop"
+    remote_src: true
+    owner: "{{ env_user }}"
+    group: "{{ env_user }}"
+    mode: u=rw,g=r,o=r   # mode: '0644'
+  when:
+    - env_desktop == "gnome"
+    - ansible_distribution == "Archlinux"
+
+- name: Copy desktop launcher file for 'Syncthing WebGUI' to local user-folder (Arch + Gnome)
+  ansible.builtin.copy:
+    src: "files/gnome/Gnome_DesktopLauncher_User_syncthing-WebGUI.desktop"
+    dest: "/home/{{ env_user }}/.local/share/applications/syncthing-WebGUI.desktop"
+    remote_src: true
+    owner: "{{ env_user }}"
+    group: "{{ env_user }}"
+    mode: u=rw,g=r,o=r   # mode: '0644'
+  when:
+    - env_desktop == "gnome"
+    - ansible_distribution == "Archlinux"
+
+
+
 # #######################################
 # ### Gnome Autostart Apps - Current User
 #
-# config for all Users see: https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/desktop_migration_and_administration_guide/user-sessions#autostart-applications
+# config for all Users see:
+# https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/desktop_migration_and_administration_guide/user-sessions#autostart-applications
 # #######################################
 
-### Autostart-Verzeichnis erstellen (aktueller User):
-### -------------------------------------------------
+# ### Autostart-Verzeichnis erstellen (aktueller User):
+# ### -------------------------------------------------
 - name: Create autostart directory for current user if it does not exist
   ansible.builtin.file:
     path: /home/{{ env_user }}/.config/autostart
     state: directory
     owner: "{{ env_user }}"
     group: "{{ env_user }}"
-    mode: u=rwx   #mode: '0700'
+    mode: u=rwx   # mode: '0700'
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-### Autostart-Programme:
-### --------------------
-- name: copy autostart file for Nextcloud Client (flatpak) to local user-folder (Ubuntu + Gnome)
+# ### Autostart-Programme:
+# ### --------------------
+- name: Copy autostart file for 'Nextcloud Client' (flatpak) to local user-folder (Ubuntu + Gnome)
   ansible.builtin.copy:
     src: "files/gnome/Gnome_AutostartApp_User_NextcloudClient_flatpak.desktop"
     dest: "/home/{{ env_user }}/.config/autostart/NextcloudClient.desktop"
-    remote_src: yes
+    remote_src: true
     owner: "{{ env_user }}"
     group: "{{ env_user }}"
-    mode: u=rw,g=rw,o=r   #mode: '0664'
+    mode: u=rw,g=rw,o=r   # mode: '0664'
   when:
     - env_desktop == "ubuntu:gnome"
     - ansible_distribution == "Ubuntu"
 
-- name: copy autostart file for Nextcloud Client to local user-folder (Arch + Gnome)
+- name: Copy autostart file for 'Nextcloud Client' to local user-folder (Arch + Gnome)
   ansible.builtin.copy:
     src: "files/gnome/Gnome_AutostartApp_User_NextcloudClient.desktop"
     dest: "/home/{{ env_user }}/.config/autostart/NextcloudClient.desktop"
-    remote_src: yes
+    remote_src: true
     owner: "{{ env_user }}"
     group: "{{ env_user }}"
-    mode: u=rw,g=rw,o=r   #mode: '0664'
+    mode: u=rw,g=rw,o=r   # mode: '0664'
   when:
     - env_desktop == "gnome"
     - ansible_distribution == "Archlinux"
 
-
-###########################
-### Create Desktop Launcher
-###########################
-
-### Syncthing
-### ---------
-- name: copy desktop launcher file for Syncthing start to local user-folder (Arch + Gnome)
+- name: Copy autostart file for 'Syncthing Start' to local user-folder (Arch + Gnome)
   ansible.builtin.copy:
     src: "files/gnome/Gnome_DesktopLauncher_User_syncthing-start.desktop"
-    dest: "/home/{{ env_user }}/.local/share/applications/syncthing-start.desktop"
-    remote_src: yes
+    dest: "/home/{{ env_user }}/.config/autostart/syncthing-start.desktop"
+    remote_src: true
     owner: "{{ env_user }}"
     group: "{{ env_user }}"
-    mode: u=rw,g=r,o=r   #mode: '0644'
-  when:
-    - env_desktop == "gnome"
-    - ansible_distribution == "Archlinux"
-
-- name: copy desktop launcher file for Syncthing WebGUI to local user-folder (Arch + Gnome)
-  ansible.builtin.copy:
-    src: "files/gnome/Gnome_DesktopLauncher_User_syncthing-WebGUI.desktop"
-    dest: "/home/{{ env_user }}/.local/share/applications/syncthing-WebGUI.desktop"
-    remote_src: yes
-    owner: "{{ env_user }}"
-    group: "{{ env_user }}"
-    mode: u=rw,g=r,o=r   #mode: '0644'
+    mode: u=rw,g=rw,o=r   # mode: '0664'
   when:
     - env_desktop == "gnome"
     - ansible_distribution == "Archlinux"
 
 
-#######################
-### Disable Ubuntu dock
-#######################
+
+# #######################
+# ### Disable Ubuntu dock
+# #######################
 # Annahme: gnome extension "dash to dock" wurde installiert
-#- name: disable Ubuntu dock (Ubuntu + Gnome)
+# - name: disable Ubuntu dock (Ubuntu + Gnome)
 #  tags: gnome
 #  command: gnome-extensions disable ubuntu-dock@ubuntu.com
 #  when:
 #    - env_desktop == "ubuntu:gnome"
 
-## alternativ:
-#- name: set gnome shell disabled-extensions - ubuntu-dock (Ubuntu + Gnome)
-##  become_user: "{{ env_user }}"
-#  dconf:
+# # alternativ:
+# - name: Set gnome shell disabled-extensions - ubuntu-dock (Ubuntu + Gnome)
+# #  become_user: "{{ env_user }}"
+#  community.general.dconf:
 #    key: "/org/gnome/shell/disabled-extensions"
 #    value: "['ubuntu-dock@ubuntu.com']"
 #  when:
 #    - env_desktop in ["ubuntu:gnome"]
 
 
-#################
-### favorite apps
-#################
+# #################
+# ### favorite apps
+# #################
 
-- name: adding favorite apps to dock (Gnome, all)
+- name: Adding favorite apps to dock (Gnome, all)
   ansible.builtin.command: gsettings set org.gnome.shell favorite-apps "['com.belmoussaoui.Authenticator.desktop', 'org.keepassxc.KeePassXC.desktop', 'firefox.desktop', 'firefox-esr.desktop', 'org.mozilla.firefox.desktop', 'brave-browser.desktop', 'com.brave.Browser.desktop', 'chromium.desktop','org.chromium.Chromium.desktop', 'org.gnome.Epiphany.desktop', 'org.gnome.Evolution.desktop', 'org.gnome.Terminal.desktop', 'nemo.desktop', 'org.gnome.gedit.desktop', 'org.libreoffice.LibreOffice.desktop', 'libreoffice-startcenter.desktop', 'code_code.desktop', 'code.desktop', 'code-oss.desktop', 'anki.desktop', 'net.ankiweb.Anki.desktop', 'net.cozic.joplin_desktop.desktop', 'de.willuhn.Jameica.desktop', 'rhythmbox.desktop', 'org.gnome.Rhythmbox3.desktop', 'de.haeckerfelix.Shortwave.desktop', 'org.signal.Signal.desktop', 'signal-desktop.desktop', 'org.remmina.Remmina.desktop', 'virt-manager.desktop']"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
 
-######################
-### desktop-background
-######################
+# ######################
+# ### desktop-background
+# ######################
 
-- name: create a directory for desktop-wallpaper in local user-folder (Gnome)
+- name: Create a directory for desktop-wallpaper in local user-folder (Gnome)
   ansible.builtin.file:
     path: "/home/{{ env_user }}/.local/share/backgrounds"
     state: directory
-  #    mode: '0755'
+    # mode: '0755'
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: copy desktop-wallpaper file to local user-folder (Gnome)
+- name: Copy desktop-wallpaper file to local user-folder (Gnome)
   ansible.builtin.copy:
     src: "files/gnome/background/brad-huchteman-stone-mountain.jpg" 
     dest: "/home/{{ env_user }}/.local/share/backgrounds/brad-huchteman-stone-mountain.jpg"
-    remote_src: yes
+    remote_src: true
     owner: "{{ env_user }}"
     group: "{{ env_user }}"
-    mode: u=rwx,g=rwx,o=rwx
-  #    mode: '0777'
+    mode: u=rwx,g=rwx,o=rwx   # mode: '0777'
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set desktop - background (Gnome)
-  dconf:
+- name: Set desktop - background (Gnome)
+  community.general.dconf:
     key: "/org/gnome/desktop/background/picture-uri"
     value: '"file:///home/{{ env_user }}/.local/share/backgrounds/brad-huchteman-stone-mountain.jpg"'
-  #    state: present   # standard-wert
+    # state: present   # standard-wert
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set desktop - dark background (Gnome)
-  dconf:
+- name: Set desktop - dark background (Gnome)
+  community.general.dconf:
     key: "/org/gnome/desktop/background/picture-uri-dark"
     value: '"file:///home/{{ env_user }}/.local/share/backgrounds/brad-huchteman-stone-mountain.jpg"'
-  #    state: present   # standard-wert
+    # state: present   # standard-wert
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set desktop-wallpaper picture-options (Gnome)
-  dconf:
+- name: Set desktop-wallpaper picture-options (Gnome)
+  community.general.dconf:
     key: "/org/gnome/desktop/background/picture-options"
     value: "'zoom'"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set show-desktop-icons (Gnome)
-  dconf:
+- name: Set show-desktop-icons (Gnome)
+  community.general.dconf:
     key: "/org/gnome/desktop/background/show-desktop-icons"
     value: "false"
   when:
@@ -161,134 +175,134 @@
 
 ### weitere desktop settings
 ### ------------------------
-- name: set desktop interface - clock-format (Gnome)
-  dconf:
+- name: Set desktop interface - clock-format (Gnome)
+  community.general.dconf:
     key: "/org/gnome/desktop/interface/clock-format"
     value: "'24h'"
   when:
-    #    - ansible_os_family == "Suse"
-    #    - env_desktop == "gnome"
+    # - ansible_os_family == "Suse"
+    # - env_desktop == "gnome"
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set desktop interface - clock-show-date (Gnome)
-  dconf:
+- name: Set desktop interface - clock-show-date (Gnome)
+  community.general.dconf:
     key: "/org/gnome/desktop/interface/clock-show-date"
     value: "true"
   when:
-    #    - ansible_os_family == "Suse"
+    # - ansible_os_family == "Suse"
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set desktop interface - clock-show-weekday (Gnome)
+- name: Set desktop interface - clock-show-weekday (Gnome)
   dconf:
     key: "/org/gnome/desktop/interface/clock-show-weekday"
     value: "true"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-### Appearance
-- name: set desktop interface - color-sheme - dark (Gnome)
-  dconf:
+# ### Appearance
+- name: Set desktop interface - color-sheme - dark (Gnome)
+  community.general.dconf:
     key: "/org/gnome/desktop/interface/color-scheme"
     value: "'prefer-dark'"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-### gtk-theme ###
+# ### gtk-theme ###
 
 # all
 
-#- name: create a directory for gtk-theme files in userdir (all + Gnome)
+# - name: create a directory for gtk-theme files in userdir (all + Gnome)
 #  ansible.builtin.file:
 #    path: "/home/{{ env_user }}/.themes"
 #    state: directory
-##    mode: '0755'
+# #    mode: '0755'
 #  when:
-##    - ansible_os_family == "Suse"
+# #    - ansible_os_family == "Suse"
 #    - env_desktop in ["gnome","ubuntu:gnome"]
 
-#- name: copy gtk-theme MateriaBreath-dark to userdir (all + Gnome)
+# - name: copy gtk-theme MateriaBreath-dark to userdir (all + Gnome)
 #  unarchive:
 #    src: "files/gnome/themes/MateriaBreath.zip"
 #    dest: "/home/{{ env_user }}/.themes/"
 #    creates: "/home/{{ env_user }}/.themes/MateriaBreath-dark" # creates unterstützt keine tilde
 #    remote_src: yes
 #    keep_newer: yes
-##    owner: sandro
-##    group: users # Suse
-##    group: sandro # Ubuntu/Debian
-##    mode: u=rwx,g=rwx,o=rwx
+# #    owner: sandro
+# #    group: users # Suse
+# #    group: sandro # Ubuntu/Debian
+# #    mode: u=rwx,g=rwx,o=rwx
 #  when:
-##    - ansible_os_family == "Suse"
+# #    - ansible_os_family == "Suse"
 #    - env_desktop in ["gnome","ubuntu:gnome"]
 
-#- name: copy gtk-theme Ultimate-Dark-(Flat)-Green to userdir (all + Gnome)
+# - name: copy gtk-theme Ultimate-Dark-(Flat)-Green to userdir (all + Gnome)
 #  unarchive:
 #    src: "files/gnome/themes/Ultimate-Dark-(Flat)-Green.zip"
 #    dest: "/home/{{ env_user }}/.themes/"
 #    creates: /home/"{{ env_user }}"/.themes/Ultimate-Dark-(Flat)-Green # creates unterstützt keine tilde
 #    remote_src: yes
 #    keep_newer: yes
-##    owner: sandro
-##    group: users # suse
-##    group: sandro # ubuntu, debian
-##    mode: u=rwx,g=rwx,o=rwx
+# #    owner: sandro
+# #    group: users # suse
+# #    group: sandro # ubuntu, debian
+# #    mode: u=rwx,g=rwx,o=rwx
 #  when:
-##    - ansible_os_family == "Suse"
+# #    - ansible_os_family == "Suse"
 #    - env_desktop in ["gnome","ubuntu:gnome"]
 
-##- name: set desktop interface - gtk-theme MateriaBreath-dark (all + Gnome)
-## bei theme "MateriaBreath-dark" sind die Optionskästchenen + Häkchen nicht zu sehen
-- name: set desktop interface - gtk-theme (Gnome, Ubuntu)
-  dconf:
+# #- name: Set desktop interface - gtk-theme MateriaBreath-dark (all + Gnome)
+# # bei theme "MateriaBreath-dark" sind die Optionskästchenen + Häkchen nicht zu sehen
+- name: Set desktop interface - gtk-theme (Gnome, Ubuntu)
+  community.general.dconf:
     key: "/org/gnome/desktop/interface/gtk-theme"
-    #    value: "'Adwaita-dark'"
+    # value: "'Adwaita-dark'"
     value: "'Yaru-prussiangreen-dark'"
   when:
     - env_desktop in ["gnome","ubuntu:gnome"]
     - ansible_distribution in ["Ubuntu"]
 
 # Suse  -'Adwaita-dark'
-#- name: set desktop interface - gtk-theme (Suse + Gnome)
-#  dconf:
+# - name: Set desktop interface - gtk-theme (Suse + Gnome)
+#  community.general.dconf:
 #    key: "/org/gnome/desktop/interface/gtk-theme"
 #    value: "'Adwaita-dark'"
 #  when:
 #    - ansible_os_family == "Suse"
 #    - env_desktop == "gnome"
 
-### icon-theme ###
+# ### icon-theme ###
 
 # all
 
-#- name: create a directory for icon-theme files in userdir (all + Gnome)
+# - name: create a directory for icon-theme files in userdir (all + Gnome)
 #  ansible.builtin.file:
 #    path: "/home/{{ env_user }}/.icons"
 #    state: directory
-##    mode: '0755'
+# #    mode: '0755'
 #  when:
-##    - ansible_os_family == "Suse"
+# #    - ansible_os_family == "Suse"
 #    - env_desktop in ["gnome","ubuntu:gnome"]
 
-#- name: copy icon-theme Materia-Manjaro-Dark-2 to userdir (all + Gnome)
+# - name: copy icon-theme Materia-Manjaro-Dark-2 to userdir (all + Gnome)
 #  unarchive:
 #    src: "files/gnome/icons/Materia-Manjaro-Dark-2.zip"
 #    dest: "/home/{{ env_user }}/.icons/"
 #    creates: /home/"{{ env_user }}"/.icons/Materia-Manjaro-Dark-2 # creates unterstützt keine tilde
 #    remote_src: yes
 #    keep_newer: yes
-##    owner: sandro
-##    group: users # suse
-##    group: sandro # ubuntu, debian
-##    mode: u=rwx,g=rwx,o=rwx
+# #    owner: sandro
+# #    group: users # suse
+# #    group: sandro # ubuntu, debian
+# #    mode: u=rwx,g=rwx,o=rwx
 #  when:
-##    - ansible_os_family == "Suse"
+# #    - ansible_os_family == "Suse"
 #    - env_desktop in ["gnome","ubuntu:gnome"]
 
-#- name: set desktop interface - icon-theme Materia-Manjaro-Dark-2 (Gnome)
-- name: set desktop interface - icon-theme (Gnome, Ubuntu)
-  dconf:
-    #    key: "/org/gnome/desktop/interface/icon-theme"
-    #    value: "'Materia-Manjaro-Dark-2'"
+# - name: Set desktop interface - icon-theme Materia-Manjaro-Dark-2 (Gnome)
+- name: Set desktop interface - icon-theme (Gnome, Ubuntu)
+  community.general.dconf:
+    # key: "/org/gnome/desktop/interface/icon-theme"
+    # value: "'Materia-Manjaro-Dark-2'"
     key: "/org/gnome/desktop/interface/icon-theme"
     value: "'Yaru-prussiangreen'"
   when:
@@ -296,58 +310,58 @@
     - ansible_distribution in ["Ubuntu"]
 
 
-### Desktop interface, calendar, sceensaver, ...:
-- name: set desktop interface - show-battery-percentage (Gnome)
-  dconf:
+# ### Desktop interface, calendar, sceensaver, ...:
+- name: Set desktop interface - show-battery-percentage (Gnome)
+  community.general.dconf:
     key: "/org/gnome/desktop/interface/show-battery-percentage"
     value: "true"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set desktop interface - locate-pointer (Gnome)
-  dconf:
+- name: Set desktop interface - locate-pointer (Gnome)
+  community.general.dconf:
     key: "/org/gnome/desktop/interface/locate-pointer"
     value: "true"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set desktop calendar - show-weekdate in calendar (Gnome)
-  dconf:
+- name: Set desktop calendar - show-weekdate in calendar (Gnome)
+  community.general.dconf:
     key: "/org/gnome/desktop/calendar/show-weekdate"
     value: "true"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set desktop input-sources - show-all-sources (Gnome)
-  dconf:
+- name: Set desktop input-sources - show-all-sources (Gnome)
+  community.general.dconf:
     key: "/org/gnome/desktop/input-sources/show-all-sources"
     value: "true"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set desktop screensaver - idle-activation-enabled (Gnome)
-  dconf:
+- name: Set desktop screensaver - idle-activation-enabled (Gnome)
+  community.general.dconf:
     key: "/org/gnome/desktop/screensaver/idle-activation-enabled"
     value: "true"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set desktop screensaver - lock-enabled (Gnome)
-  dconf:
+- name: Set desktop screensaver - lock-enabled (Gnome)
+  community.general.dconf:
     key: "/org/gnome/desktop/screensaver/lock-enabled"
     value: "true"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set desktop screensaver - lock-delay (Gnome)
-  dconf:
+- name: Set desktop screensaver - lock-delay (Gnome)
+  community.general.dconf:
     key: "/org/gnome/desktop/screensaver/lock-delay"
     value: "'0'"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set desktop wm preferences - button-layout (Gnome)
-  dconf:
+- name: Set desktop wm preferences - button-layout (Gnome)
+  community.general.dconf:
     key: "/org/gnome/desktop/wm/preferences/button-layout"
     value: "'appmenu:minimize,maximize,close'"
   when:
@@ -356,30 +370,30 @@
 
 ### power settings:
 #   ---------------
-- name: set settings-daemon - plugin - power - power-button-action (Gnome)
-  dconf:
+- name: Set settings-daemon - plugin - power - power-button-action (Gnome)
+  community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/power/power-button-action"
     value: "'nothing'"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set settings-daemon - plugin - power - sleep-inactive-ac-type (Gnome)
-  dconf:
+- name: Set settings-daemon - plugin - power - sleep-inactive-ac-type (Gnome)
+  community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/power/sleep-inactive-ac-type"
     value: "'nothing'"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set settings-daemon - plugin - power - sleep-inactive-battery-type (Gnome)
-  dconf:
+- name: Set settings-daemon - plugin - power - sleep-inactive-battery-type (Gnome)
+  community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/power/sleep-inactive-battery-type"
     value: "'nothing'"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
 ### set Display - Night Light
-- name: set settings-daemon - plugin - color - night-light-enabled (Gnome)
-  dconf:
+- name: Set settings-daemon - plugin - color - night-light-enabled (Gnome)
+  community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/color/night-light-enabled"
     value: "true"
   when:
@@ -397,24 +411,24 @@
 # Primary = STRG links
 
 # - control-center - p
-- name: set settings-daemon - plugin - media-keys - control-center (Gnome)
-  dconf:
+- name: Set settings-daemon - plugin - media-keys - control-center (Gnome)
+  community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/control-center"
     value: "['<Primary><Alt>p']"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
 # - email- q
-- name: set settings-daemon - plugin - media-keys - email (Gnome)
-  dconf:
+- name: Set settings-daemon - plugin - media-keys - email (Gnome)
+  community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/email"
     value: "['<Primary><Alt>q']"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
 # - www (Standard-Browser) - w
-- name: set settings-daemon - plugin - media-keys - www (Gnome)
-  dconf:
+- name: Set settings-daemon - plugin - media-keys - www (Gnome)
+  community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/www"
     value: "['<Primary><Alt>w']"
   when:
@@ -424,53 +438,53 @@
 # ------------------------------
 
 # - Authenticator (custom0) - a
-- name: set settings-daemon - plugin - media-keys - Authenticator,name (Gnome)
-  dconf:
+- name: Set settings-daemon - plugin - media-keys - Authenticator,name (Gnome)
+  community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/name"
     value: "'Authenticator'"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set settings-daemon - plugin - media-keys - Authenticator,command (Gnome)
-  dconf:
+- name: Set settings-daemon - plugin - media-keys - Authenticator,command (Gnome)
+  community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/command"
     value: "'flatpak run com.belmoussaoui.Authenticator'"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set settings-daemon - plugin - media-keys - Authenticator,binding (Gnome)
-  dconf:
+- name: Set settings-daemon - plugin - media-keys - Authenticator,binding (Gnome)
+  community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/binding"
     value: "'<Primary><Alt>a'"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
 # - KeepassXC (custom1) - k
-- name: set settings-daemon - plugin - media-keys - KeepassXC,name (Gnome)
-  dconf:
+- name: Set settings-daemon - plugin - media-keys - KeepassXC,name (Gnome)
+  community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/name"
     value: "'KeepassXC'"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set settings-daemon - plugin - media-keys - KeepassXC,command (Gnome, Ubuntu, flatpak)
-  dconf:
+- name: Set settings-daemon - plugin - media-keys - KeepassXC,command (Gnome, Ubuntu, flatpak)
+  community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/command"
     value: "'flatpak run org.keepassxc.KeePassXC'"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
     - ansible_distribution == "Ubuntu"
 
-- name: set settings-daemon - plugin - media-keys - KeepassXC,command (Gnome, Arch)
-  dconf:
+- name: Set settings-daemon - plugin - media-keys - KeepassXC,command (Gnome, Arch)
+  community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/command"
     value: "'KeePassXC'"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
     - ansible_distribution == "Archlinux"
 
-- name: set settings-daemon - plugin - media-keys - KeepassXC,binding (Gnome)
-  dconf:
+- name: Set settings-daemon - plugin - media-keys - KeepassXC,binding (Gnome)
+  community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/binding"
     value: "'<Primary><Alt>k'"
   when:
@@ -485,289 +499,289 @@
 ###
 
 # - Firefox (custom2) - f
-- name: set settings-daemon - plugin - media-keys - firefox,name (Gnome)
-  dconf:
+- name: Set settings-daemon - plugin - media-keys - firefox,name (Gnome)
+  community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/name"
     value: "'Firefox'"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set settings-daemon - plugin - media-keys - firefox,command (Gnome)
-  dconf:
+- name: Set settings-daemon - plugin - media-keys - firefox,command (Gnome)
+  community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/command"
     value: "'firefox'"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
     - "'firefox-esr' not in ansible_facts.packages"
 
-- name: set settings-daemon - plugin - media-keys - firefox-esr,command (Gnome)
-  dconf:
+- name: Set settings-daemon - plugin - media-keys - firefox-esr,command (Gnome)
+  community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/command"
     value: "'firefox-esr'"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
     - "'firefox-esr' in ansible_facts.packages"
 
-- name: set settings-daemon - plugin - media-keys - Firefox,binding (Gnome)
-  dconf:
+- name: Set settings-daemon - plugin - media-keys - Firefox,binding (Gnome)
+  community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/binding"
     value: "'<Primary><Alt>f'"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
 # - Chromium (custom3) - c
-- name: set settings-daemon - plugin - media-keys - chromium,name (Gnome)
-  dconf:
+- name: Set settings-daemon - plugin - media-keys - chromium,name (Gnome)
+  community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/name"
     value: "'Chromium'"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set settings-daemon - plugin - media-keys - chromium,command (Gnome, Ubuntu, flatpak)
-  dconf:
+- name: Set settings-daemon - plugin - media-keys - chromium,command (Gnome, Ubuntu, flatpak)
+  community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/command"
     value: "'flatpak run org.chromium.Chromium'"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
     - ansible_distribution == "Ubuntu"
 
-- name: set settings-daemon - plugin - media-keys - chromium,command (Gnome, Arch)
-  dconf:
+- name: Set settings-daemon - plugin - media-keys - chromium,command (Gnome, Arch)
+  community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/command"
     value: "'chromium'"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
     - ansible_distribution == "Archlinux"
 
-- name: set settings-daemon - plugin - media-keys - chromium,binding (Gnome)
-  dconf:
+- name: Set settings-daemon - plugin - media-keys - chromium,binding (Gnome)
+  community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/binding"
     value: "'<Primary><Alt>c'"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
 # - Brave Browser (custom4) - b
-- name: set settings-daemon - plugin - media-keys - Brave Browser,name (Gnome)
-  dconf:
+- name: Set settings-daemon - plugin - media-keys - Brave Browser,name (Gnome)
+  community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/name"
     value: "'Brave Browser'"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set settings-daemon - plugin - media-keys - Brave Browser,command (Gnome, Ubuntu)
-  dconf:
+- name: Set settings-daemon - plugin - media-keys - Brave Browser,command (Gnome, Ubuntu)
+  community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/command"
     value: "'brave-browser'"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
     - ansible_distribution == "Ubuntu"
 
-- name: set settings-daemon - plugin - media-keys - Brave Browser,command (Gnome, Arch)
-  dconf:
+- name: Set settings-daemon - plugin - media-keys - Brave Browser,command (Gnome, Arch)
+  community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/command"
     value: "'brave'"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
     - ansible_distribution == "Archlinux"
 
-- name: set settings-daemon - plugin - media-keys - Brave Browser,binding (Gnome)
-  dconf:
+- name: Set settings-daemon - plugin - media-keys - Brave Browser,binding (Gnome)
+  community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/binding"
     value: "'<Primary><Alt>b'"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
 # - Nemo (custom5) - e
-- name: set settings-daemon - plugin - media-keys - Nemo,name (Gnome)
-  dconf:
+- name: Set settings-daemon - plugin - media-keys - Nemo,name (Gnome)
+  community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom5/name"
     value: "'Nemo'"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set settings-daemon - plugin - media-keys - Nemo,command (Gnome)
-  dconf:
+- name: Set settings-daemon - plugin - media-keys - Nemo,command (Gnome)
+  community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom5/command"
     value: "'nemo'"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set settings-daemon - plugin - media-keys - Nemo,binding (Gnome)
-  dconf:
+- name: Set settings-daemon - plugin - media-keys - Nemo,binding (Gnome)
+  community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom5/binding"
     value: "'<Primary><Alt>e'"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
 # - gedit (custom6) - g
-- name: set settings-daemon - plugin - media-keys - gedit,name (Gnome)
-  dconf:
+- name: Set settings-daemon - plugin - media-keys - gedit,name (Gnome)
+  community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom6/name"
     value: "'gedit'"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set settings-daemon - plugin - media-keys - gedit,command (Gnome)
-  dconf:
+- name: Set settings-daemon - plugin - media-keys - gedit,command (Gnome)
+  community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom6/command"
     value: "'gedit'"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set settings-daemon - plugin - media-keys - gedit,binding (Gnome)
-  dconf:
+- name: Set settings-daemon - plugin - media-keys - gedit,binding (Gnome)
+  community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom6/binding"
     value: "'<Primary><Alt>g'"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
 # - Libre Office (custom7) - l
-- name: set settings-daemon - plugin - media-keys - Libre Office,name (Gnome)
-  dconf:
+- name: Set settings-daemon - plugin - media-keys - Libre Office,name (Gnome)
+  community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom7/name"
     value: "'Libre Office'"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set settings-daemon - plugin - media-keys - Libre Office,command (Gnome, Ubuntu, flatpak)
-  dconf:
+- name: Set settings-daemon - plugin - media-keys - Libre Office,command (Gnome, Ubuntu, flatpak)
+  community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom7/command"
     value: "'flatpak run org.libreoffice.LibreOffice'"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
     - ansible_distribution == "Ubuntu"
 
-- name: set settings-daemon - plugin - media-keys - Libre Office,command (Gnome, Arch)
-  dconf:
+- name: Set settings-daemon - plugin - media-keys - Libre Office,command (Gnome, Arch)
+  community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom7/command"
     value: "'libreoffice'"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
     - ansible_distribution == "Archlinux"
 
-- name: set settings-daemon - plugin - media-keys - Libre Office,binding (Gnome)
-  dconf:
+- name: Set settings-daemon - plugin - media-keys - Libre Office,binding (Gnome)
+  community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom7/binding"
     value: "'<Primary><Alt>l'"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
 # - VSCode / Code OSS (custom8) - m
-- name: set settings-daemon - plugin - media-keys - VSCode,name (Gnome, Ubuntu)
-  dconf:
+- name: Set settings-daemon - plugin - media-keys - VSCode,name (Gnome, Ubuntu)
+  community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom8/name"
     value: "'VSCode'"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
     - ansible_distribution == "Ubuntu"
 
-- name: set settings-daemon - plugin - media-keys - CodeOSS,name (Gnome, Arch)
-  dconf:
+- name: Set settings-daemon - plugin - media-keys - CodeOSS,name (Gnome, Arch)
+  community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom8/name"
     value: "'Code OSS'"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
     - ansible_distribution == "Ubuntu"
 
-- name: set settings-daemon - plugin - media-keys - VSCode CodeOSS,command (Gnome)
-  dconf:
+- name: Set settings-daemon - plugin - media-keys - VSCode CodeOSS,command (Gnome)
+  community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom8/command"
     value: "'code'"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set settings-daemon - plugin - media-keys - VSCode,binding (Gnome)
-  dconf:
+- name: Set settings-daemon - plugin - media-keys - VSCode,binding (Gnome)
+  community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom8/binding"
     value: "'<Primary><Alt>m'"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
 # - Joplin (custom9) - j
-- name: set settings-daemon - plugin - media-keys - Joplin,name (Gnome)
-  dconf:
+- name: Set settings-daemon - plugin - media-keys - Joplin,name (Gnome)
+  community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom9/name"
     value: "'Joplin'"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set settings-daemon - plugin - media-keys - Joplin,command (Gnome)
-  dconf:
+- name: Set settings-daemon - plugin - media-keys - Joplin,command (Gnome)
+  community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom9/command"
     value: "'flatpak run net.cozic.joplin_desktop'"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set settings-daemon - plugin - media-keys - Joplin,binding (Gnome)
-  dconf:
+- name: Set settings-daemon - plugin - media-keys - Joplin,binding (Gnome)
+  community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom9/binding"
     value: "'<Primary><Alt>j'"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
 # - Remmina (custom10) - r
-- name: set settings-daemon - plugin - media-keys - Remmina,name (Gnome)
-  dconf:
+- name: Set settings-daemon - plugin - media-keys - Remmina,name (Gnome)
+  community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom10/name"
     value: "'Remmina'"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set settings-daemon - plugin - media-keys - Remmina,command(Gnome)
-  dconf:
+- name: Set settings-daemon - plugin - media-keys - Remmina,command(Gnome)
+  community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom10/command"
     value: "'remmina'"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set settings-daemon - plugin - media-keys - Remmina,binding (Gnome)
-  dconf:
+- name: Set settings-daemon - plugin - media-keys - Remmina,binding (Gnome)
+  community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom10/binding"
     value: "'<Primary><Alt>r'"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
 # - Virtual Machine Manager (custom11) - v
-- name: set settings-daemon - plugin - media-keys - Virtual Machine Manager,name (Gnome)
-  dconf:
+- name: Set settings-daemon - plugin - media-keys - Virtual Machine Manager,name (Gnome)
+  community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom11/name"
     value: "'Virtual Machine Manager'"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set settings-daemon - plugin - media-keys - Virtual Machine Manager,command(Gnome)
-  dconf:
+- name: Set settings-daemon - plugin - media-keys - Virtual Machine Manager,command(Gnome)
+  community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom11/command"
     value: "'virt-manager'"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set settings-daemon - plugin - media-keys - Virtual Machine Manager,binding (Gnome)
-  dconf:
+- name: Set settings-daemon - plugin - media-keys - Virtual Machine Manager,binding (Gnome)
+  community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom11/binding"
     value: "'<Primary><Alt>v'"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
 # - Software Center 'Gnome Software' (Ubuntu) (custom12) - s
-- name: set settings-daemon - plugin - media-keys - Gnome Software,name (Gnome, Ubuntu)
-  dconf:
+- name: Set settings-daemon - plugin - media-keys - Gnome Software,name (Gnome, Ubuntu)
+  community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom12/name"
     value: "'Gnome Software'"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
     - ansible_distribution == "Ubuntu"
 
-- name: set settings-daemon - plugin - media-keys - Gnome Software,command (Gnome, Ubuntu)
-  dconf:
+- name: Set settings-daemon - plugin - media-keys - Gnome Software,command (Gnome, Ubuntu)
+  community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom12/command"
     value: "'gnome-software'"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
     - ansible_distribution == "Ubuntu"
 
-- name: set settings-daemon - plugin - media-keys - Gnome Software,binding (Gnome, Ubuntu)
-  dconf:
+- name: Set settings-daemon - plugin - media-keys - Gnome Software,binding (Gnome, Ubuntu)
+  community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom12/binding"
     value: "'<Primary><Alt>s'"
   when:
@@ -775,24 +789,24 @@
     - ansible_distribution == "Ubuntu"
 
 # - Software Center 'Pamac-Manager' (Arch) (custom12) - s
-- name: set settings-daemon - plugin - media-keys - Pamac Manager,name (Gnome, Arch)
-  dconf:
+- name: Set settings-daemon - plugin - media-keys - Pamac Manager,name (Gnome, Arch)
+  community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom12/name"
     value: "'Pamac-Manager'"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
     - ansible_distribution == "Archlinux"
 
-- name: set settings-daemon - plugin - media-keys - Pamac Managercommand (Gnome, Arch)
-  dconf:
+- name: Set settings-daemon - plugin - media-keys - Pamac Managercommand (Gnome, Arch)
+  community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom12/command"
     value: "'pamac-manager'"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
     - ansible_distribution == "Archlinux"
 
-- name: set settings-daemon - plugin - media-keys - Pamac Manager,binding (Gnome, Arch)
-  dconf:
+- name: Set settings-daemon - plugin - media-keys - Pamac Manager,binding (Gnome, Arch)
+  community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom12/binding"
     value: "'<Primary><Alt>s'"
   when:
@@ -803,8 +817,8 @@
 ### ---------------------------------------------------
 ### - set/create list for configured custom-keybindings
 ### ---------------------------------------------------
-- name: set settings-daemon - plugin - media-keys - custom-keybindings (Gnome)
-  dconf:
+- name: Set settings-daemon - plugin - media-keys - custom-keybindings (Gnome)
+  community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings"
     value: "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom5/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom6/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom7/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom8/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom9/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom10/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom11/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom12/']"
   when:
@@ -814,16 +828,16 @@
 ### Gnome Weather:
 #   -------------
 #
-#- name: set gnome  - Weather automatic-location (Gnome)
-#  dconf:
+#- name: Set gnome  - Weather automatic-location (Gnome)
+#  community.general.dconf:
 #    key: "/org/gnome/Weather/automatic-location"
 #    value: "false"
 #  when:
 ##    - ansible_os_family == "Suse"
 #    - env_desktop == "gnome"
 
-#- name: set gnome  - Weather locations (Gnome)
-#  dconf:
+#- name: Set gnome  - Weather locations (Gnome)
+#  community.general.dconf:
 #    key: "/org/gnome/Weather/locations"
 #    value: "[<(uint32 2, <('Niederkirchen, Saarland', '', false, [(0.86339344922787564, 0.12656180196211969)], [(0.863065315111196, 0.13148146449914197)])>)>]"
 #  when:
@@ -832,71 +846,71 @@
 
 ### nemo filebrowser -  preferences:
 #   --------------------------------
-- name: set nemo preferences - click-policy (Gnome)
-  dconf:
+- name: Set nemo preferences - click-policy (Gnome)
+  community.general.dconf:
     key: "/org/nemo/preferences/click-policy"
     value: "'double'"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set nemo preferences - show-computer-icon-toolbar (Gnome)
-  dconf:
+- name: Set nemo preferences - show-computer-icon-toolbar (Gnome)
+  community.general.dconf:
     key: "/org/nemo/preferences/show-computer-icon-toolbar"
     value: "true"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set nemo preferences - show-home-icon-toolbar (Gnome)
-  dconf:
+- name: Set nemo preferences - show-home-icon-toolbar (Gnome)
+  community.general.dconf:
     key: "/org/nemo/preferences/show-home-icon-toolbar"
     value: "true"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set nemo preferences - show-list-view-icon-toolbar (Gnome)
-  dconf:
+- name: Set nemo preferences - show-list-view-icon-toolbar (Gnome)
+  community.general.dconf:
     key: "/org/nemo/preferences/show-list-view-icon-toolbar"
     value: "true"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set nemo preferences - show-location-entry (Gnome)
-  dconf:
+- name: Set nemo preferences - show-location-entry (Gnome)
+  community.general.dconf:
     key: "/org/nemo/preferences/show-location-entry"
     value: "true"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set nemo preferences - show-new-folder-icon-toolbar (Gnome)
-  dconf:
+- name: Set nemo preferences - show-new-folder-icon-toolbar (Gnome)
+  community.general.dconf:
     key: "/org/nemo/preferences/show-new-folder-icon-toolbar"
     value: "true"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set nemo preferences - show-open-in-terminal-toolbar ((Gnome)
-  dconf:
+- name: Set nemo preferences - show-open-in-terminal-toolbar ((Gnome)
+  community.general.dconf:
     key: "/org/nemo/preferences/show-open-in-terminal-toolbar"
     value: "true"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set nemo preferences - show-reload-icon-toolbar (Gnome)
-  dconf:
+- name: Set nemo preferences - show-reload-icon-toolbar (Gnome)
+  community.general.dconf:
     key: "/org/nemo/preferences/show-reload-icon-toolbar"
     value: "true"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set nemo preferences - show-show-thumbnails-toolbar (Gnome)
-  dconf:
+- name: Set nemo preferences - show-show-thumbnails-toolbar (Gnome)
+  community.general.dconf:
     key: "/org/nemo/preferences/show-show-thumbnails-toolbar"
     value: "true"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set nemo extensions - nemo terminal - default-visible (Gnome)
-  dconf:
+- name: Set nemo extensions - nemo terminal - default-visible (Gnome)
+  community.general.dconf:
     key: "/org/nemo/extensions/nemo-terminal/default-visible"
     value: "false"
   when:
@@ -905,8 +919,8 @@
 
 ### gedit -  preferences:
 #   ---------------------
-- name: set gedit preferences - scheme (Gnome)
-  dconf:
+- name: Set gedit preferences - scheme (Gnome)
+  community.general.dconf:
     key: "/org/gnome/gedit/preferences/editor/scheme"
     value: "'solarized-dark'"
   when:
@@ -915,7 +929,7 @@
 
 ### gnome terminal - profiles and preferences:
 #   ------------------------------------------
-- name: set gnome terminal - profiles and preferences (Gnome, Ubuntu)
+- name: Set gnome terminal - profiles and preferences (Gnome, Ubuntu)
   ansible.builtin.script: "{{ env_PWD }}/tasks/Desktop_Gnome/config_workstation-Gnome-DesktopPreferences-terminal.sh" # funktioniert; ansible version 2.9
   ##  ansible.builtin.script: "{{ env_PWD }}/tasks/Desktop_Gnome/config_workstation-Gnome-DesktopPreferences-terminal.sh" # ab ansible version 2.10
   ##  ansible.builtin.script:  # ab ansible version 2.10
@@ -954,193 +968,193 @@
 
 # ### ding
 # https://ubuntuhandbook.org/index.php/2022/03/show-trash-ubuntu-2204-desktop/
-- name: set gnome shell extensions - ding - show-home (Gnome)
+- name: Set gnome shell extensions - ding - show-home (Gnome)
   # Settings - Appearance - Desktop Icons - Show Personal folder
-  dconf:
+  community.general.dconf:
     key: "/org/gnome/shell/extensions/ding/show-home"
     value: "false"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set gnome shell extensions - ding - start-corner (Gnome)
+- name: Set gnome shell extensions - ding - start-corner (Gnome)
   # Settings - Appearance - Desktop Icons - Position of New Icons
-  dconf:
+  community.general.dconf:
     key: "/org/gnome/shell/extensions/ding/start-corner"
     value: "'top-left'"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
 ### Dash to Dock:
-- name: set gnome shell extensions - dash-to-dock - custom-theme-shrink (Gnome)
-  dconf:
+- name: Set gnome shell extensions - dash-to-dock - custom-theme-shrink (Gnome)
+  community.general.dconf:
     key: "/org/gnome/shell/extensions/dash-to-dock/custom-theme-shrink"
     value: "true"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set gnome shell extensions - dash-to-dock - dash-max-icon-size (Gnome)
+- name: Set gnome shell extensions - dash-to-dock - dash-max-icon-size (Gnome)
   # Appearence - Dock - Icon Size
-  dconf:
+  community.general.dconf:
     key: "/org/gnome/shell/extensions/dash-to-dock/dash-max-icon-size"
     value: "32"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set gnome shell extensions - dash-to-dock - disable-overview-on-startup (Gnome)
-  dconf:
+- name: Set gnome shell extensions - dash-to-dock - disable-overview-on-startup (Gnome)
+  community.general.dconf:
     key: "/org/gnome/shell/extensions/dash-to-dock/disable-overview-on-startup"
     value: "true"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set gnome shell extensions - dash-to-dock - dock-fixed (Gnome)
+- name: Set gnome shell extensions - dash-to-dock - dock-fixed (Gnome)
   # Appearence - Dock - Auot-hide the Dock: enable
-  dconf:
+  community.general.dconf:
     key: "/org/gnome/shell/extensions/dash-to-dock/dock-fixed"
     value: "false"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set gnome shell extensions - dash-to-dock - dock-position (Gnome)
+- name: Set gnome shell extensions - dash-to-dock - dock-position (Gnome)
   # Appearence - Dock - Auot-hide the Dock: enable
-  dconf:
+  community.general.dconf:
     key: "/org/gnome/shell/extensions/dash-to-dock/dock-position"
     value: "'LEFT'"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set gnome shell extensions - dash-to-dock - extend-height (Gnome)
+- name: Set gnome shell extensions - dash-to-dock - extend-height (Gnome)
   # Appearence - Dock - Panel mode: enable
-  dconf:
+  community.general.dconf:
     key: "/org/gnome/shell/extensions/dash-to-dock/extend-height"
     value: "false"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set gnome shell extensions - dash-to-dock - height-fraction (Gnome)
-  dconf:
+- name: Set gnome shell extensions - dash-to-dock - height-fraction (Gnome)
+  community.general.dconf:
     key: "/org/gnome/shell/extensions/dash-to-dock/height-fraction"
     value: "'0.94999999999999996'"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set gnome shell extensions - dash-to-dock - isolate-workspaces (Gnome)
-  dconf:
+- name: Set gnome shell extensions - dash-to-dock - isolate-workspaces (Gnome)
+  community.general.dconf:
     key: "/org/gnome/shell/extensions/dash-to-dock/isolate-workspaces"
     value: "true"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set gnome shell extensions - dash-to-dock - multi-monitor" (Gnome)
-  dconf:
+- name: Set gnome shell extensions - dash-to-dock - multi-monitor" (Gnome)
+  community.general.dconf:
     key: "/org/gnome/shell/extensions/dash-to-dock/multi-monitor"
     value: "true"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set gnome shell extensions - dash-to-dock - running-indicator-style" (Gnome)
-  dconf:
+- name: Set gnome shell extensions - dash-to-dock - running-indicator-style" (Gnome)
+  community.general.dconf:
     key: "/org/gnome/shell/extensions/dash-to-dock/running-indicator-style"
     value: "'DOTS'"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set gnome shell extensions - dash-to-dock - scroll-action" (Gnome)
-  dconf:
+- name: Set gnome shell extensions - dash-to-dock - scroll-action" (Gnome)
+  community.general.dconf:
     key: "/org/gnome/shell/extensions/dash-to-dock/scroll-action"
     value: "'switch-workspace'"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set gnome shell extensions - dash-to-dock - show-mounts (Gnome)
-  dconf:
+- name: Set gnome shell extensions - dash-to-dock - show-mounts (Gnome)
+  community.general.dconf:
     key: "/org/gnome/shell/extensions/dash-to-dock/show-mounts"
     value: "false"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set gnome shell extensions - dash-to-dock - show-mounts (Gnome)
-  dconf:
+- name: Set gnome shell extensions - dash-to-dock - show-mounts (Gnome)
+  community.general.dconf:
     key: "/org/gnome/shell/extensions/dash-to-dock/show-mounts"
     value: "false"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set gnome shell extensions - dash-to-dock - show-mounts-only-mounted (Gnome)
-  dconf:
+- name: Set gnome shell extensions - dash-to-dock - show-mounts-only-mounted (Gnome)
+  community.general.dconf:
     key: "/org/gnome/shell/extensions/dash-to-dock/show-mounts-only-mounted"
     value: "false"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set gnome shell extensions - dash-to-dock - show-trash (Gnome)
-  dconf:
+- name: Set gnome shell extensions - dash-to-dock - show-trash (Gnome)
+  community.general.dconf:
     key: "/org/gnome/shell/extensions/dash-to-dock/show-trash"
     value: "false"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
 
-### openweather:
-- name: set gnome shell extensions - openweather - city (Gnome)
-  dconf:
+# ### openweather:
+- name: Set gnome shell extensions - openweather - city (Gnome)
+  community.general.dconf:
     key: "/org/gnome/shell/extensions/openweather/city"
     value: "'49.4641816,7.2484007>Niederkirchen, Kuseler Straße, Saal, Niederkirchen, Sankt Wendel, Landkreis St. Wendel, Saarland, 66606, Deutschland >-1 && 49.49342345,6.828330133618561>Nunkirchen, Wadern, Landkreis Merzig-Wadern, Saarland, Deutschland >-1'"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set gnome shell extensions - openweather - actual-city" (Gnome)
-  dconf:
+- name: Set gnome shell extensions - openweather - actual-city" (Gnome)
+  community.general.dconf:
     key: "/org/gnome/shell/extensions/openweather/actual-city"
     value: "1"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set gnome shell extensions - openweather - days-forecast (Gnome)
-  dconf:
+- name: Set gnome shell extensions - openweather - days-forecast (Gnome)
+  community.general.dconf:
     key: "/org/gnome/shell/extensions/openweather/days-forecast"
     value: "4"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set gnome shell extensions - openweather - menu-alignment (Gnome)
-  dconf:
+- name: Set gnome shell extensions - openweather - menu-alignment (Gnome)
+  community.general.dconf:
     key: "/org/gnome/shell/extensions/openweather/menu-alignment"
     value: "80.099999999999994"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set gnome shell extensions - openweather - position-in-panel (Gnome)
-  dconf:
+- name: Set gnome shell extensions - openweather - position-in-panel (Gnome)
+  community.general.dconf:
     key: "/org/gnome/shell/extensions/openweather/position-in-panel"
     value: "'center'"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set gnome shell extensions - openweather - pressure-unit (Gnome)
-  dconf:
+- name: Set gnome shell extensions - openweather - pressure-unit (Gnome)
+  community.general.dconf:
     key: "/org/gnome/shell/extensions/openweather/pressure-unit"
     value: "'hPa'"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set gnome shell extensions - openweather - unit (Gnome)
-  dconf:
+- name: Set gnome shell extensions - openweather - unit (Gnome)
+  community.general.dconf:
     key: "/org/gnome/shell/extensions/openweather/unit"
     value: "'celsius'"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set gnome shell extensions - openweather - wind-speed-unit (Gnome)
-  dconf:
+- name: Set gnome shell extensions - openweather - wind-speed-unit (Gnome)
+  community.general.dconf:
     key: "/org/gnome/shell/extensions/openweather/wind-speed-unit"
     value: "'kph'"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-####################################################
+# ###################################################
 # TODO: ggf. GNOME Shell Apps Dashboard - Categories
-####################################################
+# ###################################################
 #
 # https://specifications.freedesktop.org/menu-spec/menu-spec-latest.html
 # A. Registered Categories
@@ -1150,7 +1164,7 @@
 #
 # dconf editor: /org/gnome/desktop/app-folders/folder-children
 
-#- name: GNOME Shell Apps Dashboard - Categories (Suse + Gnome)
+# - name: GNOME Shell Apps Dashboard - Categories (Suse + Gnome)
 #  command: gsettings set org.gnome.desktop.app-folders folder-children "['AudioVideo', 'Development', 'Education', 'Game', 'Graphics', 'Network', 'Office', 'Science', 'Settings', 'System', 'Utility']"
 #  when:
 #    - ansible_os_family == "Suse"
@@ -1158,29 +1172,29 @@
 
 # ################################
 # ### Gnome Epiphany (Web Browser)
-- name: set gnome - epiphany - aks-for-default (Gnome)
-  dconf:
+- name: Set gnome - epiphany - aks-for-default (Gnome)
+  community.general.dconf:
     key: "/org/gnome/epiphany/ask-for-default"
     value: "false"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set gnome - epiphany - default-search-engine (Gnome)
-  dconf:
+- name: Set gnome - epiphany - default-search-engine (Gnome)
+  community.general.dconf:
     key: "/org/gnome/epiphany/default-search-engine"
     value: "'DuckDuckGo'"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set gnome - epiphany - reader - color-scheme (Gnome)
-  dconf:
+- name: Set gnome - epiphany - reader - color-scheme (Gnome)
+  community.general.dconf:
     key: "/org/gnome/epiphany/reader/color-scheme"
     value: "'dark'"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set gnome - epiphany - web - remember-passwords (Gnome)
-  dconf:
+- name: Set gnome - epiphany - web - remember-passwords (Gnome)
+  community.general.dconf:
     key: "/org/gnome/epiphany/web/remember-passwords"
     value: "false"
   when:
@@ -1188,155 +1202,155 @@
 
 # ##########################
 # ### Gnome Evolution (Mail)
-- name: set gnome - evolution - calendar - classify-private (Gnome)
-  dconf:
+- name: Set gnome - evolution - calendar - classify-private (Gnome)
+  community.general.dconf:
     key: "/org/gnome/evolution/calendar/classify-private"
     value: "true"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set gnome - evolution - calendar - compress-weekend (Gnome)
-  dconf:
+- name: Set gnome - evolution - calendar - compress-weekend (Gnome)
+  community.general.dconf:
     key: "/org/gnome/evolution/calendar/compress-weekend"
     value: "false"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set gnome - evolution - calendar - day-end-hour (Gnome)
-  dconf:
+- name: Set gnome - evolution - calendar - day-end-hour (Gnome)
+  community.general.dconf:
     key: "/org/gnome/evolution/calendar/day-end-hour"
     value: "16"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set gnome - evolution - calendar - day-start-hour (Gnome)
-  dconf:
+- name: Set gnome - evolution - calendar - day-start-hour (Gnome)
+  community.general.dconf:
     key: "/org/gnome/evolution/calendar/day-start-hour"
     value: "7"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set gnome - evolution - calendar - editor-show-timezone (Gnome)
-  dconf:
+- name: Set gnome - evolution - calendar - editor-show-timezone (Gnome)
+  community.general.dconf:
     key: "/org/gnome/evolution/calendar/editor-show-timezone"
     value: "true"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set gnome - evolution - calendar - prefer-new-item (Gnome)
-  dconf:
+- name: Set gnome - evolution - calendar - prefer-new-item (Gnome)
+  community.general.dconf:
     key: "/org/gnome/evolution/calendar/prefer-new-item"
     value: "'event-new'"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set gnome - evolution - calendar - primary-memos (Gnome)
-  dconf:
+- name: Set gnome - evolution - calendar - primary-memos (Gnome)
+  community.general.dconf:
     key: "/org/gnome/evolution/calendar/primary-memos"
     value: "'system-memo-list'"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set gnome - evolution - calendar - show-icons-month-view (Gnome)
-  dconf:
+- name: Set gnome - evolution - calendar - show-icons-month-view (Gnome)
+  community.general.dconf:
     key: "/org/gnome/evolution/calendar/show-icons-month-view"
     value: "true"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set gnome - evolution - calendar - show-week-numbers (Gnome)
-  dconf:
+- name: Set gnome - evolution - calendar - show-week-numbers (Gnome)
+  community.general.dconf:
     key: "/org/gnome/evolution/calendar/show-week-numbers"
     value: "true"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set gnome - evolution - calendar - show-week-numbers (Gnome)
-  dconf:
+- name: Set gnome - evolution - calendar - show-week-numbers (Gnome)
+  community.general.dconf:
     key: "/org/gnome/evolution/calendar/use-24hour-format"
     value: "true"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set gnome - evolution - mail - browser-close-on-reply-policy (Gnome)
-  dconf:
+- name: Set gnome - evolution - mail - browser-close-on-reply-policy (Gnome)
+  community.general.dconf:
     key: "/org/gnome/evolution/mail/browser-close-on-reply-policy"
     value: "'never'"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set gnome - evolution - mail - composer-delay-outbox-flush (Gnome)
-  dconf:
+- name: Set gnome - evolution - mail - composer-delay-outbox-flush (Gnome)
+  community.general.dconf:
     key: "/org/gnome/evolution/mail/composer-delay-outbox-flush"
     value: "0"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set gnome - evolution - mail - composer-show-bcc (Gnome)
-  dconf:
+- name: Set gnome - evolution - mail - composer-show-bcc (Gnome)
+  community.general.dconf:
     key: "/org/gnome/evolution/mail/composer-show-bcc"
     value: "true"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set gnome - evolution - mail - composer-spell-languages (Gnome)
-  dconf:
+- name: Set gnome - evolution - mail - composer-spell-languages (Gnome)
+  community.general.dconf:
     key: "/org/gnome/evolution/mail/composer-spell-languages"
     value: "['de_DE']"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set gnome - evolution - mail - composer-top-signature (Gnome)
-  dconf:
+- name: Set gnome - evolution - mail - composer-top-signature (Gnome)
+  community.general.dconf:
     key: "/org/gnome/evolution/mail/composer-top-signature"
     value: "true"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set gnome - evolution - mail - forward-style-name (Gnome)
-  dconf:
+- name: Set gnome - evolution - mail - forward-style-name (Gnome)
+  community.general.dconf:
     key: "/org/gnome/evolution/mail/forward-style-name"
     value: "'inline'"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set gnome - evolution - mail - layout (Gnome)
-  dconf:
+- name: Set gnome - evolution - mail - layout (Gnome)
+  community.general.dconf:
     key: "/org/gnome/evolution/mail/layout"
     value: "1"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set gnome - evolution - mail - mark-seen (Gnome)
-  dconf:
+- name: Set gnome - evolution - mail - mark-seen (Gnome)
+  community.general.dconf:
     key: "/org/gnome/evolution/mail/mark-seen"
     value: "false"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set gnome - evolution - mail - show-sender-photo (Gnome)
-  dconf:
+- name: Set gnome - evolution - mail - show-sender-photo (Gnome)
+  community.general.dconf:
     key: "/org/gnome/evolution/mail/show-sender-photo"
     value: "true"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set gnome - evolution - mail - show-to-do-bar (Gnome)
-  dconf:
+- name: Set gnome - evolution - mail - show-to-do-bar (Gnome)
+  community.general.dconf:
     key: "/org/gnome/evolution/mail/show-to-do-bar"
     value: "false"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set gnome - evolution - mail - show-to-do-bar-sub (Gnome)
-  dconf:
+- name: Set gnome - evolution - mail - show-to-do-bar-sub (Gnome)
+  community.general.dconf:
     key: "/org/gnome/evolution/mail/show-to-do-bar-sub"
     value: "false"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: set gnome - evolution - mail - to-do-bar-show-no-duedate-tasks (Gnome)
-  dconf:
+- name: Set gnome - evolution - mail - to-do-bar-show-no-duedate-tasks (Gnome)
+  community.general.dconf:
     key: "/org/gnome/evolution/mail/to-do-bar-show-no-duedate-tasks"
     value: "true"
   when:
