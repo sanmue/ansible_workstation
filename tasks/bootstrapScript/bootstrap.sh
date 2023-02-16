@@ -242,7 +242,7 @@ ansible-playbook "/home/${userid}/${repodir}/${playbookdir}/${playbook}" -v -K
 ### Archlinux/Manjaro: weitere Installationen
 ### - am Schluss, damit nicht aufhalten
 ### ---
-read -r -p "Install from AUR: Citrix ICAClient, virtio-win, MS TTF Fonts? (j=ja, sonstige Eingabe: nein)" installAUR
+read -r -p "Install from AUR: Citrix ICAClient, virtio-win, MS TTF Fonts? ('j'=ja, sonstige Eingabe: nein)" installAUR
 
 if [ "${installAUR}" == "j" ]; then
     case ${os} in
