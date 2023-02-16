@@ -1,7 +1,7 @@
-
 # ##############
 # ### SSH / SSHD
 # ### ##########
+
 - name: Services - start ssh (Ubuntu)
   ansible.builtin.service:
     name: ssh
@@ -68,21 +68,5 @@
 - name: Services - enable clamav-freshclam.service (Ubuntu, Arch)
   ansible.builtin.service:
     name: clamav-freshclam.service
-    enabled: true
-  when: ansible_distribution in ["Ubuntu", "Archlinux"]
-
-
-
-# #############
-# ### Syncthing
-# ### #########
-
-- name: Start + Enable Syncthing Service (systemd) for user (Ubuntu, Arch)
-  become: true
-  become_user: {{ env_user }}
-  ansible.builtin.service:
-    name: syncthing.service
-    args: --user
-    state: started
     enabled: true
   when: ansible_distribution in ["Ubuntu", "Archlinux"]
