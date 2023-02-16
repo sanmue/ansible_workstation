@@ -1,12 +1,12 @@
 ---
 
-- name: Gather facts+vars + config repos
+- name: Gather facts+vars and config repos
   hosts: localhost
   connection: local
   become: false
   gather_facts: true
   pre_tasks:
-    - name: ConfigRepos
+    - name: GatherFactsVars ConfigRepos
       ansible.builtin.import_tasks: 
         - tasks/basic_all/config_workstation-ansibleFacts.yml
         - tasks/basic_all/config_workstation-addrepos.yml
