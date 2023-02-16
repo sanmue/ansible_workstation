@@ -6,7 +6,6 @@
   become: false
   gather_facts: true
   pre_tasks:
-    #- name: AnsibleFactsAndVars
     - ansible.builtin.import_tasks: tasks/basic_all/config_workstation-ansibleFacts.yml
 
 
@@ -15,8 +14,7 @@
   connection: local
   become: true
   pre_tasks:
-    #- name: ConfigRepos
-    ansible.builtin.import_tasks: 
+    - ansible.builtin.import_tasks: 
       - tasks/basic_all/config_workstation-addrepos.yml
       - tasks/fix/config_workstation-addrepos-ubuntu-fix.yml
       - tasks/basic_all/all_update.yml
