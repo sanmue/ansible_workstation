@@ -1,13 +1,20 @@
-
-- name: start and enable snapd (Archlinux)  
+- name: Start and enable snapd (Archlinux)  
   tags: workstation,arch,snap
-  service:
+  ansible.builtin.service:
     name: snapd.socket
     state: started
-    enabled: yes
+    enabled: true
   when: ansible_distribution == "Archlinux"
 
-- name: enable classic snap support (Archlinux)
+- name: Start and enable snapd.apparmor (Archlinux)  
+  tags: workstation,arch,snap
+  ansible.builtin.service:
+    name: snapd.apparmor
+    state: started
+    enabled: true
+  when: ansible_distribution == "Archlinux"
+
+- name: Enable classic snap support (Archlinux)
   tags: workstation,arch,snap
   become: true
   become_user: root
@@ -24,8 +31,6 @@
     cmd: sed -Ei '/EnableSnap/s/^#//' /etc/pamac.conf
   when:
     - ansible_distribution == "Archlinux"
-
-
 
 # https://stackoverflow.com/questions/56560173/ansible-how-to-add-modify-path-variable-in-centos
 #- name: 'Add {{ snapd_path }} if PATH does not exist'
