@@ -1,13 +1,11 @@
-- name: Start and enable snapd (Archlinux)  
-  tags: workstation,arch,snap
+- name: Start and enable snapd (Archlinux)
   ansible.builtin.service:
     name: snapd.socket
     state: started
     enabled: true
   when: ansible_distribution == "Archlinux"
 
-- name: Start and enable snapd.apparmor (Archlinux)  
-  tags: workstation,arch,snap
+- name: Start and enable snapd.apparmor (Archlinux)
   ansible.builtin.service:
     name: snapd.apparmor
     state: started
@@ -15,7 +13,6 @@
   when: ansible_distribution == "Archlinux"
 
 - name: Enable classic snap support (Archlinux)
-  tags: workstation,arch,snap
   become: true
   become_user: root
   ansible.builtin.shell:
@@ -24,7 +21,6 @@
     - ansible_distribution == "Archlinux"
 
 - name: Enable snap for pamac (Archlinux)
-  tags: workstation,arch,snap
   become: true
   become_user: root
   ansible.builtin.shell:
@@ -33,14 +29,14 @@
     - ansible_distribution == "Archlinux"
 
 # https://stackoverflow.com/questions/56560173/ansible-how-to-add-modify-path-variable-in-centos
-#- name: 'Add {{ snapd_path }} if PATH does not exist'
+# - name: 'Add {{ snapd_path }} if PATH does not exist'
 #    lineinfile:
 #      path: /etc/environment
 #      line: 'PATH="{{ snapd_path }}"'
 #      insertafter: EOF
 #    when: lookup('file', '/etc/environment') is not search('^\s*PATH\s*=')
 
-#- name: 'Add {{ snapd_path }} to PATH'
+# - name: 'Add {{ snapd_path }} to PATH'
 #    lineinfile:
 #      path: /etc/environment
 #      regexp: 'PATH=(["])((?!.*?{{ snapd_path }}).*?)(["])$'
