@@ -16,17 +16,19 @@
     - env_desktop == "gnome"
     - ansible_distribution == "Archlinux"
 
-- name: Copy desktop launcher file for 'Syncthing WebGUI' to local user-folder (Arch + Gnome)
-  ansible.builtin.copy:
-    src: "files/gnome/Gnome_DesktopLauncher_User_syncthing-WebGUI.desktop"
-    dest: "/home/{{ env_user }}/.local/share/applications/syncthing-WebGUI.desktop"
-    remote_src: true
-    owner: "{{ env_user }}"
-    group: "{{ env_user }}"
-    mode: u=rw,g=r,o=r   # mode: '0644'
-  when:
-    - env_desktop == "gnome"
-    - ansible_distribution == "Archlinux"
+# ### Changed to: Autostart Syncthing via systemd service 'syncthing'
+#     - https://docs.syncthing.net/users/autostart.html#linux
+# - name: Copy desktop launcher file for 'Syncthing WebGUI' to local user-folder (Arch + Gnome)
+#  ansible.builtin.copy:
+#    src: "files/gnome/Gnome_DesktopLauncher_User_syncthing-WebGUI.desktop"
+#    dest: "/home/{{ env_user }}/.local/share/applications/syncthing-WebGUI.desktop"
+#    remote_src: true
+#    owner: "{{ env_user }}"
+#    group: "{{ env_user }}"
+#    mode: u=rw,g=r,o=r   # mode: '0644'
+#  when:
+#    - env_desktop == "gnome"
+#    - ansible_distribution == "Archlinux"
 
 
 

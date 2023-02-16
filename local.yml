@@ -1,6 +1,7 @@
 ---
 
-- hosts: localhost
+- name: Gather Facts and Variables
+  hosts: localhost
   connection: local
   become: false
   gather_facts: true
@@ -9,7 +10,8 @@
       ansible.builtin.import_tasks: tasks/basic_all/config_workstation-ansibleFacts.yml
 
 
-- hosts: localhost
+- name: Config + fix repos + update
+  hosts: localhost
   connection: local
   become: true
   pre_tasks:
