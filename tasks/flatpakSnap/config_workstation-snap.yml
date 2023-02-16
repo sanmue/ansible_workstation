@@ -1,3 +1,4 @@
+
 - name: Start and enable snapd (Archlinux)
   ansible.builtin.service:
     name: snapd.socket
@@ -5,7 +6,7 @@
     enabled: true
   when: ansible_distribution == "Archlinux"
 
-- name: Start and enable snapd.apparmor (Archlinux)
+- name: Start and enable snapd apparmor (Archlinux)
   ansible.builtin.service:
     name: snapd.apparmor
     state: started
@@ -28,7 +29,7 @@
   when:
     - ansible_distribution == "Archlinux"
 
-# https://stackoverflow.com/questions/56560173/ansible-how-to-add-modify-path-variable-in-centos
+# # https://stackoverflow.com/questions/56560173/ansible-how-to-add-modify-path-variable-in-centos
 # - name: 'Add {{ snapd_path }} if PATH does not exist'
 #    lineinfile:
 #      path: /etc/environment
