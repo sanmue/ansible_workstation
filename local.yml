@@ -4,100 +4,103 @@
   hosts: localhost
   connection: local
   become: false
-  tags: always,pre,ansibleFacts
   gather_facts: true
   pre_tasks:
     - name: AnsibleFactsAndVars
-      ansible.builtin.import_tasks: tasks/basic_all/config_workstation-ansibleFacts.yml
+      ansible.builtin.import_tasks: 
+        - tasks/basic_all/config_workstation-ansibleFacts.yml
 
 
 - name: Config Repos
   hosts: localhost
   connection: local
   become: true
-  tags: always,pre
   pre_tasks:
-  - ansible.builtin.import_tasks: tasks/basic_all/config_workstation-addrepos.yml
-  - ansible.builtin.import_tasks: tasks/fix/config_workstation-addrepos-ubuntu-fix.yml
-  - ansible.builtin.import_tasks: tasks/basic_all/all_update.yml
+    - name: ConfigRepos
+      ansible.builtin.import_tasks: 
+        - tasks/basic_all/config_workstation-addrepos.yml
+        - tasks/fix/config_workstation-addrepos-ubuntu-fix.yml
+        - tasks/basic_all/all_update.yml
 
 
 - name: Main Install
   hosts: localhost
   connection: local
   become: true
-  tags: always
   tasks:
-  # ### Entfernen nicht benötigter, vorinstallierter Pakete:
-  - ansible.builtin.import_tasks: tasks/Desktop_Gnome/packages_workstation-Gnome-removePreInstalls.yml
-  - ansible.builtin.import_tasks: tasks/Desktop_Plasma/packages_workstation-Plasma-removePreInstalls.yml
-  # ----------------------------------------------------------
-  # ### Installation Software-Packages
-  # - repo:
-  - ansible.builtin.import_tasks: tasks/basic_all/packages_workstation-basic.yml
-  - ansible.builtin.import_tasks: tasks/Desktop_Plasma/packages_workstation-Plasma.yml
-  - ansible.builtin.import_tasks: tasks/Desktop_Gnome/packages_workstation-Gnome.yml
-  - ansible.builtin.import_tasks: tasks/Desktop_Gnome/packages_workstation-gnomeshellstuff.yml
-  # - flatpak:
-  - ansible.builtin.import_tasks: tasks/flatpakSnap/config_workstation-flatpak.yml
-  - ansible.builtin.import_tasks: tasks/flatpakSnap/packages_workstation-flatpak.yml
-  # - snap:
-  - ansible.builtin.import_tasks: tasks/flatpakSnap/config_workstation-snap.yml
-  - ansible.builtin.import_tasks: tasks/flatpakSnap/packages_workstation-snap.yml
-  # Installation lokal heruntergeladener Pakete:
-  - ansible.builtin.import_tasks: tasks/basic_all/packages_workstation-localPackageInstall.yml
-  # ----------------------------------------------------------
-  # ### Config Firewall, Services, sonstige Settings:
-  - ansible.builtin.import_tasks: tasks/basic_all/config_all-firewall.yml
-  - ansible.builtin.import_tasks: tasks/basic_all/config_workstation-firewall.yml
-  - ansible.builtin.import_tasks: tasks/basic_all/config_all-services-misc.yml
-  - ansible.builtin.import_tasks: tasks/basic_all/config_all-settings-misc.yml
-  # ----------------------------------------------------------
-  # ### Virtualisierung:
-  - ansible.builtin.import_tasks: tasks/VM/packages_workstation-VM-QemuKvm.yml
-  - ansible.builtin.import_tasks: tasks/VM/config_all-VM-daemon.yml
-  - ansible.builtin.import_tasks: tasks/VM/config_all-VM-users.yml
-  - ansible.builtin.import_tasks: tasks/VM/config_all-VM-QemuKvm-create.yml
-  - ansible.builtin.import_tasks: tasks/fix/config_all-VM-QemuKvm-create_fix.yml
-  # ----------------------------------------------------------
-  # ### sudo-ansible-user + cronjob:
-  # - ansible.builtin.import_tasks: tasks/basic_all/config_all-ansible-users.yml
-  - ansible.builtin.import_tasks: tasks/basic_all/config_all-cron.yml
-  # ----------------------------------------------------------
-  # ### cleanup:
-  - ansible.builtin.import_tasks: tasks/basic_all/all_cleanup.yml
+    - name: MainInstall
+      ansible.builtin.import_tasks:
+        # ### Entfernen nicht benötigter, vorinstallierter Pakete:
+        - tasks/Desktop_Gnome/packages_workstation-Gnome-removePreInstalls.yml
+        - tasks/Desktop_Plasma/packages_workstation-Plasma-removePreInstalls.yml
+        # ----------------------------------------------------------
+        # ### Install Software-Packages
+        # - repo:
+        - tasks/basic_all/packages_workstation-basic.yml
+        - tasks/Desktop_Plasma/packages_workstation-Plasma.yml
+        - tasks/Desktop_Gnome/packages_workstation-Gnome.yml
+        - tasks/Desktop_Gnome/packages_workstation-gnomeshellstuff.yml
+        # - flatpak:
+        - tasks/flatpakSnap/config_workstation-flatpak.yml
+        - tasks/flatpakSnap/packages_workstation-flatpak.yml
+        # - snap:
+        - tasks/flatpakSnap/config_workstation-snap.yml
+        - tasks/flatpakSnap/packages_workstation-snap.yml
+        # Installation lokal heruntergeladener Pakete:
+        - tasks/basic_all/packages_workstation-localPackageInstall.yml
+        # ----------------------------------------------------------
+        # ### Config Firewall, Services, sonstige Settings:
+        - tasks/basic_all/config_all-firewall.yml
+        - tasks/basic_all/config_workstation-firewall.yml
+        - tasks/basic_all/config_all-services-misc.yml
+        - tasks/basic_all/config_all-settings-misc.yml
+        # ----------------------------------------------------------
+        # ### Virtualisierung:
+        - tasks/VM/packages_workstation-VM-QemuKvm.yml
+        - tasks/VM/config_all-VM-daemon.yml
+        - tasks/VM/config_all-VM-users.yml
+        - tasks/VM/config_all-VM-QemuKvm-create.yml
+        - tasks/fix/config_all-VM-QemuKvm-create_fix.yml
+        # ----------------------------------------------------------
+        # ### sudo-ansible-user + cronjob:
+        # - tasks/basic_all/config_all-ansible-users.yml
+        - tasks/basic_all/config_all-cron.yml
+        # ----------------------------------------------------------
+        # ### cleanup:
+        - tasks/basic_all/all_cleanup.yml
 
 
-- name: DesktopPreferences
+- name: Desktop Preferences
   hosts: localhost
   connection: local
   become: true
   become_user: "{{ env_user }}"
-  tags: always,gnome
   tasks:
-  # - ansible.builtin.import_tasks: tasks/Desktop_Gnome/packages_workstation-Gnome-GnomeshellExtensions.yml
-  # - ansible.builtin.import_tasks: tasks/Desktop_Gnome/config_workstation-Gnome-GnomeshellExtensions.yml
-  - ansible.builtin.import_tasks: tasks/Desktop_Gnome/config_workstation-Gnome-DesktopPreferences.yml
+    - name: DesktopPreferences
+      ansible.builtin.import_tasks:
+        # - tasks/Desktop_Gnome/packages_workstation-Gnome-GnomeshellExtensions.yml
+        # - tasks/Desktop_Gnome/config_workstation-Gnome-GnomeshellExtensions.yml
+        - tasks/Desktop_Gnome/config_workstation-Gnome-DesktopPreferences.yml
 
 
-  - name: Write final message
-    ansible.builtin.debug:
-      msg: "Please restart the system for the changes to take effect!"
+- name: Write final message
+  hosts: localhost
+  connection: local
+  become: true
+  become_user: "{{ env_user }}"
+  tasks:
+    - name: WriteFinalMessage
+      ansible.builtin.debug:
+         msg: "Please restart the system for the changes to take effect!"
 
 
-# - hosts: localhost
-#  connection: local
-#  become: true
-#  tags: always,reboot
-#  tasks:
-#  - ansible.builtin.import_tasks: tasks/basic_all/all_reboot.yml # da hier local/pull --> geht nicht
-#  FAILED! => {"changed": false, "elapsed": 0, "msg": "Running reboot with local connection would reboot the control node.", "rebooted": false}
+# - name: Reboot system
+#   hosts: localhost
+#   connection: local
+#   become: true
+#   tasks:
+#     - name: RebootSystem
+#       ansible.builtin.import_tasks:
+#         - tasks/basic_all/all_reboot.yml # da hier local/pull --> geht nicht
+#   # FAILED! => {"changed": false, "elapsed": 0, "msg": "Running reboot with local connection would reboot the control node.", "rebooted": false}
 
-### "all_reboot.yml" geändert auf ansible.builtin.shell, cmd: reboot
-### (und damit nicht mehr reboot über ansible-Modul (s.o.))
-# - hosts: localhost
-#  connection: local
-#  become: true
-#  tags: always,reboot
-#  tasks:
-#  - ansible.builtin.import_tasks: tasks/basic_all/all_reboot.yml
