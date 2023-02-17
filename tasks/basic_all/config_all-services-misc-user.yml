@@ -3,7 +3,9 @@
 # ### #########
 # https://docs.syncthing.net/users/autostart.html#linux
 
-# funktioniert so wohl nur mit root-rechten, nicht für User (findet service nicht)
+# args (--user) wird nicht berücksichtigt
+# Service für User kann so nicht eingerichtet werden
+#
 # - name: Start + Enable Syncthing Service (systemd) for user (Ubuntu, Arch)
 #  ansible.builtin.service:
 #    name: syncthing.service
