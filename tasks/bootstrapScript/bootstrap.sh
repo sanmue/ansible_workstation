@@ -254,7 +254,10 @@ if [ "${installAUR}" == "j" ]; then
             sudo pamac build virtio-win && touch "/home/${userid}/.VM_virtioDriversInstalled"
 
             echo -e "\nInstall Microsoft TTF Fonts from AUR (Arch)"
-            sudo pamac build ttf-ms-fonts && touch "/home/${userid}/.ttfMsFontsInstalled"
+            sudo pamac build ttf-ms-fonts
+
+            echo -e "\nInstall woeusb-ng from AUR (Arch)"
+            sudo pamac build woeusb-ng   # Simple tool that enable you to create your own usb stick with Windows installer.
         ;;
 
         *)
