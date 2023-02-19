@@ -83,7 +83,7 @@
     # ----------------------------------------------------------
     # ### sudo-ansible-user + cronjob:
     - name: Config ansible user
-      ansible.builtin.import_tasks: tasks/basic_all/config_all-ansible-users.yml
+      # ansible.builtin.import_tasks: tasks/basic_all/config_all-ansible-users.yml
     - name: Config Cron
       ansible.builtin.import_tasks: tasks/basic_all/config_all-cron.yml
     # ----------------------------------------------------------
