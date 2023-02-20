@@ -398,7 +398,7 @@
   ansible.builtin.blockinfile:
     path: "/etc/clamav/clamd.conf"
     backup: true
-    marker: '# ### {mark} ANSIBLE MANAGED BLOCK ###'
+    marker: '# ### {mark} ANSIBLE MANAGED BLOCK - ExcludePath ###'
     block: |
       # Don't scan files and directories matching regex
       # This directive can be used multiple times
@@ -415,7 +415,7 @@
   ansible.builtin.blockinfile:
     path: "/etc/clamav/clamd.conf"
     backup: true
-    marker: '# ### {mark} ANSIBLE MANAGED BLOCK ###'
+    marker: '# ### {mark} ANSIBLE MANAGED BLOCK - VirusEvent ###'
     block: |
       # Execute a command when virus is found. In the command string %v will
       # be replaced with the virus name and %f will be replaced with the file name.
@@ -423,7 +423,7 @@
       # and $CLAM_VIRUSEVENT_VIRUSNAME.
       # Default: no
       #VirusEvent /usr/local/bin/send_sms 123456789 "VIRUS ALERT: %v in %f"
-      VirusEvent /usr/bin/notify-send "VirusAlert: '${CLAM_VIRUSEVENT_VIRUSNAME}' in '${CLAM_VIRUSEVENT_FILENAME}'" "Virus found - notification."" --icon=dialog-error
+      VirusEvent /usr/bin/notify-send "VirusAlert: '${CLAM_VIRUSEVENT_VIRUSNAME}' in '${CLAM_VIRUSEVENT_FILENAME}'" "Virus found - notification." --icon=dialog-error
   when:
     - ansible_distribution in ["Archlinux", "Ubuntu"]
 
