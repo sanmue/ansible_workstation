@@ -401,7 +401,7 @@
   ansible.builtin.blockinfile:
     path: "/etc/clamav/clamd.conf"
     backup: yes
-    marker: '" ### {mark} ANSIBLE MANAGED BLOCK ###'
+    marker: '# ### {mark} ANSIBLE MANAGED BLOCK ###'
     block: |
       # Don't scan files and directories matching regex
       # This directive can be used multiple times
