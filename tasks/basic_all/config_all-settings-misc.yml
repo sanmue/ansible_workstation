@@ -2,6 +2,8 @@
 # ### grub2 bootloader
 # ### ################
 
+# https://www.fosslinux.com/46741/things-to-do-after-installing-manjaro.htm
+# - aus Punkt 13: Install the Latest Kernel (or an Older LTS Kernel)
 - name: Enable GRUB Menu at boot (Archlinux)
   ansible.builtin.shell:
     cmd: sudo sed -Ei '/GRUB_TIMEOUT_STYLE=hidden/s/hidden/menu/' /etc/default/grub && sudo update-grub
