@@ -393,6 +393,25 @@
     clone: true
 
 
+# ##################
+# ### ClamAV - clamd
+# ##################
+
+- name: Set ClamAV global config - ExcludePath (arch, Ubuntu)
+  ansible.builtin.blockinfile:
+    path: "/etc/clamav/clamd.conf"
+    backup: yes
+    marker: '" ### {mark} ANSIBLE MANAGED BLOCK ###'
+    block: |
+      # Don't scan files and directories matching regex
+      # This directive can be used multiple times
+      # Default: scan all
+      #ExcludePath ^/proc/
+      #ExcludePath ^/sys/
+      ExcludePath ^/home/.*/\.clam/quarantine
+  when:
+    - ansible_distribution in ["Archlinux", "Ubuntu"]
+
 
 ###################################
 ### Visual Studio Code / Code - OSS
