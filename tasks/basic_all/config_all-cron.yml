@@ -39,8 +39,8 @@
   ansible.builtin.file:
     path: "{{ env_user }}/{{ item }}"
     state: directory
-    owner: {{ env_user }}
-    group: {{ env_user }}
+    owner: "{{ env_user }}"
+    group: "{{ env_user }}"
     mode: '0755'
   loop:
     - .clam/logs
