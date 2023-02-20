@@ -1,3 +1,14 @@
+# ####################
+# ### grub2 bootloader
+# ### ################
+
+- name: Enable GRUB Menu at boot (Archlinux)
+  ansible.builtin.shell:
+    cmd: sudo sed -Ei '/GRUB_TIMEOUT_STYLE=hidden/s/hidden/menu/' /etc/default/grub && sudo update-grub
+  when:
+    - ansible_distribution == "Archlinux"
+
+
 # ##########################################
 # ### bashrc - add additional Paths + Config
 # ### ######################################
