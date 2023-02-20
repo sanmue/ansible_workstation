@@ -1,15 +1,14 @@
-
-##########################################
-### bashrc - add additional Paths + Config
-### ######################################
+# ##########################################
+# ### bashrc - add additional Paths + Config
+# ### ######################################
 # - global wäre: /etc/bash_bashrc
 
-- name: bashrc - check status (User, all)
+- name: Bashrc - check status (User, all)
   ansible.builtin.stat:
     path: "/home/{{ env_user }}/.bashrc"
   register: statBashrcUser
 
-- name: bashrc - create (User, all)
+- name: Bashrc - create (User, all)
   ansible.builtin.file:
     path: "/home/{{ env_user }}/.bashrc"
     state: touch
@@ -18,10 +17,10 @@
     - not statBashrcUser.stat.exists
     #oder: - statBashrcUser.stat.exists == false
 
-- name: bashrc - Insert/Update additional paths and config - nvm (User, all)
+- name: Bashrc - Insert/Update additional paths and config - nvm (User, all)
   ansible.builtin.blockinfile:
     path: "/home/{{ env_user }}/.bashrc"
-    backup: yes
+    backup: true
     marker: "### {mark} 'nvm' - ANSIBLE MANAGED BLOCK ###"
     block: |
       # --------------------------
@@ -36,10 +35,10 @@
   when:
     - ansible_distribution in ["Ubuntu", "Archlinux"]
 
-- name: bashrc - Insert/Update additional paths and config - vim (User, all)
+- name: Bashrc - Insert/Update additional paths and config - vim (User, all)
   ansible.builtin.blockinfile:
     path: "/home/{{ env_user }}/.bashrc"
-    backup: yes
+    backup: true
     marker: "### {mark} 'vim' ANSIBLE MANAGED BLOCK ###"
     block: |
       # ------------------------------
@@ -50,10 +49,10 @@
   when:
     - ansible_distribution in ["Ubuntu", "Archlinux"]
 
-- name: bashrc - Insert/Update additional paths and config - user-bin (User, all)
+- name: Bashrc - Insert/Update additional paths and config - user-bin (User, all)
   ansible.builtin.blockinfile:
     path: "/home/{{ env_user }}/.bashrc"
-    backup: yes
+    backup: true
     marker: "### {mark} 'user-bin' ANSIBLE MANAGED BLOCK ###"
     block: |
       # ------------------------------------------
@@ -63,10 +62,10 @@
   when:
     - ansible_distribution in ["Ubuntu", "Archlinux"]
 
-- name: bashrc - Insert/Update additional paths and config - pyenv (User, Ubuntu)
+- name: Bashrc - Insert/Update additional paths and config - pyenv (User, Ubuntu)
   ansible.builtin.blockinfile:
     path: "/home/{{ env_user }}/.bashrc"
-    backup: yes
+    backup: true
     marker: "### {mark} 'pyenv' ANSIBLE MANAGED BLOCK ###"
     block: |
       # -----
@@ -80,7 +79,7 @@
   when:
     - ansible_distribution in ["Ubuntu"]
 
-#- name: bashrc - initial command 'pyenv init' - pyenv (User, Arch)
+#- name: Bashrc - initial command 'pyenv init' - pyenv (User, Arch)
 #  become: true
 #  become_user: "{{ env_user }}"
 #  ansible.builtin.shell:
@@ -91,10 +90,10 @@
 #  when:
 #    - ansible_distribution in ["Archlinux"]
 
-- name: bashrc - Insert/Update additional paths and config - pyenv (User, Arch)
+- name: Bashrc - Insert/Update additional paths and config - pyenv (User, Arch)
   ansible.builtin.blockinfile:
     path: "/home/{{ env_user }}/.bashrc"
-    backup: yes
+    backup: true
     marker: "### {mark} 'pyenv' ANSIBLE MANAGED BLOCK ###"
     block: |
       # -----
@@ -107,12 +106,12 @@
     - ansible_distribution in ["Archlinux"]
 
 
-- name: bashrc - check status (root, all)
+- name: Bashrc - check status (root, all)
   ansible.builtin.stat:
     path: "/root/.bashrc"
   register: statBashrcRoot
 
-- name: bashrc - create (root, all)
+- name: Bashrc - create (root, all)
   ansible.builtin.file:
     path: "/root/.bashrc"
     state: touch
@@ -120,10 +119,10 @@
     - ansible_distribution in ["Ubuntu", "Archlinux"]
     - not statBashrcRoot.stat.exists
 
-- name: bashrc - Insert/Update additional paths and config (root, all)
+- name: Bashrc - Insert/Update additional paths and config (root, all)
   ansible.builtin.blockinfile:
     path: "/root/.bashrc"
-    backup: yes
+    backup: true
     marker: "### {mark} 'vim' ANSIBLE MANAGED BLOCK ###"
     block: |
       # ------------------------------
@@ -135,30 +134,29 @@
     - ansible_distribution in ["Ubuntu", "Archlinux"]
 
 
-
-#######################################
-### zsh - add additional Paths + Config
-### ###################################
+# #######################################
+# ### zsh - add additional Paths + Config
+# ### ###################################
 # - global wäre: /etc/zshrc   # https://linuxconfig.org/zsh-shell-installation-and-configuration-on-linux
 
-- name: zshrc - check status (User, all)
+- name: Zshrc - check status (User, all)
   ansible.builtin.stat:
     path: "/home/{{ env_user }}/.zshrc"
   register: statzshrcUser
 
-- name: zshrc - create (User, all)
+- name: Zshrc - create (User, all)
   ansible.builtin.file:
     path: "/home/{{ env_user }}/.zshrc"
     state: touch
   when:
     - ansible_distribution in ["Ubuntu", "Archlinux"]
     - not statzshrcUser.stat.exists
-    #oder: - statzshrcUser.stat.exists == false
+    # oder: - statzshrcUser.stat.exists == false
 
-- name: zshrc - Insert/Update additional paths and config - nvm (User, all)
+- name: Zshrc - Insert/Update additional paths and config - nvm (User, all)
   ansible.builtin.blockinfile:
     path: "/home/{{ env_user }}/.zshrc"
-    backup: yes
+    backup: true
     marker: "### {mark} 'nvm' - ANSIBLE MANAGED BLOCK ###"
     block: |
       # --------------------------
@@ -173,10 +171,10 @@
   when:
     - ansible_distribution in ["Ubuntu", "Archlinux"]
 
-- name: zshrc - Insert/Update additional paths and config - vim (User, all)
+- name: Zshrc - Insert/Update additional paths and config - vim (User, all)
   ansible.builtin.blockinfile:
     path: "/home/{{ env_user }}/.zshrc"
-    backup: yes
+    backup: true
     marker: "### {mark} 'vim' ANSIBLE MANAGED BLOCK ###"
     block: |
       # ------------------------------
@@ -187,10 +185,10 @@
   when:
     - ansible_distribution in ["Ubuntu", "Archlinux"]
 
-- name: zshrc - Insert/Update additional paths and config - user-bin (User, all)
+- name: Zshrc - Insert/Update additional paths and config - user-bin (User, all)
   ansible.builtin.blockinfile:
     path: "/home/{{ env_user }}/.zshrc"
-    backup: yes
+    backup: true
     marker: "### {mark} 'user-bin' ANSIBLE MANAGED BLOCK ###"
     block: |
       # ------------------------------------------
@@ -200,10 +198,10 @@
   when:
     - ansible_distribution in ["Ubuntu", "Archlinux"]
 
-- name: zshrc - Insert/Update additional paths and config - pyenv (User, Ubuntu)
+- name: Zshrc - Insert/Update additional paths and config - pyenv (User, Ubuntu)
   ansible.builtin.blockinfile:
     path: "/home/{{ env_user }}/.zshrc"
-    backup: yes
+    backup: true
     marker: "### {mark} 'pyenv' ANSIBLE MANAGED BLOCK ###"
     block: |
       # -----
@@ -217,7 +215,7 @@
   when:
     - ansible_distribution in ["Ubuntu"]
 
-#- name: zshrc - initial command 'pyenv init' - pyenv (User, Arch)
+# - name: Zshrc - initial command 'pyenv init' - pyenv (User, Arch)
 #  become: true
 #  become_user: "{{ env_user }}"
 #  ansible.builtin.shell:
@@ -228,10 +226,10 @@
 #  when:
 #    - ansible_distribution in ["Archlinux"]
 
-- name: zshrc - Insert/Update additional paths and config - pyenv (User, Arch)
+- name: Zshrc - Insert/Update additional paths and config - pyenv (User, Arch)
   ansible.builtin.blockinfile:
     path: "/home/{{ env_user }}/.zshrc"
-    backup: yes
+    backup: true
     marker: "### {mark} 'pyenv' ANSIBLE MANAGED BLOCK ###"
     block: |
       # -----
@@ -244,12 +242,12 @@
     - ansible_distribution in ["Archlinux"]
 
 
-- name: zshrc - check status (root, all)
+- name: Zshrc - check status (root, all)
   ansible.builtin.stat:
     path: "/root/.zshrc"
   register: statBashrcRoot
 
-- name: zshrc - create (root, all)
+- name: Zshrc - create (root, all)
   ansible.builtin.file:
     path: "/root/.zshrc"
     state: touch
@@ -257,10 +255,10 @@
     - ansible_distribution in ["Ubuntu", "Archlinux"]
     - not statBashrcRoot.stat.exists
 
-- name: zshrc - Insert/Update additional paths and config (root, all)
+- name: Zshrc - Insert/Update additional paths and config (root, all)
   ansible.builtin.blockinfile:
     path: "/root/.zshrc"
-    backup: yes
+    backup: true
     marker: "### {mark} 'vim' ANSIBLE MANAGED BLOCK ###"
     block: |
       # ------------------------------
@@ -272,7 +270,6 @@
     - ansible_distribution in ["Ubuntu", "Archlinux"]
 
 
-
 # #######
 # ### vim
 # #######
@@ -281,7 +278,7 @@
 # ### VIM Settings
 
 # alt:
-#- name: set vim config for user "sandro" (.vimrc) (all)
+# - name: set vim config for user "sandro" (.vimrc) (all)
 #  ansible.builtin.script: "{{ env_PWD }}/tasks/config_all-settings-misc-vim.sh"
 #  args:
 #    creates: "/home/{{ env_user }}/.vimrc"
@@ -290,7 +287,7 @@
 - name: Set vim global config (ubuntu)
   ansible.builtin.blockinfile:
     path: "/etc/vim/vimrc.local"
-    backup: yes
+    backup: true
     marker: '" ### {mark} ANSIBLE MANAGED BLOCK ###'
     block: |
       " #
@@ -331,7 +328,7 @@
 - name: Set vim global config (arch)
   ansible.builtin.blockinfile:
     path: "/etc/vimrc"
-    backup: yes
+    backup: true
     marker: '" ### {mark} ANSIBLE MANAGED BLOCK ###'
     block: |
       " #
@@ -397,10 +394,10 @@
 # ### ClamAV - clamd
 # ##################
 
-- name: Set ClamAV global config - ExcludePath (arch, Ubuntu)
+- name: Set ClamAV - clamd global config - ExcludePath (arch, Ubuntu)
   ansible.builtin.blockinfile:
     path: "/etc/clamav/clamd.conf"
-    backup: yes
+    backup: true
     marker: '# ### {mark} ANSIBLE MANAGED BLOCK ###'
     block: |
       # Don't scan files and directories matching regex
@@ -413,9 +410,27 @@
     - ansible_distribution in ["Archlinux", "Ubuntu"]
 
 
-###################################
-### Visual Studio Code / Code - OSS
-###################################
+# https://wiki.archlinux.org/title/Desktop_notifications#Bash
+- name: Set ClamAV - clamd global config - VirusEvent - Desktop Notification (arch, Ubuntu)
+  ansible.builtin.blockinfile:
+    path: "/etc/clamav/clamd.conf"
+    backup: true
+    marker: '# ### {mark} ANSIBLE MANAGED BLOCK ###'
+    block: |
+      # Execute a command when virus is found. In the command string %v will
+      # be replaced with the virus name and %f will be replaced with the file name.
+      # Additionally, two environment variables will be defined: $CLAM_VIRUSEVENT_FILENAME
+      # and $CLAM_VIRUSEVENT_VIRUSNAME.
+      # Default: no
+      #VirusEvent /usr/local/bin/send_sms 123456789 "VIRUS ALERT: %v in %f"
+      VirusEvent /usr/bin/notify-send "VirusAlert: '${CLAM_VIRUSEVENT_VIRUSNAME}' in '${CLAM_VIRUSEVENT_FILENAME}'" "Virus found - notification."" --icon=dialog-error
+  when:
+    - ansible_distribution in ["Archlinux", "Ubuntu"]
+
+
+# ###################################
+# ### Visual Studio Code / Code - OSS
+# ###################################
 
 - name: Install 'Visual Studio Code' bzw 'Code-OSS' - Extension 'Sync Settings' by zokugun (Ubuntu)
   tags: workstation,ubuntu
@@ -429,7 +444,8 @@
 - name: Start 'Visual Studio Code' bzw 'Code-OSS' (Ubuntu)
   tags: workstation,ubuntu
   ansible.builtin.shell:
-    cmd: code >/dev/null 2>&1 &  # damit im Home-Verzeichnis der Config-Pfad von VS Code erstellt wird + später die settings.yml dorthin kopiert werden kann
+    cmd: code >/dev/null 2>&1 &   # damit im Home-Verzeichnis der Config-Pfad von VS Code erstellt wird + 
+                                  # später die settings.yml dorthin kopiert werden kann
   args:
       creates: /home/{{ env_user }}/.config/Code/User/globalStorage/zokugun.sync-settings/settings.yml   # nur ausführen, wenn nicht bereits z.B. in vorhergehendem Lauf gestartet/erstellt wurde
   become: true
@@ -440,7 +456,8 @@
 - name: Start 'Code - OSS' (Arch)
   tags: workstation,arch
   ansible.builtin.shell:
-    cmd: code >/dev/null 2>&1 &  # damit im Home-Verzeichnis der Config-Pfad von VS Code erstellt wird + später die settings.yml dorthin kopiert werden kann
+    cmd: code >/dev/null 2>&1 &   # damit im Home-Verzeichnis der Config-Pfad von VS Code erstellt wird + 
+                                  # später die settings.yml dorthin kopiert werden kann
   args:
       creates: "/home/{{ env_user }}/.config/Code - OSS/User/globalStorage/zokugun.sync-settings/settings.yml"   # nur ausführen, wenn nicht bereits z.B. in vorhergehendem Lauf gestartet/erstellt wurde
   become: true

@@ -34,6 +34,7 @@
       - kdeconnect
       - keepassxc
       - kitty   # gpu beschleunigtes terminal
+      - libnotify   # Library for sending desktop notifications
       - lsb-release
       - make
       #- man-pages-de
