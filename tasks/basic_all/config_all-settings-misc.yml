@@ -409,6 +409,7 @@
       #ExcludePath ^/proc/
       #ExcludePath ^/sys/
       ExcludePath ^/home/.*/\.clam/quarantine
+       
   when:
     - ansible_distribution in ["Archlinux", "Ubuntu"]
 
