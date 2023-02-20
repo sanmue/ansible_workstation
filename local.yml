@@ -81,11 +81,13 @@
     - name: VM - create fix
       ansible.builtin.import_tasks: tasks/fix/config_all-VM-QemuKvm-create_fix.yml
     # ----------------------------------------------------------
-    # ### sudo-ansible-user + cronjob:
-    - name: Config ansible user
-      # ansible.builtin.import_tasks: tasks/basic_all/config_all-ansible-users.yml
+    # ### cronjob:
     - name: Config Cron
       ansible.builtin.import_tasks: tasks/basic_all/config_all-cron.yml
+    # ----------------------------------------------------------
+    # ### sudo-ansible-user:
+    - name: Config ansible user
+      # ansible.builtin.import_tasks: tasks/basic_all/config_all-ansible-users.yml
     # ----------------------------------------------------------
     # ### cleanup:
     - name: Cleanup
