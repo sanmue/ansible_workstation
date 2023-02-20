@@ -59,3 +59,6 @@
     # - You can add multiple ExcludePath options in /etc/clamav/clamd.conf file. These are in RegEx.
   when:
     - ansible_distribution in ["Ubuntu", "Archlinux"]
+
+
+# ### ClamAV Settings (/etc/clamav/clamd.conf): siehe 'config_all-settings-misc.yml'
