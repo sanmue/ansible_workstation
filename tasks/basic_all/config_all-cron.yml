@@ -37,7 +37,7 @@
 
 - name: Create 'quarantine' and 'logs' folder for ClamAV for env_user (Archlinux, Ubuntu)
   ansible.builtin.file:
-    path: "{{ env_user }}/{{ item }}"
+    path: "/home/{{ env_user }}/{{ item }}"
     state: directory
     owner: "{{ env_user }}"
     group: "{{ env_user }}"
