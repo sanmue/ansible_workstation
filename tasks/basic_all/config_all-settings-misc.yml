@@ -366,7 +366,6 @@
     - ansible_distribution == "Archlinux"
 
 
-
 # ---------------
 # ### VIM plugins
 
@@ -409,7 +408,6 @@
   when:
     - ansible_distribution in ["Archlinux", "Ubuntu"]
 
-
 # https://wiki.archlinux.org/title/Desktop_notifications#Bash
 - name: Set ClamAV - clamd global config - VirusEvent - Desktop Notification (arch, Ubuntu)
   ansible.builtin.blockinfile:
@@ -424,6 +422,25 @@
       # Default: no
       #VirusEvent /usr/local/bin/send_sms 123456789 "VIRUS ALERT: %v in %f"
       VirusEvent /usr/bin/notify-send "VirusAlert: '${CLAM_VIRUSEVENT_VIRUSNAME}' in '${CLAM_VIRUSEVENT_FILENAME}'" "Virus found - notification." --icon=dialog-error
+  when:
+    - ansible_distribution in ["Archlinux", "Ubuntu"]
+
+- name: Set ClamAV - clamd global config - Limits (arch, Ubuntu)
+  ansible.builtin.blockinfile:
+    path: "/etc/clamav/clamd.conf"
+    backup: true
+    marker: '# ### {mark} ANSIBLE MANAGED BLOCK - Limits ###'
+    block: |
+      # Files larger than this limit won't be scanned. Affects the input file itself
+      # as well as files contained inside it (when the input file is an archive, a
+      # document or some other kind of container).
+      # Value of 0 disables the limit.
+      # Note: disabling this limit or setting it too high may result in severe damage
+      # to the system.
+      # Technical design limitations prevent ClamAV from scanning files greater than
+      # 2 GB at this time.
+      # Default: 100M
+      MaxFileSize 400M
   when:
     - ansible_distribution in ["Archlinux", "Ubuntu"]
 
