@@ -85,9 +85,9 @@
     - name: Config Cron
       ansible.builtin.import_tasks: tasks/basic_all/config_all-cron.yml
     # ----------------------------------------------------------
-    # ### sudo-ansible-user:
-    # - name: Config ansible user
-      # ansible.builtin.import_tasks: tasks/basic_all/config_all-ansible-users.yml
+    # ### Create Users / Config User privileges:
+    - name: Config users
+      ansible.builtin.import_tasks: tasks/basic_all/config_all-users.yml
     # ----------------------------------------------------------
     # ### cleanup:
     - name: Cleanup

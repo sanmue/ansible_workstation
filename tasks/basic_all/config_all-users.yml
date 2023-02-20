@@ -1,0 +1,40 @@
+# #############
+# ### s_ansible
+# #############
+
+- name: Config users - add ansible user
+  ansible.builtin.user:
+    name: s_ansible
+    system: true
+
+- name: Config users - s_ansible - set up sudo
+  ansible.builtin.copy:
+    src: files/sudoer_s_ansible
+    dest: /etc/sudoers.d/s_ansible
+    owner: root
+    group: root
+    mode: 0440
+
+
+# ##########
+# ### clamav
+# ##########
+
+# https://wiki.archlinux.org/title/ClamAV
+- name: Users - clamav - create sudoers file
+  ansible.builtin.file:
+    path: "/etc/sudoers.d/clamav"
+    state: touch
+    owner: root
+    group: root
+    mode: 0440
+
+- name: Users - clamav - allow running notify-send
+  ansible.builtin.blockinfile:
+    path: "/etc/sudoers.d/clamav"
+    backup: false
+    marker: '# ### {mark} ANSIBLE MANAGED BLOCK - notify-send ###'
+    block: |
+      clamav ALL = (ALL) NOPASSWD: SETENV: /usr/bin/notify-send
+  # when:
+  #   - ansible_distribution in ["Archlinux", "Ubuntu"]
