@@ -12,7 +12,7 @@
   ansible.builtin.shell:
     cmd: "postalias /etc/postfix/aliases && newaliases && touch /home/{{ env_user}}/.postfixPostalias"
     args:
-      creates: /home/{{ env_user}}/.postfixPostalias
+      creates: "/home/{{ env_user}}/.postfixPostalias"
   when:
     - ansible_distribution in ["Archlinux", "Ubuntu"]
 
