@@ -1,7 +1,7 @@
 ﻿- name: Config postfix (Archlinux, Ubuntu)
   ansible.builtin.lineinfile:
     path: /etc/postfix/aliases
-    regexp: '^#root:.*you'
+    regexp: '^#root.*you'
     line: "root: {{ env_user }}"
     state: present
   when:
