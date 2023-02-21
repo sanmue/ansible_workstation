@@ -10,5 +10,8 @@ for ADDRESS in /run/user/*; do
     /usr/bin/notify-send -i dialog-warning "Virus found!" "$ALERT"
 done
 
-# Send local mail alert to ${USER}:
-echo "${ALERT}" | /usr/bin/mail -s "Signature detected in '${CLAM_VIRUSEVENT_FILENAME}'" "${USEER}"
+# Send local mail alert to all logged on users:
+userList=$(who -s | cut -d " " -f 1)
+for user in ${userList}; do
+    echo "${ALERT}" | /usr/bin/mail -s "Signature detected in '${CLAM_VIRUSEVENT_FILENAME}'" "${user}"
+done

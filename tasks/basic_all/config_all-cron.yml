@@ -54,7 +54,6 @@
     special_time: weekly
     user: "{{ env_user }}"
     job: /usr/bin/clamdscan --fdpass --multiscan --move="${HOME}/.clam/quarantine" --log="${HOME}/.clam/logs/$(date +\%Y\%m\%d)-weekly.log" "${HOME}" 2>/dev/null 1>&2
-    # '--exclude-dir' wird ignoriert, da kein gültiger Parameter bei clamdscan
     # https://serverfault.com/questions/957666/how-to-make-clamdscan-exclude-folders-and-only-log-infected
     # - You can add multiple ExcludePath options in /etc/clamav/clamd.conf file. These are in RegEx.
   when:
