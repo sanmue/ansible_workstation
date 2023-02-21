@@ -11,4 +11,4 @@ for ADDRESS in /run/user/*; do
 done
 
 # Send local mail alert to ${USER}:
-echo "Signature detected by clamav: '${CLAM_VIRUSEVENT_VIRUSNAME}' in '${CLAM_VIRUSEVENT_FILENAME}'" | /usr/bin/mail -s "Signature detected in '${CLAM_VIRUSEVENT_FILENAME}'" "${USER}"
+echo "${ALERT}" | /usr/bin/mail -s "Signature detected in '${CLAM_VIRUSEVENT_FILENAME}'" "${USEER}"
