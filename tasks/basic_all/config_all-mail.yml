@@ -5,3 +5,9 @@
     replace: "root: {{ env_user }}"
   when:
     - ansible_distribution in ["Archlinux", "Ubuntu"]
+
+- name: Config postfix aliases (Archlinux, Ubuntu)
+  ansible.builtin.shell:
+    cmd: postalias /etc/postfix/aliases && newaliases
+  when:
+    - ansible_distribution in ["Archlinux", "Ubuntu"]
