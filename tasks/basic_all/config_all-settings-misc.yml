@@ -468,7 +468,7 @@
     group: root
     mode: '0755'
     backup: false
-    # marker: '# ### {mark} ANSIBLE MANAGED BLOCK - notify-send ###'
+    marker: '# ### {mark} ANSIBLE MANAGED BLOCK - VirusEvent notify-send ###'
     block: |
       #!/bin/bash
       PATH=/usr/bin
