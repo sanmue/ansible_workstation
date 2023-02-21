@@ -31,8 +31,7 @@
   ansible.builtin.lineinfile:
     path: /etc/postfix/main.cf
     insertafter: '^#mydestination.=.\$myhostname, localhost.\$mydomain, $localhost'
-    #line: mydestination = $myhostname, localhost.$mydomain, localhost
-    line: mydestination = localhost
+    line: mydestination = $myhostname, localhost.$mydomain, localhost
     state: present
   when:
     - ansible_distribution in ["Archlinux", "Ubuntu"]
