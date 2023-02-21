@@ -421,23 +421,6 @@
   when:
     - ansible_distribution in ["Archlinux", "Ubuntu"]
 
-# https://wiki.archlinux.org/title/Desktop_notifications#Bash
-- name: Set ClamAV - clamd global config - VirusEvent - Desktop Notification (arch, Ubuntu)
-  ansible.builtin.blockinfile:
-    path: "/etc/clamav/clamd.conf"
-    backup: true
-    marker: '# ### {mark} ANSIBLE MANAGED BLOCK - VirusEvent ###'
-    block: |
-      # Execute a command when virus is found. In the command string %v will
-      # be replaced with the virus name and %f will be replaced with the file name.
-      # Additionally, two environment variables will be defined: $CLAM_VIRUSEVENT_FILENAME
-      # and $CLAM_VIRUSEVENT_VIRUSNAME.
-      # Default: no
-      #VirusEvent /usr/local/bin/send_sms 123456789 "VIRUS ALERT: %v in %f"
-      VirusEvent /usr/bin/notify-send "VirusAlert: '${CLAM_VIRUSEVENT_VIRUSNAME}' in '${CLAM_VIRUSEVENT_FILENAME}'" "Virus found - notification." --icon=dialog-error
-  when:
-    - ansible_distribution in ["Archlinux", "Ubuntu"]
-
 - name: Set ClamAV - clamd global config - Limits (arch, Ubuntu)
   ansible.builtin.blockinfile:
     path: "/etc/clamav/clamd.conf"
@@ -454,6 +437,49 @@
       # 2 GB at this time.
       # Default: 100M
       MaxFileSize 400M
+  when:
+    - ansible_distribution in ["Archlinux", "Ubuntu"]
+
+# https://wiki.archlinux.org/title/Desktop_notifications#Bash
+# https://wiki.archlinux.org/title/ClamAV
+- name: Set ClamAV - clamd global config - VirusEvent - Desktop Notification (arch, Ubuntu)
+  ansible.builtin.blockinfile:
+    path: "/etc/clamav/clamd.conf"
+    backup: true
+    marker: '# ### {mark} ANSIBLE MANAGED BLOCK - VirusEvent ###'
+    block: |
+      # Execute a command when virus is found. In the command string %v will
+      # be replaced with the virus name and %f will be replaced with the file name.
+      # Additionally, two environment variables will be defined: $CLAM_VIRUSEVENT_FILENAME
+      # and $CLAM_VIRUSEVENT_VIRUSNAME.
+      # Default: no
+      #VirusEvent /usr/local/bin/send_sms 123456789 "VIRUS ALERT: %v in %f"
+      #VirusEvent /usr/bin/notify-send "VirusAlert: '${CLAM_VIRUSEVENT_VIRUSNAME}' in '${CLAM_VIRUSEVENT_FILENAME}'" "Virus found - notification." --icon=dialog-warning
+      VirusEvent /etc/clamav/VirusEvent.sh
+  when:
+    - ansible_distribution in ["Archlinux", "Ubuntu"]
+
+# https://wiki.archlinux.org/title/ClamAV
+- name: Users - clamav - VirusEvent - notify-send on signature found (Arch, Ubuntu)
+  ansible.builtin.blockinfile:
+    path: "/etc/clamav/VirusEvent.sh"
+    create: true
+    owner: root
+    group: root
+    mode: '0755'
+    backup: false
+    # marker: '# ### {mark} ANSIBLE MANAGED BLOCK - notify-send ###'
+    block: |
+      #!/bin/bash
+      PATH=/usr/bin
+      ALERT="Signature detected by clamav: '${CLAM_VIRUSEVENT_VIRUSNAME}' in '${CLAM_VIRUSEVENT_FILENAME}'"
+
+      # Send an alert to all graphical users.
+      for ADDRESS in /run/user/*; do
+          USERID=${ADDRESS#/run/user/}
+          /usr/bin/sudo -u "#$USERID" DBUS_SESSION_BUS_ADDRESS="unix:path=$ADDRESS/bus" PATH=${PATH} \
+          /usr/bin/notify-send -i dialog-warning "Virus found!" "$ALERT"
+      done
   when:
     - ansible_distribution in ["Archlinux", "Ubuntu"]
 

@@ -21,17 +21,13 @@
 # ##########
 
 # https://wiki.archlinux.org/title/ClamAV
-- name: Users - clamav - create sudoers file
-  ansible.builtin.file:
-    path: "/etc/sudoers.d/clamav"
-    state: touch
-    owner: root
-    group: root
-    mode: 0440
-
 - name: Users - clamav - allow running notify-send
   ansible.builtin.blockinfile:
     path: "/etc/sudoers.d/clamav"
+    create: true
+    owner: root
+    group: root
+    mode: '0440'
     backup: false
     marker: '# ### {mark} ANSIBLE MANAGED BLOCK - notify-send ###'
     block: |
