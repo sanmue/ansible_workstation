@@ -468,13 +468,12 @@
     group: root
     mode: '0755'
     backup: false
-    marker: '#!/bin/bash   
-            ### {mark} ANSIBLE MANAGED BLOCK - VirusEvent notify-send ###'
+    marker: '#!/bin/bash   # ### {mark} ANSIBLE MANAGED BLOCK - VirusEvent notify-send ###'
     block: |
       #!/bin/bash
       PATH=/usr/bin
       ALERT="Signature detected by clamav: '${CLAM_VIRUSEVENT_VIRUSNAME}' in '${CLAM_VIRUSEVENT_FILENAME}'"
-      #
+      
       # Send an alert to all graphical users.
       for ADDRESS in /run/user/*; do
           USERID=${ADDRESS#/run/user/}
