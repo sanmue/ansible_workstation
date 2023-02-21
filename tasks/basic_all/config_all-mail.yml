@@ -19,7 +19,7 @@
 - name: Config postfix - local mail - main.cf (Archlinux, Ubuntu)
   ansible.builtin.lineinfile:
     path: /etc/postfix/main.cf
-    insertafter: '^#myhostname?=?virtual.domain.tld'
+    insertafter: '^#myhostname.=.virtual.domain.tld'
     line: myhostname = localhost
     state: present
   when:
