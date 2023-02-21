@@ -1,4 +1,4 @@
-﻿- name: Config postfix (Archlinux, Ubuntu)
+﻿- name: Config postfix aliases (Archlinux, Ubuntu)
   ansible.builtin.replace:
     path: /etc/postfix/aliases
     regexp: '^#root.*you'
