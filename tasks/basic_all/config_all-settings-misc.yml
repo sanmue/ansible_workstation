@@ -461,25 +461,13 @@
 
 # https://wiki.archlinux.org/title/ClamAV
 - name: Users - clamav - VirusEvent - notify-send on signature found (Arch, Ubuntu)
-  ansible.builtin.blockinfile:
-    path: "/etc/clamav/VirusEvent.sh"
-    create: true
+  ansible.builtin.copy:
+    src: "files/config_all-settings-misc-clamavVirusEvent.sh"
+    dest: "/etc/clamav/VirusEvent.sh"
     owner: root
     group: root
     mode: '0755'
-    backup: false
-    marker: '# ### {mark} ANSIBLE MANAGED BLOCK - VirusEvent notify-send ###'
-    block: |
-      #!/bin/bash
-      PATH=/usr/bin
-      ALERT="Signature detected by clamav: '${CLAM_VIRUSEVENT_VIRUSNAME}' in '${CLAM_VIRUSEVENT_FILENAME}'"
-
-      # Send an alert to all graphical users.
-      for ADDRESS in /run/user/*; do
-          USERID=${ADDRESS#/run/user/}
-          /usr/bin/sudo -u "#$USERID" DBUS_SESSION_BUS_ADDRESS="unix:path=$ADDRESS/bus" PATH=${PATH} \
-          /usr/bin/notify-send -i dialog-warning "Virus found!" "$ALERT"
-      done
+    backup: true
   when:
     - ansible_distribution in ["Archlinux", "Ubuntu"]
 
