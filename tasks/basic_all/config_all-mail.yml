@@ -1,4 +1,4 @@
-﻿- name: Config postfix aliases (Archlinux, Ubuntu)
+﻿- name: Config postfix - aliases (Archlinux, Ubuntu)
   ansible.builtin.replace:
     path: /etc/postfix/aliases
     regexp: '^#root.*you'
@@ -6,7 +6,7 @@
   when:
     - ansible_distribution in ["Archlinux", "Ubuntu"]
 
-- name: Config postfix aliases (Archlinux, Ubuntu)
+- name: Config postfix - run postalias command (Archlinux, Ubuntu)
   ansible.builtin.shell:
     cmd: postalias /etc/postfix/aliases && newaliases
   when:
