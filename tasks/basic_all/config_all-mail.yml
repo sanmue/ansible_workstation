@@ -16,9 +16,9 @@
   when:
     - ansible_distribution in ["Archlinux", "Ubuntu"]
 
-
+# ### ##############################
 # ### config postfix for local mail:
-- name: Config postfix - local mail - main.cf (Archlinux, Ubuntu)
+- name: Config postfix - local mail - main.cf - myhostname (Archlinux, Ubuntu)
   ansible.builtin.lineinfile:
     path: /etc/postfix/main.cf
     insertafter: '^#myhostname.=.virtual.domain.tld'
@@ -26,3 +26,13 @@
     state: present
   when:
     - ansible_distribution in ["Archlinux", "Ubuntu"]
+
+- name: Config postfix - local mail - main.cf - mydestination (Archlinux, Ubuntu)
+  ansible.builtin.lineinfile:
+    path: /etc/postfix/main.cf
+    insertafter: '^#mydestination.=.*$localhost'
+    line: mydestination = $myhostname, localhost.$mydomain, localhost
+    state: present
+  when:
+    - ansible_distribution in ["Archlinux", "Ubuntu"]
+
