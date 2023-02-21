@@ -36,4 +36,3 @@
     state: present
   when:
     - ansible_distribution in ["Archlinux", "Ubuntu"]
-
