@@ -16,9 +16,9 @@
 
 - name: Config postfix - initialize alias database (Archlinux, Ubuntu)
   ansible.builtin.shell:
-    cmd: "newaliases && touch /home/{{ env_user }}/.postfixPostalias"
+    cmd: "newaliases && touch /home/{{ env_user }}/.postfixNewaliases"
   args:
-    creates: "/home/{{ env_user }}/.postfixPostalias"
+    creates: "/home/{{ env_user }}/.postfixNewaliases"
   when:
     - ansible_distribution in ["Archlinux", "Ubuntu"]
 
