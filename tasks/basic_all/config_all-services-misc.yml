@@ -3,7 +3,7 @@
 ### ######
 
 # https://wiki.archlinux.org/title/Cron
-- name: Services - start cronie (Arch)
+- name: Services - start+enable cronie (Arch)
   ansible.builtin.service:
     name: cronie.service
     state: started
