@@ -42,7 +42,6 @@
     path: /etc/postfix/main.cf
     insertafter: '^#inet_interfaces.=.\$myhostname'
     line: inet_interfaces = $myhostname, localhost
-    #firstmatch: true
     state: present
   when:
     - ansible_distribution in ["Archlinux", "Ubuntu"]
@@ -52,7 +51,6 @@
     path: /etc/postfix/main.cf
     insertafter: '^#mynetworks_style.=.subnet'
     line: mynetworks_style = host
-    #firstmatch: true
     state: present
   when:
     - ansible_distribution in ["Archlinux", "Ubuntu"]
@@ -62,8 +60,6 @@
     path: /etc/postfix/main.cf
     insertafter: '^#relayhost.=.\[an.ip.add.ress\]'
     line: 'default_transport = error: outside mail is not deliverable'
-
-    #firstmatch: true
     state: present
   when:
     - ansible_distribution in ["Archlinux", "Ubuntu"]
