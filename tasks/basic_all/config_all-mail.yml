@@ -32,6 +32,7 @@
     path: /etc/postfix/main.cf
     insertafter: '^#mydestination.=.\$myhostname,.localhost.\$mydomain,.localhost'
     line: mydestination = $myhostname, localhost.$mydomain, localhost
+    firstmatch: true
     state: present
   when:
     - ansible_distribution in ["Archlinux", "Ubuntu"]
