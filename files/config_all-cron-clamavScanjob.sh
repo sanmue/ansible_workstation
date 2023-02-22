@@ -1,5 +1,7 @@
 ﻿#!/bin/bash
 
+set -x   # for debugging
+
 #############
 ### Variablen
 #############
@@ -21,7 +23,7 @@ errMsg="${errMsgSubj}, path '${scanPath}' does not exist.\nScript: '$0'"
 ##############
 ### Funktionen
 ##############
-function notify-allGuiUser() { 
+function notify-allGuiUser { 
 	# Param1: Notify Subject
     # Param2: Notify Message
 
@@ -32,7 +34,7 @@ function notify-allGuiUser() {
     done 
 }
 
-function mail-allLogonUser() { 
+function mail-allLogonUser { 
 	# Param1: Mail Subject
     # Param2: Mail Message
     arrUser=($(users))      # array of logged on users
