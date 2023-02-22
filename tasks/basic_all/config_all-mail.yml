@@ -30,7 +30,7 @@
 - name: Config postfix - local mail - main.cf - mydestination (Archlinux, Ubuntu)
   ansible.builtin.lineinfile:
     path: /etc/postfix/main.cf
-    insertafter: '^#mydestination.=.\$myhostname, localhost.\$mydomain, $localhost'
+    insertafter: '^#mydestination.=.\$myhostname,.localhost.\$mydomain,.localhost'
     line: mydestination = $myhostname, localhost.$mydomain, localhost
     state: present
   when:
