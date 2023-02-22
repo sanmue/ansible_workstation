@@ -73,6 +73,7 @@ mail_allLogonUser "${startMsgSubj}" "${startMsg}"
 # ### -------
 # ### Scanjob
 # ### -------
+# https://serverfault.com/questions/957666/how-to-make-clamdscan-exclude-folders-and-only-log-infected
 /usr/bin/clamdscan --fdpass --multiscan --move="${scanPath}/.clam/quarantine" --log="${scanPath}/.clam/logs/$(date +\%Y\%m\%d)-weekly.log" "${scanPath}" 2>/dev/null 1>&2
 
 # ### --------------------------------

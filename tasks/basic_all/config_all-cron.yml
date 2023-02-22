@@ -29,7 +29,7 @@
 - name: Create Cronjob to update ClamAV database (Archlinux, Ubuntu)
   ansible.builtin.cron:
     name: "Update ClamAV database"
-    special_time: daily
+    special_time: hourly
     user: clamav
     job: "/usr/bin/freshclam --quiet"
   when:
@@ -53,9 +53,8 @@
     name: "scan home-folder"
     special_time: weekly
     user: "{{ env_user }}"
-    job: /usr/bin/clamdscan --fdpass --multiscan --move="${HOME}/.clam/quarantine" --log="${HOME}/.clam/logs/$(date +\%Y\%m\%d)-weekly.log" "${HOME}" 2>/dev/null 1>&2
-    # https://serverfault.com/questions/957666/how-to-make-clamdscan-exclude-folders-and-only-log-infected
-    # - You can add multiple ExcludePath options in /etc/clamav/clamd.conf file. These are in RegEx.
+    # job: /usr/bin/clamdscan --fdpass --multiscan --move="${HOME}/.clam/quarantine" --log="${HOME}/.clam/logs/$(date +\%Y\%m\%d)-weekly.log" "${HOME}" 2>/dev/null 1>&2
+    job: "/etc/clamav/ScanHOME.sh {$HOME} 2>/dev/null"
   when:
     - ansible_distribution in ["Ubuntu", "Archlinux"]
 

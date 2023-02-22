@@ -460,10 +460,21 @@
     - ansible_distribution in ["Archlinux", "Ubuntu"]
 
 # https://wiki.archlinux.org/title/ClamAV
-- name: Users - clamav - VirusEvent - notify-send on signature found (Arch, Ubuntu)
+- name: Users - clamav - bash-skript VirusEvent - notify-send on signature found (Arch, Ubuntu)
   ansible.builtin.copy:
     src: "files/config_all-settings-misc-clamavVirusEvent.sh"
     dest: "/etc/clamav/VirusEvent.sh"
+    owner: root
+    group: root
+    mode: '0755'
+    backup: true
+  when:
+    - ansible_distribution in ["Archlinux", "Ubuntu"]
+
+- name: Users - clamav - cron - bashScript to scan HOME folder (Arch, Ubuntu)
+  ansible.builtin.copy:
+    src: "files/config_all-cron-clamav-ScanHOME.sh"
+    dest: "/etc/clamav/ScanHOME.sh"
     owner: root
     group: root
     mode: '0755'
