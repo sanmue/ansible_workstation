@@ -56,3 +56,14 @@
     state: present
   when:
     - ansible_distribution in ["Archlinux", "Ubuntu"]
+
+- name: Config postfix - local mail - main.cf - default_transport (Archlinux, Ubuntu)
+  ansible.builtin.lineinfile:
+    path: /etc/postfix/main.cf
+    insertafter: '^#relayhost.=.\[an.ip.add.ress\]'
+    line: 'default_transport = error: outside mail is not deliverable'
+
+    #firstmatch: true
+    state: present
+  when:
+    - ansible_distribution in ["Archlinux", "Ubuntu"]
