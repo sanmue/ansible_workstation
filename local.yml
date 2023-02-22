@@ -95,6 +95,8 @@
       ansible.builtin.import_tasks: tasks/basic_all/packages_all-mail.yml
     - name: Config postfix
       ansible.builtin.import_tasks: tasks/basic_all/config_all-mail.yml
+    - name: Config postfix.service
+      ansible.builtin.import_tasks: tasks/basic_all/config_all-mail-service.yml
     # ----------------------------------------------------------
     # ### cleanup:
     - name: Cleanup

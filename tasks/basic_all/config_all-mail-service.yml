@@ -1,0 +1,6 @@
+﻿- name: Config postfix service (Archlinux, Ubuntu)
+  ansible.builtin.service:
+    name: postfix.service
+    state: started
+    enabled: true
+  when: ansible_distribution in ["Archlinux", "Ubuntu"]
