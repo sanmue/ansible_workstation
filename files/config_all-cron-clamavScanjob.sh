@@ -23,7 +23,7 @@ errMsg="${errMsgSubj}, path '${scanPath}' does not exist.\nScript: '$0'"
 ##############
 ### Funktionen
 ##############
-function notify-allGuiUser { 
+function notify_allGuiUser { 
 	# Param1: Notify Subject
     # Param2: Notify Message
 
@@ -34,7 +34,7 @@ function notify-allGuiUser {
     done 
 }
 
-function mail-allLogonUser { 
+function mail_allLogonUser { 
 	# Param1: Mail Subject
     # Param2: Mail Message
     arrUser=($(users))      # array of logged on users
@@ -54,9 +54,9 @@ function mail-allLogonUser {
 # ### --------------
 if [ ! -d "${scanPath}" ]; then
     # --- Send an alert to all graphical users:
-    notify-allGuiUser ${errMsgSubj} ${errMsg}
+    notify_allGuiUser ${errMsgSubj} ${errMsg}
     # --- Send (local) mail alert to all logged on users:
-    mail-allLogonUser ${errMsgSubj} ${errMsg}
+    mail_allLogonUser ${errMsgSubj} ${errMsg}
 
     exit 1
 fi
@@ -66,9 +66,9 @@ fi
 # ### --------------------------------
 
 # --- Send an alert to all graphical users:
-notify-allGuiUser "${startMsgSubj}" "${startMsg}"
+notify_allGuiUser "${startMsgSubj}" "${startMsg}"
 # --- Send (local) mail alert to all logged on users:
-mail-allLogonUser "${startMsgSubj}" "${startMsg}"
+mail_allLogonUser "${startMsgSubj}" "${startMsg}"
 
 # ### -------
 # ### Scanjob
@@ -80,7 +80,7 @@ mail-allLogonUser "${startMsgSubj}" "${startMsg}"
 # ### --------------------------------
 
 # --- Send an alert to all graphical users:
-notify-allGuiUser "${finMsgSubj}" "${finMsg}"
+notify_allGuiUser "${finMsgSubj}" "${finMsg}"
 # --- Send (local) mail alert to all logged on users:
-mail-allLogonUser "${finMsgSubj}" "${finMsg}"
+mail_allLogonUser "${finMsgSubj}" "${finMsg}"
 
