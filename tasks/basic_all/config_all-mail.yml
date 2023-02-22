@@ -10,7 +10,7 @@
 
 - name: Config postfix - run postalias command (Archlinux, Ubuntu)
   ansible.builtin.shell:
-    cmd: "postalias /etc/postfix/aliases && newaliases && touch /home/{{ env_user}}/.postfixPostalias"
+    cmd: "postalias /etc/postfix/aliases && newaliases && touch /home/{{ env_user }}/.postfixPostalias"
   args:
     creates: "/home/{{ env_user}}/.postfixPostalias"
   when:
