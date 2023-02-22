@@ -1,3 +1,16 @@
+### ######
+### Cronie
+### ######
+
+# https://wiki.archlinux.org/title/Cron
+- name: Services - start cronie (Arch)
+  ansible.builtin.service:
+    name: cronie.service
+    state: started
+    enabled: true
+  when: ansible_distribution in ["Archlinux"]
+
+
 # ##############
 # ### SSH / SSHD
 # ### ##########

@@ -1,12 +1,10 @@
-
-#- name: add ansible-pull cron job
+# - name: add ansible-pull cron job
 #  tags: cron
 #  cron:
 #    name: ansible auto-provision
 #    user: s_ansible
 #    minute: "*/10"
 #    job: ansible-pull -o -U https://github.com/sanmue/ansible_test.git
-
 
 ### ##############
 ### Pacman-Mirrors
