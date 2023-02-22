@@ -9,7 +9,7 @@ PATH=/usr/bin
 
 scanPath="/home/sandro"     # default-Wert
 if [ $# -gt 0 ]; then
-    scanPath="${1}"         # Übergabe-Parameter an Script
+    scanPath="${1}"         # Pfad aus Übergabe-Parameter an Script
 fi
 
 startMsgSubj="ClamAV (cronjob) - Scan started"
