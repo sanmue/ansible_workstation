@@ -54,9 +54,9 @@ function mail_allLogonUser {
 # ### --------------
 if [ ! -d "${scanPath}" ]; then
     # --- Send an alert to all graphical users:
-    notify_allGuiUser ${errMsgSubj} ${errMsg}
+    notify_allGuiUser "${errMsgSubj}" "${errMsg}"
     # --- Send (local) mail alert to all logged on users:
-    mail_allLogonUser ${errMsgSubj} ${errMsg}
+    mail_allLogonUser "${errMsgSubj}" "${errMsg}"
 
     exit 1
 fi
