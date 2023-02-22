@@ -1,6 +1,6 @@
 ﻿#!/bin/bash
 
-set -x   # for debugging
+#set -x   # for debugging
 
 #############
 ### Variablen
@@ -73,7 +73,7 @@ mail_allLogonUser "${startMsgSubj}" "${startMsg}"
 # ### -------
 # ### Scanjob
 # ### -------
-# /usr/bin/clamdscan --fdpass --multiscan --move="${scanPath}/.clam/quarantine" --log="${scanPath}/.clam/logs/$(date +\%Y\%m\%d)-weekly.log" "${scanPath}" 2>/dev/null 1>&2
+/usr/bin/clamdscan --fdpass --multiscan --move="${scanPath}/.clam/quarantine" --log="${scanPath}/.clam/logs/$(date +\%Y\%m\%d)-weekly.log" "${scanPath}" 2>/dev/null 1>&2
 
 # ### --------------------------------
 # ### Send final notification to users
@@ -81,6 +81,6 @@ mail_allLogonUser "${startMsgSubj}" "${startMsg}"
 
 # --- Send an alert to all graphical users:
 notify_allGuiUser "${finMsgSubj}" "${finMsg}"
-# --- Send (local) mail alert to all logged on users:
+# --- Send (local) mail to all logged on users:
 mail_allLogonUser "${finMsgSubj}" "${finMsg}"
 
