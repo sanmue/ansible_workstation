@@ -126,7 +126,7 @@
       - base-devel   # insbes. wg. AUR Paketen   # bereits installiert (bootstrap)
       - brave-browser
       - chromium
-      - chronie   # Daemon that runs specified programs at scheduled times and related tools
+      - cronie   # Daemon that runs specified programs at scheduled times and related tools
       - code   # The Open Source build of Visual Studio Code (vscode) editor
       - discord
       # - evolution-on   # Tray plugin for the Evolution email client
