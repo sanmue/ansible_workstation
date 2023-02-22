@@ -15,7 +15,7 @@ startMsg="${startMsgSubj} for path '${scanPath}'.\nScript: '$0'"
 finMsgSubj="ClamAV (cronjob) - Scan finished"
 finMsg="${finMsgSubj} for path '${scanPath}'.\nScript: '$0'"
 errMsgSubj="ClamAV (cronjob) - Error"
-errMsg="${errMsgSubj}: Path '${scanPath}' does not exist.\nScript: '$0'"
+errMsg="${errMsgSubj}, path '${scanPath}' does not exist.\nScript: '$0'"
 
 
 ##############
@@ -52,9 +52,9 @@ function mail-allLogonUser() {
 # ### --------------
 if [ ! -d "${scanPath}" ]; then
     # --- Send an alert to all graphical users:
-    notify-allGuiUser "${errMsgSubj}" "${errMsg}"
+    notify-allGuiUser ${errMsgSubj} ${errMsg}
     # --- Send (local) mail alert to all logged on users:
-    mail-allLogonUser "${errMsgSubj}" "${errMsg}"
+    mail-allLogonUser ${errMsgSubj} ${errMsg}
 
     exit 1
 fi
