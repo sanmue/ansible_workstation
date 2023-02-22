@@ -1,4 +1,4 @@
-﻿- name: Install packages for local mail (Archlinux, Ubuntu)
+﻿- name: Install packages for (local) mail (Archlinux, Ubuntu)
   ansible.builtin.package:
     state: latest
     name:

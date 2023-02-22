@@ -27,6 +27,15 @@
   when:
     - ansible_distribution in ["Archlinux", "Ubuntu"]
 
+- name: Config postfix - local mail - main.cf - mydomain (Archlinux, Ubuntu)
+  ansible.builtin.lineinfile:
+    path: /etc/postfix/main.cf
+    insertafter: '^#mydomain.=.domain.tld'
+    line: mydomain = localdomain
+    state: present
+  when:
+    - ansible_distribution in ["Archlinux", "Ubuntu"]
+
 - name: Config postfix - local mail - main.cf - mydestination (Archlinux, Ubuntu)
   ansible.builtin.lineinfile:
     path: /etc/postfix/main.cf
