@@ -16,6 +16,8 @@
 # ### ######################################
 # - global wäre: /etc/bash_bashrc
 
+# -------------
+# ### env_user:
 - name: Bashrc - check status (User, all)
   ansible.builtin.stat:
     path: "/home/{{ env_user }}/.bashrc"
@@ -28,7 +30,7 @@
   when:
     - ansible_distribution in ["Ubuntu", "Archlinux"]
     - not statBashrcUser.stat.exists
-    #oder: - statBashrcUser.stat.exists == false
+    # oder: - statBashrcUser.stat.exists == false
 
 - name: Bashrc - Insert/Update additional paths and config - nvm (User, all)
   ansible.builtin.blockinfile:
@@ -92,12 +94,12 @@
   when:
     - ansible_distribution in ["Ubuntu"]
 
-#- name: Bashrc - initial command 'pyenv init' - pyenv (User, Arch)
+# - name: Bashrc - initial command 'pyenv init' - pyenv (User, Arch)
 #  become: true
 #  become_user: "{{ env_user }}"
 #  ansible.builtin.shell:
 #    cmd: pyenv init >/dev/null && touch /home/{{ env_user }}/.pyenvinitExecuted
- # args:
+# args:
 #    creates: /home/{{ env_user }}/.pyenvinitExecuted
 #  ignore_errors: true
 #  when:
@@ -118,7 +120,23 @@
   when:
     - ansible_distribution in ["Archlinux"]
 
+# https://wiki.archlinux.org/title/Systemd/User#PATH
+- name: Bashrc - systemd user import-environment (User, all)
+  ansible.builtin.blockinfile:
+    path: "/home/{{ env_user }}/.bashrc"
+    backup: true
+    marker: "### {mark} 'systemd user' ANSIBLE MANAGED BLOCK ###"
+    block: |
+      # -----
+      # systemd user import-environment
+      # -----
+      systemctl --user import-environment PATH
+  when:
+    - ansible_distribution in ["Archlinux", "Ubuntu"]
 
+
+# --------
+# ### root
 - name: Bashrc - check status (root, all)
   ansible.builtin.stat:
     path: "/root/.bashrc"
@@ -152,6 +170,8 @@
 # ### ###################################
 # - global wäre: /etc/zshrc   # https://linuxconfig.org/zsh-shell-installation-and-configuration-on-linux
 
+# --------
+# ### user
 - name: Zshrc - check status (User, all)
   ansible.builtin.stat:
     path: "/home/{{ env_user }}/.zshrc"
@@ -254,7 +274,23 @@
   when:
     - ansible_distribution in ["Archlinux"]
 
+# https://wiki.archlinux.org/title/Systemd/User#PATH
+- name: Zshrc - systemd user import-environment (User, all)
+  ansible.builtin.blockinfile:
+    path: "/home/{{ env_user }}/.zshrc"
+    backup: true
+    marker: "### {mark} 'systemd user' ANSIBLE MANAGED BLOCK ###"
+    block: |
+      # -----
+      # systemd user import-environment
+      # -----
+      systemctl --user import-environment PATH
+  when:
+    - ansible_distribution in ["Archlinux", "Ubuntu"]
 
+
+# --------
+# ### root
 - name: Zshrc - check status (root, all)
   ansible.builtin.stat:
     path: "/root/.zshrc"
