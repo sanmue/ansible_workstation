@@ -6,18 +6,21 @@
 #    minute: "*/10"
 #    job: ansible-pull -o -U https://github.com/sanmue/ansible_test.git
 
+
 ### ##############
 ### Pacman-Mirrors
 ### ##############
-# Für Manjaro; bei Arch: alternativ reflector nutzen
-- name: Create Cronjob to update pacman-mirrors (Archlinux)
-  ansible.builtin.cron:
-    name: "Update pacman-mirrors every month"
-    special_time: monthly
-    user: root
-    job: "pacman-mirrors -c all && pacman-mirrors --country Germany,France,Austria,Switzerland,Netherlands && pacman -Syyu"
-  when:
-    - ansible_distribution == "Archlinux"
+# nicht benötigt
+# Für Manjaro: es gibt u.a. 'pamac-mirrorlist.timer', der wöchentlich auf die 8 schnellsten server aktualisiert
+# bei Arch: 'reflector' nutzen
+#- name: Create Cronjob to update pacman-mirrors (Archlinux)
+#  ansible.builtin.cron:
+#    name: "Update pacman-mirrors every month"
+#    special_time: monthly
+#    user: root
+#    job: "pacman-mirrors -c all && pacman-mirrors --country Germany,France,Austria,Switzerland,Netherlands && pacman -Syyu"
+#  when:
+#    - ansible_distribution == "Archlinux"
 
 
 ### ######
