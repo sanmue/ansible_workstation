@@ -1,6 +1,7 @@
 ### ######
 ### Cronie
 ### ######
+# cron wird verwendet von ClamTK und timeshift
 
 # https://wiki.archlinux.org/title/Cron
 - name: Services - start+enable cronie (Arch)

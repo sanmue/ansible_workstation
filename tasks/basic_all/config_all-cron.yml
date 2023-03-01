@@ -23,15 +23,15 @@
   when:
     - ansible_distribution in ["Ubuntu", "Archlinux"]
 
-- name: Create Cronjob to scan home-folder of env_user (Archlinux, Ubuntu)
-  ansible.builtin.cron:
-    name: "scan home-folder"
-    special_time: weekly
-    user: "{{ env_user }}"
-    # job: /usr/bin/clamdscan --fdpass --multiscan --move="${HOME}/.clam/quarantine" --log="${HOME}/.clam/logs/$(date +\%Y\%m\%d)-weekly.log" "${HOME}" 2>/dev/null 1>&2
-    job: '/etc/clamav/ScanHOME.sh "${HOME}" 2>/dev/null'
-  when:
-    - ansible_distribution in ["Ubuntu", "Archlinux"]
+#- name: Create Cronjob to scan home-folder of env_user (Archlinux, Ubuntu)
+#  ansible.builtin.cron:
+#    name: "scan home-folder"
+#    special_time: weekly
+#    user: "{{ env_user }}"
+#    # job: /usr/bin/clamdscan --fdpass --multiscan --move="${HOME}/.clam/quarantine" --log="${HOME}/.clam/logs/$(date +\%Y\%m\%d)-weekly.log" "${HOME}" 2>/dev/null 1>&2
+#    job: '/etc/clamav/ScanHOME.sh "${HOME}" 2>/dev/null'
+#  when:
+#    - ansible_distribution in ["Ubuntu", "Archlinux"]
 
 
 # ### ClamAV Settings (/etc/clamav/clamd.conf): siehe 'config_all-settings-misc.yml'
