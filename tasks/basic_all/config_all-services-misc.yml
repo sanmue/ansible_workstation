@@ -135,8 +135,8 @@
     name: clamav-updatedb.timer
     state: started
     enabled: true
-    # daemon_reload: true
-    scope: global
+    daemon_reload: true
+    scope: user
   when:
     - ansible_distribution in ["Archlinux", "Ubuntu"]
 
