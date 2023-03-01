@@ -81,7 +81,9 @@
     - name: VM - create fix
       ansible.builtin.import_tasks: tasks/fix/config_all-VM-QemuKvm-create_fix.yml
     # ----------------------------------------------------------
-    # ### cronjob:
+    # ### systemd timer / cron:
+    - name: Config systemd timer
+      ansible.builtin.import_tasks: tasks/basic_all/config_all-systemd.yml
     - name: Config Cron
       ansible.builtin.import_tasks: tasks/basic_all/config_all-cron.yml
     # ----------------------------------------------------------

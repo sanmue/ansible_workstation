@@ -7,35 +7,9 @@
 #    job: ansible-pull -o -U https://github.com/sanmue/ansible_test.git
 
 
-### ##############
-### Pacman-Mirrors
-### ##############
-# nicht benötigt
-# Für Manjaro: es gibt u.a. 'pamac-mirrorlist.timer', der wöchentlich auf die 8 schnellsten server aktualisiert
-# bei Arch: 'reflector' nutzen
-#- name: Create Cronjob to update pacman-mirrors (Archlinux)
-#  ansible.builtin.cron:
-#    name: "Update pacman-mirrors every month"
-#    special_time: monthly
-#    user: root
-#    job: "pacman-mirrors -c all && pacman-mirrors --country Germany,France,Austria,Switzerland,Netherlands && pacman -Syyu"
-#  when:
-#    - ansible_distribution == "Archlinux"
-
-
 ### ######
 ### ClamAV
 ### ######
-
-- name: Create Cronjob to update ClamAV database (Archlinux, Ubuntu)
-  ansible.builtin.cron:
-    name: "Update ClamAV database"
-    special_time: hourly
-    user: clamav
-    job: "/usr/bin/freshclam --quiet"
-  when:
-    - ansible_distribution in ["Ubuntu", "Archlinux"]
-
 - name: Create 'quarantine' and 'logs' folder for ClamAV for env_user (Archlinux, Ubuntu)
   ansible.builtin.file:
     path: "/home/{{ env_user }}/{{ item }}"
