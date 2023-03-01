@@ -141,9 +141,9 @@
     scope: user
   become: true
   become_user: "{{ env_user }}"
-  environment:
+  # environment:
     # XDG_RUNTIME_DIR: "/run/user/{{ env_user }}"
-    XDG_RUNTIME_DIR: "/run/user/1000"
+    # XDG_RUNTIME_DIR: "/run/user/1000"
   when:
     - ansible_distribution in ["Archlinux", "Ubuntu"]
 
