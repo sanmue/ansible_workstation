@@ -98,7 +98,6 @@
 - name: Systemd - create service unit - update ClamAV database (all)
   ansible.builtin.blockinfile:
     path: "/etc/systemd/system/clamav-updatedb.service"
-    backup: true
     marker: "### {mark} 'Update ClamAV database - service unit' ANSIBLE MANAGED BLOCK ###"
     block: |
       [Unit]
@@ -110,13 +109,18 @@
       Type=oneshot
       ExecStart=/usr/bin/freshclam --quiet
       User=clamav
+    backup: true
+    create: true
+    state: present
+    group: root
+    user: root
+    mode: '644'
   when:
     - ansible_distribution in ["Archlinux", "Ubuntu"]
 
 - name: Systemd - create timer unit - update ClamAV database (all)
   ansible.builtin.blockinfile:
     path: "/etc/systemd/system/clamav-updatedb.timer"
-    backup: true
     marker: "### {mark} 'Update ClamAV database - timer unit' ANSIBLE MANAGED BLOCK ###"
     block: |
       [Unit]
@@ -128,6 +132,12 @@
       OnCalendar=hourly
       RandomizedDelaySec=10min
       Persistent=true
+    backup: true
+    create: true
+    state: present
+    group: root
+    user: root
+    mode: '644'
   when:
     - ansible_distribution in ["Archlinux", "Ubuntu"]
 
