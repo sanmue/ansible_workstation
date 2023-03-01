@@ -71,7 +71,6 @@
       # user-spezifische Servcies: siehe unten "User Services": tasks/basic_all/config_all-services-misc-user.yml
     - name: Config Cron
       ansible.builtin.import_tasks: tasks/basic_all/config_all-cron.yml
-      
     # ----------------------------------------------------------
     # ### Virtualisierung:
     - name: VM - Qeumu KVM
