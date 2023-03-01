@@ -137,6 +137,8 @@
     enabled: true
     daemon_reload: true
     scope: user
+  environment:
+    XDG_RUNTIME_DIR: "/run/user/{{ myuid }}"
   when:
     - ansible_distribution in ["Archlinux", "Ubuntu"]
 
