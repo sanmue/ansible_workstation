@@ -86,7 +86,8 @@
 
 - name: Systemd - create service unit - update ClamAV database (all)
   ansible.builtin.blockinfile:
-    path: "/etc/systemd/system/clamav-updatedb.service"
+    # path: "/etc/systemd/system/clamav-updatedb.service"
+    path: "/etc/systemd/user/clamav-updatedb.service"
     marker: "### {mark} 'Update ClamAV database - service unit' ANSIBLE MANAGED BLOCK ###"
     block: |
       [Unit]
@@ -109,7 +110,8 @@
 
 - name: Systemd - create timer unit - update ClamAV database (all)
   ansible.builtin.blockinfile:
-    path: "/etc/systemd/system/clamav-updatedb.timer"
+    # path: "/etc/systemd/system/clamav-updatedb.timer"
+    path: "/etc/systemd/user/clamav-updatedb.timer"
     marker: "### {mark} 'Update ClamAV database - timer unit' ANSIBLE MANAGED BLOCK ###"
     block: |
       [Unit]
@@ -136,7 +138,7 @@
     state: started
     enabled: true
     daemon_reload: true
-    # scope: user
+    scope: user
   # environment:
   #   XDG_RUNTIME_DIR: "/run/user/{{ env_user }}"
   when:
