@@ -1,6 +1,11 @@
-### ######
-### Cronie
-### ######
+# ##########
+# ### System
+# ##########
+# systemweit
+
+# ------
+# Cronie
+# ------
 # cron wird verwendet von ClamTK und timeshift
 
 # https://wiki.archlinux.org/title/Cron
@@ -12,9 +17,9 @@
   when: ansible_distribution in ["Archlinux"]
 
 
-# ##############
-# ### SSH / SSHD
-# ### ##########
+# ------------
+# # SSH / SSHD
+# ------------
 
 - name: Services - start ssh (Ubuntu)
   ansible.builtin.service:
@@ -42,9 +47,11 @@
   when: ansible_distribution in ["Archlinux"]
 
 
-# ##########
-# ### ClamAV
-# ### ######
+# --------
+# # ClamAV
+# --------
+
+# ### Allgemeine
 
 # Arch-Wiki/ManjaroWiki: https://wiki.archlinux.org/title/ClamAV bzw. https://wiki.manjaro.org/index.php/ClamAV
 # You will need to run freshclam before starting the service for the first time 
@@ -84,3 +91,51 @@
     name: clamav-freshclam.service
     enabled: true
   when: ansible_distribution in ["Ubuntu", "Archlinux"]
+
+
+# ### custom
+
+- name: Systemd - create service unit - update ClamAV database (all)
+  ansible.builtin.blockinfile:
+    path: "/etc/systemd/system/clamav-updatedb.service"
+    backup: true
+    marker: "### {mark} 'Update ClamAV database - service unit' ANSIBLE MANAGED BLOCK ###"
+    block: |
+      [Unit]
+      Description=Update ClamAV database hourly
+      Wants=network-online.target
+      After=network-online.target
+
+      [Service]
+      Type=oneshot
+      ExecStart=/usr/bin/freshclam --quiet
+      User=clamav
+  when:
+    - ansible_distribution in ["Archlinux", "Ubuntu"]
+
+- name: Systemd - create timer unit - update ClamAV database (all)
+  ansible.builtin.blockinfile:
+    path: "/etc/systemd/system/clamav-updatedb.timer"
+    backup: true
+    marker: "### {mark} 'Update ClamAV database - timer unit' ANSIBLE MANAGED BLOCK ###"
+    block: |
+      [Unit]
+      Description=Update ClamAV database hourly
+
+      [Timer]
+      # starts service (unit): clamav-updatedb.service
+      Unit=clamav-updatedb.service
+      OnCalendar=hourly
+      RandomizedDelaySec=10min
+      Persistent=true
+  when:
+    - ansible_distribution in ["Archlinux", "Ubuntu"]
+
+- name: Systemd - update ClamAV database - enable+start timer (all)
+  ansible.builtin.systemd:
+    name: clamav-updatedb.timer
+    state: started
+    enabled: true
+    daemon_reload: true
+  when:
+    - ansible_distribution in ["Archlinux", "Ubuntu"]

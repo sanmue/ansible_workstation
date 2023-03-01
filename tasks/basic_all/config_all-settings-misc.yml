@@ -438,9 +438,11 @@
     clone: true
 
 
-# ##################
-# ### ClamAV - clamd
-# ##################
+# ##########
+# ### ClamAV
+# ##########
+
+# ### clamd
 
 - name: Set ClamAV - clamd global config - ExcludePath (arch, Ubuntu)
   ansible.builtin.blockinfile:
@@ -517,6 +519,22 @@
     backup: true
   when:
     - ansible_distribution in ["Archlinux", "Ubuntu"]
+
+
+# ### custom folders (quarantine, logs)
+
+- name: Create 'quarantine' and 'logs' folder for ClamAV for env_user (Archlinux, Ubuntu)
+  ansible.builtin.file:
+    path: "/home/{{ env_user }}/{{ item }}"
+    state: directory
+    owner: "{{ env_user }}"
+    group: "{{ env_user }}"
+    mode: '0755'
+  loop:
+    - .clam/logs
+    - .clam/quarantine
+  when:
+    - ansible_distribution in ["Ubuntu", "Archlinux"]
 
 
 # ###################################

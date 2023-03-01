@@ -1,3 +1,7 @@
+# ### ###
+# ### ansible-pull für automatisches Update bei Änderungen in git-repo
+# ### ###
+
 # - name: add ansible-pull cron job
 #  tags: cron
 #  cron:
@@ -7,23 +11,13 @@
 #    job: ansible-pull -o -U https://github.com/sanmue/ansible_test.git
 
 
-### ######
-### ClamAV
-### ######
-- name: Create 'quarantine' and 'logs' folder for ClamAV for env_user (Archlinux, Ubuntu)
-  ansible.builtin.file:
-    path: "/home/{{ env_user }}/{{ item }}"
-    state: directory
-    owner: "{{ env_user }}"
-    group: "{{ env_user }}"
-    mode: '0755'
-  loop:
-    - .clam/logs
-    - .clam/quarantine
-  when:
-    - ansible_distribution in ["Ubuntu", "Archlinux"]
+# ##########
+# ### ClamAV
+# ##########
 
-#- name: Create Cronjob to scan home-folder of env_user (Archlinux, Ubuntu)
+# siehe neu bei services (mit systemd/Timer umgesetzt)
+
+# - name: Create Cronjob to scan home-folder of env_user (Archlinux, Ubuntu)
 #  ansible.builtin.cron:
 #    name: "scan home-folder"
 #    special_time: weekly
@@ -32,6 +26,3 @@
 #    job: '/etc/clamav/ScanHOME.sh "${HOME}" 2>/dev/null'
 #  when:
 #    - ansible_distribution in ["Ubuntu", "Archlinux"]
-
-
-# ### ClamAV Settings (/etc/clamav/clamd.conf): siehe 'config_all-settings-misc.yml'

@@ -59,15 +59,19 @@
     - name: Install local packages
       ansible.builtin.import_tasks: tasks/basic_all/packages_workstation-localPackageInstall.yml
     # ----------------------------------------------------------
-    # ### Config Firewall, Services, sonstige Settings:
+    # ### Config Firewall, Cron, Services, sonstige Settings:
     - name: Config Firewall all
       ansible.builtin.import_tasks: tasks/basic_all/config_all-firewall.yml
     - name: Config Firewall workstation
       ansible.builtin.import_tasks: tasks/basic_all/config_workstation-firewall.yml
-    - name: Config Services all
-      ansible.builtin.import_tasks: tasks/basic_all/config_all-services-misc.yml
     - name: Config Settings all misc
       ansible.builtin.import_tasks: tasks/basic_all/config_all-settings-misc.yml
+    - name: Config Services all - systemweit
+      ansible.builtin.import_tasks: tasks/basic_all/config_all-services-misc.yml
+      # user-spezifische Servcies: siehe unten "User Services": tasks/basic_all/config_all-services-misc-user.yml
+    - name: Config Cron
+      ansible.builtin.import_tasks: tasks/basic_all/config_all-cron.yml
+      
     # ----------------------------------------------------------
     # ### Virtualisierung:
     - name: VM - Qeumu KVM
@@ -80,12 +84,6 @@
       ansible.builtin.import_tasks: tasks/VM/config_all-VM-QemuKvm-create.yml
     - name: VM - create fix
       ansible.builtin.import_tasks: tasks/fix/config_all-VM-QemuKvm-create_fix.yml
-    # ----------------------------------------------------------
-    # ### systemd timer / cron:
-    - name: Config systemd timer
-      ansible.builtin.import_tasks: tasks/basic_all/config_all-systemd.yml
-    - name: Config Cron
-      ansible.builtin.import_tasks: tasks/basic_all/config_all-cron.yml
     # ----------------------------------------------------------
     # ### Create Users / Config User privileges:
     - name: Config users
