@@ -140,7 +140,8 @@
     daemon_reload: true
     scope: user
   environment:
-    XDG_RUNTIME_DIR: "/run/user/{{ env_user }}"
+    # XDG_RUNTIME_DIR: "/run/user/{{ env_user }}"
+    XDG_RUNTIME_DIR: "/run/user/1000"
   when:
     - ansible_distribution in ["Archlinux", "Ubuntu"]
 
