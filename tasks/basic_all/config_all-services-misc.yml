@@ -140,10 +140,10 @@
     daemon_reload: true
     scope: user
   become: true
-  become_user: "{{ env_user }}"
-  # environment:
+  become_user: "clamav"
+  environment:
     # XDG_RUNTIME_DIR: "/run/user/{{ env_user }}"
-    # XDG_RUNTIME_DIR: "/run/user/1000"
+    XDG_RUNTIME_DIR: "/run/user/64"
   when:
     - ansible_distribution in ["Archlinux", "Ubuntu"]
 
