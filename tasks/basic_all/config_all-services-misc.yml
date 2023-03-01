@@ -67,28 +67,17 @@
   when: ansible_distribution in ["Ubuntu", "Archlinux"]
 
 
-- name: Services - Start clamav-daemon.service (Ubuntu, Arch)
+- name: Services - Start+enable clamav-daemon.service (Ubuntu, Arch)
   ansible.builtin.service:
     name: clamav-daemon.service
     state: started
-  when: ansible_distribution in ["Ubuntu", "Archlinux"]
-
-- name: Services - enable clamav-daemon.service (Ubuntu, Arch)
-  ansible.builtin.service:
-    name: clamav-daemon.service
     enabled: true
   when: ansible_distribution in ["Ubuntu", "Archlinux"]
 
-
-- name: Services - Start clamav-freshclam.service (Ubuntu, Arch)
+- name: Services - Start+enable clamav-freshclam.service (Ubuntu, Arch)
   ansible.builtin.service:
     name: clamav-freshclam.service
     state: started
-  when: ansible_distribution in ["Ubuntu", "Archlinux"]
-
-- name: Services - enable clamav-freshclam.service (Ubuntu, Arch)
-  ansible.builtin.service:
-    name: clamav-freshclam.service
     enabled: true
   when: ansible_distribution in ["Ubuntu", "Archlinux"]
 
@@ -106,9 +95,9 @@
       After=network-online.target
 
       [Service]
+      User=clamav
       Type=oneshot
       ExecStart=/usr/bin/freshclam --quiet
-      User=clamav
     backup: true
     create: true
     state: present
@@ -147,5 +136,16 @@
     state: started
     enabled: true
     daemon_reload: true
+    scope: global
   when:
     - ansible_distribution in ["Archlinux", "Ubuntu"]
+
+
+# ########
+# ### user
+# ########
+# systemd user instance
+
+# --------
+# # ClamAV
+# --------
