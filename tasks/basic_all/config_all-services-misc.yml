@@ -136,7 +136,7 @@
     state: started
     enabled: true
     daemon_reload: true
-    scope: user
+    # scope: user
   # environment:
   #   XDG_RUNTIME_DIR: "/run/user/{{ env_user }}"
   when:
