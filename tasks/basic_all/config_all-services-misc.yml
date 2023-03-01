@@ -139,6 +139,8 @@
     enabled: true
     daemon_reload: true
     scope: user
+  become: true
+  become_user: {{ env_user }}
   environment:
     # XDG_RUNTIME_DIR: "/run/user/{{ env_user }}"
     XDG_RUNTIME_DIR: "/run/user/1000"
