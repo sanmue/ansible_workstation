@@ -99,10 +99,10 @@
 
       [Service]
       Type=oneshot
-      RemainAfterExit=true
+      RemainAfterExit=yes
       ExecStart=/usr/local/bin/scanHome.sh
       #ExecStart=/usr/local/bin/scanHome.sh "${HOME}" 2>/dev/null
-      #User={{ env_user }}
+      User={{ env_user }}
     state: present
     group: root
     owner: root
@@ -126,6 +126,9 @@
       AccuracySec=12h
       #RandomizedDelaySec=12h
       Persistent=true
+
+      [Install]
+      WantedBy=timers.target
     state: present
     group: root
     owner: root

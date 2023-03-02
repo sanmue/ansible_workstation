@@ -12,7 +12,7 @@
 ### Parameter/Variablen
 #######################
 
-scanPath="${HOME}"     # default-Wert
+scanPath="$HOME"     # default-Wert
 if [ $# -gt 0 ]; then
     scanPath="${1}"    # 1. Übergabe-Parameter an Script
 fi
@@ -85,6 +85,8 @@ mail_allLogonUser "${startMsgSubj}" "${startMsg}"
 # ### Scanjob
 # ### -------
 # https://serverfault.com/questions/957666/how-to-make-clamdscan-exclude-folders-and-only-log-infected
+
+echo "$(date), scanPath: '${scanPath}', User '${USER}'," >> /tmp/clamav_scanHome.log
 /usr/bin/clamdscan --fdpass --multiscan --move="${qurantineFolder}" --log="${logFolder}" "${scanPath}" 2>/dev/null 1>&2
 
 # ### --------------------------------
