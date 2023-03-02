@@ -1,6 +1,6 @@
 ﻿#!/bin/bash
 
-set -x   # for debugging
+#set -x   # for debugging
 
 ###
 ### Skript scannt das HOME-Verzeichnis des ausführenden Users (default) nach Virus-Signaturen (ClamAV)
