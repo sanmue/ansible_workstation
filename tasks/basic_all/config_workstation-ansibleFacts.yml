@@ -30,7 +30,7 @@
 
 - name: AnsibleFacts - Get XDG_RUNTIME_DIR (USER) (all)
   set_fact:
-    env_XDG_RUNTIME_DIR: "{{ ansible_facts['env']['XDG_RUNTIME_DIR'] }}"   # z.B.: "/run/user/1000"
+    env_user_XDG_RUNTIME_DIR: "{{ ansible_facts['env']['XDG_RUNTIME_DIR'] }}"   # z.B.: "/run/user/1000"
 
 - name: AnsibleFacts - Get lsb lsb-release (Ubuntu)
   set_fact:
