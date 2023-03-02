@@ -512,7 +512,7 @@
 - name: Users - clamav - serevices - bashScript to scan HOME folder (Arch, Ubuntu)
   ansible.builtin.copy:
     src: "files/config_all-services-misc-clamav-scanHome.sh"
-    dest: "/etc/clamav/scanHome.sh"
+    dest: "/usr/local/bin/scanHome.sh"
     owner: root
     group: root
     mode: '0755'
