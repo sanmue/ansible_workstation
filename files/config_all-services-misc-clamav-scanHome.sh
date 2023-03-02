@@ -2,24 +2,25 @@
 
 #set -x   # for debugging
 
-##########
-# Scan Home-Verzeichnis nach VirusSignaturen (ClamAV/clamdscen)
-# - Script wird per systemd/Timer gestartet (user systemd instance)
-# - sendet vor Start und nach Ende des Scan eine Meldung/Nachricht an die User
-#
-# Parameter1 [optional]: Pfad des zu scannenden Home Verzeichnisses
-# oder kein Paramter: default-Wert ($HOME)
-##########
+###
+### Skript scannt das HOME-Verzeichnis des ausführenden Users (default) nach Virus-Signaturen (ClamAV)
+### oder einen übergebenen Pfad (1. Parameter) (sollte aktuell das HOME-Verzeichnis sein, da 
+###                                            ExcludePath für qurantine-Verzeichnis entsprechend konfiguriert)
+###
 
-#########################
-### Parameter / Variablen
-#########################
-scanPath="$HOME"      # default-Wert (kein Übergabe-Parameter vorhanden)
+#######################
+### Parameter/Variablen
+#######################
+
+scanPath="$HOME"     # default-Wert
 if [ $# -gt 0 ]; then
-    scanPath="${1}"   # Parameter1
+    scanPath="${1}"    # 1. Übergabe-Parameter an Script
 fi
 
+qurantineFolder="${scanPath}/.clam/quarantine"
+logFolder="${scanPath}/.clam/logs/$(date +\%Y\%m\%d)-weekly.log"
 PATH=/usr/bin
+
 startMsgSubj="ClamAV (cronjob) - Scan started"
 startMsg="${startMsgSubj} for path '${scanPath}'.\nScript: '$0'"
 finMsgSubj="ClamAV (cronjob) - Scan finished"
@@ -31,7 +32,7 @@ errMsg="${errMsgSubj}, path '${scanPath}' does not exist.\nScript: '$0'"
 ##############
 ### Funktionen
 ##############
-function notify_allGuiUser {
+function notify_allGuiUser { 
 	# Param1: Notify Subject
     # Param2: Notify Message
 
@@ -39,10 +40,10 @@ function notify_allGuiUser {
         USERID=${ADDRESS#/run/user/}
         /usr/bin/sudo -u "#$USERID" DBUS_SESSION_BUS_ADDRESS="unix:path=$ADDRESS/bus" PATH=${PATH} \
         /usr/bin/notify-send -i dialog-warning "${1}" "${2}"
-    done
+    done 
 }
 
-function mail_allLogonUser {
+function mail_allLogonUser { 
 	# Param1: Mail Subject
     # Param2: Mail Message
     arrUser=($(users))      # array of logged on users
@@ -57,9 +58,6 @@ function mail_allLogonUser {
 ### main
 ########
 
-# ### Testausgabe Logfile:
-echo "User: '${USER}', scanPath: '${scanPath}', date: '$(date)'" >> "${HOME}/Downloads/test.log"
-
 # ### --------------
 # ### Check scanPath
 # ### --------------
@@ -69,7 +67,7 @@ if [ ! -d "${scanPath}" ]; then
     # --- Send (local) mail alert to all logged on users:
     mail_allLogonUser "${errMsgSubj}" "${errMsg}"
 
-	echo "scanPath :'${scanPath}' does not exist" >> "${HOME}/Downloads/test.log"
+    echo "$(date), scanPath: '${scanPath}', existiert nicht" >> /tmp/clamav_scanHome.log
 
     exit 1
 fi
@@ -87,10 +85,8 @@ mail_allLogonUser "${startMsgSubj}" "${startMsg}"
 # ### Scanjob
 # ### -------
 # https://serverfault.com/questions/957666/how-to-make-clamdscan-exclude-folders-and-only-log-infected
-/usr/bin/clamdscan --fdpass --multiscan --move="${scanPath}/.clam/quarantine" --log="${scanPath}/.clam/logs/$(date +\%Y\%m\%d)-weekly.log" "${scanPath}" 2>/dev/null 1>&2
-
-#test-log:
-echo "$(date), User: '${USER}', scanPath: '${scanPath}'" >> ${HOME}/.clam/logs/testlog.txt
+#echo "$(date), scanPath: '${scanPath}', User '${USER}'," >> /tmp/clamav_scanHome.log
+/usr/bin/clamdscan --fdpass --multiscan --move="${qurantineFolder}" --log="${logFolder}" "${scanPath}" 2>/dev/null 1>&2
 
 # ### --------------------------------
 # ### Send final notification to users

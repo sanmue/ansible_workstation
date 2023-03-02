@@ -100,7 +100,7 @@
       [Service]
       Type=oneshot
       RemainAfterExit=yes
-      ExecStart=/usr/local/bin/scanHome.sh $HOME 2>/dev/null
+      ExecStart=/bin/bash /usr/local/bin/scanHome.sh $HOME 2>/dev/null
       #User={{ env_user }}
     state: present
     group: root
