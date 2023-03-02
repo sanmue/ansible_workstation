@@ -28,6 +28,10 @@
   set_fact:
     env_user: "{{ ansible_facts['env']['USER'] }}"   # z.B.: "sandro"
 
+- name: AnsibleFacts - Get XDG_RUNTIME_DIR (USER) (all)
+  set_fact:
+    env_XDG_RUNTIME_DIR: "{{ ansible_facts['env']['XDG_RUNTIME_DIR'] }}"   # z.B.: "/run/user/1000"
+
 - name: AnsibleFacts - Get lsb lsb-release (Ubuntu)
   set_fact:
     env_lsb: "{{ ansible_facts['lsb']['release'] }}"   # z.B. bei Ubuntu 20.04: "20.04"
