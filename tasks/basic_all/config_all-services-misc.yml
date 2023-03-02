@@ -54,7 +54,7 @@
 # ### Allgemeine
 
 # Arch-Wiki/ManjaroWiki: https://wiki.archlinux.org/title/ClamAV bzw. https://wiki.manjaro.org/index.php/ClamAV
-# You will need to run freshclam before starting the service for the first time 
+# You will need to run freshclam before starting the service for the first time
 # or you will run into trouble/errors which will prevent ClamAV from starting correctly.
 #
 # You may get a notification that clamd was not notified. This is normal because we haven't started the service yet.
@@ -84,75 +84,10 @@
 
 # ### custom
 
-- name: Systemd - create service unit - update ClamAV database (all)
-  ansible.builtin.blockinfile:
-    # path: "/etc/systemd/system/clamav-updatedb.service"
-    path: "/etc/systemd/user/clamav-updatedb.service"
-    marker: "### {mark} 'Update ClamAV database - service unit' ANSIBLE MANAGED BLOCK ###"
-    block: |
-      [Unit]
-      Description=Update ClamAV database hourly
-      Wants=network-online.target
-      After=network-online.target
-
-      [Service]
-      User=clamav
-      Type=oneshot
-      ExecStart=/usr/bin/freshclam --quiet
-    backup: true
-    create: true
-    state: present
-    group: root
-    owner: root
-    mode: '644'
-  when:
-    - ansible_distribution in ["Archlinux", "Ubuntu"]
-
-- name: Systemd - create timer unit - update ClamAV database (all)
-  ansible.builtin.blockinfile:
-    # path: "/etc/systemd/system/clamav-updatedb.timer"
-    path: "/etc/systemd/user/clamav-updatedb.timer"
-    marker: "### {mark} 'Update ClamAV database - timer unit' ANSIBLE MANAGED BLOCK ###"
-    block: |
-      [Unit]
-      Description=Update ClamAV database hourly
-
-      [Timer]
-      # starts service (unit): clamav-updatedb.service
-      Unit=clamav-updatedb.service
-      OnCalendar=hourly
-      RandomizedDelaySec=10min
-      Persistent=true
-    backup: true
-    create: true
-    state: present
-    group: root
-    owner: root
-    mode: '644'
-  when:
-    - ansible_distribution in ["Archlinux", "Ubuntu"]
-
-- name: Systemd - update ClamAV database - enable+start timer (all)
-  ansible.builtin.systemd:
-    name: clamav-updatedb.timer
-    state: started
-    enabled: true
-    # daemon_reload: true
-    scope: user
-  become: true
-  become_user: "clamav"
-  environment:
-    # XDG_RUNTIME_DIR: "/run/user/{{ env_user }}"
-    XDG_RUNTIME_DIR: "/run/user/64"
-  when:
-    - ansible_distribution in ["Archlinux", "Ubuntu"]
-
 
 # ########
 # ### user
 # ########
 # systemd user instance
 
-# --------
-# # ClamAV
-# --------
+# nix
