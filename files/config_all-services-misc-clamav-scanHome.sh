@@ -2,15 +2,24 @@
 
 #set -x   # for debugging
 
-#############
-### Variablen
-#############
-PATH=/usr/bin
+###
+### Skript scannt das HOME-Verzeichnis des ausführenden Users (default) nach Virus-Signaturen (ClamAV)
+### oder einen übergebenen Pfad (1. Parameter) (sollte aktuell das HOME-Verzeichnis sein, da 
+###                                            ExcludePath für qurantine-Verzeichnis entsprechend konfiguriert)
+###
 
-scanPath="/home/sandro"     # default-Wert
+#######################
+### Parameter/Variablen
+#######################
+
+scanPath="${HOME}"     # default-Wert
 if [ $# -gt 0 ]; then
-    scanPath="${1}"         # Pfad aus Übergabe-Parameter an Script
+    scanPath="${1}"    # 1. Übergabe-Parameter an Script
 fi
+
+qurantineFolder="${scanPath}/.clam/quarantine"
+logFolder="${scanPath}/.clam/logs/$(date +\%Y\%m\%d)-weekly.log"
+PATH=/usr/bin
 
 startMsgSubj="ClamAV (cronjob) - Scan started"
 startMsg="${startMsgSubj} for path '${scanPath}'.\nScript: '$0'"
@@ -74,7 +83,7 @@ mail_allLogonUser "${startMsgSubj}" "${startMsg}"
 # ### Scanjob
 # ### -------
 # https://serverfault.com/questions/957666/how-to-make-clamdscan-exclude-folders-and-only-log-infected
-/usr/bin/clamdscan --fdpass --multiscan --move="${scanPath}/.clam/quarantine" --log="${scanPath}/.clam/logs/$(date +\%Y\%m\%d)-weekly.log" "${scanPath}" 2>/dev/null 1>&2
+/usr/bin/clamdscan --fdpass --multiscan --move="${qurantineFolder}" --log="${logFolder}" "${scanPath}" 2>/dev/null 1>&2
 
 # ### --------------------------------
 # ### Send final notification to users

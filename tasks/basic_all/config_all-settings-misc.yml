@@ -509,10 +509,10 @@
   when:
     - ansible_distribution in ["Archlinux", "Ubuntu"]
 
-- name: Users - clamav - cron - bashScript to scan HOME folder (Arch, Ubuntu)
+- name: Users - clamav - serevices - bashScript to scan HOME folder (Arch, Ubuntu)
   ansible.builtin.copy:
-    src: "files/config_all-cron-clamav-ScanHOME.sh"
-    dest: "/etc/clamav/ScanHOME.sh"
+    src: "files/config_all-services-misc-clamav-scanHome.sh"
+    dest: "/etc/clamav/scanHome.sh"
     owner: root
     group: root
     mode: '0755'
