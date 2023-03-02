@@ -101,7 +101,7 @@
       Type=oneshot
       RemainAfterExit=true
       #User="{{ env_user }}"
-      ExecStart=/etc/clamav/scanHome.sh
+      ExecStart=/etc/clamav/scanHome.sh ${HOME} 2>/dev/null
     state: present
     group: root
     owner: root
