@@ -102,16 +102,6 @@
       ansible.builtin.import_tasks: tasks/basic_all/all_cleanup.yml
 
 
-- name: User services
-  hosts: localhost
-  connection: local
-  become: true
-  become_user: "{{ env_user }}"
-  tasks:
-    - name: Config Syncthing Service für User (systemd)
-      ansible.builtin.import_tasks: tasks/basic_all/config_all-services-misc-user.yml
-
-
 - name: Genome Shell Extension + Desktop Settings
   hosts: localhost
   connection: local
