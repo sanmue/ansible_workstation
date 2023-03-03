@@ -123,7 +123,7 @@
       [Service]
       Type=oneshot
       #RemainAfterExit=yes
-      #-> wenn status aktiv behält lässt sich Service (manuell, in diesem Fall) nicht wieder starten
+      #-> wenn status aktiv behält lässt sich der Service (auch manuell / nur in diesem Fall?) nicht erneut starten
       ExecStart=/bin/bash /usr/local/bin/scanHome.sh $HOME 2>/dev/null
       #User={{ env_user }}
     state: present
