@@ -11,14 +11,13 @@
 #######################
 ### Parameter/Variablen
 #######################
-
 scanPath="$HOME"     # default-Wert
 if [ $# -gt 0 ]; then
     scanPath="${1}"    # 1. Übergabe-Parameter an Script
 fi
-
 qurantineFolder="${scanPath}/.clam/quarantine"
 logFolder="${scanPath}/.clam/logs/$(date +\%Y\%m\%d)-weekly.log"
+
 PATH=/usr/bin
 
 startMsgSubj="ClamAV (cronjob) - Scan started"
