@@ -67,7 +67,7 @@ if [ ! -d "${scanPath}" ]; then
     # --- Send (local) mail alert to all logged on users:
     mail_allLogonUser "${errMsgSubj}" "${errMsg}"
 
-    echo "$(date), scanPath: '${scanPath}', existiert nicht" >> /tmp/clamav_scanHome.log
+    echo "$(date), $0; Check scanPath, Error: '${scanPath}' existiert nicht" >> "${logFolder}/${logName}"
 
     exit 1
 fi
