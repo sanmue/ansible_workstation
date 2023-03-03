@@ -16,7 +16,8 @@ if [ $# -gt 0 ]; then
     scanPath="${1}"    # 1. Übergabe-Parameter an Script
 fi
 qurantineFolder="${scanPath}/.clam/quarantine"
-logFolder="${scanPath}/.clam/logs/$(date +\%Y\%m\%d)-weekly.log"
+logFolder="${scanPath}/.clam/logs"
+logName="$(date +\%Y\%m\%d)-weekly.log"
 
 PATH=/usr/bin
 
@@ -85,7 +86,7 @@ mail_allLogonUser "${startMsgSubj}" "${startMsg}"
 # ### -------
 # https://serverfault.com/questions/957666/how-to-make-clamdscan-exclude-folders-and-only-log-infected
 #echo "$(date), scanPath: '${scanPath}', User '${USER}'," >> /tmp/clamav_scanHome.log
-/usr/bin/clamdscan --fdpass --multiscan --move="${qurantineFolder}" --log="${logFolder}" "${scanPath}" 2>/dev/null 1>&2
+/usr/bin/clamdscan --fdpass --multiscan --move="${qurantineFolder}" --log="${logFolder}/${logName}" "${scanPath}" 2>/dev/null 1>&2
 
 # ### --------------------------------
 # ### Send final notification to users
