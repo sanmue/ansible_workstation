@@ -1,14 +1,13 @@
 
-##############
-### KDE Plasma
-##############
+# ##############
+# ### KDE Plasma
+# ##############
 
-#- name: Uninstall packages for workstations (Archlinux + KDE Plasma)
-#  tags: workstation,kde,arch
-#  package:
-#    state: absent
-#    name:
-#      - xxx
-#  when:
-#    - env_desktop == "kde"
-#    - ansible_distribution == "Archlinux"
+# - name: Uninstall packages for workstations (Archlinux + KDE Plasma)
+#   ansible.builtin.package:
+#     state: absent
+#     name:
+#       - yakuake
+#   when:
+#     - env_desktop == "kde"
+#     - ansible_distribution == "Archlinux"

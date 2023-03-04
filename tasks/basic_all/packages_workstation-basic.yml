@@ -4,7 +4,7 @@
 
 - name: Install basic packages for workstations (all)
   ansible.builtin.package:
-    state: latest
+    state: present
     name:
       - ansible   # bereits installiert (bootstrap)
       - ansible-lint   # für z.B. ansible extension in VS Code
@@ -24,7 +24,7 @@
       - gimp-help-en
       - git   # bereits installiert (bootstrap)
       - grsync
-      - gufw    # gui for ufw
+      # - gufw    # gui for ufw
       - hplip   # Drivers for HP DeskJet, OfficeJet, Photosmart, Business Inkjet and some LaserJet
       - htop
       - hunspell
@@ -53,11 +53,9 @@
       - unzip
       - wget
       - xdg-utils
-      # 
       # --- Firewall
       - ufw   # bereits installiert (bootstrap)
       # - firewalld   # ggf. ändern
-      # 
       # ---------
       # firmware:
       - b43-fwcutter
@@ -72,7 +70,7 @@
 
 - name: Install basic packages for snapper on btrfs filesystem (all)
   ansible.builtin.package:
-    state: latest
+    state: present
     name:
       # ### for btrfs filesystem:
       - snapper           # A tool for managing BTRFS and LVM snapshots. It can create, diff and restore snapshots and provides timelined auto-snapping.
@@ -104,7 +102,7 @@
 
 - name: Install additional packages for snapper on btrfs filesystem (Archlinux)
   ansible.builtin.package:
-    state: latest
+    state: present
     name:
       # ### additional packages for btrfs filesystem:
       - btrfs-assistant   # An application for managing BTRFS subvolumes and Snapper snapshots
@@ -121,7 +119,7 @@
 
 - name: Install basic packages (Archlinux)
   ansible.builtin.package:
-    state: latest
+    state: present
     name:
       - archlinux-keyring
       - base-devel   # insbes. wg. AUR Paketen   # bereits installiert (bootstrap)
@@ -159,12 +157,10 @@
       - steam-native-runtime   # Native replacement for the Steam runtime using system libraries (installiert benötigte 32bit libs)
       - torbrowser-launcher
       - vim-ansible
-      # 
       # -----------------------------------
       # flatpak- und snap-plugin für pamac:
       - libpamac-flatpak-plugin
       - pamac-snap-plugin
-      # 
       # ---------
       # firmware:
       # - alsa-firmware   # unresolvable package conflicts detected
@@ -174,7 +170,7 @@
 
 - name: Install basic packages (Ubuntu)
   ansible.builtin.package:
-    state: latest
+    state: present
     name:
       - anki
       - clamav-daemon
@@ -196,7 +192,6 @@
       # - searchmonkey
       - ssh   # bereits installiert (bootstrap)
       - ufw   # bereits installiert (bootstrap)
-      # 
       # Multimedia; entspechend libs sollten bereits installiert sein (wenn mei Installer ausgewählt wurde)
       # - ffmpeg
       # - x264
@@ -209,7 +204,7 @@
 
 # - name: Install packages for workstations - Firefox from MozillaTeam ppa (Ubuntu >=22 + Gnome)
 #  ansible.builtin.apt:
-#    state: latest
+#    state: present
 #    name:
 # #      - firefox              # ab Ubuntu 22.04: Standard als snap package installiert (Probleme: z.B. Keepassxc Erweiterung)
 # #      - firefox-dev
@@ -231,7 +226,7 @@
 
 - name: Install basic packages - prereqesites for Pyenv (Ubuntu)
   ansible.builtin.package:
-    state: latest
+    state: present
     name:
      # Pyenv
      # https://ostechnix.com/pyenv-python-version-management-made-easier/
@@ -272,7 +267,7 @@
 
 - name: Install basic packages (all + x11 display server)
   ansible.builtin.package:
-    state: latest
+    state: present
     name:
       - xclip   # Command line interface to the X11 clipboard   # Voraussetzung für snap-package "espanso"
   when:
@@ -282,7 +277,7 @@
 
 # - name: install Vivaldi Browser (Ubuntu)
 #  ansible.builtin.package:
-#    state: latest
+#    state: present
 #    name:
 #      - vivaldi-stable
 # #  when: ansible_os_family == "Suse" or
@@ -291,7 +286,7 @@
 
 # - name: Install Vivaldi Browser (Archlinux)
 #  ansible.builtin.package:
-#    state: latest
+#    state: present
 #    name:
 #      - vivaldi
 #      - vivaldi-ffmpeg-codecs

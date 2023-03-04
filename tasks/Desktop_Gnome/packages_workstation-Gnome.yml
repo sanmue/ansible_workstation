@@ -1,13 +1,12 @@
-
-#########
-### Gnome
-#########
+# #########
+# ### Gnome
+# #########
 
 # - gnome-shell-extensions... # -> separater Task (packages_workstation-gnomeshellstuff.yml
 
 - name: Install packages for workstations (Gnome, all)
   tags: workstation,gnome,arch,all
-  package:
+  ansible.builtin.package:
     state: latest
     name:
       - alacarte   # Menu editor for gnome
@@ -17,7 +16,7 @@
       - gnome-keyring
       - gtkhash
       - inkscape   # Plasma: Krita
-      #- kdeconnect   # -> ? gnome-shell-extension-gsconnect ?
+      # - kdeconnect   # -> ? gnome-shell-extension-gsconnect ?
       - rhythmbox
       - seahorse   # bereits standardmäßig installiert
       - totem # -> vlc
@@ -30,15 +29,15 @@
 
 - name: Install packages for workstations (Archlinux + Gnome)
   tags: workstation,gnome,arch
-  package:
+  ansible.builtin.package:
     state: latest
     name:
       - dconf
-      #- deluge # -> transmission-gtk
+      # - deluge # -> transmission-gtk
       - epiphany   # A GNOME web browser based on the WebKit rendering engin
       - evince   # Document viewer (PDF, PostScript, XPS, djvu, dvi, tiff, cbr, cbz, cb7, cbt)
       - gtkhash-nemo
-      #- guake   # Drop-down terminal for GNOME
+      # - guake   # Drop-down terminal for GNOME
       - nemo
       - nemo-bulk-rename
       - nemo-seahorse
@@ -53,14 +52,14 @@
 
 - name: Install packages for workstations (Ubuntu + Gnome)
   tags: workstation,gnome,ubuntu
-  package:
+  ansible.builtin.package:
     state: latest
     name:
       - dconf-cli
       - epiphany-browser
       - gnome-software-plugin-flatpak
-      #- language-pack-gnome-de-base
-      #- language-pack-gnome-de
+      # - language-pack-gnome-de-base
+      # - language-pack-gnome-de
       - language-pack-gnome-en-base
       - language-pack-gnome-en
       - nemo
