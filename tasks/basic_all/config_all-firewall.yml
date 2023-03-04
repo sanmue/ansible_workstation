@@ -1,27 +1,25 @@
+# ###########
+# ### UFW ###
+# ###########
 
-###########
-### UFW ###
-###########
-
-### UFW - enable
+# ### UFW - enable
 - name: UFW - enable (Ubuntu)
-  ufw:
+  community.general.ufw:
     state: enabled
   when: ansible_distribution == "Ubuntu"
   register: firewall_ufw
 
 - name: UFW - enable (Archlinux + Gnome)
-  ufw:
+  community.general.ufw:
     state: enabled
   when:
-    - ansible_distribution == "Archlinux" 
+    - ansible_distribution == "Archlinux"
     - env_desktop == "gnome"
   register: firewall_ufw
 
-
-### UFW - allow
+# ### UFW - allow
 - name: UFW - allow ssh (Ubuntu)
-  ufw:
+  community.general.ufw:
     rule: limit
     port: ssh
     proto: tcp
@@ -30,7 +28,7 @@
   register: firewall_ufw
 
 - name: UFW - allow ssh (Archlinux + Gnome)
-  ufw:
+  community.general.ufw:
     rule: limit
     port: ssh
     proto: tcp
@@ -40,16 +38,15 @@
     - env_desktop == "gnome"
   register: firewall_ufw
 
-
-### UFW - reload
+# ### UFW - reload
 - name: UFW - reload (Ubuntu)
-  ufw:
+  community.general.ufw:
     state: reloaded
   when: ansible_distribution == "Ubuntu" and
         firewall_ufw.changed
 
 - name: UFW - reload (Archlinux + Gnome)
-  ufw:
+  community.general.ufw:
     state: reloaded
   when:
     - ansible_distribution == "Archlinux"
@@ -57,82 +54,53 @@
     - firewall_ufw.changed
 
 
-#################
-### firewalld ###
-#################
+# #################
+# ### firewalld ###
+# #################
 
-### firewalld - enable
-- name: firewalld - enable (Suse)
-  service:
-    enabled: yes
-    name: firewalld
-#  when: ansible_distribution == "openSUSE Leap"
-  when: ansible_os_family == "Suse"
-  register: firewall_d
-
+# ### firewalld - enable+start
 - name: firewalld - enable (Archlinux + KDE)
-  service:
-    enabled: yes
+  ansible.builtin.service:
     name: firewalld
-  when:
-    - ansible_distribution in ["Archlinux"]
-    - env_desktop == "kde"    
-  register: firewall_d
-
-
-### firewalld - start
-- name: firewalld - starting (Suse)
-  systemd:
+    enabled: true
     state: started
-    name: firewalld
-  when: ansible_os_family == "Suse"
-  register: firewall_d
-
-- name: firewalld - starting (Archlinux + KDE)
-  systemd:
-    state: started
-    name: firewalld
-  when:
-    - ansible_distribution in ["Archlinux"]
-    - env_desktop == "kde"  
-  register: firewall_d
-
-
-### firewalld - allow
-- name: firewalld - allow ssh (Suse)
-  firewalld:
-    service: ssh
-    permanent: yes
-    state: enabled
-    immediate: yes
-#    zone: public
-  when: ansible_os_family == "Suse"
-  register: firewall_d
-
-- name: firewalld - allow ssh (Archlinux + KDE)
-  firewalld:
-    service: ssh
-    permanent: yes
-    state: enabled
-    immediate: yes
-#    zone: public
   when:
     - ansible_distribution in ["Archlinux"]
     - env_desktop == "kde"
   register: firewall_d
 
+# ### firewalld - start (geändert, s.o.: enable+start)
+# - name: firewalld - starting (Archlinux + KDE)
+#   ansible.builtin.systemd:
+#     name: firewalld
+#     state: started
+#   when:
+#     - ansible_distribution in ["Archlinux"]
+#     - env_desktop == "kde"
+#   register: firewall_d
 
-### firewalld - reload
-- name: firewalld - reload (Suse)
-  command: firewall-cmd --reload
+# ### firewalld - allow
+- name: firewalld - allow ssh (Archlinux + KDE)
+  ansible.posix.firewalld:
+    service: ssh
+    permanent: true
+    state: enabled
+    immediate: true
+    # zone: public
   when:
-    - ansible_os_family == "Suse"
-    - firewall_d.changed
+    - ansible_distribution in ["Archlinux"]
+    - env_desktop == "kde"
+  register: firewall_d
+
+# ### firewalld - reload
+# - name: firewalld - reload (Archlinux + KDE)
+#   ansible.builtin.command: firewall-cmd --reload
+#   when:
+#     - ansible_distribution in ["Archlinux"]
+#     - env_desktop == "kde"
+#     - firewall_d.changed
 
 - name: firewalld - reload (Archlinux + KDE)
-  command: firewall-cmd --reload
-  when:
-    - ansible_distribution in ["Archlinux"]
-    - env_desktop == "kde"
-    - firewall_d.changed
-
+  ansible.builtin.service:
+    name: firewalld
+    state: reloaded
