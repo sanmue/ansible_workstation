@@ -9,12 +9,12 @@
   when: ansible_distribution == "Ubuntu"
   register: firewall_ufw
 
-- name: UFW - enable (Archlinux + Gnome)
+- name: UFW - enable (Archlinux)
   community.general.ufw:
     state: enabled
   when:
     - ansible_distribution == "Archlinux"
-    - env_desktop == "gnome"
+    # - env_desktop == "gnome"
   register: firewall_ufw
 
 # ### UFW - allow
@@ -27,7 +27,7 @@
   when: ansible_distribution == "Ubuntu"
   register: firewall_ufw
 
-- name: UFW - allow ssh (Archlinux + Gnome)
+- name: UFW - allow ssh (Archlinux)
   community.general.ufw:
     rule: limit
     port: ssh
@@ -35,7 +35,7 @@
     comment: SSH
   when:
     - ansible_distribution == "Archlinux"
-    - env_desktop == "gnome"
+    # - env_desktop == "gnome"
   register: firewall_ufw
 
 # ### UFW - reload
@@ -45,12 +45,12 @@
   when: ansible_distribution == "Ubuntu" and
         firewall_ufw.changed
 
-- name: UFW - reload (Archlinux + Gnome)
+- name: UFW - reload (Archlinux)
   community.general.ufw:
     state: reloaded
   when:
     - ansible_distribution == "Archlinux"
-    - env_desktop == "gnome"
+    # - env_desktop == "gnome"
     - firewall_ufw.changed
 
 
@@ -59,15 +59,15 @@
 # #################
 
 # ### firewalld - enable+start
-- name: firewalld - enable (Archlinux + KDE)
-  ansible.builtin.service:
-    name: firewalld
-    enabled: true
-    state: started
-  when:
-    - ansible_distribution in ["Archlinux"]
-    - env_desktop == "kde"
-  register: firewall_d
+# - name: firewalld - enable (Archlinux + KDE)
+#   ansible.builtin.service:
+#     name: firewalld
+#     enabled: true
+#     state: started
+#   when:
+#     - ansible_distribution in ["Archlinux"]
+#     - env_desktop == "kde"
+#   register: firewall_d
 
 # ### firewalld - start (geändert, s.o.: enable+start)
 # - name: firewalld - starting (Archlinux + KDE)
@@ -80,17 +80,17 @@
 #   register: firewall_d
 
 # ### firewalld - allow
-- name: firewalld - allow ssh (Archlinux + KDE)
-  ansible.posix.firewalld:
-    service: ssh
-    permanent: true
-    state: enabled
-    immediate: true
-    # zone: public
-  when:
-    - ansible_distribution in ["Archlinux"]
-    - env_desktop == "kde"
-  register: firewall_d
+# - name: firewalld - allow ssh (Archlinux + KDE)
+#   ansible.posix.firewalld:
+#     service: ssh
+#     permanent: true
+#     state: enabled
+#     immediate: true
+#     # zone: public
+#   when:
+#     - ansible_distribution in ["Archlinux"]
+#     - env_desktop == "kde"
+#   register: firewall_d
 
 # ### firewalld - reload
 # - name: firewalld - reload (Archlinux + KDE)
@@ -100,7 +100,7 @@
 #     - env_desktop == "kde"
 #     - firewall_d.changed
 
-- name: firewalld - reload (Archlinux + KDE)
-  ansible.builtin.service:
-    name: firewalld
-    state: reloaded
+# - name: firewalld - reload (Archlinux + KDE)
+#   ansible.builtin.service:
+#     name: firewalld
+#     state: reloaded

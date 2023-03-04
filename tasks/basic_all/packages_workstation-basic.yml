@@ -24,7 +24,7 @@
       - gimp-help-en
       - git   # bereits installiert (bootstrap)
       - grsync
-      # - gufw    # gui for ufw
+      - gufw    # gui for ufw
       - hplip   # Drivers for HP DeskJet, OfficeJet, Photosmart, Business Inkjet and some LaserJet
       - htop
       - hunspell
