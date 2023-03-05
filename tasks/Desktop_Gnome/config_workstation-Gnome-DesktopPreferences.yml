@@ -31,7 +31,6 @@
 #    - ansible_distribution == "Archlinux"
 
 
-
 # #######################################
 # ### Gnome Autostart Apps - Current User
 #
@@ -88,7 +87,6 @@
   when:
     - env_desktop == "gnome"
     - ansible_distribution == "Archlinux"
-
 
 
 # #######################
@@ -175,8 +173,8 @@
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
 
-### weitere desktop settings
-### ------------------------
+# ### weitere desktop settings
+# ### ------------------------
 - name: Set desktop interface - clock-format (Gnome)
   community.general.dconf:
     key: "/org/gnome/desktop/interface/clock-format"
@@ -370,8 +368,8 @@
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
 
-### power settings:
-#   ---------------
+# ### power settings:
+# -------------------
 - name: Set settings-daemon - plugin - power - power-button-action (Gnome)
   community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/power/power-button-action"
@@ -393,7 +391,7 @@
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-### set Display - Night Light
+# ### set Display - Night Light
 - name: Set settings-daemon - plugin - color - night-light-enabled (Gnome)
   community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/color/night-light-enabled"
@@ -402,8 +400,8 @@
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
 
-### set Keyboard Shortcuts
-### ----------------------
+# ### set Keyboard Shortcuts
+# ### ----------------------
 #
 # Settings - Keyboard - Keyboard Shortcuts
 # Alternative Möglichkeit: erstellte/vorhandene Keys eines Systems exportieren + wieder importieren per Skript:
@@ -492,13 +490,13 @@
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-### Um zu prüfen, ob firefox-esr installiert ist:
+# ### Um zu prüfen, ob firefox-esr installiert ist:
 # https://dev.to/setevoy/ansible-check-if-a-package-installed-on-a-remote-system-4402
 # https://docs.ansible.com/ansible/latest/collections/ansible/builtin/package_facts_module.html
 - name: Gather the package facts
   ansible.builtin.package_facts:
     manager: auto
-###
+# ###
 
 # - Firefox (custom2) - f
 - name: Set settings-daemon - plugin - media-keys - firefox,name (Gnome)
@@ -816,9 +814,9 @@
     - ansible_distribution == "Archlinux"
 
 
-### ---------------------------------------------------
-### - set/create list for configured custom-keybindings
-### ---------------------------------------------------
+# ### ---------------------------------------------------
+# ### - set/create list for configured custom-keybindings
+# ### ---------------------------------------------------
 - name: Set settings-daemon - plugin - media-keys - custom-keybindings (Gnome)
   community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings"
@@ -827,27 +825,27 @@
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
 
-### Gnome Weather:
-#   -------------
+# ### Gnome Weather:
+# ------------------
 #
-#- name: Set gnome  - Weather automatic-location (Gnome)
+# - name: Set gnome  - Weather automatic-location (Gnome)
 #  community.general.dconf:
 #    key: "/org/gnome/Weather/automatic-location"
 #    value: "false"
 #  when:
-##    - ansible_os_family == "Suse"
+# #    - ansible_os_family == "Suse"
 #    - env_desktop == "gnome"
 
-#- name: Set gnome  - Weather locations (Gnome)
+# - name: Set gnome  - Weather locations (Gnome)
 #  community.general.dconf:
 #    key: "/org/gnome/Weather/locations"
 #    value: "[<(uint32 2, <('Niederkirchen, Saarland', '', false, [(0.86339344922787564, 0.12656180196211969)], [(0.863065315111196, 0.13148146449914197)])>)>]"
 #  when:
-##    - ansible_os_family == "Suse"
+# #    - ansible_os_family == "Suse"
 #    - env_desktop == "gnome"
 
-### nemo filebrowser -  preferences:
-#   --------------------------------
+# ### nemo filebrowser -  preferences:
+# ------------------------------------
 - name: Set nemo preferences - click-policy (Gnome)
   community.general.dconf:
     key: "/org/nemo/preferences/click-policy"
@@ -919,8 +917,8 @@
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
 
-### gedit -  preferences:
-#   ---------------------
+# ### gedit -  preferences:
+# -------------------------
 - name: Set gedit preferences - scheme (Gnome)
   community.general.dconf:
     key: "/org/gnome/gedit/preferences/editor/scheme"
@@ -929,33 +927,33 @@
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
 
-### gnome terminal - profiles and preferences:
-#   ------------------------------------------
+# ### gnome terminal - profiles and preferences:
+# ----------------------------------------------
 - name: Set gnome terminal - profiles and preferences (Gnome, Ubuntu)
   ansible.builtin.script: "{{ env_PWD }}/tasks/Desktop_Gnome/config_workstation-Gnome-DesktopPreferences-terminal.sh" # funktioniert; ansible version 2.9
-  ##  ansible.builtin.script: "{{ env_PWD }}/tasks/Desktop_Gnome/config_workstation-Gnome-DesktopPreferences-terminal.sh" # ab ansible version 2.10
-  ##  ansible.builtin.script:  # ab ansible version 2.10
-  ##    cmd: "{{ env_PWD }}/tasks/Desktop_Gnome/config_workstation-Gnome-DesktopPreferences-terminal.sh"
-  ##
-  ##  command: "{{ env_PWD }}/tasks/Desktop_Gnome/config_workstation-Gnome-DesktopPreferences-terminal.sh" # funktioniert; ansible version 2.9
-  ##  ansible.builtin.command: "{{ env_PWD }}/tasks/Desktop_Gnome/config_workstation-Gnome-DesktopPreferences-terminal.sh" # ab ansible version 2.10
-  ##  ansible.builtin.command: # ab ansible version 2.10
-  ##    cmd: "{{ env_PWD }}/tasks/Desktop_Gnome/config_workstation-Gnome-DesktopPreferences-terminal.sh"
-  ## The command(s) will not be processed through the shell, so variables like $HOME and operations like "<", ">", "|", ";" and "&" will not work. Use the shell module if you need these features.
-  ##
-  ##  shell: "{{ env_PWD }}/tasks/Desktop_Gnome/config_workstation-Gnome-DesktopPreferences-terminal.sh" # funktioniert; ansible version 2.9
-  ##  ansible.builtin.shell: "{{ env_PWD }}/tasks/Desktop_Gnome/config_workstation-Gnome-DesktopPreferences-terminal.sh" # ab ansible version 2.10
+  # #  ansible.builtin.script: "{{ env_PWD }}/tasks/Desktop_Gnome/config_workstation-Gnome-DesktopPreferences-terminal.sh" # ab ansible version 2.10
+  # #  ansible.builtin.script:  # ab ansible version 2.10
+  # #    cmd: "{{ env_PWD }}/tasks/Desktop_Gnome/config_workstation-Gnome-DesktopPreferences-terminal.sh"
+  # #
+  # #  command: "{{ env_PWD }}/tasks/Desktop_Gnome/config_workstation-Gnome-DesktopPreferences-terminal.sh" # funktioniert; ansible version 2.9
+  # #  ansible.builtin.command: "{{ env_PWD }}/tasks/Desktop_Gnome/config_workstation-Gnome-DesktopPreferences-terminal.sh" # ab ansible version 2.10
+  # #  ansible.builtin.command: # ab ansible version 2.10
+  # #    cmd: "{{ env_PWD }}/tasks/Desktop_Gnome/config_workstation-Gnome-DesktopPreferences-terminal.sh"
+  # # The command(s) will not be processed through the shell, so variables like $HOME and operations like "<", ">", "|", ";" and "&" will not work. Use the shell module if you need these features.
+  # #
+  # #  shell: "{{ env_PWD }}/tasks/Desktop_Gnome/config_workstation-Gnome-DesktopPreferences-terminal.sh" # funktioniert; ansible version 2.9
+  # #  ansible.builtin.shell: "{{ env_PWD }}/tasks/Desktop_Gnome/config_workstation-Gnome-DesktopPreferences-terminal.sh" # ab ansible version 2.10
   args:
     creates: "/home/{{ env_user }}/.ansibleTerminalProfileSet"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
-    ##    - "ansible_version.major is version('2', '=')"
-    ##    - "ansible_version.minor is version('9', '<=')"
-    #- "ansible_version.full is version('2.10.0', '>=')"
+    # #    - "ansible_version.major is version('2', '=')"
+    # #    - "ansible_version.minor is version('9', '<=')"
+    # - "ansible_version.full is version('2.10.0', '>=')"
     - ansible_distribution in ["Ubuntu"]
 
 - name: create flag - file .ansibleTerminalProfileSet (Gnome)
-  file:
+  ansible.builtin.file:
     path: "/home/{{ env_user }}/.ansibleTerminalProfileSet"
     state: touch
     mode: u=rw,g=r,o=r
@@ -965,8 +963,8 @@
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
 
-### gnome shell extensions -  preferences:
-#   --------------------------------------
+# ### gnome shell extensions -  preferences:
+# ------------------------------------------
 
 # ### ding
 # https://ubuntuhandbook.org/index.php/2022/03/show-trash-ubuntu-2204-desktop/
@@ -986,7 +984,7 @@
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-### Dash to Dock:
+# ### Dash to Dock:
 - name: Set gnome shell extensions - dash-to-dock - custom-theme-shrink (Gnome)
   community.general.dconf:
     key: "/org/gnome/shell/extensions/dash-to-dock/custom-theme-shrink"
