@@ -146,8 +146,8 @@
       [Timer]
       Unit=clamav_scanHome.service
       OnCalendar=Sat *-*-* 18:00:00
-      AccuracySec=12h
-      #RandomizedDelaySec=12h
+      AccuracySec=2h
+      #RandomizedDelaySec=24h
       Persistent=true
 
       [Install]
