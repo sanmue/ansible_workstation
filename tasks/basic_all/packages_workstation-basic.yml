@@ -110,7 +110,6 @@
       - btrfs-assistant   # An application for managing BTRFS subvolumes and Snapper snapshots
       - snap-pac          # Pacman hooks that use snapper to create pre/post btrfs snapshots like openSUSE's YaST
       - snap-sync         # Use snapper snapshots to backup to external drive
-      - timeshift-autosnap-manjaro
   # with_items: ansible_mounts
   when:
     # - item.mount  == '/'
@@ -122,6 +121,7 @@
   ansible.builtin.package:
     name:
       - btrfs-assistant   # An application for managing BTRFS subvolumes and Snapper snapshots
+      - timeshift-autosnap-manjaro
     state: present
   when:
     - rootFsIsBtrfs != ''
