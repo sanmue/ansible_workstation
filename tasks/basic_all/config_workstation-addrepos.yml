@@ -1,30 +1,38 @@
-#######################
-### Archlinux (Manjaro)
-#######################
+# ####################################
+# ### pamac.conf - Archlinux (Manjaro)
+# ####################################
+
+- name: Check if exists pamac.conf (Archlinux)
+  ansible.builtin.stat:
+    path: /etc/pamac.conf
+  register: pamac_conf
+  when:
+    - ansible_distribution == "Archlinux"
 
 - name: Enable AUR support for pamac gui (Archlinux)
   ansible.builtin.shell:
     cmd: sudo sed -Ei '/EnableAUR/s/^#//' /etc/pamac.conf
   when:
     - ansible_distribution == "Archlinux"
+    - pamac_conf.stat.exists
 
 - name: Enable check updates for AUR packages in pamac (Archlinux)
   ansible.builtin.shell:
     cmd: sudo sed -Ei '/CheckAURUpdates/s/^#//' /etc/pamac.conf
   when:
     - ansible_distribution == "Archlinux"
+    - pamac_conf.stat.exists
 
 
-
-##########
-### Ubuntu
-##########
+# ##########
+# ### Ubuntu
+# ##########
 
 # https://fostips.com/ubuntu-21-10-two-firefox-remove-snap/
 #
 # Anmerkung: wird aktuell nicht mehr benötigt, da als flatpak installiert wird
 #
-#- name: add repo (Mozilla Team PPA) for Firefox (apt, Ubuntu >= 22)
+# - name: add repo (Mozilla Team PPA) for Firefox (apt, Ubuntu >= 22)
 #  tags: workstation,ubuntu,addrepos,pre
 #  ansible.builtin.apt_repository:
 #    repo: ppa:mozillateam/ppa
@@ -35,11 +43,12 @@
 #    - ansible_distribution_major_version|int >= 22
 #    - ansible_pkg_mgr == "apt"
 
-#- name: Set PPA Priority for Mozillateam and block Firefox from Ubuntus own repository (Ubuntu >= 22)
+# - name: Set PPA Priority for Mozillateam and block Firefox from Ubuntus own repository (Ubuntu >= 22)
 #  ansible.builtin.script: "{{ env_PWD }}/tasks/basic_all/config_workstation-addrepos-ubuntu.sh"
 #  when:
 #    - ansible_distribution == "Ubuntu"
-#    - ansible_distribution_major_version|int >= 22        # Ubuntu 22.04 has transitioned from using /etc/apt/trusted.gpg to using individual .gpg files located in /etc/apt/trusted.gpg.d
+#    - ansible_distribution_major_version|int >= 22   # Ubuntu 22.04 has transitioned from using /etc/apt/trusted.gpg to 
+                                                      # using individual .gpg files located in /etc/apt/trusted.gpg.d
 #    - env_desktop in ["gnome", "ubuntu:gnome"]
 #    - "ansible_version.full is version('2.10.0', '>=')"   # 'ansible.builtin.script' ab ansible version 2.10 (welche bei Ubutnu 22.04 installiert wird)
 
@@ -48,10 +57,10 @@
   ansible.builtin.script: "{{ env_PWD }}/tasks/basic_all/config_workstation-addrepos-ubuntu.sh"
   when:
     - ansible_distribution == "Ubuntu"
-    - ansible_distribution_major_version|int >= 22        # Ubuntu 22.04 has transitioned from using /etc/apt/trusted.gpg to using individual .gpg files located in /etc/apt/trusted.gpg.d
+    - ansible_distribution_major_version|int >= 22        # Ubuntu 22.04 has transitioned from using /etc/apt/trusted.gpg to 
+                                                          # using individual .gpg files located in /etc/apt/trusted.gpg.d
     - env_desktop in ["gnome", "ubuntu:gnome"]
     - "ansible_version.full is version('2.10.0', '>=')"   # 'ansible.builtin.script' ab ansible version 2.10 (welche bei Ubutnu 22.04 installiert wird)
-
 
 
 # PowerShell
@@ -62,24 +71,24 @@
   ansible.builtin.get_url:
     url: "https://packages.microsoft.com/config/ubuntu/{{ env_lsb }}/packages-microsoft-prod.deb"
     dest: /tmp/packages-microsoft-prod.deb
-    force_basic_auth: yes
+    force_basic_auth: true
   when:
     - ansible_distribution == "Ubuntu"
 
 - name: Register the Microsoft repository GPG keys (apt, Ubuntu)
-  command:
+  ansible.builtincommand:
     cmd: dpkg -i /tmp/packages-microsoft-prod.deb
   when:
     - ansible_distribution == "Ubuntu"
 
 - name: Update package lists
-  apt:
-    update_cache: yes
-  when: 
+  ansible.builtinapt:
+    update_cache: true
+  when:
     - ansible_pkg_mgr == "apt"
 
 # neu: s.o.
-#- name: add repo for PowerShell (Ubuntu)
+# - name: add repo for PowerShell (Ubuntu)
 #  tags: workstation,ubuntu,addrepos,pre
 #  ansible.builtin.apt_repository:
 #    repo: "deb https://packages.microsoft.com/config/ubuntu/{{ env_lsb }}/packages-microsoft-prod.deb"
@@ -94,10 +103,10 @@
   # https://launchpad.net/~stefanberger/+archive/ubuntu/swtpm
   tags: workstation,ubuntu,addrepos,pre
   ansible.builtin.apt_repository:
-    #repo: deb http://ppa.launchpad.net/smoser/swtpm/ubuntu focal main
+    # repo: deb http://ppa.launchpad.net/smoser/swtpm/ubuntu focal main
     repo: ppa:smoser/swtpm
     state: present
-    update_cache: yes
+    update_cache: true
   when:
     - ansible_pkg_mgr == "apt"
     - ansible_distribution == "Ubuntu"
@@ -109,7 +118,7 @@
 # MS Teams auskommentiert, da über jetzt über Browser nutze
 #
 # https://learn.microsoft.com/en-us/microsoftteams/get-clients?tabs=Linux#desktop-clients
-#- name: Add Apt signing key for Microsoft Teams repo (apt, Ubuntu)
+# - name: Add Apt signing key for Microsoft Teams repo (apt, Ubuntu)
 #  ansible.builtin.apt_key:
 #    url: "https://packages.microsoft.com/keys/microsoft.asc"
 #    state: present
@@ -117,7 +126,7 @@
 #    - ansible_pkg_mgr == "apt"
 #    - ansible_distribution == "Ubuntu"
 
-#- name: add repo for Microsoft Teams (apt, Ubuntu)
+# - name: add repo for Microsoft Teams (apt, Ubuntu)
 #  tags: workstation,ubuntu,addrepos,pre
 #  ansible.builtin.apt_repository:
 #    repo: 'deb https://packages.microsoft.com/repos/ms-teams stable main'
@@ -133,7 +142,7 @@
 #
 # umgestellt auf flatpak
 #
-#- name: Add Apt signing key for Brave Web Browser (apt, Ubuntu)
+# - name: Add Apt signing key for Brave Web Browser (apt, Ubuntu)
 #  ansible.builtin.apt_key:
 #    url: "https://brave-browser-apt-release.s3.brave.com/brave-core.asc"
 #    state: present
@@ -141,7 +150,7 @@
 #    - ansible_pkg_mgr == "apt"
 #    - ansible_distribution == "Ubuntu"
 
-#- name: add repo for Brave Web Browser (apt, Ubuntu)
+# - name: add repo for Brave Web Browser (apt, Ubuntu)
 #  tags: workstation,ubuntu,addrepos,pre
 #  ansible.builtin.apt_repository:
 #    repo: 'deb [arch=amd64] https://brave-browser-apt-release.s3.brave.com stable main'
@@ -152,21 +161,21 @@
 #    - ansible_distribution == "Ubuntu"
 
 
-#- name: add apt signing key for Vivaldi Browser repos (apt, Ubuntu)
+# - name: add apt signing key for Vivaldi Browser repos (apt, Ubuntu)
 #  tags: workstation,ubuntu,addrepos,pre
 #  apt_key:
 #    url: https://repo.vivaldi.com/archive/linux_signing_key.pub
 #    state: present
 #  when:
-##    - ansible_distribution == "Ubuntu"
+#    # - ansible_distribution == "Ubuntu"
 #    - ansible_pkg_mgr == "apt"
 
-#- name: add repo for Vivaldi Browser (Ubuntu)
+# - name: add repo for Vivaldi Browser (Ubuntu)
 #  tags: workstation,ubuntu,addrepos,pre
 #  ansible.builtin.apt_repository:
 #    repo: deb https://repo.vivaldi.com/archive/deb/ stable main
 #    state: present
 #    update_cache: yes
 #  when:
-##    - ansible_distribution == "Ubuntu"
+#    # - ansible_distribution == "Ubuntu"
 #    - ansible_pkg_mgr == "apt"
