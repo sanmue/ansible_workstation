@@ -146,7 +146,6 @@
     name:
       - archlinux-keyring
       - base-devel   # insbes. wg. AUR Paketen   # bereits installiert (bootstrap)
-      - brave-browser
       - chromium
       - cronie   # für clamtk + timeshift # Daemon that runs specified programs at scheduled times and related tools
       - code   # The Open Source build of Visual Studio Code (vscode) editor
@@ -194,7 +193,8 @@
 
 - name: Install basic packages(Archlinux/Manjaro)
   ansible.builtin.package:
-    name: 
+    name:
+      - brave-browser
       - snapd
       - timeshift
     state: present
@@ -204,7 +204,8 @@
 
 - name: Install basic packages (Archlinux, NOT Manjaro)
   community.general.pacman:
-    name: 
+    name:
+      - brave
       - snapd
       # - timeshift
       # - timeshift-systemd-timer
@@ -212,7 +213,7 @@
       # # - timeshift-autoupgrade
     state: present
     executable: yay
-  when: 
+  when:
     - ansible_distribution in ["Archlinux"]
     - env_lsb_id != "ManjaroLinux"
 
