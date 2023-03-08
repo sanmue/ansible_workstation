@@ -179,10 +179,6 @@
       - steam-native-runtime   # Native replacement for the Steam runtime using system libraries (installiert benötigte 32bit libs)
       - torbrowser-launcher
       - vim-ansible
-      # -----------------------------------
-      # flatpak- und snap-plugin für pamac:
-      - libpamac-flatpak-plugin
-      - pamac-snap-plugin
       # ---------
       # firmware:
       # - alsa-firmware   # unresolvable package conflicts detected
@@ -197,6 +193,10 @@
       - manjaro-keyring
       - snapd
       - timeshift
+      # -----------------------------------
+      # flatpak- und snap-plugin für pamac:
+      - libpamac-flatpak-plugin
+      - pamac-snap-plugin
     state: present
   when: 
     - ansible_distribution in ["Archlinux"]
