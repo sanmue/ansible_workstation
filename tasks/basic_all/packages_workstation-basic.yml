@@ -134,8 +134,8 @@
     state: present
     executable: yay
     # extra_args: --aur
-  become: true
-  become_user: "{{ env_user }}"
+  # become: true
+  # become_user: "{{ env_user }}"
   when:
     - rootFsIsBtrfs != ''
     - ansible_distribution in ["Archlinux"]
