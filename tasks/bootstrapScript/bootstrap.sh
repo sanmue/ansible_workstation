@@ -19,7 +19,7 @@ defaultDomain="universalaccount.de"
 defaultMail="${userid}@${defaultDomain}"
 gitOnlineRepo="git@github.com:sanmue/${playbookdir}.git"
 os=""
-oslist=("Ubuntu" "Manjaro" "EndeavorOS")   # aktuell berücksichtige Betriebssysteme
+oslist=("Ubuntu" "Manjaro" "EndeavourOS")   # aktuell berücksichtige Betriebssysteme
 
 
 # echo "Ich bin: ${userid}"
@@ -66,7 +66,7 @@ echo "Verwendetes OS: ${os}"
 ### Installation initial benötigter Pakete und Services abhängig von Betriebssystem:
 ### ---
 case ${os} in
-    Manjaro* | Endeavor*)
+    Manjaro* | EndeavourOS*)
         if [ ! -f "/home/${userid}/.bootstrapMirrorPool" ]; then
             touch "/home/${userid}/.bootstrapMirrorPool"
 
@@ -246,7 +246,7 @@ read -r -p "Install from AUR: Citrix ICA-Client, virtio-win, MS TTF Fonts, ...? 
 
 if [ "${installAUR}" == "j" ]; then
     case ${os} in
-        Manjaro* | Endeavor*)
+        Manjaro* | EndeavourOS*)
             echo -e "\nInstall Citrix Workspace App (icaclient) from AUR (Arch)"
             yay icaclient && touch "/home/${userid}/.icaclientInstalled"
 
