@@ -6,7 +6,7 @@
 - name: UFW - allow KDE Connect / GSConnect (tcp) (Ubuntu)
   community.general.ufw:
     rule: allow
-    port: 1714:1764 
+    port: 1714:1764
     proto: tcp
     comment: KDE Connect / GSConnect
   when: ansible_distribution == "Ubuntu"
@@ -33,7 +33,7 @@
 # ### firewalld ###
 # #################
 
-- name: firewalld - allow KDE Connect (Archlinux)
+- name: Firewalld - allow KDE Connect (Archlinux)
   ansible.posix.firewalld:
     service: kdeconnect
     permanent: true
@@ -43,7 +43,7 @@
     - ansible_distribution in ["Archlinux"]
   register: firewall_d
 
-- name: firewalld - reload (Archlinux)
+- name: Firewalld - reload (Archlinux)
   ansible.builtin.service:
     name: firewalld
     state: reloaded

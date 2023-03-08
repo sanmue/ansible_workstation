@@ -32,7 +32,7 @@
 # #################
 
 ### firewalld - enable+start
-- name: firewalld - enable (Archlinux)
+- name: Firewalld - enable (Archlinux)
   ansible.builtin.service:
     name: firewalld
     enabled: true
@@ -43,7 +43,7 @@
   register: firewall_d
 
 ### firewalld - allow
-- name: firewalld - allow ssh (Archlinux)
+- name: Firewalld - allow ssh (Archlinux)
   ansible.posix.firewalld:
     service: ssh
     permanent: true
@@ -61,11 +61,10 @@
 #     - ansible_distribution in ["Archlinux"]
     # - firewall_d.changed
 
-- name: firewalld - reload (Archlinux)
+- name: Firewalld - reload (Archlinux)
   ansible.builtin.service:
     name: firewalld
     state: reloaded
   when:
     - ansible_distribution in ["Archlinux"]
     - firewall_d.changed
-
