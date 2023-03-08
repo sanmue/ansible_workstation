@@ -45,7 +45,6 @@
       - steam
       - syncthing
       # - terminator   # Terminal emulator that supports tabs and grids
-      - timeshift
       - vim   # bereits installiert (bootstrap)
       - vlc
       - unzip
@@ -164,17 +163,24 @@
       - sof-firmware
   when: ansible_distribution in ["Archlinux"]
 
-- name: Install basic packages (snapd) (Archlinux/Manjaro)
+- name: Install basic packages(Archlinux/Manjaro)
   ansible.builtin.package:
-    name: snapd
+    name: 
+      - snapd
+      - timeshift
     state: present
   when: 
     - ansible_distribution in ["Archlinux"]
     - env_lsb_id == "ManjaroLinux"
 
-- name: Install basic packages (snapd) (Archlinux, NOT Manjaro)
+- name: Install basic packages (Archlinux, NOT Manjaro)
   community.general.pacman:
-    name: snapd
+    name: 
+      - snapd
+      # - timeshift
+      # - timeshift-systemd-timer
+      # - timeshift-autosnap
+      # # - timeshift-autoupgrade
     state: present
     executable: yay
   when: 
@@ -205,6 +211,7 @@
       - python3-psutil
       # - searchmonkey
       - ssh   # bereits installiert (bootstrap)
+      - timeshift
       - ufw   # bereits installiert (bootstrap)
       # Multimedia; entspechend libs sollten bereits installiert sein (wenn mei Installer ausgewählt wurde)
       # - ffmpeg
