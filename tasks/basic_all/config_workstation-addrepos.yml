@@ -2,21 +2,21 @@
 # ### pamac.conf - Archlinux (Manjaro)
 # ####################################
 
-- name: Check if exists pamac.conf (Archlinux)
+- name: Check if exists pamac.conf (Archlinux/Manjaro)
   ansible.builtin.stat:
     path: /etc/pamac.conf
   register: pamac_conf
   when:
     - ansible_distribution == "Archlinux"
 
-- name: Enable AUR support for pamac gui (Archlinux)
+- name: Enable AUR support for pamac gui (Archlinux/Manjaro)
   ansible.builtin.shell:
     cmd: sudo sed -Ei '/EnableAUR/s/^#//' /etc/pamac.conf
   when:
     - ansible_distribution == "Archlinux"
     - pamac_conf.stat.exists
 
-- name: Enable check updates for AUR packages in pamac (Archlinux)
+- name: Enable check updates for AUR packages in pamac (Archlinux/Manjaro)
   ansible.builtin.shell:
     cmd: sudo sed -Ei '/CheckAURUpdates/s/^#//' /etc/pamac.conf
   when:

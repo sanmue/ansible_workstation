@@ -45,7 +45,6 @@
       - steam
       - syncthing
       # - terminator   # Terminal emulator that supports tabs and grids
-      - snapd
       - timeshift
       - vim   # bereits installiert (bootstrap)
       - vlc
@@ -150,6 +149,7 @@
       - python-psutil
       - pyenv
       - remmina
+      # - snapd   # bei Manjaro in repo drin, bei Arch (EndeavourOS) nicht
       - signal-desktop
       - steam-native-runtime   # Native replacement for the Steam runtime using system libraries (installiert benötigte 32bit libs)
       - torbrowser-launcher
@@ -164,6 +164,22 @@
       - sof-firmware
   when: ansible_distribution in ["Archlinux"]
 
+- name: Install basic packages (snapd) (Archlinux/Manjaro)
+  ansible.builtin.package:
+    name: snapd
+    state: present
+  when: 
+    - ansible_distribution in ["Archlinux"]
+    - env_lsb_id == "ManjaroLinux"
+
+- name: Install basic packages (snapd) (Archlinux, NOT Manjaro)
+  community.general.pacman:
+    name: snapd
+    state: present
+    executable: yay
+  when: 
+    - ansible_distribution in ["Archlinux"]
+    - env_lsb_id != "ManjaroLinux"
 
 - name: Install basic packages (Ubuntu)
   ansible.builtin.package:
