@@ -82,7 +82,7 @@
     - ansible_distribution == "Ubuntu"
 
 - name: Update package lists
-  ansible.builtinapt:
+  ansible.builtin.apt:
     update_cache: true
   when:
     - ansible_pkg_mgr == "apt"
