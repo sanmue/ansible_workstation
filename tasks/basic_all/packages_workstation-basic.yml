@@ -166,10 +166,8 @@
       - libreoffice-still
       # - libreoffice-still-de
       - libreoffice-still-en-gb
-      - linux-steam-integration
       - lshw
       - malcontent   # Parental control support for applications
-      - manjaro-keyring
       - nextcloud-client
       - openssh   # bereits installiert (bootstrap)
       - psutils   # A set of postscript utilities
@@ -195,6 +193,8 @@
   ansible.builtin.package:
     name:
       - brave-browser
+      - linux-steam-integration
+      - manjaro-keyring
       - snapd
       - timeshift
     state: present
@@ -206,6 +206,7 @@
   community.general.pacman:
     name:
       - brave
+      - linux-steam-integration
       - snapd
       # - timeshift
       # - timeshift-systemd-timer
