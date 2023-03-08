@@ -76,7 +76,7 @@
     - ansible_distribution == "Ubuntu"
 
 - name: Register the Microsoft repository GPG keys (apt, Ubuntu)
-  ansible.builtincommand:
+  ansible.builtin.command:
     cmd: dpkg -i /tmp/packages-microsoft-prod.deb
   when:
     - ansible_distribution == "Ubuntu"
