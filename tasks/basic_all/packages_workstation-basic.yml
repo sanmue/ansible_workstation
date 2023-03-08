@@ -127,19 +127,18 @@
     - ansible_distribution in ["Archlinux"]
     - env_lsb_id == "ManjaroLinux"
 
-- name: Install additional packages for snapper on btrfs filesystem (Archlinux, NOT Manjaro)
-  community.general.pacman:
-    name:
-      - btrfs-assistant   # An application for managing BTRFS subvolumes and Snapper snapshots
-    state: present
-    executable: yay
-    # extra_args: --aur
-  # become: true
-  # become_user: "{{ env_user }}"
-  when:
-    - rootFsIsBtrfs != ''
-    - ansible_distribution in ["Archlinux"]
-    - env_lsb_id != "ManjaroLinux"
+#  verlagert an Schluss bootstrap.sh, da wg. Auswahlmöglichkeit ähnliches Paket nicht installiert wird
+# - name: Install additional packages for snapper on btrfs filesystem (Archlinux, NOT Manjaro)
+#   community.general.pacman:
+#     name:
+#       - btrfs-assistant   # An application for managing BTRFS subvolumes and Snapper snapshots
+#     state: present
+#     executable: yay
+#     # extra_args: --aur
+#   when:
+#     - rootFsIsBtrfs != ''
+#     - ansible_distribution in ["Archlinux"]
+#     - env_lsb_id != "ManjaroLinux"
 
 - name: Install basic packages (Archlinux)
   ansible.builtin.package:

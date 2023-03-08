@@ -247,6 +247,9 @@ read -r -p "Install from AUR: Citrix ICA-Client, virtio-win, MS TTF Fonts, ...? 
 if [ "${installAUR}" == "j" ]; then
     case ${os} in
         Manjaro* | EndeavourOS*)
+            echo -e "\nInstall btrfs-assistant from AUR (Arch)"
+            yay btrfs-assistant
+
             echo -e "\nInstall Citrix Workspace App (icaclient) from AUR (Arch)"
             yay icaclient && touch "/home/${userid}/.icaclientInstalled"
 
