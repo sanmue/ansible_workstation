@@ -24,7 +24,6 @@
       - gimp-help-en
       - git   # bereits installiert (bootstrap)
       - grsync
-      - gufw    # gui for ufw
       - hplip   # Drivers for HP DeskJet, OfficeJet, Photosmart, Business Inkjet and some LaserJet
       - htop
       - hunspell
@@ -53,9 +52,6 @@
       - unzip
       - wget
       - xdg-utils
-      # --- Firewall
-      - ufw   # bereits installiert (bootstrap)
-      # - firewalld   # ggf. ändern
       # ---------
       # firmware:
       - b43-fwcutter
@@ -133,6 +129,7 @@
       - firefox
       - firefox-i18n-en-us
       # - flameshot   # -> ksnip
+      # - firewalld   # bereits installiert (bootstrap)
       - foliate
       - gnupg
       - gpgme
@@ -182,6 +179,7 @@
       # - firefox-locale-en
       - gitk
       - gpg
+      - gufw   # gui for ufw
       - hunspell-de-de
       - hunspell-en-us
       - libidn11-dev   # benötigt für Citrix Workspace app (ica client)

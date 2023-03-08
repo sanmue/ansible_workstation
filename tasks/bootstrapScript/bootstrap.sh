@@ -19,7 +19,7 @@ defaultDomain="universalaccount.de"
 defaultMail="${userid}@${defaultDomain}"
 gitOnlineRepo="git@github.com:sanmue/${playbookdir}.git"
 os=""
-oslist=("Ubuntu" "Manjaro")   # aktuell berücksichtige Betriebssysteme
+oslist=("Ubuntu" "Manjaro" "EndeavorOS")   # aktuell berücksichtige Betriebssysteme
 
 
 # echo "Ich bin: ${userid}"
@@ -66,7 +66,7 @@ echo "Verwendetes OS: ${os}"
 ### Installation initial benötigter Pakete und Services abhängig von Betriebssystem:
 ### ---
 case ${os} in
-    Manjaro*)
+    Manjaro* | Endeavor*)
         if [ ! -f "/home/${userid}/.bootstrapMirrorPool" ]; then
             touch "/home/${userid}/.bootstrapMirrorPool"
 
@@ -75,21 +75,21 @@ case ${os} in
         fi
 
         echo -e "\nInstallation initial benoetigte Software (git, ansible, openssh, ufw)..."
-        sudo pacman -Syu --needed --noconfirm rsync git ansible openssh ufw ufw-extras vim
+        sudo pacman -Syu --needed --noconfirm rsync git ansible openssh vim yay firewalld
 
         echo -e "\nInstallation benoetigte Software zur Installation von AUR-Packages..."
-        sudo pacman -Syu --needed --noconfirm base-devel
+        sudo pacman -S --needed --noconfirm base-devel
 
-        echo -e "\nAktiviere Firewall 'ufw' und erlaube ssh ..."
-        sudo systemctl enable ufw.service && sudo ufw enable && sudo ufw allow ssh comment 'SSH' && sudo ufw reload
+        echo -e "\nAktiviere Firewall 'firewalld' und erlaube ssh ..."
+        sudo systemctl enable --now firewalld.service && sudo ufw allow ssh comment 'SSH' && sudo ufw reload
 
         echo -e "\nStarte und aktiviere sshd.service..."
-        sudo systemctl start sshd.service && sudo systemctl enable sshd.service
+        sudo systemctl enable --now sshd.service
 
         echo -e "\nVM - Qemu/KVM: Wiki empfiehlt inst. von 'iptables-nft'"
         echo -e "Bestätige, dass 'iptables' (und 'inxi') gelöscht und 'iptables-nft' installiert wird"
         echo -e "Anmerkung: 'inxi' wird im Rahmen basis-inst wieder installiert"
-        sudo pacman -Syu iptables-nft
+        sudo pacman -S iptables-nft
     ;;
 
     Ubuntu*)
@@ -246,18 +246,18 @@ read -r -p "Install from AUR: Citrix ICA-Client, virtio-win, MS TTF Fonts, ...? 
 
 if [ "${installAUR}" == "j" ]; then
     case ${os} in
-        Manjaro*)
+        Manjaro* | Endeavor*)
             echo -e "\nInstall Citrix Workspace App (icaclient) from AUR (Arch)"
-            sudo pamac build icaclient && touch "/home/${userid}/.icaclientInstalled"
+            yay icaclient && touch "/home/${userid}/.icaclientInstalled"
 
             echo -e "\nVM - Install virtio-win image from AUR (Arch)"
-            sudo pamac build virtio-win && touch "/home/${userid}/.VM_virtioDriversInstalled"
+            yay virtio-win && touch "/home/${userid}/.VM_virtioDriversInstalled"
 
             echo -e "\nInstall Microsoft TTF Fonts from AUR (Arch)"
-            sudo pamac build ttf-ms-fonts
+            yay ttf-ms-fonts
 
             echo -e "\nInstall woeusb-ng from AUR (Arch)"
-            sudo pamac build woeusb-ng   # Simple tool that enable you to create your own usb stick with Windows installer.
+            yay woeusb-ng   # Simple tool that enable you to create your own usb stick with Windows installer.
         ;;
 
         *)
