@@ -81,7 +81,8 @@ case ${os} in
         if [ "${os}" = "EndeavourOS" ]; then
             echo -e "\nInstallation Archlinux, EndeavourOS: 'pamac-all'..."
             yay pamac-all
-            # mit pamac ist es einfacher (automatisiert) mehrere (AUR)pakete ohne Nachfrage zu installieren (pamac build --no-confirm SW1 SW2 ...)
+            # mit pamac ist (aktuell noch) es einfacher (automatisiert) mehrere (AUR)pakete ohne Nachfrage zu installieren 
+            # (pamac build --no-confirm SW1 SW2 ...)
             # mit ansible modul pacman, executable yay + argumente (noch) nicht hingekriegt
         fi
 
@@ -98,9 +99,7 @@ case ${os} in
         echo -e "Bestätige, dass 'iptables' (und 'inxi') gelöscht und 'iptables-nft' installiert wird"
         echo -e "Anmerkung: 'inxi' wird im Rahmen basis-inst wieder installiert"
         sudo pacman -S iptables-nft
-    ;;
-
-    
+    ;;    
 
     Ubuntu*)
         echo -e "\nUpdate Repos und Installation benoetigte Software (git,ansible,ssh,ufw,chrome-genome-shell)..."
@@ -159,7 +158,6 @@ case ${os} in
         echo -e "\nAktiviere Firewall 'firewalld' und erlaube ssh ..."
         sudo systemctl enable firewalld && sudo systemctl start firewalld && sudo firewall-cmd --zone=public --add-service=ssh --permanent && sudo firewall-cmd --reload
     ;;
-
 
     *)
         echo "Unbehandelter Fall: switch os - default-switch Zweig"

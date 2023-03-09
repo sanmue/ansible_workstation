@@ -1,6 +1,6 @@
 - name: Install gnomeshell extension stuff (Gnome, all)
   tags: workstation,gnome,ubuntu
-  package:
+  ansible.builtin.package:
     state: latest
     name:
       - gnome-shell-extensions
@@ -12,7 +12,7 @@
 
 - name: Install gnomeshell extension stuff (Ubuntu >=22 + Gnome)
   tags: workstation,gnome,ubuntu
-  package:
+  ansible.builtin.package:
     state: latest
     name:
       - gnome-shell-extension-gsconnect
@@ -22,20 +22,29 @@
     - ansible_distribution_major_version|int >= 22
 
 
-# Inst für Archlinux, EndeavourOS: packages_workstation-localPackageInstall.yml
-- name: Install gnomeshell extension stuff (Archlinux + Gnome)
+- name: Install gnomeshell extension stuff (Archlinux/Manjaro + Gnome)
   tags: workstation,gnome,arch
-  package:
+  ansible.builtin.package:
     state: latest
     name:
       - gnome-shell-extension-gsconnect
-      #- gnome-shell-extension-dash-to-dock
+      # - gnome-shell-extension-dash-to-dock
       - gnome-shell-extension-dash-to-panel   # Extension for GNOME shell to combine the dash and main panel
-      #- gnome-shell-extension-gamemode   # GNOME Shell extension for Feral Interactive's GameMode
-      #- gnome-shell-extension-material-shell   # A modern desktop interface for Linux extending GNOME Shell
-      #- gnome-shell-extension-nightthemeswitcher   # A GNOME Shell extension to make your desktop easy on the eye, day and night.
-      #- gnome-shell-extension-pop-shell   # GNOME Shell extension for advanced tiling window management
+      # - gnome-shell-extension-gamemode   # GNOME Shell extension for Feral Interactive's GameMode
+      # - gnome-shell-extension-material-shell   # A modern desktop interface for Linux extending GNOME Shell
+      # - gnome-shell-extension-nightthemeswitcher   # A GNOME Shell extension to make your desktop easy on the eye, day and night.
+      # - gnome-shell-extension-pop-shell   # GNOME Shell extension for advanced tiling window management
   when:
     - ansible_distribution == "Archlinux"
     - env_desktop == "gnome"
     - env_lsb_id == "ManjaroLinux"
+
+- name: Install gnomeshell extension stuff via pamac from AUR (Archlinux, NOT Manjaro, Gnome)
+  ansible.builtin.shell: 
+    cmd: "pamac build --no-confirm gnome-shell-extension-gsconnect gnome-shell-extension-dash-to-panel  && touch /home/{{ env_user }}/.ansible_pamacArchGnomeshellstuff"
+    args:
+      creates: "/home/{{ env_user }}/.ansible_pamacArchGnomeshellstuff"
+  when:
+    - ansible_distribution in ["Archlinux"]
+    - env_desktop == "gnome"
+    - env_lsb_id != "ManjaroLinux"

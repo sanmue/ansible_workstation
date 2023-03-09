@@ -58,6 +58,16 @@
     - env_desktop == "gnome"
     - env_lsb_id == "ManjaroLinux"
 
+- name: Install packages for workstations via pamac from AUR (Archlinux, NOT Manjaro)
+  ansible.builtin.shell:
+    cmd: "pamac build --no-confirm gtkhash gtkhash-nemo && touch /home/{{ env_user }}/.ansible_pamacArchPackagesGnome"
+    args:
+      creates: "/home/{{ env_user }}/.ansible_pamacArchPackagesGnome"
+  when:
+    - ansible_distribution == "Archlinux"
+    - env_desktop == "gnome"
+    - env_lsb_id != "ManjaroLinux"
+
 - name: Install packages for workstations (Ubuntu + Gnome)
   ansible.builtin.package:
     state: present

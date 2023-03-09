@@ -141,6 +141,16 @@
 #     - ansible_distribution in ["Archlinux"]
 #     - env_lsb_id != "ManjaroLinux"
 
+- name: Install additional packages for snapper on btrfs filesystem via pamac from AUR (Archlinux, NOT Manjaro)
+  ansible.builtin.shell: 
+    cmd: pamac build --no-confirm btrfs-assistant
+    args:
+      creates: "/home/{{ env_user }}/.ansible_pamacArchBasicPackages"
+  when:
+    - ansible_distribution in ["Archlinux"]
+    - env_lsb_id != "ManjaroLinux"
+
+
 - name: Install basic packages (Archlinux)
   ansible.builtin.package:
     state: present
@@ -171,6 +181,10 @@
       - malcontent   # Parental control support for applications
       - nextcloud-client
       - openssh   # bereits installiert (bootstrap)
+      - powerline   # Statusline plugin for vim, an provides statuslines udn prompts for several other applications
+                    # including zsh, bash, tmux, IPython, Awesome, i3 and qtile
+      - powerline-fonts   # patched fonts for powerline
+      - powerline-vim   # vim plugin for powerline
       - psutils   # A set of postscript utilities
       - python-psutil
       - pyenv
@@ -180,13 +194,20 @@
       - steam-native-runtime   # Native replacement for the Steam runtime using system libraries (installiert benötigte 32bit libs)
       - torbrowser-launcher
       - vim-ansible
+      - zsh
+      - zsh-doc
+      - zsh-autosuggestions
+      - zsh-completions
+      - zsh-syntax-highlightning
+      - zsh-theme-powerlevel10k
+      - zshdb   # A debugger for zsh scripts
       # ---------
       # firmware:
       # - alsa-firmware   # unresolvable package conflicts detected
       - sof-firmware
   when: ansible_distribution in ["Archlinux"]
 
-- name: Install basic packages(Archlinux/Manjaro)
+- name: Install basic packages (Archlinux/Manjaro)
   ansible.builtin.package:
     name:
       - brave-browser
@@ -199,7 +220,7 @@
       - libpamac-flatpak-plugin
       - pamac-snap-plugin
     state: present
-  when: 
+  when:
     - ansible_distribution in ["Archlinux"]
     - env_lsb_id == "ManjaroLinux"
 
@@ -222,6 +243,15 @@
 #  when:
 #  - ansible_distribution in ["Archlinux"]
 #  - env_lsb_id != "ManjaroLinux"
+
+- name: Install basic packages via pamac from AUR (Archlinux, NOT Manjaro)
+  ansible.builtin.shell: 
+    cmd: "pamac build --no-confirm brave-bin linux-steam-integration snapd && touch /home/{{ env_user }}/.ansible_pamacArchBasicPackages"
+    args:
+      creates: "/home/{{ env_user }}/.ansible_pamacArchBasicPackages"
+  when:
+    - ansible_distribution in ["Archlinux"]
+    - env_lsb_id != "ManjaroLinux"
 
 - name: Install basic packages (Ubuntu)
   ansible.builtin.package:
