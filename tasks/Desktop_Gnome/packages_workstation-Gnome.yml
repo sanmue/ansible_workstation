@@ -5,7 +5,6 @@
 # - gnome-shell-extensions... # -> separater Task (packages_workstation-gnomeshellstuff.yml
 
 - name: Install packages for workstations (Gnome, all)
-  tags: workstation,gnome,arch,all
   ansible.builtin.package:
     state: present
     name:
@@ -15,7 +14,6 @@
                                                 # (Bildschirmausgabe wird ausgeschaltet nach längerer Inktivität)
       - gnome-disk-utility
       - gnome-keyring
-      - gtkhash
       - inkscape   # Plasma: Krita
       # - kdeconnect   # -> ? gnome-shell-extension-gsconnect ?
       - rhythmbox
@@ -29,36 +27,44 @@
 
 
 - name: Install packages for workstations (Archlinux + Gnome)
-  tags: workstation,gnome,arch
   ansible.builtin.package:
     state: present
     name:
       - dconf
-      # - deluge # -> transmission-gtk
+      # - deluge   # -> transmission-gtk
       - epiphany   # A GNOME web browser based on the WebKit rendering engin
       - evince   # Document viewer (PDF, PostScript, XPS, djvu, dvi, tiff, cbr, cbz, cb7, cbt)
-      - gtkhash-nemo
       # - guake   # Drop-down terminal for GNOME
       - nemo
-      - nemo-bulk-rename
       - nemo-seahorse
       - nemo-share
       - nemo-terminal
       - transmission-cli
-      - transmission-gtk # -> deluge
+      - transmission-gtk   # -> deluge
   when:
     - ansible_distribution == "Archlinux"
     - env_desktop == "gnome"
 
+- name: Install packages for workstations (Archlinux/Manjaro)
+  ansible.builtin.package:
+    state: present
+    name:
+      - gtkhash        # Inst für Archlinux, EndeavourOS: packages_workstation-localPackageInstall.yml
+      - gtkhash-nemo   # Inst für Archlinux, EndeavourOS: packages_workstation-localPackageInstall.yml
+      - nemo-bulk-rename   # kein Gegenparth in AUR gefunden für Archlinux, EndeavourOS
+  when:
+    - ansible_distribution == "Archlinux"
+    - env_desktop == "gnome"
+    - env_lsb_id == "ManjaroLinux"
 
 - name: Install packages for workstations (Ubuntu + Gnome)
-  tags: workstation,gnome,ubuntu
   ansible.builtin.package:
     state: present
     name:
       - dconf-cli
       - epiphany-browser
       - gnome-software-plugin-flatpak
+      - gtkhash
       # - language-pack-gnome-de-base
       # - language-pack-gnome-de
       - language-pack-gnome-en-base

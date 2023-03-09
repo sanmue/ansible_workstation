@@ -202,23 +202,25 @@
     - ansible_distribution in ["Archlinux"]
     - env_lsb_id == "ManjaroLinux"
 
-- name: Install basic packages (Archlinux, NOT Manjaro)
-  community.general.pacman:
-    name:
-    - brave
-    - btrfs-assistant
-    - linux-steam-integration
-    - snapd
-    # # - timeshift
-    # # - timeshift-systemd-timer
-    # # - timeshift-autosnap
-    # # - timeshift-autoupgrade
-    state: present
-    executable: yay
-    extra_args: --noconfirm -S
-  when:
-  - ansible_distribution in ["Archlinux"]
-  - env_lsb_id != "ManjaroLinux"
+# Inst für Archlinux, EndeavourOS: packages_workstation-localPackageInstall.yml
+# da aufgrund mehrerer Treffer mit yay Inst so nicht funktioniert
+# - name: Install basic packages (Archlinux, NOT Manjaro)
+#  community.general.pacman:
+#    name:
+#    - brave
+#    - btrfs-assistant
+#    - linux-steam-integration
+#    - snapd
+#    # # - timeshift
+#    # # - timeshift-systemd-timer
+#    # # - timeshift-autosnap
+#    # # - timeshift-autoupgrade
+#    state: present
+#    executable: yay
+#    extra_args: --noconfirm -S
+#  when:
+#  - ansible_distribution in ["Archlinux"]
+#  - env_lsb_id != "ManjaroLinux"
 
 - name: Install basic packages (Ubuntu)
   ansible.builtin.package:
