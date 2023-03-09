@@ -250,7 +250,7 @@ if [ "${installAUR}" == "j" ]; then
             echo -e "\nInstall btrfs-assistant, ... from AUR (Arch)"
             yay btrfs-assistant
 
-            yay brave
+            yay --noconfirm -S brave
             yay linux-steam-integration
             yay snapd
 

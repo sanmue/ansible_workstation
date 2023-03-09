@@ -215,7 +215,7 @@
     # # - timeshift-autoupgrade
     state: present
     executable: yay
-    extra_args: -S --noconfirm
+    extra_args: --noconfirm -S
   when:
   - ansible_distribution in ["Archlinux"]
   - env_lsb_id != "ManjaroLinux"
