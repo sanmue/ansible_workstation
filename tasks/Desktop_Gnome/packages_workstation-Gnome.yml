@@ -12,7 +12,7 @@
       - alacarte   # Menu editor for gnome
       - dconf-editor
       - gjs   # Javascript Bindings for GNOME   # + Ubnuntu: fehlendes Paket, damit ab 22.04 der Monitor in Engergiesparmodus kann
-              # (Bildschirmausgabe wird ausgeschaltet nach längerer Inktivität)
+                                                # (Bildschirmausgabe wird ausgeschaltet nach längerer Inktivität)
       - gnome-disk-utility
       - gnome-keyring
       - gtkhash

@@ -202,23 +202,23 @@
     - ansible_distribution in ["Archlinux"]
     - env_lsb_id == "ManjaroLinux"
 
-# s. Ende bootskript
-# - name: Install basic packages (Archlinux, NOT Manjaro)
-#  community.general.pacman:
-#    name:
-#      - brave
-#      - btrfs-assistant
-#      - linux-steam-integration
-#      - snapd
-#      # # - timeshift
-#      # # - timeshift-systemd-timer
-#      # # - timeshift-autosnap
-#      # # - timeshift-autoupgrade
-#    state: present
-#    executable: yay
-#  when:
-#    - ansible_distribution in ["Archlinux"]
-#    - env_lsb_id != "ManjaroLinux"
+- name: Install basic packages (Archlinux, NOT Manjaro)
+  community.general.pacman:
+    name:
+    - brave
+    - btrfs-assistant
+    - linux-steam-integration
+    - snapd
+    # # - timeshift
+    # # - timeshift-systemd-timer
+    # # - timeshift-autosnap
+    # # - timeshift-autoupgrade
+    state: present
+    executable: yay
+    extra_args: -S --noconfirm
+  when:
+  - ansible_distribution in ["Archlinux"]
+  - env_lsb_id != "ManjaroLinux"
 
 - name: Install basic packages (Ubuntu)
   ansible.builtin.package:
