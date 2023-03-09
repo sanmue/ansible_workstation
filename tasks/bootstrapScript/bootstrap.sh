@@ -78,6 +78,13 @@ case ${os} in
         echo -e "\nInstallation initial benoetigte Software (git, ansible, openssh, ufw)..."
         sudo pacman -Syu --needed --noconfirm rsync git ansible openssh vim yay firewalld
 
+        if [ "${os}" = "EndeavourOS" ]; then
+            echo -e "\nInstallation Archlinux, EndeavourOS: 'pamac-all'..."
+            yay pamac-all
+            # mit pamac ist es einfacher (automatisiert) mehrere (AUR)pakete ohne Nachfrage zu installieren (pamac build --no-confirm SW1 SW2 ...)
+            # mit ansible modul pacman, executable yay + argumente (noch) nicht hingekriegt
+        fi
+
         echo -e "\nInstallation benoetigte Software zur Installation von AUR-Packages..."
         sudo pacman -S --needed --noconfirm base-devel
 
@@ -92,6 +99,8 @@ case ${os} in
         echo -e "Anmerkung: 'inxi' wird im Rahmen basis-inst wieder installiert"
         sudo pacman -S iptables-nft
     ;;
+
+    
 
     Ubuntu*)
         echo -e "\nUpdate Repos und Installation benoetigte Software (git,ansible,ssh,ufw,chrome-genome-shell)..."
@@ -249,16 +258,20 @@ if [ "${installAUR}" == "j" ]; then
     case ${os} in
         Manjaro* | EndeavourOS*)
             echo -e "\nInstall Citrix Workspace App (icaclient) from AUR (Arch)"
-            yay icaclient && touch "/home/${userid}/.icaclientInstalled"
+            # yay icaclient && touch "/home/${userid}/.icaclientInstalled"
+            pamac build icaclient && touch "/home/${userid}/.icaclientInstalled"
 
             echo -e "\nVM - Install virtio-win image from AUR (Arch)"
-            yay virtio-win && touch "/home/${userid}/.VM_virtioDriversInstalled"
+            # yay virtio-win && touch "/home/${userid}/.VM_virtioDriversInstalled"
+            pamac build virtio-win && touch "/home/${userid}/.VM_virtioDriversInstalled"
 
             echo -e "\nInstall Microsoft TTF Fonts from AUR (Arch)"
-            yay ttf-ms-fonts
+            # yay ttf-ms-fonts
+            pamac build ttf-ms-fonts
 
             echo -e "\nInstall woeusb-ng from AUR (Arch)"
-            yay woeusb-ng   # Simple tool that enable you to create your own usb stick with Windows installer.
+            # yay woeusb-ng   # Simple tool that enable you to create your own usb stick with Windows installer.
+            pamac build woeusb-ng
         ;;
 
         *)
