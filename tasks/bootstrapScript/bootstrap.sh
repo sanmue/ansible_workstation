@@ -1,10 +1,11 @@
 #!/bin/bash
 
-### -------------------------------------------
+### --------------------------------------------------------------------
 ### Installation der initial benötigten Pakete
 ### Git Config
 ### Start automatisierte Installation (Ansible)
-### -------------------------------------------
+### Archlinux AUR (zusätzliche Pakete, um autom. Inst. zu beschleunigen)
+### --------------------------------------------------------------------
 
 
 ### ---
