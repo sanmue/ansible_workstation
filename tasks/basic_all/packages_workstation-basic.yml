@@ -67,7 +67,8 @@
     state: present
     name:
       # ### for btrfs filesystem:
-      - snapper           # A tool for managing BTRFS and LVM snapshots. It can create, diff and restore snapshots and provides timelined auto-snapping.
+      - snapper      # A tool for managing BTRFS and LVM snapshots. It can create, diff and restore snapshots and provides timelined auto-snapping.
+      - grub-btrfs   # Include btrfs snapshots in GRUB boot options
       # >>> You must create a default config with snapper cli named root first.
       # >>> Run 'snapper -c root create-config /' as root
   # with_items: ansible_mounts
