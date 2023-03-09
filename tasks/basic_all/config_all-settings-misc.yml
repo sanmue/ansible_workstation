@@ -590,20 +590,20 @@
 - name: Wait until 'Visual Studio Code' Extension 'Sync Settings' Standard Config-File is present before continuing (Ubuntu)
   ansible.builtin.wait_for:
     path: /home/{{ env_user }}/.config/Code/User/globalStorage/zokugun.sync-settings/settings.yml   #Datei
-    #path: /home/{{ env_user }}/.config/Code/User/globalStorage/zokugun.sync-settings/               # Ordner
+    # path: /home/{{ env_user }}/.config/Code/User/globalStorage/zokugun.sync-settings/               # Ordner
   when:
     - ansible_distribution == "Ubuntu"
 
-## da sich die Extension unter Arch nicht so installieren lässt (s.o.) kann dies wegfallen:
-#- name: Wait until 'Code - OSS' Extension 'Sync Settings' Standard Config-File is present before continuing (Arch)
+# # da sich die Extension unter Arch nicht so installieren lässt (s.o.) kann dies wegfallen:
+# - name: Wait until 'Code - OSS' Extension 'Sync Settings' Standard Config-File is present before continuing (Arch)
 #  ansible.builtin.wait_for:
 #    path: "/home/{{ env_user }}/.config/Code - OSS/User/globalStorage/zokugun.sync-settings/settings.yml"   # Datei
 #    #path: /home/{{ env_user }}/.config/Code/User/globalStorage/zokugun.sync-settings/               # Ordner
 #  when:
 #    - ansible_distribution == "Archlinux"
 
-## da sich die Extension unter Arch nicht so installieren lässt: Verzeichnis der Extension manuell erstellen,
-## damit unten die config-datei dorthin kopiert werden kann
+# # da sich die Extension unter Arch nicht so installieren lässt: Verzeichnis der Extension manuell erstellen,
+# # damit unten die config-datei dorthin kopiert werden kann
 - name: Erstelle hilfsweise manuell 'Sync Settings' Extension Ordner für 'Code - OSS' (Arch)
   tags: workstation,arch
   ansible.builtin.file:
@@ -616,7 +616,7 @@
     - ansible_distribution in ["Archlinux"]
 
 
-#- name: Close Visual Studio Code (Ubuntu)
+# - name: Close Visual Studio Code (Ubuntu)
 #  tags: workstation,ubuntu
 #  ansible.builtin.shell:
 #    cmd: pkill -15 code   # Signal: "-15" entspricht "SIGTERM" : Abschließen und beenden des Programms
