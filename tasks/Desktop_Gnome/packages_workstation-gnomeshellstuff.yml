@@ -5,7 +5,6 @@
     name:
       - gnome-shell-extensions
       - gnome-shell-extension-appindicator
-      - gnome-shell-extension-gsconnect
       - gnome-tweaks
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
@@ -16,19 +15,22 @@
   package:
     state: latest
     name:
+      - gnome-shell-extension-gsconnect
       - gnome-shell-extension-gsconnect-browsers
   when:
     - env_desktop == "ubuntu:gnome"
     - ansible_distribution_major_version|int >= 22
 
 
+# Inst für Archlinux, EndeavourOS: packages_workstation-localPackageInstall.yml
 - name: Install gnomeshell extension stuff (Archlinux + Gnome)
   tags: workstation,gnome,arch
   package:
     state: latest
     name:
-      - gnome-shell-extension-dash-to-dock
-      #- gnome-shell-extension-dash-to-panel   # Extension for GNOME shell to combine the dash and main panel
+      - gnome-shell-extension-gsconnect
+      #- gnome-shell-extension-dash-to-dock
+      - gnome-shell-extension-dash-to-panel   # Extension for GNOME shell to combine the dash and main panel
       #- gnome-shell-extension-gamemode   # GNOME Shell extension for Feral Interactive's GameMode
       #- gnome-shell-extension-material-shell   # A modern desktop interface for Linux extending GNOME Shell
       #- gnome-shell-extension-nightthemeswitcher   # A GNOME Shell extension to make your desktop easy on the eye, day and night.
@@ -36,3 +38,4 @@
   when:
     - ansible_distribution == "Archlinux"
     - env_desktop == "gnome"
+    - env_lsb_id == "ManjaroLinux"
