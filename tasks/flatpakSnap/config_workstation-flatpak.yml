@@ -19,6 +19,8 @@
     cmd: sed -Ei '/EnableFlatpak/s/^#//' /etc/pamac.conf
   when:
     - ansible_distribution == "Archlinux"
+    - pamac_conf.stat.exists   # aus: config_workstation-addrepos.yml
+    # - env_lsb_id == "ManjaroLinux"
 
 - name: Enable flatpak updates for pamac (Archlinux)
   tags: workstation,arch,flatpak
@@ -28,3 +30,5 @@
     cmd: sed -Ei '/CheckFlatpakUpdates/s/^#//' /etc/pamac.conf
   when:
     - ansible_distribution == "Archlinux"
+    - pamac_conf.stat.exists   # aus: config_workstation-addrepos.yml
+    # - env_lsb_id == "ManjaroLinux"
