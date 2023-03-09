@@ -143,7 +143,6 @@
 
 - name: Install additional packages for snapper on btrfs filesystem via pamac from AUR (Archlinux, NOT Manjaro)
   ansible.builtin.shell: pamac build --no-confirm btrfs-assistant
-    # cmd: pamac build --no-confirm btrfs-assistant
   args:
     creates: "/home/{{ env_user }}/.ansible_pamacArchBasicPackages"
   when:
@@ -245,10 +244,9 @@
 #  - env_lsb_id != "ManjaroLinux"
 
 - name: Install basic packages via pamac from AUR (Archlinux, NOT Manjaro)
-  ansible.builtin.shell: 
-    cmd: "pamac build --no-confirm brave-bin linux-steam-integration snapd && touch /home/{{ env_user }}/.ansible_pamacArchBasicPackages"
-    args:
-      creates: "/home/{{ env_user }}/.ansible_pamacArchBasicPackages"
+  ansible.builtin.shell: "pamac build --no-confirm brave-bin linux-steam-integration snapd && touch /home/{{ env_user }}/.ansible_pamacArchBasicPackages"
+  args:
+    creates: "/home/{{ env_user }}/.ansible_pamacArchBasicPackages"
   when:
     - ansible_distribution in ["Archlinux"]
     - env_lsb_id != "ManjaroLinux"

@@ -40,10 +40,9 @@
     - env_lsb_id == "ManjaroLinux"
 
 - name: Install gnomeshell extension stuff via pamac from AUR (Archlinux, NOT Manjaro, Gnome)
-  ansible.builtin.shell: 
-    cmd: "pamac build --no-confirm gnome-shell-extension-gsconnect gnome-shell-extension-dash-to-panel  && touch /home/{{ env_user }}/.ansible_pamacArchGnomeshellstuff"
-    args:
-      creates: "/home/{{ env_user }}/.ansible_pamacArchGnomeshellstuff"
+  ansible.builtin.shell: "pamac build --no-confirm gnome-shell-extension-gsconnect gnome-shell-extension-dash-to-panel  && touch /home/{{ env_user }}/.ansible_pamacArchGnomeshellstuff"
+  args:
+    creates: "/home/{{ env_user }}/.ansible_pamacArchGnomeshellstuff"
   when:
     - ansible_distribution in ["Archlinux"]
     - env_desktop == "gnome"
