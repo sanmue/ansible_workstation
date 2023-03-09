@@ -6,7 +6,8 @@
 # - aus Punkt 13: Install the Latest Kernel (or an Older LTS Kernel)
 - name: Enable GRUB Menu at boot (Archlinux)
   ansible.builtin.shell:
-    cmd: sudo sed -Ei '/GRUB_TIMEOUT_STYLE=hidden/s/hidden/menu/' /etc/default/grub && sudo update-grub
+    # cmd: sudo sed -Ei '/GRUB_TIMEOUT_STYLE=hidden/s/hidden/menu/' /etc/default/grub && sudo update-grub   # update-grup nicht stdm. Inst bei Archlinux
+    cmd: sudo sed -Ei '/GRUB_TIMEOUT_STYLE=hidden/s/hidden/menu/' /etc/default/grub && sudo grub-mkconfig -o /boot/grub/grub.cfg
   when:
     - ansible_distribution == "Archlinux"
 
@@ -21,16 +22,19 @@
 - name: Bashrc - check status (User, all)
   ansible.builtin.stat:
     path: "/home/{{ env_user }}/.bashrc"
-  register: statBashrcUser
+  register: stat_bashrc_user
 
 - name: Bashrc - create (User, all)
   ansible.builtin.file:
     path: "/home/{{ env_user }}/.bashrc"
     state: touch
+    owner: "{{ env_user }}"
+    group: "{{ env_user }}"
+    mode: u=rw,g=r,o=r
   when:
     - ansible_distribution in ["Ubuntu", "Archlinux"]
-    - not statBashrcUser.stat.exists
-    # oder: - statBashrcUser.stat.exists == false
+    - not stat_bashrc_user.stat.exists
+    # oder: - stat_bashrc_user.stat.exists == false
 
 - name: Bashrc - Insert/Update additional paths and config - nvm (User, all)
   ansible.builtin.blockinfile:
@@ -140,15 +144,18 @@
 - name: Bashrc - check status (root, all)
   ansible.builtin.stat:
     path: "/root/.bashrc"
-  register: statBashrcRoot
+  register: stat_bashrc_root
 
 - name: Bashrc - create (root, all)
   ansible.builtin.file:
     path: "/root/.bashrc"
     state: touch
+    user: root
+    group: root
+    mode: '0644'
   when:
     - ansible_distribution in ["Ubuntu", "Archlinux"]
-    - not statBashrcRoot.stat.exists
+    - not stat_bashrc_root.stat.exists
 
 - name: Bashrc - Insert/Update additional paths and config (root, all)
   ansible.builtin.blockinfile:
@@ -181,6 +188,9 @@
   ansible.builtin.file:
     path: "/home/{{ env_user }}/.zshrc"
     state: touch
+    owner: "{{ env_user }}"
+    group: "{{ env_user }}"
+    mode: u=rw,g=r,o=r
   when:
     - ansible_distribution in ["Ubuntu", "Archlinux"]
     - not statzshrcUser.stat.exists
@@ -294,15 +304,18 @@
 - name: Zshrc - check status (root, all)
   ansible.builtin.stat:
     path: "/root/.zshrc"
-  register: statBashrcRoot
+  register: stat_bashrc_root
 
 - name: Zshrc - create (root, all)
   ansible.builtin.file:
     path: "/root/.zshrc"
     state: touch
+    owner: root
+    group: root
+    mode: '0644'
   when:
     - ansible_distribution in ["Ubuntu", "Archlinux"]
-    - not statBashrcRoot.stat.exists
+    - not stat_bashrc_root.stat.exists
 
 - name: Zshrc - Insert/Update additional paths and config (root, all)
   ansible.builtin.blockinfile:
