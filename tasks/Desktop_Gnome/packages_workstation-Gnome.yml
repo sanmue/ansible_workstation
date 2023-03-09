@@ -14,6 +14,7 @@
                                                 # (Bildschirmausgabe wird ausgeschaltet nach längerer Inktivität)
       - gnome-disk-utility
       - gnome-keyring
+      - gnome-terminal
       - inkscape   # Plasma: Krita
       # - kdeconnect   # -> ? gnome-shell-extension-gsconnect ?
       - rhythmbox
