@@ -142,7 +142,7 @@
 #     - env_lsb_id != "ManjaroLinux"
 
 - name: Install additional packages for snapper on btrfs filesystem via pamac from AUR (Archlinux, NOT Manjaro)
-  ansible.builtin.shell: 
+  ansible.builtin.command: 
     cmd: "pamac build --no-confirm btrfs-assistant"
     args:
       creates: "/home/{{ env_user }}/.ansible_pamacArchBasicPackages"
