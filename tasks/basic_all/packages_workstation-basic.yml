@@ -197,7 +197,7 @@
       - zsh-doc
       - zsh-autosuggestions
       - zsh-completions
-      - zsh-syntax-highlightning
+      - zsh-syntax-highlighting
       - zsh-theme-powerlevel10k
       - zshdb   # A debugger for zsh scripts
       # ---------
