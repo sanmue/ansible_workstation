@@ -301,6 +301,8 @@
 
 # snapd: alternativer Install 'manuell' über gitclone + makepkg:
 - name: Install basic packages from AUR (snapd) - git clone (Archlinux, NOT Manjaro)
+  become: true
+  become_user: "{{ env_user }}"   # damit Rechte stimmen für nächsten Schritt: makepkg
   ansible.builtin.git:
     repo: https://aur.archlinux.org/snapd.git
     dest: /tmp/snapd
