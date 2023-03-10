@@ -313,10 +313,10 @@
 - name: Install basic packages from AUR (snapd) - makepgk (Archlinux, NOT Manjaro)
   become: true
   become_user: "{{ env_user }}"   # makepkg darf nicht als root ausgeführt werden
-  ansible.builtin.shell: makepkg -si --needed --noconfirm
+  #ansible.builtin.shell: makepkg -si --needed --noconfirm
+  ansible.builtin.shell: makepkg -si --noconfirm
   args:
     chdir: /tmp/snapd
-  
   when:
     - ansible_distribution in ["Archlinux"]
     - env_lsb_id != "ManjaroLinux"
