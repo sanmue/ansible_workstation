@@ -262,17 +262,30 @@
     - ansible_distribution in ["Archlinux"]
     - env_lsb_id != "ManjaroLinux"
 
-- name: Install basic packages via pamac from AUR (snapd) (Archlinux, NOT Manjaro)
-  ansible.builtin.shell: "pamac build --no-confirm snapd"
-  args:
-    creates: "/home/{{ env_user }}/.ansible_pamacArchBasicPackages"
+- name: Install basic packages via pamac from AUR - create flag file (Archlinux, NOT Manjaro)
+  ansible.builtin.file:
+    path: "/home/{{ env_user }}/.ansible_pamacArchBasicPackages"
+    state: touch
+    mode: u=rw,g=r,o=r
+    modification_time: preserve
+    access_time: preserve
   when:
     - ansible_distribution in ["Archlinux"]
     - env_lsb_id != "ManjaroLinux"
 
-- name: Install basic packages via pamac from AUR - create flag file (Archlinux, NOT Manjaro)
+- name: Install basic packages via pamac from AUR (snapd) (Archlinux, NOT Manjaro)
+  ansible.builtin.shell: "pamac build --no-confirm snapd"
+  become: true
+  become_user: "{{ env_user }}"
+  args:
+    creates: "/home/{{ env_user }}/.ansible_pamacArchBasicPackagesSnapd"
+  when:
+    - ansible_distribution in ["Archlinux"]
+    - env_lsb_id != "ManjaroLinux"
+
+- name: Install basic packages via pamac from AUR (snapd) - create flag file (Archlinux, NOT Manjaro)
   ansible.builtin.file:
-    path: "/home/{{ env_user }}/.ansible_pamacArchBasicPackages"
+    path: "/home/{{ env_user }}/.ansible_pamacArchBasicPackagesSnapd"
     state: touch
     mode: u=rw,g=r,o=r
     modification_time: preserve
