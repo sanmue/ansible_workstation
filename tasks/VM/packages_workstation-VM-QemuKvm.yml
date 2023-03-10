@@ -74,4 +74,4 @@
       - spice-vdagent   # spice agent for Linux guests (z.B. für clipboard sharing host+guest)
   when:
     - ansible_virtualization_role == "guest"
-    - ansible_distribution in ["Archlinux" "Ubuntu"]
+    - ansible_distribution in ["Archlinux", "Ubuntu"]
