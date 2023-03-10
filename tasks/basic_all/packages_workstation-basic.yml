@@ -335,8 +335,10 @@
 #    - ansible_distribution in ["Archlinux"]
 #    - env_lsb_id != "ManjaroLinux"
 
-- name: Install basic packages - starship shell prompt (Archlinux, NOT Manjaro)
-  ansible.builtin.shell: curl -sS https://starship.rs/install.sh
+- name: Install basic packages - starship shell prompt (env_user) (Archlinux, NOT Manjaro)
+  ansible.builtin.shell: curl -sS https://starship.rs/install.sh | sh
+  become: true
+  become_user: "{{ env_user }}"
   when:
     - ansible_distribution in ["Archlinux"]
     - env_lsb_id != "ManjaroLinux"

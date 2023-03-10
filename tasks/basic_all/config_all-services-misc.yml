@@ -210,7 +210,7 @@
 
       [Timer]
       Unit=starship_update.service
-      OnCalendar=Sat *-*-* 18:00:00
+      OnCalendar=Sat *-*-* 17:00:00
       AccuracySec=2h
       #RandomizedDelaySec=24h
       Persistent=true
