@@ -277,7 +277,8 @@
 # snapd:
 # da im bootstrap.sh bereits mit yay pamac-all snapd installiert wird, hier nicht mehr notwendig
 # ---
-#
+# Anmerkung: alterntiver install via git clone + makepkg (weiter unten) funktioniert ohne Unterbrechtung (Abrfrage sudo pw)
+# ---
 # - name: Install basic packages via pamac from AUR (snapd) (Archlinux, NOT Manjaro)
 #  ansible.builtin.shell: "pamac build --no-confirm snapd"
 #  # become: true
@@ -299,27 +300,26 @@
 #    - ansible_distribution in ["Archlinux"]
 #    - env_lsb_id != "ManjaroLinux"
 
-# snapd: alternativer Install 'manuell' über gitclone + makepkg:
-- name: Install basic packages from AUR (snapd) - git clone (Archlinux, NOT Manjaro)
-  become: true
-  become_user: "{{ env_user }}"   # damit Rechte stimmen für nächsten Schritt: makepkg
-  ansible.builtin.git:
-    repo: https://aur.archlinux.org/snapd.git
-    dest: /tmp/snapd
-  when:
-    - ansible_distribution in ["Archlinux"]
-    - env_lsb_id != "ManjaroLinux"
-
-- name: Install basic packages from AUR (snapd) - makepgk (Archlinux, NOT Manjaro)
-  become: true
-  become_user: "{{ env_user }}"   # makepkg darf nicht als root ausgeführt werden
-  #ansible.builtin.shell: makepkg -si --needed --noconfirm
-  ansible.builtin.shell: makepkg -si --noconfirm
-  args:
-    chdir: /tmp/snapd
-  when:
-    - ansible_distribution in ["Archlinux"]
-    - env_lsb_id != "ManjaroLinux"
+# # snapd: alternativer Install 'manuell' über gitclone + makepkg:
+# - name: Install basic packages from AUR (snapd) - git clone (Archlinux, NOT Manjaro)
+#  become: true
+#  become_user: "{{ env_user }}"   # damit Rechte stimmen für nächsten Schritt: makepkg
+#  ansible.builtin.git:
+#    repo: https://aur.archlinux.org/snapd.git
+#    dest: /tmp/snapd
+#  when:
+#    - ansible_distribution in ["Archlinux"]
+#    - env_lsb_id != "ManjaroLinux"
+#
+#- name: Install basic packages from AUR (snapd) - makepgk (Archlinux, NOT Manjaro)
+#  become: true
+#  become_user: "{{ env_user }}"   # makepkg darf nicht als root ausgeführt werden
+#  ansible.builtin.shell: makepkg -si --needed --noconfirm
+#  args:
+#    chdir: /tmp/snapd
+#  when:
+#    - ansible_distribution in ["Archlinux"]
+#    - env_lsb_id != "ManjaroLinux"
 
 
 - name: Install basic packages (Ubuntu)
