@@ -1,10 +1,9 @@
-
 # TODO: ggf. noch nested virtualization
 
 - name: VM - install VM QEMU/KVM (Ubuntu, not VM guest)
   tags: VM
-  package:
-    state: latest
+  ansible.builtin.package:
+    state: present
     name:
       - qemu-kvm
       - libvirt-daemon-system
@@ -23,8 +22,8 @@
 
 - name: VM - install VM QEMU/KVM (Archlinux, not VM guest)
   tags: VM
-  package:
-    state: latest
+  ansible.builtin.package:
+    state: present
     name:
       - bridge-utils      # Utilities for configuring the Linux ethernet bridge
       - dnsmasq           # Lightweight, easy to configure DNS forwarder and DHCP server
@@ -46,7 +45,9 @@
     - ansible_virtualization_role != "guest"
 
 # auskommentiert: dauert bei Install zu lange oder funktioniert nicht richtig
-#- name: VM - install (download) virtio-drivers for Windows guests from AUR (Archlinux, not VM guest)
+# in bootstrap.sh enthalten (nach ansible playbook)
+#
+# - name: VM - install (download) virtio-drivers for Windows guests from AUR (Archlinux, not VM guest)
 #  tags: VM
 #  ansible.builtin.shell:
 #    cmd: sudo pamac build --no-confirm virtio-win && touch /home/{{ env_user }}/.VM_virtioDriversInstalled
@@ -58,9 +59,19 @@
 
 - name: VM - install VM QEMU/KVM - virt-manager/viewer (all, not VM guest)
   tags: VM,workstation
-  package:
-    state: latest
+  ansible.builtin.package:
+    state: present
     name:
       - virt-manager
       - virt-viewer
   when: ansible_virtualization_role != "guest"
+
+- name: VM - install VM QEMU/KVM - Guest (all, VM guest)
+  tags: VM,guest
+  ansible.builtin.package:
+    state: present
+    name:
+      - spice-vdagent   # spice agent for Linux guests (z.B. für clipboard sharing host+guest)
+  when: 
+    - ansible_virtualization_role == "guest"
+    - ansible_distribution in ["Archlinux" "Ubuntu"]
