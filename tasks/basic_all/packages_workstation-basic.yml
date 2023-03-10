@@ -8,6 +8,7 @@
     name:
       - ansible   # bereits installiert (bootstrap)
       - ansible-lint   # für z.B. ansible extension in VS Code
+      - bash
       - clamav
       - clamtk
       - curl
@@ -155,6 +156,7 @@
     state: present
     name:
       - archlinux-keyring
+      - awesome-terminal-fonts
       - base-devel   # insbes. wg. AUR Paketen   # bereits installiert (bootstrap)
       - chromium
       - cronie   # für clamtk + timeshift # Daemon that runs specified programs at scheduled times and related tools
@@ -192,14 +194,17 @@
       - signal-desktop
       - steam-native-runtime   # Native replacement for the Steam runtime using system libraries (installiert benötigte 32bit libs)
       - torbrowser-launcher
+      - ttf-dejavu
+      - ttf-font-awesome
       - vim-ansible
-      - zsh
-      - zsh-doc
-      - zsh-autosuggestions
-      - zsh-completions
-      - zsh-syntax-highlighting
-      - zsh-theme-powerlevel10k
-      - zshdb   # A debugger for zsh scripts
+      # - zsh
+      # - zsh-doc
+      # - zsh-autosuggestions       # besser: install from git 
+      # - zsh-completions           # besser: install from git 
+      # - zsh-syntax-highlighting   # besser: install from git 
+      # - zsh-theme-powerlevel10k   # besser: install from git # There is also zsh-theme-powerlevel10k community package. 
+                                    # Historically, it has been breaking often and for extended periods of time. Do not use it.
+      # - zshdb   # A debugger for zsh scripts
       # ---------
       # firmware:
       # - alsa-firmware   # unresolvable package conflicts detected
@@ -214,6 +219,7 @@
       - manjaro-keyring
       - snapd
       - timeshift
+      - ttf-meslo-nerd-font-powerlevel10k
       # -----------------------------------
       # flatpak- und snap-plugin für pamac:
       - libpamac-flatpak-plugin
@@ -256,6 +262,14 @@
 
 - name: Install basic packages via pamac from AUR (linux-steam-integration) (Archlinux, NOT Manjaro)
   ansible.builtin.shell: "pamac build --no-confirm linux-steam-integration"
+  args:
+    creates: "/home/{{ env_user }}/.ansible_pamacArchBasicPackages"
+  when:
+    - ansible_distribution in ["Archlinux"]
+    - env_lsb_id != "ManjaroLinux"
+
+- name: Install basic packages via pamac from AUR (ttf-meslo-nerd-font-powerlevel10k) (Archlinux, NOT Manjaro)
+  ansible.builtin.shell: "pamac build --no-confirm ttf-meslo-nerd-font-powerlevel10k"
   args:
     creates: "/home/{{ env_user }}/.ansible_pamacArchBasicPackages"
   when:
@@ -321,6 +335,13 @@
 #    - ansible_distribution in ["Archlinux"]
 #    - env_lsb_id != "ManjaroLinux"
 
+- name: Install basic packages - starship shell prompt (Archlinux, NOT Manjaro)
+  ansible.builtin.shell: curl -sS https://starship.rs/install.sh
+  when:
+    - ansible_distribution in ["Archlinux"]
+    - env_lsb_id != "ManjaroLinux"
+# config: in config_all-settingsmisc.yml; update: systemd timer
+# https://starship.rs/
 
 - name: Install basic packages (Ubuntu)
   ansible.builtin.package:

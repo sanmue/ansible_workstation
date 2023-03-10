@@ -36,6 +36,19 @@
     - not stat_bashrc_user.stat.exists
     # oder: - stat_bashrc_user.stat.exists == false
 
+- name: Bashrc - Insert/Update additional paths and config - starship shell prompt (User, all)
+  ansible.builtin.blockinfile:
+    path: "/home/{{ env_user }}/.bashrc"
+    backup: true
+    marker: "### {mark} 'starship shell prompt' ANSIBLE MANAGED BLOCK ###"
+    block: |
+      # -------------------------------------------
+      # starship shell prompt - Add the init script
+      # -------------------------------------------
+      eval "$(starship init bash)"
+  when:
+    - ansible_distribution in ["Ubuntu", "Archlinux"]
+
 - name: Bashrc - Insert/Update additional paths and config - nvm (User, all)
   ansible.builtin.blockinfile:
     path: "/home/{{ env_user }}/.bashrc"
