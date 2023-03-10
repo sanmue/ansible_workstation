@@ -1,10 +1,10 @@
-##############################################
+# ##############################################
 # Create:
 #   - virtual machines
 #   - Networks
 #   - Storage Pools (02/2023: tmp. auskommentiert, siehe to do)
 #   - Snapshots
-############################################## 
+# ############################################## 
 # https://serverfault.com/questions/434064/correct-way-to-move-kvm-vm
 # https://unix.stackexchange.com/questions/628454/how-can-i-migrate-backup-restore-a-virt-manager-snapshot
 
@@ -28,9 +28,9 @@
   tags: VM
   ansible.builtin.shell:
     cmd: ls files/VM/netdump_*.xml | xargs -I % sh -c "virsh net-define %"   # ls files/VM/netdump_*.xml: Dateiname inkl. Pfad
-    #oder:
-    #chdir: files/VM/
-    #cmd: ls netdump_*.xml | xargs -I % sh -c "virsh net-define %"   # nur Dateiname, da vorher in Verzeichnis gewechselt und dann erst ls
+    # oder:
+    # chdir: files/VM/
+    # cmd: ls netdump_*.xml | xargs -I % sh -c "virsh net-define %"   # nur Dateiname, da vorher in Verzeichnis gewechselt und dann erst ls
   args:
     creates: /home/{{ env_user }}/.vm_qemu-kvm_created
   when: ansible_virtualization_role != "guest"
@@ -40,7 +40,7 @@
   ansible.builtin.shell:
     chdir: files/VM/
     cmd: ls netdump_*.xml | xargs -I % sh -c "echo % | cut -d _ -f 2" | xargs -I % sh -c "echo % | cut -d . -f 1" | xargs -I % sh -c "virsh net-start %"
-    #z.B.:  netdump_default.xml                        default.xml                                 default                            virsh net-start default
+    # z.B.: netdump_default.xml                        default.xml                                 default                            virsh net-start default
   args:
     creates: /home/{{ env_user }}/.vm_qemu-kvm_created
   when: ansible_virtualization_role != "guest"
@@ -77,7 +77,7 @@
 
 # TODO: anpassen / festlegen System-Device; aktuell nur für 1 nvme-SSD passend
 #
-#- name: create storage pool 'Downloads' for env_user (Qemu-Kvm)
+# - name: create storage pool 'Downloads' for env_user (Qemu-Kvm)
 #  tags: VM
 #  ansible.builtin.shell:
 #    chdir: files/VM/
@@ -92,6 +92,6 @@
   ansible.builtin.file:
     path: /home/{{ env_user }}/.vm_qemu-kvm_created
     state: touch
+    mode: '0644'
     modification_time: preserve
   when: ansible_virtualization_role != "guest"
-
