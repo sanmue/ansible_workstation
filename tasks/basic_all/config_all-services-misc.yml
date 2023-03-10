@@ -189,7 +189,8 @@
 
       [Service]
       Type=oneshot
-      ExecStart=/bin/bash curl -sS https://starship.rs/install.sh | sh
+      #ExecStart=/bin/bash curl -sS https://starship.rs/install.sh | sh
+      ExecStart=/bin/bash curl -sS https://starship.rs/install.sh > starship_install.sh && chmod 755 starship_install.sh && /bin/bash starship_install.sh --yes
       #User={{ env_user }}
     state: present
     group: root
