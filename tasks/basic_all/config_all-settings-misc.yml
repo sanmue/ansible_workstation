@@ -354,6 +354,21 @@
     - ansible_distribution in ["Ubuntu", "Archlinux"]
 
 
+# #########################
+# ### starship shell prompt
+# #########################
+- name: starship shell prompt - copy update-script to usr-local-bin (Arch, Ubuntu)
+  ansible.builtin.copy:
+    src: "files/config_all-settings-misc-starship_update.sh"
+    dest: "/usr/local/bin/starship_update.sh"
+    owner: root
+    group: root
+    mode: '0755'
+    backup: true
+  when:
+    - ansible_distribution in ["Archlinux", "Ubuntu"]
+
+
 # #######
 # ### vim
 # #######
