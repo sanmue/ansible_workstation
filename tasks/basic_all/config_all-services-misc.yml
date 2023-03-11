@@ -98,10 +98,10 @@
 
       [Service]
       Type=oneshot
-      #ExecStart=/usr/bin/curl -sS https://starship.rs/install.sh | sh
-      #ExecStart=/usr/bin/curl -sS https://starship.rs/install.sh > starship_install.sh && /usr/bin/bash chmod 755 starship_install.sh && /bin/bash starship_install.sh --yes
-      ExecStart=/usr/bin/bash /usr/local/bin/starship_update.sh $HOME 2>/dev/null
-      #User={{ env_user }}
+      #ExecStart=/usr/bin/curl -sS https://starship.rs/install.sh > starship_install.sh
+      #ExecStart=/usr/bin/chmod 755 starship_install.sh && /usr/bin/bash starship_install.sh --yes && /usr/bin/rm starship_install.sh
+      #
+      ExecStart=/usr/bin/bash /usr/local/bin/starship_update.sh $HOME
     state: present
     group: root
     owner: root

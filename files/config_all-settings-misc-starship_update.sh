@@ -12,7 +12,7 @@
 ### -------------------
 path="$HOME"     # default-Wert
 if [ $# -gt 0 ]; then
-    path="${1}"    # 1. Übergabe-Parameter an Script
+    path="${1}"    # 1. Übergabe-Parameter an Script muss Pfad sein
 fi
 
 ### ----
@@ -20,4 +20,4 @@ fi
 ### ----
 
 # --- Update:
-curl -sS https://starship.rs/install.sh > "$path/starship_install.sh" && chmod 755 "$path/starship_install.sh" && "$path/starship_install.sh --yes" && rm "$path/starship_install.sh"
+curl -sS https://starship.rs/install.sh > $path/starship_install.sh && chmod 755 $path/starship_install.sh && $path/starship_install.sh --yes && rm $path/starship_install.sh
