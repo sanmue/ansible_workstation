@@ -182,6 +182,19 @@
   when:
     - ansible_distribution in ["Ubuntu", "Archlinux"]
 
+- name: Bashrc - Insert/Update additional paths and config - starship shell prompt (root, all)
+  ansible.builtin.blockinfile:
+    path: "/root/.bashrc"
+    backup: true
+    marker: "### {mark} 'starship shell prompt' ANSIBLE MANAGED BLOCK ###"
+    block: |
+      # -------------------------------------------
+      # starship shell prompt - Add the init script
+      # -------------------------------------------
+      eval "$(starship init bash)"
+  when:
+    - ansible_distribution in ["Ubuntu", "Archlinux"]
+
 
 # #######################################
 # ### zsh - add additional Paths + Config
