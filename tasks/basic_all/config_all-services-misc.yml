@@ -88,7 +88,7 @@
 
 - name: Services - starship shell prompt update - Create service unit file (Ubuntu, Arch)
   ansible.builtin.blockinfile:
-    path: "/etc/systemd/user/starship_update.service"
+    path: "/etc/systemd/system/starship_update.service"
     create: true
     backup: true
     marker: '# ### {mark} ANSIBLE MANAGED BLOCK - starship shell prompt update ###'
@@ -111,7 +111,7 @@
 
 - name: Services - starship shell prompt update - Create timer unit file (Ubuntu, Arch)
   ansible.builtin.blockinfile:
-    path: "/etc/systemd/user/starship_update.timer"
+    path: "/etc/systemd/system/starship_update.timer"
     create: true
     backup: true
     marker: '# ### {mark} ANSIBLE MANAGED BLOCK - starship shell prompt update ###'
