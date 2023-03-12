@@ -59,13 +59,26 @@
 #
 # You may get a notification that clamd was not notified. This is normal because we haven't started the service yet.
 #
-- name: Update clamav database (Ubuntu, Arch)
+- name: Services - Update clamav database (Arch)
   ansible.builtin.shell:
-    cmd: freshclam && touch /home/{{ env_user }}/.freshclamInitialStartExecuted
+    cmd: freshclam
   args:
-    creates: /home/{{ env_user }}/.freshclamInitialStartExecuted
-  when: ansible_distribution in ["Ubuntu", "Archlinux"]
+    creates: /home/{{ env_user }}/.ansible_freshclamInitialStartExecuted
+  when: ansible_distribution in ["Archlinux"]
 
+# - name: Services - Update clamav database (Ubuntu)
+#  # ansible.builtin.shell: freshclam
+#  ansible.builtin.shell: freshclam --daemon --user=clamav   # Fehlermeldung
+#  args:
+#    creates: /home/{{ env_user }}/.ansible_freshclamInitialStartExecuted
+#  when: ansible_distribution in ["Ubuntu"]
+
+- name: Services - Set flag file freshclamInitialStartExecuted (Ubuntu, Arch)
+  ansible.builtin.shell:
+    cmd: freshclam && touch /home/{{ env_user }}/.ansible_freshclamInitialStartExecuted
+  args:
+    creates: /home/{{ env_user }}/.ansible_freshclamInitialStartExecuted
+  when: ansible_distribution in ["Ubuntu", "Archlinux"]
 
 - name: Services - Start+enable clamav-daemon.service (Ubuntu, Arch)
   ansible.builtin.service:
