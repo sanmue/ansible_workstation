@@ -59,13 +59,13 @@
   register: rootFsIsBtrfs
   ignore_errors: true
 
-- name: Install basic packages for snapper on btrfs filesystem (all)
+- name: Install basic packages for snapper on btrfs filesystem (all, NOT Ubuntu)
   ansible.builtin.package:
     state: present
     name:
       # ### for btrfs filesystem:
       - snapper      # A tool for managing BTRFS and LVM snapshots. It can create, diff and restore snapshots and provides timelined auto-snapping.
-      - grub-btrfs   # Include btrfs snapshots in GRUB boot options
+      - grub-btrfs   # paketname bei Ubuntu (Standard) nicht vorhanden # Include btrfs snapshots in GRUB boot options
       # >>> You must create a default config with snapper cli named root first.
       # >>> Run 'snapper -c root create-config /' as root
   # with_items: ansible_mounts
@@ -73,6 +73,7 @@
     # - item.mount  == '/'
     # - item.fstype == 'btrfs'
     - rootFsIsBtrfs != ''
+    - ansible_distribution in ["Archlinux"]
 
 - name: Install basic packages for snapper on btrfs filesystem (Archlinux/Manjaro)
   ansible.builtin.package:
@@ -88,7 +89,7 @@
   register: snapperDefaultConfigExists
   ignore_errors: true
 
-- name: Create a default config for '/' with snapper cli named 'root' (all)
+- name: Create a default config for '/' with snapper cli named 'root' (all, NOT Ubuntu)
   ansible.builtin.shell: snapper -c root create-config / && touch /home/{{ env_user }}/.snapperDefaultRootConfigCreated
   # with_items: ansible_mounts
   args:
@@ -99,6 +100,7 @@
     - rootFsIsBtrfs != ''
     # - snapperDefaultConfigExists == ''
     # - snapperDefaultConfigExists is not defined or snapperDefaultConfigExists == ''
+    - ansible_distribution in ["Archlinux"]
 
 - name: Install additional packages for snapper on btrfs filesystem (Archlinux)
   ansible.builtin.package:
