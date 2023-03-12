@@ -75,7 +75,7 @@
 
 - name: Services - Set flag file freshclamInitialStartExecuted (Ubuntu, Arch)
   ansible.builtin.shell:
-    cmd: freshclam && touch /home/{{ env_user }}/.ansible_freshclamInitialStartExecuted
+    cmd: touch /home/{{ env_user }}/.ansible_freshclamInitialStartExecuted
   args:
     creates: /home/{{ env_user }}/.ansible_freshclamInitialStartExecuted
   when: ansible_distribution in ["Ubuntu", "Archlinux"]
