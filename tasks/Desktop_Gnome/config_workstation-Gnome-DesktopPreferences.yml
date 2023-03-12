@@ -133,7 +133,7 @@
 
 - name: Copy desktop-wallpaper file to local user-folder (Gnome)
   ansible.builtin.copy:
-    src: "files/gnome/background/brad-huchteman-stone-mountain.jpg" 
+    src: "files/gnome/background/brad-huchteman-stone-mountain.jpg"
     dest: "/home/{{ env_user }}/.local/share/backgrounds/brad-huchteman-stone-mountain.jpg"
     remote_src: true
     owner: "{{ env_user }}"
@@ -193,7 +193,7 @@
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
 - name: Set desktop interface - clock-show-weekday (Gnome)
-  dconf:
+  community.general.dconf:
     key: "/org/gnome/desktop/interface/clock-show-weekday"
     value: "true"
   when:
@@ -944,7 +944,7 @@
   # #  shell: "{{ env_PWD }}/tasks/Desktop_Gnome/config_workstation-Gnome-DesktopPreferences-terminal.sh" # funktioniert; ansible version 2.9
   # #  ansible.builtin.shell: "{{ env_PWD }}/tasks/Desktop_Gnome/config_workstation-Gnome-DesktopPreferences-terminal.sh" # ab ansible version 2.10
   args:
-    creates: "/home/{{ env_user }}/.ansibleTerminalProfileSet"
+    creates: "/home/{{ env_user }}/.ansible_TerminalProfileSet"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
     # #    - "ansible_version.major is version('2', '=')"
@@ -952,9 +952,9 @@
     # - "ansible_version.full is version('2.10.0', '>=')"
     - ansible_distribution in ["Ubuntu"]
 
-- name: create flag - file .ansibleTerminalProfileSet (Gnome)
+- name: Create flag - file .ansible_TerminalProfileSet (Gnome)
   ansible.builtin.file:
-    path: "/home/{{ env_user }}/.ansibleTerminalProfileSet"
+    path: "/home/{{ env_user }}/.ansible_TerminalProfileSet"
     state: touch
     mode: u=rw,g=r,o=r
     modification_time: preserve
@@ -1165,7 +1165,7 @@
 # dconf editor: /org/gnome/desktop/app-folders/folder-children
 
 # - name: GNOME Shell Apps Dashboard - Categories (Suse + Gnome)
-#  command: gsettings set org.gnome.desktop.app-folders folder-children "['AudioVideo', 'Development', 'Education', 'Game', 'Graphics', 'Network', 'Office', 'Science', 'Settings', 'System', 'Utility']"
+#  ansible.builtin.command: gsettings set org.gnome.desktop.app-folders folder-children "['AudioVideo', 'Development', 'Education', 'Game', 'Graphics', 'Network', 'Office', 'Science', 'Settings', 'System', 'Utility']"
 #  when:
 #    - ansible_os_family == "Suse"
 #    - env_desktop == "gnome"

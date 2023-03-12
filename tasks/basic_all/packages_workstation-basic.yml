@@ -90,10 +90,10 @@
   ignore_errors: true
 
 - name: Create a default config for '/' with snapper cli named 'root' (all, NOT Ubuntu)
-  ansible.builtin.shell: snapper -c root create-config / && touch /home/{{ env_user }}/.snapperDefaultRootConfigCreated
+  ansible.builtin.shell: snapper -c root create-config / && touch /home/{{ env_user }}/.ansible_snapperDefaultRootConfigCreated
   # with_items: ansible_mounts
   args:
-    creates: /home/{{ env_user }}/.snapperDefaultRootConfigCreated
+    creates: /home/{{ env_user }}/.ansible_snapperDefaultRootConfigCreated
   when:
     # - item.mount  == '/'
     # - item.fstype == 'btrfs'
@@ -200,10 +200,10 @@
       - vim-ansible
       # - zsh
       # - zsh-doc
-      # - zsh-autosuggestions       # besser: install from git 
-      # - zsh-completions           # besser: install from git 
-      # - zsh-syntax-highlighting   # besser: install from git 
-      # - zsh-theme-powerlevel10k   # besser: install from git # There is also zsh-theme-powerlevel10k community package. 
+      # - zsh-autosuggestions       # besser: install from git
+      # - zsh-completions           # besser: install from git
+      # - zsh-syntax-highlighting   # besser: install from git
+      # - zsh-theme-powerlevel10k   # besser: install from git # There is also zsh-theme-powerlevel10k community package.
                                     # Historically, it has been breaking often and for extended periods of time. Do not use it.
       # - zshdb   # A debugger for zsh scripts
       # ---------
@@ -235,8 +235,8 @@
     name:
       - awesome-terminal-fonts
   when:
-  - ansible_distribution in ["Archlinux"]
-  - env_lsb_id != "ManjaroLinux"
+    - ansible_distribution in ["Archlinux"]
+    - env_lsb_id != "ManjaroLinux"
 
 # Inst für Archlinux, EndeavourOS: packages_workstation-localPackageInstall.yml
 # da aufgrund mehrerer Treffer mit yay Inst so nicht funktioniert
@@ -334,7 +334,7 @@
 #    - ansible_distribution in ["Archlinux"]
 #    - env_lsb_id != "ManjaroLinux"
 #
-#- name: Install basic packages from AUR (snapd) - makepgk (Archlinux, NOT Manjaro)
+# - name: Install basic packages from AUR (snapd) - makepgk (Archlinux, NOT Manjaro)
 #  become: true
 #  become_user: "{{ env_user }}"   # makepkg darf nicht als root ausgeführt werden
 #  ansible.builtin.shell: makepkg -si --needed --noconfirm
@@ -420,7 +420,7 @@
 # #      - firefox-locale-de
 #      - firefox-locale-en
 # #      - firefox-esr
-# #      - firefox-esr-locale-en      
+# #      - firefox-esr-locale-en
 #    default_release: 'o=LP-PPA-mozillateam'   # damit aus ppa installiert wird, und nicht wieder von ubuntu als snap
 #    update_cache: yes
 #  when:

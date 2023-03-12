@@ -68,8 +68,8 @@ echo "Verwendetes OS: ${os}"
 ### ---
 case ${os} in
     Manjaro* | EndeavourOS*)
-        if [ ! -f "/home/${userid}/.bootstrapMirrorPool" ]; then
-            touch "/home/${userid}/.bootstrapMirrorPool"
+        if [ ! -f "/home/${userid}/.ansible_bootstrapMirrorPool" ]; then
+            touch "/home/${userid}/.ansible_bootstrapMirrorPool"
 
             echo -e "\nReset custom mirror list + customize mirror pool + full refresh of the package database and update all packages on the system..."
             sudo pacman-mirrors -c all && sudo pacman-mirrors --country Germany,France,Austria,Switzerland,Netherlands && sudo pacman -Syyu --noconfirm 
@@ -80,7 +80,7 @@ case ${os} in
 
         if [ "${os}" = "EndeavourOS" ]; then
             echo -e "\nInstallation Archlinux, EndeavourOS: 'pamac-all'..."
-            yay pamac-all
+            yay pamac-all && touch "/home/${userid}/.ansible_bootstrap_yay-pamacInstall"
             # mit pamac ist (aktuell noch) es einfacher (automatisiert) mehrere (AUR)pakete ohne Nachfrage zu installieren 
             # (pamac build --no-confirm SW1 SW2 ...)
             # mit ansible modul pacman, executable yay + argumente (noch) nicht hingekriegt
@@ -257,19 +257,19 @@ if [ "${installAUR}" == "j" ]; then
         Manjaro* | EndeavourOS*)
             echo -e "\nInstall Citrix Workspace App (icaclient) from AUR (Arch)"
             # yay icaclient && touch "/home/${userid}/.icaclientInstalled"
-            pamac build icaclient && touch "/home/${userid}/.icaclientInstalled"
+            pamac build icaclient && touch "/home/${userid}/.ansible_bootstrap_pamac-icaclientInstalled"
 
             echo -e "\nVM - Install virtio-win image from AUR (Arch)"
             # yay virtio-win && touch "/home/${userid}/.VM_virtioDriversInstalled"
-            pamac build virtio-win && touch "/home/${userid}/.VM_virtioDriversInstalled"
+            pamac build virtio-win && touch "/home/${userid}/.ansible_bootstrap_pamac-vmVirtioWinInstalled"
 
             echo -e "\nInstall Microsoft TTF Fonts from AUR (Arch)"
             # yay ttf-ms-fonts
-            pamac build ttf-ms-fonts
+            pamac build ttf-ms-fonts && touch "/home/${userid}/.ansible_bootstrap_pamac-ttfmsfontsInstalled"
 
             echo -e "\nInstall woeusb-ng from AUR (Arch)"
             # yay woeusb-ng   # Simple tool that enable you to create your own usb stick with Windows installer.
-            pamac build woeusb-ng
+            pamac build woeusb-ng && touch "/home/${userid}/.ansible_bootstrap_pamac-woeusbngInstalled"
         ;;
 
         *)
@@ -279,4 +279,3 @@ if [ "${installAUR}" == "j" ]; then
         ;;
     esac
 fi
-
