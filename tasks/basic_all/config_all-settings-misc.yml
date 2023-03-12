@@ -412,11 +412,12 @@
 #  args:
 #    creates: "/home/{{ env_user }}/.vimrc"
 
-
 - name: Set vim global config (ubuntu)
   ansible.builtin.blockinfile:
     path: "/etc/vim/vimrc.local"
     backup: true
+    create: true
+    mode: '0644'
     marker: '" ### {mark} ANSIBLE MANAGED BLOCK ###'
     block: |
       " #
