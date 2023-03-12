@@ -335,7 +335,7 @@
 #    - ansible_distribution in ["Archlinux"]
 #    - env_lsb_id != "ManjaroLinux"
 
-- name: Install basic packages - starship shell prompt (env_user) - download install-file (Archlinux, NOT Manjaro)
+- name: Install basic packages - starship shell prompt (env_user) - download install-file (all)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.uri:
@@ -348,16 +348,16 @@
     creates: "/home/{{ env_user }}/starship_install.sh"
   register: result
   when:
-    - ansible_distribution in ["Archlinux"]
-    - env_lsb_id != "ManjaroLinux"
+    - ansible_distribution in ["Archlinux", "Ubuntu"]
+    # - env_lsb_id != "ManjaroLinux"   # für bash in Manjaro, daher auskommentiert
 
-- name: Install basic packages - starship shell prompt (env_user) - execute install-file (Archlinux, NOT Manjaro)
+- name: Install basic packages - starship shell prompt (env_user) - execute install-file (all)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: "/home/{{ env_user }}/starship_install.sh --yes"
   when:
-    - ansible_distribution in ["Archlinux"]
-    - env_lsb_id != "ManjaroLinux"
+    - ansible_distribution in ["Archlinux", "Ubuntu"]
+    # - env_lsb_id != "ManjaroLinux"   # für bash in Manjaro, daher auskommentiert
 # config: in config_all-settingsmisc.yml; update: systemd timer
 # https://starship.rs/
 

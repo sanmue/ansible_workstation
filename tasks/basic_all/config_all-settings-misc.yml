@@ -168,6 +168,19 @@
     - ansible_distribution in ["Ubuntu", "Archlinux"]
     - not stat_bashrc_root.stat.exists
 
+- name: Bashrc - Insert/Update additional paths and config - starship shell prompt (root, all)
+  ansible.builtin.blockinfile:
+    path: "/root/.bashrc"
+    backup: true
+    marker: "### {mark} 'starship shell prompt' ANSIBLE MANAGED BLOCK ###"
+    block: |
+      # -------------------------------------------
+      # starship shell prompt - Add the init script
+      # -------------------------------------------
+      eval "$(starship init bash)"
+  when:
+    - ansible_distribution in ["Ubuntu", "Archlinux"]
+
 - name: Bashrc - Insert/Update additional paths and config (root, all)
   ansible.builtin.blockinfile:
     path: "/root/.bashrc"
@@ -179,19 +192,6 @@
       # -------------------------------
       export VISUAL=vim
       export EDITOR="${VISUAL}"
-  when:
-    - ansible_distribution in ["Ubuntu", "Archlinux"]
-
-- name: Bashrc - Insert/Update additional paths and config - starship shell prompt (root, all)
-  ansible.builtin.blockinfile:
-    path: "/root/.bashrc"
-    backup: true
-    marker: "### {mark} 'starship shell prompt' ANSIBLE MANAGED BLOCK ###"
-    block: |
-      # -------------------------------------------
-      # starship shell prompt - Add the init script
-      # -------------------------------------------
-      eval "$(starship init bash)"
   when:
     - ansible_distribution in ["Ubuntu", "Archlinux"]
 
@@ -219,6 +219,21 @@
     - ansible_distribution in ["Ubuntu", "Archlinux"]
     - not statzshrcUser.stat.exists
     # oder: - statzshrcUser.stat.exists == false
+
+# bei Manjaro ist zsh bereits angepasst
+- name: Zshrc - Insert/Update additional paths and config - starship shell prompt (User, NOT Manjaro)
+  ansible.builtin.blockinfile:
+    path: "/home/{{ env_user }}/.zshrc"
+    backup: true
+    marker: "### {mark} 'starship shell prompt' ANSIBLE MANAGED BLOCK ###"
+    block: |
+      # -------------------------------------------
+      # starship shell prompt - Add the init script
+      # -------------------------------------------
+      eval "$(starship init bash)"
+  when:
+    - ansible_distribution in ["Ubuntu", "Archlinux"]
+    - env_lsb_id != "ManjaroLinux"
 
 - name: Zshrc - Insert/Update additional paths and config - nvm (User, all)
   ansible.builtin.blockinfile:
@@ -338,6 +353,21 @@
   when:
     - ansible_distribution in ["Ubuntu", "Archlinux"]
     - not stat_bashrc_root.stat.exists
+
+# bei Manjaro ist zsh bereits angepasst
+- name: Zshrc - Insert/Update additional paths and config - starship shell prompt (root, NOT Manjaro)
+  ansible.builtin.blockinfile:
+    path: "/root/.zshrc"
+    backup: true
+    marker: "### {mark} 'starship shell prompt' ANSIBLE MANAGED BLOCK ###"
+    block: |
+      # -------------------------------------------
+      # starship shell prompt - Add the init script
+      # -------------------------------------------
+      eval "$(starship init bash)"
+  when:
+    - ansible_distribution in ["Ubuntu", "Archlinux"]
+    - env_lsb_id != "ManjaroLinux"
 
 - name: Zshrc - Insert/Update additional paths and config (root, all)
   ansible.builtin.blockinfile:
