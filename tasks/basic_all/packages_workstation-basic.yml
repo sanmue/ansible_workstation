@@ -16,9 +16,6 @@
       - dmidecode
       - eslint   # An AST-based pattern checker for JavaScript (für VS Code / Code - OSS Extension)
       - evolution
-      - evolution-bogofilter
-      - evolution-ews   # MS Exchange integration through Exchange Web Services
-      - evolution-spamassassin
       - libfaketime   # Report fake dates and times to programs without having to change the system-wide time.
       - flatpak
       - gimp
@@ -161,6 +158,9 @@
       - cronie   # für clamtk + timeshift # Daemon that runs specified programs at scheduled times and related tools
       - code   # The Open Source build of Visual Studio Code (vscode) editor
       - discord
+      - evolution-bogofilter
+      - evolution-ews   # MS Exchange integration through Exchange Web Services
+      - evolution-spamassassin
       # - evolution-on   # Tray plugin for the Evolution email client
       # - exfat-utils   # exfat-utils and exfatprogs are in conflict
       - firefox
@@ -375,7 +375,9 @@
     name:
       - anki
       - clamav-daemon
+      - evolution-plugin-bogofilter
       - evolution-plugin-pstimport
+      - evolution-plugin-spamassassin
       - evolution-plugins
       - exfat-fuse#
       # - firefox # -> in Standard-Inst bereits vorhanden (ab 22.04: als snap package)
