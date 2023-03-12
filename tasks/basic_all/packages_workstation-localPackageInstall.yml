@@ -1,18 +1,17 @@
-﻿
-#   ----------------------------------------
-### Install from locally downloades packages
-#   ----------------------------------------
+﻿# ----------------------------------------
+# Install from locally downloades packages
+# ----------------------------------------
 
-#####################################
-### Citrix Workspace App (ICA-Client)
-#####################################
+# #####################################
+# ### Citrix Workspace App (ICA-Client)
+# #####################################
 
 - name: Install Certificates for Citrix Workspace App (ICA-Client) from Mozilla cert-folder + pem-convert (Ubuntu)
   # requires installed Mozilla Firefox (was installed via a previous task)
   ansible.builtin.shell:
-    #chdir: tasks/basic_all/
-    #cmd: ./config_workstation-localPackageInstall-CitrixWorkspaceApp.sh
-    cmd: ./tasks/basic_all/config_workstation-localPackageInstall-CitrixWorkspaceApp.sh
+    # chdir: tasks/basic_all/
+    # cmd: ./config_workstation-localPackageInstall-CitrixWorkspaceApp.sh
+    cmd: chmod +x ./tasks/basic_all/config_workstation-localPackageInstall-CitrixWorkspaceApp.sh && ./tasks/basic_all/config_workstation-localPackageInstall-CitrixWorkspaceApp.sh
   when:
     - ansible_distribution == "Ubuntu"
 
@@ -23,15 +22,15 @@
     - ansible_distribution == "Ubuntu"
 
 
-### Archlinux/Manjaro: ins bootstrap-script aufenommen
+# ### Archlinux/Manjaro: ins bootstrap-script aufenommen
 
-#- name: TODO - Download and install Citrix Workspace App (icaclient) from AUR (Arch)
+# - name: TODO - Download and install Citrix Workspace App (icaclient) from AUR (Arch)
 #  ansible.builtin.debug:
 #    msg: "TODO: Install from AUR: 'sudo pamac build --no-confirm icaclient'"
 #  when:
 #    - ansible_distribution == "Archlinux"
 
-#- name: Download and install Citrix Workspace App (icaclient) from AUR (Archlinux)
+# - name: Download and install Citrix Workspace App (icaclient) from AUR (Archlinux)
 #  ansible.builtin.shell:
 #    cmd: "sudo pamac build --no-confirm icaclient && touch /home/{{ env_user }}/.icaclientInstalled"
 #  args:
@@ -40,16 +39,15 @@
 #    - ansible_distribution == "Archlinux"
 
 
-
-######################
-### Visual Studio Code
-######################
+# ######################
+# ### Visual Studio Code
+# ######################
 
 - name: Download Visual Studio Code deb-package (Ubuntu)
   ansible.builtin.get_url:
     url: "https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64"
     dest: /tmp/code.deb
-#    force_basic_auth: yes
+    # force_basic_auth: yes
     force: false
   when:
     - ansible_distribution == "Ubuntu"
