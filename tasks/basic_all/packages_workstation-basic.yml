@@ -156,7 +156,6 @@
     state: present
     name:
       - archlinux-keyring
-      - awesome-terminal-fonts
       - base-devel   # insbes. wg. AUR Paketen   # bereits installiert (bootstrap)
       - chromium
       - cronie   # für clamtk + timeshift # Daemon that runs specified programs at scheduled times and related tools
@@ -228,6 +227,14 @@
   when:
     - ansible_distribution in ["Archlinux"]
     - env_lsb_id == "ManjaroLinux"
+
+- name: Install basic packages (Archlinux, NOT Manjaro)
+  community.general.pacman:
+    name:
+      - awesome-terminal-fonts
+  when:
+  - ansible_distribution in ["Archlinux"]
+  - env_lsb_id != "ManjaroLinux"
 
 # Inst für Archlinux, EndeavourOS: packages_workstation-localPackageInstall.yml
 # da aufgrund mehrerer Treffer mit yay Inst so nicht funktioniert
