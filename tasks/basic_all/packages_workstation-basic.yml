@@ -16,6 +16,7 @@
       - dmidecode
       - eslint   # An AST-based pattern checker for JavaScript (für VS Code / Code - OSS Extension)
       - evolution
+      - exa   # ls replacement
       - flatpak
       - gimp
       - gimp-help-en
