@@ -1,48 +1,48 @@
 ﻿# ### https://wiki.archlinux.org/title/Postfix
 
-- name: Config postfix - aliases (Archlinux, Ubuntu)
+- name: Config postfix - aliases (Archlinux)
   ansible.builtin.replace:
     path: /etc/postfix/aliases
     regexp: '^#root.*you'
     replace: "root: {{ env_user }}"
   when:
-    - ansible_distribution in ["Archlinux", "Ubuntu"]
+    - ansible_distribution in ["Archlinux"]
 
-- name: Config postfix - run postalias command (Archlinux, Ubuntu)
+- name: Config postfix - run postalias command (Archlinux)
   ansible.builtin.shell:
     cmd: "postalias /etc/postfix/aliases"
   when:
-    - ansible_distribution in ["Archlinux", "Ubuntu"]
+    - ansible_distribution in ["Archlinux"]
 
-- name: Config postfix - initialize alias database (Archlinux, Ubuntu)
+- name: Config postfix - initialize alias database (Archlinux)
   ansible.builtin.shell:
     cmd: "newaliases && touch /home/{{ env_user }}/.ansible_postfixNewaliases"
   args:
     creates: "/home/{{ env_user }}/.ansible_postfixNewaliases"
   when:
-    - ansible_distribution in ["Archlinux", "Ubuntu"]
+    - ansible_distribution in ["Archlinux"]
 
 # ### ##############################
 # ### config postfix for local mail:
-- name: Config postfix - local mail - main.cf - myhostname (Archlinux, Ubuntu)
+- name: Config postfix - local mail - main.cf - myhostname (Archlinux)
   ansible.builtin.lineinfile:
     path: /etc/postfix/main.cf
     insertafter: '^#myhostname.=.virtual.domain.tld'
     line: myhostname = localhost
     state: present
   when:
-    - ansible_distribution in ["Archlinux", "Ubuntu"]
+    - ansible_distribution in ["Archlinux"]
 
-- name: Config postfix - local mail - main.cf - mydomain (Archlinux, Ubuntu)
+- name: Config postfix - local mail - main.cf - mydomain (Archlinux)
   ansible.builtin.lineinfile:
     path: /etc/postfix/main.cf
     insertafter: '^#mydomain.=.domain.tld'
     line: mydomain = localdomain
     state: present
   when:
-    - ansible_distribution in ["Archlinux", "Ubuntu"]
+    - ansible_distribution in ["Archlinux"]
 
-- name: Config postfix - local mail - main.cf - mydestination (Archlinux, Ubuntu)
+- name: Config postfix - local mail - main.cf - mydestination (Archlinux)
   ansible.builtin.lineinfile:
     path: /etc/postfix/main.cf
     insertafter: '^#mydestination.=.\$myhostname,.localhost.\$mydomain,.localhost'
@@ -50,31 +50,31 @@
     firstmatch: true
     state: present
   when:
-    - ansible_distribution in ["Archlinux", "Ubuntu"]
+    - ansible_distribution in ["Archlinux"]
 
-- name: Config postfix - local mail - main.cf - inet_interfaces (Archlinux, Ubuntu)
+- name: Config postfix - local mail - main.cf - inet_interfaces (Archlinux)
   ansible.builtin.lineinfile:
     path: /etc/postfix/main.cf
     insertafter: '^#inet_interfaces.=.\$myhostname'
     line: inet_interfaces = $myhostname, localhost
     state: present
   when:
-    - ansible_distribution in ["Archlinux", "Ubuntu"]
+    - ansible_distribution in ["Archlinux"]
 
-- name: Config postfix - local mail - main.cf - mynetworks_style (Archlinux, Ubuntu)
+- name: Config postfix - local mail - main.cf - mynetworks_style (Archlinux)
   ansible.builtin.lineinfile:
     path: /etc/postfix/main.cf
     insertafter: '^#mynetworks_style.=.subnet'
     line: mynetworks_style = host
     state: present
   when:
-    - ansible_distribution in ["Archlinux", "Ubuntu"]
+    - ansible_distribution in ["Archlinux"]
 
-- name: Config postfix - local mail - main.cf - default_transport (Archlinux, Ubuntu)
+- name: Config postfix - local mail - main.cf - default_transport (Archlinux)
   ansible.builtin.lineinfile:
     path: /etc/postfix/main.cf
     insertafter: '^#relayhost.=.\[an.ip.add.ress\]'
     line: 'default_transport = error: outside mail is not deliverable'
     state: present
   when:
-    - ansible_distribution in ["Archlinux", "Ubuntu"]
+    - ansible_distribution in ["Archlinux"]
