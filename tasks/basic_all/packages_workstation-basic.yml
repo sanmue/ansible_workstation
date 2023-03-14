@@ -197,7 +197,9 @@
       - steam-native-runtime   # Native replacement for the Steam runtime using system libraries (installiert benötigte 32bit libs)
       - torbrowser-launcher
       - ttf-dejavu
-      - ttf-font-awesome
+      - ttf-dejavu-nerd
+      # - ttf-font-awesome
+      - ttf-sourcecodepro-nerd
       - vim-ansible
       # - zsh
       # - zsh-doc
@@ -231,13 +233,13 @@
     - ansible_distribution in ["Archlinux"]
     - env_lsb_id == "ManjaroLinux"
 
-- name: Install basic packages (Archlinux, NOT Manjaro)
-  community.general.pacman:
-    name:
-      - awesome-terminal-fonts
-  when:
-    - ansible_distribution in ["Archlinux"]
-    - env_lsb_id != "ManjaroLinux"
+# - name: Install basic packages (Archlinux, NOT Manjaro)
+#  community.general.pacman:
+#    name:
+#      - awesome-terminal-fonts
+#  when:
+#    - ansible_distribution in ["Archlinux"]
+#    - env_lsb_id != "ManjaroLinux"
 
 # Inst für Archlinux, EndeavourOS: packages_workstation-localPackageInstall.yml
 # da aufgrund mehrerer Treffer mit yay Inst so nicht funktioniert
@@ -345,6 +347,19 @@
 #    - ansible_distribution in ["Archlinux"]
 #    - env_lsb_id != "ManjaroLinux"
 
+
+- name: Install basic packages - create local font directory - systemwide (all)
+  # https://wiki.archlinux.org/title/Fonts#Manual_installation
+  # systemwide (all users): /usr/share/fonts/   # is under the purview of the package manager, and should not be modified manually
+  # systemwide (all users): /usr/local/share/fonts/
+  # for single user: ~/.local/share/fonts/
+  ansible.builtin.file:
+    path: /usr/local/share/fonts
+    mode: '0755'
+    state: directory
+  when:
+    - ansible_distribution in ["Archlinux", "Ubuntu"]
+
 # - name: Install basic packages - Nerd Fonts - Meslo LG M Regular Complete Mono - systemwide (all)
 # # https://github.com/ryanoasis/nerd-fonts#option-6-ad-hoc-curl-download
 # # https://github.com/ryanoasis/nerd-fonts/releases
@@ -356,10 +371,10 @@
 #    url: https://github.com/ryanoasis/nerd-fonts/raw/HEAD/patched-fonts/Melso/M/Regular/complete/Meslo%20LG%20M%20Regular%20Nerd%20Font%20Complete%20Mono.ttf 
 #    method: GET
 #    follow_redirects: safe
-#    # dest: "/usr/share/fonts/Meslo LG M Regular Nerd Font Complete Mono.ttf"
-#    dest: /usr/share/fonts/
+#    # dest: "/usr/local/share/fonts/Meslo LG M Regular Nerd Font Complete Mono.ttf"
+#    dest: /usr/local/share/fonts/
 #    mode: '0644'
-#    creates: "/usr/share/fonts/Meslo LG M Regular Nerd Font Complete Mono.ttf"
+#    creates: "/usr/local/share/fonts/Meslo LG M Regular Nerd Font Complete Mono.ttf"
 #  # register: result
 #  when:
 #    - ansible_distribution in ["Archlinux", "Ubuntu"]
@@ -373,8 +388,8 @@
 # install for user: ~/.local/share/fonts/
   ansible.builtin.shell: sudo curl -fLo "Meslo LG M Regular Nerd Font Complete Mono.ttf" https://github.com/ryanoasis/nerd-fonts/raw/HEAD/patched-fonts/Meslo/M/Regular/complete/Meslo%20LG%20M%20Regular%20Nerd%20Font%20Complete%20Mono.ttf
   args:
-    chdir: /usr/share/fonts/
-    creates: "/usr/share/fonts/Meslo LG M Regular Nerd Font Complete Mono.ttf"
+    chdir: /usr/local/share/fonts/
+    creates: "/usr/local/share/fonts/Meslo LG M Regular Nerd Font Complete Mono.ttf"
   when:
     - ansible_distribution in ["Archlinux", "Ubuntu"]
 
@@ -383,18 +398,18 @@
 #    url: https://github.com/ryanoasis/nerd-fonts/raw/HEAD/patched-fonts/Melso/M/Regular/complete/Meslo%20LG%20M%20Regular%20Nerd%20Font%20Complete.ttf
 #    method: GET
 #    follow_redirects: safe
-#    # dest: "/usr/share/fonts//Meslo LG M Regular Nerd Font Complete.ttf"
-#    dest: "/usr/local/share/fonts/Meslo LG M Regular Nerd Font Complete.ttf"
+#    # dest: "/usr/local/share/fonts/Meslo LG M Regular Nerd Font Complete.ttf"
+#    dest: "/usr/local/share/fonts/fonts/Meslo LG M Regular Nerd Font Complete.ttf"
 #    mode: '0644'
-#    creates: "/usr/share/fonts/Meslo LG M Regular Nerd Font Complete.ttf"
+#    creates: "/usr/local/share/fonts/Meslo LG M Regular Nerd Font Complete.ttf"
 #  when:
 #    - ansible_distribution in ["Archlinux", "Ubuntu"]
 
 - name: Install basic packages - Nerd Fonts - Meslo LG M Regular Complete Mono - systemwide (all)
   ansible.builtin.shell: sudo curl -fLo "Meslo LG M Regular Nerd Font Complete.ttf" https://github.com/ryanoasis/nerd-fonts/raw/HEAD/patched-fonts/Meslo/M/Regular/complete/Meslo%20LG%20M%20Regular%20Nerd%20Font%20Complete.ttf
   args:
-    chdir: /usr/share/fonts/
-    creates: "/usr/share/fonts/Meslo LG M Regular Nerd Font Complete.ttf"
+    chdir: /usr/local/share/fonts
+    creates: "/usr/local/share/fonts/Meslo LG M Regular Nerd Font Complete.ttf"
   when:
     - ansible_distribution in ["Archlinux", "Ubuntu"]
 
@@ -402,6 +417,7 @@
   ansible.builtin.shell: fc-cache -f
   when:
     - ansible_distribution in ["Archlinux", "Ubuntu"]
+
 
 - name: Install basic packages - starship shell prompt (env_user) - download install-file (all)
   become: true

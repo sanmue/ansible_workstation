@@ -21,8 +21,8 @@ create_new_profile() {
 }
 
 
-######################################
-### Create profile - "Custom_Standard"
+# ######################################
+# ### Create profile - "Custom_Standard"
 id=$(create_new_profile Custom_Standard)
 # Preferences:
 dconf write "${dconfdir}/:${id}"/background-color "'rgb(23,20,33)'"
@@ -31,15 +31,16 @@ dconf write "${dconfdir}/:${id}"/palette "['rgb(23,20,33)', 'rgb(192,28,40)', 'r
 dconf write "${dconfdir}/:${id}"/use-theme-colors "false"
 dconf write "${dconfdir}/:${id}"/default-size-columns "100"
 dconf write "${dconfdir}/:${id}"/default-size-rows "28"
-dconf write "${dconfdir}/:${id}"/font "'Monospace 14'"
+# dconf write "${dconfdir}/:${id}"/font "'Monospace 14'"
+dconf write "${dconfdir}/:${id}"/font "'MesloLGM Nerd Font Mono 12'"
 dconf write "${dconfdir}/:${id}"/use-system-font "false"
 
 # Set as default profile:
 #dconf write "${dconfdir}/default" "'$id'"
 
 
-######################################
-### Create profile - "Custom_SSH"
+# ######################################
+# ### Create profile - "Custom_SSH"
 id=$(create_new_profile Custom_SSH)
 # Preferences:
 dconf write "${dconfdir}/:${id}"/background-color "'rgb(0,0,0)'"
@@ -47,13 +48,13 @@ dconf write "${dconfdir}/:${id}"/foreground-color "'rgb(0,255,0)'"
 dconf write "${dconfdir}/:${id}"/use-theme-colors "false"
 dconf write "${dconfdir}/:${id}"/default-size-columns "100"
 dconf write "${dconfdir}/:${id}"/default-size-rows "28"
-dconf write "${dconfdir}/:${id}"/font "'Monospace 14'"
+dconf write "${dconfdir}/:${id}"/font "'MesloLGM Nerd Font Mono 12'"
 dconf write "${dconfdir}/:${id}"/use-system-font "false"
 #dconf write "${dconfdir}/:${id}"/visible-name "Custom_SSH"
 
 
-######################################
-### Create profile - "Custom_Root"
+# ######################################
+# ### Create profile - "Custom_Root"
 id=$(create_new_profile Custom_Root)
 # Preferences:
 dconf write "${dconfdir}/:${id}"/background-color "'rgb(9,9,9)'"
@@ -61,17 +62,17 @@ dconf write "${dconfdir}/:${id}"/foreground-color "'rgb(213,0,0)'"
 dconf write "${dconfdir}/:${id}"/use-theme-colors "false"
 dconf write "${dconfdir}/:${id}"/default-size-columns "100"
 dconf write "${dconfdir}/:${id}"/default-size-rows "28"
-dconf write "${dconfdir}/:${id}"/font "'Monospace 14'"
+dconf write "${dconfdir}/:${id}"/font "'MesloLGM Nerd Font Mono 12'"
 dconf write "${dconfdir}/:${id}"/use-system-font "false"
 
-################################################################################
-################################################################################
+# ###############################################################################
+# ###############################################################################
 
-### $ gsettings list-schemas | grep org.gnome.Terminal
+# ### $ gsettings list-schemas | grep org.gnome.Terminal
 # org.gnome.Terminal.ProfilesList
 # org.gnome.Terminal.Legacy.Settings
 #
-### $ gsettings get org.gnome.Terminal.ProfilesList list
+# ### $ gsettings get org.gnome.Terminal.ProfilesList list
 # ['b1dcc9dd-5262-4d8d-a863-c897e6d979b9', 'dbf405e2-9686-4035-98c0-e23e25934e56']
-### $ gsettings get org.gnome.Terminal.ProfilesList default
+# ### $ gsettings get org.gnome.Terminal.ProfilesList default
 #'b1dcc9dd-5262-4d8d-a863-c897e6d979b9'
