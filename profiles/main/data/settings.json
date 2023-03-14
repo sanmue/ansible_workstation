@@ -22,5 +22,6 @@
     
     },
     "syncSettings.hostname": "{{hostname}}",
-    "terminal.integrated.fontFamily": "'NotoMono Nerd Font'"
+    "terminal.integrated.fontFamily": "'MesloLGS NF'",
+    "editor.fontFamily": "'MesloLGS NF', 'Droid Sans Mono', 'monospace', monospace"
 }
