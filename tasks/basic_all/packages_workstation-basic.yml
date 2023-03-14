@@ -345,6 +345,25 @@
 #    - ansible_distribution in ["Archlinux"]
 #    - env_lsb_id != "ManjaroLinux"
 
+# - name: Install Nerd Fonts - Meslo LG M Regular Complete Mono - systemwide (all)
+# # https://github.com/ryanoasis/nerd-fonts#option-6-ad-hoc-curl-download
+# # https://github.com/ryanoasis/nerd-fonts/releases
+# # https://ostechnix.com/install-nerd-fonts-to-add-glyphs-in-your-code-on-linux/
+# # https://askubuntu.com/questions/1384501/installing-custom-fonts-on-ubuntu-server
+# # install systemwide: /usr/share/fonts/ or /usr/local/share/fonts/
+# # install for user: ~/.local/share/fonts/
+#  ansible.builtin.uri:
+#    url: https://github.com/ryanoasis/nerd-fonts/raw/HEAD/patched-fonts/Melso/M/Regular/complete/Meslo%20LG%20M%20Regular%20Nerd%20Font%20Complete%20Mono.ttf
+#    method: GET
+#    follow_redirects: safe
+#    # dest: "/usr/local/share/fonts/Meslo LG M Regular Nerd Font Complete Mono.ttf"
+#    dest: /usr/local/share
+#    mode: '0644'
+#    creates: "/usr/local/share/fonts/Meslo LG M Regular Nerd Font Complete Mono.ttf"
+#  # register: result
+#  when:
+#    - ansible_distribution in ["Archlinux", "Ubuntu"]
+
 - name: Install Nerd Fonts - Meslo LG M Regular Complete Mono - systemwide (all)
 # https://github.com/ryanoasis/nerd-fonts#option-6-ad-hoc-curl-download
 # https://github.com/ryanoasis/nerd-fonts/releases
@@ -352,15 +371,11 @@
 # https://askubuntu.com/questions/1384501/installing-custom-fonts-on-ubuntu-server
 # install systemwide: /usr/share/fonts/ or /usr/local/share/fonts/
 # install for user: ~/.local/share/fonts/
-  ansible.builtin.uri:
+  ansible.builtin.get_url:
     url: https://github.com/ryanoasis/nerd-fonts/raw/HEAD/patched-fonts/Melso/M/Regular/complete/Meslo%20LG%20M%20Regular%20Nerd%20Font%20Complete%20Mono.ttf
-    method: GET
-    follow_redirects: safe
     # dest: "/usr/local/share/fonts/Meslo LG M Regular Nerd Font Complete Mono.ttf"
     dest: /usr/local/share
     mode: '0644'
-    creates: "/usr/local/share/fonts/Meslo LG M Regular Nerd Font Complete Mono.ttf"
-  # register: result
   when:
     - ansible_distribution in ["Archlinux", "Ubuntu"]
 
