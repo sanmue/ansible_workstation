@@ -356,7 +356,8 @@
     url: https://github.com/ryanoasis/nerd-fonts/raw/HEAD/patched-fonts/Melso/M/Regular/complete/Meslo%20LG%20M%20Regular%20Nerd%20Font%20Complete%20Mono.ttf
     method: GET
     follow_redirects: safe
-    dest: "/usr/local/share/fonts/Meslo LG M Regular Nerd Font Complete Mono.ttf"
+    # dest: "/usr/local/share/fonts/Meslo LG M Regular Nerd Font Complete Mono.ttf"
+    dest: /usr/local/share
     mode: '0644'
     creates: "/usr/local/share/fonts/Meslo LG M Regular Nerd Font Complete Mono.ttf"
   # register: result
@@ -368,9 +369,10 @@
     url: https://github.com/ryanoasis/nerd-fonts/raw/HEAD/patched-fonts/Melso/M/Regular/complete/Meslo%20LG%20M%20Regular%20Nerd%20Font%20Complete.ttf
     method: GET
     follow_redirects: safe
+    # dest: "/usr/local/share/fonts/Meslo LG M Regular Nerd Font Complete.ttf"
     dest: "/usr/local/share/fonts/Meslo LG M Regular Nerd Font Complete.ttf"
     mode: '0644'
-    creates: "/usr/local/share/fonts/Meslo LG M Regular Nerd Font Complete.ttf"
+    creates: /usr/local/share
   when:
     - ansible_distribution in ["Archlinux", "Ubuntu"]
   
