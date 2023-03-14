@@ -371,7 +371,7 @@
 # https://askubuntu.com/questions/1384501/installing-custom-fonts-on-ubuntu-server
 # install systemwide: /usr/share/fonts/ or /usr/local/share/fonts/
 # install for user: ~/.local/share/fonts/
-  ansible.builtin.shell: curl -fLo "Meslo LG M Regular Nerd Font Complete Mono.ttf" https://github.com/ryanoasis/nerd-fonts/raw/HEAD/patched-fonts/Melso/M/Regular/complete/Meslo%20LG%20M%20Regular%20Nerd%20Font%20Complete%20Mono.ttf 
+  ansible.builtin.shell: sudo curl -fLo "Meslo LG M Regular Nerd Font Complete Mono.ttf" https://github.com/ryanoasis/nerd-fonts/raw/HEAD/patched-fonts/Meslo/M/Regular/complete/Meslo%20LG%20M%20Regular%20Nerd%20Font%20Complete%20Mono.ttf
   args:
     chdir: /usr/share/fonts/
     creates: "/usr/share/fonts/Meslo LG M Regular Nerd Font Complete Mono.ttf"
@@ -391,7 +391,7 @@
 #    - ansible_distribution in ["Archlinux", "Ubuntu"]
 
 - name: Install basic packages - Nerd Fonts - Meslo LG M Regular Complete Mono - systemwide (all)
-  ansible.builtin.shell: curl -fLo "Meslo LG M Regular Nerd Font Complete.ttf" https://github.com/ryanoasis/nerd-fonts/raw/HEAD/patched-fonts/Melso/M/Regular/complete/Meslo%20LG%20M%20Regular%20Nerd%20Font%20Complete.ttf 
+  ansible.builtin.shell: sudo curl -fLo "Meslo LG M Regular Nerd Font Complete.ttf" https://github.com/ryanoasis/nerd-fonts/raw/HEAD/patched-fonts/Meslo/M/Regular/complete/Meslo%20LG%20M%20Regular%20Nerd%20Font%20Complete.ttf
   args:
     chdir: /usr/share/fonts/
     creates: "/usr/share/fonts/Meslo LG M Regular Nerd Font Complete.ttf"
