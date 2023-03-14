@@ -346,13 +346,14 @@
 #    - env_lsb_id != "ManjaroLinux"
 
 - name: Install Nerd Fonts - Meslo LG M Regular Complete Mono - systemwide (all)
-# https://github.com/ryanoasis/nerd-fonts#patched-fonts
+# https://github.com/ryanoasis/nerd-fonts#option-6-ad-hoc-curl-download
+# https://github.com/ryanoasis/nerd-fonts/releases
 # https://ostechnix.com/install-nerd-fonts-to-add-glyphs-in-your-code-on-linux/
 # https://askubuntu.com/questions/1384501/installing-custom-fonts-on-ubuntu-server
 # install systemwide: /usr/share/fonts/ or /usr/local/share/fonts/
 # install for user: ~/.local/share/fonts/
   ansible.builtin.uri:
-    url: 'https://github.com/ryanoasis/nerd-fonts/raw/HEAD/patched-fonts/Melso/M/Regular/complete/Meslo LG M Regular Nerd Font Complete Mono.ttf'
+    url: https://github.com/ryanoasis/nerd-fonts/raw/HEAD/patched-fonts/Melso/M/Regular/complete/Meslo%20LG%20M%20Regular%20Nerd%20Font%20Complete%20Mono.ttf
     method: GET
     follow_redirects: safe
     dest: "/usr/local/share/fonts/Meslo LG M Regular Nerd Font Complete Mono.ttf"
@@ -364,7 +365,7 @@
 
 - name: Install Nerd Fonts - Meslo LG M Regular Complete - systemwide (all)
   ansible.builtin.uri:
-    url: 'https://github.com/ryanoasis/nerd-fonts/raw/HEAD/patched-fonts/Melso/M/Regular/complete/Meslo LG M Regular Nerd Font Complete.ttf'
+    url: https://github.com/ryanoasis/nerd-fonts/raw/HEAD/patched-fonts/Melso/M/Regular/complete/Meslo%20LG%20M%20Regular%20Nerd%20Font%20Complete.ttf
     method: GET
     follow_redirects: safe
     dest: "/usr/local/share/fonts/Meslo LG M Regular Nerd Font Complete.ttf"
