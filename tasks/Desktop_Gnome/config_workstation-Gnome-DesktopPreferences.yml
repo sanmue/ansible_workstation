@@ -950,7 +950,7 @@
     # #    - "ansible_version.major is version('2', '=')"
     # #    - "ansible_version.minor is version('9', '<=')"
     # - "ansible_version.full is version('2.10.0', '>=')"
-    - ansible_distribution in ["Ubuntu"]
+    # - ansible_distribution in ["Ubuntu"]
 
 - name: Create flag - file .ansible_TerminalProfileSet (Gnome)
   ansible.builtin.file:
@@ -961,7 +961,7 @@
     access_time: preserve
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
-    - ansible_distribution in ["Ubuntu"]
+    # - ansible_distribution in ["Ubuntu"]
 
 
 # ### gnome shell extensions -  preferences:
