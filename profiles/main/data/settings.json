@@ -21,5 +21,6 @@
     "terminal.integrated.env.linux": {
     
     },
-    "syncSettings.hostname": "{{hostname}}"
+    "syncSettings.hostname": "{{hostname}}",
+    "terminal.integrated.fontFamily": "'NotoMono Nerd Font'"
 }
