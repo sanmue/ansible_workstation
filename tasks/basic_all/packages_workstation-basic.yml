@@ -345,6 +345,39 @@
 #    - ansible_distribution in ["Archlinux"]
 #    - env_lsb_id != "ManjaroLinux"
 
+- name: Install Nerd Fonts - Meslo LG M Regular Complete Mono - systemwide (all)
+# https://github.com/ryanoasis/nerd-fonts#patched-fonts
+# https://ostechnix.com/install-nerd-fonts-to-add-glyphs-in-your-code-on-linux/
+# https://askubuntu.com/questions/1384501/installing-custom-fonts-on-ubuntu-server
+# install systemwide: /usr/share/fonts/ or /usr/local/share/fonts/
+# install for user: ~/.local/share/fonts/
+  ansible.builtin.uri:
+    url: 'https://github.com/ryanoasis/nerd-fonts/raw/HEAD/patched-fonts/Melso/M/Regular/complete/Meslo LG M Regular Nerd Font Complete Mono.ttf'
+    method: GET
+    follow_redirects: safe
+    dest: "/usr/local/share/fonts/Meslo LG M Regular Nerd Font Complete Mono.ttf"
+    mode: '0644'
+    creates: "/usr/local/share/fonts/Meslo LG M Regular Nerd Font Complete Mono.ttf"
+  # register: result
+  when:
+    - ansible_distribution in ["Archlinux", "Ubuntu"]
+
+- name: Install Nerd Fonts - Meslo LG M Regular Complete - systemwide (all)
+  ansible.builtin.uri:
+    url: 'https://github.com/ryanoasis/nerd-fonts/raw/HEAD/patched-fonts/Melso/M/Regular/complete/Meslo LG M Regular Nerd Font Complete.ttf'
+    method: GET
+    follow_redirects: safe
+    dest: "/usr/local/share/fonts/Meslo LG M Regular Nerd Font Complete.ttf"
+    mode: '0644'
+    creates: "/usr/local/share/fonts/Meslo LG M Regular Nerd Font Complete.ttf"
+  when:
+    - ansible_distribution in ["Archlinux", "Ubuntu"]
+  
+- name: Build font information cache files for apps using fontconfig (all)
+  ansible.builtin.shell: fc-cache -f
+  when:
+    - ansible_distribution in ["Archlinux", "Ubuntu"]
+
 - name: Install basic packages - starship shell prompt (env_user) - download install-file (all)
   become: true
   become_user: "{{ env_user }}"
@@ -356,7 +389,7 @@
     group: "{{ env_user }}"
     mode: '0755'
     creates: "/home/{{ env_user }}/starship_install.sh"
-  register: result
+  # register: result
   when:
     - ansible_distribution in ["Archlinux", "Ubuntu"]
     # - env_lsb_id != "ManjaroLinux"   # für bash in Manjaro, daher auskommentiert

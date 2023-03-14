@@ -203,6 +203,19 @@
   when:
     - ansible_distribution in ["Archlinux", "Ubuntu"]
 
+- name: Bashrc - set font (User, all)
+  # font install: siehe packages_workstation-basic.yml
+  ansible.builtin.blockinfile:
+    path: "/home/{{ env_user }}/.bashrc"
+    backup: true
+    marker: "### {mark} 'set font' ANSIBLE MANAGED BLOCK ###"
+    block: |
+      # --------
+      # set font
+      # --------
+      setfont 'Meslo LG M Regular Nerd Font Complete'
+  when:
+    - ansible_distribution in ["Ubuntu", "Archlinux"]
 
 # --------
 # ### root
