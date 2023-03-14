@@ -32,7 +32,7 @@ dconf write "${dconfdir}/:${id}"/use-theme-colors "false"
 dconf write "${dconfdir}/:${id}"/default-size-columns "100"
 dconf write "${dconfdir}/:${id}"/default-size-rows "28"
 # dconf write "${dconfdir}/:${id}"/font "'Monospace 14'"
-dconf write "${dconfdir}/:${id}"/font "'MesloLGM Nerd Font Mono 12'"
+dconf write "${dconfdir}/:${id}"/font "'MesloLGM Nerd Font 12'"
 dconf write "${dconfdir}/:${id}"/use-system-font "false"
 
 # Set as default profile:
@@ -48,7 +48,7 @@ dconf write "${dconfdir}/:${id}"/foreground-color "'rgb(0,255,0)'"
 dconf write "${dconfdir}/:${id}"/use-theme-colors "false"
 dconf write "${dconfdir}/:${id}"/default-size-columns "100"
 dconf write "${dconfdir}/:${id}"/default-size-rows "28"
-dconf write "${dconfdir}/:${id}"/font "'MesloLGM Nerd Font Mono 12'"
+dconf write "${dconfdir}/:${id}"/font "'MesloLGM Nerd Font 12'"
 dconf write "${dconfdir}/:${id}"/use-system-font "false"
 #dconf write "${dconfdir}/:${id}"/visible-name "Custom_SSH"
 
@@ -62,7 +62,7 @@ dconf write "${dconfdir}/:${id}"/foreground-color "'rgb(213,0,0)'"
 dconf write "${dconfdir}/:${id}"/use-theme-colors "false"
 dconf write "${dconfdir}/:${id}"/default-size-columns "100"
 dconf write "${dconfdir}/:${id}"/default-size-rows "28"
-dconf write "${dconfdir}/:${id}"/font "'MesloLGM Nerd Font Mono 12'"
+dconf write "${dconfdir}/:${id}"/font "'MesloLGM Nerd Font 12'"
 dconf write "${dconfdir}/:${id}"/use-system-font "false"
 
 # ###############################################################################

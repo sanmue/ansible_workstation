@@ -961,6 +961,7 @@
     access_time: preserve
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
+    - ansible_distribution in ["Ubuntu"]
 
 
 # ### gnome shell extensions -  preferences:
