@@ -213,7 +213,7 @@
       # --------
       # set font
       # --------
-      setfont 'Meslo LG M Regular Nerd Font Complete'
+      setfont 'Meslo LG M Regular Nerd Font Complete Mono'
   when:
     - ansible_distribution in ["Ubuntu", "Archlinux"]
 
