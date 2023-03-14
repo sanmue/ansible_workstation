@@ -504,17 +504,17 @@
 #    - env_desktop == "ubuntu:gnome"
 
 # ## Visual Studio Code - Install
-# ## - moved to ...-manualInstall.yml
+# ## - moved to packages_workstation-localPackageInstall.yml
 
 
 - name: Install basic packages - prereqesites for Pyenv (Ubuntu)
   ansible.builtin.package:
     state: present
     name:
-     # Pyenv
-     # https://ostechnix.com/pyenv-python-version-management-made-easier/
-     # https://github.com/pyenv/pyenv-installer
-     # manche Pakete sind schon installiert (s.o.):
+      # Pyenv
+      # https://ostechnix.com/pyenv-python-version-management-made-easier/
+      # https://github.com/pyenv/pyenv-installer
+      # manche Pakete sind schon installiert (s.o.):
       - make
       - build-essential
       - libssl-dev

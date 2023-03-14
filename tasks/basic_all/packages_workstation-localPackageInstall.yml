@@ -6,7 +6,7 @@
 # ### Citrix Workspace App (ICA-Client)
 # #####################################
 
-- name: Install Certificates for Citrix Workspace App (ICA-Client) from Mozilla cert-folder + pem-convert (Ubuntu)
+- name: Local packages install - install Certificates for Citrix Workspace App (ICA-Client) from Mozilla cert-folder + pem-convert (Ubuntu)
   # requires installed Mozilla Firefox (was installed via a previous task)
   ansible.builtin.shell:
     # chdir: tasks/basic_all/
@@ -24,13 +24,13 @@
 
 # ### Archlinux/Manjaro: ins bootstrap-script aufenommen
 
-# - name: TODO - Download and install Citrix Workspace App (icaclient) from AUR (Arch)
+# - name: TODO - Local packages install - Download and install Citrix Workspace App (icaclient) from AUR (Arch)
 #  ansible.builtin.debug:
 #    msg: "TODO: Install from AUR: 'sudo pamac build --no-confirm icaclient'"
 #  when:
 #    - ansible_distribution == "Archlinux"
 
-# - name: Download and install Citrix Workspace App (icaclient) from AUR (Archlinux)
+# - name: Local packages install - Download and install Citrix Workspace App (icaclient) from AUR (Archlinux)
 #  ansible.builtin.shell:
 #    cmd: "sudo pamac build --no-confirm icaclient && touch /home/{{ env_user }}/.icaclientInstalled"
 #  args:
@@ -43,19 +43,30 @@
 # ### Visual Studio Code
 # ######################
 
-- name: Download Visual Studio Code deb-package (Ubuntu)
+- name: Local packages install - get stat /usr/bin/code (all)
+  ansible.builtin.stat:
+    path: /usr/bin/code
+  register: usrbincode
+  # when:
+    # - ansible_distribution == "Ubuntu"
+
+- name: Local packages install - download Visual Studio Code deb-package (Ubuntu)
   ansible.builtin.get_url:
     url: "https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64"
     dest: /tmp/code.deb
     # force_basic_auth: yes
     force: false
+    mode: '0755'
   when:
     - ansible_distribution == "Ubuntu"
+    - usrbincode.stat.exists == false
 
-- name: Install Visual Studio Code deb-package (Ubuntu, apt)
+- name: Local packages install - install Visual Studio Code deb-package (Ubuntu, apt)
   tags: workstation,ubuntu,apt
   ansible.builtin.apt:
     deb: /tmp/code.deb
+    only_upgrade: true
   when:
     - ansible_pkg_mgr == "apt"
     - ansible_distribution == "Ubuntu"
+    - usrbincode.stat.exists == false
