@@ -929,6 +929,10 @@
 
 # ### gnome terminal - profiles and preferences:
 # ----------------------------------------------
+# #
+# https://linuxconfig.org/introduction-to-the-dconf-configuration-system
+# https://askubuntu.com/questions/941770/how-do-i-create-gnome-terminal-profiles-at-a-global-level-for-all-users
+# #
 - name: Set gnome terminal - profiles and preferences (Gnome, Ubuntu)
   ansible.builtin.script: "{{ env_PWD }}/tasks/Desktop_Gnome/config_workstation-Gnome-DesktopPreferences-terminal.sh" # funktioniert; ansible version 2.9
   # #  ansible.builtin.script: "{{ env_PWD }}/tasks/Desktop_Gnome/config_workstation-Gnome-DesktopPreferences-terminal.sh" # ab ansible version 2.10
