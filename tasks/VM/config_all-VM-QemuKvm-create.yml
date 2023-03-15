@@ -90,7 +90,7 @@
 - name: VM - create 'flag-file' indicating VM-stuff was created (Qemu-Kvm)
   tags: VM
   ansible.builtin.file:
-    path: /home/{{ env_user }}/.vm_qemu-kvm_created
+    path: /home/{{ env_user }}/.ansible_vm_qemuKvmCreated
     state: touch
     mode: '0644'
     modification_time: preserve

@@ -32,9 +32,9 @@
 
 # - name: Local packages install - Download and install Citrix Workspace App (icaclient) from AUR (Archlinux)
 #  ansible.builtin.shell:
-#    cmd: "sudo pamac build --no-confirm icaclient && touch /home/{{ env_user }}/.icaclientInstalled"
+#    cmd: "sudo pamac build --no-confirm icaclient && touch /home/{{ env_user }}/.ansible_pamac-icaclientInstalled"
 #  args:
-#    creates: "/home/{{ env_user }}/.icaclientInstalled"
+#    creates: "/home/{{ env_user }}/.ansible_pamac-icaclientInstalled"
 #  when:
 #    - ansible_distribution == "Archlinux"
 
