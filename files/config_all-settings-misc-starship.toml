@@ -96,7 +96,7 @@ disabled = false
 #"Pictures" = " "
 
 [status]
-format = '[$symbol$status $hex_status $signal_number-$signal_name]($style) '
+format = '[$symbol$status $hex_status SIG:$signal_number-$signal_name]($style) '
 symbol = '✘ '
 disabled = false
 
