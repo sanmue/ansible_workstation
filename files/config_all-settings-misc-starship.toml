@@ -1,0 +1,114 @@
+# Get editor completions based on the config schema
+"$schema" = 'https://starship.rs/config-schema.json'
+
+
+# Customizing the prompt (including desired modules at desired position and sequence):
+format = """
+[╭╴](fg:#505050)\
+[$os]($style)\
+[ ](fg:#505050)\
+[$username$hostname$sudo$directory \
+$git_branch$git_commit$git_state$git_metrics$git_status\
+$kubernetes$vcsh$fossil_branch$hg_branch$pijul_channel$docker_context$package$c\
+$cmake$cobol$daml$dart$deno$dotneti$elixir$ulm$erlang$fennel$golang$guix_shell\
+$haskell$haxe$helm$java$julia$kotlin$gradle$lua$nim$nodejs$ocaml$opa$perl$php\
+$pulumi$purescript$python$raku$rlang$red$ruby$rust$scala$swift$terraform$vlang\
+$vagrant$zig$buf$nix_shell$conda$meson$spack$aws$gcloud$openstack$azure$crystal\
+$container$shell$jobs$env_var$custom$memory_usage$battery$time$cmd_duration \
+$fill $line_break]($style)\
+[╰╴](fg:#505050)\
+[$status$localip$character]($style)
+"""
+# - '$line_break', i.e. everything from the next line on refers to the second line of the prompt
+#   ('\n' would work too, but it is just not a module of starship)
+# - Some modules listed above will not show up, as their default value ist 'disabled = true' or
+#   they are only displayed under certain conditions.
+#   They have to be enabled manually, e.g. see below "# Customizing and enabling some modules used above"
+#   https://starship.rs/config/
+
+
+# Customizing and enabling some modules used above:
+[os]
+format = "[$symbol]($style)"
+style = "fg:BBBBBB bold"
+disabled = false
+
+[os.symbols]
+Alpine = " "
+Amazon = " "
+Arch = " "
+Debian = " "
+EndeavourOS = " "
+Fedora = " "
+FreeBSD = " "
+Gentoo = " "
+HardenedBSD = "󰒘 "
+Linux = " "
+Macos = " "
+Manjaro = " "
+Mint = " "
+NixOS = " "
+OpenBSD = " "
+openSUSE = " "
+OracleLinux = "⊂⊃ "
+Pop = " "
+Raspbian = " "
+Redhat = " "
+RedHatEnterprise = " "
+Solus = " "
+SUSE = " "
+Ubuntu = " "
+Unknown = " "
+Windows = " "
+
+[username]
+format = '[$user]($style)'
+style_user = 'fg:#5FD700 bold'
+style_root = 'red bold'
+show_always = false
+disabled = false
+
+[hostname]
+format = '[$ssh_symbol](fg:#5FD700 bold)[$hostname](fg:#5FD700 bold) '
+ssh_only = true
+ssh_symbol = '  '
+#trim_at = '.companyname.com'
+disabled = false
+
+[directory]
+format = '[$read_only]($read_only_style)[$path]($style)'
+style = 'cyan bold'
+read_only_style = 'cyan'
+read_only = ' '
+home_symbol = ' ~'
+truncation_length = 12
+truncation_symbol = '…/'
+#truncate_to_repo = true
+use_os_path_sep = true
+disabled = false
+
+#[directory.substitutions]
+#"Documents" = " "
+#"Downloads" = " "
+#"Music" = " "
+#"Pictures" = " "
+
+[status]
+format = '[$symbol$status $hex_status $signal_number-$signal_name]($style) '
+symbol = '✘ '
+disabled = false
+
+[fill]
+style = 'fg:#505050'
+symbol = '─'
+
+[localip]
+format = '[$localipv4](fg:#5FD700 bold) '
+ssh_only = true
+disabled = false
+
+[sudo]
+style = 'red bold'
+symbol = ' '
+disabled = false
+

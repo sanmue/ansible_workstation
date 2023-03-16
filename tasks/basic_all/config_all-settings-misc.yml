@@ -94,12 +94,42 @@
     backup: true
     marker: "### {mark} 'starship shell prompt' ANSIBLE MANAGED BLOCK ###"
     block: |
-      # -------------------------------------------
-      # starship shell prompt - Add the init script
-      # -------------------------------------------
+      # -----------------------------------------------
+      # starship shell prompt - init script + functions
+      # -----------------------------------------------
       eval "$(starship init bash)"
+
+      function set_win_title(){
+        echo -ne "\033]0; $USER@$HOSNAME \007"
+      }
+
+      starship_precmd_user_func="set_win_title"
   when:
     - ansible_distribution in ["Ubuntu", "Archlinux"]
+
+- name: config all settings - copy starship shell prompt config file (User, all)
+  become: true
+  become_user: {{ evn_user }}
+  ansible.builtin.copy:
+    src: files/config_all-settings-misc-starship.toml
+    dest: "/home/{{ env_user }}/.config/starship.toml"
+    mode: '0644'
+    backup: true
+    marker: "### {mark} 'starship shell prompt' ANSIBLE MANAGED BLOCK ###"
+    block: |
+      # -----------------------------------------------
+      # starship shell prompt - init script + functions
+      # -----------------------------------------------
+      eval "$(starship init bash)"
+
+      function set_win_title(){
+        echo -ne "\033]0; $USER@$HOSNAME \007"
+      }
+
+      starship_precmd_user_func="set_win_title"
+  when:
+    - ansible_distribution in ["Ubuntu", "Archlinux"]
+
 
 - name: Bashrc - Insert/Update additional paths and config - nvm (User, all)
   ansible.builtin.blockinfile:
