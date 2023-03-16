@@ -109,7 +109,7 @@
 
 - name: config all settings - copy starship shell prompt config file (User, all)
   become: true
-  become_user: {{ evn_user }}
+  become_user: {{ env_user }}
   ansible.builtin.copy:
     src: files/config_all-settings-misc-starship.toml
     dest: "/home/{{ env_user }}/.config/starship.toml"
