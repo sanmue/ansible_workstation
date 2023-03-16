@@ -4,10 +4,7 @@
 
 # Customizing the prompt (including desired modules at desired position and sequence):
 format = """
-[╭╴](fg:#505050)\
-[$os]($style)\
-[ ](fg:#505050)\
-[$username$hostname$sudo$directory \
+[╭╴](fg:#505050)[$os]($style)[ ](fg:#505050)[$username$hostname$sudo$directory \
 $git_branch$git_commit$git_state$git_metrics$git_status\
 $kubernetes$vcsh$fossil_branch$hg_branch$pijul_channel$docker_context$package$c\
 $cmake$cobol$daml$dart$deno$dotneti$elixir$ulm$erlang$fennel$golang$guix_shell\
@@ -16,12 +13,11 @@ $pulumi$purescript$python$raku$rlang$red$ruby$rust$scala$swift$terraform$vlang\
 $vagrant$zig$buf$nix_shell$conda$meson$spack$aws$gcloud$openstack$azure$crystal\
 $container$shell$jobs$env_var$custom$memory_usage$battery$time$cmd_duration \
 $fill $line_break]($style)\
-[╰╴](fg:#505050)\
-[$status$localip$character]($style)
+[╰╴](fg:#505050)[$status$localip$character]($style)
 """
 # - '$line_break', i.e. everything from the next line on refers to the second line of the prompt
 #   ('\n' would work too, but it is just not a module of starship)
-# - Some modules listed above will not show up, as their default value ist 'disabled = true' or
+# - Some modules listed above will not show up all the time, as their default value is 'disabled = true' or
 #   they are only displayed under certain conditions.
 #   They have to be enabled manually, e.g. see below "# Customizing and enabling some modules used above"
 #   https://starship.rs/config/
