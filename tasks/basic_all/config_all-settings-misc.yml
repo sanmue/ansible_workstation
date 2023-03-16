@@ -115,18 +115,6 @@
     dest: "/home/{{ env_user }}/.config/starship.toml"
     mode: '0644'
     backup: true
-    marker: "### {mark} 'starship shell prompt' ANSIBLE MANAGED BLOCK ###"
-    block: |
-      # -----------------------------------------------
-      # starship shell prompt - init script + functions
-      # -----------------------------------------------
-      eval "$(starship init bash)"
-
-      function set_win_title(){
-        echo -ne "\033]0; $USER@$HOSNAME \007"
-      }
-
-      starship_precmd_user_func="set_win_title"
   when:
     - ansible_distribution in ["Ubuntu", "Archlinux"]
 
