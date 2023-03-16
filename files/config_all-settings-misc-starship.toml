@@ -17,7 +17,7 @@ $fill $line_break]($style)\
 """
 # - '$line_break', i.e. everything from the next line on refers to the second line of the prompt
 #   ('\n' would work too, but it is just not a module of starship)
-# - Some modules listed above will not show up all the time, as their default value is 'disabled = true' or
+# - Some modules listed above will not show up (all the time), as their default value is 'disabled = true' or
 #   they are only displayed under certain conditions.
 #   They have to be enabled manually, e.g. see below "# Customizing and enabling some modules used above"
 #   https://starship.rs/config/
