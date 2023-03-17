@@ -4,6 +4,8 @@ enabled:
     uuid: 37d7747f-e652-4eac-83de-f2939f7e2121
   - id: batisteo.vscode-django
     uuid: 4b41a5a8-170e-4156-b2c0-10efb270abbc
+  - id: bungcip.better-toml
+    uuid: 464f4ac7-af65-4aa9-9907-4ba7fa419085
   - id: chouzz.vscode-better-align
     uuid: fe952d85-7386-49e9-aa9a-87cff42f24a2
   - id: dbaeumer.vscode-eslint
