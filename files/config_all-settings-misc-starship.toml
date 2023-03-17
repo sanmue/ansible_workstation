@@ -15,8 +15,9 @@ $container$shell$jobs$env_var$custom$memory_usage$battery$time$cmd_duration \
 $fill $line_break]($style)\
 [╰╴](fg:#505050)[$status$localip$character]($style)
 """
-# - '$line_break', i.e. everything from the next line on refers to the second line of the prompt
-#   ('\n' would work too, but it is just not a module of starship)
+# - '$line_break', i.e. everything from the next line on refers to the second line of the prompt.
+#   - '\n' for a line break could work too on your system, but it is just not a 'starship' module. 
+#   - Just let the module do the correct line break.
 # - Some modules listed above will not show up (all the time), as their default value is 'disabled = true' or
 #   they are only displayed under certain conditions.
 #   They have to be enabled manually, e.g. see below "# Customizing and enabling some modules used above"
@@ -29,6 +30,8 @@ format = "[$symbol]($style)"
 style = "fg:BBBBBB bold"
 disabled = false
 
+# Don't be confused if you see this toml file via web browser on Starship website, gist, ... and you don't see any "real" symbols here.
+# If Nerd-fonts are already installed on your system (e.g. MesloLG Nerd Font, ...) it should work:
 [os.symbols]
 Alpine = " "
 Amazon = " "
