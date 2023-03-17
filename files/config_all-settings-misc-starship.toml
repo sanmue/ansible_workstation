@@ -31,7 +31,7 @@ style = "fg:BBBBBB bold"
 disabled = false
 
 # Don't be confused if you see this toml file via web browser on Starship website, gist, ... and you don't see any "real" symbols here.
-# If Nerd-fonts are already installed on your system (e.g. MesloLG Nerd Font, ...) it should work:
+# If Nerd-fonts are already installed on your system (e.g. MesloLG Nerd Font, FiraCode Nerd Font, ...) it should work:
 [os.symbols]
 Alpine = " "
 Amazon = " "
