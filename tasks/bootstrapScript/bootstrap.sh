@@ -1,11 +1,11 @@
 #!/bin/bash
 
-### --------------------------------------------------------------------
-### Installation der initial benötigten Pakete
-### Git Config
+### ---------------------------------------------------------------------------
+### Installation initial benötigter Pakete / Config (e.g. firewall, git, ...)
 ### Start automatisierte Installation (Ansible)
-### Archlinux AUR (zusätzliche Pakete, um autom. Inst. zu beschleunigen)
-### --------------------------------------------------------------------
+### Archlinux(-Derivate): Installationen (aus AUR) separat außerhalb playbook
+### - um Ausführung playbook nicht wg. evtl. manueller Eingaben zu unterbrechen
+### ---------------------------------------------------------------------------
 
 
 ### ---
@@ -19,18 +19,9 @@ userid=$(whoami)   # oder: userid=${USER}
 defaultDomain="universalaccount.de"
 defaultMail="${userid}@${defaultDomain}"
 gitOnlineRepo="git@github.com:sanmue/${playbookdir}.git"
+gitdefaultBranchName="main"
 os=""
 oslist=("Ubuntu" "Manjaro" "EndeavourOS")   # aktuell berücksichtige Betriebssysteme
-
-
-# echo "Ich bin: ${userid}"
-#if [ "${userid}" != "root" ]; then 
-#    echo "Skript bitte mit sudo/root-Rechten ausführen."
-#    echo "Skript wird beendet."
-#    echo "Bitte Enter drücken."
-#    read -r
-#    exit 0
-#fi
 
 
 ### ---
@@ -170,9 +161,10 @@ esac
 ### ---
 ### Git Config
 ### ---
-echo -e "\nErstelle git config mit Name '${userid}' und Mailadresse '${defaultMail}'..."
+echo -e "\nErstelle git config mit Name '${userid}', Email '${defaultMail}' und defaultBranch '${gitdefaultBranchName}' ..."
 git config --global user.name "${userid}"
 git config --global user.email "${defaultMail}"
+git config --global init.defaultBranch "${gitdefaultBranchName}"
 echo "Git-config ist nun:" 
 #git config --list   #bei openSUSE wird .gitconfig in vi geöffnet
 cat "/home/${userid}/.gitconfig"

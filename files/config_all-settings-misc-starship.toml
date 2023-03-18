@@ -4,7 +4,7 @@
 
 # Customizing the prompt (including desired modules at desired position and sequence):
 format = """
-[╭╴](fg:#505050)[$os]($style)[ ](fg:#505050)[$username$hostname$sudo$directory \
+[╭╴](fg:#505050)[$os]($style)[ ](fg:#505050)[$username$hostname$sudo$directory\
 $git_branch$git_commit$git_state$git_metrics$git_status\
 $kubernetes$vcsh$fossil_branch$hg_branch$pijul_channel$docker_context$package$c\
 $cmake$cobol$daml$dart$deno$dotneti$elixir$ulm$erlang$fennel$golang$guix_shell\
@@ -23,15 +23,19 @@ $fill $line_break]($style)\
 #   They have to be enabled manually, e.g. see below "# Customizing and enabling some modules used above"
 #   https://starship.rs/config/
 
+# Don't be confused if you see this toml file via web browser on Starship website, gist, ... and you don't see any "real" symbols here.
+# If Nerd-fonts are already installed on your system (e.g. MesloLG Nerd Font, FiraCode Nerd Font, ...) it should work
 
-# Customizing and enabling some modules used above:
+
+# Inserts a blank line between shell prompts:
+add_newline = true
+
+# Customizing and enabling some modules listed above:
 [os]
-format = "[$symbol]($style)"
-style = "fg:BBBBBB bold"
+format = "[$symbol]($style) "
+style = "fg:BBBBBB"
 disabled = false
 
-# Don't be confused if you see this toml file via web browser on Starship website, gist, ... and you don't see any "real" symbols here.
-# If Nerd-fonts are already installed on your system (e.g. MesloLG Nerd Font, FiraCode Nerd Font, ...) it should work:
 [os.symbols]
 Alpine = " "
 Amazon = " "
@@ -39,8 +43,7 @@ Android = " "
 Arch = " "
 CentOS = " "
 Debian = " "
-EndeavourOS = " "
-#EndeavourOS = " "
+EndeavourOS = " " # " "
 Fedora = " "
 FreeBSD = " "
 Gentoo = " "
@@ -50,38 +53,36 @@ Macos = " "
 Manjaro = " "
 Mint = " "
 NixOS = " "
-OpenBSD = " "
-#OpenBSD = " "
+OpenBSD = " " # " "
 openSUSE = " "
 OracleLinux = "⊂⊃ "
-Pop = " "
-#Pop = " "
+Pop = " " # " "
 Raspbian = " "
 Redhat = " "
 RedHatEnterprise = " "
-Solus = " "
-#Solus = " "
+Solus = " " # " "
 SUSE = " "
 Ubuntu = " "
 Unknown = " "
 Windows = " "
+# 
 
 [username]
-format = '[$user]($style)'
-style_user = 'fg:#5FD700 bold'
+format = '[$user]($style) '
+style_user = 'fg:#5FD700'
 style_root = 'red bold'
 show_always = false
 disabled = false
 
 [hostname]
-format = '[$ssh_symbol](fg:#5FD700 bold)[$hostname](fg:#5FD700 bold) '
+format = '[$ssh_symbol](fg:#5FD700)[$hostname](fg:#5FD700) '
 ssh_only = true
-ssh_symbol = '  '
+ssh_symbol = ' '   # '⇒' # ' ' # 'ﬁ⇒'
 #trim_at = '.companyname.com'
 disabled = false
 
 [directory]
-format = '[$read_only]($read_only_style)[$path]($style)'
+format = '[$read_only]($read_only_style)[$path]($style) '
 style = 'cyan bold'
 read_only_style = 'cyan'
 read_only = ' '
@@ -99,7 +100,8 @@ disabled = false
 #"Pictures" = " "
 
 [status]
-format = '[$symbol$status $hex_status SIG:$signal_number-$signal_name]($style) '
+format = '[$symbol$status $hex_status  $signal_number-$signal_name]($style) ' # 󱏬
+style = 'red'
 symbol = '✘ '
 disabled = false
 
@@ -108,12 +110,56 @@ style = 'fg:#505050'
 symbol = '─'
 
 [localip]
-format = '[$localipv4](fg:#5FD700 bold) '
+format = '[$localipv4](fg:#5FD700) '
 ssh_only = true
 disabled = false
 
 [sudo]
 style = 'red bold'
-symbol = ' '
+symbol = ' ' # 
 disabled = false
 
+[git_branch]
+format = '[ $symbol $branch(:$remote_branch)]($style) '
+style = "fg:#F44D27"
+symbol = "" # " "
+#ignore_branches = ['master', 'main']
+
+[git_commit]
+format = '[\($hash$tag\)]($style) '
+style = "fg:#F44D27"
+commit_hash_length = 8
+tag_symbol = ' ' # 
+disabled = false
+
+[git_status]
+format = '[$all_status$ahead_behind]($style) '
+style = "fg:#F44D27"
+conflicted = ' '
+ahead = '${count}⇡ '
+behind = '${count}⇣ '
+diverged = '⇕${ahead_count}⇡${behind_count}⇣ '
+up_to_date = '✓ '
+untracked = '[${count} ](fg:red)'
+stashed = ' ' # '📦 '
+modified = '[${count}󰷉 ](fg:#CCAF0A)' # '📝'
+staged = '[${count} ](green)' # ﳇ 
+renamed = '﫦 ' # ' '
+deleted = '﯊ ' # '🗑 '
+disabled = false
+
+[cmd_duration]
+format = '[  $duration]($style) '
+style = 'yellow'
+min_time = 500
+disabled = false
+
+
+# maybe sometime useful:
+# ╭ ╴ ╰ ╴       ≺ ≻ ❬ ❭ ❮ ❯ ❰ ❱       祉 祈   﫦 ⎜ ⎟ ⎢ ⎥ ⎪ ⏽ │ ┃ ║ ⎮   ╱ ╲            
+# ∑                  ﮅ 﫮 﫯   ⇒  ﬁ ⇒ 旅 ✘ ✘ ✗   ✔ ✓             
+#                  ﰖ  練           ← ↑ → ↓ ↔ ↕             履   ?        
+#        פֿ   謹 凜 ﯢ   ﳉ 﨩 
+#   聯 輦 賓             鈴 ﳓ         ﯊    ﳇ  ﰀ    
+#   摒  朗   樂      ﳼ  
+# ﴗ 
