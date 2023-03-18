@@ -18,9 +18,11 @@
       - evolution
       - exa   # ls replacement
       - flatpak
+      - font-manager
       - gimp
       - gimp-help-en
       - git   # bereits installiert (bootstrap)
+      - gpick
       - grsync
       - hplip   # Drivers for HP DeskJet, OfficeJet, Photosmart, Business Inkjet and some LaserJet
       - htop
