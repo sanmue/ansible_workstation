@@ -137,12 +137,12 @@ ahead = '${count}⇡ '
 behind = '${count}⇣ '
 diverged = '⇕${ahead_count}⇡${behind_count}⇣ '
 up_to_date = '✓ '
-untracked = '[${count} ](fg:red)'
+untracked = '[${count}ﳇ ](fg:red)' # 
 stashed = ' ' # '📦 '
-modified = '[${count}󰷉 ](fg:#CCAF0A)' # '📝'
-staged = '[${count} ](green)' # ﳇ 
+modified = '[${count}󰷉 ](fg:#CCAF0A)' # '📝' # '! '
+staged = '[${count} ](green)' # '+ '
 renamed = '${count}﫦 ' # ' '
-deleted = '${count}﯊ ' # '🗑 '
+deleted = '${count}﯊ ' # '🗑 ' '- '
 disabled = false
 
 [jobs]
