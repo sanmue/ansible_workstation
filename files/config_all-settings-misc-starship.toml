@@ -86,7 +86,7 @@ show_always = false
 disabled = false
 
 [hostname]
-format = '[$ssh_symbol](fg:#5FD700)[$hostname](fg:#5FD700) '
+format = '[$ssh_symbol](fg:#5FD700)[$hostname ](fg:#5FD700) '
 ssh_only = true
 ssh_symbol = ' ' # '⇒' # ' ' # 'ﬁ⇒'
 #trim_at = '.companyname.com'
@@ -94,7 +94,7 @@ disabled = false
 
 [sudo]
 style = 'red bold'
-symbol = ' ' # 
+symbol = ' ❯ ' # ' ❯ '
 disabled = false
 
 [directory]
