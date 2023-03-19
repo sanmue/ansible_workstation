@@ -5,7 +5,7 @@
 
 # Customizing the prompt (including desired modules at desired position and sequence):
 format = """
-[╭╴](fg:#505050)[$os]($style)[ ](fg:#505050)[$username$hostname$sudo$directory\
+[╭╴](fg:#505050)[$os]($style)[$username$hostname$sudo$directory\
 $git_branch$git_commit$git_state$git_metrics$git_status\
 $kubernetes$vcsh$fossil_branch$hg_branch$pijul_channel$docker_context$package$c\
 $cmake$cobol$daml$dart$deno$dotneti$elixir$ulm$erlang$fennel$golang$guix_shell\
@@ -79,14 +79,14 @@ Unknown = " "
 Windows = " "
 
 [username]
-format = '[$user]($style) '
+format = '[]($style) [$user]($style) '
 style_user = 'green bold'
 style_root = 'red bold'
 show_always = false
 disabled = false
 
 [hostname]
-format = '[$ssh_symbol](green bold)[$hostname](fg:green bold) [](cyan) '
+format = '[$ssh_symbol](green bold)[$hostname](fg:green bold) '
 ssh_only = true
 ssh_symbol = ' ' # '⇒' # ' ' # 'ﬁ⇒'
 #trim_at = '.companyname.com'
@@ -98,13 +98,13 @@ symbol = ' ❯ ' # ' ❯ '
 disabled = false
 
 [directory]
-format = '[$read_only]($read_only_style)[$repo_root]($repo_root_style)[$path]($style) '
+format = '[ ]($style)[$read_only]($read_only_style)[$repo_root]($repo_root_style)[$path]($style) '
 style = 'cyan bold'
 read_only_style = 'cyan'
 read_only = ' ' # ' ' # ' ''
 home_symbol = ' ~'
 truncation_length = 3
-truncation_symbol = '…/'
+truncation_symbol = ' …/'
 truncate_to_repo = true
 repo_root_style	= 'cyan bold' #'fg:#E04D27 bold'
 use_os_path_sep = true
