@@ -80,13 +80,13 @@ Windows = " "
 
 [username]
 format = '[$user]($style) '
-style_user = 'fg:#5FD700'
+style_user = 'green bold'
 style_root = 'red bold'
 show_always = false
 disabled = false
 
 [hostname]
-format = '[$ssh_symbol](fg:#5FD700)[$hostname](fg:#5FD700) [](cyan) '
+format = '[$ssh_symbol](green bold)[$hostname](fg:green bold) [](cyan) '
 ssh_only = true
 ssh_symbol = ' ' # '⇒' # ' ' # 'ﬁ⇒'
 #trim_at = '.companyname.com'
@@ -106,40 +106,40 @@ home_symbol = ' ~'
 truncation_length = 3
 truncation_symbol = '…/'
 truncate_to_repo = true
-repo_root_style	= 'cyan bold' #'fg:#F44D27 bold'
+repo_root_style	= 'cyan bold' #'fg:#E04D27 bold'
 use_os_path_sep = true
 disabled = false
 
 [git_branch]
 format = '[ $symbol $branch(:$remote_branch)]($style) '
-style = 'fg:#F44D27'
+style = 'fg:#E04D27'
 symbol = ''
 #ignore_branches = ['master', 'main']
 
 [git_commit]
 format = '[\($hash$tag\)]($style) '
-style = 'fg:#F44D27'
+style = 'fg:#E04D27'
 commit_hash_length = 8
 tag_symbol = ' ' # ' ''
 disabled = false
 
 [git_metrics]
 format = '[\[+$added/]($added_style)[-$deleted\]]($deleted_style) '
-added_style = 'fg:#F44D27'
-deleted_style = 'fg:#F44D27'
+added_style = 'fg:#E04D27'
+deleted_style = 'fg:#E04D27'
 disabled = false
 
 [git_status]
 format = '[$all_status$ahead_behind]($style) '
-style = 'fg:#F44D27'
+style = 'fg:#E04D27'
 conflicted = '${count} '
 ahead = '${count}⇡ '
 behind = '${count}⇣ '
 diverged = '⇕${ahead_count}⇡${behind_count}⇣ '
 up_to_date = '✓ '
-untracked = '[${count}ﳇ ](fg:red)' # ' ' # '? '
+untracked = '[${count}ﳇ ](red)' # ' ' # '? '
 stashed = '[${count} ](fg:#A52A2A)' # '📦 '# ' ' # ' ' # ' ' # ' ' 
-modified = '[${count}󰷉 ](fg:#CCAF0A)' # '📝' # '! '
+modified = '[${count}󰷉 ](fg:#C8AC00)' # '📝' # '! '
 staged = '[${count} ](green)' # '+ '
 renamed = '${count}﫦 ' # ' '
 deleted = '${count}﯊ ' # '🗑 ' '- '
@@ -177,7 +177,7 @@ symbol = '✘ '
 disabled = false
 
 [localip]
-format = '[$localipv4](fg:#5FD700) '
+format = '[$localipv4](green bold) '
 ssh_only = true
 disabled = false
 
