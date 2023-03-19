@@ -2,18 +2,23 @@
 
 #set -x   # for debugging
 
-###
-### Skript scannt das HOME-Verzeichnis des ausführenden Users (default) nach Virus-Signaturen (ClamAV)
-### oder einen übergebenen Pfad (1. Parameter) (sollte aktuell das HOME-Verzeichnis sein, da 
-###                                            ExcludePath für qurantine-Verzeichnis entsprechend konfiguriert)
-###
+# ### ################################################################################################
+# ### Skript scannt nach Virus-Signaturen (ClamAV)
+# ### - im HOME-Verzeichnis des ausführenden Users (default, wenn kein Parameter übergeben wurde) oder
+# ### - in dem Pfad, der als 1. Parameter übergeben wird
+# ###     - sollte das $HOME-Verzeichnis sein, da 'ExcludePath' für quarantine-Verzeichnis aktuell
+# ###       entsprechend fix konfiguriert ist + wg. evtl. Zugriffsrechte
+# ###     - siehe 'config_all-settings-misc.yml': path: "/etc/clamav/clamd.conf"
+# ###       ExcludePath ^/home/.*/\.clam/quarantine (ggf. ändern in .*/\.clam/quarantine oder .*/quarantine)
+# ### ################################################################################################
+
 
 #######################
 ### Parameter/Variablen
 #######################
 scanPath="$HOME"     # default-Wert
 if [ $# -gt 0 ]; then
-    scanPath="${1}"    # 1. Übergabe-Parameter an Script
+    scanPath="${1}"    # 1. Übergabe-Parameter an Script: abweichende Pfadangabe
 fi
 qurantineFolder="${scanPath}/.clam/quarantine"
 logFolder="${scanPath}/.clam/logs"
@@ -21,11 +26,11 @@ logName="$(date +\%Y\%m\%d)-weekly.log"
 
 PATH=/usr/bin
 
-startMsgSubj="ClamAV (cronjob) - Scan started"
+startMsgSubj="ClamAV - Scan started"
 startMsg="${startMsgSubj} for path '${scanPath}'.\nScript: '$0'"
-finMsgSubj="ClamAV (cronjob) - Scan finished"
+finMsgSubj="ClamAV - Scan finished"
 finMsg="${finMsgSubj} for path '${scanPath}'.\nScript: '$0'"
-errMsgSubj="ClamAV (cronjob) - Error"
+errMsgSubj="ClamAV - Error"
 errMsg="${errMsgSubj}, path '${scanPath}' does not exist.\nScript: '$0'"
 
 
