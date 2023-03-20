@@ -5,14 +5,14 @@
 
 # Customizing the prompt (including desired modules at desired position and sequence):
 format = """
-[╭╴](fg:#505050)[$os]($style)[ ](fg:#505050 bold)[$username$hostname$sudo$directory\
+[╭╴](fg:#505050)[$os]($style)[${custom.whensudo}]($style)[$username$hostname$sudo$directory\
 $git_branch$git_commit$git_state$git_metrics$git_status\
 $kubernetes$vcsh$fossil_branch$hg_branch$pijul_channel$docker_context$package$c\
 $cmake$cobol$daml$dart$deno$dotneti$elixir$ulm$erlang$fennel$golang$guix_shell\
 $haskell$haxe$helm$java$julia$kotlin$gradle$lua$nim$nodejs$ocaml$opa$perl$php\
 $pulumi$purescript$python$raku$rlang$red$ruby$rust$scala$swift$terraform$vlang\
 $vagrant$zig$buf$nix_shell$conda$meson$spack$aws$gcloud$openstack$azure$crystal\
-$container$shell$env_var$custom$jobs$memory_usage$battery$time$cmd_duration \
+$container$shell$env_var$jobs$memory_usage$battery$time$cmd_duration \
 $fill $line_break]($style)\
 [╰╴](fg:#505050)[$status$localip$character]($style)
 """
@@ -79,14 +79,14 @@ Unknown = ""
 Windows = ""
 
 [username]
-format = '[$user]($style) '
+format = '[]($style) [$user]($style) '
 style_user = 'green bold'
 style_root = 'red bold'
 show_always = false
 disabled = false
 
 [hostname]
-format = '[$ssh_symbol](green bold)[$hostname](fg:green bold) [](cyan) '
+format = '[$ssh_symbol](green bold)[$hostname](fg:green bold) '
 ssh_only = true
 ssh_symbol = ' ' # '⇒' # ' ' # 'ﬁ⇒'
 #trim_at = '.companyname.com'
@@ -94,17 +94,17 @@ disabled = false
 
 [sudo]
 style = 'red bold'
-symbol = ' ❯ ' # ' ❯ '
+symbol = ' ' # ' '
 disabled = false
 
 [directory]
-format = '[$read_only]($read_only_style)[$repo_root]($repo_root_style)[$path]($style) '
+format = '[ ]($style)[$read_only]($read_only_style)[$repo_root]($repo_root_style)[$path]($style) '
 style = 'cyan bold'
 read_only_style = 'cyan'
 read_only = ' ' # ' ' # ' ''
 home_symbol = ' ~'
 truncation_length = 3
-truncation_symbol = '…/'
+truncation_symbol = ' …/'
 truncate_to_repo = true
 repo_root_style	= 'cyan bold' #'fg:#E04D27 bold'
 use_os_path_sep = true
@@ -180,6 +180,32 @@ disabled = false
 format = '[$localipv4](green bold) '
 ssh_only = true
 disabled = false
+
+# when Bedingung (oder was anderes) greift nicht, wird nicht angezeigt wenn sudo
+# $sudo wieder hinter $hostname verschoben
+[custom.whensudo]
+description = "Shows   when sudo"
+format = "[$symbol $output]($style)"
+style = "fg:BBBBBB bold" # "red bold" bold" # "fg:#505050 bold"
+symbol = " " # " 󰋦"
+#detect_extensions = ['os'] # e.g.: ['os','xyz']
+#os = "Linux"
+shell = "['bash']"
+#
+command = "checksudo=$(sudo --validate --non-interactive 2>&1)"
+when = """ test -z "${checksudo}"  """
+#when = """ [[ ! $(echo "${checksudo}" | grep sudo) ]] """
+#
+#command = "echo foo"
+#command = "checksudo=$(sudo --validate --non-interactive 2>&1); if [[ $(echo ${checksudo} | grep sudo) ]]; then checksudo='nein'; else checksudo='ja'; fi"
+#when = """ test "$checksudo" == "ja"  """
+#
+#when = "skript.sh"
+#when = true
+#disabled = false
+
+# https://superuser.com/questions/553932/how-to-check-if-i-have-sudo-access
+# https://www.golinuxcloud.com/linux-check-sudo-access/
 
 
 # maybe sometime useful:
