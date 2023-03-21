@@ -3,6 +3,9 @@
 
 # ~/.config/starship.toml
 
+# Variant 1bg: with background in first line, separator on right side
+
+
 # Customizing the prompt (including desired modules at desired position and sequence):
 format = """
 [╭╴](fg:#505050)\
@@ -18,10 +21,10 @@ $cmake$cobol$daml$dart$deno$dotneti$elixir$ulm$erlang$fennel$golang$guix_shell\
 $haskell$haxe$helm$java$julia$kotlin$gradle$lua$nim$nodejs$ocaml$opa$perl$php\
 $pulumi$purescript$python$raku$rlang$red$ruby$rust$scala$swift$terraform$vlang\
 $vagrant$zig$buf$nix_shell$conda$meson$spack$aws$gcloud$openstack$azure$crystal\
-$container$shell$env_var$battery$custom\
+$container$shell$env_var$battery$time$custom\
 \
 $jobs\
-$memory_usagetime\
+$memory_usage\
 [ ](fg:#242424)\
 $cmd_duration\
 $fill\
@@ -29,7 +32,7 @@ $line_break\
 [╰╴](fg:#505050)\
 [$status\
 $localip\
-$character]($style)\
+$character]($style)
 """
 
 # - '$line_break', i.e. everything from the next line on refers to the second line of the prompt.
@@ -114,15 +117,16 @@ symbol = ' ❯ ' # ' ❯ '
 disabled = false
 
 [directory]
-format = '[$read_only]($read_only_style)[$repo_root]($repo_root_style)[$path]($style)[](bg:#242424)[](fg:cyan bg:#242424)'
+format = '[$read_only]($read_only_style)[$repo_root]($repo_root_style)[$path]($style)[ ](bg:#242424)[](fg:cyan bg:#242424)'
 style = 'fg:cyan bold bg:#242424'
-read_only_style = 'fg:cyan bg:#242424'
-read_only = ' ' # ' ' # ' ''
 home_symbol = ' ~'
+read_only = ' ' # ' ' # ' ''
+read_only_style = 'fg:cyan bg:#242424'
 truncation_length = 3
 truncation_symbol = '…/'
 truncate_to_repo = true
-repo_root_style	= 'fg:cyan bold bg:#242424' #'fg:#E04D27 bold'
+repo_root_format = '[$read_only]($read_only_style)[$before_root_path]($before_repo_root_style)[$repo_root]($repo_root_style)[$path]($style)[ ](bg:#242424)'
+repo_root_style	= 'fg:cyan bold bg:#242424'
 use_os_path_sep = true
 disabled = false
 
@@ -196,3 +200,12 @@ disabled = false
 format = '[$localipv4](fg:green bold) '
 ssh_only = true
 disabled = false
+
+
+# maybe sometime useful:
+# ╭ ╴ ╰ ╴       ≺ ≻ ❬ ❭ ❮ ❯ ❰ ❱       祉 祈   﫦 ⎜ ⎟ ⎢ ⎥ ⎪ ⏽ │ ┃ ║ ⎮   ╱ ╲           
+# ∑                  ﮅ 﫮 﫯   ⇒  ﬁ ⇒ 旅 ✘ ✘ ✗   ✔ ✓                  
+#                  ﰖ  練           ← ↑ → ↓ ↔ ↕     ⇅ ⇄  北 痢         履   ?        
+#        פֿ        謹 凜 ﯢ   ﳉ 﨩 
+#   聯 輦 賓             鈴 ﳓ         ﯊    ﳇ  ﰀ    ﬙      省 廒
+#   摒  朗   樂    ﳼ  

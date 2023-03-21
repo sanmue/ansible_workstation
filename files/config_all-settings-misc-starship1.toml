@@ -3,19 +3,38 @@
 
 # ~/.config/starship.toml
 
+# Variant 1: without background, separator on the right side
+
+
 # Customizing the prompt (including desired modules at desired position and sequence):
 format = """
-[╭╴](fg:#505050)[$os]($style)[${custom.whensudo}]($style)[$username$hostname$sudo$directory\
+[╭╴](fg:#505050)\
+$os\
+$username\
+$hostname\
+$sudo\
+$directory\
 $git_branch$git_commit$git_state$git_metrics$git_status\
+\
 $kubernetes$vcsh$fossil_branch$hg_branch$pijul_channel$docker_context$package$c\
 $cmake$cobol$daml$dart$deno$dotneti$elixir$ulm$erlang$fennel$golang$guix_shell\
 $haskell$haxe$helm$java$julia$kotlin$gradle$lua$nim$nodejs$ocaml$opa$perl$php\
 $pulumi$purescript$python$raku$rlang$red$ruby$rust$scala$swift$terraform$vlang\
 $vagrant$zig$buf$nix_shell$conda$meson$spack$aws$gcloud$openstack$azure$crystal\
-$container$shell$env_var$jobs$memory_usage$battery$time$cmd_duration \
-$fill $line_break]($style)\
-[╰╴](fg:#505050)[$status$localip$character]($style)
+$container$shell$env_var$battery$time$custom\
+\
+$jobs\
+$memory_usage\
+[ ](fg:)\
+$cmd_duration\
+$fill\
+$line_break\
+[╰╴](fg:#505050)\
+[$status\
+$localip\
+$character]($style)
 """
+
 # - '$line_break', i.e. everything from the next line on refers to the second line of the prompt.
 #   - '\n' for a line break could work too on your system, but it is just not a 'starship' module. 
 #   - Just let the module do the correct line break.
@@ -34,8 +53,8 @@ add_newline = true
 # Customization and activation of some modules:
 # Listed in the order of their position in the module row above
 [os]
-format = "[$symbol]($style) "
-style = "fg:BBBBBB"
+format = "[](fg:)[$symbol ]($style)[ ](fg:#707070 bold bg:)"
+style = "fg:#BBBBBB bg:"
 disabled = false
 
 [os.symbols]
@@ -79,75 +98,76 @@ Unknown = ""
 Windows = ""
 
 [username]
-format = '[]($style) [$user]($style) '
-style_user = 'green bold'
-style_root = 'red bold'
+format = '[$user ]($style)'
+style_user = 'fg:green bold bg:'
+style_root = 'fg:red bold bg:'
 show_always = false
 disabled = false
 
 [hostname]
-format = '[$ssh_symbol](green bold)[$hostname](fg:green bold) '
+format = '[$ssh_symbol](fg:green bold bg:)[$hostname ](fg:green bold bg:)[ ](fg:green bold bg:)'
 ssh_only = true
 ssh_symbol = ' ' # '⇒' # ' ' # 'ﬁ⇒'
 #trim_at = '.companyname.com'
 disabled = false
 
 [sudo]
-style = 'red bold'
-symbol = ' ' # ' '
+style = 'fg:red bold bg:'
+symbol = ' ❯ ' # ' ❯ '
 disabled = false
 
 [directory]
-format = '[ ]($style)[$read_only]($read_only_style)[$repo_root]($repo_root_style)[$path]($style) '
-style = 'cyan bold'
-read_only_style = 'cyan'
-read_only = ' ' # ' ' # ' ''
+format = '[$read_only]($read_only_style)[$repo_root]($repo_root_style)[$path]($style)[ ](bg:)[](fg:cyan bg:)'
+style = 'fg:cyan bold bg:'
 home_symbol = ' ~'
+read_only = ' ' # ' ' # ' ''
+read_only_style = 'fg:cyan bg:'
 truncation_length = 3
-truncation_symbol = ' …/'
+truncation_symbol = '…/'
 truncate_to_repo = true
-repo_root_style	= 'cyan bold' #'fg:#E04D27 bold'
+repo_root_format = '[$read_only]($read_only_style)[$before_root_path]($before_repo_root_style)[$repo_root]($repo_root_style)[$path]($style)[ ](bg:)'
+repo_root_style	= 'fg:cyan bold bg:'
 use_os_path_sep = true
 disabled = false
 
 [git_branch]
-format = '[ $symbol $branch(:$remote_branch)]($style) '
-style = 'fg:#E04D27'
+format = '[❯ $symbol $branch(:$remote_branch) ]($style)'
+style = 'fg:#E04D27 bg:'
 symbol = ''
 #ignore_branches = ['master', 'main']
 
 [git_commit]
-format = '[\($hash$tag\)]($style) '
-style = 'fg:#E04D27'
+format = '[\($hash$tag\)]($style)'
+style = 'fg:#E04D27 bg:'
 commit_hash_length = 8
 tag_symbol = ' ' # ' ''
 disabled = false
 
 [git_metrics]
-format = '[\[+$added/]($added_style)[-$deleted\]]($deleted_style) '
-added_style = 'fg:#E04D27'
-deleted_style = 'fg:#E04D27'
+format = '[\[+$added/]($added_style)[-$deleted\] ]($deleted_style)'
+added_style = 'fg:#E04D27 bg:'
+deleted_style = 'fg:#E04D27 bg:'
 disabled = false
 
 [git_status]
-format = '[$all_status$ahead_behind]($style) '
-style = 'fg:#E04D27'
+format = '[$all_status$ahead_behind]($style)'
+style = 'fg:#E04D27 bg:'
 conflicted = '${count} '
 ahead = '${count}⇡ '
 behind = '${count}⇣ '
 diverged = '⇕${ahead_count}⇡${behind_count}⇣ '
 up_to_date = '✓ '
-untracked = '[${count}ﳇ ](red)' # ' ' # '? '
-stashed = '[${count} ](fg:#A52A2A)' # '📦 '# ' ' # ' ' # ' ' # ' ' 
-modified = '[${count}󰷉 ](fg:#C8AC00)' # '📝' # '! '
-staged = '[${count} ](green)' # '+ '
+untracked = '[${count}ﳇ ](fg:red bg:)' # ' ' # '? '
+stashed = '[${count} ](fg:#A52A2A bg:)' # '📦 '# ' ' # ' ' # ' ' # ' ' 
+modified = '[${count}󰷉 ](fg:#C8AC00 bg:)' # '📝' # '! '
+staged = '[${count} ](fg:green bg:)' # '+ '
 renamed = '${count}﫦 ' # ' '
 deleted = '${count}﯊ ' # '🗑 ' '- '
 disabled = false
 
 [jobs]
 format = '[ $number$symbol]($style) '
-style = 'blue'
+style = 'fg:blue bg:'
 symbol = '省' # '廒' # '󰜎' # '' # '✦'
 symbol_threshold = 1
 number_threshold = 4
@@ -155,14 +175,14 @@ disabled = false
 
 [memory_usage]
 format = '[ $symbol ${ram} ${swap}]($style) '
-style = 'purple dimmed'
+style = 'fg:purple dimmed bg:'
 symbol = '﬙ 北' # '﬙ 痢' # '﬙ / 󰾵' # '󰍛 󰾵' # '﬙ 󰾴' # '﬙ 󰾶' # '﬙ 󰾷' '﬙ 󰣂'
 threshold = 75
 disabled = false
 
 [cmd_duration]
 format = '[  $duration]($style) '
-style = 'yellow'
+style = 'fg:yellow'
 min_time = 500
 disabled = false
 
@@ -172,44 +192,18 @@ symbol = '─'
 
 [status]
 format = '[$symbol$status $hex_status  $signal_number-$signal_name]($style) '
-style = 'red'
+style = 'fg:red'
 symbol = '✘ '
 disabled = false
 
 [localip]
-format = '[$localipv4](green bold) '
+format = '[$localipv4](fg:green bold) '
 ssh_only = true
 disabled = false
 
-# when Bedingung (oder was anderes) greift nicht, wird nicht angezeigt wenn sudo
-# $sudo wieder hinter $hostname verschoben
-[custom.whensudo]
-description = "Shows   when sudo"
-format = "[$symbol $output]($style)"
-style = "fg:BBBBBB bold" # "red bold" bold" # "fg:#505050 bold"
-symbol = " " # " 󰋦"
-#detect_extensions = ['os'] # e.g.: ['os','xyz']
-#os = "Linux"
-shell = "['bash']"
-#
-command = "checksudo=$(sudo --validate --non-interactive 2>&1)"
-when = """ test -z "${checksudo}"  """
-#when = """ [[ ! $(echo "${checksudo}" | grep sudo) ]] """
-#
-#command = "echo foo"
-#command = "checksudo=$(sudo --validate --non-interactive 2>&1); if [[ $(echo ${checksudo} | grep sudo) ]]; then checksudo='nein'; else checksudo='ja'; fi"
-#when = """ test "$checksudo" == "ja"  """
-#
-#when = "skript.sh"
-#when = true
-#disabled = false
-
-# https://superuser.com/questions/553932/how-to-check-if-i-have-sudo-access
-# https://www.golinuxcloud.com/linux-check-sudo-access/
-
 
 # maybe sometime useful:
-# ╭ ╴ ╰ ╴       ≺ ≻ ❬ ❭ ❮ ❯ ❰ ❱       祉 祈   﫦 ⎜ ⎟ ⎢ ⎥ ⎪ ⏽ │ ┃ ║ ⎮   ╱ ╲            
+# ╭ ╴ ╰ ╴       ≺ ≻ ❬ ❭ ❮ ❯ ❰ ❱       祉 祈   﫦 ⎜ ⎟ ⎢ ⎥ ⎪ ⏽ │ ┃ ║ ⎮   ╱ ╲           
 # ∑                  ﮅ 﫮 﫯   ⇒  ﬁ ⇒ 旅 ✘ ✘ ✗   ✔ ✓                  
 #                  ﰖ  練           ← ↑ → ↓ ↔ ↕     ⇅ ⇄  北 痢         履   ?        
 #        פֿ        謹 凜 ﯢ   ﳉ 﨩 

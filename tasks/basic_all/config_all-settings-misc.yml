@@ -111,7 +111,7 @@
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.copy:
-    src: files/config_all-settings-misc-starship.toml
+    src: files/config_all-settings-misc-starship1.toml
     dest: "/home/{{ env_user }}/.config/starship.toml"
     mode: '0644'
     backup: true
