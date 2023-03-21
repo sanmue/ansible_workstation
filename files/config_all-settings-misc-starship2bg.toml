@@ -54,7 +54,7 @@ add_newline = true
 # Listed in the order of their position in the module row above
 [os]
 format = "[](fg:#242424)[$symbol]($style)[ ](bg:#242424)"
-style = "fg:#808080 bg:#242424" # "fg:#BBBBBB bg:#242424"
+style = "fg:#909090 bg:#242424" # "fg:#BBBBBB bg:#242424"
 disabled = false
 
 [os.symbols]
