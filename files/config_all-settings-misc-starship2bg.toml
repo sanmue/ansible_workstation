@@ -15,14 +15,6 @@ $hostname\
 $sudo\
 $directory\
 $git_branch$git_commit$git_state$git_metrics$git_status\
-\
-$kubernetes$vcsh$fossil_branch$hg_branch$pijul_channel$docker_context$package$c\
-$cmake$cobol$daml$dart$deno$dotneti$elixir$ulm$erlang$fennel$golang$guix_shell\
-$haskell$haxe$helm$java$julia$kotlin$gradle$lua$nim$nodejs$ocaml$opa$perl$php\
-$pulumi$purescript$python$raku$rlang$red$ruby$rust$scala$swift$terraform$vlang\
-$vagrant$zig$buf$nix_shell$conda$meson$spack$aws$gcloud$openstack$azure$crystal\
-$container$shell$env_var$battery$time$custom\
-\
 $jobs\
 $memory_usage\
 [ ](fg:#242424)\
@@ -54,7 +46,7 @@ add_newline = true
 # Listed in the order of their position in the module row above
 [os]
 format = "[](fg:#242424)[$symbol ]($style)[ ](bg:#242424)"
-style = "fg:#909090 bg:#242424" # "fg:#BBBBBB bg:#242424"
+style = "fg:#AAAAAA bg:#242424" # "fg:#BBBBBB bg:#242424"
 disabled = false
 
 [os.symbols]
@@ -210,3 +202,14 @@ disabled = false
 #        פֿ        謹 凜 ﯢ   ﳉ 﨩 
 #   聯 輦 賓             鈴 ﳓ         ﯊    ﳇ  ﰀ    ﬙      省 廒
 #   摒  朗   樂    ﳼ  
+
+
+# aktuell nicht genutze Module:
+#\
+#$kubernetes$vcsh$fossil_branch$hg_branch$pijul_channel$docker_context$package$c\
+#$cmake$cobol$daml$dart$deno$dotneti$elixir$ulm$erlang$fennel$golang$guix_shell\
+#$haskell$haxe$helm$java$julia$kotlin$gradle$lua$nim$nodejs$ocaml$opa$perl$php\
+#$pulumi$purescript$python$raku$rlang$red$ruby$rust$scala$swift$terraform$vlang\
+#$vagrant$zig$buf$nix_shell$conda$meson$spack$aws$gcloud$openstack$azure$crystal\
+#$container$shell$env_var$battery$time$custom\
+#\
