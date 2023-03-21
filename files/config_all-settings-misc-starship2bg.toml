@@ -159,7 +159,7 @@ deleted = '${count}﯊ ' # '🗑 ' '- '
 disabled = false
 
 [jobs]
-format = '[ ](fg:blue bold bg:#242424)[$number$symbol]($style)' # [ ](bg:#242424)
+format = '[  ](fg:blue bold bg:#242424)[$number$symbol]($style)' # [ ](bg:#242424)
 style = 'fg:blue bg:#242424'
 symbol = '省' # '廒' # '󰜎' # '' # '✦'
 symbol_threshold = 1
@@ -167,7 +167,7 @@ number_threshold = 4
 disabled = false
 
 [memory_usage]
-format = '[ ](fg:purple bold bg:#242424)[$symbol ${ram} ${swap}]($style)' # [ ](bg:#242424)
+format = '[  ](fg:purple bold bg:#242424)[$symbol ${ram} ${swap}]($style)' # [ ](bg:#242424)
 style = 'fg:purple bg:#242424'
 symbol = '﬙ 北' # '﬙ 痢' # '﬙ / 󰾵' # '󰍛 󰾵' # '﬙ 󰾴' # '﬙ 󰾶' # '﬙ 󰾷' '﬙ 󰣂'
 threshold = 75
