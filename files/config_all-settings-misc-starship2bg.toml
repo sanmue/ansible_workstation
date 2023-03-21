@@ -6,7 +6,7 @@
 # Variant 1bg: with background in first line, separator on right side
 
 
-# Customizing the prompt (including desired modules at desired position and sequence):
+# Customizing the prompt (and placing desired modules at desired position and sequence):
 format = """
 [╭╴](fg:#505050)\
 $os\
