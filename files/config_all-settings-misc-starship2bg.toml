@@ -54,7 +54,7 @@ add_newline = true
 # Listed in the order of their position in the module row above
 [os]
 format = "[](fg:#242424)[$symbol]($style)[ ](bg:#242424)"
-style = "fg:#BBBBBB bg:#242424"
+style = "fg:#808080 bg:#242424" # "fg:#BBBBBB bg:#242424"
 disabled = false
 
 [os.symbols]
@@ -98,7 +98,7 @@ Unknown = ""
 Windows = ""
 
 [username]
-format = '[ ](fg:#606060 bold bg:#242424)[$user]($style)[ ](bg:#242424)'
+format = '[ ](fg:green bold bg:#242424)[$user]($style)[ ](bg:#242424)'
 style_user = 'fg:green bold bg:#242424'
 style_root = 'fg:red bold bg:#242424'
 show_always = false
@@ -112,13 +112,13 @@ ssh_symbol = '' # '⇒' # ' ' # 'ﬁ⇒'
 disabled = false
 
 [sudo]
-format = '[ ](fg:#606060 bold bg:#242424)[as $symbol]($style)'
+format = '[ ](fg:red bold bg:#242424)[as $symbol]($style)'
 style = 'fg:red bold bg:#242424'
 symbol = ' ' # ' ❯ '
 disabled = false
 
 [directory]
-format = '[ ](fg:#606060 bold bg:#242424)[$read_only]($read_only_style)[$repo_root]($repo_root_style)[$path]($style)' # [ ](bg:#242424)
+format = '[ ](fg:cyan bold bg:#242424)[$read_only]($read_only_style)[$repo_root]($repo_root_style)[$path]($style)' # [ ](bg:#242424)
 style = 'fg:cyan bold bg:#242424'
 home_symbol = ' ~'
 read_only = ' ' # ' ' # ' ''
@@ -126,7 +126,7 @@ read_only_style = 'fg:cyan bg:#242424'
 truncation_length = 3
 truncation_symbol = '…/'
 truncate_to_repo = true
-repo_root_format = '[ ](fg:#606060 bold bg:#242424)[$read_only]($read_only_style)[$before_root_path]($before_repo_root_style)[$repo_root]($repo_root_style)[$path]($style)[ ](bg:#242424)' # [ ](bg:#242424)
+repo_root_format = '[ ](fg:cyan bold bg:#242424)[$read_only]($read_only_style)[$before_root_path]($before_repo_root_style)[$repo_root]($repo_root_style)[$path]($style)[ ](bg:#242424)' # [ ](bg:#242424)
 repo_root_style	= 'fg:cyan bold bg:#242424'
 use_os_path_sep = true
 disabled = false
@@ -167,7 +167,7 @@ deleted = '${count}﯊ ' # '🗑 ' '- '
 disabled = false
 
 [jobs]
-format = '[ ](fg:#606060 bold bg:#242424)[$number$symbol]($style)' # [ ](bg:#242424)
+format = '[ ](fg:blue bold bg:#242424)[$number$symbol]($style)' # [ ](bg:#242424)
 style = 'fg:blue bg:#242424'
 symbol = '省' # '廒' # '󰜎' # '' # '✦'
 symbol_threshold = 1
@@ -175,7 +175,7 @@ number_threshold = 4
 disabled = false
 
 [memory_usage]
-format = '[ ](fg:#606060 bold bg:#242424)[$symbol ${ram} ${swap}]($style)' # [ ](bg:#242424)
+format = '[ ](fg:purple bold bg:#242424)[$symbol ${ram} ${swap}]($style)' # [ ](bg:#242424)
 style = 'fg:purple bg:#242424'
 symbol = '﬙ 北' # '﬙ 痢' # '﬙ / 󰾵' # '󰍛 󰾵' # '﬙ 󰾴' # '﬙ 󰾶' # '﬙ 󰾷' '﬙ 󰣂'
 threshold = 75
