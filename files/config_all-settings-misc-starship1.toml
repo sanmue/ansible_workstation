@@ -175,7 +175,7 @@ disabled = false
 
 [memory_usage]
 format = '[ $symbol ${ram} ${swap}]($style) '
-style = 'fg:purple dimmed bg:'
+style = 'fg:purple bg:'
 symbol = '﬙ 北' # '﬙ 痢' # '﬙ / 󰾵' # '󰍛 󰾵' # '﬙ 󰾴' # '﬙ 󰾶' # '﬙ 󰾷' '﬙ 󰣂'
 threshold = 75
 disabled = false

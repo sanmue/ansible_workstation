@@ -53,7 +53,7 @@ add_newline = true
 # Customization and activation of some modules:
 # Listed in the order of their position in the module row above
 [os]
-format = "[](fg:#242424)[$symbol ]($style)[ ](fg:#707070 bold bg:#242424)"
+format = "[](fg:#242424)[$symbol]($style)[ ](bg:#242424)"
 style = "fg:#BBBBBB bg:#242424"
 disabled = false
 
@@ -98,26 +98,27 @@ Unknown = ""
 Windows = ""
 
 [username]
-format = '[$user ]($style)'
+format = '[ ](fg:green bold bg:#242424)[$user]($style)[ ](bg:#242424)'
 style_user = 'fg:green bold bg:#242424'
 style_root = 'fg:red bold bg:#242424'
 show_always = false
 disabled = false
 
 [hostname]
-format = '[$ssh_symbol](fg:green bold bg:#242424)[$hostname ](fg:green bold bg:#242424)[ ](fg:green bold bg:#242424)'
+format = '[$ssh_symbol ](fg:green bold bg:#242424)[$hostname](fg:green bold bg:#242424)[ ](bg:#242424)'
 ssh_only = true
-ssh_symbol = ' ' # '⇒' # ' ' # 'ﬁ⇒'
+ssh_symbol = '' # '⇒' # ' ' # 'ﬁ⇒'
 #trim_at = '.companyname.com'
 disabled = false
 
 [sudo]
+format = '[ ](fg:red bold bg:#242424)[as $symbol]($style)'
 style = 'fg:red bold bg:#242424'
-symbol = ' ❯ ' # ' ❯ '
+symbol = ' ' # ' ❯ '
 disabled = false
 
 [directory]
-format = '[$read_only]($read_only_style)[$repo_root]($repo_root_style)[$path]($style)[ ](bg:#242424)[](fg:cyan bg:#242424)'
+format = '[ ](fg:cyan bold bg:#242424)[$read_only]($read_only_style)[$repo_root]($repo_root_style)[$path]($style)' # [ ](bg:#242424)
 style = 'fg:cyan bold bg:#242424'
 home_symbol = ' ~'
 read_only = ' ' # ' ' # ' ''
@@ -125,32 +126,32 @@ read_only_style = 'fg:cyan bg:#242424'
 truncation_length = 3
 truncation_symbol = '…/'
 truncate_to_repo = true
-repo_root_format = '[$read_only]($read_only_style)[$before_root_path]($before_repo_root_style)[$repo_root]($repo_root_style)[$path]($style)[ ](bg:#242424)'
+repo_root_format = '[ ](fg:cyan bold bg:#242424)[$read_only]($read_only_style)[$before_root_path]($before_repo_root_style)[$repo_root]($repo_root_style)[$path]($style)[ ](bg:#242424)' # [ ](bg:#242424)
 repo_root_style	= 'fg:cyan bold bg:#242424'
 use_os_path_sep = true
 disabled = false
 
 [git_branch]
-format = '[❯ $symbol $branch(:$remote_branch) ]($style)'
+format = '[❯ $symbol $branch(:$remote_branch)]($style)[ ](bg:#242424)' # '❯ '
 style = 'fg:#E04D27 bg:#242424'
 symbol = ''
 #ignore_branches = ['master', 'main']
 
 [git_commit]
-format = '[\($hash$tag\)]($style)'
+format = '[\($hash$tag\)]($style)[ ](bg:#242424)'
 style = 'fg:#E04D27 bg:#242424'
 commit_hash_length = 8
 tag_symbol = ' ' # ' ''
 disabled = false
 
 [git_metrics]
-format = '[\[+$added/]($added_style)[-$deleted\] ]($deleted_style)'
+format = '[\[+$added/]($added_style)[-$deleted\]]($deleted_style)[ ](bg:#242424)'
 added_style = 'fg:#E04D27 bg:#242424'
 deleted_style = 'fg:#E04D27 bg:#242424'
 disabled = false
 
 [git_status]
-format = '[$all_status$ahead_behind]($style)'
+format = '[$all_status$ahead_behind]($style)' # [ ](bg:#242424)
 style = 'fg:#E04D27 bg:#242424'
 conflicted = '${count} '
 ahead = '${count}⇡ '
@@ -166,7 +167,7 @@ deleted = '${count}﯊ ' # '🗑 ' '- '
 disabled = false
 
 [jobs]
-format = '[ $number$symbol]($style) '
+format = '[ ](fg:blue bold bg:#242424)[$number$symbol]($style)' # [ ](bg:#242424)
 style = 'fg:blue bg:#242424'
 symbol = '省' # '廒' # '󰜎' # '' # '✦'
 symbol_threshold = 1
@@ -174,14 +175,14 @@ number_threshold = 4
 disabled = false
 
 [memory_usage]
-format = '[ $symbol ${ram} ${swap}]($style) '
+format = '[ ](fg:purple bold bg:#242424)[$symbol ${ram} ${swap}]($style)' # [ ](bg:#242424)
 style = 'fg:purple bg:#242424'
 symbol = '﬙ 北' # '﬙ 痢' # '﬙ / 󰾵' # '󰍛 󰾵' # '﬙ 󰾴' # '﬙ 󰾶' # '﬙ 󰾷' '﬙ 󰣂'
 threshold = 75
 disabled = false
 
 [cmd_duration]
-format = '[  $duration]($style) '
+format = '[  $duration ]($style)'
 style = 'fg:yellow'
 min_time = 500
 disabled = false
@@ -191,13 +192,13 @@ style = 'fg:#505050'
 symbol = '─'
 
 [status]
-format = '[$symbol$status $hex_status  $signal_number-$signal_name]($style) '
+format = '[$symbol$status $hex_status  $signal_number-$signal_name ]($style)'
 style = 'fg:red'
 symbol = '✘ '
 disabled = false
 
 [localip]
-format = '[$localipv4](fg:green bold) '
+format = '[$localipv4 ](fg:green bold)'
 ssh_only = true
 disabled = false
 
