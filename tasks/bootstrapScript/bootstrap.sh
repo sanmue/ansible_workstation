@@ -62,8 +62,30 @@ case ${os} in
         if [ ! -f "/home/${userid}/.ansible_bootstrapMirrorPool" ]; then
             touch "/home/${userid}/.ansible_bootstrapMirrorPool"
 
-            echo -e "\nReset custom mirror list + customize mirror pool + full refresh of the package database and update all packages on the system..."
-            sudo pacman-mirrors -c all && sudo pacman-mirrors --country Germany,France,Austria,Switzerland,Netherlands && sudo pacman -Syyu --noconfirm 
+            if [[ "${os}" = "Manjaro"* ]]; then
+                echo -e "\nReset custom mirror list + customize mirror pool + full refresh of the package database and update all packages on the system..."
+                # from listet countries:
+                sudo pacman-mirrors -c all && sudo pacman-mirrors --method rank --country 'Germany,France,Austria,Switzerland,Netherlands,Belgium,Sweden' && sudo pacman -Syyu --noconfirm
+            fi
+
+            if [[ "${os}" = "EndeavourOS"* ]]; then
+                echo -e "\nRetrieve up-to-date Arch Linux mirror data, rank it and update all packages on the system..."
+                # https://wiki.archlinux.org/title/Mirrors#top-page
+                # https://wiki.archlinux.org/title/Reflector#top-page
+                # https://man.archlinux.org/man/reflector.1#EXAMPLES
+
+                # Backup current mirrorlists:
+                sudo cp /etc/pacman.d/endeavouros-mirrorlist /etc/pacman.d/endeavouros-mirrorlist.backup
+                sudo cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup
+                # rankmirrors für EndeavourOS (config: /etc/eos-rankmirrors.conf):
+                sudo eos-rankmirrors # --verbose
+                # Retrieve the latest mirror list from the Arch Linux Mirror Status page + listed countries:
+                # (relector conf: /etc/xdg/reflector/reflector.conf
+                sudo reflector --age 12 --protocol https --sort rate --country 'Germany,France,Austria,Switzerland,Netherlands,Belgium,Sweden' --save /etc/pacman.d/mirrorlist
+                #sudo systemctl start reflector.service
+                # Update all packages on the system:    # (pacman conf: /etc/pacman.conf)
+                sudo pacman -Syyu --noconfirm
+            fi
         fi
 
         echo -e "\nInstallation initial benoetigte Software (git, ansible, openssh, ufw)..."
