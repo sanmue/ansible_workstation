@@ -16,7 +16,7 @@ $directory\
 $git_branch$git_commit$git_state$git_metrics$git_status\
 $jobs\
 $memory_usage\
-[ ](fg:#242424)\
+[ ](fg:#252525)\
 $cmd_duration\
 $fill\
 $line_break\
@@ -44,8 +44,8 @@ add_newline = true
 # Customization and activation of some modules:
 # Listed in the order of their position in the module row above
 [os]
-format = "[](fg:#242424)[$symbol ]($style)[ ](bg:#242424)"
-style = "fg:#AAAAAA bg:#242424"
+format = "[](fg:#252525)[$symbol ]($style)[ ](bg:#252525)"
+style = "fg:#AAAAAA bg:#252525"
 disabled = false
 
 [os.symbols]
@@ -89,85 +89,85 @@ Unknown = ""
 Windows = ""
 
 [username]
-format = '[ ](fg:green bold bg:#242424)[$user]($style)[ ](bg:#242424)'
-style_user = 'fg:green bold bg:#242424'
-style_root = 'fg:red bold bg:#242424'
+format = '[ ](fg:green bold bg:#252525)[$user]($style)[ ](bg:#252525)'
+style_user = 'fg:green bold bg:#252525'
+style_root = 'fg:red bold bg:#252525'
 show_always = false
 disabled = false
 
 [hostname]
-format = '[$ssh_symbol ](fg:green bold bg:#242424)[$hostname](fg:green bold bg:#242424)[ ](bg:#242424)'
+format = '[$ssh_symbol ](fg:green bold bg:#252525)[$hostname](fg:green bold bg:#252525)[ ](bg:#252525)'
 ssh_only = true
 ssh_symbol = '' # '⇒' # ' ' # 'ﬁ⇒'
 #trim_at = '.companyname.com'
 disabled = false
 
 [sudo]
-format = '[ ](fg:red bold bg:#242424)[as $symbol]($style)'
-style = 'fg:red bold bg:#242424'
+format = '[ ](fg:red bold bg:#252525)[as $symbol]($style)'
+style = 'fg:red bold bg:#252525'
 symbol = ' ' # ' ❯ '
 disabled = false
 
 [directory]
-format = '[ ](fg:cyan bold bg:#242424)[$read_only]($read_only_style)[$repo_root]($repo_root_style)[$path]($style)'
-style = 'fg:cyan bold bg:#242424'
+format = '[ ](fg:cyan bold bg:#252525)[$read_only]($read_only_style)[$repo_root]($repo_root_style)[$path]($style)'
+style = 'fg:cyan bold bg:#252525'
 home_symbol = ' ~'
 read_only = ' ' # ' ' # ' ''
-read_only_style = 'fg:cyan bg:#242424'
+read_only_style = 'fg:cyan bg:#252525'
 truncation_length = 3
 truncation_symbol = '…/'
 truncate_to_repo = true
-repo_root_format = '[ ](fg:cyan bold bg:#242424)[$read_only]($read_only_style)[$before_root_path]($before_repo_root_style)[$repo_root]($repo_root_style)[$path]($style)[ ](bg:#242424)'
-repo_root_style	= 'fg:cyan bold bg:#242424'
+repo_root_format = '[ ](fg:cyan bold bg:#252525)[$read_only]($read_only_style)[$before_root_path]($before_repo_root_style)[$repo_root]($repo_root_style)[$path]($style)[ ](bg:#252525)'
+repo_root_style	= 'fg:cyan bold bg:#252525'
 use_os_path_sep = true
 disabled = false
 
 [git_branch]
-format = '[❯ $symbol $branch(:$remote_branch)]($style)[ ](bg:#242424)'
-style = 'fg:#E04D27 bg:#242424'
+format = '[❯ $symbol $branch(:$remote_branch)]($style)[ ](bg:#252525)'
+style = 'fg:#E04D27 bg:#252525'
 symbol = ''
 #ignore_branches = ['master', 'main']
 
 [git_commit]
-format = '[\($hash$tag\)]($style)[ ](bg:#242424)'
-style = 'fg:#E04D27 bg:#242424'
+format = '[\($hash$tag\)]($style)[ ](bg:#252525)'
+style = 'fg:#E04D27 bg:#252525'
 commit_hash_length = 8
 tag_symbol = ' ' # ' ''
 disabled = false
 
 [git_metrics]
-format = '[\[+$added/]($added_style)[-$deleted\]]($deleted_style)[ ](bg:#242424)'
-added_style = 'fg:#E04D27 bg:#242424'
-deleted_style = 'fg:#E04D27 bg:#242424'
+format = '[\[+$added/]($added_style)[-$deleted\]]($deleted_style)[ ](bg:#252525)'
+added_style = 'fg:#E04D27 bg:#252525'
+deleted_style = 'fg:#E04D27 bg:#252525'
 disabled = false
 
 [git_status]
 format = '[$all_status$ahead_behind]($style)'
-style = 'fg:#E04D27 bg:#242424'
+style = 'fg:#E04D27 bg:#252525'
 conflicted = '${count} '
 ahead = '${count}⇡ '
 behind = '${count}⇣ '
 diverged = '⇕${ahead_count}⇡${behind_count}⇣ '
 up_to_date = '✓ '
-untracked = '[${count}ﳇ ](fg:red bg:#242424)' # ' ' # '? '
-stashed = '[${count} ](fg:#A52A2A bg:#242424)' # '📦 '# ' ' # ' ' # ' ' # ' ' 
-modified = '[${count}󰷉 ](fg:#C8AC00 bg:#242424)' # '📝' # '! '
-staged = '[${count} ](fg:green bg:#242424)' # '+ '
+untracked = '[${count}ﳇ ](fg:red bg:#252525)' # ' ' # '? '
+stashed = '[${count} ](fg:#A52A2A bg:#252525)' # '📦 '# ' ' # ' ' # ' ' # ' ' 
+modified = '[${count}󰷉 ](fg:#C8AC00 bg:#252525)' # '📝' # '! '
+staged = '[${count} ](fg:green bg:#252525)' # '+ '
 renamed = '${count}﫦 ' # ' '
 deleted = '${count}﯊ ' # '🗑 ' '- '
 disabled = false
 
 [jobs]
-format = '[  ](fg:blue bold bg:#242424)[$number$symbol]($style)'
-style = 'fg:blue bg:#242424'
+format = '[  ](fg:blue bold bg:#252525)[$number$symbol]($style)'
+style = 'fg:blue bg:#252525'
 symbol = '省' # '廒' # '󰜎' # '' # '✦'
 symbol_threshold = 1
 number_threshold = 4
 disabled = false
 
 [memory_usage]
-format = '[  ](fg:purple bold bg:#242424)[$symbol ${ram} ${swap}]($style)'
-style = 'fg:purple bg:#242424'
+format = '[  ](fg:purple bold bg:#252525)[$symbol ${ram} ${swap}]($style)'
+style = 'fg:purple bg:#252525'
 symbol = '﬙ 北' # '﬙ 痢' # '﬙ / 󰾵' # '󰍛 󰾵' # '﬙ 󰾴' # '﬙ 󰾶' # '﬙ 󰾷' '﬙ 󰣂'
 threshold = 75
 disabled = false
