@@ -3,7 +3,7 @@
 
 # ~/.config/starship.toml
 #
-# ### Variant 2 ### no background in top line of the prompt, separators on left side
+# ### Variant 2: two line prompt, no background in top line, separators on left side
 #
 # - No filling solid line in top row: 
 #   Replace '$fill\' with just one character '\' or just completely delete the line that contains '$fill\' further down.
@@ -38,7 +38,6 @@ $line_break\
 $localip\
 $character]($style)
 """
-
 
 # Inserts a blank line between shell prompts:
 add_newline = true
