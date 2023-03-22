@@ -2,7 +2,20 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 
 # ~/.config/starship.toml
-# Version 2bg: with background in first line, separator on left side
+#
+# Version 2: no background in top line of the prompt, separators on left side
+#
+# - No filling solid line in top row: 
+#   Replace '$fill\' with just one character '\' or just completely delete the line that contains '$fill\' further down.
+#
+# - '$line_break': everything from the next line on refers to the second line of the prompt.
+#
+# - Some modules listed further down will not show up (all the time), as their default value is 'disabled = true' or
+#   they are only displayed under certain conditions.
+#
+# - Symbols:
+#   Don't be confused if you see this toml file via web browser on a website, gist, ... and you don't see any "real" symbols further down.
+#   If Nerd-fonts are already installed on your system (e.g. MesloLG Nerd Font, FiraCode Nerd Font, ...) it should work.
 
 
 # Customizing the prompt (and placing desired modules at desired position and sequence):
@@ -25,17 +38,6 @@ $line_break\
 $localip\
 $character]($style)
 """
-
-# - '$line_break', i.e. everything from the next line on refers to the second line of the prompt.
-#   - '\n' for a line break could work too on your system, but it is just not a 'starship' module. 
-#   - Just let the module do the correct line break.
-# - Some modules listed above will not show up (all the time), as their default value is 'disabled = true' or
-#   they are only displayed under certain conditions.
-#   They have to be enabled manually, e.g. see below "# Customizing and enabling some modules used above"
-#   https://starship.rs/config/
-
-# Don't be confused if you see this toml file via web browser on Starship website, gist, ... and you don't see any "real" symbols here.
-# If Nerd-fonts are already installed on your system (e.g. MesloLG Nerd Font, FiraCode Nerd Font, ...) it should work
 
 
 # Inserts a blank line between shell prompts:
