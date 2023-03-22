@@ -45,7 +45,7 @@ add_newline = true
 # Listed in the order of their position in the module row above
 [os]
 format = "[](fg:#242424)[$symbol ]($style)[ ](bg:#242424)"
-style = "fg:#AAAAAA bg:#242424" # "fg:#BBBBBB bg:#242424"
+style = "fg:#AAAAAA bg:#242424"
 disabled = false
 
 [os.symbols]
@@ -109,7 +109,7 @@ symbol = ' ' # ' ❯ '
 disabled = false
 
 [directory]
-format = '[ ](fg:cyan bold bg:#242424)[$read_only]($read_only_style)[$repo_root]($repo_root_style)[$path]($style)' # [ ](bg:#242424)
+format = '[ ](fg:cyan bold bg:#242424)[$read_only]($read_only_style)[$repo_root]($repo_root_style)[$path]($style)'
 style = 'fg:cyan bold bg:#242424'
 home_symbol = ' ~'
 read_only = ' ' # ' ' # ' ''
@@ -117,13 +117,13 @@ read_only_style = 'fg:cyan bg:#242424'
 truncation_length = 3
 truncation_symbol = '…/'
 truncate_to_repo = true
-repo_root_format = '[ ](fg:cyan bold bg:#242424)[$read_only]($read_only_style)[$before_root_path]($before_repo_root_style)[$repo_root]($repo_root_style)[$path]($style)[ ](bg:#242424)' # [ ](bg:#242424)
+repo_root_format = '[ ](fg:cyan bold bg:#242424)[$read_only]($read_only_style)[$before_root_path]($before_repo_root_style)[$repo_root]($repo_root_style)[$path]($style)[ ](bg:#242424)'
 repo_root_style	= 'fg:cyan bold bg:#242424'
 use_os_path_sep = true
 disabled = false
 
 [git_branch]
-format = '[❯ $symbol $branch(:$remote_branch)]($style)[ ](bg:#242424)' # '❯ '
+format = '[❯ $symbol $branch(:$remote_branch)]($style)[ ](bg:#242424)'
 style = 'fg:#E04D27 bg:#242424'
 symbol = ''
 #ignore_branches = ['master', 'main']
@@ -142,7 +142,7 @@ deleted_style = 'fg:#E04D27 bg:#242424'
 disabled = false
 
 [git_status]
-format = '[$all_status$ahead_behind]($style)' # [ ](bg:#242424)
+format = '[$all_status$ahead_behind]($style)'
 style = 'fg:#E04D27 bg:#242424'
 conflicted = '${count} '
 ahead = '${count}⇡ '
@@ -158,7 +158,7 @@ deleted = '${count}﯊ ' # '🗑 ' '- '
 disabled = false
 
 [jobs]
-format = '[  ](fg:blue bold bg:#242424)[$number$symbol]($style)' # [ ](bg:#242424)
+format = '[  ](fg:blue bold bg:#242424)[$number$symbol]($style)'
 style = 'fg:blue bg:#242424'
 symbol = '省' # '廒' # '󰜎' # '' # '✦'
 symbol_threshold = 1
@@ -166,7 +166,7 @@ number_threshold = 4
 disabled = false
 
 [memory_usage]
-format = '[  ](fg:purple bold bg:#242424)[$symbol ${ram} ${swap}]($style)' # [ ](bg:#242424)
+format = '[  ](fg:purple bold bg:#242424)[$symbol ${ram} ${swap}]($style)'
 style = 'fg:purple bg:#242424'
 symbol = '﬙ 北' # '﬙ 痢' # '﬙ / 󰾵' # '󰍛 󰾵' # '﬙ 󰾴' # '﬙ 󰾶' # '﬙ 󰾷' '﬙ 󰣂'
 threshold = 75
