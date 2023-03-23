@@ -4,7 +4,7 @@
 
 # https://www.fosslinux.com/46741/things-to-do-after-installing-manjaro.htm
 # - aus Punkt 13: Install the Latest Kernel (or an Older LTS Kernel)
-- name: Enable GRUB Menu at boot (Archlinux)
+- name: Settings all misc - Enable GRUB Menu at boot (Archlinux)
   ansible.builtin.shell:
     # cmd: sudo sed -Ei '/GRUB_TIMEOUT_STYLE=hidden/s/hidden/menu/' /etc/default/grub && sudo update-grub   # update-grup nicht stdm. Inst bei Archlinux
     cmd: sudo sed -Ei '/GRUB_TIMEOUT_STYLE=hidden/s/hidden/menu/' /etc/default/grub && sudo grub-mkconfig -o /boot/grub/grub.cfg
@@ -19,12 +19,12 @@
 
 # -------------
 # ### env_user:
-- name: Bashrc - check status (User, all)
+- name: Settings all misc - Bashrc - check status (User, all)
   ansible.builtin.stat:
     path: "/home/{{ env_user }}/.bashrc"
   register: stat_bashrc_user
 
-- name: Bashrc - create (User, all)
+- name: Settings all misc - Bashrc - create (User, all)
   ansible.builtin.file:
     path: "/home/{{ env_user }}/.bashrc"
     state: touch
@@ -35,7 +35,7 @@
     - ansible_distribution in ["Ubuntu", "Archlinux"]
     - not stat_bashrc_user.stat.exists   # oder: - stat_bashrc_user.stat.exists == false
 
-- name: Bashrc - additional EXPORTS (User, all)
+- name: Settings all misc - Bashrc - additional EXPORTS (User, all)
   ansible.builtin.blockinfile:
     path: "/home/{{ env_user }}/.bashrc"
     backup: true
@@ -62,7 +62,7 @@
   when:
     - ansible_distribution in ["Ubuntu", "Archlinux"]
 
-- name: Bashrc - custom alias definitions (User, all)
+- name: Settings all misc - Bashrc - custom alias definitions (User, all)
   ansible.builtin.blockinfile:
     path: "/home/{{ env_user }}/.bashrc"
     backup: true
@@ -88,7 +88,7 @@
   when:
     - ansible_distribution in ["Ubuntu", "Archlinux"]
 
-- name: Bashrc - Insert/Update additional paths and config - starship shell prompt (User, all)
+- name: Settings all misc - Bashrc - Insert/Update additional paths and config - starship shell prompt (User, all)
   ansible.builtin.blockinfile:
     path: "/home/{{ env_user }}/.bashrc"
     backup: true
@@ -107,7 +107,7 @@
   when:
     - ansible_distribution in ["Ubuntu", "Archlinux"]
 
-- name: config all settings - copy starship shell prompt config file (User, all)
+- name: Settings all misc - config all settings - copy starship shell prompt config file (User, all)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.copy:
@@ -119,7 +119,7 @@
     - ansible_distribution in ["Ubuntu", "Archlinux"]
 
 
-- name: Bashrc - Insert/Update additional paths and config - nvm (User, all)
+- name: Settings all misc - Bashrc - Insert/Update additional paths and config - nvm (User, all)
   ansible.builtin.blockinfile:
     path: "/home/{{ env_user }}/.bashrc"
     backup: true
@@ -137,7 +137,7 @@
   when:
     - ansible_distribution in ["Ubuntu", "Archlinux"]
 
-- name: Bashrc - Insert/Update additional paths and config - vim (User, all)
+- name: Settings all misc - Bashrc - Insert/Update additional paths and config - vim (User, all)
   ansible.builtin.blockinfile:
     path: "/home/{{ env_user }}/.bashrc"
     backup: true
@@ -151,7 +151,7 @@
   when:
     - ansible_distribution in ["Ubuntu", "Archlinux"]
 
-- name: Bashrc - Insert/Update additional paths and config - user-bin (User, all)
+- name: Settings all misc - Bashrc - Insert/Update additional paths and config - user-bin (User, all)
   ansible.builtin.blockinfile:
     path: "/home/{{ env_user }}/.bashrc"
     backup: true
@@ -164,7 +164,7 @@
   when:
     - ansible_distribution in ["Ubuntu", "Archlinux"]
 
-- name: Bashrc - Insert/Update additional paths and config - pyenv (User, Ubuntu)
+- name: Settings all misc - Bashrc - Insert/Update additional paths and config - pyenv (User, Ubuntu)
   ansible.builtin.blockinfile:
     path: "/home/{{ env_user }}/.bashrc"
     backup: true
@@ -181,7 +181,7 @@
   when:
     - ansible_distribution in ["Ubuntu"]
 
-# - name: Bashrc - initial command 'pyenv init' - pyenv (User, Arch)
+# - name: Settings all misc - Bashrc - initial command 'pyenv init' - pyenv (User, Arch)
 #  become: true
 #  become_user: "{{ env_user }}"
 #  ansible.builtin.shell:
@@ -192,7 +192,7 @@
 #  when:
 #    - ansible_distribution in ["Archlinux"]
 
-- name: Bashrc - Insert/Update additional paths and config - pyenv (User, Arch)
+- name: Settings all misc - Bashrc - Insert/Update additional paths and config - pyenv (User, Arch)
   ansible.builtin.blockinfile:
     path: "/home/{{ env_user }}/.bashrc"
     backup: true
@@ -208,7 +208,7 @@
     - ansible_distribution in ["Archlinux"]
 
 # https://wiki.archlinux.org/title/Systemd/User#PATH
-- name: Bashrc - systemd user import-environment (User, all)
+- name: Settings all misc - Bashrc - systemd user import-environment (User, all)
   ansible.builtin.blockinfile:
     path: "/home/{{ env_user }}/.bashrc"
     backup: true
@@ -224,12 +224,12 @@
 
 # --------
 # ### root
-- name: Bashrc - check status (root, all)
+- name: Settings all misc - Bashrc - check status (root, all)
   ansible.builtin.stat:
     path: "/root/.bashrc"
   register: stat_bashrc_root
 
-- name: Bashrc - create (root, all)
+- name: Settings all misc - Bashrc - create (root, all)
   ansible.builtin.file:
     path: "/root/.bashrc"
     state: touch
@@ -238,7 +238,7 @@
     - ansible_distribution in ["Ubuntu", "Archlinux"]
     - not stat_bashrc_root.stat.exists
 
-- name: Bashrc - Insert/Update additional paths and config - starship shell prompt (root, all)
+- name: Settings all misc - Bashrc - Insert/Update additional paths and config - starship shell prompt (root, all)
   ansible.builtin.blockinfile:
     path: "/root/.bashrc"
     backup: true
@@ -251,7 +251,7 @@
   when:
     - ansible_distribution in ["Ubuntu", "Archlinux"]
 
-- name: Bashrc - Insert/Update additional paths and config (root, all)
+- name: Settings all misc - Bashrc - Insert/Update additional paths and config (root, all)
   ansible.builtin.blockinfile:
     path: "/root/.bashrc"
     backup: true
@@ -273,12 +273,12 @@
 
 # --------
 # ### user
-- name: Zshrc - check status (User, all)
+- name: Settings all misc - Zshrc - check status (User, all)
   ansible.builtin.stat:
     path: "/home/{{ env_user }}/.zshrc"
   register: statzshrcUser
 
-- name: Zshrc - create (User, all)
+- name: Settings all misc - Zshrc - create (User, all)
   ansible.builtin.file:
     path: "/home/{{ env_user }}/.zshrc"
     state: touch
@@ -290,7 +290,7 @@
     - not statzshrcUser.stat.exists
     # oder: - statzshrcUser.stat.exists == false
 
-- name: Zshrc - custom alias definitions (User, all)
+- name: Settings all misc - Zshrc - custom alias definitions (User, all)
   ansible.builtin.blockinfile:
     path: "/home/{{ env_user }}/.zshrc"
     backup: true
@@ -317,7 +317,7 @@
     - ansible_distribution in ["Ubuntu", "Archlinux"]
 
 # bei Manjaro ist zsh bereits angepasst
-- name: Zshrc - Insert/Update additional paths and config - starship shell prompt (User, NOT Manjaro)
+- name: Settings all misc - Zshrc - Insert/Update additional paths and config - starship shell prompt (User, NOT Manjaro)
   ansible.builtin.blockinfile:
     path: "/home/{{ env_user }}/.zshrc"
     backup: true
@@ -331,7 +331,7 @@
     - ansible_distribution in ["Ubuntu", "Archlinux"]
     - env_lsb_id != "ManjaroLinux"
 
-- name: Zshrc - Insert/Update additional paths and config - nvm (User, all)
+- name: Settings all misc - Zshrc - Insert/Update additional paths and config - nvm (User, all)
   ansible.builtin.blockinfile:
     path: "/home/{{ env_user }}/.zshrc"
     backup: true
@@ -349,7 +349,7 @@
   when:
     - ansible_distribution in ["Ubuntu", "Archlinux"]
 
-- name: Zshrc - Insert/Update additional paths and config - vim (User, all)
+- name: Settings all misc - Zshrc - Insert/Update additional paths and config - vim (User, all)
   ansible.builtin.blockinfile:
     path: "/home/{{ env_user }}/.zshrc"
     backup: true
@@ -363,7 +363,7 @@
   when:
     - ansible_distribution in ["Ubuntu", "Archlinux"]
 
-- name: Zshrc - Insert/Update additional paths and config - user-bin (User, all)
+- name: Settings all misc - Zshrc - Insert/Update additional paths and config - user-bin (User, all)
   ansible.builtin.blockinfile:
     path: "/home/{{ env_user }}/.zshrc"
     backup: true
@@ -376,7 +376,7 @@
   when:
     - ansible_distribution in ["Ubuntu", "Archlinux"]
 
-- name: Zshrc - Insert/Update additional paths and config - pyenv (User, Ubuntu)
+- name: Settings all misc - Zshrc - Insert/Update additional paths and config - pyenv (User, Ubuntu)
   ansible.builtin.blockinfile:
     path: "/home/{{ env_user }}/.zshrc"
     backup: true
@@ -393,7 +393,7 @@
   when:
     - ansible_distribution in ["Ubuntu"]
 
-# - name: Zshrc - initial command 'pyenv init' - pyenv (User, Arch)
+# - name: Settings all misc - Zshrc - initial command 'pyenv init' - pyenv (User, Arch)
 #  become: true
 #  become_user: "{{ env_user }}"
 #  ansible.builtin.shell:
@@ -404,7 +404,7 @@
 #  when:
 #    - ansible_distribution in ["Archlinux"]
 
-- name: Zshrc - Insert/Update additional paths and config - pyenv (User, Arch)
+- name: Settings all misc - Zshrc - Insert/Update additional paths and config - pyenv (User, Arch)
   ansible.builtin.blockinfile:
     path: "/home/{{ env_user }}/.zshrc"
     backup: true
@@ -420,7 +420,7 @@
     - ansible_distribution in ["Archlinux"]
 
 # https://wiki.archlinux.org/title/Systemd/User#PATH
-- name: Zshrc - systemd user import-environment (User, all)
+- name: Settings all misc - Zshrc - systemd user import-environment (User, all)
   ansible.builtin.blockinfile:
     path: "/home/{{ env_user }}/.zshrc"
     backup: true
@@ -436,12 +436,12 @@
 
 # --------
 # ### root
-- name: Zshrc - check status (root, all)
+- name: Settings all misc - Zshrc - check status (root, all)
   ansible.builtin.stat:
     path: "/root/.zshrc"
   register: stat_bashrc_root
 
-- name: Zshrc - create (root, all)
+- name: Settings all misc - Zshrc - create (root, all)
   ansible.builtin.file:
     path: "/root/.zshrc"
     state: touch
@@ -451,7 +451,7 @@
     - not stat_bashrc_root.stat.exists
 
 # bei Manjaro ist zsh bereits angepasst
-- name: Zshrc - Insert/Update additional paths and config - starship shell prompt (root, NOT Manjaro)
+- name: Settings all misc - Zshrc - Insert/Update additional paths and config - starship shell prompt (root, NOT Manjaro)
   ansible.builtin.blockinfile:
     path: "/root/.zshrc"
     backup: true
@@ -465,7 +465,7 @@
     - ansible_distribution in ["Ubuntu", "Archlinux"]
     - env_lsb_id != "ManjaroLinux"
 
-- name: Zshrc - Insert/Update additional paths and config (root, all)
+- name: Settings all misc - Zshrc - Insert/Update additional paths and config (root, all)
   ansible.builtin.blockinfile:
     path: "/root/.zshrc"
     backup: true
@@ -483,7 +483,7 @@
 # #########################
 # ### starship shell prompt
 # #########################
-- name: starship shell prompt - copy update-script to usr-local-bin (Arch, Ubuntu)
+- name: Settings all misc - starship shell prompt - copy update-script to usr-local-bin (Arch, Ubuntu)
   ansible.builtin.copy:
     src: "files/config_all-settings-misc-starship_update.sh"
     dest: "/usr/local/bin/starship_update.sh"
@@ -503,12 +503,12 @@
 # ### VIM Settings
 
 # alt:
-# - name: set vim config for user "sandro" (.vimrc) (all)
+# - name: Settings all misc - set vim config for user "sandro" (.vimrc) (all)
 #  ansible.builtin.script: "{{ env_PWD }}/tasks/config_all-settings-misc-vim.sh"
 #  args:
 #    creates: "/home/{{ env_user }}/.vimrc"
 
-- name: Set vim global config (ubuntu)
+- name: Settings all misc - Set vim global config (ubuntu)
   ansible.builtin.blockinfile:
     path: "/etc/vim/vimrc.local"
     backup: true
@@ -551,7 +551,7 @@
     - ansible_distribution == "Ubuntu"
 
 
-- name: Set vim global config (arch)
+- name: Settings all misc - Set vim global config (arch)
   ansible.builtin.blockinfile:
     path: "/etc/vimrc"
     backup: true
@@ -596,7 +596,7 @@
 # ### VIM plugins
 
 # - https://github.com/dense-analysis/ale
-- name: Create folder for vim git-plugins (all)
+- name: Settings all misc - Create folder for vim git-plugins (all)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell:
@@ -604,7 +604,7 @@
   args:
     creates: /home/{{ env_user }}/.vim/pack/git-plugins/start
 
-- name: Install (git clone) vim plugin - Linter ALE (all)
+- name: Settings all misc - Install (git clone) vim plugin - Linter ALE (all)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.git:
@@ -621,7 +621,7 @@
 
 # ### clamd
 
-- name: Set ClamAV - clamd global config - ExcludePath (arch, Ubuntu)
+- name: Settings all misc - Set ClamAV - clamd global config - ExcludePath (arch, Ubuntu)
   ansible.builtin.blockinfile:
     path: "/etc/clamav/clamd.conf"
     backup: true
@@ -636,7 +636,7 @@
   when:
     - ansible_distribution in ["Archlinux", "Ubuntu"]
 
-- name: Set ClamAV - clamd global config - Limits (arch, Ubuntu)
+- name: Settings all misc - Set ClamAV - clamd global config - Limits (arch, Ubuntu)
   ansible.builtin.blockinfile:
     path: "/etc/clamav/clamd.conf"
     backup: true
@@ -657,7 +657,7 @@
 
 # https://wiki.archlinux.org/title/Desktop_notifications#Bash
 # https://wiki.archlinux.org/title/ClamAV
-- name: Set ClamAV - clamd global config - VirusEvent - Desktop Notification (arch, Ubuntu)
+- name: Settings all misc - Set ClamAV - clamd global config - VirusEvent - Desktop Notification (arch, Ubuntu)
   ansible.builtin.blockinfile:
     path: "/etc/clamav/clamd.conf"
     backup: true
@@ -675,7 +675,7 @@
     - ansible_distribution in ["Archlinux", "Ubuntu"]
 
 # https://wiki.archlinux.org/title/ClamAV
-- name: Users - clamav - bash-skript VirusEvent - notify-send on signature found (Arch, Ubuntu)
+- name: Settings all misc - Users - clamav - bash-skript VirusEvent - notify-send on signature found (Arch, Ubuntu)
   ansible.builtin.copy:
     src: "files/config_all-settings-misc-clamavVirusEvent.sh"
     dest: "/etc/clamav/VirusEvent.sh"
@@ -686,7 +686,7 @@
   when:
     - ansible_distribution in ["Archlinux", "Ubuntu"]
 
-- name: Users - clamav - serevices - bashScript to scan HOME folder (Arch, Ubuntu)
+- name: Settings all misc - Users - clamav - serevices - bashScript to scan HOME folder (Arch, Ubuntu)
   ansible.builtin.copy:
     src: "files/config_all-services-misc-clamav-scanHome.sh"
     dest: "/usr/local/bin/scanHome.sh"
@@ -700,7 +700,7 @@
 
 # ### custom folders (quarantine, logs)
 
-- name: Create 'quarantine' and 'logs' folder for ClamAV for env_user (Archlinux, Ubuntu)
+- name: Settings all misc - Create 'quarantine' and 'logs' folder for ClamAV for env_user (Archlinux, Ubuntu)
   ansible.builtin.file:
     path: "/home/{{ env_user }}/{{ item }}"
     state: directory
@@ -714,11 +714,38 @@
     - ansible_distribution in ["Ubuntu", "Archlinux"]
 
 
+# #############################################
+# # reflector - retrieve the latest mirror list
+# #############################################
+# Service: siehe "config_all-services-misc.yml"
+- name: Settings all misc - reflector - insert countries (Arch, NOT Manjaro)
+  ansible.builtin.replace:
+    path: /etc/xdg/reflector/reflector.conf
+    #search_string: '# --country France,Germany'
+    regexp: '^# --country France,Germany'
+    replace: '--country Germany,France,Austria,Switzerland,Netherlands,Belgium,Sweden'
+    backup: true
+  when:
+    - ansible_distribution in ["Archlinux"]
+    - env_lsb_id != "ManjaroLinux"
+
+- name: Settings all misc - reflector - how many mirrors to use (Arch, NOT Manjaro)
+  ansible.builtin.replace:
+    path: /etc/xdg/reflector/reflector.conf
+    #search_string: '--latest 5'
+    regexp: '^--latest 5'
+    replace: '--latest 8'
+    backup: true
+  when:
+    - ansible_distribution in ["Archlinux"]
+    - env_lsb_id != "ManjaroLinux"
+
+
 # ###################################
 # ### Visual Studio Code / Code - OSS
 # ###################################
 
-- name: Install 'Visual Studio Code' bzw 'Code-OSS' - Extension 'Sync Settings' by zokugun (Ubuntu)
+- name: Settings all misc - Install 'Visual Studio Code' bzw 'Code-OSS' - Extension 'Sync Settings' by zokugun (Ubuntu)
   tags: workstation,ubuntu
   ansible.builtin.shell:
     cmd: code --install-extension zokugun.sync-settings
@@ -727,7 +754,7 @@
   when:
     - ansible_distribution in ["Ubuntu"]   # hat unter Arch (mit ' Code - OSS') nicht funktioniert
 
-- name: Start 'Visual Studio Code' bzw 'Code-OSS' (Ubuntu)
+- name: Settings all misc - Start 'Visual Studio Code' bzw 'Code-OSS' (Ubuntu)
   tags: workstation,ubuntu
   ansible.builtin.shell:
     cmd: code >/dev/null 2>&1 &   # damit im Home-Verzeichnis der Config-Pfad von VS Code erstellt wird + 
@@ -739,7 +766,7 @@
   when:
     - ansible_distribution in ["Ubuntu"]
 
-- name: Start 'Code - OSS' (Arch)
+- name: Settings all misc - Start 'Code - OSS' (Arch)
   tags: workstation,arch
   ansible.builtin.shell:
     cmd: code >/dev/null 2>&1 &   # damit im Home-Verzeichnis der Config-Pfad von VS Code erstellt wird + 
@@ -751,7 +778,7 @@
   when:
     - ansible_distribution in ["Archlinux"]
 
-- name: Wait until 'Visual Studio Code' Extension 'Sync Settings' Standard Config-File is present before continuing (Ubuntu)
+- name: Settings all misc - Wait until 'Visual Studio Code' Extension 'Sync Settings' Standard Config-File is present before continuing (Ubuntu)
   ansible.builtin.wait_for:
     path: /home/{{ env_user }}/.config/Code/User/globalStorage/zokugun.sync-settings/settings.yml   #Datei
     # path: /home/{{ env_user }}/.config/Code/User/globalStorage/zokugun.sync-settings/               # Ordner
@@ -759,7 +786,7 @@
     - ansible_distribution == "Ubuntu"
 
 # # da sich die Extension unter Arch nicht so installieren lässt (s.o.) kann dies wegfallen:
-# - name: Wait until 'Code - OSS' Extension 'Sync Settings' Standard Config-File is present before continuing (Arch)
+# - name: Settings all misc - Wait until 'Code - OSS' Extension 'Sync Settings' Standard Config-File is present before continuing (Arch)
 #  ansible.builtin.wait_for:
 #    path: "/home/{{ env_user }}/.config/Code - OSS/User/globalStorage/zokugun.sync-settings/settings.yml"   # Datei
 #    #path: /home/{{ env_user }}/.config/Code/User/globalStorage/zokugun.sync-settings/               # Ordner
@@ -768,7 +795,7 @@
 
 # # da sich die Extension unter Arch nicht so installieren lässt: Verzeichnis der Extension manuell erstellen,
 # # damit unten die config-datei dorthin kopiert werden kann
-- name: Erstelle hilfsweise manuell 'Sync Settings' Extension Ordner für 'Code - OSS' (Arch)
+- name: Settings all misc - Erstelle hilfsweise manuell 'Sync Settings' Extension Ordner für 'Code - OSS' (Arch)
   tags: workstation,arch
   ansible.builtin.file:
     path: "/home/{{ env_user }}/.config/Code - OSS//User/globalStorage/zokugun.sync-settings"
@@ -780,7 +807,7 @@
     - ansible_distribution in ["Archlinux"]
 
 
-# - name: Close Visual Studio Code (Ubuntu)
+# - name: Settings all misc - Close Visual Studio Code (Ubuntu)
 #  tags: workstation,ubuntu
 #  ansible.builtin.shell:
 #    cmd: pkill -15 code   # Signal: "-15" entspricht "SIGTERM" : Abschließen und beenden des Programms
@@ -790,7 +817,7 @@
 #  when:
 #    - ansible_distribution == "Ubuntu"
 
-- name: Set/Copy 'Visual Studio Code' settings-file for Extension 'Sync Settings' (Ubuntu)
+- name: Settings all misc - Set/Copy 'Visual Studio Code' settings-file for Extension 'Sync Settings' (Ubuntu)
   tags: workstation,ubuntu
   ansible.builtin.copy:
     src: ./files/VSCode_Extension_Sync-Settings_settings.yml
@@ -801,7 +828,7 @@
   when:
     - ansible_distribution == "Ubuntu"
 
-- name: Set/Copy 'Code - OSS' settings-file for Extension 'Sync Settings' (Arch)
+- name: Settings all misc - Set/Copy 'Code - OSS' settings-file for Extension 'Sync Settings' (Arch)
   tags: workstation,arch
   ansible.builtin.copy:
     src: ./files/VSCode_Extension_Sync-Settings_settings.yml

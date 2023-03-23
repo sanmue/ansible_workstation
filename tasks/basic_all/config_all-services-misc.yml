@@ -7,7 +7,7 @@
 # Cronie
 # ------
 # cron wird verwendet von ClamTK und timeshift
-
+#
 # https://wiki.archlinux.org/title/Cron
 - name: Services - start+enable cronie (Arch)
   ansible.builtin.service:
@@ -17,10 +17,25 @@
   when: ansible_distribution in ["Archlinux"]
 
 
+# ---------------------------------------------
+# # reflector - retrieve the latest mirror list
+# ---------------------------------------------
+# https://man.archlinux.org/man/reflector.1#EXAMPLES
+# https://wiki.archlinux.org/title/Reflector#top-page
+# - conf: /etc/xdg/reflector/reflector.conf   -->   siehe config_all-settings-misc.yml
+- name: Services - start+enable reflector (Arch, NOT Manjaro)
+  ansible.builtin.service:
+    name: reflector.service
+    state: started
+    enabled: true
+  when:
+    - ansible_distribution in ["Archlinux"]
+    - env_lsb_id != "ManjaroLinux"            # gibt es nicht bei Manjaro
+
+
 # ------------
 # # SSH / SSHD
 # ------------
-
 - name: Services - start ssh (Ubuntu)
   ansible.builtin.service:
     name: ssh
