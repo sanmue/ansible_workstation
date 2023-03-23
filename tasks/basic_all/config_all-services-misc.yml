@@ -30,7 +30,10 @@
     enabled: true
   when:
     - ansible_distribution in ["Archlinux"]
-    - env_lsb_id != "ManjaroLinux"            # gibt es nicht bei Manjaro
+    - env_lsb_id != "ManjaroLinux"
+# Anm:  Manjaro hat eigenen systemd Timer/Service dafür:
+#       /usr/lib/systemd/system/pamac-mirrorlist.timer
+#       /usr/lib/systemd/system/pamac-mirrorlist.service
 
 
 # ------------
