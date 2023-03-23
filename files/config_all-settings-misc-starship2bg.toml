@@ -4,6 +4,7 @@
 # ~/.config/starship.toml
 #
 # ### Variant 2bg: two line prompt, with background in top line, separators on left side
+# *** Borrowed from a design seen in a zsh (should be from https://github.com/romkatv/powerlevel10k)
 #
 # - No filling solid line in top row: 
 #   Replace '$fill\' with just one character '\' or just completely delete the line that contains '$fill\' further down,
