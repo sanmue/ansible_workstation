@@ -1,6 +1,6 @@
 ﻿- name: Install packages for (local) mail (Archlinux, Ubuntu)
   ansible.builtin.package:
-    state: latest
+    state: present
     name:
       - s-nail    # Environment for sending and receiving mail
       - postfix   # Fast, easy to administer, secure mail server   # Mail Tranfer Agent (MTA)

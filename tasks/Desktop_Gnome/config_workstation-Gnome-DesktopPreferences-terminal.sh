@@ -34,6 +34,7 @@ dconf write "${dconfdir}/:${id}"/default-size-rows "28"
 # dconf write "${dconfdir}/:${id}"/font "'Monospace 14'"
 dconf write "${dconfdir}/:${id}"/font "'MesloLGM Nerd Font 12'"
 dconf write "${dconfdir}/:${id}"/use-system-font "false"
+dconf write "${dconfdir}/:${id}"/cursor-shape "underline"
 
 # Set as default profile:
 #dconf write "${dconfdir}/default" "'$id'"
@@ -50,6 +51,7 @@ dconf write "${dconfdir}/:${id}"/default-size-columns "100"
 dconf write "${dconfdir}/:${id}"/default-size-rows "28"
 dconf write "${dconfdir}/:${id}"/font "'MesloLGM Nerd Font 12'"
 dconf write "${dconfdir}/:${id}"/use-system-font "false"
+dconf write "${dconfdir}/:${id}"/cursor-shape "underline"
 #dconf write "${dconfdir}/:${id}"/visible-name "Custom_SSH"
 
 
@@ -64,6 +66,7 @@ dconf write "${dconfdir}/:${id}"/default-size-columns "100"
 dconf write "${dconfdir}/:${id}"/default-size-rows "28"
 dconf write "${dconfdir}/:${id}"/font "'MesloLGM Nerd Font 12'"
 dconf write "${dconfdir}/:${id}"/use-system-font "false"
+dconf write "${dconfdir}/:${id}"/cursor-shape "underline"
 
 # ###############################################################################
 # ###############################################################################
