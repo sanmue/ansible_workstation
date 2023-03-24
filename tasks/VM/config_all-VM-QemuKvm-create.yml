@@ -21,7 +21,7 @@
   ansible.builtin.shell:
     cmd: virsh net-destroy default && virsh net-undefine default
   args:
-    creates: /home/{{ env_user }}/.vm_qemu-kvm_created
+    creates: /home/{{ env_user }}/.ansible_vm_qemuKvmCreated
   when: ansible_virtualization_role != "guest"
 
 - name: VM - create virtual networks (Qemu-Kvm)
@@ -32,7 +32,7 @@
     # chdir: files/VM/
     # cmd: ls netdump_*.xml | xargs -I % sh -c "virsh net-define %"   # nur Dateiname, da vorher in Verzeichnis gewechselt und dann erst ls
   args:
-    creates: /home/{{ env_user }}/.vm_qemu-kvm_created
+    creates: /home/{{ env_user }}/.ansible_vm_qemuKvmCreated
   when: ansible_virtualization_role != "guest"
 
 - name: VM - start all virtual networks (Qemu-Kvm)
@@ -42,7 +42,7 @@
     cmd: ls netdump_*.xml | xargs -I % sh -c "echo % | cut -d _ -f 2" | xargs -I % sh -c "echo % | cut -d . -f 1" | xargs -I % sh -c "virsh net-start %"
     # z.B.: netdump_default.xml                        default.xml                                 default                            virsh net-start default
   args:
-    creates: /home/{{ env_user }}/.vm_qemu-kvm_created
+    creates: /home/{{ env_user }}/.ansible_vm_qemuKvmCreated
   when: ansible_virtualization_role != "guest"
 
 - name: VM - autostart all virtual networks (Qemu-Kvm)
@@ -51,7 +51,7 @@
     chdir: files/VM/
     cmd: ls netdump_*.xml | xargs -I % sh -c "echo % | cut -d _ -f 2" | xargs -I % sh -c "echo % | cut -d . -f 1" | xargs -I % sh -c "virsh net-autostart %"
   args:
-    creates: /home/{{ env_user }}/.vm_qemu-kvm_created
+    creates: /home/{{ env_user }}/.ansible_vm_qemuKvmCreated
   when: ansible_virtualization_role != "guest"
 
 
@@ -61,7 +61,7 @@
     chdir: files/VM/
     cmd: ls dump_*.xml | xargs -I % sh -c "virsh define %"    # 'virsh define': just creates, does not start vm; 'virsh create': creates + starts vm
   args:
-    creates: /home/{{ env_user }}/.vm_qemu-kvm_created
+    creates: /home/{{ env_user }}/.ansible_vm_qemuKvmCreated
   when: ansible_virtualization_role != "guest"
 
 
@@ -71,7 +71,7 @@
     chdir: files/VM/
     cmd: ./vm_snapshotcreate-redefine.sh
   args:
-    creates: /home/{{ env_user }}/.vm_qemu-kvm_created
+    creates: /home/{{ env_user }}/.ansible_vm_qemuKvmCreated
   when: ansible_virtualization_role != "guest"
 
 
@@ -83,7 +83,7 @@
 #    chdir: files/VM/
 #    cmd: ./vm_storagepool-define.sh {{ env_user }}
 #  args:
-#    creates: /home/{{ env_user }}/.vm_qemu-kvm_created
+#    creates: /home/{{ env_user }}/.ansible_vm_qemuKvmCreated
 #  when: ansible_virtualization_role != "guest"
 
 
