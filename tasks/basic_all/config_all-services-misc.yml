@@ -180,6 +180,14 @@
 # ########
 # systemd user instance
 
+# ----------------------------------------------------------------------------------------------------
+# Anmekrung zu "systemctl --user status .." -  Abfrage
+# das Verzeichnis "/etc/xdg/systemd/user" ist ein Link auf "../../systemd/user" (= "/etc/systemd/user")
+# daher wird z.B. angezeigt:
+# "Loaded: loaded (/etc/xdg/systemd/user/clamav_scanHome.timer; enabled; preset: enabled)"
+# ----------------------------------------------------------------------------------------------------
+
+
 # -------------
 # ### Syncthing
 # -------------
