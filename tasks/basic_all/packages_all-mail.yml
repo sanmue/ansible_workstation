@@ -2,7 +2,8 @@
   ansible.builtin.package:
     state: present
     name:
-      - s-nail    # Environment for sending and receiving mail
+      - s-nail    # Environment for sending and receiving mail  (Ubuntu: /usr/bin/s-nail; Arch: /usr/bin/mail)
+                  # - Ubuntu: symlink --> /usr/bin/mail, damit mail-command verwendet werden kann (siehe config_all-mail.yml)
       - postfix   # Fast, easy to administer, secure mail server   # Mail Tranfer Agent (MTA)
   when:
     - ansible_distribution in ["Archlinux", "Ubuntu"]
