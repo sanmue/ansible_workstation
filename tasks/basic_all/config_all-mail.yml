@@ -12,8 +12,9 @@
     src: /usr/bin/s-nail
     dest: /usr/bin/mail
     state: link
-    owner: foo
-    group: foo
+    owner: root
+    group: root
+    mode: 755
   when:
     - ansible_distribution in ["Ubuntu"]
 
@@ -29,18 +30,9 @@
 - name: Config_all-mail - postfix - aliases (Ubuntu)
   ansible.builtin.lineinfile:
     path: /etc/aliases
-    regexp: '^postmaster:'
-    insertbefore: "root: {{ env_user }}"
-    backup: true
-  when:
-    - ansible_distribution in ["Ubuntu"]
-
-
-- name: Config_all-mail -  postfix - aliases (Ubuntu)
-  ansible.builtin.lineinfile:
-    path: /etc/aliases
-    regexp: '^postmaster:'
-    insertbefore: "root: {{ env_user }}"
+    #regexp: '^postmaster:'
+    insertbefore: "^postmaster:"
+    line: "root: {{ env_user }}"
     backup: true
   when:
     - ansible_distribution in ["Ubuntu"]
@@ -130,3 +122,12 @@
     state: present
   when:
     - ansible_distribution in ["Archlinux"]
+
+- name: Config_all-mail - postfix - local mail - main.cf - default_transport (Ubuntu)
+  ansible.builtin.lineinfile:
+    path: /etc/postfix/main.cf
+    insertafter: '^relayhost'
+    line: 'default_transport = error: outside mail is not deliverable'
+    state: present
+  when:
+    - ansible_distribution in ["Ubuntu"]
