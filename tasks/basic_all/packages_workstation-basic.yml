@@ -50,6 +50,7 @@
       - unzip
       - wget
       - xdg-utils
+      - zsh
       # ---------
       # firmware:
       - b43-fwcutter
@@ -203,11 +204,12 @@
       # - ttf-font-awesome
       - ttf-sourcecodepro-nerd
       - vim-ansible
-      # - zsh
+      # - zsh   # s.o. basic all
       # - zsh-doc
-      # - zsh-autosuggestions       # besser: install from git
-      # - zsh-completions           # besser: install from git
-      # - zsh-syntax-highlighting   # besser: install from git
+      - zsh-autosuggestions       # besser: install from git?
+      - zsh-completions           # besser: install from git?
+      - zsh-syntax-highlighting   # besser: install from git?
+      - zsh-history-substring-search # besser: install from git?
       # - zsh-theme-powerlevel10k   # besser: install from git # There is also zsh-theme-powerlevel10k community package.
                                     # Historically, it has been breaking often and for extended periods of time. Do not use it.
       # - zshdb   # A debugger for zsh scripts
@@ -492,6 +494,9 @@
       # #- gstreamer - kram
       # - ...
       # - youtube-dl
+      # - zsh   # s.o. basic all
+      - zsh zsh-autosuggestions
+      - zsh-syntax-highlighting
   when: ansible_distribution == "Ubuntu"
 
 

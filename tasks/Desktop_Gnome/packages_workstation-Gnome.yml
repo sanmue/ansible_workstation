@@ -10,6 +10,8 @@
     name:
       - alacarte   # Menu editor for gnome
       - dconf-editor
+      - gedit
+      - gedit-plugins
       - gjs   # Javascript Bindings for GNOME   # + Ubnuntu: fehlendes Paket, damit ab 22.04 der Monitor in Engergiesparmodus kann
                                                 # (Bildschirmausgabe wird ausgeschaltet nach längerer Inktivität)
       - gnome-disk-utility
