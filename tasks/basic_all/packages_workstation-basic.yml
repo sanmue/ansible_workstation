@@ -495,7 +495,7 @@
       # - ...
       # - youtube-dl
       # - zsh   # s.o. basic all
-      - zsh zsh-autosuggestions
+      - zsh-autosuggestions
       - zsh-syntax-highlighting
   when: ansible_distribution == "Ubuntu"
 
