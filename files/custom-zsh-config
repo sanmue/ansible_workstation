@@ -1,6 +1,6 @@
-﻿## entnommen bei Manjaro aus '/usr/share/zsh/manjaro-zsh-config'
-# angepasst für Archlinux wurde der Abschnitt (s.u.):  '## Plugins section: Enable fish style features'
-# TODO: Anpassung 'Plugins section' für Ubuntu bzw. Debian
+﻿## entnommen bei Manjaro aus /usr/share/zsh/manjaro-zsh-config
+# angepasst für Archlinux wurde der Abschnitt (s.u.): 'Plugins section: Enable fish style features'
+# TODO Anpassung 'Plugins section' für Ubuntu bzw. Debian
 
 ## Options section
 setopt correct                                                  # Auto correct mistakes
@@ -80,7 +80,7 @@ export LESS=-R
 ## Plugins section: Enable fish style features
 # Use syntax highlighting
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh
-# User autosuggestions
+# Use autosuggestions
 if [[ -r /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh ]]; then
     source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh
 fi
