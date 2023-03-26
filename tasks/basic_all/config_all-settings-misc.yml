@@ -347,7 +347,7 @@
 # https://www.fileformat.info/info/unicode/char/feff/index.htm
 #
 # danach wurde noch ein '"' vor den Inhalt aus der Datei gesetezt. entfernt:
-- name: All settings misc - Zshrc -  Delete '"' at beginnning, after instering 'custom-zsh-config' in .zshrc (User, NOT Manjaro)
+- name: All settings misc - Zshrc -  Delete '"' at beginnning of insterted text form 'custom-zsh-config' in .zshrc (User, NOT Manjaro)
   ansible.builtin.replace:
     path: "/home/{{ env_user }}/.zshrc"
     regexp: '^"##'
