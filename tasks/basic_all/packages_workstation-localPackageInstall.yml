@@ -77,3 +77,20 @@
     - ansible_pkg_mgr == "apt"
     - ansible_distribution == "Ubuntu"
     - usrbincode.stat.exists == false
+
+
+# ###############
+# ### zsh plugins
+# ###############
+# Anm.: bei Archlinux über paket, bei Manjaro schon von werk aus vorhanden
+
+- name: Local packages install - install zsh plugin - zsh-autosuggestions (Ubuntu)
+  ansible.builtin.git:
+    repo: https://github.com/zsh-users/zsh-autosuggestions.git
+    dest: /usr/share/zsh/plugins/zsh-autosuggestions
+    lone: true
+    update: true
+  when:
+    - ansible_distribution in ["Ubuntu"]
+
+
