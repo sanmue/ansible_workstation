@@ -779,17 +779,6 @@
 # ### Visual Studio Code / Code - OSS
 # ###################################
 
-- name: All settings misc - Install 'Visual Studio Code' bzw 'Code-OSS' - Extension 'Sync Settings' by zokugun (Ubuntu)
-  tags: workstation,ubuntu
-  become: true
-  become_user: "{{ env_user }}"
-  ansible.builtin.shell:
-    cmd: code --install-extension zokugun.sync-settings
-  args:
-      creates: /home/{{ env_user }}/.config/Code/User/globalStorage/zokugun.sync-settings/settings.yml   # nur ausführen, wenn nicht bereits z.B. in vorhergehendem Lauf gestartet/erstellt wurde
-  when:
-    - ansible_distribution in ["Ubuntu"]   # hat unter Arch (mit ' Code - OSS') nicht funktioniert
-
 - name: All settings misc - Start 'Visual Studio Code' bzw 'Code-OSS' (Ubuntu)
   tags: workstation,ubuntu
   ansible.builtin.shell:
@@ -811,6 +800,17 @@
   become_user: "{{ env_user }}"
   when:
     - ansible_distribution in ["Archlinux"]
+
+- name: All settings misc - Install 'Visual Studio Code' bzw 'Code-OSS' - Extension 'Sync Settings' by zokugun (Ubuntu)
+  tags: workstation,ubuntu
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.shell:
+    cmd: code --install-extension zokugun.sync-settings
+  args:
+      creates: /home/{{ env_user }}/.config/Code/User/globalStorage/zokugun.sync-settings/settings.yml   # nur ausführen, wenn nicht bereits z.B. in vorhergehendem Lauf gestartet/erstellt wurde
+  when:
+    - ansible_distribution in ["Ubuntu"]   # hat unter Arch (mit ' Code - OSS') nicht funktioniert
 
 - name: All settings misc - Wait until 'Visual Studio Code' Extension 'Sync Settings' Standard Config-File is present before continuing (Ubuntu)
   ansible.builtin.wait_for:
