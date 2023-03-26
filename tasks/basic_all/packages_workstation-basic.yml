@@ -207,10 +207,10 @@
       # - zsh   # s.o. basic all
       # - zsh-doc
       - zsh-autosuggestions       # besser: install from git?
-      - zsh-completions           # besser: install from git?
+      - # zsh-completions           # besser: install from git?
       - zsh-syntax-highlighting   # besser: install from git?
       - zsh-history-substring-search # besser: install from git?
-      # - zsh-theme-powerlevel10k   # besser: install from git # There is also zsh-theme-powerlevel10k community package.
+      # - zsh-theme-powerlevel10k   # bei Manjaro vorhanden (oh-my-zsh) # besser: install from git # There is also zsh-theme-powerlevel10k community package.
                                     # Historically, it has been breaking often and for extended periods of time. Do not use it.
       # - zshdb   # A debugger for zsh scripts
       # ---------
@@ -495,8 +495,10 @@
       # - ...
       # - youtube-dl
       # - zsh   # s.o. basic all
-      - zsh-autosuggestions
-      - zsh-syntax-highlighting
+      # zsh-plugins: siehe "packages_workstation-localPackageInstall.yml"
+      # - zsh-autosuggestions             # über git: https://github.com/zsh-users/zsh-autosuggestions
+      # - zsh-syntax-highlighting         # über git: https://github.com/zsh-users/zsh-syntax-highlighting
+          # zsh-history-substring-search  # über git: https://github.com/zsh-users/zsh-history-substring-search
   when: ansible_distribution == "Ubuntu"
 
 

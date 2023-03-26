@@ -304,8 +304,8 @@
     - ansible_distribution in ["Ubuntu", "Archlinux"]
     - env_lsb_id != "ManjaroLinux"
 
-# Übernommen aus manjaro-zsh-config (/usr/share/zsh/manjaro-zsh-config)
-# zsh ist bei Manjaro die Standardshell und entsprechend vorkonfiguriert
+# Übernommen + anpgepasst aus manjaro-zsh-config (/usr/share/zsh/manjaro-zsh-config)
+# Anm.: zsh ist bei Manjaro die Standardshell und entsprechend vorkonfiguriert
 # https://unix.stackexchange.com/questions/33255/how-to-define-and-load-your-own-shell-function-in-zsh
 # https://zplugin.readthedocs.io/en/latest/zsh-plugin-standard/
 - name: All settings misc - Zshrc - copy custom zsh config file (User, NOT Manjaro)
