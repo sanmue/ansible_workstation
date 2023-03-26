@@ -88,7 +88,7 @@
   ansible.builtin.git:
     repo: https://github.com/zsh-users/zsh-autosuggestions.git
     dest: /usr/share/zsh/plugins/zsh-autosuggestions
-    lone: true
+    clone: true
     update: true
   when:
     - ansible_distribution in ["Ubuntu"]
