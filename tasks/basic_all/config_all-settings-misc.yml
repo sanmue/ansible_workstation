@@ -340,14 +340,21 @@
     - env_lsb_id != "ManjaroLinux"
 
 # Zeichenfolge '"<feff>' wurde vor Inhalt aus 'files/custom-zsh-config' eingefügt
-#
 # U+FEFF was called a ZERO WIDTH NO-BREAK SPACE
 # Also, a quick trip to Wikipedia told us about the actual uses for U+FEFF, more commonly known as Byte order mark or BOM
 # --> Datei 'files/custom-zsh-config' war als UTF-8 mit BOM --> als 'normales' UTF-8 File ohne BOM gespeichert
-#
 # https://www.freecodecamp.org/news/a-quick-tale-about-feff-the-invisible-character-cd25cd4630e7/
 # https://www.fileformat.info/info/unicode/char/feff/index.htm
 #
+# danach wurde noch ein '"' vor den Inhalt aus der Datei gesetezt. entfernt:
+- name: All settings misc - Zshrc -  Delete '"' at beginnning, after instering 'custom-zsh-config' in .zshrc (User, NOT Manjaro)
+  ansible.builtin.replace:
+    path: "/home/{{ env_user }}/.zshrc"
+    regexp: '^"##'
+    replace: '##'
+  when:
+    - ansible_distribution in ["Ubuntu", "Archlinux"]
+    - env_lsb_id != "ManjaroLinux"
 
 
 #- name: All settings misc - Zshrc - source cutom zsh config in .zshrc (User, NOT Manjaro)
