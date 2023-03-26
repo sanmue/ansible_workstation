@@ -158,10 +158,10 @@
     state: present
     name:
       - archlinux-keyring
-      # - base-devel        # insbes. wg. AUR Paketen   # bereits installiert (bootstrap)
-      # - chromium
-      # - cronie            # für clamtk + timeshift # Daemon that runs specified programs at scheduled times and related tools
-      # - code              # The Open Source build of Visual Studio Code (vscode) editor
+      - base-devel        # insbes. wg. AUR Paketen   # bereits installiert (bootstrap)
+      - chromium
+      - cronie            # für clamtk + timeshift # Daemon that runs specified programs at scheduled times and related tools
+      - code              # The Open Source build of Visual Studio Code (vscode) editor
       # - discord
       # - evolution-bogofilter
       # - evolution-ews     # MS Exchange integration through Exchange Web Services
