@@ -334,7 +334,6 @@
       # -----------------
       # custom zsh config
       # -----------------
-
       "{{ lookup('file', 'files/custom-zsh-config') }}"
   when:
     - ansible_distribution in ["Ubuntu", "Archlinux"]
