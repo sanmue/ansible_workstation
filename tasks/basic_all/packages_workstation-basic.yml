@@ -187,10 +187,10 @@
       - malcontent   # Parental control support for applications
       - nextcloud-client
       - openssh   # bereits installiert (bootstrap)
-      - powerline   # Statusline plugin for vim, an provides statuslines udn prompts for several other applications 
-      # including zsh, bash, tmux, IPython, Awesome, i3 and qtile
-      - powerline-fonts   # patched fonts for powerline
-      - powerline-vim   # vim plugin for powerline
+      # - powerline   # Statusline plugin for vim, an provides statuslines udn prompts for several other applications 
+      #               # including zsh, bash, tmux, IPython, Awesome, i3 and qtile
+      # - powerline-fonts   # patched fonts for powerline
+      # - powerline-vim   # vim plugin for powerline
       - psutils   # A set of postscript utilities
       - python-psutil
       - pyenv
