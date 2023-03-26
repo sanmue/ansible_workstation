@@ -206,17 +206,17 @@
       # - vim-ansible
       # # - zsh   # s.o. basic all
       # # - zsh-doc
-      # - zsh-autosuggestions           # besser: install from git?
+      - zsh-autosuggestions           # besser: install from git?
       # - # zsh-completions             # besser: install from git?
-      # - zsh-syntax-highlighting       # besser: install from git?
-      # - zsh-history-substring-search  # besser: install from git?
+      - zsh-syntax-highlighting       # besser: install from git?
+      - zsh-history-substring-search  # besser: install from git?
       # # - zsh-theme-powerlevel10k     # bei Manjaro vorhanden (oh-my-zsh) # besser: install from git # There is also zsh-theme-powerlevel10k community package.
       #                               Historically, it has been breaking often and for extended periods of time. Do not use it.
       # # - zshdb                       # A debugger for zsh scripts
       # ---------
       # firmware:
-      # # - alsa-firmware               # unresolvable package conflicts detected
-      # - sof-firmware
+      # - alsa-firmware               # unresolvable package conflicts detected
+      - sof-firmware
   when: ansible_distribution in ["Archlinux"]
 
 - name: Install basic packages (Archlinux/Manjaro)
