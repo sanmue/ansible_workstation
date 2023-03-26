@@ -159,7 +159,8 @@
       # ------------------------------------------
       # Benutzer-bin Verzeichnis an PATH anhängen:
       # ------------------------------------------
-      export PATH=/home/{{ env_user }}/.local/bin:$PATH
+      #export PATH=/home/{{ env_user }}/.local/bin:$PATH
+      export PATH=~/.local/bin:$PATH
   when:
     - ansible_distribution in ["Ubuntu", "Archlinux"]
 
@@ -308,6 +309,8 @@
 # Anm.: zsh ist bei Manjaro die Standardshell und entsprechend vorkonfiguriert
 # https://unix.stackexchange.com/questions/33255/how-to-define-and-load-your-own-shell-function-in-zsh
 # https://zplugin.readthedocs.io/en/latest/zsh-plugin-standard/
+#
+# nicht mehr notwendig, da im nächsten task der INHALT von 'files/custom-zsh-config' in .zshrc reinkopiert wird
 - name: All settings misc - Zshrc - copy custom zsh config file (User, NOT Manjaro)
   ansible.builtin.copy:
     src: files/custom-zsh-config
@@ -320,21 +323,37 @@
     - ansible_distribution in ["Ubuntu", "Archlinux"]
     - env_lsb_id != "ManjaroLinux"
 
-- name: All settings misc - Zshrc - Insert/Update additional paths and config - starship shell prompt (User, NOT Manjaro)
+# https://stackoverflow.com/questions/65020310/how-to-copy-file-content-to-another-file-in-ansible-without-overwriting-the-seco
+# https://cloudlinuxtech.com/zsh-syntax-highlighting-autosuggestions/#How_to_install_the_zsh-syntax-highlighting_package_in_Linux
+- name: All settings misc - Zshrc - Insert/Update additional paths and config - custom zsh config (User, NOT Manjaro)
   ansible.builtin.blockinfile:
     path: "/home/{{ env_user }}/.zshrc"
     backup: true
-    marker: "### {mark} 'source cutom zsh config' ANSIBLE MANAGED BLOCK ###"
+    marker: "### {mark} 'custom zsh config' ANSIBLE MANAGED BLOCK ###"
     block: |
-      # ------------------------
-      # source custom zsh config
-      # ------------------------
-      if [[ -e /usr/share/zsh/custom-zsh-config ]]; then
-        source /usr/share/zsh/custom-zsh-config
-      fi
+      # -----------------
+      # custom zsh config
+      # -----------------
+      "{{ lookup('file', 'files/custom-zsh-config') }}""
   when:
     - ansible_distribution in ["Ubuntu", "Archlinux"]
     - env_lsb_id != "ManjaroLinux"
+
+#- name: All settings misc - Zshrc - Insert/Update additional paths and config - source cutom zsh config (User, NOT Manjaro)
+#  ansible.builtin.blockinfile:
+#    path: "/home/{{ env_user }}/.zshrc"
+#    backup: true
+#    marker: "### {mark} 'source cutom zsh config' ANSIBLE MANAGED BLOCK ###"
+#    block: |
+#      # ------------------------
+#      # source custom zsh config
+#      # ------------------------
+#      if [[ -e /usr/share/zsh/custom-zsh-config ]]; then
+#        source /usr/share/zsh/custom-zsh-config
+#      fi
+#  when:
+#    - ansible_distribution in ["Ubuntu", "Archlinux"]
+#    - env_lsb_id != "ManjaroLinux"
 
 - name: All settings misc - Zshrc - custom alias definitions (User, all)
   ansible.builtin.blockinfile:
@@ -403,7 +422,8 @@
       # ------------------------------------------
       # Benutzer-bin Verzeichnis an PATH anhängen:
       # ------------------------------------------
-      export PATH=/home/{{ env_user }}/.local/bin:$PATH
+      #export PATH=/home/{{ env_user }}/.local/bin:$PATH
+      export PATH=~/.local/bin:$PATH
   when:
     - ansible_distribution in ["Ubuntu", "Archlinux"]
 
