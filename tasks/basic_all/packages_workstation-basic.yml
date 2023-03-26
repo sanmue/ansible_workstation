@@ -179,22 +179,22 @@
       - hunspell-en_us
       # - ipset
       - ksnip
-      # - libnotify           # Library for sending desktop notifications
-      # - libreoffice-still
-      # # - libreoffice-still-de
-      # - libreoffice-still-en-gb
-      # - lshw
-      # - malcontent          # Parental control support for applications
-      # - nextcloud-client
-      # - openssh             # bereits installiert (bootstrap)
-      # # - powerline         # Statusline plugin for vim, an provides statuslines udn prompts for several other applications 
+      - libnotify           # Library for sending desktop notifications
+      - libreoffice-still
+      # - libreoffice-still-de
+      - libreoffice-still-en-gb
+      - lshw
+      - malcontent          # Parental control support for applications
+      - nextcloud-client
+      - openssh             # bereits installiert (bootstrap)
+      # - powerline         # Statusline plugin for vim, an provides statuslines udn prompts for several other applications 
       #                     # including zsh, bash, tmux, IPython, Awesome, i3 and qtile
-      # # - powerline-fonts   # patched fonts for powerline
-      # # - powerline-vim     # vim plugin for powerline
-      # - psutils             # A set of postscript utilities
-      # - python-psutil
-      # - pyenv
-      # - remmina
+      # - powerline-fonts   # patched fonts for powerline
+      # - powerline-vim     # vim plugin for powerline
+      - psutils             # A set of postscript utilities
+      - python-psutil
+      - pyenv
+      - remmina
       # # - snapd                 # bei Manjaro in repo drin, bei Arch (EndeavourOS) nicht
       # - signal-desktop
       # - steam-native-runtime    # Native replacement for the Steam runtime using system libraries (installiert benötigte 32bit libs)
