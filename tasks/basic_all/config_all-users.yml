@@ -2,12 +2,12 @@
 # ### s_ansible
 # #############
 
-- name: Config users - add ansible user
+- name: Config all users - add ansible user (all)
   ansible.builtin.user:
     name: s_ansible
     system: true
 
-- name: Config users - s_ansible - set up sudo
+- name: Config all users - s_ansible - set up sudo (all)
   ansible.builtin.copy:
     src: files/sudoer_s_ansible
     dest: /etc/sudoers.d/s_ansible
@@ -21,7 +21,7 @@
 # ##########
 
 # https://wiki.archlinux.org/title/ClamAV
-- name: Users - clamav - allow running notify-send and mail
+- name: Config all users - clamav - allow running notify-send and mail (all)
   ansible.builtin.blockinfile:
     path: "/etc/sudoers.d/clamav"
     create: true
@@ -34,3 +34,15 @@
       clamav ALL = (ALL) NOPASSWD: SETENV: /usr/bin/notify-send, /usr/bin/mail
   # when:
   #   - ansible_distribution in ["Archlinux", "Ubuntu"]
+
+
+# ############################
+# ### set zsh as default shell
+# ############################
+# https://stackoverflow.com/questions/43560657/edit-current-users-shell-with-ansible
+
+- name: Config all users - env_user - set zsh as standard shell (all)
+  ansible.builtin.shell: "usermod --shell $(which zsh) {{ env_user }}"
+  # when:
+  #   - ansible_distribution in ["Archlinux", "Ubuntu"]
+
