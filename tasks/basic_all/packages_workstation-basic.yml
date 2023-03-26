@@ -157,7 +157,7 @@
   ansible.builtin.package:
     state: present
     name:
-      # - archlinux-keyring
+      - archlinux-keyring
       # - base-devel        # insbes. wg. AUR Paketen   # bereits installiert (bootstrap)
       # - chromium
       # - cronie            # für clamtk + timeshift # Daemon that runs specified programs at scheduled times and related tools
@@ -206,10 +206,10 @@
       # - vim-ansible
       # # - zsh   # s.o. basic all
       # # - zsh-doc
-      - zsh-autosuggestions           # besser: install from git?
-      - # zsh-completions             # besser: install from git?
-      - zsh-syntax-highlighting       # besser: install from git?
-      - zsh-history-substring-search  # besser: install from git?
+      # - zsh-autosuggestions           # besser: install from git?
+      # - # zsh-completions             # besser: install from git?
+      # - zsh-syntax-highlighting       # besser: install from git?
+      # - zsh-history-substring-search  # besser: install from git?
       # # - zsh-theme-powerlevel10k     # bei Manjaro vorhanden (oh-my-zsh) # besser: install from git # There is also zsh-theme-powerlevel10k community package.
       #                               Historically, it has been breaking often and for extended periods of time. Do not use it.
       # # - zshdb                       # A debugger for zsh scripts
