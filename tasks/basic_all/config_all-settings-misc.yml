@@ -323,55 +323,56 @@
     - ansible_distribution in ["Ubuntu", "Archlinux"]
     - env_lsb_id != "ManjaroLinux"
 
-# https://stackoverflow.com/questions/65020310/how-to-copy-file-content-to-another-file-in-ansible-without-overwriting-the-seco
-# https://cloudlinuxtech.com/zsh-syntax-highlighting-autosuggestions/#How_to_install_the_zsh-syntax-highlighting_package_in_Linux
-- name: All settings misc - Zshrc - Insert 'files/custom-zsh-config' in .zshrc (User, NOT Manjaro)
+
+# # https://stackoverflow.com/questions/65020310/how-to-copy-file-content-to-another-file-in-ansible-without-overwriting-the-seco
+# # https://cloudlinuxtech.com/zsh-syntax-highlighting-autosuggestions/#How_to_install_the_zsh-syntax-highlighting_package_in_Linux
+# - name: All settings misc - Zshrc - Insert 'files/custom-zsh-config' in .zshrc (User, NOT Manjaro)
+#   ansible.builtin.blockinfile:
+#     path: "/home/{{ env_user }}/.zshrc"
+#     backup: true
+#     marker: "### {mark} 'custom zsh config' ANSIBLE MANAGED BLOCK ###"
+#     block: |
+#       # -----------------
+#       # custom zsh config
+#       # -----------------
+#       "{{ lookup('file', 'files/custom-zsh-config') }}"
+#   when:
+#     - ansible_distribution in ["Ubuntu", "Archlinux"]
+#     - env_lsb_id != "ManjaroLinux"
+
+# # Zeichenfolge '"<feff>' wurde vor Inhalt aus 'files/custom-zsh-config' eingefügt
+# # U+FEFF was called a ZERO WIDTH NO-BREAK SPACE
+# # Also, a quick trip to Wikipedia told us about the actual uses for U+FEFF, more commonly known as Byte order mark or BOM
+# # --> Datei 'files/custom-zsh-config' war als UTF-8 mit BOM --> als 'normales' UTF-8 File ohne BOM gespeichert
+# # https://www.freecodecamp.org/news/a-quick-tale-about-feff-the-invisible-character-cd25cd4630e7/
+# # https://www.fileformat.info/info/unicode/char/feff/index.htm
+# #
+# # danach wurde noch ein '"' vor den Inhalt aus der Datei gesetezt. entfernt:
+# - name: All settings misc - Zshrc -  Delete '"' at beginnning of insterted text form 'custom-zsh-config' in .zshrc (User, NOT Manjaro)
+#   ansible.builtin.replace:
+#     path: "/home/{{ env_user }}/.zshrc"
+#     regexp: '^"##'
+#     replace: '##'
+#   when:
+#     - ansible_distribution in ["Ubuntu", "Archlinux"]
+#     - env_lsb_id != "ManjaroLinux"
+
+- name: All settings misc - Zshrc - source cutom zsh config in .zshrc (User, NOT Manjaro)
   ansible.builtin.blockinfile:
     path: "/home/{{ env_user }}/.zshrc"
     backup: true
-    marker: "### {mark} 'custom zsh config' ANSIBLE MANAGED BLOCK ###"
+    marker: "### {mark} 'source cutom zsh config' ANSIBLE MANAGED BLOCK ###"
     block: |
-      # -----------------
-      # custom zsh config
-      # -----------------
-      "{{ lookup('file', 'files/custom-zsh-config') }}"
+      # ------------------------
+      # source custom zsh config
+      # ------------------------
+      if [[ -e /usr/share/zsh/custom-zsh-config ]]; then
+        source /usr/share/zsh/custom-zsh-config
+      fi
   when:
     - ansible_distribution in ["Ubuntu", "Archlinux"]
     - env_lsb_id != "ManjaroLinux"
 
-# Zeichenfolge '"<feff>' wurde vor Inhalt aus 'files/custom-zsh-config' eingefügt
-# U+FEFF was called a ZERO WIDTH NO-BREAK SPACE
-# Also, a quick trip to Wikipedia told us about the actual uses for U+FEFF, more commonly known as Byte order mark or BOM
-# --> Datei 'files/custom-zsh-config' war als UTF-8 mit BOM --> als 'normales' UTF-8 File ohne BOM gespeichert
-# https://www.freecodecamp.org/news/a-quick-tale-about-feff-the-invisible-character-cd25cd4630e7/
-# https://www.fileformat.info/info/unicode/char/feff/index.htm
-#
-# danach wurde noch ein '"' vor den Inhalt aus der Datei gesetezt. entfernt:
-- name: All settings misc - Zshrc -  Delete '"' at beginnning of insterted text form 'custom-zsh-config' in .zshrc (User, NOT Manjaro)
-  ansible.builtin.replace:
-    path: "/home/{{ env_user }}/.zshrc"
-    regexp: '^"##'
-    replace: '##'
-  when:
-    - ansible_distribution in ["Ubuntu", "Archlinux"]
-    - env_lsb_id != "ManjaroLinux"
-
-
-#- name: All settings misc - Zshrc - source cutom zsh config in .zshrc (User, NOT Manjaro)
-#  ansible.builtin.blockinfile:
-#    path: "/home/{{ env_user }}/.zshrc"
-#    backup: true
-#    marker: "### {mark} 'source cutom zsh config' ANSIBLE MANAGED BLOCK ###"
-#    block: |
-#      # ------------------------
-#      # source custom zsh config
-#      # ------------------------
-#      if [[ -e /usr/share/zsh/custom-zsh-config ]]; then
-#        source /usr/share/zsh/custom-zsh-config
-#      fi
-#  when:
-#    - ansible_distribution in ["Ubuntu", "Archlinux"]
-#    - env_lsb_id != "ManjaroLinux"
 
 - name: All settings misc - Zshrc - custom alias definitions (User, all)
   ansible.builtin.blockinfile:
