@@ -325,7 +325,7 @@
 
 # https://stackoverflow.com/questions/65020310/how-to-copy-file-content-to-another-file-in-ansible-without-overwriting-the-seco
 # https://cloudlinuxtech.com/zsh-syntax-highlighting-autosuggestions/#How_to_install_the_zsh-syntax-highlighting_package_in_Linux
-- name: All settings misc - Zshrc - Insert/Update additional paths and config - custom zsh config (User, NOT Manjaro)
+- name: All settings misc - Zshrc - Insert 'files/custom-zsh-config' in .zshrc (User, NOT Manjaro)
   ansible.builtin.blockinfile:
     path: "/home/{{ env_user }}/.zshrc"
     backup: true
@@ -339,7 +339,7 @@
     - ansible_distribution in ["Ubuntu", "Archlinux"]
     - env_lsb_id != "ManjaroLinux"
 
-#- name: All settings misc - Zshrc - Insert/Update additional paths and config - source cutom zsh config (User, NOT Manjaro)
+#- name: All settings misc - Zshrc - source cutom zsh config in .zshrc (User, NOT Manjaro)
 #  ansible.builtin.blockinfile:
 #    path: "/home/{{ env_user }}/.zshrc"
 #    backup: true
