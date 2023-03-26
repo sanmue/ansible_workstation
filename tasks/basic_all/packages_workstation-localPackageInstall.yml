@@ -50,6 +50,13 @@
   # when:
     # - ansible_distribution == "Ubuntu"
 
+- name: Local packages install - get stat /tmp/code.deb (all)
+  ansible.builtin.stat:
+    path: /tmp/code.deb
+  register: tmpcodedeb
+  # when:
+    # - ansible_distribution == "Ubuntu"
+
 - name: Local packages install - download Visual Studio Code deb-package (Ubuntu)
   ansible.builtin.get_url:
     url: "https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64"
@@ -59,7 +66,7 @@
     mode: '0755'
   when:
     - ansible_distribution == "Ubuntu"
-    - usrbincode.stat.exists == false
+    - usrbincode.stat.exists == false or tmpcodedeb.stat.exists == false
 
 - name: Local packages install - install Visual Studio Code deb-package (Ubuntu, apt)
   tags: workstation,ubuntu,apt
