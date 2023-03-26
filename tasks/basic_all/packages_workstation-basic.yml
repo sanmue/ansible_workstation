@@ -162,17 +162,17 @@
       - chromium
       - cronie            # für clamtk + timeshift # Daemon that runs specified programs at scheduled times and related tools
       - code              # The Open Source build of Visual Studio Code (vscode) editor
-      # - discord
-      # - evolution-bogofilter
-      # - evolution-ews     # MS Exchange integration through Exchange Web Services
-      # - evolution-spamassassin
-      # # - evolution-on    # Tray plugin for the Evolution email client
-      # # - exfat-utils     # exfat-utils and exfatprogs are in conflict
-      # - firefox
-      # - firefox-i18n-en-us
-      # # - flameshot       # -> ksnip
-      # # - firewalld       # bereits installiert (bootstrap)
-      # - foliate
+      - discord
+      - evolution-bogofilter
+      - evolution-ews     # MS Exchange integration through Exchange Web Services
+      - evolution-spamassassin
+      # - evolution-on    # Tray plugin for the Evolution email client
+      # - exfat-utils     # exfat-utils and exfatprogs are in conflict
+      - firefox
+      - firefox-i18n-en-us
+      # - flameshot       # -> ksnip
+      # - firewalld       # bereits installiert (bootstrap)
+      - foliate
       # - gnupg
       # - gpgme
       # - hunspell-de
