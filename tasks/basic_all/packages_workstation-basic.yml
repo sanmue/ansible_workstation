@@ -158,20 +158,20 @@
     state: present
     name:
       - archlinux-keyring
-      - base-devel   # insbes. wg. AUR Paketen   # bereits installiert (bootstrap)
+      - base-devel        # insbes. wg. AUR Paketen   # bereits installiert (bootstrap)
       - chromium
-      - cronie   # für clamtk + timeshift # Daemon that runs specified programs at scheduled times and related tools
-      - code   # The Open Source build of Visual Studio Code (vscode) editor
+      - cronie            # für clamtk + timeshift # Daemon that runs specified programs at scheduled times and related tools
+      - code              # The Open Source build of Visual Studio Code (vscode) editor
       - discord
       - evolution-bogofilter
-      - evolution-ews   # MS Exchange integration through Exchange Web Services
+      - evolution-ews     # MS Exchange integration through Exchange Web Services
       - evolution-spamassassin
-      # - evolution-on   # Tray plugin for the Evolution email client
-      # - exfat-utils   # exfat-utils and exfatprogs are in conflict
+      # - evolution-on    # Tray plugin for the Evolution email client
+      # - exfat-utils     # exfat-utils and exfatprogs are in conflict
       - firefox
       - firefox-i18n-en-us
-      # - flameshot   # -> ksnip
-      # - firewalld   # bereits installiert (bootstrap)
+      # - flameshot       # -> ksnip
+      # - firewalld       # bereits installiert (bootstrap)
       - foliate
       - gnupg
       - gpgme
@@ -179,25 +179,25 @@
       - hunspell-en_us
       # - ipset
       - ksnip
-      - libnotify   # Library for sending desktop notifications
+      - libnotify           # Library for sending desktop notifications
       - libreoffice-still
       # - libreoffice-still-de
       - libreoffice-still-en-gb
       - lshw
-      - malcontent   # Parental control support for applications
+      - malcontent          # Parental control support for applications
       - nextcloud-client
-      - openssh   # bereits installiert (bootstrap)
-      # - powerline   # Statusline plugin for vim, an provides statuslines udn prompts for several other applications 
-      #               # including zsh, bash, tmux, IPython, Awesome, i3 and qtile
+      - openssh             # bereits installiert (bootstrap)
+      # - powerline         # Statusline plugin for vim, an provides statuslines udn prompts for several other applications 
+      #                     # including zsh, bash, tmux, IPython, Awesome, i3 and qtile
       # - powerline-fonts   # patched fonts for powerline
-      # - powerline-vim   # vim plugin for powerline
-      - psutils   # A set of postscript utilities
+      # - powerline-vim     # vim plugin for powerline
+      - psutils             # A set of postscript utilities
       - python-psutil
       - pyenv
       - remmina
-      # - snapd   # bei Manjaro in repo drin, bei Arch (EndeavourOS) nicht
+      # - snapd                 # bei Manjaro in repo drin, bei Arch (EndeavourOS) nicht
       - signal-desktop
-      - steam-native-runtime   # Native replacement for the Steam runtime using system libraries (installiert benötigte 32bit libs)
+      - steam-native-runtime    # Native replacement for the Steam runtime using system libraries (installiert benötigte 32bit libs)
       - torbrowser-launcher
       - ttf-dejavu
       - ttf-dejavu-nerd
@@ -206,16 +206,16 @@
       - vim-ansible
       # - zsh   # s.o. basic all
       # - zsh-doc
-      - zsh-autosuggestions       # besser: install from git?
-      - # zsh-completions           # besser: install from git?
-      - zsh-syntax-highlighting   # besser: install from git?
-      - zsh-history-substring-search # besser: install from git?
-      # - zsh-theme-powerlevel10k   # bei Manjaro vorhanden (oh-my-zsh) # besser: install from git # There is also zsh-theme-powerlevel10k community package.
+      - zsh-autosuggestions           # besser: install from git?
+      - # zsh-completions             # besser: install from git?
+      - zsh-syntax-highlighting       # besser: install from git?
+      - zsh-history-substring-search  # besser: install from git?
+      # - zsh-theme-powerlevel10k     # bei Manjaro vorhanden (oh-my-zsh) # besser: install from git # There is also zsh-theme-powerlevel10k community package.
       #                               Historically, it has been breaking often and for extended periods of time. Do not use it.
-      # - zshdb   # A debugger for zsh scripts
+      # - zshdb                       # A debugger for zsh scripts
       # ---------
       # firmware:
-      # - alsa-firmware   # unresolvable package conflicts detected
+      # - alsa-firmware               # unresolvable package conflicts detected
       - sof-firmware
   when: ansible_distribution in ["Archlinux"]
 
