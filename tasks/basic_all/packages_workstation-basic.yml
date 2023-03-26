@@ -155,7 +155,7 @@
 
 - name: Install basic packages (Archlinux)
   ansible.builtin.package:
-    state: present
+    state: latest
     name:
       - archlinux-keyring
       - base-devel   # insbes. wg. AUR Paketen   # bereits installiert (bootstrap)
