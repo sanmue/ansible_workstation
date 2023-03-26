@@ -154,6 +154,13 @@
     - ansible_distribution in ["Archlinux", "Ubuntu"]
 
 
+# #########################
+# ### starship shell prompt
+# #########################
+
+
+
+
 # ###############################
 # ### zsh plugins - from git repo
 # ###############################
