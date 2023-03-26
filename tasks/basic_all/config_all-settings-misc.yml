@@ -806,7 +806,7 @@
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell:
-    cmd: 'code --install-extension zokugun.sync-settings'
+    cmd: code --install-extension zokugun.sync-settings
   args:
       creates: "/home/{{ env_user }}/.config/Code/User/globalStorage/zokugun.sync-settings/settings.yml"   # nur ausführen, wenn nicht bereits z.B. in vorhergehendem Lauf gestartet/erstellt wurde
   when:
