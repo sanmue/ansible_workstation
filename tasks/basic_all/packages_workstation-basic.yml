@@ -211,7 +211,7 @@
       - zsh-syntax-highlighting   # besser: install from git?
       - zsh-history-substring-search # besser: install from git?
       # - zsh-theme-powerlevel10k   # bei Manjaro vorhanden (oh-my-zsh) # besser: install from git # There is also zsh-theme-powerlevel10k community package.
-      # Historically, it has been breaking often and for extended periods of time. Do not use it.
+      #                               Historically, it has been breaking often and for extended periods of time. Do not use it.
       # - zshdb   # A debugger for zsh scripts
       # ---------
       # firmware:
