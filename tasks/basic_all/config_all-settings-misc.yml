@@ -330,11 +330,7 @@
     path: "/home/{{ env_user }}/.zshrc"
     backup: true
     marker: "### {mark} 'custom zsh config' ANSIBLE MANAGED BLOCK ###"
-    block: |
-      # -----------------
-      # custom zsh config
-      # -----------------
-      "{{ lookup('file', 'files/custom-zsh-config') }}"
+    block: "{{ lookup('file', 'files/custom-zsh-config') }}"
   when:
     - ansible_distribution in ["Ubuntu", "Archlinux"]
     - env_lsb_id != "ManjaroLinux"
