@@ -83,7 +83,7 @@
 # ### Fonts
 # #########
 
-- name: Install basic packages - create local font directory - systemwide (all)
+- name: Local packages install - create local font directory - systemwide (all)
   # https://wiki.archlinux.org/title/Fonts#Manual_installation
   # systemwide (all users): /usr/share/fonts/   # is under the purview of the package manager, and should not be modified manually
   # systemwide (all users): /usr/local/share/fonts/
@@ -95,7 +95,7 @@
   when:
     - ansible_distribution in ["Archlinux", "Ubuntu"]
 
-# - name: Install basic packages - Nerd Fonts - Meslo LG M Regular Complete Mono - systemwide (all)
+# - name: Local packages install - Nerd Fonts - Meslo LG M Regular Complete Mono - systemwide (all)
 # # https://github.com/ryanoasis/nerd-fonts#option-6-ad-hoc-curl-download
 # # https://github.com/ryanoasis/nerd-fonts/releases
 # # https://ostechnix.com/install-nerd-fonts-to-add-glyphs-in-your-code-on-linux/
@@ -114,7 +114,7 @@
 #  when:
 #    - ansible_distribution in ["Archlinux", "Ubuntu"]
 
-- name: Install basic packages - Nerd Fonts - Meslo LG M Regular Complete Mono - systemwide (all)
+- name: Local packages install - Nerd Fonts - Meslo LG M Regular Complete Mono - systemwide (all)
 # https://github.com/ryanoasis/nerd-fonts#option-6-ad-hoc-curl-download
 # https://github.com/ryanoasis/nerd-fonts/releases
 # https://ostechnix.com/install-nerd-fonts-to-add-glyphs-in-your-code-on-linux/
@@ -128,7 +128,7 @@
   when:
     - ansible_distribution in ["Archlinux", "Ubuntu"]
 
-# - name: Install basic packages - Nerd Fonts - Meslo LG M Regular Complete - systemwide (all)
+# - name: Local packages install - Nerd Fonts - Meslo LG M Regular Complete - systemwide (all)
 #  ansible.builtin.uri:
 #    url: https://github.com/ryanoasis/nerd-fonts/raw/HEAD/patched-fonts/Melso/M/Regular/complete/Meslo%20LG%20M%20Regular%20Nerd%20Font%20Complete.ttf
 #    method: GET
@@ -140,7 +140,7 @@
 #  when:
 #    - ansible_distribution in ["Archlinux", "Ubuntu"]
 
-- name: Install basic packages - Nerd Fonts - Meslo LG M Regular Complete Mono - systemwide (all)
+- name: Local packages install - Nerd Fonts - Meslo LG M Regular Complete Mono - systemwide (all)
   ansible.builtin.shell: sudo curl -fLo "Meslo LG M Regular Nerd Font Complete.ttf" https://github.com/ryanoasis/nerd-fonts/raw/HEAD/patched-fonts/Meslo/M/Regular/complete/Meslo%20LG%20M%20Regular%20Nerd%20Font%20Complete.ttf
   args:
     chdir: /usr/local/share/fonts
@@ -148,7 +148,7 @@
   when:
     - ansible_distribution in ["Archlinux", "Ubuntu"]
 
-- name: Install basic packages - Fonts - Build font information cache files for apps using fontconfig (all)
+- name: Local packages install - Fonts - Build font information cache files for apps using fontconfig (all)
   ansible.builtin.shell: fc-cache -f
   when:
     - ansible_distribution in ["Archlinux", "Ubuntu"]
@@ -158,7 +158,39 @@
 # ### starship shell prompt
 # #########################
 
+- name: Local packages install - starship shell prompt (env_user) - download install-file (all)
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.uri:
+    url: 'https://starship.rs/install.sh'
+    method: GET
+    dest: "/home/{{ env_user }}/starship_install.sh"
+    owner: "{{ env_user }}"
+    group: "{{ env_user }}"
+    mode: '0755'
+    creates: "/home/{{ env_user }}/starship_install.sh"
+  # register: result
+  when:
+    - ansible_distribution in ["Archlinux", "Ubuntu"]
+    # - env_lsb_id != "ManjaroLinux"   # für bash in Manjaro, daher auskommentiert
 
+- name: Local packages install - starship shell prompt (env_user) - execute install-file (all)
+  ansible.builtin.stat:
+    path: /usr/local/bin/starship
+  register: starship
+  when:
+    - ansible_distribution in ["Archlinux", "Ubuntu"]
+
+- name: Local packages install - starship shell prompt (env_user) - execute install-file (all)
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.shell: "/home/{{ env_user }}/starship_install.sh --yes"
+  when:
+    - ansible_distribution in ["Archlinux", "Ubuntu"]
+    - starship.stat.exists == false
+    # - env_lsb_id != "ManjaroLinux"   # für bash in Manjaro, daher auskommentiert
+# config: in config_all-settingsmisc.yml; update: systemd timer
+# https://starship.rs/
 
 
 # ###############################
