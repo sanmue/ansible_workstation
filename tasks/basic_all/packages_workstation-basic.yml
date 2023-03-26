@@ -195,15 +195,15 @@
       - python-psutil
       - pyenv
       - remmina
-      # # - snapd                 # bei Manjaro in repo drin, bei Arch (EndeavourOS) nicht
-      # - signal-desktop
-      # - steam-native-runtime    # Native replacement for the Steam runtime using system libraries (installiert benötigte 32bit libs)
-      # - torbrowser-launcher
-      # - ttf-dejavu
-      # - ttf-dejavu-nerd
-      # # - ttf-font-awesome
-      # - ttf-sourcecodepro-nerd
-      # - vim-ansible
+      # - snapd                 # bei Manjaro in repo drin, bei Arch (EndeavourOS) nicht
+      - signal-desktop
+      - steam-native-runtime    # Native replacement for the Steam runtime using system libraries (installiert benötigte 32bit libs)
+      - torbrowser-launcher
+      - ttf-dejavu
+      - ttf-dejavu-nerd
+      # - ttf-font-awesome
+      - ttf-sourcecodepro-nerd
+      - vim-ansible
       # # - zsh   # s.o. basic all
       # # - zsh-doc
       - zsh-autosuggestions           # besser: install from git?
