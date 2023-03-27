@@ -1,4 +1,4 @@
-﻿- name: Config postfix service (Archlinux, Ubuntu)
+- name: Config postfix service (Archlinux, Ubuntu)
   ansible.builtin.service:
     name: postfix.service
     state: started
