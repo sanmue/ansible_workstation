@@ -568,7 +568,7 @@
 # #######
 # ### zsh
 # #######
-- name: All settings misc - Users - zsh plugin git update - bash-skript (Ubuntu)
+- name: All settings misc - zsh plugin git update - bash-skript (Ubuntu)
   ansible.builtin.copy:
     src: "files/config_all-services-misc-zshpluginsgit_update.sh"
     dest: "/usr/local/bin/zshpluginsgit_update.sh"
@@ -576,6 +576,22 @@
     group: root
     mode: '0755'
     backup: true
+  when:
+    - ansible_distribution in ["Ubuntu"]
+
+# fatal: detected dubious ownership in repository at '/usr/share/zsh/plugins/...; To add an exception:
+- name: All settings misc - zsh plugin git repo - add safe.directory - autosuggestions (Ubuntu)
+  ansible.builtin.shell: /usr/bin/git config --global --add safe.directory /usr/share/zsh/plugins/zsh-autosuggestions
+  when:
+    - ansible_distribution in ["Ubuntu"]
+
+- name: All settings misc - zsh plugin git repo - add safe.directory - syntax-highlighting (Ubuntu)
+  ansible.builtin.shell: /usr/bin/git config --global --add safe.directory /usr/share/zsh/plugins/zsh-syntax-highlighting
+  when:
+    - ansible_distribution in ["Ubuntu"]
+
+- name: All settings misc - zsh plugin git repo - add safe.directory - history-substring-search (Ubuntu)
+  ansible.builtin.shell: /usr/bin/git config --global --add safe.directory /usr/share/zsh/plugins/zsh-history-substring-search
   when:
     - ansible_distribution in ["Ubuntu"]
 
