@@ -1,4 +1,4 @@
-﻿#!/usr/bin/env bash
+#!/usr/bin/env bash
 
 #set -x   # enable debug mode
 
@@ -77,7 +77,7 @@ for plugin in ${arrZshPlugin}; do
         mail_allLogonUser "Clone ${plugin}" "Clone ${plugin}"
 
         echo "$(date), $0; Clone ${plugin}" >> "${logPath}/${logName}"
-        /usr/bin/git clone "${githubPathZshusers}/${plugin}.git" "${zshpluginpath}/${plugin}"
+        /usr/bin/git clone "${githubPathZshusers}/${plugin}.git" "${zshpluginpath}/${plugin}" 2>&1 1>/dev/null
     fi    
 done
 
@@ -97,7 +97,7 @@ mail_allLogonUser "${startMsgSubj}" "${startMsg}"
 for plugin in ${arrZshPlugin}; do
     if [ -d "${zshpluginpath}/${plugin}" ]; then
         notify_allGuiUser "zsh plugin update (git) - ${plugin}" "Updating repo for ${plugin}..."
-        cd "${zshpluginpath}/${plugin}" && /usr/bin/git pull origin
+        cd "${zshpluginpath}/${plugin}" && /usr/bin/git pull origin 2>&1 1>/dev/null
     fi    
 done
 
