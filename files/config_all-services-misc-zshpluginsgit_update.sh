@@ -96,7 +96,11 @@ mail_allLogonUser "${startMsgSubj}" "${startMsg}"
 
 for plugin in ${arrZshPlugin}; do
     if [ -d "${zshpluginpath}/${plugin}" ]; then
+        # --- Send an alert to all graphical users:
         notify_allGuiUser "zsh plugin update (git) - ${plugin}" "Updating repo for ${plugin}..."
+        # --- Send (local) mail alert to all logged on users:
+        mail_allLogonUser "zsh plugin update (git) - ${plugin}" "Updating repo for ${plugin}..."
+
         cd "${zshpluginpath}/${plugin}" && /usr/bin/git pull origin 2>&1 1>/dev/null
     fi    
 done
