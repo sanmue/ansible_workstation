@@ -11,6 +11,7 @@
       - bash
       - clamav
       - clamtk
+      - cups
       - curl
       - deja-dup   # A trivial-to-use personal backup tool to protect against accidental data loss
       - dmidecode
@@ -162,6 +163,7 @@
       - chromium
       - cronie            # für clamtk + timeshift # Daemon that runs specified programs at scheduled times and related tools
       - code              # The Open Source build of Visual Studio Code (vscode) editor
+      - cups-pdf
       - discord
       - evolution-bogofilter
       - evolution-ews     # MS Exchange integration through Exchange Web Services
@@ -376,6 +378,7 @@
       # - luckybackup
       - openssh-client
       - powershell   # repo wurde hinzugefügt
+      - printer-driver-cups-pdf
       - python3-psutil
       # - searchmonkey
       - ssh   # bereits installiert (bootstrap)

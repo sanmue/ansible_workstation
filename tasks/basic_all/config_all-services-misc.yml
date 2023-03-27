@@ -175,6 +175,69 @@
   when: ansible_distribution in ["Ubuntu", "Archlinux"]
 
 
+# ---------------
+# ### zsh plugins
+# ---------------
+
+- name: Services - starship shell prompt update - Create service unit file (Ubuntu, Arch)
+  ansible.builtin.blockinfile:
+    path: "/etc/systemd/system/starship_update.service"
+    create: true
+    backup: true
+    marker: '# ### {mark} ANSIBLE MANAGED BLOCK - starship shell prompt update ###'
+    block: |
+      [Unit]
+      Description=starship shell prompt update
+
+      [Service]
+      Type=oneshot
+      #ExecStart=/usr/bin/curl -sS https://starship.rs/install.sh > starship_install.sh
+      #ExecStart=/usr/bin/chmod 755 starship_install.sh && /usr/bin/bash starship_install.sh --yes && /usr/bin/rm starship_install.sh
+      #
+      ExecStart=/usr/bin/bash /usr/local/bin/starship_update.sh $HOME
+    state: present
+    group: root
+    owner: root
+    mode: '777'
+  when:
+    - ansible_distribution in ["Ubuntu"]
+
+- name: Services - starship shell prompt update - Create timer unit file (Ubuntu, Arch)
+  ansible.builtin.blockinfile:
+    path: "/etc/systemd/system/starship_update.timer"
+    create: true
+    backup: true
+    marker: '# ### {mark} ANSIBLE MANAGED BLOCK - starship shell prompt update ###'
+    block: |
+      [Unit]
+      Description=starship shell prompt update
+
+      [Timer]
+      Unit=starship_update.service
+      OnCalendar=Sat *-*-* 17:00:00
+      AccuracySec=12h
+      #RandomizedDelaySec=24h
+      Persistent=true
+
+      [Install]
+      WantedBy=timers.target
+    state: present
+    group: root
+    owner: root
+    mode: '777'
+  when:
+    - ansible_distribution in ["Ubuntu"]
+
+- name: Services - starship shell prompt update - start+enable timer (Ubuntu, Arch)
+  ansible.builtin.systemd:
+    name: starship_update.timer
+    state: started
+    enabled: true
+    daemon_reload: true
+  when:
+    - ansible_distribution in ["Ubuntu"]
+
+
 # ########
 # ### user
 # ########
