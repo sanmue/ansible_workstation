@@ -15,8 +15,8 @@
 PATH=/usr/bin
 
 zshpluginpath="/usr/share/zsh/plugins"
-#declare -a arrZshPlugin
-arrZshPlugin=( 'zsh-autosuggestions' 'zsh-syntax-highlighting' 'zsh-history-substring-search' )
+declare -a arrZshPlugin
+arrZshPlugin=("zsh-autosuggestions zsh-syntax-highlighting zsh-history-substring-search")
 githubPathZshusers="https://github.com/zsh-users"
 logPath="/var/log"
 logName="zshpluginsgit_update.service.log"
