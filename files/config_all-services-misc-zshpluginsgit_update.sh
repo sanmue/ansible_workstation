@@ -90,9 +90,9 @@ notify_allGuiUser "${startMsgSubj}" "${startMsg}"
 # --- Send (local) mail alert to all logged on users:
 mail_allLogonUser "${startMsgSubj}" "${startMsg}"
 
-# ### --------------
-# ### Update plugins
-# ### --------------
+# ### ---------------------------
+# ### Update zsh plugins git repo
+# ### ---------------------------
 
 for plugin in ${arrZshPlugin}; do
     if [ -d "${zshpluginpath}/${plugin}" ]; then
