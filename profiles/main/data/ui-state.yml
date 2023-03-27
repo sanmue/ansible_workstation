@@ -27,7 +27,7 @@ mhutchie.git-graph: '{"lastKnownGitPath":"git"}'
 ms-vscode.powershell: '{"powerShellExtensionVersion":"2021.12.0"}'
 rangav.vscode-thunder-client: '{"tc.version-key":"2.0.2"}'
 vscode-icons-team.vscode-icons: '{"vsicons":{"version":"12.2.0","status":2,"welcomeShown":true}}'
-workbench.activity.pinnedViewlets2: '[{"id":"workbench.view.explorer","pinned":true,"visible":true,"order":0},{"id":"workbench.view.search","pinned":true,"visible":true,"order":1},{"id":"workbench.view.scm","pinned":true,"visible":true,"order":2},{"id":"workbench.view.debug","pinned":true,"visible":true,"order":3},{"id":"workbench.view.extensions","pinned":true,"visible":true,"order":4},{"id":"workbench.view.remote","pinned":true,"visible":false,"order":4},{"id":"workbench.view.extension.test","pinned":true,"visible":true,"order":6},{"id":"workbench.view.extension.references-view","pinned":true,"visible":false,"order":7},{"id":"workbench.view.extension.package-explorer","pinned":true,"visible":false,"order":8},{"id":"workbench.view.extension.gitlens","pinned":true,"visible":true,"order":8},{"id":"workbench.view.extension.todo-tree-container","pinned":true,"visible":false,"order":10},{"id":"workbench.view.extension.jupyter","pinned":true,"visible":false,"order":11},{"id":"workbench.view.extension.PowerShell","pinned":true,"visible":false,"order":11},{"id":"workbench.view.extension.thunder-client","pinned":true,"visible":false,"order":12},{"id":"workbench.view.editSessions","pinned":true,"visible":false},{"id":"userDataProfiles","pinned":true,"visible":false}]'
+workbench.activity.pinnedViewlets2: '[{"id":"workbench.view.explorer","pinned":true,"visible":true,"order":0},{"id":"workbench.view.search","pinned":true,"visible":true,"order":1},{"id":"workbench.view.scm","pinned":true,"visible":true,"order":2},{"id":"workbench.view.debug","pinned":true,"visible":true,"order":3},{"id":"workbench.view.extensions","pinned":true,"visible":true,"order":4},{"id":"workbench.view.remote","pinned":true,"visible":false,"order":4},{"id":"workbench.view.extension.test","pinned":true,"visible":true,"order":6},{"id":"workbench.view.extension.references-view","pinned":true,"visible":false,"order":7},{"id":"workbench.view.extension.package-explorer","pinned":true,"visible":true,"order":8},{"id":"workbench.view.extension.gitlens","pinned":true,"visible":true,"order":9},{"id":"workbench.view.extension.todo-tree-container","pinned":true,"visible":true,"order":10},{"id":"workbench.view.extension.jupyter","pinned":true,"visible":false,"order":11},{"id":"workbench.view.extension.PowerShell","pinned":true,"visible":true,"order":11},{"id":"workbench.view.extension.thunder-client","pinned":true,"visible":true,"order":12},{"id":"workbench.view.editSessions","pinned":true,"visible":false},{"id":"userDataProfiles","pinned":true,"visible":false}]'
 workbench.activity.placeholderViewlets: "[{\"id\":\"workbench.view.explorer\",\
   \"themeIcon\":{\"id\":\"explorer-view-icon\"},\"name\":\"Explorer\",\"isBuilt\
   in\":true,\"views\":[{\"when\":\"openEditorsVisible\"},{},{},{\"when\":\"time\
@@ -85,22 +85,32 @@ workbench.activity.placeholderViewlets: "[{\"id\":\"workbench.view.explorer\",\
   0\"},{\"when\":\"testExplorerVisible\"}]},{\"id\":\"workbench.view.extension.\
   references-view\",\"themeIcon\":{\"id\":\"references\"},\"name\":\"References\
   \",\"isBuiltin\":false,\"views\":[{\"when\":\"reference-list.isActive\"}]},{\
-  \"id\":\"workbench.view.extension.package-explorer\",\"isBuiltin\":false},{\"\
-  id\":\"workbench.view.extension.gitlens\",\"themeIcon\":{\"id\":\"gitlens-git\
-  lens\"},\"name\":\"GitLens\",\"isBuiltin\":false,\"views\":[{},{\"when\":\"!g\
-  itlens:disabled\"}]},{\"id\":\"workbench.view.extension.todo-tree-container\",\
-  \"isBuiltin\":false},{\"id\":\"workbench.view.extension.jupyter\",\"isBuiltin\
-  \":false},{\"id\":\"workbench.view.extension.PowerShell\",\"isBuiltin\":false\
-  },{\"id\":\"workbench.view.extension.thunder-client\",\"isBuiltin\":false},{\
-  \"id\":\"workbench.view.editSessions\",\"themeIcon\":{\"id\":\"edit-sessions-\
-  view-icon\"},\"name\":\"Cloud
+  \"id\":\"workbench.view.extension.package-explorer\",\"iconUrl\":{\"$mid\":1,\
+  \"path\":\"%%EXTENSION_DATA_PATH%%/donjayamanne.python-environment-manager-1.\
+  0.4-universal/resources/logo.svg\",\"scheme\":\"file\"},\"name\":\"Python\",\
+  \"isBuiltin\":false,\"views\":[{}]},{\"id\":\"workbench.view.extension.gitlens\
+  \",\"themeIcon\":{\"id\":\"gitlens-gitlens\"},\"name\":\"GitLens\",\"isBuiltin\
+  \":false,\"views\":[{},{\"when\":\"!gitlens:disabled\"}]},{\"id\":\"workbench\
+  .view.extension.todo-tree-container\",\"iconUrl\":{\"$mid\":1,\"path\":\"%%EX\
+  TENSION_DATA_PATH%%/gruntfuggly.todo-tree-0.0.215-universal/resources/todo-tr\
+  ee-container.svg\",\"scheme\":\"file\"},\"name\":\"TODOs\",\"isBuiltin\":fals\
+  e,\"views\":[{\"when\":\"!todo-tree-is-empty\"}]},{\"id\":\"workbench.view.ex\
+  tension.jupyter\",\"isBuiltin\":false},{\"id\":\"workbench.view.extension.Pow\
+  erShell\",\"themeIcon\":{\"id\":\"terminal-powershell\"},\"name\":\"PowerShell\
+  \",\"isBuiltin\":false,\"views\":[{\"when\":\"config.powershell.sideBar.Comma\
+  ndExplorerVisibility\"}]},{\"id\":\"workbench.view.extension.thunder-client\",\
+  \"iconUrl\":{\"$mid\":1,\"path\":\"%%EXTENSION_DATA_PATH%%/rangav.vscode-thun\
+  der-client-2.5.3-universal/images/thunder-client.svg\",\"scheme\":\"file\"},\
+  \"name\":\"Thunder
+  Client\",\"isBuiltin\":false,\"views\":[{}]},{\"id\":\"workbench.view.editSes\
+  sions\",\"themeIcon\":{\"id\":\"edit-sessions-view-icon\"},\"name\":\"Cloud
   Changes\",\"isBuiltin\":true,\"views\":[{\"when\":\"editSessionsShowView\"}]}\
   ,{\"id\":\"userDataProfiles\",\"themeIcon\":{\"id\":\"defaultProfile-icon\"},\
   \"name\":\"Profiles\",\"isBuiltin\":true,\"views\":[]}]"
 workbench.auxiliarybar.pinnedPanels: "[]"
 workbench.auxiliarybar.size: "300"
 workbench.auxiliaryBar.size: "300"
-workbench.editor.languageDetectionOpenedLanguages.global: '[["ignore",true],["json",true],["log",true],["jsonc",true],["xml",true],["powershell",true],["markdown",true],["ansible",true],["shellscript",true],["yaml",true],["toml",true],["plaintext",true]]'
+workbench.editor.languageDetectionOpenedLanguages.global: '[["ignore",true],["json",true],["log",true],["xml",true],["powershell",true],["markdown",true],["toml",true],["jsonc",true],["plaintext",true],["yaml",true],["shellscript",true],["ansible",true]]'
 workbench.explorer.views.state.hidden: '[{"id":"outline","isHidden":false},{"id":"timeline","isHidden":false},{"id":"workbench.explorer.openEditorsView","isHidden":true},{"id":"workbench.explorer.emptyView","isHidden":false},{"id":"workbench.explorer.fileView","isHidden":false},{"id":"npm","isHidden":true},{"id":"jupyterViewVariables","isHidden":false}]'
 workbench.grid.height: "1347"
 workbench.grid.size: '{"height":1099,"width":1280}'
@@ -112,10 +122,10 @@ workbench.panel.lastNonMaximizedWidth: "300"
 workbench.panel.markers.hidden: '[{"id":"workbench.panel.markers.view","isHidden":false}]'
 workbench.panel.output.hidden: '[{"id":"workbench.panel.output","isHidden":false}]'
 workbench.panel.pinnedPanels: '[{"id":"workbench.panel.markers","name":"Problems","pinned":true,"badgeEnabled":true,"order":0,"visible":true},{"id":"workbench.panel.output","name":"Output","pinned":true,"badgeEnabled":true,"order":1,"visible":true},{"id":"workbench.panel.repl","name":"Debug
-  Console","pinned":true,"badgeEnabled":true,"order":2,"visible":true},{"id":"terminal","name":"Terminal","pinned":true,"badgeEnabled":true,"order":3,"visible":true},{"id":"workbench.view.extension.jupyter-variables","name":"Jupyter","pinned":true,"badgeEnabled":true,"order":7,"visible":false},{"id":"workbench.view.extension.gitlensPanel","name":"GitLens","pinned":true,"badgeEnabled":true,"order":6,"visible":false},{"id":"refactorPreview","name":"Refactor
+  Console","pinned":true,"badgeEnabled":true,"order":2,"visible":true},{"id":"terminal","name":"Terminal","pinned":true,"badgeEnabled":true,"order":3,"visible":true},{"id":"workbench.view.extension.jupyter-variables","name":"Jupyter","pinned":true,"badgeEnabled":true,"order":7,"visible":false},{"id":"workbench.view.extension.gitlensPanel","name":"GitLens","pinned":true,"badgeEnabled":true,"order":6,"visible":true},{"id":"refactorPreview","name":"Refactor
   Preview","pinned":true,"visible":false}]'
 workbench.panel.repl.hidden: '[{"id":"workbench.panel.repl.view","isHidden":false}]'
-workbench.panel.size: "369"
+workbench.panel.size: "377"
 workbench.scm.views.state.hidden: '[{"id":"workbench.scm.repositories","isHidden":true},{"id":"workbench.scm","isHidden":false},{"id":"gitlens.views.commits","isHidden":false},{"id":"gitlens.views.repositories","isHidden":true},{"id":"gitlens.views.fileHistory","isHidden":false},{"id":"gitlens.views.lineHistory","isHidden":true},{"id":"gitlens.views.branches","isHidden":false},{"id":"gitlens.views.remotes","isHidden":false},{"id":"gitlens.views.stashes","isHidden":false},{"id":"gitlens.views.tags","isHidden":false},{"id":"gitlens.views.worktrees","isHidden":false},{"id":"gitlens.views.contributors","isHidden":true},{"id":"gitlens.views.searchAndCompare","isHidden":false},{"id":"gitlens.views.commitDetails","isHidden":false}]'
 workbench.sidebar.size: "473"
 workbench.sideBar.size: "434"

@@ -1,8 +1,7 @@
 {
     "workbench.colorTheme": "Default Dark+",
     "telemetry.telemetryLevel": "off",
-    "files.defaultLanguage": "powershell",
-    "files.encoding": "utf8bom",
+    "files.defaultLanguage": "shellscript",
     "workbench.startupEditor": "none",
     "editor.minimap.enabled": false,
     "kite.showWelcomeNotificationOnStartup": false,
