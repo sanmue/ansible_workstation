@@ -96,7 +96,8 @@ mail_allLogonUser "${startMsgSubj}" "${startMsg}"
 
 for plugin in ${arrZshPlugin}; do
     if [ -d "${zshpluginpath}/${plugin}" ]; then
-    cd "${zshpluginpath}/${plugin}" && /usr/bin/git pull origin
+        notify_allGuiUser "zsh plugin update (git) - ${plugin}" "Updating repo for ${plugin}..."
+        cd "${zshpluginpath}/${plugin}" && /usr/bin/git pull origin
     fi    
 done
 
