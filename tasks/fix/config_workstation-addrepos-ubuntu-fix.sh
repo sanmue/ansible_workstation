@@ -1,4 +1,6 @@
-#!/bin/bash
+#!/usr/bin/env bash
+
+#set -x   # enable debug mode
 
 # Fix deprecation warning bei apt-update: Key is stored in legacy trusted.gpg keyring (/etc/apt/trusted.gpg)
 #   - z.B.: http://ppa.launchpad.net/mozillateam/ppa/ubuntu/dists/jammy/InRelease: Key is stored in legacy trusted.gpg keyring (/etc/apt/trusted.gpg), see the DEPRECATION section in apt-key(8) for details.

@@ -1,4 +1,6 @@
-#!/bin/bash
+#!/usr/bin/env bash
+
+#set -x   # enable debug mode
 
 ### --------------------------------------------------------------------
 ### create storage pool for user (directory-based, /home/user/Downloads)

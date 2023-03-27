@@ -1,4 +1,6 @@
-#!/bin/bash
+#!/usr/bin/env bash
+
+#set -x   # enable debug mode
 
 ### für Manjaro/Archlinux: Bei Neuerstellung QEMU/KVM-VMs aus Ubuntu
 ### Stand: 02/2023, VMs aus Ubuntu 22.04

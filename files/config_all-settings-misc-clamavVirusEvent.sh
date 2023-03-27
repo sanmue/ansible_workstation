@@ -1,4 +1,6 @@
-﻿#!/bin/bash
+﻿#!/usr/bin/env bash
+
+#set -x   # enable debug mode
 
 PATH=/usr/bin
 ALERT="Signature detected by clamav: '${CLAM_VIRUSEVENT_VIRUSNAME}' in '${CLAM_VIRUSEVENT_FILENAME}'"

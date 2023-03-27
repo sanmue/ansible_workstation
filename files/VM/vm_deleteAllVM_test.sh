@@ -1,4 +1,6 @@
-#!/bin/bash
+#!/usr/bin/env bash
+
+#set -x   # enable debug mode
 
 ### ############
 ### Lösche VMs incl.:

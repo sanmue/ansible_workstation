@@ -1,6 +1,6 @@
-﻿#!/bin/bash
+﻿#!/usr/bin/env bash
 
-#set -x   # for debugging
+#set -x   # enable debug mode
 
 ### ############################
 ### Update starship shell prompt

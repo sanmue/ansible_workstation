@@ -1,4 +1,6 @@
-#!/bin/bash
+#!/usr/bin/env bash
+
+#set -x   # enable debug mode
 
 ### install certificates for citrix workspace app (ica-client)
 ### by using mozilla certificates (mozilla firefox must be installed)

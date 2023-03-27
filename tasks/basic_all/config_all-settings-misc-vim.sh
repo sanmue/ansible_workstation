@@ -1,4 +1,6 @@
-#!/bin/bash
+#!/usr/bin/env bash
+
+#set -x   # enable debug mode
 
 ###
 # wird nicht mehr verwendet, globale config für vim nun über files/.vimrc.local
