@@ -9,7 +9,7 @@
 # cron wird verwendet von ClamTK und timeshift
 #
 # https://wiki.archlinux.org/title/Cron
-- name: Services - start+enable cronie (Arch)
+- name: All services misc - start+enable cronie (Arch)
   ansible.builtin.service:
     name: cronie.service
     state: started
@@ -23,7 +23,7 @@
 # https://man.archlinux.org/man/reflector.1#EXAMPLES
 # https://wiki.archlinux.org/title/Reflector#top-page
 # - conf: /etc/xdg/reflector/reflector.conf   -->   siehe config_all-settings-misc.yml
-- name: Services - start+enable reflector (Arch, NOT Manjaro)
+- name: All services misc - start+enable reflector (Arch, NOT Manjaro)
   ansible.builtin.service:
     name: reflector.service
     #state: started
@@ -39,26 +39,26 @@
 # ------------
 # # SSH / SSHD
 # ------------
-- name: Services - start ssh (Ubuntu)
+- name: All services misc - start ssh (Ubuntu)
   ansible.builtin.service:
     name: ssh
     state: started
   when: ansible_distribution in ["Ubuntu"]
 
-- name: Services - enable ssh (Ubuntu)
+- name: All services misc - enable ssh (Ubuntu)
   ansible.builtin.service:
     name: ssh
     enabled: true
   when: ansible_distribution in ["Ubuntu"]
 
 
-- name: Services - start sshd (Archlinux)
+- name: All services misc - start sshd (Archlinux)
   ansible.builtin.service:
     name: sshd
     state: started
   when: ansible_distribution in ["Archlinux"]
 
-- name: Services - enable sshd (Archlinux)
+- name: All services misc - enable sshd (Archlinux)
   ansible.builtin.service:
     name: sshd
     enabled: true
@@ -77,35 +77,35 @@
 #
 # You may get a notification that clamd was not notified. This is normal because we haven't started the service yet.
 #
-- name: Services - Update clamav database (Arch)
+- name: All services misc - Update clamav database (Arch)
   ansible.builtin.shell:
     cmd: freshclam
   args:
     creates: /home/{{ env_user }}/.ansible_freshclamInitialStartExecuted
   when: ansible_distribution in ["Archlinux"]
 
-# - name: Services - Update clamav database (Ubuntu)
+# - name: All services misc - Update clamav database (Ubuntu)
 #  # ansible.builtin.shell: freshclam
 #  ansible.builtin.shell: freshclam --daemon --user=clamav   # Fehlermeldung
 #  args:
 #    creates: /home/{{ env_user }}/.ansible_freshclamInitialStartExecuted
 #  when: ansible_distribution in ["Ubuntu"]
 
-- name: Services - Set flag file freshclamInitialStartExecuted (Ubuntu, Arch)
+- name: All services misc - Set flag file freshclamInitialStartExecuted (Ubuntu, Arch)
   ansible.builtin.shell:
     cmd: touch /home/{{ env_user }}/.ansible_freshclamInitialStartExecuted
   args:
     creates: /home/{{ env_user }}/.ansible_freshclamInitialStartExecuted
   when: ansible_distribution in ["Ubuntu", "Archlinux"]
 
-- name: Services - Start+enable clamav-daemon.service (Ubuntu, Arch)
+- name: All services misc - Start+enable clamav-daemon.service (Ubuntu, Arch)
   ansible.builtin.service:
     name: clamav-daemon.service
     state: started
     enabled: true
   when: ansible_distribution in ["Ubuntu", "Archlinux"]
 
-- name: Services - Start+enable clamav-freshclam.service (Ubuntu, Arch)
+- name: All services misc - Start+enable clamav-freshclam.service (Ubuntu, Arch)
   ansible.builtin.service:
     name: clamav-freshclam.service
     state: started
@@ -117,7 +117,7 @@
 # -------------------------
 # https://starship.rs/
 
-- name: Services - starship shell prompt update - Create service unit file (Ubuntu, Arch)
+- name: All services misc - starship shell prompt update - Create service unit file (Ubuntu, Arch)
   ansible.builtin.blockinfile:
     path: "/etc/systemd/system/starship_update.service"
     create: true
@@ -136,11 +136,11 @@
     state: present
     group: root
     owner: root
-    mode: '777'
+    mode: '0644'
   when:
     - ansible_distribution in ["Archlinux", "Ubuntu"]
 
-- name: Services - starship shell prompt update - Create timer unit file (Ubuntu, Arch)
+- name: All services misc - starship shell prompt update - Create timer unit file (Ubuntu, Arch)
   ansible.builtin.blockinfile:
     path: "/etc/systemd/system/starship_update.timer"
     create: true
@@ -152,7 +152,7 @@
 
       [Timer]
       Unit=starship_update.service
-      OnCalendar=Sat *-*-* 17:00:00
+      OnCalendar=Sat *-*-* 11:00:00
       AccuracySec=12h
       #RandomizedDelaySec=24h
       Persistent=true
@@ -162,11 +162,11 @@
     state: present
     group: root
     owner: root
-    mode: '777'
+    mode: '0644'
   when:
     - ansible_distribution in ["Archlinux", "Ubuntu"]
 
-- name: Services - starship shell prompt update - start+enable timer (Ubuntu, Arch)
+- name: All services misc - starship shell prompt update - start+enable timer (Ubuntu, Arch)
   ansible.builtin.systemd:
     name: starship_update.timer
     state: started
@@ -178,43 +178,41 @@
 # ---------------
 # ### zsh plugins
 # ---------------
+# zugehöriges, auszuführendes Script wird in 'config_all-services-misc.yml' in '/usr/local/bin' erstellt
 
-- name: Services - starship shell prompt update - Create service unit file (Ubuntu, Arch)
+- name: All services misc - zsh plugins update - Create service unit file (Ubuntu)
   ansible.builtin.blockinfile:
-    path: "/etc/systemd/system/starship_update.service"
+    path: "/etc/systemd/system/zshpluginsgit_update.service"
     create: true
     backup: true
-    marker: '# ### {mark} ANSIBLE MANAGED BLOCK - starship shell prompt update ###'
+    marker: '# ### {mark} ANSIBLE MANAGED BLOCK - zshpluginsgit_update ###'
     block: |
       [Unit]
-      Description=starship shell prompt update
+      Description=zsh plugins git update
 
       [Service]
       Type=oneshot
-      #ExecStart=/usr/bin/curl -sS https://starship.rs/install.sh > starship_install.sh
-      #ExecStart=/usr/bin/chmod 755 starship_install.sh && /usr/bin/bash starship_install.sh --yes && /usr/bin/rm starship_install.sh
-      #
-      ExecStart=/usr/bin/bash /usr/local/bin/starship_update.sh $HOME
+      ExecStart=/usr/bin/bash /usr/local/bin/zshpluginsgit_update.sh
     state: present
     group: root
     owner: root
-    mode: '777'
+    mode: '0644'
   when:
     - ansible_distribution in ["Ubuntu"]
 
-- name: Services - starship shell prompt update - Create timer unit file (Ubuntu, Arch)
+- name: All services misc - zsh plugins update - Create timer unit file (Ubuntu)
   ansible.builtin.blockinfile:
-    path: "/etc/systemd/system/starship_update.timer"
+    path: "/etc/systemd/system/zshpluginsgit_update.timer"
     create: true
     backup: true
-    marker: '# ### {mark} ANSIBLE MANAGED BLOCK - starship shell prompt update ###'
+    marker: '# ### {mark} ANSIBLE MANAGED BLOCK - zshpluginsgit_update ###'
     block: |
       [Unit]
-      Description=starship shell prompt update
+      Description=zsh plugins git update
 
       [Timer]
-      Unit=starship_update.service
-      OnCalendar=Sat *-*-* 17:00:00
+      Unit=zshpluginsgit_update.service
+      OnCalendar=Sat *-*-* 11:05:00
       AccuracySec=12h
       #RandomizedDelaySec=24h
       Persistent=true
@@ -224,13 +222,13 @@
     state: present
     group: root
     owner: root
-    mode: '777'
+    mode: '0644'
   when:
     - ansible_distribution in ["Ubuntu"]
 
-- name: Services - starship shell prompt update - start+enable timer (Ubuntu, Arch)
+- name: All services misc - zsh plugins update - start+enable timer (Ubuntu)
   ansible.builtin.systemd:
-    name: starship_update.timer
+    name: zshpluginsgit_update.timer
     state: started
     enabled: true
     daemon_reload: true
@@ -256,7 +254,7 @@
 # -------------
 # https://docs.syncthing.net/users/autostart.html#linux
 
-- name: Services - Syncthing - start+enable - env_user (Ubuntu, Arch)
+- name: All services misc - Syncthing - start+enable - env_user (Ubuntu, Arch)
   ansible.builtin.systemd:
     name: syncthing.service
     state: started
@@ -274,7 +272,7 @@
 # ----------
 
 # https://stackoverflow.com/questions/45776003/fixing-a-systemd-service-203-exec-failure-no-such-file-or-directory
-- name: Services - ClamAV - Create service unit file - user - scanHome (Ubuntu, Arch)
+- name: All services misc - ClamAV - Create service unit file - user - scanHome (Ubuntu, Arch)
   ansible.builtin.blockinfile:
     path: "/etc/systemd/user/clamav_scanHome.service"
     create: true
@@ -293,11 +291,11 @@
     state: present
     group: root
     owner: root
-    mode: '777'
+    mode: '0644'
   when:
     - ansible_distribution in ["Archlinux", "Ubuntu"]
 
-- name: Services - ClamAV - Create timer unit file - user - scanHome (Ubuntu, Arch)
+- name: All services misc - ClamAV - Create timer unit file - user - scanHome (Ubuntu, Arch)
   ansible.builtin.blockinfile:
     path: "/etc/systemd/user/clamav_scanHome.timer"
     create: true
@@ -319,11 +317,11 @@
     state: present
     group: root
     owner: root
-    mode: '777'
+    mode: '0644'
   when:
     - ansible_distribution in ["Archlinux", "Ubuntu"]
 
-- name: Services - ClamAV - start+enable timer - env_user - scanHome (Ubuntu, Arch)
+- name: All services misc - ClamAV - start+enable timer - env_user - scanHome (Ubuntu, Arch)
   ansible.builtin.systemd:
     name: clamav_scanHome.timer
     state: started

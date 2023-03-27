@@ -566,6 +566,21 @@
 
 
 # #######
+# ### zsh
+# #######
+- name: All settings misc - Users - zsh plugin git update - bash-skript (Ubuntu)
+  ansible.builtin.copy:
+    src: "files/config_all-services-misc-zshpluginsgit_update.sh"
+    dest: "/usr/local/bin/zshpluginsgit_update.sh"
+    owner: root
+    group: root
+    mode: '0755'
+    backup: true
+  when:
+    - ansible_distribution in ["Ubuntu"]
+
+
+# #######
 # ### vim
 # #######
 
@@ -660,7 +675,6 @@
       " #
   when:
     - ansible_distribution == "Archlinux"
-
 
 # ---------------
 # ### VIM plugins
