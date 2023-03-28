@@ -24,6 +24,7 @@
     creates: "/home/{{ env_user }}/.ansible_plasma_pamacAUR-autokey"
   when:
     - ansible_distribution in ["Archlinux"]
+    - env_desktop == "kde"
 
 
 - name: Plasma - Install packages for workstations (Archlinux + KDE Plasma)

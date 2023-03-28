@@ -54,6 +54,7 @@
     creates: "/home/{{ env_user }}/.ansible_gnome_pamacAUR-autokey"
   when:
     - ansible_distribution in ["Archlinux"]
+    - env_desktop == "gnome"
 
 - name: Gnome - Install packages for workstations (Archlinux/Manjaro)
   ansible.builtin.package:
