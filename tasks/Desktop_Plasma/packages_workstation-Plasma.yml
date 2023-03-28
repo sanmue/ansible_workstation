@@ -19,7 +19,7 @@
     - ansible_distribution == "Archlinux"
 
 - name: Plasma - Install autokey-qt via pamac from AUR (Archlinux)
-  ansible.builtin.shell: pamac build --no-confirm autokey-qt
+  ansible.builtin.shell: pamac build --no-confirm autokey-common
   args:
     creates: "/home/{{ env_user }}/.ansible_plasma_pamacAUR-autokey"
   when:

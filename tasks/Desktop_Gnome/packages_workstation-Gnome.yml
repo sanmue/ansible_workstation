@@ -49,7 +49,7 @@
     - env_desktop == "gnome"
 
 - name: Gnome - Install autokey-gtk via pamac from AUR (Archlinux)
-  ansible.builtin.shell: pamac build --no-confirm autokey-gtk
+  ansible.builtin.shell: pamac build --no-confirm autokey-common
   args:
     creates: "/home/{{ env_user }}/.ansible_gnome_pamacAUR-autokey"
   when:
