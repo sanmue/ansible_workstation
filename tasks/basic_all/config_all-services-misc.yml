@@ -211,6 +211,7 @@
   when:
     - ansible_distribution in ["Ubuntu"]
 
+# monatlich (am 1. um 11:05 Uhr); alternativ: 'OnCalendar=monthly' (= monatlich am 01. umd 00:00 Uhr)
 - name: All services misc - zsh plugins update - Create timer unit file (Ubuntu)
   ansible.builtin.blockinfile:
     path: "/etc/systemd/system/zshpluginsgit_update.timer"
@@ -223,7 +224,7 @@
 
       [Timer]
       Unit=zshpluginsgit_update.service
-      OnCalendar=Sat *-*-* 11:05:00
+      OnCalendar=*-*-01 11:05:00
       AccuracySec=12h
       #RandomizedDelaySec=24h
       Persistent=true
