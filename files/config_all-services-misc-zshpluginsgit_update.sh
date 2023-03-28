@@ -15,8 +15,16 @@
 PATH=/usr/bin
 
 zshpluginpath="/usr/share/zsh/plugins"
+
+# https://stackoverflow.com/questions/9293887/reading-a-space-delimited-string-into-an-array-in-bash
+# - https://stackoverflow.com/a/53369525
+# https://stackoverflow.com/questions/24628076/convert-multiline-string-to-array
+
+strZshPlugin="zsh-autosuggestions zsh-syntax-highlighting zsh-history-substring-search"   # String
 declare -a arrZshPlugin
-arrZshPlugin=("zsh-autosuggestions zsh-syntax-highlighting zsh-history-substring-search")
+eval "arrZshPlugin=(${strZshPlugin})"     # array # eval: if you need parameter expansion
+
+
 githubPathZshusers="https://github.com/zsh-users"
 logPath="/var/log"
 logName="zshpluginsgit_update.service.log"
@@ -62,7 +70,7 @@ function mail_allLogonUser {
 # ### Check zsh pluginpaths
 # ### ---------------------
 
-for plugin in ${arrZshPlugin}; do
+for plugin in "${arrZshPlugin[@]}"; do
     if [ ! -d "${zshpluginpath}/${plugin}" ]; then
         # --- Send an alert to all graphical users:
         notify_allGuiUser "${errMsgSubj}" "${errMsg}"
@@ -77,7 +85,7 @@ for plugin in ${arrZshPlugin}; do
         mail_allLogonUser "Clone ${plugin}" "Clone ${plugin}"
 
         echo "$(date), $0; Clone ${plugin}" >> "${logPath}/${logName}"
-        /usr/bin/git clone "${githubPathZshusers}/${plugin}.git" "${zshpluginpath}/${plugin}" 2>&1 1>/dev/null
+        /usr/bin/git clone "${githubPathZshusers}/${plugin}.git" "${zshpluginpath}/${plugin}" 1>/dev/null 2>> "${logPath}/${logName}"
     fi    
 done
 
@@ -94,14 +102,14 @@ mail_allLogonUser "${startMsgSubj}" "${startMsg}"
 # ### Update zsh plugins git repo
 # ### ---------------------------
 
-for plugin in ${arrZshPlugin}; do
+for plugin in "${arrZshPlugin[@]}"; do
     if [ -d "${zshpluginpath}/${plugin}" ]; then
         # --- Send an alert to all graphical users:
         notify_allGuiUser "zsh plugin update (git) - ${plugin}" "Updating repo for ${plugin}..."
         # --- Send (local) mail alert to all logged on users:
         mail_allLogonUser "zsh plugin update (git) - ${plugin}" "Updating repo for ${plugin}..."
 
-        cd "${zshpluginpath}/${plugin}" && /usr/bin/git pull origin 2>&1 1>/dev/null
+        cd "${zshpluginpath}/${plugin}" && /usr/bin/git pull origin 1>/dev/null 2>> "${logPath}/${logName}"
     fi    
 done
 
