@@ -3,6 +3,17 @@
 # ##########
 # systemweit
 
+# ---------------------
+# ### cups OpenPrinting
+# ---------------------
+- name: All services misc - start+enable cronie (Arch)
+  ansible.builtin.service:
+    name: cups.service
+    state: started
+    enabled: true
+  when: ansible_distribution in ["Archlinux"]
+
+
 # ------
 # Cronie
 # ------
