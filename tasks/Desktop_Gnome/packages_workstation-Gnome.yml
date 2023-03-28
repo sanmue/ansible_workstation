@@ -4,7 +4,7 @@
 
 # - gnome-shell-extensions... # -> separater Task (packages_workstation-gnomeshellstuff.yml
 
-- name: Install packages for workstations (Gnome, all)
+- name: Gnome - Install packages for workstations (Gnome, all)
   ansible.builtin.package:
     state: present
     name:
@@ -29,7 +29,7 @@
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
 
-- name: Install packages for workstations (Archlinux + Gnome)
+- name: Gnome - Install packages for workstations (Archlinux + Gnome)
   ansible.builtin.package:
     state: present
     name:
@@ -48,7 +48,14 @@
     - ansible_distribution == "Archlinux"
     - env_desktop == "gnome"
 
-- name: Install packages for workstations (Archlinux/Manjaro)
+- name: Gnome - Install autokey-gtk via pamac from AUR (Archlinux)
+  ansible.builtin.shell: pamac build --no-confirm autokey-gtk
+  args:
+    creates: "/home/{{ env_user }}/.ansible_gnome_pamacAUR-autokey"
+  when:
+    - ansible_distribution in ["Archlinux"]
+
+- name: Gnome - Install packages for workstations (Archlinux/Manjaro)
   ansible.builtin.package:
     state: present
     name:
@@ -60,7 +67,7 @@
     - env_desktop == "gnome"
     - env_lsb_id == "ManjaroLinux"
 
-- name: Install packages for workstations via pamac from AUR (Archlinux, NOT Manjaro)
+- name: Gnome - Install packages for workstations via pamac from AUR (Archlinux, NOT Manjaro)
   ansible.builtin.shell: "pamac build --no-confirm gtkhash gtkhash-nemo && touch /home/{{ env_user }}/.ansible_pamacArchPackagesGnome"
   args:
     creates: "/home/{{ env_user }}/.ansible_pamacArchPackagesGnome"
@@ -69,10 +76,12 @@
     - env_desktop == "gnome"
     - env_lsb_id != "ManjaroLinux"
 
-- name: Install packages for workstations (Ubuntu + Gnome)
+
+- name: Gnome - Install packages for workstations (Ubuntu + Gnome)
   ansible.builtin.package:
     state: present
     name:
+      - autokey-gtk
       - dconf-cli
       - epiphany-browser
       - gnome-software-plugin-flatpak
