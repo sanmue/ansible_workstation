@@ -5,13 +5,14 @@
     name:
       - whalebird
 
-- name: Install snap packages --classic for workstations (all)
-  tags: workstation,ubuntu,arch,snap
-  community.general.snap:
-    state: present
-    name:
-      - espanso
-    classic: true
+# ersetzt durch AutoKey
+#- name: Install snap packages --classic for workstations (all)
+#  tags: workstation,ubuntu,arch,snap
+#  community.general.snap:
+#    state: present
+#    name:
+#      - espanso
+#    classic: true
 
 - name: Install snap packages --classic for workstations (Archlinux)
   tags: workstation,ubuntu,arch,snap
