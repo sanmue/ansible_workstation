@@ -159,7 +159,6 @@
       # ------------------------------------------
       # Benutzer-bin Verzeichnis an PATH anhängen:
       # ------------------------------------------
-      #export PATH=/home/{{ env_user }}/.local/bin:$PATH
       export PATH=~/.local/bin:$PATH
   when:
     - ansible_distribution in ["Ubuntu", "Archlinux"]
@@ -457,7 +456,6 @@
       # ------------------------------------------
       # Benutzer-bin Verzeichnis an PATH anhängen:
       # ------------------------------------------
-      #export PATH=/home/{{ env_user }}/.local/bin:$PATH
       export PATH=~/.local/bin:$PATH
   when:
     - ansible_distribution in ["Ubuntu", "Archlinux"]
@@ -619,7 +617,7 @@
 # ### VIM Settings
 
 # alt:
-# - name: All settings misc - set vim config for user "sandro" (.vimrc) (all)
+# - name: All settings misc - set vim config for user env_user (.vimrc) (all)
 #  ansible.builtin.script: "{{ env_PWD }}/tasks/config_all-settings-misc-vim.sh"
 #  args:
 #    creates: "/home/{{ env_user }}/.vimrc"
