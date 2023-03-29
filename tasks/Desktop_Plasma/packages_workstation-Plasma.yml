@@ -26,6 +26,15 @@
     - ansible_distribution in ["Archlinux"]
     - env_desktop == "kde"
 
+- name: Gnome - Install autokey via pamac from AUR - create flag-file (Archlinux)
+  ansible.builtin.file:
+    path: "/home/{{ env_user }}/.ansible_gnome_pamacAUR-autokey"
+    state: touch
+    mode: '0644'
+  when:
+    - ansible_distribution in ["Archlinux"]
+    - env_desktop == "gnome"
+
 
 - name: Plasma - Install packages for workstations (Archlinux + KDE Plasma)
   tags: workstation,kde,arch

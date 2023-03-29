@@ -278,6 +278,24 @@
     path: "/home/{{ env_user }}/.zshrc"
   register: statzshrcUser
 
+- name: All settings misc - Zshrc - copy .zshrc - .zshrc.old (User, Manjaro)
+  ansible.builtin.copy:
+    src: "/home/{{ env_user }}/.zshrc"
+    dest: "/home/{{ env_user }}/.zshrc.old"
+    backup: true
+  when: 
+    - statzshrcUser.stat.exists == true
+    - env_lsb_id == "ManjaroLinux"
+
+- name: All settings misc - Zshrc - delete .zshrc (User, Manjaro)
+  ansible.builtin.file:
+    path: "/home/{{ env_user }}/.zshrc"
+    state: absent
+    backup: true
+  when: 
+    - statzshrcUser.stat.exists == true
+    - env_lsb_id == "ManjaroLinux"
+
 - name: All settings misc - Zshrc - create (User, all)
   ansible.builtin.file:
     path: "/home/{{ env_user }}/.zshrc"
@@ -290,8 +308,20 @@
     - not statzshrcUser.stat.exists
     # oder: - statzshrcUser.stat.exists == false
 
-# bei Manjaro ist zsh bereits angepasst
-- name: All settings misc - Zshrc - Insert/Update additional paths and config - starship shell prompt (User, NOT Manjaro)
+- name: All settings misc - Zshrc - create (User, all)
+  ansible.builtin.file:
+    path: "/home/{{ env_user }}/.zshrc"
+    state: touch
+    owner: "{{ env_user }}"
+    group: "{{ env_user }}"
+    mode: u=rw,g=r,o=r
+  when:
+    - ansible_distribution in ["Ubuntu", "Archlinux"]
+    - not statzshrcUser.stat.exists
+    # oder: - statzshrcUser.stat.exists == false
+
+
+- name: All settings misc - Zshrc - Insert/Update additional paths and config - starship shell prompt (User,all
   ansible.builtin.blockinfile:
     path: "/home/{{ env_user }}/.zshrc"
     backup: true
@@ -303,7 +333,7 @@
       eval "$(starship init zsh)"
   when:
     - ansible_distribution in ["Ubuntu", "Archlinux"]
-    - env_lsb_id != "ManjaroLinux"
+    # - env_lsb_id != "ManjaroLinux"  # bei Manjaro ist zsh pompt von Werk aus schon angepasst
 
 # Übernommen + anpgepasst aus manjaro-zsh-config (/usr/share/zsh/manjaro-zsh-config)
 # Anm.: zsh ist bei Manjaro die Standardshell und entsprechend vorkonfiguriert
@@ -311,7 +341,7 @@
 # https://zplugin.readthedocs.io/en/latest/zsh-plugin-standard/
 #
 # nicht mehr notwendig, da im nächsten task der INHALT von 'files/custom-zsh-config' in .zshrc reinkopiert wird
-- name: All settings misc - Zshrc - copy custom zsh config file (User, NOT Manjaro)
+- name: All settings misc - Zshrc - copy custom zsh config file (User, all)
   ansible.builtin.copy:
     src: files/custom-zsh-config
     dest: /usr/share/zsh/custom-zsh-config
@@ -321,12 +351,12 @@
     backup: true
   when:
     - ansible_distribution in ["Ubuntu", "Archlinux"]
-    - env_lsb_id != "ManjaroLinux"
+    # - env_lsb_id != "ManjaroLinux"
 
 
 # https://stackoverflow.com/questions/65020310/how-to-copy-file-content-to-another-file-in-ansible-without-overwriting-the-seco
 # https://cloudlinuxtech.com/zsh-syntax-highlighting-autosuggestions/#How_to_install_the_zsh-syntax-highlighting_package_in_Linux
-- name: All settings misc - Zshrc - Insert 'files/custom-zsh-config' in .zshrc (User, NOT Manjaro)
+- name: All settings misc - Zshrc - Insert 'files/custom-zsh-config' in .zshrc (User, all)
   ansible.builtin.blockinfile:
     path: "/home/{{ env_user }}/.zshrc"
     backup: true
@@ -338,7 +368,7 @@
       "{{ lookup('file', 'files/custom-zsh-config') }}"
   when:
     - ansible_distribution in ["Ubuntu", "Archlinux"]
-    - env_lsb_id != "ManjaroLinux"
+    # - env_lsb_id != "ManjaroLinux"
 
 # Zeichenfolge '"<feff>' wurde vor Inhalt aus 'files/custom-zsh-config' eingefügt
 # U+FEFF was called a ZERO WIDTH NO-BREAK SPACE
@@ -348,16 +378,16 @@
 # https://www.fileformat.info/info/unicode/char/feff/index.htm
 #
 # danach wurde noch ein '"' vor den Inhalt aus der Datei gesetezt. entfernt:
-- name: All settings misc - Zshrc -  Delete '"' at beginnning of insterted text form 'custom-zsh-config' in .zshrc (User, NOT Manjaro)
+- name: All settings misc - Zshrc -  Delete '"' at beginnning of insterted text form 'custom-zsh-config' in .zshrc (User, all)
   ansible.builtin.replace:
     path: "/home/{{ env_user }}/.zshrc"
     regexp: '^"##'
     replace: '##'
   when:
     - ansible_distribution in ["Ubuntu", "Archlinux"]
-    - env_lsb_id != "ManjaroLinux"
+    # - env_lsb_id != "ManjaroLinux"
 
-#- name: All settings misc - Zshrc - source cutom zsh config in .zshrc (User, NOT Manjaro)
+#- name: All settings misc - Zshrc - source cutom zsh config in .zshrc (User, all)
 #  ansible.builtin.blockinfile:
 #    path: "/home/{{ env_user }}/.zshrc"
 #    backup: true
@@ -371,7 +401,7 @@
 #      fi
 #  when:
 #    - ansible_distribution in ["Ubuntu", "Archlinux"]
-#    - env_lsb_id != "ManjaroLinux"
+#    # - env_lsb_id != "ManjaroLinux"
 
 
 - name: All settings misc - Zshrc - custom alias definitions (User, all)
@@ -520,8 +550,7 @@
     - ansible_distribution in ["Ubuntu", "Archlinux"]
     - not stat_bashrc_root.stat.exists
 
-# bei Manjaro ist zsh bereits angepasst
-- name: All settings misc - Zshrc - Insert/Update additional paths and config - starship shell prompt (root, NOT Manjaro)
+- name: All settings misc - Zshrc - Insert/Update additional paths and config - starship shell prompt (root, all)
   ansible.builtin.blockinfile:
     path: "/root/.zshrc"
     backup: true
@@ -533,7 +562,7 @@
       eval "$(starship init zsh)"
   when:
     - ansible_distribution in ["Ubuntu", "Archlinux"]
-    - env_lsb_id != "ManjaroLinux"
+    # - env_lsb_id != "ManjaroLinux"  # bei Manjaro ist zsh bereits angepasst
 
 - name: All settings misc - Zshrc - Insert/Update additional paths and config (root, all)
   ansible.builtin.blockinfile:
