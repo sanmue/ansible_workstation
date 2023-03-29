@@ -19,7 +19,7 @@
 
 # -------------
 # ### env_user:
-- name: All settings misc - Bashrc - check status (User, all)
+- name: All settings misc - Bashrc - check status .bashrc (User, all)
   ansible.builtin.stat:
     path: "/home/{{ env_user }}/.bashrc"
   register: stat_bashrc_user
@@ -273,7 +273,7 @@
 
 # --------
 # ### user
-- name: All settings misc - Zshrc - check status (User, all)
+- name: All settings misc - Zshrc - check status .zshrc (User, all)
   ansible.builtin.stat:
     path: "/home/{{ env_user }}/.zshrc"
   register: statzshrcUser
@@ -295,7 +295,7 @@
     - statzshrcUser.stat.exists == true
     - env_lsb_id == "ManjaroLinux"
 
-- name: All settings misc - Zshrc - create (User, all)
+- name: All settings misc - Zshrc - touch (User, all)
   ansible.builtin.file:
     path: "/home/{{ env_user }}/.zshrc"
     state: touch
@@ -304,21 +304,8 @@
     mode: u=rw,g=r,o=r
   when:
     - ansible_distribution in ["Ubuntu", "Archlinux"]
-    - not statzshrcUser.stat.exists
+    # - not statzshrcUser.stat.exists
     # oder: - statzshrcUser.stat.exists == false
-
-- name: All settings misc - Zshrc - create (User, all)
-  ansible.builtin.file:
-    path: "/home/{{ env_user }}/.zshrc"
-    state: touch
-    owner: "{{ env_user }}"
-    group: "{{ env_user }}"
-    mode: u=rw,g=r,o=r
-  when:
-    - ansible_distribution in ["Ubuntu", "Archlinux"]
-    - not statzshrcUser.stat.exists
-    # oder: - statzshrcUser.stat.exists == false
-
 
 - name: All settings misc - Zshrc - Insert/Update additional paths and config - starship shell prompt (User,all
   ansible.builtin.blockinfile:
