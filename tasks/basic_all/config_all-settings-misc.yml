@@ -291,7 +291,6 @@
   ansible.builtin.file:
     path: "/home/{{ env_user }}/.zshrc"
     state: absent
-    backup: true
   when: 
     - statzshrcUser.stat.exists == true
     - env_lsb_id == "ManjaroLinux"
