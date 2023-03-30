@@ -106,7 +106,7 @@
       alias kssh="kitty +kitten ssh"
 
       # directory listing (+ using 'exa' instead of 'ls')
-      alias ls='exa --color=auto --icons --group'   # --group relevant/wirkt nur bei '-l'; so ist aber schon standardmäßig überall dabei
+      alias ls='exa --color=auto --icons --group --time-style=long-iso'   # '--group' und '--time-style' nur bei '-l'; dann schon dabei
       alias ll='ls -la --ignore-glob ..'            # show long listing of all except ".."
       alias l='ls -la --ignore-glob .?*'            # show long listing but no hidden dotfiles except "." (rekursiv bis 1. Unterverzeichnis, mit dessen Inhalt)
       # tree-view:
@@ -403,7 +403,7 @@
       alias kssh="kitty +kitten ssh"
 
       # directory listing (+ using 'exa' instead of 'ls')
-      alias ls='exa --color=auto --icons --group'   # --group relevant/wirkt nur bei '-l'; so ist aber schon standardmäßig überall dabei
+      alias ls='exa --color=auto --icons --group --time-style=long-iso'   # '--group' und '--time-style' nur bei '-l'; dann schon dabei
       alias ll='ls -la --ignore-glob ..'            # show long listing of all except ".."
       alias l='ls -la --ignore-glob .?*'            # show long listing but no hidden dotfiles except "." (rekursiv bis 1. Unterverzeichnis, mit dessen Inhalt)
       # tree-view:
