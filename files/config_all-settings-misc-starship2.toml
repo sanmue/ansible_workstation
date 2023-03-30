@@ -158,6 +158,7 @@ staged = '[${count} ](fg:green)' # '+ '
 renamed = '${count}﫦 ' # ' '
 deleted = '${count}﯊ ' # '🗑 ' '- '
 disabled = false
+#
 
 [jobs]
 format = '[  ](fg:blue bold)[$number$symbol]($style)'
