@@ -81,11 +81,11 @@
       export HISTCONTROL=erasedups:ignoredups:ignorespace
 
       # Check the window size after each command and, if necessary, update the values of LINES and COLUMNS
-      shopt -s checkwinsize
+      #shopt -s checkwinsize
 
       # Causes bash to append to history instead of overwriting it so if you start a new terminal, you have old session history
       shopt -s histappend
-      PROMPT_COMMAND='history -a'
+      #PROMPT_COMMAND='history -a'
 
       # Show auto-completion list automatically, without double tab (einfacher tab genügt)
       if [[ $iatest -gt 0 ]]; then bind "set show-all-if-ambiguous On"; fi
