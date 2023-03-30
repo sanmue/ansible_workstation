@@ -175,6 +175,7 @@
       # - flameshot       # -> ksnip
       # - firewalld       # bereits installiert (bootstrap)
       - foliate
+      - github-cli
       - gnupg
       - gpgme
       - hunspell-de
@@ -368,6 +369,7 @@
       # - firefox # -> in Standard-Inst bereits vorhanden (ab 22.04: als snap package)
       # - firefox-locale-de
       # - firefox-locale-en
+      - gh   # GitHub CLI, GitHub\u2019s official command line tool
       - gitk
       - gpg
       - gufw   # gui for ufw
