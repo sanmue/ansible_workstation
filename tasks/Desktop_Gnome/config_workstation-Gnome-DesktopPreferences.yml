@@ -129,20 +129,20 @@
   ansible.builtin.file:
     path: "/home/{{ env_user }}/.local/share/backgrounds"
     state: directory
-    mode: '0644'
+    mode: '0777'
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
 - name: Copy desktop-wallpaper file to local user-folder (Gnome)
-  become: true
-  become_user: "{{ env_user }}"
+  # become: true
+  # become_user: "{{ env_user }}"
   ansible.builtin.copy:
     src: "files/gnome/background/brad-huchteman-stone-mountain.jpg"
     dest: "/home/{{ env_user }}/.local/share/backgrounds/brad-huchteman-stone-mountain.jpg"
     remote_src: true
     owner: "{{ env_user }}"
     group: "{{ env_user }}"
-    mode: u=rw,g=r,o=r   # mode: '0644'
+    mode: u=rw,g=rw,o=rw
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
