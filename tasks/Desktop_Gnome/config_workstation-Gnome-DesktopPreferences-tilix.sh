@@ -8,15 +8,24 @@
 dconfdir=/com/gexperts/Tilix/profiles
 
 create_new_profile() {
-    local profile_ids=($(dconf list ${dconfdir}/ | sed 's/\///g'))
-    local profile_name="$1"
-    local profile_ids_old="$(dconf read "$dconfdir"/list | tr -d "]")"
+    local profile_name="$1"   # local profile_name="Test"
     local profile_id="$(uuidgen)"
 
-    [ -z "${profile_ids_old}" ] && local profile_ids_old="["  # if there's no `list` key
-    [ ${#profile_ids[@]} -gt 0 ] && local delimiter=,  # if the list is empty
-    dconf write ${dconfdir}/list "${profile_ids_old}${delimiter} '${profile_id}']"
+    local arr_profileId=($(dconf list ${dconfdir}/ | sed 's/\///g'))
+    [ ${#arr_profileId[@]} -gt 0 ] && local delimiter=', '
+    if [ -z "${arr_profileId}" ]; then
+        local profileList="['${profile_id}']"
+    else
+        local profileList="["
+        for profileId in "${arr_profileId[@]}"; do
+            profileList+="'${profileId}'${delimiter}"
+        done
+        profileList+="'${profile_id}']"
+    fi
+
+    dconf write ${dconfdir}/list "${profileList}"
     dconf write "${dconfdir}/${profile_id}"/visible-name "'${profile_name}'"
+    
     echo "${profile_id}"
 }
 
@@ -37,7 +46,7 @@ dconf write "${dconfdir}/${id}"/use-system-font "false"
 dconf write "${dconfdir}/${id}"/cursor-shape "'ibeam'"
 dconf write "${dconfdir}/${id}"/terminal-bell "'sound'"
 dconf write "${dconfdir}/${id}"/use-theme-colors "true"
-#dconf write "${dconfdir}/:${id}"/visible-name "Custom_Standard" # s.o.: als Parameter für Funktion 'create_new_profile'
+#dconf write "${dconfdir}/:${id}"/visible-name "Custom_Standard" # s.o.: Parameter Funktion 'create_new_profile'
 
 # Set as default profile:
 dconf write "${dconfdir}/default" "'$id'"
