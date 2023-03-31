@@ -134,6 +134,8 @@
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
 - name: Copy desktop-wallpaper file to local user-folder (Gnome)
+  become: true
+  become_user: "{{ env_user }}"
   ansible.builtin.copy:
     src: "files/gnome/background/brad-huchteman-stone-mountain.jpg"
     dest: "/home/{{ env_user }}/.local/share/backgrounds/brad-huchteman-stone-mountain.jpg"
