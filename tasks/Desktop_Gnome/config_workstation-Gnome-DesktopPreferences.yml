@@ -995,7 +995,7 @@
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: Set gnome terminal - profiles and preferences (Gnome, Ubuntu)
+- name: Gnome Desktop Prefs - Set tilix terminal - profiles and preferences (Gnome, Ubuntu)
   ansible.builtin.script: "tasks/Desktop_Gnome/config_workstation-Gnome-DesktopPreferences-tilix.sh"
   args:
     creates: "/home/{{ env_user }}/.ansible_tilixTerminalProfileSet"

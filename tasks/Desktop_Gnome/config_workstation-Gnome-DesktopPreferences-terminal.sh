@@ -33,7 +33,6 @@ dconf write "${dconfdir}/:${id}"/palette "['rgb(23,20,33)', 'rgb(192,28,40)', 'r
 dconf write "${dconfdir}/:${id}"/use-theme-colors "false"
 dconf write "${dconfdir}/:${id}"/default-size-columns "100"
 dconf write "${dconfdir}/:${id}"/default-size-rows "32"
-# dconf write "${dconfdir}/:${id}"/font "'Monospace 14'"
 dconf write "${dconfdir}/:${id}"/font "'MesloLGM Nerd Font 12'"
 dconf write "${dconfdir}/:${id}"/use-system-font "false"
 dconf write "${dconfdir}/:${id}"/cursor-shape "'ibeam'"
