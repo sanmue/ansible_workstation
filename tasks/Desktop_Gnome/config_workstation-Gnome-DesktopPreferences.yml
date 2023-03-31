@@ -114,7 +114,9 @@
 # #################
 
 - name: Adding favorite apps to dock (Gnome, all)
-  ansible.builtin.command: gsettings set org.gnome.shell favorite-apps "['com.belmoussaoui.Authenticator.desktop', 'org.keepassxc.KeePassXC.desktop', 'firefox.desktop', 'firefox-esr.desktop', 'org.mozilla.firefox.desktop', 'brave-browser.desktop', 'com.brave.Browser.desktop', 'chromium.desktop','org.chromium.Chromium.desktop', 'org.gnome.Epiphany.desktop', 'org.gnome.Evolution.desktop', 'org.gnome.Terminal.desktop', 'nemo.desktop', 'org.gnome.gedit.desktop', 'org.libreoffice.LibreOffice.desktop', 'libreoffice-startcenter.desktop', 'code_code.desktop', 'code.desktop', 'code-oss.desktop', 'anki.desktop', 'net.ankiweb.Anki.desktop', 'net.cozic.joplin_desktop.desktop', 'de.willuhn.Jameica.desktop', 'rhythmbox.desktop', 'org.gnome.Rhythmbox3.desktop', 'de.haeckerfelix.Shortwave.desktop', 'org.signal.Signal.desktop', 'signal-desktop.desktop', 'org.remmina.Remmina.desktop', 'virt-manager.desktop']"
+  # ansible.builtin.shell: gsettings set org.gnome.shell favorite-apps "['com.belmoussaoui.Authenticator.desktop', 'org.keepassxc.KeePassXC.desktop', 'firefox.desktop', 'firefox-esr.desktop', 'org.mozilla.firefox.desktop', 'brave-browser.desktop', 'com.brave.Browser.desktop', 'chromium.desktop','org.chromium.Chromium.desktop', 'org.gnome.Epiphany.desktop', 'org.gnome.Evolution.desktop', 'org.gnome.Terminal.desktop', 'nemo.desktop', 'org.gnome.gedit.desktop', 'org.libreoffice.LibreOffice.desktop', 'libreoffice-startcenter.desktop', 'code_code.desktop', 'code.desktop', 'code-oss.desktop', 'anki.desktop', 'net.ankiweb.Anki.desktop', 'net.cozic.joplin_desktop.desktop', 'de.willuhn.Jameica.desktop', 'rhythmbox.desktop', 'org.gnome.Rhythmbox3.desktop', 'de.haeckerfelix.Shortwave.desktop', 'org.signal.Signal.desktop', 'signal-desktop.desktop', 'org.remmina.Remmina.desktop', 'virt-manager.desktop']"
+  # Terminal 'org.gnome.Terminal.desktop' replaced with 'com.gexperts.Tilix.desktop':
+  ansible.builtin.shell: gsettings set org.gnome.shell favorite-apps "['com.belmoussaoui.Authenticator.desktop', 'org.keepassxc.KeePassXC.desktop', 'firefox.desktop', 'firefox-esr.desktop', 'org.mozilla.firefox.desktop', 'brave-browser.desktop', 'com.brave.Browser.desktop', 'chromium.desktop','org.chromium.Chromium.desktop', 'org.gnome.Epiphany.desktop', 'org.gnome.Evolution.desktop', 'com.gexperts.Tilix.desktop', 'nemo.desktop', 'org.gnome.gedit.desktop', 'org.libreoffice.LibreOffice.desktop', 'libreoffice-startcenter.desktop', 'code_code.desktop', 'code.desktop', 'code-oss.desktop', 'anki.desktop', 'net.ankiweb.Anki.desktop', 'net.cozic.joplin_desktop.desktop', 'de.willuhn.Jameica.desktop', 'rhythmbox.desktop', 'org.gnome.Rhythmbox3.desktop', 'de.haeckerfelix.Shortwave.desktop', 'org.signal.Signal.desktop', 'signal-desktop.desktop', 'org.remmina.Remmina.desktop', 'virt-manager.desktop']"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -127,7 +129,7 @@
   ansible.builtin.file:
     path: "/home/{{ env_user }}/.local/share/backgrounds"
     state: directory
-    # mode: '0755'
+    mode: '0644'
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -138,7 +140,7 @@
     remote_src: true
     owner: "{{ env_user }}"
     group: "{{ env_user }}"
-    mode: u=rwx,g=rwx,o=rwx   # mode: '0777'
+    mode: u=rw,g=r,o=r   # mode: '0644'
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -888,7 +890,7 @@
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: Set nemo preferences - show-open-in-terminal-toolbar ((Gnome)
+- name: Set nemo preferences - show-open-in-terminal-toolbar (Gnome)
   community.general.dconf:
     key: "/org/nemo/preferences/show-open-in-terminal-toolbar"
     value: "true"
@@ -966,6 +968,48 @@
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
     # - ansible_distribution in ["Ubuntu"]
+
+
+# ### tilix (tiling terminal emulator) - profiles and preferences:
+# ----------------------------------------------------------------
+- name: Gnome Desktop Prefs - tilix terminal - close-with-last-session (Gnome)
+  community.general.dconf:
+    key: "/com/gexperts/Tilix/close-with-last-session"
+    value: "false"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+
+- name: Gnome Desktop Prefs - tilix terminal - control-scroll-zoom (Gnome)
+  community.general.dconf:
+    key: "/com/gexperts/Tilix/control-scroll-zoom"
+    value: "true"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+
+- name: Gnome Desktop Prefs - tilix terminal - control-scroll-zoom (Gnome)
+  community.general.dconf:
+    key: "/com/gexperts/Tilix/terminal-title-style"
+    value: "'small'"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+
+- name: Set gnome terminal - profiles and preferences (Gnome, Ubuntu)
+  ansible.builtin.script: "tasks/Desktop_Gnome/config_workstation-Gnome-DesktopPreferences-tilix.sh"
+  args:
+    creates: "/home/{{ env_user }}/.ansible_tilixTerminalProfileSet"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+
+- name: Gnome Desktop Prefs - tilix terminal - ProfileSet - create flag - file (Gnome)
+  ansible.builtin.file:
+    path: "/home/{{ env_user }}/.ansible_tilixTerminalProfileSet"
+    state: touch
+    mode: u=rw,g=r,o=r
+    modification_time: preserve
+    access_time: preserve
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+
 
 
 # ### gnome shell extensions -  preferences:

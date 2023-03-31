@@ -32,11 +32,11 @@ dconf write "${dconfdir}/:${id}"/foreground-color "'rgb(208,207,204)'"
 dconf write "${dconfdir}/:${id}"/palette "['rgb(23,20,33)', 'rgb(192,28,40)', 'rgb(38,162,105)', 'rgb(162,115,76)', 'rgb(18,72,139)', 'rgb(163,71,186)', 'rgb(42,161,179)', 'rgb(208,207,204)', 'rgb(94,92,100)', 'rgb(246,97,81)', 'rgb(51,209,122)', 'rgb(233,173,12)', 'rgb(42,123,222)', 'rgb(192,97,203)', 'rgb(51,199,222)', 'rgb(255,255,255)']"
 dconf write "${dconfdir}/:${id}"/use-theme-colors "false"
 dconf write "${dconfdir}/:${id}"/default-size-columns "100"
-dconf write "${dconfdir}/:${id}"/default-size-rows "28"
+dconf write "${dconfdir}/:${id}"/default-size-rows "32"
 # dconf write "${dconfdir}/:${id}"/font "'Monospace 14'"
 dconf write "${dconfdir}/:${id}"/font "'MesloLGM Nerd Font 12'"
 dconf write "${dconfdir}/:${id}"/use-system-font "false"
-dconf write "${dconfdir}/:${id}"/cursor-shape "'underline'"
+dconf write "${dconfdir}/:${id}"/cursor-shape "'ibeam'"
 
 # Set as default profile:
 #dconf write "${dconfdir}/default" "'$id'"
@@ -53,7 +53,7 @@ dconf write "${dconfdir}/:${id}"/default-size-columns "100"
 dconf write "${dconfdir}/:${id}"/default-size-rows "28"
 dconf write "${dconfdir}/:${id}"/font "'MesloLGM Nerd Font 12'"
 dconf write "${dconfdir}/:${id}"/use-system-font "false"
-dconf write "${dconfdir}/:${id}"/cursor-shape "'underline'"
+dconf write "${dconfdir}/:${id}"/cursor-shape "'ibeam'"
 #dconf write "${dconfdir}/:${id}"/visible-name "Custom_SSH"
 
 
@@ -68,7 +68,7 @@ dconf write "${dconfdir}/:${id}"/default-size-columns "100"
 dconf write "${dconfdir}/:${id}"/default-size-rows "28"
 dconf write "${dconfdir}/:${id}"/font "'MesloLGM Nerd Font 12'"
 dconf write "${dconfdir}/:${id}"/use-system-font "false"
-dconf write "${dconfdir}/:${id}"/cursor-shape "'underline'"
+dconf write "${dconfdir}/:${id}"/cursor-shape "'ibeam'"
 
 # ###############################################################################
 # ###############################################################################

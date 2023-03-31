@@ -105,7 +105,7 @@ case ${os} in
         sudo pacman -S --needed --noconfirm base-devel
 
         echo -e "\nAktiviere Firewall 'firewalld' und erlaube ssh ..."
-        sudo systemctl enable --now firewalld.service && sudo ufw allow ssh comment 'SSH' && sudo ufw reload
+        sudo systemctl enable --now firewalld.service && sudo firewall-cmd --zone=public --add-service=ssh --permanent && sudo firewall-cmd --reload
 
         echo -e "\nStarte und aktiviere sshd.service..."
         sudo systemctl enable --now sshd.service
