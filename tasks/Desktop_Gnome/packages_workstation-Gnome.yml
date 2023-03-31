@@ -21,6 +21,7 @@
       # - kdeconnect   # -> ? gnome-shell-extension-gsconnect ?
       - rhythmbox
       - seahorse   # bereits standardmäßig installiert
+      - tililx   # A tiling terminal emulator for Linux using GTK+ 3
       - totem # -> vlc
       # ---------
       # firmware:
