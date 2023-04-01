@@ -104,6 +104,9 @@ case ${os} in
         echo -e "\nInstallation benoetigte Software zur Installation von AUR-Packages..."
         sudo pacman -S --needed --noconfirm base-devel
 
+        echo -e "\n Installation (wenn VM) spice agent for Linux guests (z.B. für clipboard sharing host+guest)"
+        [[ $(systemd-detect-virt) != *"none"* ]] && sudo pacman -Syu --needed --noconfirm spice-vdagent
+
         echo -e "\nAktiviere Firewall 'firewalld' und erlaube ssh ..."
         sudo systemctl enable --now firewalld.service && sudo firewall-cmd --zone=public --add-service=ssh --permanent && sudo firewall-cmd --reload
 
@@ -125,6 +128,9 @@ case ${os} in
 
         echo -e "\nInstalliere noch fehlende, benötigte Packages für Installation von Brave Web Browser"
         sudo apt-get install -y --show-progress curl
+
+        echo -e "\n Installation (wenn VM) spice agent for Linux guests (z.B. für clipboard sharing host+guest)"
+        [[ $(systemd-detect-virt) != *"none"* ]] && sudo apt-get install -y --show-progress spice-vdagent
 
         echo -e "\nAktiviere Firewall 'ufw' und erlaube ssh ..."
         sudo ufw enable && sudo ufw allow ssh comment 'SSH' && sudo ufw reload
@@ -149,6 +155,9 @@ case ${os} in
         echo -e "\nInstalliere noch fehlende, benötigte Packages für Installation von Brave Web Browser"
         sudo apt-get install -y --show-progress curl
 
+        echo -e "\n Installation (wenn VM) spice agent for Linux guests (z.B. für clipboard sharing host+guest)"
+        [[ $(systemd-detect-virt) != *"none"* ]] && sudo apt-get install -y --show-progress spice-vdagent
+
         echo -e "\nStarte + Aktiviere ssh ..."
         sudo systemclt start ssh && sudo systemctl enable ssh
 
@@ -169,6 +178,9 @@ case ${os} in
         
         echo -e "\nInstalliere noch fehlende, benötigte Packages für Installation von Brave Web Browser"
         sudo apt-get install -y --details curl
+
+        echo -e "\n Installation (wenn VM) spice agent for Linux guests (z.B. für clipboard sharing host+guest)"
+        [[ $(systemd-detect-virt) != *"none"* ]] && sudo zypper install -y --details spice-vdagent
 
         echo -e "\nAktiviere Firewall 'firewalld' und erlaube ssh ..."
         sudo systemctl enable firewalld && sudo systemctl start firewalld && sudo firewall-cmd --zone=public --add-service=ssh --permanent && sudo firewall-cmd --reload
