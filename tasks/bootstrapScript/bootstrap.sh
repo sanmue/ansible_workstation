@@ -179,6 +179,7 @@ case ${os} in
         echo -e "\nInstalliere noch fehlende, benötigte Packages für Installation von Brave Web Browser"
         sudo apt-get install -y --details curl
 
+        # https://unix.stackexchange.com/questions/89714/easy-way-to-determine-the-virtualization-technology-of-a-linux-machine
         echo -e "\n Installation (wenn VM) spice agent for Linux guests (z.B. für clipboard sharing host+guest)"
         [[ $(systemd-detect-virt) != *"none"* ]] && sudo zypper install -y --details spice-vdagent
 
