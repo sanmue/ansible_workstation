@@ -974,6 +974,8 @@
 
 # ### tilix (tiling terminal emulator) - profiles and preferences:
 # ----------------------------------------------------------------
+# bei EndeavourOS: Solange manche Einstellungen auf default stehen, funktionieren Änderungen nicht
+# Workaround: manuell Werte in der GUI ändern oder zumindest den "Schieber" bei default deaktivieren und dann ansible playbook nochmal starten
 - name: Gnome Desktop Prefs - tilix terminal - close-with-last-session (Gnome)
   community.general.dconf:
     key: "/com/gexperts/Tilix/close-with-last-session"
@@ -988,7 +990,7 @@
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: Gnome Desktop Prefs - tilix terminal - control-scroll-zoom (Gnome)
+- name: Gnome Desktop Prefs - tilix terminal - terminal-title-style (Gnome)
   community.general.dconf:
     key: "/com/gexperts/Tilix/terminal-title-style"
     value: "'small'"
@@ -1011,7 +1013,6 @@
     access_time: preserve
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
-
 
 
 # ### gnome shell extensions -  preferences:
