@@ -48,7 +48,6 @@
       # - terminator   # Terminal emulator that supports tabs and grids
       - vim   # bereits installiert (bootstrap)
       - vlc
-      - units   # converts between different systems of units
       - unzip
       - wget
       - xdg-utils
@@ -234,6 +233,7 @@
       - snapd
       - timeshift
       - ttf-meslo-nerd-font-powerlevel10k
+      - units   # converts between different systems of units
       # -----------------------------------
       # flatpak- und snap-plugin für pamac:
       - libpamac-flatpak-plugin
@@ -292,6 +292,14 @@
 
 - name: Install basic packages via pamac from AUR (ttf-meslo-nerd-font-powerlevel10k) (Archlinux, NOT Manjaro)
   ansible.builtin.shell: "pamac build --no-confirm ttf-meslo-nerd-font-powerlevel10k"
+  args:
+    creates: "/home/{{ env_user }}/.ansible_pamacArchBasicPackages"
+  when:
+    - ansible_distribution in ["Archlinux"]
+    - env_lsb_id != "ManjaroLinux"
+
+- name: Install basic packages via pamac from AUR (utils) (Archlinux, NOT Manjaro)
+  ansible.builtin.shell: "pamac build --no-confirm utils"
   args:
     creates: "/home/{{ env_user }}/.ansible_pamacArchBasicPackages"
   when:
@@ -391,6 +399,7 @@
       - ssh   # bereits installiert (bootstrap)
       - timeshift
       - ufw   # bereits installiert (bootstrap)
+      - units   # converts between different systems of units
       # Multimedia; entspechend libs sollten bereits installiert sein (wenn mei Installer ausgewählt wurde)
       # - ffmpeg
       # - x264
