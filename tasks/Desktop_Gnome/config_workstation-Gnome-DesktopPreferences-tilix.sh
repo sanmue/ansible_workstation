@@ -45,7 +45,9 @@ dconf write "${dconfdir}/${id}"/font "'MesloLGM Nerd Font 12'"
 dconf write "${dconfdir}/${id}"/use-system-font "false"
 dconf write "${dconfdir}/${id}"/cursor-shape "'ibeam'"
 dconf write "${dconfdir}/${id}"/terminal-bell "'sound'"
+dconf write "${dconfdir}/${id}"/theme-variant "'dark'"
 dconf write "${dconfdir}/${id}"/use-theme-colors "true"
+dconf write "${dconfdir}/${id}"/use-tabs "true"
 #dconf write "${dconfdir}/:${id}"/visible-name "Custom_Standard" # s.o.: Parameter Funktion 'create_new_profile'
 
 # Set as default profile:
