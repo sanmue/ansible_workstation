@@ -14,6 +14,7 @@
       - gedit-plugins
       - gjs   # Javascript Bindings for GNOME   # + Ubnuntu: fehlendes Paket, damit ab 22.04 der Monitor in Engergiesparmodus kann
                                                 # (Bildschirmausgabe wird ausgeschaltet nach längerer Inktivität)
+      - gnome-calculator
       - gnome-disk-utility
       - gnome-keyring
       - gnome-terminal
@@ -49,6 +50,23 @@
     - ansible_distribution == "Archlinux"
     - env_desktop == "gnome"
 
+- name: Gnome - Install ulauncher via pamac from AUR (Archlinux)
+  ansible.builtin.shell: yay -S --needed --no-confirm ulauncher
+  args:
+    creates: "/home/{{ env_user }}/.ansible_gnome_yayAUR-ulauncher"
+  when:
+    - ansible_distribution in ["Archlinux"]
+    - env_desktop == "gnome"
+
+# - name: Gnome - ulauncher - create flag-file (Archlinux)
+#  ansible.builtin.file:
+#    path: "/home/{{ env_user }}/.ansible_gnome_yayAUR-ulauncher"
+#    state: touch
+#    mode: '0644'
+#  when:
+#    - ansible_distribution in ["Archlinux"]
+#    - env_desktop == "gnome"
+
 - name: Gnome - Install autokey-gtk via pamac from AUR (Archlinux)
   ansible.builtin.shell: pamac build --no-confirm autokey-common autokey-gtk
   args:
@@ -57,7 +75,7 @@
     - ansible_distribution in ["Archlinux"]
     - env_desktop == "gnome"
 
-- name: Gnome - Install autokey via pamac from AUR - create flag-file (Archlinux)
+- name: Gnome - autokey - create flag-file (Archlinux)
   ansible.builtin.file:
     path: "/home/{{ env_user }}/.ansible_gnome_pamacAUR-autokey"
     state: touch

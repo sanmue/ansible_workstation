@@ -48,6 +48,7 @@
       # - terminator   # Terminal emulator that supports tabs and grids
       - vim   # bereits installiert (bootstrap)
       - vlc
+      - units   # converts between different systems of units
       - unzip
       - wget
       - xdg-utils
@@ -170,11 +171,13 @@
       - evolution-spamassassin
       # - evolution-on    # Tray plugin for the Evolution email client
       # - exfat-utils     # exfat-utils and exfatprogs are in conflict
+      - fd   # Simple, fast and user-friendly alternative to find
       - firefox
       - firefox-i18n-en-us
       # - flameshot       # -> ksnip
       # - firewalld       # bereits installiert (bootstrap)
       - foliate
+      - fzf   # Command-line fuzzy finder
       - github-cli
       - gnupg
       - gpgme
@@ -366,9 +369,11 @@
       - evolution-plugin-spamassassin
       - evolution-plugins
       - exfat-fuse
+      - fd-find   # Simple, fast and user-friendly alternative to find
       # - firefox # -> in Standard-Inst bereits vorhanden (ab 22.04: als snap package)
       # - firefox-locale-de
       # - firefox-locale-en
+      - fzf   # Command-line fuzzy finder
       - gh   # GitHub CLI, GitHub\u2019s official command line tool
       - gitk
       - gpg
