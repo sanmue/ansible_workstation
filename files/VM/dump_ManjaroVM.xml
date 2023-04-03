@@ -1,6 +1,6 @@
 <domain type='kvm'>
-  <name>manjaroVM</name>
-  <uuid>aea19926-a379-4eda-b5e2-d5973177861f</uuid>
+  <name>ManjaroVM</name>
+  <uuid>d80f1795-98bf-42e5-9c0b-6a2c542aeab2</uuid>
   <metadata>
     <libosinfo:libosinfo xmlns:libosinfo="http://libosinfo.org/xmlns/libvirt/domain/1.0">
       <libosinfo:os id="http://manjaro.org/manjaro/rolling"/>
@@ -9,11 +9,8 @@
   <memory unit='KiB'>8388608</memory>
   <currentMemory unit='KiB'>4194304</currentMemory>
   <vcpu placement='static'>2</vcpu>
-  <resource>
-    <partition>/machine</partition>
-  </resource>
-  <os>
-    <type arch='x86_64' machine='pc-q35-6.2'>hvm</type>
+  <os firmware='efi'>
+    <type arch='x86_64' machine='pc-q35-7.2'>hvm</type>
     <boot dev='hd'/>
   </os>
   <features>
@@ -38,8 +35,7 @@
     <emulator>/usr/bin/qemu-system-x86_64</emulator>
     <disk type='file' device='disk'>
       <driver name='qemu' type='qcow2' discard='unmap'/>
-      <source file='/var/lib/libvirt/images/manjaroVM.qcow2'/>
-      <backingStore/>
+      <source file='/var/lib/libvirt/images/ManjaroVM.qcow2'/>
       <target dev='vda' bus='virtio'/>
       <address type='pci' domain='0x0000' bus='0x04' slot='0x00' function='0x0'/>
     </disk>
@@ -130,7 +126,7 @@
       <address type='pci' domain='0x0000' bus='0x03' slot='0x00' function='0x0'/>
     </controller>
     <interface type='network'>
-      <mac address='52:54:00:a3:1a:b7'/>
+      <mac address='52:54:00:98:c7:c4'/>
       <source network='default'/>
       <model type='virtio'/>
       <address type='pci' domain='0x0000' bus='0x01' slot='0x00' function='0x0'/>
@@ -156,8 +152,11 @@
     </input>
     <input type='mouse' bus='ps2'/>
     <input type='keyboard' bus='ps2'/>
-    <graphics type='spice' autoport='yes' listen='127.0.0.1'>
-      <listen type='address' address='127.0.0.1'/>
+    <tpm model='tpm-crb'>
+      <backend type='emulator' version='2.0'/>
+    </tpm>
+    <graphics type='spice' autoport='yes'>
+      <listen type='address'/>
       <image compression='off'/>
     </graphics>
     <sound model='ich9'>
@@ -174,6 +173,7 @@
     <redirdev bus='usb' type='spicevmc'>
       <address type='usb' bus='0' port='3'/>
     </redirdev>
+    <watchdog model='itco' action='reset'/>
     <memballoon model='virtio'>
       <address type='pci' domain='0x0000' bus='0x05' slot='0x00' function='0x0'/>
     </memballoon>

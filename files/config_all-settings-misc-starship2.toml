@@ -144,19 +144,20 @@ deleted_style = 'fg:#E04D27'
 disabled = false
 
 [git_status]
-format = '[$all_status$ahead_behind]($style)'
+# place symbols before '$count'
+format = '([$all_status$ahead_behind]($style))'
 style = 'fg:#E04D27'
-conflicted = '[${count} ](fg:red)'
-ahead = '[${count}⇡ ](fg:yellow)'
-behind = '[${count}⇣ ](fg:yellow)'
+conflicted = '[$count ](fg:red)'
+ahead = '[⇡$count ](fg:yellow)'
+behind = '[⇣$count ](fg:yellow)'
 diverged = '[⇕${ahead_count}⇡${behind_count}⇣ ](fg:yellow)' # ⇕ ↕ ⇳ 󰹹 󰹺 󰧈 
 up_to_date = '[✓ ](fg:green)'
-untracked = '[${count}ﳇ ](fg:red)' # ' ' # '? '
-stashed = '[${count} ](fg:#A52A2A)' # '📦 '# ' ' # ' ' # ' ' # ' ' 
-modified = '[${count}󰷉 ](fg:#C8AC00)' # '📝' # '! '
-staged = '[${count} ](fg:green)' # '+ '
-renamed = '[${count}﫦 ](fg:yellow)' # ' '
-deleted = '${count}﯊ ' # '🗑 ' '- '
+untracked = '[ﳇ$count ](fg:red)' # ' ' # '? '
+stashed = '[$count ](fg:#A52A2A)' # '📦 '# ' ' # ' ' # ' ' # ' ' 
+modified = '[󰷉$count ](fg:#C8AC00)' # '📝' # '! '
+staged = '[$count ](fg:green)' # '+ '
+renamed = '[﫦$count ](fg:yellow)' # ' '
+deleted = '[﯊${count} ](fg:orange)' # '🗑 ' '- '
 disabled = false
 
 [jobs]
