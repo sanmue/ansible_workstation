@@ -398,12 +398,17 @@
       - openssh-client
       - powershell   # repo wurde hinzugefügt
       - printer-driver-cups-pdf
+      - python3-pip   # autokey inst via pip
       - python3-psutil
+      - python3-pyinotify   # auch für autokey
+      - python3-dbus  # autokey dependancy # sollte bereits installiert sein
+      - python3-xlib  # autokey dependancy # sollte bereits installiert sein
       # - searchmonkey
       - ssh   # bereits installiert (bootstrap)
       - timeshift
       - ufw   # bereits installiert (bootstrap)
       - units   # converts between different systems of units
+      - wmctrl   # autokey dependancy # sollte bereits installiert sein
       # Multimedia; entspechend libs sollten bereits installiert sein (wenn mei Installer ausgewählt wurde)
       # - ffmpeg
       # - x264
