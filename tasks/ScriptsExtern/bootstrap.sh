@@ -284,20 +284,22 @@ read -r -p "Install from AUR: Citrix ICA-Client, virtio-win, MS TTF Fonts, ...? 
 if [ "${installAUR}" == "j" ]; then
     case ${os} in
         Manjaro* | EndeavourOS*)
-            echo -e "\nInstall Citrix Workspace App (icaclient) from AUR (Arch)"
-            # yay icaclient && touch "/home/${userid}/.icaclientInstalled"
+            echo -e "\nInstall 'autokey-gtk' from AUR (Arch)"
+            yay -S autokey-gtk # && touch "/home/${userid}/.ansible_bootstrap_autokeyGtkInstalled"
+
+            echo -e "\nInstall 'autokey-qt' from AUR (Arch)"
+            yay -S autokey-qt # && touch "/home/${userid}/.ansible_bootstrap_autokeyQtInstalled"
+
+            echo -e "\nInstall Citrix Workspace App (icaclient) from AUR (Arch,Manjaro)"
             pamac build icaclient && touch "/home/${userid}/.ansible_bootstrap_pamac-icaclientInstalled"
 
-            echo -e "\nVM - Install virtio-win image from AUR (Arch)"
-            # yay virtio-win && touch "/home/${userid}/.VM_virtioDriversInstalled"
+            echo -e "\nVM - Install virtio-win image from AUR (Arch,Manjaro))"
             pamac build virtio-win && touch "/home/${userid}/.ansible_bootstrap_pamac-vmVirtioWinInstalled"
 
-            echo -e "\nInstall Microsoft TTF Fonts from AUR (Arch)"
-            # yay ttf-ms-fonts
+            echo -e "\nInstall Microsoft TTF Fonts from AUR (Arch,Manjaro))"
             pamac build ttf-ms-fonts && touch "/home/${userid}/.ansible_bootstrap_pamac-ttfmsfontsInstalled"
 
-            echo -e "\nInstall woeusb-ng from AUR (Arch)"
-            # yay woeusb-ng   # Simple tool that enable you to create your own usb stick with Windows installer.
+            echo -e "\nInstall woeusb-ng from AUR (Arch,Manjaro))"
             pamac build woeusb-ng && touch "/home/${userid}/.ansible_bootstrap_pamac-woeusbngInstalled"
         ;;
 
