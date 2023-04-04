@@ -39,9 +39,9 @@ fi
 #echo "Starte backup von '${source}' nach '${dest}' - MIRROR"
 #logname="backupMirror_$(date +"%Y-%m-%d_%H%M%S").log"
 ##rsync --dry-run -aPhEv --delete --force --exclude={'01_VM','lost+found','.Trash*'} "${source}/" "${dest}/" | tee "/tmp/${logname}"
-#rsync -aPhEv --delete --force --exclude={'01_VM','lost+found','.Trash*'} "${source}/" "${dest}/" | tee "/tmp/${logname}"
-## da Owner, Group, ... erhalten bleiben, kann man auch mit root machen, aber sollte nicht notwendig sein:
-##sudo rsync -aPhEv --delete --force --exclude={'01_VM','lost+found','.Trash*'} "${source}/" "${dest}/" | tee "/tmp/${logname}"
+##rsync -aPhEv --delete --force --exclude={'01_VM','lost+found','.Trash*'} "${source}/" "${dest}/" | tee "/tmp/${logname}"
+#
+#sudo rsync -aPhEv --delete --force --exclude={'01_VM','lost+found','.Trash*'} "${source}/" "${dest}/" | tee "/tmp/${logname}"
 #echo '========================================'
 
 # VM (sudo)
