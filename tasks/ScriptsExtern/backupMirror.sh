@@ -7,8 +7,8 @@
 #paramRsync=''
 
 if [ $# -gt 1 ]; then   # wenn (mehr als 0) Übergabeparameter vorhanden
-	source=$2
-	source=${dest%/}
+	source=$1
+	source=${source%/}
 	dest=$2
 	dest=${dest%/}
 else
@@ -34,9 +34,18 @@ fi
 
 # ### ###############################
 # ### Sicherung (Mirror)
+# Standard
 echo -e "\n========================================"
 echo "Starte backup von '${source}' nach '${dest}' - MIRROR"
 logname="backupMirror_$(date +"%Y-%m-%d_%H%M%S").log"
-rsync --dry-run -aPhEv --delete --force --exclude={'lost+found','.Trash*'} "${source}/" "${dest}/" | tee "/tmp/${logname}"
-#rsync -aPhEv --delete --force --exclude={'lost+found','.Trash*'} "${source}/" "${dest}/" | tee "/tmp/${logname}"
+#rsync --dry-run -aPhEv --delete --force --exclude={'01_VM','lost+found','.Trash*'} "${source}/" "${dest}/" | tee "/tmp/${logname}"
+rsync -aPhEv --delete --force --exclude={'01_VM','lost+found','.Trash*'} "${source}/" "${dest}/" | tee "/tmp/${logname}"
+echo '========================================'
+
+# VM (sudo)
+echo -e "\n========================================"
+echo "Starte backup von '${source}/01_VM/' nach '${dest}/01_VM/' - MIRROR"
+logname="backupMirrorVM_$(date +"%Y-%m-%d_%H%M%S").log"
+#sudo rsync --dry-run -aPhEv --delete --force "${source}/01_VM/" "${dest}/01_VM/" | tee "/tmp/${logname}"
+sudo rsync -aPhEv --delete --force "${source}/01_VM/" "${dest}/01_VM/" | tee "/tmp/${logname}"
 echo '========================================'
