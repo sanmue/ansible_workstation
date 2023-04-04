@@ -271,7 +271,7 @@
 #  - ansible_distribution in ["Archlinux"]
 #  - env_lsb_id != "ManjaroLinux"
 
-- name: Install basic packages via pamac from AUR (brave-bin) (Archlinux, NOT Manjaro)
+- name: Install basic packages - AUR - pamac - brave-bin (Archlinux, NOT Manjaro)
   # ansible.builtin.shell: "pamac build --no-confirm brave-bin linux-steam-integration snapd && touch /home/{{ env_user }}/.ansible_pamacArchBasicPackages"
   # müssen im Folgenden einzeln aufgeführt werden, da sonst Fehler-Rückmeldung
   # alternativ evtl. testen: über shell-skript
@@ -282,7 +282,7 @@
     - ansible_distribution in ["Archlinux"]
     - env_lsb_id != "ManjaroLinux"
 
-- name: Install basic packages via pamac from AUR (linux-steam-integration) (Archlinux, NOT Manjaro)
+- name: Install basic packages - AUR - pamac - linux-steam-integration (Archlinux, NOT Manjaro)
   ansible.builtin.shell: "pamac build --no-confirm linux-steam-integration"
   args:
     creates: "/home/{{ env_user }}/.ansible_pamacArchBasicPackages"
@@ -290,7 +290,7 @@
     - ansible_distribution in ["Archlinux"]
     - env_lsb_id != "ManjaroLinux"
 
-- name: Install basic packages via pamac from AUR (ttf-meslo-nerd-font-powerlevel10k) (Archlinux, NOT Manjaro)
+- name: Install basic packages - AUR - pamac - ttf-meslo-nerd-font-powerlevel10k (Archlinux, NOT Manjaro)
   ansible.builtin.shell: "pamac build --no-confirm ttf-meslo-nerd-font-powerlevel10k"
   args:
     creates: "/home/{{ env_user }}/.ansible_pamacArchBasicPackages"
@@ -310,7 +310,7 @@
 #    - ansible_distribution in ["Archlinux"]
 #    - env_lsb_id != "ManjaroLinux"
 
-- name: Install basic packages via pamac from AUR - create flag file (Archlinux, NOT Manjaro)
+- name: Install basic packages - AUR - pamac - create flag file (Archlinux, NOT Manjaro)
   ansible.builtin.file:
     path: "/home/{{ env_user }}/.ansible_pamacArchBasicPackages"
     state: touch
@@ -327,7 +327,7 @@
 # ---
 # Anmerkung: alterntiver install via git clone + makepkg (weiter unten) funktioniert ohne Unterbrechtung (Abrfrage sudo pw)
 # ---
-# - name: Install basic packages via pamac from AUR (snapd) (Archlinux, NOT Manjaro)
+# - name: Install basic packages - AUR - pamac - snapd (Archlinux, NOT Manjaro)
 #  ansible.builtin.shell: "pamac build --no-confirm snapd"
 #  # become: true
 #  # become_user: "{{ env_user }}"   # Ablauf wird unterbroche und nach Berechtigung (root) gefragt; hat jeoch so funktioniert
@@ -337,7 +337,7 @@
 #    - ansible_distribution in ["Archlinux"]
 #    - env_lsb_id != "ManjaroLinux"
 
-# - name: Install basic packages via pamac from AUR (snapd) - create flag file (Archlinux, NOT Manjaro)
+# - name: IInstall basic packages - AUR - pamac - snapd - create flag file (Archlinux, NOT Manjaro)
 #  ansible.builtin.file:
 #    path: "/home/{{ env_user }}/.ansible_pamacArchBasicPackagesSnapd"
 #    state: touch
