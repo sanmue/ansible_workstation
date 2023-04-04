@@ -121,6 +121,7 @@
       - language-pack-gnome-en
       - nemo
       - transmission   # torrent client
+      - ulauncher   # ppa wurde hinzugefügt
   when:
     - ansible_distribution == "Ubuntu"
     - env_desktop == "ubuntu:gnome"
