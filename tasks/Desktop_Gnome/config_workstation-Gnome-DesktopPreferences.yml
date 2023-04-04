@@ -817,6 +817,28 @@
     - env_desktop in ["gnome", "ubuntu:gnome"]
     - ansible_distribution == "Archlinux"
 
+# - ulauncher (custom13) - ctrl+space
+# https://github.com/Ulauncher/Ulauncher/discussions/991
+- name: Set settings-daemon - plugin - media-keys - ulauncher,name (Gnome)
+  community.general.dconf:
+    key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom13/name"
+    value: "'ulauncher'"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+
+- name: Set settings-daemon - plugin - media-keys - ulauncher,command(Gnome)
+  community.general.dconf:
+    key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom13/command"
+    value: "'ulauncher-toggle'"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+
+- name: Set settings-daemon - plugin - media-keys - ulauncher,binding (Gnome)
+  community.general.dconf:
+    key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom13/binding"
+    value: "'<Control>space'"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
 
 # ### ---------------------------------------------------
 # ### - set/create list for configured custom-keybindings
