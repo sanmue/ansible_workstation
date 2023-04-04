@@ -298,14 +298,17 @@
     - ansible_distribution in ["Archlinux"]
     - env_lsb_id != "ManjaroLinux"
 
-# gnu units    # converts between different units
-- name: Install basic packages via pamac from AUR (units) (Archlinux, NOT Manjaro)
-  ansible.builtin.shell: "pamac build --no-confirm units"
-  args:
-    creates: "/home/{{ env_user }}/.ansible_pamacArchBasicPackages"
-  when:
-    - ansible_distribution in ["Archlinux"]
-    - env_lsb_id != "ManjaroLinux"
+# gnu units    # converts between different units # für extension von ulauncher
+# - es muss ein pgp-key vorher / oder im Rahmen inst mit yay importiert werden, yay unterbricht jedoch / nicht automatisierbar
+# - daher auskommentiert: manuell nachinstallieren
+#
+# - name: Install basic packages via pamac from AUR (units) (Archlinux, NOT Manjaro)
+#  ansible.builtin.shell: "pamac build --no-confirm units"
+#  args:
+#    creates: "/home/{{ env_user }}/.ansible_pamacArchBasicPackages"
+#  when:
+#    - ansible_distribution in ["Archlinux"]
+#    - env_lsb_id != "ManjaroLinux"
 
 - name: Install basic packages via pamac from AUR - create flag file (Archlinux, NOT Manjaro)
   ansible.builtin.file:
