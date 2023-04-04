@@ -81,23 +81,23 @@
   when:
     - ansible_distribution == "Ubuntu"
 
-- name: add repo for ulauncher (apt, Ubuntu)
-  tags: workstation,ubuntu,addrepos,pre
-  ansible.builtin.apt_repository:
-    repo: ppa:agornostal/ulauncher
-    state: present
-    update_cache: yes
-  when:
-    - ansible_distribution == "Ubuntu"
-    - ansible_pkg_mgr == "apt"
-
-#- name: add repo for ulauncher (Ubuntu)
+#- name: add repo for ulauncher (apt, Ubuntu)
 #  tags: workstation,ubuntu,addrepos,pre
-#  ansible.builtin.shell: sudo add-apt-repository ppa:agornostal/ulauncher && touch "/home/{{ env_user }}/.ansible_ppaUlauncherAdded"
-#  args:
-#    creates: "/home/{{ env_user }}/.ansible_ppaUlauncherAdded"
+#  ansible.builtin.apt_repository:
+#    repo: ppa:agornostal/ulauncher
+#    state: present
+#    update_cache: yes
 #  when:
 #    - ansible_distribution == "Ubuntu"
+#    - ansible_pkg_mgr == "apt"
+
+- name: add repo for ulauncher (Ubuntu)
+  tags: workstation,ubuntu,addrepos,pre
+  ansible.builtin.shell: sudo add-apt-repository ppa:agornostal/ulauncher && touch "/home/{{ env_user }}/.ansible_ppaUlauncherAdded"
+  args:
+    creates: "/home/{{ env_user }}/.ansible_ppaUlauncherAdded"
+  when:
+    - ansible_distribution == "Ubuntu"
 
 - name: Update package lists
   ansible.builtin.apt:
