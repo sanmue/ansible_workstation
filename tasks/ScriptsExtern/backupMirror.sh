@@ -35,17 +35,27 @@ fi
 # ### ###############################
 # ### Sicherung (Mirror)
 # Standard
-echo -e "\n========================================"
-echo "Starte backup von '${source}' nach '${dest}' - MIRROR"
-logname="backupMirror_$(date +"%Y-%m-%d_%H%M%S").log"
-#rsync --dry-run -aPhEv --delete --force --exclude={'01_VM','lost+found','.Trash*'} "${source}/" "${dest}/" | tee "/tmp/${logname}"
-rsync -aPhEv --delete --force --exclude={'01_VM','lost+found','.Trash*'} "${source}/" "${dest}/" | tee "/tmp/${logname}"
-echo '========================================'
+#echo -e "\n========================================"
+#echo "Starte backup von '${source}' nach '${dest}' - MIRROR"
+#logname="backupMirror_$(date +"%Y-%m-%d_%H%M%S").log"
+##rsync --dry-run -aPhEv --delete --force --exclude={'01_VM','lost+found','.Trash*'} "${source}/" "${dest}/" | tee "/tmp/${logname}"
+#rsync -aPhEv --delete --force --exclude={'01_VM','lost+found','.Trash*'} "${source}/" "${dest}/" | tee "/tmp/${logname}"
+## da Owner, Group, ... erhalten bleiben, kann man auch mit root machen, aber sollte nicht notwendig sein:
+##sudo rsync -aPhEv --delete --force --exclude={'01_VM','lost+found','.Trash*'} "${source}/" "${dest}/" | tee "/tmp/${logname}"
+#echo '========================================'
 
 # VM (sudo)
+#echo -e "\n========================================"
+#echo "Starte backup von '${source}/01_VM/' nach '${dest}/01_VM/' - MIRROR"
+#logname="backupMirrorVM_$(date +"%Y-%m-%d_%H%M%S").log"
+##sudo rsync --dry-run -aPhEv --delete --force "${source}/01_VM/" "${dest}/01_VM/" | tee "/tmp/${logname}"
+#sudo rsync -aPhEv --delete --force "${source}/01_VM/" "${dest}/01_VM/" | tee "/tmp/${logname}"
+#echo '========================================'
+
+# Gesamt (sudo)
 echo -e "\n========================================"
-echo "Starte backup von '${source}/01_VM/' nach '${dest}/01_VM/' - MIRROR"
-logname="backupMirrorVM_$(date +"%Y-%m-%d_%H%M%S").log"
-#sudo rsync --dry-run -aPhEv --delete --force "${source}/01_VM/" "${dest}/01_VM/" | tee "/tmp/${logname}"
-sudo rsync -aPhEv --delete --force "${source}/01_VM/" "${dest}/01_VM/" | tee "/tmp/${logname}"
+echo "Starte backup von '${source}' nach '${dest}' - MIRROR"
+logname="backupMirrorAll_$(date +"%Y-%m-%d_%H%M%S").log"
+#sudo rsync --dry-run -aPhEv --delete --force --exclude={'lost+found','.Trash*'} "${source}/" "${dest}/" | tee "/tmp/${logname}"
+sudo rsync -aPhEv --delete --force --exclude={'lost+found','.Trash*'} "${source}/" "${dest}/" | tee "/tmp/${logname}"
 echo '========================================'
