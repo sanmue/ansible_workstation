@@ -32,7 +32,10 @@ fi
 
 
 # ### ###############################
-# ### Sicherung home und home/.config
+# ### Sicherung $home und $home/.config
+
+read -rp "Start mit beliebiger Eingabe"
+
 # 1: Sicherung $source
 echo -e "\n========================================"
 echo "Starte backup von '${source}' nach '${dest}'"
