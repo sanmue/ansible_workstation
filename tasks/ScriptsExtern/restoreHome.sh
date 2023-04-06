@@ -29,6 +29,9 @@ fi
 
 # ### ##########################
 # ### Restore home aus Sicherung
+
+read -rp "Start mit beliebiger Eingabe"
+
 echo -e "\n ======================================== "
 echo "Starte restore von '${source}' nach '${dest}'"
 logname="restoreHome_$(date +"%Y-%m-%d_%H%M%S").log"
