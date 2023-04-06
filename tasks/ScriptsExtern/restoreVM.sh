@@ -18,7 +18,7 @@ fi
 
 # Prüfung Quell:
 if [ -e "${source}" ]; then             # Prüfung, ob Sicherungsziel existiert
-	echo "Quellpfad ist: ${dest}"
+	echo "Quellpfad ist: ${source}"
 else
 	echo "Parameter 1: Quellpfad '${source}' existiert nicht, Ende."
 	exit 1
@@ -40,6 +40,6 @@ read -rp "Start mit beliebiger Eingabe"
 # ### VM (sudo)
 echo "Starte restore von '${source}/' nach '${dest}/'"
 logname="restoreVM_$(date +"%Y-%m-%d_%H%M%S").log"
-sudo rsync "${paramRsync}" -aPhEv "${source}/" "${dest}/" | tee "/tmp/${logname}"   # ### dry-run
-#sudo rsync -aPhEv "${source}/" "${dest}/" | tee "/tmp/${logname}"
+#sudo rsync "${paramRsync}" -aPhEv "${source}/" "${dest}/" | tee "/tmp/${logname}"   # ### dry-run
+sudo rsync -aPhEv "${source}/" "${dest}/" | tee "/tmp/${logname}"
 echo " ======================================== "
