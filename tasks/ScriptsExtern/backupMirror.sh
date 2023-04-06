@@ -43,12 +43,12 @@ echo "Starte backup von '${source}' nach '${dest}' - MIRROR ohne '01_VM'"
 logname="backupMirror_noVM_$(date +"%Y-%m-%d_%H%M%S").log"
 # exclude '01_VM' im ersten Lauf wg. sudo   
 # ### dry-run:
-rsync "${paramRsync}" -aPhEv --delete --force --exclude={'01_VM','lost+found','.Trash*'} "${source}/" "${dest}/" | tee "/tmp/${logname}"   
-#rsync -aPhEv --delete --force --exclude={'01_VM','lost+found','.Trash*'} "${source}/" "${dest}/" | tee "/tmp/${logname}"
+#rsync "${paramRsync}" -aPhEv --delete --force --exclude={'01_VM','lost+found','.Trash*'} "${source}/" "${dest}/" | tee "/tmp/${logname}"   
+rsync -aPhEv --delete --force --exclude={'01_VM','lost+found','.Trash*'} "${source}/" "${dest}/" | tee "/tmp/${logname}"
 
 # ### VM (sudo)
 echo "Starte backup von '${source}/01_VM/' nach '${dest}/01_VM/'"
 logname="backupMirrorVM_$(date +"%Y-%m-%d_%H%M%S").log"
-sudo rsync "${paramRsync}" -aPhEv --delete --force "${source}/01_VM/" "${dest}/01_VM/" | tee "/tmp/${logname}"
-#sudo rsync -aPhEv --delete --force "${source}/01_VM/" "${dest}/01_VM/" | tee "/tmp/${logname}"
+#sudo rsync "${paramRsync}" -aPhEv --delete --force "${source}/01_VM/" "${dest}/01_VM/" | tee "/tmp/${logname}"
+sudo rsync -aPhEv --delete --force "${source}/01_VM/" "${dest}/01_VM/" | tee "/tmp/${logname}"
 echo " ======================================== "
