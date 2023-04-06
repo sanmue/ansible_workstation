@@ -9,6 +9,7 @@
     state: present
     name:
       - alacarte   # Menu editor for gnome
+      - baobab   # A graphical directory tree analyzer
       - dconf-editor
       - gedit
       - gedit-plugins
