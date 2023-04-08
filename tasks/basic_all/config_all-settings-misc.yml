@@ -2,6 +2,17 @@
 # ### grub2 bootloader
 # ### ################
 
+- name: All settings misc - Enable GRUB Menu at boot (Archlinux)
+  ansible.builtin.lineinfile:
+    path: /etc/default/grub
+    # regexp: '^#GRUB_ENABLE_CRYPTODISK.*'
+    insertafter: '^#GRUB_ENABLE_CRYPTODISK.*'
+    line: 'GRUB_ENABLE_CRYPTODISK=y'
+    state: present
+    backup: true
+  when:
+    - ansible_distribution == "Archlinux"
+
 # https://www.fosslinux.com/46741/things-to-do-after-installing-manjaro.htm
 # - aus Punkt 13: Install the Latest Kernel (or an Older LTS Kernel)
 - name: All settings misc - Enable GRUB Menu at boot (Archlinux)
