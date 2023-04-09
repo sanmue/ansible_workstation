@@ -62,7 +62,7 @@ echo "Verwendetes OS: ${os}"
 
 # ### Alle Systeme:
 # Download 'Starshiop Shell Prompt' install-script
-curl -sS "https://starship.rs/install.sh" > "${HOME}/starship_install.sh" && chmod +x "${HOME}/starship_install.sh"
+curl -sS "https://starship.rs/install.sh" > "/home/${userid}/starship_install.sh" && chmod +x "/home/${userid}/starship_install.sh"
 
 # ### je System individuell:
 case ${os} in
@@ -137,6 +137,13 @@ case ${os} in
 
         echo -e "\n Installation (wenn VM) spice agent for Linux guests (z.B. für clipboard sharing host+guest)"
         [[ $(systemd-detect-virt) != *"none"* ]] && sudo apt-get install -y --show-progress spice-vdagent
+
+        echo -e "\n Füge Repo für 'ulauncher' hinzu"
+        if [ -e "/home/${userid}/.ansible_ppaUlauncherAdded" ]; then
+            echo "Repo wurde bereits hinzugefügt, Schritt wird übersprungen"
+        else
+            sudo add-apt-repository ppa:agornostal/ulauncher && touch "/home/${userid}/.ansible_ppaUlauncherAdded"
+        fi
 
         echo -e "\nAktiviere Firewall 'ufw' und erlaube ssh ..."
         sudo ufw enable && sudo ufw allow ssh comment 'SSH' && sudo ufw reload
