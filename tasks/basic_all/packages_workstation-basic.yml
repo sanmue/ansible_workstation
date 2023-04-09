@@ -9,12 +9,14 @@
       - ansible   # bereits installiert (bootstrap)
       - ansible-lint   # für z.B. ansible extension in VS Code
       - bash
+      - bleachbit
       - clamav
       - clamtk
       - cups
       - curl
       - deja-dup   # A trivial-to-use personal backup tool to protect against accidental data loss
       - dmidecode
+      - efivar
       - eslint   # An AST-based pattern checker for JavaScript (für VS Code / Code - OSS Extension)
       - evolution
       - exa   # ls replacement
@@ -201,6 +203,7 @@
       # - powerline-fonts   # patched fonts for powerline
       # - powerline-vim     # vim plugin for powerline
       - psutils             # A set of postscript utilities
+      - python-pip
       - python-psutil
       - pyenv
       - remmina
@@ -395,6 +398,7 @@
       - powershell   # repo wurde hinzugefügt
       - printer-driver-cups-pdf
       # - python3-pip   # aktuell nicht benötigt
+      - python3-pip
       - python3-psutil
       - python3-pyinotify
       # - searchmonkey
