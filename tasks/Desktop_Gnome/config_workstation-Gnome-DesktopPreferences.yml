@@ -207,6 +207,7 @@
   community.general.dconf:
     key: "/org/gnome/desktop/interface/clock-format"
     value: "'24h'"
+    state: present
   when:
     # - ansible_os_family == "Suse"
     # - env_desktop == "gnome"
@@ -216,6 +217,7 @@
   community.general.dconf:
     key: "/org/gnome/desktop/interface/clock-show-date"
     value: "true"
+    state: present
   when:
     # - ansible_os_family == "Suse"
     - env_desktop in ["gnome", "ubuntu:gnome"]
@@ -224,6 +226,7 @@
   community.general.dconf:
     key: "/org/gnome/desktop/interface/clock-show-weekday"
     value: "true"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -232,6 +235,7 @@
   community.general.dconf:
     key: "/org/gnome/desktop/interface/color-scheme"
     value: "'prefer-dark'"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -285,6 +289,7 @@
     key: "/org/gnome/desktop/interface/gtk-theme"
     # value: "'Adwaita-dark'"
     value: "'Yaru-prussiangreen-dark'"
+    state: present
   when:
     - env_desktop in ["gnome","ubuntu:gnome"]
     - ansible_distribution in ["Ubuntu"]
@@ -333,6 +338,7 @@
     # value: "'Materia-Manjaro-Dark-2'"
     key: "/org/gnome/desktop/interface/icon-theme"
     value: "'Yaru-prussiangreen'"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
     - ansible_distribution in ["Ubuntu"]
@@ -343,6 +349,7 @@
   community.general.dconf:
     key: "/org/gnome/desktop/interface/show-battery-percentage"
     value: "true"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -350,6 +357,7 @@
   community.general.dconf:
     key: "/org/gnome/desktop/interface/locate-pointer"
     value: "true"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -357,6 +365,7 @@
   community.general.dconf:
     key: "/org/gnome/desktop/calendar/show-weekdate"
     value: "true"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -364,6 +373,7 @@
   community.general.dconf:
     key: "/org/gnome/desktop/input-sources/show-all-sources"
     value: "true"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -371,6 +381,7 @@
   community.general.dconf:
     key: "/org/gnome/desktop/screensaver/idle-activation-enabled"
     value: "true"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -378,6 +389,7 @@
   community.general.dconf:
     key: "/org/gnome/desktop/screensaver/lock-enabled"
     value: "true"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -385,6 +397,7 @@
   community.general.dconf:
     key: "/org/gnome/desktop/screensaver/lock-delay"
     value: "'0'"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -392,6 +405,7 @@
   community.general.dconf:
     key: "/org/gnome/desktop/wm/preferences/button-layout"
     value: "'appmenu:minimize,maximize,close'"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -402,6 +416,7 @@
   community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/power/power-button-action"
     value: "'nothing'"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -409,6 +424,7 @@
   community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/power/sleep-inactive-ac-type"
     value: "'nothing'"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -416,6 +432,7 @@
   community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/power/sleep-inactive-battery-type"
     value: "'nothing'"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -424,6 +441,7 @@
   community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/color/night-light-enabled"
     value: "true"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -443,6 +461,7 @@
   community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/control-center"
     value: "['<Primary><Alt>p']"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -451,6 +470,7 @@
   community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/email"
     value: "['<Primary><Alt>q']"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -459,6 +479,7 @@
   community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/www"
     value: "['<Primary><Alt>w']"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -470,6 +491,7 @@
   community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/name"
     value: "'Authenticator'"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -477,6 +499,7 @@
   community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/command"
     value: "'flatpak run com.belmoussaoui.Authenticator'"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -484,6 +507,7 @@
   community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/binding"
     value: "'<Primary><Alt>a'"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -492,6 +516,7 @@
   community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/name"
     value: "'KeepassXC'"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -499,6 +524,7 @@
   community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/command"
     value: "'flatpak run org.keepassxc.KeePassXC'"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
     - ansible_distribution == "Ubuntu"
@@ -507,6 +533,7 @@
   community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/command"
     value: "'KeePassXC'"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
     - ansible_distribution == "Archlinux"
@@ -515,6 +542,7 @@
   community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/binding"
     value: "'<Primary><Alt>k'"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -531,6 +559,7 @@
   community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/name"
     value: "'Firefox'"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -538,6 +567,7 @@
   community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/command"
     value: "'firefox'"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
     - "'firefox-esr' not in ansible_facts.packages"
@@ -546,6 +576,7 @@
   community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/command"
     value: "'firefox-esr'"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
     - "'firefox-esr' in ansible_facts.packages"
@@ -554,6 +585,7 @@
   community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/binding"
     value: "'<Primary><Alt>f'"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -562,6 +594,7 @@
   community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/name"
     value: "'Chromium'"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -569,6 +602,7 @@
   community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/command"
     value: "'flatpak run org.chromium.Chromium'"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
     - ansible_distribution == "Ubuntu"
@@ -577,6 +611,7 @@
   community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/command"
     value: "'chromium'"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
     - ansible_distribution == "Archlinux"
@@ -585,6 +620,7 @@
   community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/binding"
     value: "'<Primary><Alt>c'"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -593,6 +629,7 @@
   community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/name"
     value: "'Brave Browser'"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -600,6 +637,7 @@
   community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/command"
     value: "'brave-browser'"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
     - ansible_distribution == "Ubuntu"
@@ -608,6 +646,7 @@
   community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/command"
     value: "'brave'"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
     - ansible_distribution == "Archlinux"
@@ -616,6 +655,7 @@
   community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/binding"
     value: "'<Primary><Alt>b'"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -624,6 +664,7 @@
   community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom5/name"
     value: "'Nemo'"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -631,6 +672,7 @@
   community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom5/command"
     value: "'nemo'"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -638,6 +680,7 @@
   community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom5/binding"
     value: "'<Primary><Alt>e'"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -646,6 +689,7 @@
   community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom6/name"
     value: "'gedit'"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -653,6 +697,7 @@
   community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom6/command"
     value: "'gedit'"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -660,6 +705,7 @@
   community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom6/binding"
     value: "'<Primary><Alt>g'"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -668,6 +714,7 @@
   community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom7/name"
     value: "'Libre Office'"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -675,6 +722,7 @@
   community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom7/command"
     value: "'flatpak run org.libreoffice.LibreOffice'"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
     - ansible_distribution == "Ubuntu"
@@ -683,6 +731,7 @@
   community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom7/command"
     value: "'libreoffice'"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
     - ansible_distribution == "Archlinux"
@@ -691,6 +740,7 @@
   community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom7/binding"
     value: "'<Primary><Alt>l'"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -699,6 +749,7 @@
   community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom8/name"
     value: "'VSCode'"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
     - ansible_distribution == "Ubuntu"
@@ -707,14 +758,16 @@
   community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom8/name"
     value: "'Code OSS'"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
-    - ansible_distribution == "Ubuntu"
+    - ansible_distribution == "Archlinux"
 
 - name: Set settings-daemon - plugin - media-keys - VSCode CodeOSS,command (Gnome)
   community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom8/command"
     value: "'code'"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -722,6 +775,7 @@
   community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom8/binding"
     value: "'<Primary><Alt>m'"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -730,6 +784,7 @@
   community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom9/name"
     value: "'Joplin'"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -737,6 +792,7 @@
   community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom9/command"
     value: "'flatpak run net.cozic.joplin_desktop'"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -744,6 +800,7 @@
   community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom9/binding"
     value: "'<Primary><Alt>j'"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -752,6 +809,7 @@
   community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom10/name"
     value: "'Remmina'"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -759,6 +817,7 @@
   community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom10/command"
     value: "'remmina'"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -766,6 +825,7 @@
   community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom10/binding"
     value: "'<Primary><Alt>r'"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -774,6 +834,7 @@
   community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom11/name"
     value: "'Virtual Machine Manager'"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -781,6 +842,7 @@
   community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom11/command"
     value: "'virt-manager'"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -788,6 +850,7 @@
   community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom11/binding"
     value: "'<Primary><Alt>v'"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -796,6 +859,7 @@
   community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom12/name"
     value: "'Gnome Software'"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
     - ansible_distribution == "Ubuntu"
@@ -804,6 +868,7 @@
   community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom12/command"
     value: "'gnome-software'"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
     - ansible_distribution == "Ubuntu"
@@ -812,6 +877,7 @@
   community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom12/binding"
     value: "'<Primary><Alt>s'"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
     - ansible_distribution == "Ubuntu"
@@ -821,6 +887,7 @@
   community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom12/name"
     value: "'Pamac-Manager'"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
     - ansible_distribution == "Archlinux"
@@ -829,6 +896,7 @@
   community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom12/command"
     value: "'pamac-manager'"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
     - ansible_distribution == "Archlinux"
@@ -837,6 +905,7 @@
   community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom12/binding"
     value: "'<Primary><Alt>s'"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
     - ansible_distribution == "Archlinux"
@@ -847,6 +916,7 @@
   community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom13/name"
     value: "'ulauncher'"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -854,6 +924,7 @@
   community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom13/command"
     value: "'ulauncher-toggle'"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -861,6 +932,7 @@
   community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom13/binding"
     value: "'<Control>space'"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -871,6 +943,7 @@
   community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings"
     value: "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom5/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom6/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom7/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom8/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom9/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom10/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom11/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom12/']"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -900,6 +973,7 @@
   community.general.dconf:
     key: "/org/nemo/preferences/click-policy"
     value: "'double'"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -907,6 +981,7 @@
   community.general.dconf:
     key: "/org/nemo/preferences/show-computer-icon-toolbar"
     value: "true"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -914,6 +989,7 @@
   community.general.dconf:
     key: "/org/nemo/preferences/show-home-icon-toolbar"
     value: "true"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -921,6 +997,7 @@
   community.general.dconf:
     key: "/org/nemo/preferences/show-list-view-icon-toolbar"
     value: "true"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -928,6 +1005,7 @@
   community.general.dconf:
     key: "/org/nemo/preferences/show-location-entry"
     value: "true"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -935,6 +1013,7 @@
   community.general.dconf:
     key: "/org/nemo/preferences/show-new-folder-icon-toolbar"
     value: "true"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -942,6 +1021,7 @@
   community.general.dconf:
     key: "/org/nemo/preferences/show-open-in-terminal-toolbar"
     value: "true"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -949,6 +1029,7 @@
   community.general.dconf:
     key: "/org/nemo/preferences/show-reload-icon-toolbar"
     value: "true"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -956,6 +1037,7 @@
   community.general.dconf:
     key: "/org/nemo/preferences/show-show-thumbnails-toolbar"
     value: "true"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -963,6 +1045,7 @@
   community.general.dconf:
     key: "/org/nemo/extensions/nemo-terminal/default-visible"
     value: "false"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -973,6 +1056,7 @@
   community.general.dconf:
     key: "/org/gnome/gedit/preferences/editor/scheme"
     value: "'solarized-dark'"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -1026,6 +1110,7 @@
   community.general.dconf:
     key: "/com/gexperts/Tilix/close-with-last-session"
     value: "true"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -1033,6 +1118,7 @@
   community.general.dconf:
     key: "/com/gexperts/Tilix/control-scroll-zoom"
     value: "false"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -1040,6 +1126,7 @@
   community.general.dconf:
     key: "/com/gexperts/Tilix/terminal-title-style"
     value: "'small'"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -1047,6 +1134,7 @@
   community.general.dconf:
     key: "/com/gexperts/Tilix/use-overlay-scrollbar"
     value: "true"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -1054,6 +1142,7 @@
   community.general.dconf:
     key: "/com/gexperts/Tilix/use-tabs"
     value: "'small'"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -1085,6 +1174,7 @@
   community.general.dconf:
     key: "/org/gnome/shell/extensions/ding/show-home"
     value: "false"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -1093,6 +1183,7 @@
   community.general.dconf:
     key: "/org/gnome/shell/extensions/ding/start-corner"
     value: "'top-left'"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -1101,6 +1192,7 @@
   community.general.dconf:
     key: "/org/gnome/shell/extensions/dash-to-dock/custom-theme-shrink"
     value: "true"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -1109,6 +1201,7 @@
   community.general.dconf:
     key: "/org/gnome/shell/extensions/dash-to-dock/dash-max-icon-size"
     value: "32"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -1116,6 +1209,7 @@
   community.general.dconf:
     key: "/org/gnome/shell/extensions/dash-to-dock/disable-overview-on-startup"
     value: "true"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -1124,6 +1218,7 @@
   community.general.dconf:
     key: "/org/gnome/shell/extensions/dash-to-dock/dock-fixed"
     value: "false"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -1132,6 +1227,7 @@
   community.general.dconf:
     key: "/org/gnome/shell/extensions/dash-to-dock/dock-position"
     value: "'LEFT'"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -1140,6 +1236,7 @@
   community.general.dconf:
     key: "/org/gnome/shell/extensions/dash-to-dock/extend-height"
     value: "false"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -1147,6 +1244,7 @@
   community.general.dconf:
     key: "/org/gnome/shell/extensions/dash-to-dock/height-fraction"
     value: "'0.94999999999999996'"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -1154,6 +1252,7 @@
   community.general.dconf:
     key: "/org/gnome/shell/extensions/dash-to-dock/isolate-workspaces"
     value: "true"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -1161,6 +1260,7 @@
   community.general.dconf:
     key: "/org/gnome/shell/extensions/dash-to-dock/multi-monitor"
     value: "true"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -1168,6 +1268,7 @@
   community.general.dconf:
     key: "/org/gnome/shell/extensions/dash-to-dock/running-indicator-style"
     value: "'DOTS'"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -1175,6 +1276,7 @@
   community.general.dconf:
     key: "/org/gnome/shell/extensions/dash-to-dock/scroll-action"
     value: "'switch-workspace'"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -1182,6 +1284,7 @@
   community.general.dconf:
     key: "/org/gnome/shell/extensions/dash-to-dock/show-mounts"
     value: "false"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -1189,6 +1292,7 @@
   community.general.dconf:
     key: "/org/gnome/shell/extensions/dash-to-dock/show-mounts"
     value: "false"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -1196,6 +1300,7 @@
   community.general.dconf:
     key: "/org/gnome/shell/extensions/dash-to-dock/show-mounts-only-mounted"
     value: "false"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -1203,6 +1308,7 @@
   community.general.dconf:
     key: "/org/gnome/shell/extensions/dash-to-dock/show-trash"
     value: "false"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -1212,6 +1318,7 @@
   community.general.dconf:
     key: "/org/gnome/shell/extensions/openweather/city"
     value: "'49.4641816,7.2484007>Niederkirchen, Kuseler Straße, Saal, Niederkirchen, Sankt Wendel, Landkreis St. Wendel, Saarland, 66606, Deutschland >-1 && 49.49342345,6.828330133618561>Nunkirchen, Wadern, Landkreis Merzig-Wadern, Saarland, Deutschland >-1'"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -1219,6 +1326,7 @@
   community.general.dconf:
     key: "/org/gnome/shell/extensions/openweather/actual-city"
     value: "1"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -1226,6 +1334,7 @@
   community.general.dconf:
     key: "/org/gnome/shell/extensions/openweather/days-forecast"
     value: "4"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -1233,6 +1342,7 @@
   community.general.dconf:
     key: "/org/gnome/shell/extensions/openweather/menu-alignment"
     value: "80.099999999999994"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -1240,6 +1350,7 @@
   community.general.dconf:
     key: "/org/gnome/shell/extensions/openweather/position-in-panel"
     value: "'center'"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -1247,6 +1358,7 @@
   community.general.dconf:
     key: "/org/gnome/shell/extensions/openweather/pressure-unit"
     value: "'hPa'"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -1254,6 +1366,7 @@
   community.general.dconf:
     key: "/org/gnome/shell/extensions/openweather/unit"
     value: "'celsius'"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -1261,6 +1374,7 @@
   community.general.dconf:
     key: "/org/gnome/shell/extensions/openweather/wind-speed-unit"
     value: "'kph'"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -1288,6 +1402,7 @@
   community.general.dconf:
     key: "/org/gnome/epiphany/ask-for-default"
     value: "false"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -1295,6 +1410,7 @@
   community.general.dconf:
     key: "/org/gnome/epiphany/default-search-engine"
     value: "'DuckDuckGo'"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -1302,6 +1418,7 @@
   community.general.dconf:
     key: "/org/gnome/epiphany/reader/color-scheme"
     value: "'dark'"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -1309,6 +1426,7 @@
   community.general.dconf:
     key: "/org/gnome/epiphany/web/remember-passwords"
     value: "false"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -1318,6 +1436,7 @@
   community.general.dconf:
     key: "/org/gnome/evolution/calendar/classify-private"
     value: "true"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -1325,6 +1444,7 @@
   community.general.dconf:
     key: "/org/gnome/evolution/calendar/compress-weekend"
     value: "false"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -1332,6 +1452,7 @@
   community.general.dconf:
     key: "/org/gnome/evolution/calendar/day-end-hour"
     value: "16"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -1339,6 +1460,7 @@
   community.general.dconf:
     key: "/org/gnome/evolution/calendar/day-start-hour"
     value: "7"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -1346,6 +1468,7 @@
   community.general.dconf:
     key: "/org/gnome/evolution/calendar/editor-show-timezone"
     value: "true"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -1353,6 +1476,8 @@
   community.general.dconf:
     key: "/org/gnome/evolution/calendar/prefer-new-item"
     value: "'event-new'"
+    state: present
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -1360,6 +1485,7 @@
   community.general.dconf:
     key: "/org/gnome/evolution/calendar/primary-memos"
     value: "'system-memo-list'"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -1367,6 +1493,7 @@
   community.general.dconf:
     key: "/org/gnome/evolution/calendar/show-icons-month-view"
     value: "true"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -1374,6 +1501,7 @@
   community.general.dconf:
     key: "/org/gnome/evolution/calendar/show-week-numbers"
     value: "true"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -1381,6 +1509,7 @@
   community.general.dconf:
     key: "/org/gnome/evolution/calendar/use-24hour-format"
     value: "true"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -1388,6 +1517,7 @@
   community.general.dconf:
     key: "/org/gnome/evolution/mail/browser-close-on-reply-policy"
     value: "'never'"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -1395,6 +1525,7 @@
   community.general.dconf:
     key: "/org/gnome/evolution/mail/composer-delay-outbox-flush"
     value: "0"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -1402,6 +1533,7 @@
   community.general.dconf:
     key: "/org/gnome/evolution/mail/composer-show-bcc"
     value: "true"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -1409,6 +1541,7 @@
   community.general.dconf:
     key: "/org/gnome/evolution/mail/composer-spell-languages"
     value: "['de_DE']"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -1416,6 +1549,7 @@
   community.general.dconf:
     key: "/org/gnome/evolution/mail/composer-top-signature"
     value: "true"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -1423,6 +1557,7 @@
   community.general.dconf:
     key: "/org/gnome/evolution/mail/forward-style-name"
     value: "'inline'"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -1430,6 +1565,7 @@
   community.general.dconf:
     key: "/org/gnome/evolution/mail/layout"
     value: "1"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -1437,6 +1573,7 @@
   community.general.dconf:
     key: "/org/gnome/evolution/mail/mark-seen"
     value: "false"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -1444,6 +1581,7 @@
   community.general.dconf:
     key: "/org/gnome/evolution/mail/show-sender-photo"
     value: "true"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -1451,6 +1589,7 @@
   community.general.dconf:
     key: "/org/gnome/evolution/mail/show-to-do-bar"
     value: "false"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -1458,6 +1597,7 @@
   community.general.dconf:
     key: "/org/gnome/evolution/mail/show-to-do-bar-sub"
     value: "false"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -1465,5 +1605,6 @@
   community.general.dconf:
     key: "/org/gnome/evolution/mail/to-do-bar-show-no-duedate-tasks"
     value: "true"
+    state: present
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
