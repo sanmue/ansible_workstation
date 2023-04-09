@@ -59,6 +59,12 @@ echo "Verwendetes OS: ${os}"
 ### ---
 ### Installation initial benötigter Pakete und Services abhängig von Betriebssystem:
 ### ---
+
+# ### Alle Systeme:
+# Download 'Starshiop Shell Prompt' install-script
+curl -sS "https://starship.rs/install.sh" > "${HOME}/starship_install.sh" && chmod +x "${HOME}/starship_install.sh"
+
+# ### je System individuell:
 case ${os} in
     Manjaro* | EndeavourOS*)
         if [ ! -f "/home/${userid}/.ansible_bootstrapMirrorPool" ]; then
@@ -252,7 +258,6 @@ else
     echo "Clone git-repo lokal nach '/home/${userid}/${repodir}/${playbookdir}'..."
     git clone "${gitOnlineRepo}" "/home/${userid}/${repodir}/${playbookdir}"
 fi
-
 
 ### ---
 ### Test / Ausführen Ansbile Playbook
