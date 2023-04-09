@@ -107,6 +107,7 @@
     # - snapperDefaultConfigExists == ''
     # - snapperDefaultConfigExists is not defined or snapperDefaultConfigExists == ''
     - ansible_distribution in ["Archlinux"]
+    - env_lsb_id != "ManjaroLinux"   # 09.04.28: verursacht aktuell Problem bei Manjaro --> ggf. manuell nachholen, wenn wieder funktioniert
 
 - name: Install additional packages for snapper on btrfs filesystem (Archlinux)
   ansible.builtin.package:

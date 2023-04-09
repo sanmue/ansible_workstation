@@ -905,12 +905,13 @@
   when:
     - ansible_distribution in ["Ubuntu"]   # hat unter Arch (mit ' Code - OSS') nicht funktioniert
 
-- name: All settings misc - Wait until 'Visual Studio Code' Extension 'Sync Settings' Standard Config-File is present before continuing (Ubuntu)
-  ansible.builtin.wait_for:
-    path: /home/{{ env_user }}/.config/Code/User/globalStorage/zokugun.sync-settings/settings.yml   #Datei
-    # path: /home/{{ env_user }}/.config/Code/User/globalStorage/zokugun.sync-settings/               # Ordner
-  when:
-    - ansible_distribution == "Ubuntu"
+# muss manuell gemacht werden, da aktuell nicht automaitisiert funktioniert
+# - name: All settings misc - Wait until 'Visual Studio Code' Extension 'Sync Settings' Standard Config-File is present before continuing (Ubuntu)
+#  ansible.builtin.wait_for:
+#    path: /home/{{ env_user }}/.config/Code/User/globalStorage/zokugun.sync-settings/settings.yml   #Datei
+#    # path: /home/{{ env_user }}/.config/Code/User/globalStorage/zokugun.sync-settings/               # Ordner
+#  when:
+#    - ansible_distribution == "Ubuntu"
 
 # # da sich die Extension unter Arch nicht so installieren lässt (s.o.) kann dies wegfallen:
 # - name: All settings misc - Wait until 'Code - OSS' Extension 'Sync Settings' Standard Config-File is present before continuing (Arch)
