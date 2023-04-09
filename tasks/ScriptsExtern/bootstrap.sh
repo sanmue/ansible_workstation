@@ -133,8 +133,8 @@ case ${os} in
         echo -e "\nVM - Qemu/KVM: Wiki empfiehlt inst. von 'iptables-nft'"
         echo -e "Bestätige, dass 'iptables' (und 'inxi') gelöscht und 'iptables-nft' installiert wird"
         echo -e "Anmerkung: 'inxi' wird im Rahmen basis-inst wieder installiert"
-        sudo pacman -S iptables-nft
-    ;;    
+        sudo pacman -S --needed iptables-nft
+    ;;
 
     Ubuntu*)
         echo -e "\nUpdate Repos und Installation benoetigte Software (git,ansible,ssh,ufw,chrome-genome-shell)..."
