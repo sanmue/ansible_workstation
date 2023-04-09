@@ -150,7 +150,7 @@
   community.general.dconf:
     key: "/org/gnome/desktop/background/picture-uri"
     value: '"file:///home/{{ env_user }}/.local/share/backgrounds/brad-huchteman-stone-mountain.jpg"'
-    # state: present   # standard-wert
+    state: present   # standard-wert
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -158,7 +158,7 @@
   community.general.dconf:
     key: "/org/gnome/desktop/background/picture-uri-dark"
     value: '"file:///home/{{ env_user }}/.local/share/backgrounds/brad-huchteman-stone-mountain.jpg"'
-    # state: present   # standard-wert
+    state: present   # standard-wert
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
@@ -166,6 +166,7 @@
   community.general.dconf:
     key: "/org/gnome/desktop/background/picture-options"
     value: "'zoom'"
+    state: present   # standard-wert
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 

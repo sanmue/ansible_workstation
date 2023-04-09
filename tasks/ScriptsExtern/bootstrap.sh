@@ -101,13 +101,13 @@ case ${os} in
 
         if [ "${os}" = "EndeavourOS" ]; then
             echo -e "\nInstallation Archlinux, EndeavourOS: 'pamac-all'..."
-            yay -S --needed --no-confirm pamac-all && touch "/home/${userid}/.ansible_bootstrap_yay-pamacInstall"
+            yay -S --needed pamac-all && touch "/home/${userid}/.ansible_bootstrap_yay-pamacInstall"
             # mit pamac ist (aktuell noch) es einfacher (automatisiert) mehrere (AUR)pakete ohne Nachfrage zu installieren 
             # (pamac build --no-confirm SW1 SW2 ...)
             # mit ansible modul pacman, executable yay + argumente (noch) nicht hingekriegt
 
             echo -e "\nInstall 'snapd' from AUR (Archlinux, not Manjaro)"
-            yay -S --needed --no-confirm snapd && touch "/home/${userid}/.ansible_bootstrap_snapdAURInstalled"
+            yay -S --needed snapd && touch "/home/${userid}/.ansible_bootstrap_snapdAURInstalled"
         fi
 
         echo -e "\nInstallation benoetigte Software zur Installation von AUR-Packages..."
@@ -313,11 +313,11 @@ if [ "${installAUR}" == "j" ]; then
             # yay -S --needed autokey-qt # && touch "/home/${userid}/.ansible_bootstrap_autokeyQtInstalled"
 
             echo -e "\nInstall brave,gsconnect,dashtopanel,gtkhash,steam,ttf-meslo(10k),ulauncher from AUR (Arch)"
-            yay -S --needed --no-confirm brave-bin gnome-shell-extension-gsconnect gnome-shell-extension-dash-to-panel gtkhash gtkhash-nemo linux-steam-integration ttf-meslo-nerd-font-powerlevel10k ulauncher && touch "/home/${userid}/.ansible_bootstrap_severalAurPkgInstalled"
+            yay -S --needed brave-bin gnome-shell-extension-gsconnect gnome-shell-extension-dash-to-panel gtkhash gtkhash-nemo linux-steam-integration ttf-meslo-nerd-font-powerlevel10k ulauncher && touch "/home/${userid}/.ansible_bootstrap_severalAurPkgInstalled"
 
             echo -e "\nInstall Citrix Workspace App (icaclient) from AUR (Arch,Manjaro)"
             #pamac build icaclient && touch "/home/${userid}/.ansible_bootstrap_pamac-icaclientInstalled"
-            yay -S --needed --no-confirm icaclient && touch "/home/${userid}/.ansible_bootstrap_pamac-icaclientInstalled"
+            yay -S --needed icaclient && touch "/home/${userid}/.ansible_bootstrap_pamac-icaclientInstalled"
 
             echo -e "\nVM - Install virtio-win image from AUR (Arch,Manjaro))"
             #pamac build virtio-win && touch "/home/${userid}/.ansible_bootstrap_pamac-vmVirtioWinInstalled"
@@ -333,7 +333,7 @@ if [ "${installAUR}" == "j" ]; then
 
             #echo -e "\nInstall woeusb-ng from AUR (Arch,Manjaro))"
             ##pamac build woeusb-ng && touch "/home/${userid}/.ansible_bootstrap_pamac-woeusbngInstalled"   # Tool to create Windows boot stick
-            #yay -S --needed --no-confirm woeusb-ng && touch "/home/${userid}/.ansible_bootstrap_pamac-woeusbngInstalled"
+            #yay -S --needed woeusb-ng && touch "/home/${userid}/.ansible_bootstrap_pamac-woeusbngInstalled"
         ;;
 
         *)
