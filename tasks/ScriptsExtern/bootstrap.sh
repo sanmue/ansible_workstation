@@ -101,7 +101,7 @@ case ${os} in
 
         if [ "${os}" = "EndeavourOS" ]; then
             echo -e "\nInstallation Archlinux, EndeavourOS: 'pamac-all'..."
-            yay pamac-all && touch "/home/${userid}/.ansible_bootstrap_yay-pamacInstall"
+            yay -S --needed --no-confirm pamac-all && touch "/home/${userid}/.ansible_bootstrap_yay-pamacInstall"
             # mit pamac ist (aktuell noch) es einfacher (automatisiert) mehrere (AUR)pakete ohne Nachfrage zu installieren 
             # (pamac build --no-confirm SW1 SW2 ...)
             # mit ansible modul pacman, executable yay + argumente (noch) nicht hingekriegt
@@ -284,28 +284,32 @@ ansible-playbook "/home/${userid}/${repodir}/${playbookdir}/${playbook}" -v -K
 ### Archlinux/Manjaro: weitere Installationen
 ### - am Schluss, damit nicht aufhalten
 ### ---
-read -r -p "Install from AUR: Citrix ICA-Client, virtio-win, MS TTF Fonts, ...? ('j'=ja, sonstige Eingabe: nein)" installAUR
+read -r -p "Install from AUR: Citrix ICA-Client, autokey, virtio-win, MS TTF Fonts, ...? ('j'=ja, sonstige Eingabe: nein)" installAUR
 
 if [ "${installAUR}" == "j" ]; then
     case ${os} in
         Manjaro* | EndeavourOS*)
             echo -e "\nInstall 'autokey-gtk' from AUR (Arch)"
-            yay -S autokey-gtk # && touch "/home/${userid}/.ansible_bootstrap_autokeyGtkInstalled"
+            yay -S --needed autokey-gtk # && touch "/home/${userid}/.ansible_bootstrap_autokeyGtkInstalled"
 
             echo -e "\nInstall 'autokey-qt' from AUR (Arch)"
-            yay -S autokey-qt # && touch "/home/${userid}/.ansible_bootstrap_autokeyQtInstalled"
+            yay -S --needed autokey-qt # && touch "/home/${userid}/.ansible_bootstrap_autokeyQtInstalled"
 
             echo -e "\nInstall Citrix Workspace App (icaclient) from AUR (Arch,Manjaro)"
-            pamac build icaclient && touch "/home/${userid}/.ansible_bootstrap_pamac-icaclientInstalled"
+            #pamac build icaclient && touch "/home/${userid}/.ansible_bootstrap_pamac-icaclientInstalled"
+            yay -S --needed --no-confirm icaclient && touch "/home/${userid}/.ansible_bootstrap_pamac-icaclientInstalled"
 
             echo -e "\nVM - Install virtio-win image from AUR (Arch,Manjaro))"
-            pamac build virtio-win && touch "/home/${userid}/.ansible_bootstrap_pamac-vmVirtioWinInstalled"
+            #pamac build virtio-win && touch "/home/${userid}/.ansible_bootstrap_pamac-vmVirtioWinInstalled"
+            yay -S --needed virtio-win && touch "/home/${userid}/.ansible_bootstrap_pamac-vmVirtioWinInstalled"
 
             echo -e "\nInstall Microsoft TTF Fonts from AUR (Arch,Manjaro))"
-            pamac build ttf-ms-fonts && touch "/home/${userid}/.ansible_bootstrap_pamac-ttfmsfontsInstalled"
+            #pamac build ttf-ms-fonts && touch "/home/${userid}/.ansible_bootstrap_pamac-ttfmsfontsInstalled"
+            yay -S --needed ttf-ms-fonts && touch "/home/${userid}/.ansible_bootstrap_pamac-ttfmsfontsInstalled"
 
-            echo -e "\nInstall woeusb-ng from AUR (Arch,Manjaro))"
-            pamac build woeusb-ng && touch "/home/${userid}/.ansible_bootstrap_pamac-woeusbngInstalled"
+            #echo -e "\nInstall woeusb-ng from AUR (Arch,Manjaro))"
+            ##pamac build woeusb-ng && touch "/home/${userid}/.ansible_bootstrap_pamac-woeusbngInstalled"   # Tool to create Windows boot stick
+            #yay -S --needed --no-confirm woeusb-ng && touch "/home/${userid}/.ansible_bootstrap_pamac-woeusbngInstalled"
         ;;
 
         *)

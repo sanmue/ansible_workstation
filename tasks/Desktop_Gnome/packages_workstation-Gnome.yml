@@ -89,18 +89,18 @@
   ansible.builtin.package:
     state: present
     name:
-      - gtkhash        # Inst für Archlinux, EndeavourOS: packages_workstation-localPackageInstall.yml
-      - gtkhash-nemo   # Inst für Archlinux, EndeavourOS: packages_workstation-localPackageInstall.yml
-      - nemo-bulk-rename   # kein Gegenparth in AUR gefunden für Archlinux, EndeavourOS
+      - gtkhash
+      - gtkhash-nemo
+      - nemo-bulk-rename
   when:
     - ansible_distribution == "Archlinux"
     - env_desktop == "gnome"
     - env_lsb_id == "ManjaroLinux"
 
 - name: Gnome - Install packages for workstations via pamac from AUR (Archlinux, NOT Manjaro)
-  ansible.builtin.shell: "pamac build --no-confirm gtkhash gtkhash-nemo && touch /home/{{ env_user }}/.ansible_pamacArchPackagesGnome"
+  ansible.builtin.shell: "pamac build --no-confirm gtkhash gtkhash-nemo && touch /home/{{ env_user }}/.ansible_gnome_pamacAUR-gtkhash"
   args:
-    creates: "/home/{{ env_user }}/.ansible_pamacArchPackagesGnome"
+    creates: "/home/{{ env_user }}/.ansible_gnome_pamacAUR-gtkhash"
   when:
     - ansible_distribution == "Archlinux"
     - env_desktop == "gnome"
