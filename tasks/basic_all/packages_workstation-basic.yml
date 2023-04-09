@@ -94,8 +94,9 @@
   register: snapperDefaultConfigExists
   ignore_errors: true
 
+# https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/storage_administration_guide/ch-snapper
 - name: Create a default config for '/' with snapper cli named 'root' (all, NOT Ubuntu)
-  ansible.builtin.shell: snapper -c root create-config / && touch /home/{{ env_user }}/.ansible_snapperDefaultRootConfigCreated
+  ansible.builtin.shell: snapper --config root create-config -f btrfs / && touch /home/{{ env_user }}/.ansible_snapperDefaultRootConfigCreated
   # with_items: ansible_mounts
   args:
     creates: /home/{{ env_user }}/.ansible_snapperDefaultRootConfigCreated
