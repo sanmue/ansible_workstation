@@ -925,12 +925,12 @@
 # # damit unten die config-datei dorthin kopiert werden kann
 - name: All settings misc - Erstelle hilfsweise manuell 'Sync Settings' Extension Ordner für 'Code - OSS' (Arch)
   tags: workstation,arch
+  become: true
+  become_user: "{{ env_user }}"
   ansible.builtin.file:
     path: "/home/{{ env_user }}/.config/Code - OSS//User/globalStorage/zokugun.sync-settings"
     state: directory
     mode: '0775'
-  become: true
-  become_user: "{{ env_user }}"
   when:
     - ansible_distribution in ["Archlinux"]
 
@@ -946,17 +946,19 @@
 
 - name: All settings misc - Erstelle hilfsweise manuell 'Sync Settings' Extension Ordner für 'VS Code' (Ubuntu)
   tags: workstation,arch
+  become: true
+  become_user: "{{ env_user }}"
   ansible.builtin.file:
     path: "/home/{{ env_user }}/.config/Code/User/globalStorage/zokugun.sync-settings"
     state: directory
     mode: '0775'
-  become: true
-  become_user: "{{ env_user }}"
   when:
-    - ansible_distribution in ["Archlinux"]
+    - ansible_distribution in ["Ubuntu"]
 
 - name: All settings misc - Set/Copy 'Visual Studio Code' settings-file for Extension 'Sync Settings' (Ubuntu)
   tags: workstation,ubuntu
+  become: true
+  become_user: "{{ env_user }}"
   ansible.builtin.copy:
     src: ./files/VSCode_Extension_Sync-Settings_settings.yml
     dest: "/home/{{ env_user }}/.config/Code/User/globalStorage/zokugun.sync-settings/settings.yml"   # Pfad bei Install des VS Code deb-Pakets (nicht bei flatpakod oder snap)
