@@ -51,39 +51,41 @@
     - ansible_distribution == "Archlinux"
     - env_desktop == "gnome"
 
-- name: Gnome - Install ulauncher via pamac from AUR (Archlinux)
-  ansible.builtin.shell: pamac build --no-confirm ulauncher
-  args:
-    creates: "/home/{{ env_user }}/.ansible_gnome_pamacAUR-ulauncher"
-  when:
-    - ansible_distribution in ["Archlinux"]
-    - env_desktop == "gnome"
+# nach bootstrap.sh veschoben
+#
+# - name: Gnome - Install ulauncher via pamac from AUR (Archlinux)
+#  ansible.builtin.shell: pamac build --no-confirm ulauncher
+#  args:
+#    creates: "/home/{{ env_user }}/.ansible_gnome_pamacAUR-ulauncher"
+#  when:
+#    - ansible_distribution in ["Archlinux"]
+#    - env_desktop == "gnome"
 
-- name: Gnome - ulauncher - create flag-file (Archlinux)
-  ansible.builtin.file:
-    path: "/home/{{ env_user }}/.ansible_gnome_pamacAUR-ulauncher"
-    state: touch
-    mode: '0644'
-  when:
-    - ansible_distribution in ["Archlinux"]
-    - env_desktop == "gnome"
+#- name: Gnome - ulauncher - create flag-file (Archlinux)
+#  ansible.builtin.file:
+#    path: "/home/{{ env_user }}/.ansible_gnome_pamacAUR-ulauncher"
+#    state: touch
+#    mode: '0644'
+#  when:
+#    - ansible_distribution in ["Archlinux"]
+#    - env_desktop == "gnome"
 
-- name: Gnome - Install autokey-gtk via pamac from AUR (Archlinux)
-  ansible.builtin.shell: pamac build --no-confirm autokey-common autokey-gtk
-  args:
-    creates: "/home/{{ env_user }}/.ansible_gnome_pamacAUR-autokey"
-  when:
-    - ansible_distribution in ["Archlinux"]
-    - env_desktop == "gnome"
+# - name: Gnome - Install autokey-gtk via pamac from AUR (Archlinux)
+#  ansible.builtin.shell: pamac build --no-confirm autokey-common autokey-gtk
+#  args:
+#    creates: "/home/{{ env_user }}/.ansible_gnome_pamacAUR-autokey"
+#  when:
+#    - ansible_distribution in ["Archlinux"]
+#    - env_desktop == "gnome"
 
-- name: Gnome - autokey - create flag-file (Archlinux)
-  ansible.builtin.file:
-    path: "/home/{{ env_user }}/.ansible_gnome_pamacAUR-autokey"
-    state: touch
-    mode: '0644'
-  when:
-    - ansible_distribution in ["Archlinux"]
-    - env_desktop == "gnome"
+# - name: Gnome - autokey - create flag-file (Archlinux)
+#  ansible.builtin.file:
+#    path: "/home/{{ env_user }}/.ansible_gnome_pamacAUR-autokey"
+#    state: touch
+#    mode: '0644'
+#  when:
+#    - ansible_distribution in ["Archlinux"]
+#    - env_desktop == "gnome"
 
 - name: Gnome - Install packages for workstations (Archlinux/Manjaro)
   ansible.builtin.package:
