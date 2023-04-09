@@ -184,15 +184,13 @@
 #  when:
 #    - env_desktop in ["gnome", "ubuntu:gnome"]
 
-# "'zoom'" ist default-value, kann entfallen
-# - name: Set desktop-wallpaper picture-options (Gnome)
-#  become: true
-#  become_user: "{{ env_user }}"
-#  ansible.builtin.shell: dconf write /org/gnome/desktop/background/picture-options "'zoom'"
-#  when:
-#    - env_desktop in ["gnome", "ubuntu:gnome"]
+- name: Set desktop-wallpaper picture-options (Gnome)
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.shell: dconf write /org/gnome/desktop/background/picture-options "'zoom'"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
 
-# "false" ist default-value, kann entfallen
 # - name: Set show-desktop-icons (Gnome)
 #  community.general.dconf:
 #    key: "/org/gnome/desktop/background/show-desktop-icons"
@@ -200,6 +198,12 @@
 #  when:
 #    - env_desktop in ["gnome", "ubuntu:gnome"]
 
+- name: Set show-desktop-icons (Gnome)
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.shell: dconf write /org/gnome/desktop/background/show-desktop-icons "false"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
 
 # ### weitere desktop settings
 # ### ------------------------
