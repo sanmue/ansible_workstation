@@ -175,7 +175,7 @@
 #    - ansible_distribution in ["Archlinux", "Ubuntu"]
 #    # - env_lsb_id != "ManjaroLinux"   # für bash in Manjaro, daher auskommentiert
 
-- name: Local packages install - starship shell prompt (env_user) - chech install status (all)
+- name: Local packages install - starship shell prompt (env_user) - check install status (all)
   ansible.builtin.stat:
     path: /usr/local/bin/starship
   register: starship
