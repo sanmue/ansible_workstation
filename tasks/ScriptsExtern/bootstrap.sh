@@ -304,14 +304,13 @@ if [ "${installAUR}" == "j" ]; then
     case ${os} in
         Manjaro* | EndeavourOS*)
             echo -e "\nInstall 'autokey-gtk' from AUR (Arch)"
-            yay -S --needed autokey-gtk # && touch "/home/${userid}/.ansible_bootstrap_autokeyGtkInstalled"
+            yay -S --needed autokey-gtk && touch "/home/${userid}/.ansible_bootstrap_autokeyGtkInstalled"
 
-            echo -e "\nInstall 'autokey-qt' from AUR (Arch)"
-            yay -S --needed autokey-qt # && touch "/home/${userid}/.ansible_bootstrap_autokeyQtInstalled"
+            # echo -e "\nInstall 'autokey-qt' from AUR (Arch)"
+            # yay -S --needed autokey-qt # && touch "/home/${userid}/.ansible_bootstrap_autokeyQtInstalled"
 
-            echo -e "\nInstall 'btrfs-assistant' from AUR (Archlinux; bei Manjaro (sollte) schon installiert (sein))"
-            #pamac build --no-confirm btrfs-assistant
-            yay -S --needed btrfs-assistant
+            echo -e "\nInstall brave,steam,ttf-meslo(10k) from AUR (Arch)"
+            yay -S --needed brave-bin linux-steam-integration ttf-meslo-nerd-font-powerlevel10k && touch "/home/${userid}/.ansible_bootstrap_severalAurPkgInstalled"
 
             echo -e "\nInstall Citrix Workspace App (icaclient) from AUR (Arch,Manjaro)"
             #pamac build icaclient && touch "/home/${userid}/.ansible_bootstrap_pamac-icaclientInstalled"
@@ -324,6 +323,10 @@ if [ "${installAUR}" == "j" ]; then
             echo -e "\nInstall Microsoft TTF Fonts from AUR (Arch,Manjaro))"
             #pamac build ttf-ms-fonts && touch "/home/${userid}/.ansible_bootstrap_pamac-ttfmsfontsInstalled"
             yay -S --needed ttf-ms-fonts && touch "/home/${userid}/.ansible_bootstrap_pamac-ttfmsfontsInstalled"
+
+            echo -e "\nInstall 'btrfs-assistant' from AUR (Archlinux; bei Manjaro (sollte) schon installiert (sein))"
+            #pamac build --no-confirm btrfs-assistant
+            yay -S --needed btrfs-assistant && touch "/home/${userid}/.ansible_bootstrap_pamac-btrfsassistantInstalled"
 
             #echo -e "\nInstall woeusb-ng from AUR (Arch,Manjaro))"
             ##pamac build woeusb-ng && touch "/home/${userid}/.ansible_bootstrap_pamac-woeusbngInstalled"   # Tool to create Windows boot stick

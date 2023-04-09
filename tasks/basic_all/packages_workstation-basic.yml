@@ -274,43 +274,47 @@
 #  - ansible_distribution in ["Archlinux"]
 #  - env_lsb_id != "ManjaroLinux"
 
-- name: Install basic packages - AUR - pamac - brave-bin (Archlinux, NOT Manjaro)
-  # ansible.builtin.shell: "pamac build --no-confirm brave-bin linux-steam-integration snapd && touch /home/{{ env_user }}/.ansible_pamacArchBasicPackages"
-  # müssen im Folgenden einzeln aufgeführt werden, da sonst Fehler-Rückmeldung
-  # alternativ evtl. testen: über shell-skript
-  ansible.builtin.shell: "pamac build --no-confirm brave-bin"
-  args:
-    creates: "/home/{{ env_user }}/.ansible_pamacArchBasicPackages"
-  when:
-    - ansible_distribution in ["Archlinux"]
-    - env_lsb_id != "ManjaroLinux"
 
-- name: Install basic packages - AUR - pamac - linux-steam-integration (Archlinux, NOT Manjaro)
-  ansible.builtin.shell: "pamac build --no-confirm linux-steam-integration"
-  args:
-    creates: "/home/{{ env_user }}/.ansible_pamacArchBasicPackages"
-  when:
-    - ansible_distribution in ["Archlinux"]
-    - env_lsb_id != "ManjaroLinux"
+# voreschoben nach bootstap.sh
+#
+# - name: Install basic packages - AUR - pamac - brave-bin (Archlinux, NOT Manjaro)
+#  # ansible.builtin.shell: "pamac build --no-confirm brave-bin linux-steam-integration snapd && touch /home/{{ env_user }}/.ansible_pamacArchBasicPackages"
+#  # müssen im Folgenden einzeln aufgeführt werden, da sonst Fehler-Rückmeldung
+#  # alternativ evtl. testen: über shell-skript
+#  ansible.builtin.shell: "pamac build --no-confirm brave-bin"
+#  args:
+#    creates: "/home/{{ env_user }}/.ansible_pamacArchBasicPackages"
+#  when:
+#    - ansible_distribution in ["Archlinux"]
+#    - env_lsb_id != "ManjaroLinux"
 
-- name: Install basic packages - AUR - pamac - ttf-meslo-nerd-font-powerlevel10k (Archlinux, NOT Manjaro)
-  ansible.builtin.shell: "pamac build --no-confirm ttf-meslo-nerd-font-powerlevel10k"
-  args:
-    creates: "/home/{{ env_user }}/.ansible_pamacArchBasicPackages"
-  when:
-    - ansible_distribution in ["Archlinux"]
-    - env_lsb_id != "ManjaroLinux"
+# - name: Install basic packages - AUR - pamac - linux-steam-integration (Archlinux, NOT Manjaro)
+#  ansible.builtin.shell: "pamac build --no-confirm linux-steam-integration"
+#  args:
+#    creates: "/home/{{ env_user }}/.ansible_pamacArchBasicPackages"
+#  when:
+#    - ansible_distribution in ["Archlinux"]
+#    - env_lsb_id != "ManjaroLinux"
 
-- name: Install basic packages - AUR - pamac - create flag file (Archlinux, NOT Manjaro)
-  ansible.builtin.file:
-    path: "/home/{{ env_user }}/.ansible_pamacArchBasicPackages"
-    state: touch
-    mode: u=rw,g=r,o=r
-    modification_time: preserve
-    access_time: preserve
-  when:
-    - ansible_distribution in ["Archlinux"]
-    - env_lsb_id != "ManjaroLinux"
+# - name: Install basic packages - AUR - pamac - ttf-meslo-nerd-font-powerlevel10k (Archlinux, NOT Manjaro)
+#  ansible.builtin.shell: "pamac build --no-confirm ttf-meslo-nerd-font-powerlevel10k"
+#  args:
+#    creates: "/home/{{ env_user }}/.ansible_pamacArchBasicPackages"
+#  when:
+#    - ansible_distribution in ["Archlinux"]
+#    - env_lsb_id != "ManjaroLinux"
+
+# - name: Install basic packages - AUR - pamac - create flag file (Archlinux, NOT Manjaro)
+#  ansible.builtin.file:
+#    path: "/home/{{ env_user }}/.ansible_pamacArchBasicPackages"
+#    state: touch
+#    mode: u=rw,g=r,o=r
+#    modification_time: preserve
+#    access_time: preserve
+#  when:
+#    - ansible_distribution in ["Archlinux"]
+#    - env_lsb_id != "ManjaroLinux"
+
 
 # ---
 # snapd:
