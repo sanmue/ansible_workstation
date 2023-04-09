@@ -105,6 +105,9 @@ case ${os} in
             # mit pamac ist (aktuell noch) es einfacher (automatisiert) mehrere (AUR)pakete ohne Nachfrage zu installieren 
             # (pamac build --no-confirm SW1 SW2 ...)
             # mit ansible modul pacman, executable yay + argumente (noch) nicht hingekriegt
+
+            echo -e "\nInstall 'snapd' from AUR (Archlinux, not Manjaro)"
+            yay -S --needed --no-confirm snapd && touch "/home/${userid}/.ansible_bootstrap_snapdAURInstalled"
         fi
 
         echo -e "\nInstallation benoetigte Software zur Installation von AUR-Packages..."
@@ -112,9 +115,6 @@ case ${os} in
 
         echo -e "\n Installation (wenn VM) spice agent for Linux guests (z.B. für clipboard sharing host+guest)"
         [[ $(systemd-detect-virt) != *"none"* ]] && sudo pacman -Syu --needed --noconfirm spice-vdagent
-
-        echo -e "\nInstall 'snapd' from AUR (Arch)"
-        yay -S --needed snapd && touch "/home/${userid}/.ansible_bootstrap_snapdAURInstalled"
 
         echo -e "\nAktiviere Firewall 'firewalld' und erlaube ssh ..."
         sudo systemctl enable --now firewalld.service && sudo firewall-cmd --zone=public --add-service=ssh --permanent && sudo firewall-cmd --reload
