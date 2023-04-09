@@ -50,28 +50,31 @@
   # when:
     # - ansible_distribution == "Ubuntu"
 
-- name: Local packages install - get stat /tmp/code.deb (all)
-  ansible.builtin.stat:
-    path: /tmp/code.deb
-  register: tmpcodedeb
-  # when:
-    # - ansible_distribution == "Ubuntu"
+# - name: Local packages install - get stat /tmp/code.deb (all)
+#  ansible.builtin.stat:
+#    # path: /tmp/code.deb
+#    path: "/home/{{ env_user }}/Downloads/code.deb"
+#  register: tmpcodedeb
+#  # when:
+#    # - ansible_distribution == "Ubuntu"
 
-- name: Local packages install - download Visual Studio Code deb-package (Ubuntu)
-  ansible.builtin.get_url:
-    url: "https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64"
-    dest: /tmp/code.deb
-    # force_basic_auth: yes
-    force: false
-    mode: '0755'
-  when:
-    - ansible_distribution == "Ubuntu"
-    - (usrbincode.stat.exists == false) and (tmpcodedeb.stat.exists == false)
+# Download nach bootstrap.sh verschoben wg. timout
+#
+# - name: Local packages install - download Visual Studio Code deb-package (Ubuntu)
+#  ansible.builtin.get_url:
+#    url: "https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64"
+#    dest: "/home/{{ env_user }}/Downloads/code.deb"
+#    # force_basic_auth: yes
+#    force: false
+#    mode: '0755'
+#  when:
+#    - ansible_distribution == "Ubuntu"
+#    - (usrbincode.stat.exists == false) and (tmpcodedeb.stat.exists == false)
 
 - name: Local packages install - install Visual Studio Code deb-package (Ubuntu, apt)
   tags: workstation,ubuntu,apt
   ansible.builtin.apt:
-    deb: /tmp/code.deb
+    deb: "/home/{{ env_user }}/Downloads/code.deb"
     only_upgrade: true
   when:
     - ansible_pkg_mgr == "apt"

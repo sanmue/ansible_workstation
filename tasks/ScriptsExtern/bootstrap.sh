@@ -135,10 +135,10 @@ case ${os} in
         echo -e "\nInstalliere noch fehlende, benötigte Packages für Installation von Brave Web Browser"
         sudo apt-get install -y --show-progress curl
 
-        echo -e "\n Installation (wenn VM) spice agent for Linux guests (z.B. für clipboard sharing host+guest)"
+        echo -e "\nInstallation (wenn VM) spice agent for Linux guests (z.B. für clipboard sharing host+guest)"
         [[ $(systemd-detect-virt) != *"none"* ]] && sudo apt-get install -y --show-progress spice-vdagent
 
-        echo -e "\n Füge Repo für 'ulauncher' hinzu"
+        echo -e "\nFüge Repo für 'ulauncher' hinzu"
         if [ -e "/home/${userid}/.ansible_ppaUlauncherAdded" ]; then
             echo "Repo wurde bereits hinzugefügt, Schritt wird übersprungen"
         else
@@ -168,8 +168,15 @@ case ${os} in
         echo -e "\nInstalliere noch fehlende, benötigte Packages für Installation von Brave Web Browser"
         sudo apt-get install -y --show-progress curl
 
-        echo -e "\n Installation (wenn VM) spice agent for Linux guests (z.B. für clipboard sharing host+guest)"
+        echo -e "\nInstallation (wenn VM) spice agent for Linux guests (z.B. für clipboard sharing host+guest)"
         [[ $(systemd-detect-virt) != *"none"* ]] && sudo apt-get install -y --show-progress spice-vdagent
+
+        echo -e "\nDownload Visual Studio Code deb-file"
+        if [ -f "/home/${userid}/Downloads/code.deb" ]; then
+            echo "Datei '/home/${userid}/Downloads/code.deb' bereits vorhanden, Schritt wird übersprungen"
+        else
+            curl -L --create-file-mode 0755 -o "/home/${userid}/Downloads/code.deb" "https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64"
+        fi
 
         echo -e "\nStarte + Aktiviere ssh ..."
         sudo systemclt start ssh && sudo systemctl enable ssh
