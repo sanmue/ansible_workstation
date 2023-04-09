@@ -1001,20 +1001,34 @@
 - name: Gnome Desktop Prefs - tilix terminal - close-with-last-session (Gnome)
   community.general.dconf:
     key: "/com/gexperts/Tilix/close-with-last-session"
-    value: "false"
+    value: "true"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
 - name: Gnome Desktop Prefs - tilix terminal - control-scroll-zoom (Gnome)
   community.general.dconf:
     key: "/com/gexperts/Tilix/control-scroll-zoom"
-    value: "true"
+    value: "false"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
 - name: Gnome Desktop Prefs - tilix terminal - terminal-title-style (Gnome)
   community.general.dconf:
     key: "/com/gexperts/Tilix/terminal-title-style"
+    value: "'small'"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+
+- name: Gnome Desktop Prefs - tilix terminal - use-overlay-scrollbar (Gnome)
+  community.general.dconf:
+    key: "/com/gexperts/Tilix/use-overlay-scrollbar"
+    value: "true"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+
+- name: Gnome Desktop Prefs - tilix terminal - use-tabs (Gnome)
+  community.general.dconf:
+    key: "/com/gexperts/Tilix/use-tabs"
     value: "'small'"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
