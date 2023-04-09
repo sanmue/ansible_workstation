@@ -302,6 +302,10 @@ if [ "${installAUR}" == "j" ]; then
             echo -e "\nInstall 'autokey-qt' from AUR (Arch)"
             yay -S --needed autokey-qt # && touch "/home/${userid}/.ansible_bootstrap_autokeyQtInstalled"
 
+            echo -e "\nInstall 'btrfs-assistant' from AUR (Archlinux; bei Manjaro (sollte) schon installiert (sein))"
+            #pamac build --no-confirm btrfs-assistant
+            yay -S --needed btrfs-assistant
+
             echo -e "\nInstall Citrix Workspace App (icaclient) from AUR (Arch,Manjaro)"
             #pamac build icaclient && touch "/home/${userid}/.ansible_bootstrap_pamac-icaclientInstalled"
             yay -S --needed --no-confirm icaclient && touch "/home/${userid}/.ansible_bootstrap_pamac-icaclientInstalled"
