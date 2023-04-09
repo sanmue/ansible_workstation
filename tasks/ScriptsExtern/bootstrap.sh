@@ -101,13 +101,21 @@ case ${os} in
 
         if [ "${os}" = "EndeavourOS" ]; then
             echo -e "\nInstallation Archlinux, EndeavourOS: 'pamac-all'..."
-            yay -S --needed pamac-all && touch "/home/${userid}/.ansible_bootstrap_yay-pamacInstall"
+            if [ -f "/home/${userid}/.ansible_bootstrap_yay-pamacInstall" ]; then
+                echo "pamac-all bereits installiert"
+            else
+                yay -S --needed pamac-all && touch "/home/${userid}/.ansible_bootstrap_yay-pamacInstall"
+            fi
             # mit pamac ist (aktuell noch) es einfacher (automatisiert) mehrere (AUR)pakete ohne Nachfrage zu installieren 
             # (pamac build --no-confirm SW1 SW2 ...)
             # mit ansible modul pacman, executable yay + argumente (noch) nicht hingekriegt
 
             echo -e "\nInstall 'snapd' from AUR (Archlinux, not Manjaro)"
-            yay -S --needed snapd && touch "/home/${userid}/.ansible_bootstrap_snapdAURInstalled"
+            if [ -f "/home/${userid}/.ansible_bootstrap_snapdAURInstalled" ]; then
+                echo "snapd bereits installiert"
+            else
+                yay -S --needed snapd && touch "/home/${userid}/.ansible_bootstrap_snapdAURInstalled"
+            fi
         fi
 
         echo -e "\nInstallation benoetigte Software zur Installation von AUR-Packages..."
