@@ -309,8 +309,8 @@ if [ "${installAUR}" == "j" ]; then
             # echo -e "\nInstall 'autokey-qt' from AUR (Arch)"
             # yay -S --needed autokey-qt # && touch "/home/${userid}/.ansible_bootstrap_autokeyQtInstalled"
 
-            echo -e "\nInstall brave,gtkhash,steam,ttf-meslo(10k),ulauncher from AUR (Arch)"
-            yay -S --needed --no-confirm brave-bin gtkhash gtkhash-nemo linux-steam-integration ttf-meslo-nerd-font-powerlevel10k ulauncher && touch "/home/${userid}/.ansible_bootstrap_severalAurPkgInstalled"
+            echo -e "\nInstall brave,gsconnect,dashtopanel,gtkhash,steam,ttf-meslo(10k),ulauncher from AUR (Arch)"
+            yay -S --needed --no-confirm brave-bin gnome-shell-extension-gsconnect gnome-shell-extension-dash-to-panel gtkhash gtkhash-nemo linux-steam-integration ttf-meslo-nerd-font-powerlevel10k ulauncher && touch "/home/${userid}/.ansible_bootstrap_severalAurPkgInstalled"
 
             echo -e "\nInstall Citrix Workspace App (icaclient) from AUR (Arch,Manjaro)"
             #pamac build icaclient && touch "/home/${userid}/.ansible_bootstrap_pamac-icaclientInstalled"
