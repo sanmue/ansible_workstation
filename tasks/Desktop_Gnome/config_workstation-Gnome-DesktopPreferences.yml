@@ -1252,13 +1252,13 @@
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-- name: Set settings-daemon - plugin - media-keys - Remmina,binding (Gnome)
-  community.general.dconf:
-    key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom10/binding"
-    value: "'<Primary><Alt>r'"
-    state: present
-  when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+# - name: Set settings-daemon - plugin - media-keys - Remmina,binding (Gnome)
+#   community.general.dconf:
+#     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom10/binding"
+#     value: "'<Primary><Alt>r'"
+#     state: present
+#   when:
+#     - env_desktop in ["gnome", "ubuntu:gnome"]
 
 - name: Set settings-daemon - plugin - media-keys - Remmina,binding (Gnome)
   become: true
