@@ -23,7 +23,7 @@ defaultMail="${userid}@${defaultDomain}"
 gitOnlineRepo="git@github.com:sanmue/${playbookdir}.git"
 gitdefaultBranchName="main"
 os=""
-oslist=("Ubuntu" "Manjaro" "EndeavourOS")   # aktuell berücksichtige Betriebssysteme
+oslist=("Ubuntu" "EndeavourOS")   # aktuell berücksichtige Betriebssysteme
 
 
 ### ---
