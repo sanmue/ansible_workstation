@@ -152,6 +152,13 @@ case ${os} in
             sudo add-apt-repository ppa:agornostal/ulauncher && touch "/home/${userid}/.ansible_ppaUlauncherAdded"
         fi
 
+        echo -e "\nDownload Visual Studio Code deb-file"
+        if [ -f "/home/${userid}/Downloads/code.deb" ]; then
+            echo "Datei '/home/${userid}/Downloads/code.deb' bereits vorhanden, Schritt wird übersprungen"
+        else
+            curl -L --create-file-mode 0755 -o "/home/${userid}/Downloads/code.deb" "https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64"
+        fi
+
         echo -e "\nAktiviere Firewall 'ufw' und erlaube ssh ..."
         sudo ufw enable && sudo ufw allow ssh comment 'SSH' && sudo ufw reload
     ;;
@@ -177,6 +184,13 @@ case ${os} in
 
         echo -e "\nInstallation (wenn VM) spice agent for Linux guests (z.B. für clipboard sharing host+guest)"
         [[ $(systemd-detect-virt) != *"none"* ]] && sudo apt-get install -y --show-progress spice-vdagent
+
+        echo -e "\nFüge Repo für 'ulauncher' hinzu"
+        if [ -e "/home/${userid}/.ansible_ppaUlauncherAdded" ]; then
+            echo "Repo wurde bereits hinzugefügt, Schritt wird übersprungen"
+        else
+            sudo add-apt-repository ppa:agornostal/ulauncher && touch "/home/${userid}/.ansible_ppaUlauncherAdded"
+        fi
 
         echo -e "\nDownload Visual Studio Code deb-file"
         if [ -f "/home/${userid}/Downloads/code.deb" ]; then
