@@ -159,6 +159,13 @@ case ${os} in
             curl -L --create-file-mode 0755 -o "/home/${userid}/Downloads/code.deb" "https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64"
         fi
 
+        echo -e "\nDownload Installer-Skript for Pyenv"
+        if [ -f "/home/${userid}/Downloads/pyenv-installer.sh" ]; then
+            echo "Datei '/home/${userid}/Downloads/pyenv-installer.sh' bereits vorhanden, Schritt wird übersprungen"
+        else
+            curl -L --create-file-mode 0755 -o "/home/${userid}/Downloads/pyenv-installer.sh" "https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer"
+        fi
+
         echo -e "\nAktiviere Firewall 'ufw' und erlaube ssh ..."
         sudo ufw enable && sudo ufw allow ssh comment 'SSH' && sudo ufw reload
     ;;
@@ -197,6 +204,13 @@ case ${os} in
             echo "Datei '/home/${userid}/Downloads/code.deb' bereits vorhanden, Schritt wird übersprungen"
         else
             curl -L --create-file-mode 0755 -o "/home/${userid}/Downloads/code.deb" "https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64"
+        fi
+
+        echo -e "\nDownload Installer-Skript for Pyenv"
+        if [ -f "/home/${userid}/Downloads/pyenv-installer.sh" ]; then
+            echo "Datei '/home/${userid}/Downloads/pyenv-installer.sh' bereits vorhanden, Schritt wird übersprungen"
+        else
+            curl -L --create-file-mode 0755 -o "/home/${userid}/Downloads/pyenv-installer.sh" "https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer"
         fi
 
         echo -e "\nStarte + Aktiviere ssh ..."

@@ -62,7 +62,7 @@
 
 
 - name: Check if btrfs filesystem + register result in variable (all)
-  ansible.builtin.command: mount | grep "^/dev" | grep "on / " | grep "btrfs"
+  ansible.builtin.shell: mount | grep "^/dev" | grep "on / " | grep "btrfs"
   register: rootFsIsBtrfs
   ignore_errors: true
 
@@ -92,7 +92,7 @@
     - env_lsb_id == "ManjaroLinux"
 
 - name: Check if default snapper config 'root' for '/' already exists (all)
-  ansible.builtin.command: snapper list-configs | grep root
+  ansible.builtin.shell: snapper list-configs | grep root
   register: snapperDefaultConfigExists
   ignore_errors: true
 
@@ -473,28 +473,29 @@
     path: "/home/{{ env_user }}/.pyenv"
   register: pyenvfolder
 
-- name: Install basic packages - Download Installer-Skript for Pyenv (Ubuntu)
-  ansible.builtin.get_url:
-    url: https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer
-    dest: /tmp/pyenv-installer.sh
-    mode: u=rwx,g=rwx,o=rwx
-  when: 
-    - ansible_distribution == "Ubuntu"
-    - pyenvfolder.stat.exists == false
+# nach bootstrap.sh verschoben wg. timeout
+# - name: Install basic packages - Download Installer-Skript for Pyenv (Ubuntu)
+#   ansible.builtin.get_url:
+#     url: https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer
+#     dest: "/home/{{ env_user }}/Downloads/pyenv-installer.sh"
+#     mode: u=rwx,g=rwx,o=rwx
+#   when:
+#     - ansible_distribution == "Ubuntu"
+#     - pyenvfolder.stat.exists == false
 
 - name: Install basic packages - Get stat of pyenv-installer skript (all)
   ansible.builtin.stat:
-    path: /tmp/pyenv-installer.sh
+    path: "/home/{{ env_user }}/Downloads/pyenv-installer.sh"
   register: pyenvskript
 
 - name: Install basic packages - Execute Installer-Skript for Pyenv (Ubuntu)
-  ansible.builtin.script:
-    cmd: /tmp/pyenv-installer.sh
-  args:
-    creates: "/home/{{ env_user }}/.pyenv"   # Run only if '.pyenv'-directory does NOT exist (from previous run)
   become: true
   become_user: "{{ env_user }}"
-  when: 
+  ansible.builtin.script:
+    cmd: "/home/{{ env_user }}/Downloads/pyenv-installer.sh"
+  args:
+    creates: "/home/{{ env_user }}/.pyenv"   # Run only if '.pyenv'-directory does NOT exist (from previous run)
+  when:
     - ansible_distribution == "Ubuntu"
     - pyenvskript.stat.exists == true
 
