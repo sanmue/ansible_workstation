@@ -60,10 +60,6 @@ echo "Verwendetes OS: ${os}"
 ### Installation initial benötigter Pakete und Services abhängig von Betriebssystem:
 ### ---
 
-# ### Alle Systeme:
-# Download 'Starshiop Shell Prompt' install-script
-curl -sS "https://starship.rs/install.sh" > "/home/${userid}/starship_install.sh" && chmod +x "/home/${userid}/starship_install.sh"
-
 # ### je System individuell:
 case ${os} in
     Manjaro* | EndeavourOS*)
@@ -97,26 +93,26 @@ case ${os} in
         fi
 
         echo -e "\nInstallation initial benoetigte Software (git, ansible, openssh, ufw)..."
-        sudo pacman -Syu --needed --noconfirm rsync git ansible openssh vim yay firewalld
+        sudo pacman -Syu --needed --noconfirm rsync git ansible openssh vim yay firewalld curl
 
-        if [ "${os}" = "EndeavourOS" ]; then
-            echo -e "\nInstallation Archlinux, EndeavourOS: 'pamac-all'..."
-            if [ -f "/home/${userid}/.ansible_bootstrap_yay-pamacInstall" ]; then
-                echo "pamac-all bereits installiert"
-            else
-                yay -S --needed pamac-all && touch "/home/${userid}/.ansible_bootstrap_yay-pamacInstall"
-            fi
+        # if [ "${os}" = "EndeavourOS" ]; then
+            # echo -e "\nInstallation Archlinux, EndeavourOS: 'pamac-all'..."
+            # if [ -f "/home/${userid}/.ansible_bootstrap_yay-pamacInstall" ]; then
+            #     echo "pamac-all bereits installiert"
+            # else
+            #     yay -S --needed pamac-all && touch "/home/${userid}/.ansible_bootstrap_yay-pamacInstall"
+            # fi
             # mit pamac ist (aktuell noch) es einfacher (automatisiert) mehrere (AUR)pakete ohne Nachfrage zu installieren 
             # (pamac build --no-confirm SW1 SW2 ...)
             # mit ansible modul pacman, executable yay + argumente (noch) nicht hingekriegt
 
-            echo -e "\nInstall 'snapd' from AUR (Archlinux, not Manjaro)"
-            if [ -f "/home/${userid}/.ansible_bootstrap_snapdAURInstalled" ]; then
-                echo "snapd bereits installiert"
-            else
-                yay -S --needed snapd && touch "/home/${userid}/.ansible_bootstrap_snapdAURInstalled"
-            fi
-        fi
+            #echo -e "\nInstall 'snapd' from AUR (Archlinux, not Manjaro)"
+            #if [ -f "/home/${userid}/.ansible_bootstrap_snapdAURInstalled" ]; then
+            #    echo "snapd bereits installiert"
+            #else
+            #    yay -S --needed snapd && touch "/home/${userid}/.ansible_bootstrap_snapdAURInstalled"
+            #fi
+        # fi
 
         echo -e "\nInstallation benoetigte Software zur Installation von AUR-Packages..."
         sudo pacman -S --needed --noconfirm base-devel
@@ -138,7 +134,7 @@ case ${os} in
 
     Ubuntu*)
         echo -e "\nUpdate Repos und Installation benoetigte Software (git,ansible,ssh,ufw,chrome-genome-shell)..."
-        sudo apt-get update && sudo apt-get dist-upgrade -y && sudo apt-get install -y --show-progress rsync git ansible chrome-gnome-shell ssh ufw vim
+        sudo apt-get update && sudo apt-get dist-upgrade -y && sudo apt-get install -y --show-progress rsync git ansible chrome-gnome-shell ssh ufw vim curl
 
         echo -e "\nInstalliere benötigte Packages für Installation von Microsoft PowerShell"
         sudo apt-get install -y --show-progress wget apt-transport-https software-properties-common
@@ -171,7 +167,7 @@ case ${os} in
         fi
 
         echo -e "\nUpdate Repos und Installation benoetigte Software (git,ansible,ssh,ufw,chrome-genome-shell)..."
-        sudo apt-get update && sudo apt-get dist-upgrade -y && sudo apt-get install -y --show-progress rsync git ansible chrome-gnome-shell openssh-client openssh-server ufw vim
+        sudo apt-get update && sudo apt-get dist-upgrade -y && sudo apt-get install -y --show-progress rsync git ansible chrome-gnome-shell openssh-client openssh-server ufw vim curl
 
         echo -e "\nInstalliere benötigte Packages für Installation von Microsoft PowerShell"
         sudo apt-get install -y --show-progress wget apt-transport-https software-properties-common
@@ -198,7 +194,7 @@ case ${os} in
 
     openSUSE*)
         echo -e "\nUpdate Repos und Installation benoetigte Software (git,ansible,ssh,firewalld)..."
-        sudo zypper refresh && sudo zypper dist-upgrade -y --details && sudo zypper install -y --details rsync git ansible openssh firewalld vim
+        sudo zypper refresh && sudo zypper dist-upgrade -y --details && sudo zypper install -y --details rsync git ansible openssh firewalld vim curl
 
         #echo -e "\nInstalliere benötigte Packages für Installation von Microsoft PowerShell"
         # https://learn.microsoft.com/en-us/powershell/scripting/install/install-other-linux?view=powershell-7.3
@@ -225,6 +221,9 @@ case ${os} in
     ;;
 esac
 
+# ### Alle Systeme:
+# Download 'Starshiop Shell Prompt' install-script
+curl -sS "https://starship.rs/install.sh" > "/home/${userid}/starship_install.sh" && chmod +x "/home/${userid}/starship_install.sh"
 
 ### ---
 ### Git Config

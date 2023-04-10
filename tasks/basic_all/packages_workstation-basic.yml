@@ -237,14 +237,14 @@
       - brave-browser
       - linux-steam-integration
       - manjaro-keyring
-      - snapd
+      # - snapd
       - timeshift
       - ttf-meslo-nerd-font-powerlevel10k
       - units   # converts between different systems of units
       # -----------------------------------
       # flatpak- und snap-plugin für pamac:
-      - libpamac-flatpak-plugin
-      - pamac-snap-plugin
+      # - libpamac-flatpak-plugin
+      # - pamac-snap-plugin
     state: present
   when:
     - ansible_distribution in ["Archlinux"]
