@@ -100,12 +100,12 @@ case ${os} in
         sudo pacman -Syu --needed --noconfirm rsync git ansible openssh vim yay firewalld
 
         if [ "${os}" = "EndeavourOS" ]; then
-            #echo -e "\nInstallation Archlinux, EndeavourOS: 'pamac-all'..."
-            #if [ -f "/home/${userid}/.ansible_bootstrap_yay-pamacInstall" ]; then
-            #    echo "pamac-all bereits installiert"
-            #else
-            #    yay -S --needed pamac-all && touch "/home/${userid}/.ansible_bootstrap_yay-pamacInstall"
-            #fi
+            echo -e "\nInstallation Archlinux, EndeavourOS: 'pamac-all'..."
+            if [ -f "/home/${userid}/.ansible_bootstrap_yay-pamacInstall" ]; then
+                echo "pamac-all bereits installiert"
+            else
+                yay -S --needed pamac-all && touch "/home/${userid}/.ansible_bootstrap_yay-pamacInstall"
+            fi
             # mit pamac ist (aktuell noch) es einfacher (automatisiert) mehrere (AUR)pakete ohne Nachfrage zu installieren 
             # (pamac build --no-confirm SW1 SW2 ...)
             # mit ansible modul pacman, executable yay + argumente (noch) nicht hingekriegt
