@@ -997,38 +997,38 @@
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.git:
-    repo: "{{ item }}"
-    dest: "/home/{{ env_user }}/.local/share/ulauncher/extensions/{{ item }}"
+    repo: "{{ item.path }}"
+    dest: "/home/{{ env_user }}/.local/share/ulauncher/extensions/{{ item.name }}"
     update: true
     clone: true
     single_branch: true
     version: "HEAD"   # default: "HEAD"
   loop:
-    - "https://github.com/Rapha149/ulauncher-bluetooth.git"
-    - "https://github.com/tchar/ulauncher-albert-calculate-anything.git"
-    - "https://github.com/sergius02/ulauncher-colorconverter.git"
-    - "https://github.com/Rapha149/ulauncher-deepl.git"
-    - "https://github.com/Ulauncher/ulauncher-emoji.git"
-    - "https://github.com/brpaz/ulauncher-faker.git"
-    - "https://github.com/KuenzelIT/ulauncher-firefox-bookmarks.git"
-    - "https://github.com/hillaryychan/ulauncher-fzf.git"
-    - "https://github.com/friday/ulauncher-gnome-settings.git"
-    - "https://github.com/SeoFernando25/ulauncher-gpt.git"
-    - "https://github.com/pwnyprod/ulauncher-ipcopy.git"
-    - "https://github.com/brpaz/ulauncher-lipsum.git"
-    - "https://github.com/RNairn01/ulauncher-meme-my-text.git"
-    - "https://github.com/melianmiko/ulauncher-nmcli.git"
-    - "https://github.com/mastdiekin/ulauncher-pypi-search.git"
-    - "https://github.com/noam09/ulauncher-remmina.git"
-    - "https://github.com/lighttigerXIV/ulauncher-session-manager.git"
-    - "https://github.com/xRealNeon/SpritpreiseUlauncher.git"
-    - "https://github.com/jyvern/ulauncher-ssh.git"
-    - "https://github.com/rootwork/ulauncher-symbol.git"
-    - "https://github.com/lighttigerXIV/ulauncher-terminal-runner-extension.git"
-    - "https://github.com/Ulauncher/ulauncher-timer.git"
-    - "https://github.com/brpaz/ulauncher-timestamp.git"
-    - "https://github.com/dhelmr/ulauncher-tldr.git"
-    - "https://github.com/zensoup/ulauncher-unicode.git"
-    - "https://github.com/NastuzziSamy/ulauncher-youtube-search.git"
+    - { path: "https://github.com/Rapha149/ulauncher-bluetooth.git",              name: "ulauncher-bluetooth" }
+    - { path: "https://github.com/tchar/ulauncher-albert-calculate-anything.git", name: "ulauncher-albert-calculate-anything" }
+    - { path: "https://github.com/sergius02/ulauncher-colorconverter.git",        name: "ulauncher-colorconverter" }
+    - { path: "https://github.com/Rapha149/ulauncher-deepl.git",                  name: "ulauncher-deepl" }
+    - { path: "https://github.com/Ulauncher/ulauncher-emoji.git",                 name: "ulauncher-emoji." }
+    - { path: "https://github.com/brpaz/ulauncher-faker.git",                     name: "ulauncher-faker" }
+    - { path: "https://github.com/KuenzelIT/ulauncher-firefox-bookmarks.git",     name: "ulauncher-firefox-bookmarks" }
+    - { path: "https://github.com/hillaryychan/ulauncher-fzf.git",                name: "ulauncher-fzf" }
+    - { path: "https://github.com/friday/ulauncher-gnome-settings.git",           name: "ulauncher-gnome-settings" }
+    - { path: "https://github.com/SeoFernando25/ulauncher-gpt.git",               name: "ulauncher-gnome-settings" }
+    - { path: "https://github.com/pwnyprod/ulauncher-ipcopy.git",                 name: "ulauncher-ipcopy" }
+    - { path: "https://github.com/brpaz/ulauncher-lipsum.git",                    name: "ulauncher-lipsum." }
+    - { path: "https://github.com/RNairn01/ulauncher-meme-my-text.git",           name: "ulauncher-meme-my-text" }
+    - { path: "https://github.com/melianmiko/ulauncher-nmcli.git",                name: "ulauncher-nmcli" }
+    - { path: "https://github.com/mastdiekin/ulauncher-pypi-search.git",          name: "ulauncher-pypi-search" }
+    - { path: "https://github.com/noam09/ulauncher-remmina.git",                  name: "ulauncher-remmina" }
+    - { path: "https://github.com/lighttigerXIV/ulauncher-session-manager.git",   name: "ulauncher-session-manager" }
+    - { path: "https://github.com/xRealNeon/SpritpreiseUlauncher.git",            name: "SpritpreiseUlauncher" }
+    - { path: "https://github.com/jyvern/ulauncher-ssh.git",                      name: "ulauncher-ssh" }
+    - { path: "https://github.com/rootwork/ulauncher-symbol.git",                 name: "ulauncher-symbol" }
+    - { path: "https://github.com/lighttigerXIV/ulauncher-terminal-runner-extension.git", name: "ulauncher-terminal-runner-extension" }
+    - { path: "https://github.com/Ulauncher/ulauncher-timer.git",                 name: "ulauncher-timer" }
+    - { path: "https://github.com/brpaz/ulauncher-timestamp.git",                 name: "ulauncher-timestamp" }
+    - { path: "https://github.com/dhelmr/ulauncher-tldr.git",                     name: "ulauncher-tldr" }
+    - { path: "https://github.com/zensoup/ulauncher-unicode.git",                 name: "ulauncher-unicode" }
+    - { path: "https://github.com/NastuzziSamy/ulauncher-youtube-search.git",     name: "ulauncher-youtube-search" }
 #  when:
 #    - ansible_distribution in ["Ubuntu"]
