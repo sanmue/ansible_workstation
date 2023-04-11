@@ -984,6 +984,15 @@
 # ### Ulauncher extensions
 # ########################
 
+- name: All settings misc - ulauncher - create extension folder (all, env_user)
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.file:
+    path: "/home/{{ env_user }}/.local/share/ulauncher/extensions"
+    state: directory
+    mode: '0755'
+
+
 - name: All settings misc - ulauncher - git clone extensions (all, env_user)
   become: true
   become_user: "{{ env_user }}"
