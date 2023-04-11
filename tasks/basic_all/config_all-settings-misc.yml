@@ -978,3 +978,48 @@
     mode: u=rw
   when:
     - ansible_distribution == "Archlinux"
+
+
+# ########################
+# ### Ulauncher extensions
+# ########################
+
+- name: All settings misc - ulauncher - git clone extensions (all, env_user)
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.git:
+    repo: "{{ item }}"
+    dest: "/home/{{ env_user }}/.local/share/ulauncher/extensions"
+    update: true
+    # clone: true
+    # single_branch: true
+    # version: master   # default: "HEAD"
+  loop:
+    - "https://github.com/Rapha149/ulauncher-bluetooth.git"
+    - "https://github.com/tchar/ulauncher-albert-calculate-anything.git"
+    - "https://github.com/sergius02/ulauncher-colorconverter.git"
+    - "https://github.com/Rapha149/ulauncher-deepl.git"
+    - "https://github.com/Ulauncher/ulauncher-emoji.git"
+    - "https://github.com/brpaz/ulauncher-faker.git"
+    - "https://github.com/KuenzelIT/ulauncher-firefox-bookmarks.git"
+    - "https://github.com/hillaryychan/ulauncher-fzf.git"
+    - "https://github.com/friday/ulauncher-gnome-settings.git"
+    - "https://github.com/SeoFernando25/ulauncher-gpt.git"
+    - "https://github.com/pwnyprod/ulauncher-ipcopy.git"
+    - "https://github.com/brpaz/ulauncher-lipsum.git"
+    - "https://github.com/RNairn01/ulauncher-meme-my-text.git"
+    - "https://github.com/melianmiko/ulauncher-nmcli.git"
+    - "https://github.com/mastdiekin/ulauncher-pypi-search.git"
+    - "https://github.com/noam09/ulauncher-remmina.git"
+    - "https://github.com/lighttigerXIV/ulauncher-session-manager.git"
+    - "https://github.com/xRealNeon/SpritpreiseUlauncher.git"
+    - "https://github.com/jyvern/ulauncher-ssh.git"
+    - "https://github.com/rootwork/ulauncher-symbol.git"
+    - "https://github.com/lighttigerXIV/ulauncher-terminal-runner-extension.git"
+    - "https://github.com/Ulauncher/ulauncher-timer.git"
+    - "https://github.com/brpaz/ulauncher-timestamp.git"
+    - "https://github.com/dhelmr/ulauncher-tldr.git"
+    - "https://github.com/zensoup/ulauncher-unicode.git"
+    - "https://github.com/NastuzziSamy/ulauncher-youtube-search.git"
+#  when:
+#    - ansible_distribution in ["Ubuntu"]
