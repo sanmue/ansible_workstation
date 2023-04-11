@@ -397,7 +397,6 @@
       - openssh-client
       - powershell   # repo wurde hinzugefügt
       - printer-driver-cups-pdf
-      # - python3-pip   # aktuell nicht benötigt
       - python3-pip
       - python3-psutil
       - python3-pyinotify
