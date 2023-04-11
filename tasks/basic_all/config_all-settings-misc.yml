@@ -999,7 +999,7 @@
   ansible.builtin.git:
     repo: "{{ item }}"
     dest: "/home/{{ env_user }}/.local/share/ulauncher/extensions"
-    update: true
+    # update: true
     # clone: true
     # single_branch: true
     # version: master   # default: "HEAD"
