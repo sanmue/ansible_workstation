@@ -998,7 +998,7 @@
   become_user: "{{ env_user }}"
   ansible.builtin.git:
     repo: "{{ item }}"
-    dest: "/home/{{ env_user }}/.local/share/ulauncher/extensions/"
+    dest: "/home/{{ env_user }}/.local/share/ulauncher/extensions/{{ item }}"
     update: true
     clone: true
     single_branch: true
