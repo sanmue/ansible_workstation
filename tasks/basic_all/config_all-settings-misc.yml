@@ -999,10 +999,10 @@
   ansible.builtin.git:
     repo: "{{ item }}"
     dest: "/home/{{ env_user }}/.local/share/ulauncher/extensions"
-    # update: true
-    # clone: true
-    # single_branch: true
-    # version: master   # default: "HEAD"
+    update: true
+    clone: true
+    single_branch: true
+    version: "HEAD"   # default: "HEAD"
   loop:
     - "https://github.com/Rapha149/ulauncher-bluetooth.git"
     - "https://github.com/tchar/ulauncher-albert-calculate-anything.git"
