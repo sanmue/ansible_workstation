@@ -345,3 +345,22 @@
   become_user: "{{ env_user }}"
   environment:
     XDG_RUNTIME_DIR: "{{ env_user_XDG_RUNTIME_DIR }}"
+
+
+# -------------
+# ### ulauncher
+# -------------
+# https://ulauncher.io/
+# https://github.com/Ulauncher/Ulauncher/
+
+- name: All services misc - ulauncher - start+enable - env_user (Ubuntu, Arch)
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.systemd:
+    name: ulauncher.service
+    state: started
+    enabled: true
+    # daemon_reload: true
+    scope: user
+  environment:
+    XDG_RUNTIME_DIR: "{{ env_user_XDG_RUNTIME_DIR }}"
