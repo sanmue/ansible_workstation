@@ -123,6 +123,7 @@
     enabled: true
   when: ansible_distribution in ["Ubuntu", "Archlinux"]
 
+
 # -------------------------
 # ### starship shell prompt
 # -------------------------

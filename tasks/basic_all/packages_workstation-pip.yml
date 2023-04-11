@@ -1,0 +1,22 @@
+# ######################
+# ### Python pip install
+# ######################
+# python3-pip, python3-psutil, (python3-pyinotify): Installiert in packages_workstation-basic.yml
+
+- name: Install basic packages - pip (Python) (env_user, all)
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.pip:
+    state: present
+    name:
+      - deepl                     # Ulauncher Extension Requirement: DeepL Translator
+      - faker                     # Ulauncher Extension Requirement: Faker
+      - lorem                     # Ulauncher Extension Requirement: Lipsum
+      - parsedatetime             # Ulauncher Extension Requirement: Calculate Anything
+      - pint                      # Ulauncher Extension Requirement: Calculate Anything
+      - pydbus                    # Ulauncher Extension Requirement: Bluetooth
+      - simpleeval                # Ulauncher Extension Requirement: Calculate Anything
+      - wrapt_timeout_decorator   # Ulauncher Extension Requirement: Bluetooth
+    extra_args: --user
+#  when:
+#    - env_desktop in ["gnome", "ubuntu:gnome"]
