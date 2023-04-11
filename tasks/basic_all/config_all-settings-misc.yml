@@ -1001,21 +1001,21 @@
     dest: "/home/{{ env_user }}/.local/share/ulauncher/extensions/{{ item.name }}"
     update: true
     clone: true
-    single_branch: true
-    version: "HEAD"   # default: "HEAD"
+    #single_branch: true
+    #version: "HEAD"   # default: "HEAD"
   loop:
     - { path: "https://github.com/Rapha149/ulauncher-bluetooth.git",              name: "ulauncher-bluetooth" }
     - { path: "https://github.com/tchar/ulauncher-albert-calculate-anything.git", name: "ulauncher-albert-calculate-anything" }
     - { path: "https://github.com/sergius02/ulauncher-colorconverter.git",        name: "ulauncher-colorconverter" }
     - { path: "https://github.com/Rapha149/ulauncher-deepl.git",                  name: "ulauncher-deepl" }
-    - { path: "https://github.com/Ulauncher/ulauncher-emoji.git",                 name: "ulauncher-emoji." }
+    - { path: "https://github.com/Ulauncher/ulauncher-emoji.git",                 name: "ulauncher-emoji" }
     - { path: "https://github.com/brpaz/ulauncher-faker.git",                     name: "ulauncher-faker" }
     - { path: "https://github.com/KuenzelIT/ulauncher-firefox-bookmarks.git",     name: "ulauncher-firefox-bookmarks" }
     - { path: "https://github.com/hillaryychan/ulauncher-fzf.git",                name: "ulauncher-fzf" }
     - { path: "https://github.com/friday/ulauncher-gnome-settings.git",           name: "ulauncher-gnome-settings" }
     - { path: "https://github.com/SeoFernando25/ulauncher-gpt.git",               name: "ulauncher-gnome-settings" }
     - { path: "https://github.com/pwnyprod/ulauncher-ipcopy.git",                 name: "ulauncher-ipcopy" }
-    - { path: "https://github.com/brpaz/ulauncher-lipsum.git",                    name: "ulauncher-lipsum." }
+    - { path: "https://github.com/brpaz/ulauncher-lipsum.git",                    name: "ulauncher-lipsum" }
     - { path: "https://github.com/RNairn01/ulauncher-meme-my-text.git",           name: "ulauncher-meme-my-text" }
     - { path: "https://github.com/melianmiko/ulauncher-nmcli.git",                name: "ulauncher-nmcli" }
     - { path: "https://github.com/mastdiekin/ulauncher-pypi-search.git",          name: "ulauncher-pypi-search" }
