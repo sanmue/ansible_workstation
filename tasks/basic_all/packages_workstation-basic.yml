@@ -240,7 +240,7 @@
       - sof-firmware
   when: ansible_distribution in ["Archlinux"]
 
-- name: Install basic packages (Archlinux/Manjaro)
+- name: Install basic packages (Manjaro)
   ansible.builtin.package:
     name:
       - brave-browser
