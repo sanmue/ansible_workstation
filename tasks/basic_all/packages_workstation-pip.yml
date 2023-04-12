@@ -3,20 +3,26 @@
 # ######################
 # python3-pip, python3-psutil, (python3-pyinotify): Installiert in packages_workstation-basic.yml
 
-- name: Install basic packages - pip (Python) (env_user, all)
+# - name: Install packages - pip (Python) (env_user, all, not EnveavourOS)
+#   become: true
+#   become_user: "{{ env_user }}"
+#   ansible.builtin.pip:
+#     state: present
+#     name:
+#       - deepl                     # Ulauncher Extension Requirement: DeepL Translator
+#       - faker                     # Ulauncher Extension Requirement: Faker
+#       - lorem                     # Ulauncher Extension Requirement: Lipsum
+#       - parsedatetime             # Ulauncher Extension Requirement: Calculate Anything
+#       - pint                      # Ulauncher Extension Requirement: Calculate Anything
+#       - pydbus                    # Ulauncher Extension Requirement: Bluetooth
+#       - simpleeval                # Ulauncher Extension Requirement: Calculate Anything
+#       - wrapt_timeout_decorator   # Ulauncher Extension Requirement: Bluetooth
+#     extra_args: --user
+#   when:
+#     - ansible_distribution in ["Archlinux", "Ubuntu"]
+#     - env_lsb_id != "EndeavourOS"
+
+- name: Install packages - pip (Python) (env_user, all)
   become: true
   become_user: "{{ env_user }}"
-  ansible.builtin.pip:
-    state: present
-    name:
-      - deepl                     # Ulauncher Extension Requirement: DeepL Translator
-      - faker                     # Ulauncher Extension Requirement: Faker
-      - lorem                     # Ulauncher Extension Requirement: Lipsum
-      - parsedatetime             # Ulauncher Extension Requirement: Calculate Anything
-      - pint                      # Ulauncher Extension Requirement: Calculate Anything
-      - pydbus                    # Ulauncher Extension Requirement: Bluetooth
-      - simpleeval                # Ulauncher Extension Requirement: Calculate Anything
-      - wrapt_timeout_decorator   # Ulauncher Extension Requirement: Bluetooth
-    extra_args: --user
-#  when:
-#    - env_desktop in ["gnome", "ubuntu:gnome"]
+  ansible.builtin.shell: pip install --user deepl faker lorem parsedatetime pint pydbus simpleeval wrapt_timeout_decorator
