@@ -356,6 +356,10 @@ if [ "${installAUR}" == "j" ]; then
             #pamac build icaclient && touch "/home/${userid}/.ansible_bootstrap_pamac-icaclientInstalled"
             yay -S --needed icaclient && touch "/home/${userid}/.ansible_bootstrap_pamac-icaclientInstalled"
 
+            echo -e "\nInstall 'btrfs-assistant' from AUR (Archlinux; bei Manjaro (sollte) schon installiert (sein))"
+            #pamac build --no-confirm btrfs-assistant
+            yay -S --needed btrfs-assistant && touch "/home/${userid}/.ansible_bootstrap_pamac-btrfsassistantInstalled"
+
             echo -e "\nVM - Install virtio-win image from AUR (Arch,Manjaro))"
             #pamac build virtio-win && touch "/home/${userid}/.ansible_bootstrap_pamac-vmVirtioWinInstalled"
             yay -S --needed virtio-win && touch "/home/${userid}/.ansible_bootstrap_pamac-vmVirtioWinInstalled"
@@ -364,13 +368,12 @@ if [ "${installAUR}" == "j" ]; then
             #pamac build ttf-ms-fonts && touch "/home/${userid}/.ansible_bootstrap_pamac-ttfmsfontsInstalled"
             yay -S --needed ttf-ms-fonts && touch "/home/${userid}/.ansible_bootstrap_pamac-ttfmsfontsInstalled"
 
-            echo -e "\nInstall 'btrfs-assistant' from AUR (Archlinux; bei Manjaro (sollte) schon installiert (sein))"
-            #pamac build --no-confirm btrfs-assistant
-            yay -S --needed btrfs-assistant && touch "/home/${userid}/.ansible_bootstrap_pamac-btrfsassistantInstalled"
-
             #echo -e "\nInstall woeusb-ng from AUR (Arch,Manjaro))"
             ##pamac build woeusb-ng && touch "/home/${userid}/.ansible_bootstrap_pamac-woeusbngInstalled"   # Tool to create Windows boot stick
             #yay -S --needed woeusb-ng && touch "/home/${userid}/.ansible_bootstrap_pamac-woeusbngInstalled"
+
+            echo -e "\nService - start+anable ulauncher.serivce für '${userid}'"
+            sudo -u "${userid}" systemctl --user enable --now ulauncher.service
         ;;
 
         *)
