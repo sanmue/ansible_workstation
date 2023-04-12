@@ -356,7 +356,7 @@ if [ "${installAUR}" == "j" ]; then
             yay -S --needed ulauncher
 
             echo -e "\nStart + enable ulauncher.service für '${userid}'"
-            sudo -u "${userid}" systemctl --user enable --now ulauncher.service
+            su -u "${userid}" -c "systemctl --user enable --now ulauncher.service"
 
             echo -e "\nInstall Citrix Workspace App (icaclient) from AUR (Arch,Manjaro)"
             #pamac build icaclient && touch "/home/${userid}/.ansible_bootstrap_pamac-icaclientInstalled"
