@@ -349,8 +349,14 @@ if [ "${installAUR}" == "j" ]; then
             # echo -e "\nInstall 'autokey-qt' from AUR (Arch)"
             # yay -S --needed autokey-qt # && touch "/home/${userid}/.ansible_bootstrap_autokeyQtInstalled"
 
-            echo -e "\nInstall brave,gsconnect,dashtopanel,gtkhash,steam,ttf-meslo(10k),ulauncher from AUR (Arch)"
-            yay -S --needed brave-bin gnome-shell-extension-gsconnect gnome-shell-extension-dash-to-panel gtkhash linux-steam-integration ttf-meslo-nerd-font-powerlevel10k ulauncher units && touch "/home/${userid}/.ansible_bootstrap_severalAurPkgInstalled"
+            echo -e "\nInstall brave,gsconnect,dashtopanel,gtkhash,steam,ttf-meslo(10k),ulauncher from AUR (Arch, Manjaro)"
+            yay -S --needed brave-bin gnome-shell-extension-gsconnect gnome-shell-extension-dash-to-panel gtkhash linux-steam-integration ttf-meslo-nerd-font-powerlevel10k units && touch "/home/${userid}/.ansible_bootstrap_severalAurPkgInstalled"
+
+            echo -e "\nInstall ulauncher from AUR (Arch,Manjaro)"
+            yay -S --needed ulauncher
+
+            echo -e "\nStart + enable ulauncher.service für '${userid}'"
+            sudo -u "${userid}" systemctl --user enable --now ulauncher.service
 
             echo -e "\nInstall Citrix Workspace App (icaclient) from AUR (Arch,Manjaro)"
             #pamac build icaclient && touch "/home/${userid}/.ansible_bootstrap_pamac-icaclientInstalled"
@@ -371,9 +377,6 @@ if [ "${installAUR}" == "j" ]; then
             #echo -e "\nInstall woeusb-ng from AUR (Arch,Manjaro))"
             ##pamac build woeusb-ng && touch "/home/${userid}/.ansible_bootstrap_pamac-woeusbngInstalled"   # Tool to create Windows boot stick
             #yay -S --needed woeusb-ng && touch "/home/${userid}/.ansible_bootstrap_pamac-woeusbngInstalled"
-
-            echo -e "\nService - start+anable ulauncher.serivce für '${userid}'"
-            sudo -u "${userid}" systemctl --user enable --now ulauncher.service
         ;;
 
         *)
