@@ -95,7 +95,7 @@
     - ansible_distribution in ["Archlinux"]
     - etcdefgrub.stat.exists
 
-- name: Install basic packages for snapper on btrfs filesystem (Archlinux/Manjaro)
+- name: Install basic packages for snapper on btrfs filesystem (Manjaro)
   ansible.builtin.package:
     state: present
     name:
@@ -249,7 +249,6 @@
       # - snapd
       - timeshift
       - ttf-meslo-nerd-font-powerlevel10k
-      - units   # converts between different systems of units
       # -----------------------------------
       # flatpak- und snap-plugin für pamac:
       # - libpamac-flatpak-plugin
