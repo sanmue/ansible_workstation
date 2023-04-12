@@ -61,26 +61,39 @@
       - linux-firmware
 
 
-- name: Check if btrfs filesystem + register result in variable (all)
+- name: Install basic packages - Check if btrfs filesystem + register result in variable (all)
   ansible.builtin.shell: mount | grep "^/dev" | grep "on / " | grep "btrfs"
   register: rootFsIsBtrfs
   ignore_errors: true
 
-- name: Install basic packages for snapper on btrfs filesystem (all, NOT Ubuntu)
+- name: Install basic packages - Get stats of etc-default-grup (all)
+  ansible.builtin.stat:
+    path: /etc/default/grub
+  register: etcdefgrub
+
+- name: Install basic packages for snapper on btrfs filesystem - snapper (all, NOT Ubuntu)
   ansible.builtin.package:
     state: present
     name:
       # ### for btrfs filesystem:
       - snapper      # A tool for managing BTRFS and LVM snapshots. It can create, diff and restore snapshots and provides timelined auto-snapping.
-      - grub-btrfs   # paketname bei Ubuntu (Standard) nicht vorhanden # Include btrfs snapshots in GRUB boot options
       # >>> You must create a default config with snapper cli named root first.
       # >>> Run 'snapper -c root create-config /' as root
   # with_items: ansible_mounts
   when:
-    # - item.mount  == '/'
-    # - item.fstype == 'btrfs'
     - rootFsIsBtrfs != ''
     - ansible_distribution in ["Archlinux"]
+
+- name: Install basic packages for snapper on btrfs filesystem + grub - grub-btrfs (all, NOT Ubuntu)
+  ansible.builtin.package:
+    state: present
+    name:
+      # ### for btrfs filesystem:
+      - grub-btrfs   # paketname bei Ubuntu (Standard) nicht vorhanden # Include btrfs snapshots in GRUB boot options
+  when:
+    - rootFsIsBtrfs != ''
+    - ansible_distribution in ["Archlinux"]
+    - etcdefgrub.stat.exists
 
 - name: Install basic packages for snapper on btrfs filesystem (Archlinux/Manjaro)
   ansible.builtin.package:
@@ -103,8 +116,6 @@
   args:
     creates: /home/{{ env_user }}/.ansible_snapperDefaultRootConfigCreated
   when:
-    # - item.mount  == '/'
-    # - item.fstype == 'btrfs'
     - rootFsIsBtrfs != ''
     # - snapperDefaultConfigExists == ''
     # - snapperDefaultConfigExists is not defined or snapperDefaultConfigExists == ''
@@ -120,8 +131,6 @@
       - snap-sync         # Use snapper snapshots to backup to external drive
   # with_items: ansible_mounts
   when:
-    # - item.mount  == '/'
-    # - item.fstype == 'btrfs'
     - rootFsIsBtrfs != ''
     - ansible_distribution in ["Archlinux"]
 

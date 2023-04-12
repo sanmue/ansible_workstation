@@ -2,6 +2,11 @@
 # ### grub2 bootloader
 # ### ################
 
+- name: Get stats of etc-default-grup (all)
+  ansible.builtin.stat:
+    path: /etc/default/grub
+  register: etcdefgrub
+
 - name: All settings misc - Enable GRUB Menu at boot (Archlinux)
   ansible.builtin.lineinfile:
     path: /etc/default/grub
@@ -12,15 +17,24 @@
     backup: true
   when:
     - ansible_distribution == "Archlinux"
+    - etcdefgrub.stat.exists
 
 # https://www.fosslinux.com/46741/things-to-do-after-installing-manjaro.htm
 # - aus Punkt 13: Install the Latest Kernel (or an Older LTS Kernel)
 - name: All settings misc - Enable GRUB Menu at boot (Archlinux)
   ansible.builtin.shell:
-    # cmd: sudo sed -Ei '/GRUB_TIMEOUT_STYLE=hidden/s/hidden/menu/' /etc/default/grub && sudo update-grub   # update-grup nicht stdm. Inst bei Archlinux
-    cmd: sudo sed -Ei '/GRUB_TIMEOUT_STYLE=hidden/s/hidden/menu/' /etc/default/grub && sudo grub-mkconfig -o /boot/grub/grub.cfg
+    cmd: sudo sed -Ei '/GRUB_TIMEOUT_STYLE=hidden/s/hidden/menu/' /etc/default/grub
   when:
     - ansible_distribution == "Archlinux"
+    - etcdefgrub.stat.exists
+
+- name: All settings misc - Update grub.cfg (Archlinux)
+  ansible.builtin.shell:
+    cmd: sudo grub-mkconfig -o /boot/grub/grub.cfg
+    # sudo update-grub   # update-grub nicht stdm. Inst bei Archlinux
+  when:
+    - ansible_distribution == "Archlinux"
+    - etcdefgrub.stat.exists
 
 
 # ##########################################
