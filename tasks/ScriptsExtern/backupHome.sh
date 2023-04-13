@@ -48,5 +48,5 @@ echo '========================================'
 echo -e "\n========================================"
 echo "Starte backup von '${source}/.config' nach '${dest}/.config'"
 #rsync -aPhEv "${paramRsync}" "${sourceConfigInclude}" "${sourceConfigExclude}" "${source}/.config/" "${dest}/.config/" | tee -a "/tmp/${logname}"
-rsync -aPhEv --include={'starship.toml','autokey/***','ulauncher/***'} --exclude='*' "${source}/.config/" "${dest}/.config/" | tee -a "/tmp/${logname}"
+rsync -aPhEv --include={'starship.toml','autokey/***','ulauncher/***','rclone/***'} --exclude='*' "${source}/.config/" "${dest}/.config/" | tee -a "/tmp/${logname}"
 echo '========================================'
