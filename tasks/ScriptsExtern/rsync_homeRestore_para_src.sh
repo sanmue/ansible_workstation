@@ -8,6 +8,7 @@ paramRsync='--dry-run'
 
 # ### Variablen / Prüfung:
 dest=${HOME}
+echo "Zielpfad ist: ${dest}"
 
 if [ $# -gt 0 ]; then   # wenn (mehr als 0) Übergabeparameter vorhanden
 	source=$1			# erster Parameter: Quellpfad
@@ -34,7 +35,7 @@ read -rp "Start mit beliebiger Eingabe"
 
 echo -e "\n ======================================== "
 echo "Starte restore von '${source}' nach '${dest}'"
-logname="restoreHome_$(date +"%Y-%m-%d_%H%M%S").log"
+logname="restoreHome_para_src_$(date +"%Y-%m-%d_%H%M%S").log"
 #rsync -aPhEv "${paramRsync}" "${source}/" "${dest}/" | tee "/tmp/${logname}"   # ### dry-run
 rsync -aPhEv "${source}/" "${dest}/" | tee "/tmp/${logname}"
 echo ' ======================================== '

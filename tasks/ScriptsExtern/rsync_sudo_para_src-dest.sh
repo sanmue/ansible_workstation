@@ -39,7 +39,7 @@ read -rp "Start mit beliebiger Eingabe"
 
 # ### VM (sudo)
 echo "Starte restore von '${source}/' nach '${dest}/'"
-logname="restoreVM_$(date +"%Y-%m-%d_%H%M%S").log"
+logname="restore_sudo_para_src-dest_$(date +"%Y-%m-%d_%H%M%S").log"
 #sudo rsync "${paramRsync}" -aPhEv "${source}/" "${dest}/" | tee "/tmp/${logname}"   # ### dry-run
 sudo rsync -aPhEv "${source}/" "${dest}/" | tee "/tmp/${logname}"
 echo " ======================================== "
