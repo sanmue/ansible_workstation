@@ -38,15 +38,15 @@ read -rp "Start mit beliebiger Eingabe"
 
 # 1: Sicherung $source
 echo -e "\n========================================"
-echo "Starte backup von '${source}' nach '${dest}'"
+echo "Starte backup von '${source}/' nach '${dest}/'"
 logname="backupHome_$(date +"%Y-%m-%d_%H%M%S").log"
 #rsync -aPhEv "${paramRsync}" "${sourceInclude}" "${sourceExclude} "${source}/" "${dest}/" | tee "/tmp/${logname}"
-rsync -aPhEv --include={'.ssh/***','.bashrc','.zshrc'} --exclude={'snap','Pictures/Screenshots/*','Downloads','.*','./*'} "${source}/" "${dest}/" | tee "/tmp/${logname}"
+rsync -aPhEv --include={'.ssh/***','.bashrc','.zshrc'} --exclude={'Downloads','pCloud-Mnt/*','Pictures/Screenshots/*','snap','.*','./*'} "${source}/" "${dest}/" | tee "/tmp/${logname}"
 echo '========================================'
 
 # 2: Sicherung $source/.config
 echo -e "\n========================================"
-echo "Starte backup von '${source}/.config' nach '${dest}/.config'"
+echo "Starte backup von '${source}/.config/' nach '${dest}/.config/'"
 #rsync -aPhEv "${paramRsync}" "${sourceConfigInclude}" "${sourceConfigExclude}" "${source}/.config/" "${dest}/.config/" | tee -a "/tmp/${logname}"
-rsync -aPhEv --include={'starship.toml','autokey/***','ulauncher/***','rclone/***'} --exclude='*' "${source}/.config/" "${dest}/.config/" | tee -a "/tmp/${logname}"
+rsync -aPhEv --include={'starship.toml','autokey/***','autostart/***','borg/***','rclone/***','remmina/***','ulauncher/***'} --exclude='*' "${source}/.config/" "${dest}/.config/" | tee -a "/tmp/${logname}"
 echo '========================================'

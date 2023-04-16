@@ -40,6 +40,7 @@
       - make
       # - man-pages-de
       - neofetch
+      - rclone   # sync tool
       - rsync   # bereits installiert (bootstrap)
       # - samba   # für VM: File sharing between host and Windows guest; https://wiki.manjaro.org/index.php/Virt-manager/en
       # - manjaro-settings-samba   # Adds an smb.conf file for Manjaro and enables samba
@@ -175,6 +176,7 @@
     name:
       - archlinux-keyring
       - base-devel        # insbes. wg. AUR Paketen   # bereits installiert (bootstrap)
+      - borg              # Deduplicating backup program with compression and authenticated encryption # GUI: vorta -> via yay in bootstrap.sh
       - chromium
       - cronie            # für clamtk + timeshift # Daemon that runs specified programs at scheduled times and related tools
       - code              # The Open Source build of Visual Studio Code (vscode) editor
@@ -382,6 +384,7 @@
     state: present
     name:
       - anki
+      - borgbackup   # Deduplicating backup program with compression and authenticated encryption
       - clamav-daemon
       - evolution-plugin-bogofilter
       - evolution-plugin-pstimport
@@ -473,6 +476,7 @@
       - libncursesw5-dev
       - xz-utils
       - tk-dev
+      - vorta   # Desktop Client for Borg Backup
   when: ansible_distribution == "Ubuntu"
 
 - name: Install basic packages - Get stat of .pyenv (all)

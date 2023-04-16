@@ -349,8 +349,8 @@ if [ "${installAUR}" == "j" ]; then
             # echo -e "\nInstall 'autokey-qt' from AUR (Arch)"
             # yay -S --needed autokey-qt # && touch "/home/${userid}/.ansible_bootstrap_autokeyQtInstalled"
 
-            echo -e "\nInstall gsconnect,dashtopanel,gtkhash,steam,ttf-meslo(10k),ulauncher from AUR (Arch, Manjaro)"
-            yay -S --needed gnome-shell-extension-gsconnect gnome-shell-extension-dash-to-panel gtkhash linux-steam-integration ttf-meslo-nerd-font-powerlevel10k units && touch "/home/${userid}/.ansible_bootstrap_severalAurPkgInstalled"
+            echo -e "\nInstall several AUR Packages: gsconnect,dashtopanel,gtkhash,steam,ttf-meslo(10k),ulauncher,vorta,... (Arch, Manjaro)"
+            yay -S --needed gnome-shell-extension-gsconnect gnome-shell-extension-dash-to-panel gtkhash linux-steam-integration ttf-meslo-nerd-font-powerlevel10k units vorta
 
             if [[ ${os} = *"Endeavour"* ]]; then   # bei Manjaro bereits über dessen repo installiert
                 yay -S --needed brave-bin
@@ -358,6 +358,8 @@ if [ "${installAUR}" == "j" ]; then
 
             echo -e "\nInstall ulauncher from AUR (Arch,Manjaro)"
             yay -S --needed ulauncher
+
+            touch "/home/${userid}/.ansible_bootstrap_severalAurPkgInstalled"
 
             echo -e "\nStart + enable ulauncher.service für '${userid}'"
             #su -u "${userid}" -c "systemctl --user enable --now ulauncher.service"

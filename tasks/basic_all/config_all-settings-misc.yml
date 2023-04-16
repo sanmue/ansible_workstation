@@ -1006,7 +1006,6 @@
     state: directory
     mode: '0755'
 
-
 - name: All settings misc - ulauncher - git clone extensions (all, env_user)
   become: true
   become_user: "{{ env_user }}"
@@ -1046,3 +1045,16 @@
     - { path: "https://github.com/NastuzziSamy/ulauncher-youtube-search.git",     name: "ulauncher-youtube-search" }
 #  when:
 #    - ansible_distribution in ["Ubuntu"]
+
+
+# ##########
+# ### rclone
+# ##########
+
+- name: All settings misc - rclone - copy script to mount pcloud (all, env_user)
+  ansible.builtin.copy:
+    src: files/config_all-settings-misc-rclone_pCloud-Mnt.sh
+    dest: "/home/{{ env_user }}/.local/bin/rclone_pCloud-Mnt.sh"
+    owner: "{{ env_user }}"
+    group: "{{ env_user }}"
+    mode: '0755'
