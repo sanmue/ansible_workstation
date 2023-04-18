@@ -37,25 +37,25 @@ videosMinDanceDest="${videosMinSrc}/v2b-min/001_Dance"   			# ist Kopier-Zielver
 videosMinSyncDanceSrc="${source}/Sync/Default/Videos/v2b/001_Dance"
 
 if [ -e "${videosMinDanceDest}" ]; then
-	echo "Quelle videosMinDanceDest ist: ${videosMinDanceDest}"
+	echo "Ziel videosMinDanceDest ist: ${videosMinDanceDest}"
 else
-	echo "Parameter 1: Quelle videosMinDanceDest '${videosMinDanceDest}' existiert nicht, Ende."
+	echo "Ziel videosMinDanceDest '${videosMinDanceDest}' existiert nicht, Ende."
 	exit 1
 fi
 if [ -e "${videosMinSyncDanceSrc}" ]; then
 	echo "Quelle videosMinSyncDanceSrc ist: ${videosMinSyncDanceSrc}"
 else
-	echo "Parameter 1: Quelle videosMinSyncDanceSrc '${videosMinSyncDanceSrc}' existiert nicht, Ende."
+	echo "Quelle videosMinSyncDanceSrc '${videosMinSyncDanceSrc}' existiert nicht, Ende."
 	exit 1
 fi
 
 # - Ziel:
-videosMinDest=$(dirname "${dest}")		# /run/media/user/extHD/home -> /run/media/user/extHD
-videosMinDest="${dest}/01_Videos-min"	# -> /run/media/user/extHD/01_Videos-min
+videosMinDest=$(dirname "${dest}")				# /run/media/user/extHD/home -> /run/media/user/extHD
+videosMinDest="${videosMinDest}/01_Videos-min"	# -> /run/media/user/extHD/01_Videos-min
 if [ -e "${videosMinDest}" ]; then
-	echo "Quelle videosMinDest ist: ${videosMinDest}"
+	echo "Ziel videosMinDest ist: ${videosMinDest}"
 else
-	echo "Parameter 1: Quelle videosMinDest '${videosMinDest}' existiert nicht, Ende."
+	echo "Ziel videosMinDest '${videosMinDest}' existiert nicht, Ende."
 	exit 1
 fi
 
