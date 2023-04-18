@@ -67,7 +67,7 @@ read -rp "Start mit beliebiger Eingabe"
 
 # 1: Sicherung $source
 echo -e "\n========================================"
-echo "Starte backup von '${source}/' nach '${dest}/'"
+echo "Starte Backup ausgwählter Teile von '${source}/' nach '${dest}/'"
 logname="rsync_homeBackup_para_dest_$(date +"%Y-%m-%d_%H%M%S").log"
 #rsync -aPhEv "${paramRsync}" "${sourceInclude}" "${sourceExclude} "${source}/" "${dest}/" | tee "/tmp/${logname}"
 #rsync -aPhEv "${paramRsync}" --include={'.ssh/***','.bashrc','.zshrc'} --exclude={'Downloads','pCloud-Mnt/*','Pictures/Screenshots/*','snap','.*','./*'} "${source}/" "${dest}/" | tee "/tmp/${logname}"
@@ -76,23 +76,30 @@ echo '========================================'
 
 # 2: Sicherung $source/.config
 echo -e "\n========================================"
-echo "Starte backup von '${source}/.config/' nach '${dest}/.config/'"
+echo "Starte Backup ausgwählter Teile von '${source}/.config/' nach '${dest}/.config/'"
 #rsync -aPhEv "${paramRsync}" "${sourceConfigInclude}" "${sourceConfigExclude}" "${source}/.config/" "${dest}/.config/" | tee -a "/tmp/${logname}"
 #rsync -aPhEv "${paramRsync}" --include={'starship.toml','autokey/***','autostart/***','borg/***','rclone/***','remmina/***','syncthing/***','ulauncher/***'} --exclude='*' "${source}/.config/" "${dest}/.config/" | tee -a "/tmp/${logname}"
 rsync -aPhEv --include={'starship.toml','autokey/***','autostart/***','borg/***','rclone/***','remmina/***','syncthing/***','ulauncher/***'} --exclude='*' "${source}/.config/" "${dest}/.config/" | tee -a "/tmp/${logname}"
 echo '========================================'
 
-# 3: Kopiere '$videosMinSyncDanceSrc' (Quelle) ins '$videosMinDanceDest' Verzeichnis (ebenfalls Quelle)
+# 3: Sicherung $source/.local
+echo -e "\n========================================"
+echo "Starte Backup ausgwählter Teile von '${source}/.local/' nach '${dest}/.local/'"
+#rsync -aPhEv "${paramRsync}" --include={'share/Vorta/***','bin/rclone_pCloud-Mnt.sh'} --exclude='*' "${source}/.local/" "${dest}/.local/" | tee -a "/tmp/${logname}"
+rsync -aPhEv --include={'share/Vorta/***','bin/rclone_pCloud-Mnt.sh'} --exclude='*' "${source}/.local/" "${dest}/.local/" | tee -a "/tmp/${logname}"
+echo '========================================'
+
+# 4: Kopiere '$videosMinSyncDanceSrc' (Quelle) ins '$videosMinDanceDest' Verzeichnis (ebenfalls Quelle)
 # - ja, Dateien existieren dann doppelt auf Quelle
 echo -e "\n========================================"
-echo "Starte backup von '${videosMinSyncDanceSrc}/' nach '${videosMinDanceDest}/'"
+echo "Starte Backup von '${videosMinSyncDanceSrc}/' nach '${videosMinDanceDest}/'"
 #rsync -aPhEv "${paramRsync}" "${videosMinSyncDanceSrc}" "${videosMinDanceDest}/" | tee -a "/tmp/${logname}"
 rsync -aPhEv "${videosMinSyncDanceSrc}/" "${videosMinDanceDest}/" | tee -a "/tmp/${logname}"
 echo '========================================'
 
-# 4: Sicherung '$videosMinSrc' (Quelle, gesamt inkl. Dance)
+# 5: Sicherung '$videosMinSrc' (Quelle, gesamt inkl. Dance)
 echo -e "\n========================================"
-echo "Starte backup von '${videosMinSrc}' nach '${videosMinDest}'"
+echo "Starte Backup von '${videosMinSrc}' nach '${videosMinDest}'"
 #rsync -aPhEv "${paramRsync}" "${videosMinSrc}/" "${videosMinDest}/" | tee -a "/tmp/${logname}"
 rsync -aPhEv "${videosMinSrc}/" "${videosMinDest}/" | tee -a "/tmp/${logname}"
 echo '========================================'
