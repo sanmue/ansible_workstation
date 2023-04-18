@@ -88,7 +88,7 @@ echo "Starte Backup ausgwählter Teile von '${source}/.local/' nach '${dest}/.lo
 #rsync -aPhEv "${paramRsync}" "${source}/.local/bin/rclone_pCloud-Mnt.sh" "${dest}/.local/bin/" | tee -a "/tmp/${logname}"
 #rsync -aPhEv "${paramRsync}" "${source}/.local/share/Vorta" "${dest}/.local/share/Vorta/" | tee -a "/tmp/${logname}"
 rsync -aPhEv "${source}/.local/bin/rclone_pCloud-Mnt.sh" "${dest}/.local/bin/" | tee -a "/tmp/${logname}"
-rsync -aPhEv "${source}/.local/share/Vorta/" "${dest}/.local/share/Vorta/" | tee -a "/tmp/${logname}"
+rsync -aPhEv "${source}/.local/share/Vorta" "${dest}/.local/share/" | tee -a "/tmp/${logname}"
 echo '========================================'
 
 # 4: Kopiere '$videosMinSyncDanceSrc' (Quelle) ins '$videosMinDanceDest' Verzeichnis (ebenfalls Quelle)
