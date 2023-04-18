@@ -28,20 +28,21 @@ if [ -e "${dest}" ]; then				# Prüfung, ob Sicherungsziel existiert
 	echo "Zielpfad ist: ${dest}"
 else
 	echo "Parameter 2: Zielpfad '${dest}' existiert nicht, Ende."
-	dest="/var/lib/libvirt/images"
-	echo "Standard-Zielpfad wird verwendet: '${dest}'"
+	exit 1
+	#dest="/var/lib/libvirt/images"
+	#echo "Standard-Zielpfad wird verwendet: '${dest}'"
 fi
 
 
-# ### #########
-# ### rsync VMs
+# ### ###############
+# ### rsync VM Images
 
 read -rp "Start mit beliebiger Eingabe"
 
 # ### VM
 echo -e "\n ======================================== "
 echo "Starte rsync (sudo) von '${source}' nach '${dest}'"
-logname="rsync_VmRestore_para_src-dest_$(date +"%Y-%m-%d_%H%M%S").log"
+logname="rsync_VmImages_para_src-dest_$(date +"%Y-%m-%d_%H%M%S").log"
 #sudo rsync "${paramRsync}" -aPhEv "${source}/" "${dest}/" | tee "/tmp/${logname}"
 sudo rsync -aPhEv "${source}/" "${dest}/" | tee "/tmp/${logname}"
 echo " ======================================== "
