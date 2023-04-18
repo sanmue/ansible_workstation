@@ -18,7 +18,7 @@ fi
 
 # Prüfung Quell:
 if [ -e "${source}" ]; then             # Prüfung, ob Sicherungsziel existiert
-	echo "Quellpfad ist: ${dest}"
+	echo "Quellpfad ist: ${source}"
 else
 	echo "Parameter 1: Quellpfad '${source}' existiert nicht, Ende."
 	exit 1
