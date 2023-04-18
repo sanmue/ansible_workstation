@@ -1,6 +1,6 @@
 <domain type='kvm'>
-  <name>UbuntuVM</name>
-  <uuid>4a1c1859-031d-4ec3-8dd2-2b4916a5feee</uuid>
+  <name>ubuntu</name>
+  <uuid>3fc9ac6d-dde3-424a-97c9-5efd6954b817</uuid>
   <metadata>
     <libosinfo:libosinfo xmlns:libosinfo="http://libosinfo.org/xmlns/libvirt/domain/1.0">
       <libosinfo:os id="http://ubuntu.com/ubuntu/22.04"/>
@@ -9,7 +9,7 @@
   <memory unit='KiB'>8388608</memory>
   <currentMemory unit='KiB'>4194304</currentMemory>
   <vcpu placement='static'>2</vcpu>
-  <os firmware='efi'>
+  <os>
     <type arch='x86_64' machine='pc-q35-7.2'>hvm</type>
     <boot dev='hd'/>
   </os>
@@ -35,7 +35,7 @@
     <emulator>/usr/bin/qemu-system-x86_64</emulator>
     <disk type='file' device='disk'>
       <driver name='qemu' type='qcow2' discard='unmap'/>
-      <source file='/var/lib/libvirt/images/UbuntuVM.qcow2'/>
+      <source file='/var/lib/libvirt/images/ubuntu.qcow2'/>
       <target dev='vda' bus='virtio'/>
       <address type='pci' domain='0x0000' bus='0x04' slot='0x00' function='0x0'/>
     </disk>
@@ -126,7 +126,7 @@
       <address type='pci' domain='0x0000' bus='0x03' slot='0x00' function='0x0'/>
     </controller>
     <interface type='network'>
-      <mac address='52:54:00:3f:58:49'/>
+      <mac address='52:54:00:11:c7:1e'/>
       <source network='default'/>
       <model type='virtio'/>
       <address type='pci' domain='0x0000' bus='0x01' slot='0x00' function='0x0'/>
@@ -152,9 +152,6 @@
     </input>
     <input type='mouse' bus='ps2'/>
     <input type='keyboard' bus='ps2'/>
-    <tpm model='tpm-crb'>
-      <backend type='emulator' version='2.0'/>
-    </tpm>
     <graphics type='spice' autoport='yes'>
       <listen type='address'/>
       <image compression='off'/>
