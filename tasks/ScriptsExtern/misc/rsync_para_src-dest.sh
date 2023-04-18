@@ -32,14 +32,13 @@ else
 fi
 
 
-# ### ###############################
-# ### Restore VM
+# ### #####
+# ### rsync
 
 read -rp "Start mit beliebiger Eingabe"
 
-# ### VM (sudo)
-echo "Starte restore von '${source}/' nach '${dest}/'"
-logname="restore_sudo_para_src-dest_$(date +"%Y-%m-%d_%H%M%S").log"
-#sudo rsync "${paramRsync}" -aPhEv "${source}/" "${dest}/" | tee "/tmp/${logname}"   # ### dry-run
-sudo rsync -aPhEv "${source}/" "${dest}/" | tee "/tmp/${logname}"
+echo "Starte rsync (sudo) von '${source}/' nach '${dest}/'"
+logname="rsync_sudo_para_src-dest_$(date +"%Y-%m-%d_%H%M%S").log"
+#rsync "${paramRsync}" -aPhEv "${source}/" "${dest}/" | tee "/tmp/${logname}"   # ### dry-run
+rsync -aPhEv "${source}/" "${dest}/" | tee "/tmp/${logname}"
 echo " ======================================== "

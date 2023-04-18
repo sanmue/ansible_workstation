@@ -32,23 +32,24 @@ else
 fi
 
 
-# ### ###############################
-# ### Sicherung (Mirror)
+# ### ##############
+# ### rsync (Mirror)
 
 read -rp "Start mit beliebiger Eingabe"
 
 # ### Gesamt, ohne VM
 echo -e "\n ======================================== "
-echo "Starte backup von '${source}' nach '${dest}' - MIRROR ohne '01_VM'"
-logname="backupMirror_noVM_$(date +"%Y-%m-%d_%H%M%S").log"
+echo "Starte rsync von '${source}' nach '${dest}' - MIRROR ohne '01_VM'"
+logname="rsync_mirror-extHd_para_src-dest_ohneVM_$(date +"%Y-%m-%d_%H%M%S").log"
 # exclude '01_VM' im ersten Lauf wg. sudo   
 # ### dry-run:
 #rsync "${paramRsync}" -aPhEv --delete --force --exclude={'01_VM','lost+found','.Trash*'} "${source}/" "${dest}/" | tee "/tmp/${logname}"   
 rsync -aPhEv --delete --force --exclude={'01_VM','lost+found','.Trash*'} "${source}/" "${dest}/" | tee "/tmp/${logname}"
 
 # ### VM (sudo)
-echo "Starte backup von '${source}/01_VM/' nach '${dest}/01_VM/'"
-logname="backupMirrorVM_$(date +"%Y-%m-%d_%H%M%S").log"
+echo "Starte rsync von '${source}/01_VM/' nach '${dest}/01_VM/'"
+read -rp "Start mit beliebiger Eingabe"
+logname="rsync_mirror-extHd_para_src-dest_VM_$(date +"%Y-%m-%d_%H%M%S").log"
 #sudo rsync "${paramRsync}" -aPhEv --delete --force "${source}/01_VM/" "${dest}/01_VM/" | tee "/tmp/${logname}"
 sudo rsync -aPhEv --delete --force "${source}/01_VM/" "${dest}/01_VM/" | tee "/tmp/${logname}"
 echo " ======================================== "

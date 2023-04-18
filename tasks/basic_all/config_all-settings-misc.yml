@@ -37,6 +37,21 @@
     - etcdefgrub.stat.exists
 
 
+# ##############################
+# ### Create /home/01_Videos-min
+# ### ##########################
+- name: All settings misc - Create '/home/01_Videos-min' - env_user permission (all)
+  ansible.builtin.file:
+    path: /home/01_Videos-min
+    state: directory
+    owner: "{{ env_user }}"
+    group: "{{ env_user }}"
+    mode: '0710'
+  when:
+    - ansible_distribution == "Archlinux"
+    - etcdefgrub.stat.exists
+
+
 # ##########################################
 # ### bashrc - add additional Paths + Config
 # ### ######################################

@@ -565,7 +565,7 @@
 # - name: Set settings-daemon - plugin - color - night-light-enabled (Gnome)
 #   community.general.dconf:
 #     key: "/org/gnome/settings-daemon/plugins/color/night-light-enabled"
-#     value: "true"
+#     value: "false"
 #     state: present
 #   when:
 #     - env_desktop in ["gnome", "ubuntu:gnome"]
@@ -573,7 +573,7 @@
 - name: Set settings-daemon - plugin - color - night-light-enabled (Gnome)
   become: true
   become_user: "{{ env_user }}"
-  ansible.builtin.shell: dconf write /org/gnome/settings-daemon/plugins/color/night-light-enabled "true"
+  ansible.builtin.shell: dconf write /org/gnome/settings-daemon/plugins/color/night-light-enabled "false"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 

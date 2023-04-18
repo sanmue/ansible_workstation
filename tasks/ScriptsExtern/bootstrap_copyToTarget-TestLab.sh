@@ -14,7 +14,7 @@
 # #####################
 
 # IP-Adresse Ziel
-if [ $# == 1 ]; then   # wenn Anzahl Argumente (die an Skript übergeben wurden) = 1 ist
+if [ $# == 1 ]; then   # wenn Anzahl Übergabeparameter (Argumente) = 1
     targetIP=$1
 else
     read -rp "IP des Zielrechners eingeben: " targetIP
