@@ -6,6 +6,7 @@
     method: system
   with_items:
     - 'com.belmoussaoui.Authenticator'
+    - 'org.cryptomator.Cryptomator'
     - 'com.github.tchx84.Flatseal'
     - 'de.willuhn.Jameica'
     - 'net.cozic.joplin_desktop'
