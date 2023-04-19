@@ -1,6 +1,6 @@
-- name: install flatpak packages for workstations (all)
+- name: Install flatpak packages for workstations (all)
   tags: workstation,ubuntu,arch,flatpak
-  flatpak:
+  community.general.flatpak:
     name: '{{ item }}'
     state: present
     method: system
@@ -13,9 +13,9 @@
     - 'de.haeckerfelix.Shortwave'
 
 
-- name: install flatpak packages (Extension Manager) for Gnome (Gnome, all)
+- name: Install flatpak packages (Extension Manager) for Gnome (Gnome, all)
   tags: workstation,ubuntu,arch,flatpak
-  flatpak:
+  community.general.flatpak:
     name: '{{ item }}'
     state: present
     method: system
@@ -26,9 +26,9 @@
     - env_desktop in ["gnome", "ubuntu:gnome"]
     
 
-- name: install flatpak packages for workstations (Archlinux)
+- name: Install flatpak packages for workstations (Archlinux)
   tags: workstation,arch,flatpak
-  flatpak:
+  community.general.flatpak:
     name: '{{ item }}'
     state: present
     method: system
@@ -38,9 +38,9 @@
     - ansible_distribution in ["Archlinux"]
 
 
-- name: install flatpak packages for workstations (Ubuntu)
+- name: Install flatpak packages for workstations (Ubuntu)
   tags: workstation,ubuntu,flatpak
-  flatpak:
+  community.general.flatpak:
     name: '{{ item }}'
     state: present
     method: system
