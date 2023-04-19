@@ -12,6 +12,7 @@
       - bleachbit
       - clamav
       - clamtk
+      - cryptsetup   # benötigt für LUKS # sollte schon installiert sein
       - cups
       - curl
       - deja-dup   # A trivial-to-use personal backup tool to protect against accidental data loss
