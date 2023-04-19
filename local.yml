@@ -59,7 +59,7 @@
     - name: Install local packages
       ansible.builtin.import_tasks: tasks/basic_all/packages_workstation-localPackageInstall.yml
     # - Python pip install:
-    - name: pip install
+    - name: Pip install
       ansible.builtin.import_tasks: tasks/basic_all/packages_workstation-pip.yml
     # ----------------------------------------------------------
     # ### Config Firewall, Cron, Services, sonstige Settings:
