@@ -8,15 +8,18 @@
 # ### grub-btrfsd - Regenerate grub-btrfs.cfg
 # -------------------------------------------
 # github.com/Antynea/grub-btrfs
-- name: All services misc - start+enable grub-btrfsd (all)
-  ansible.builtin.systemd:
-    name: grub-btrfsd.service
-    state: started
-    enabled: true
-    daemon_reload: true
-  when:
-    - rootFsIsBtrfs != ''     # Variable aus packages_workstation-basic.yml
-    - etcdefgrub.stat.exists  # Status aus packages_workstation-basic.yml
+#
+# auskommentiert, da Ausführung service auf Fehler läuft
+#
+# - name: All services misc - start+enable grub-btrfsd (Archlinlux)
+#  ansible.builtin.systemd:
+#    name: grub-btrfsd.service
+#    state: started
+#    enabled: true
+#    daemon_reload: true
+#  when:
+#    - rootFsIsBtrfs != ''     # Variable aus packages_workstation-basic.yml
+#    - etcdefgrub.stat.exists  # Status aus packages_workstation-basic.yml
 
 
 # ---------------------
