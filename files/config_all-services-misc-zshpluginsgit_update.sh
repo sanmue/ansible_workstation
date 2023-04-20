@@ -56,7 +56,7 @@ function mail_allLogonUser {
     # Param2: Mail Message
     arrUser=($(users))   # array of logged on users
 
-    for user in ${arrUser}; do
+    for user in ${arrUser}; do  # for user in "${arrUser[@]}"; do   # so müsste korrekt sein: TODO:test
         echo -e "${2}" | /usr/bin/mail -s "${1}" "${user}"
     done
 }
