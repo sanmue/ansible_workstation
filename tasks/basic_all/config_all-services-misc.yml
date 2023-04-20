@@ -3,6 +3,22 @@
 # ##########
 # systemweit
 
+
+# -------------------------------------------
+# ### grub-btrfsd - Regenerate grub-btrfs.cfg
+# -------------------------------------------
+# github.com/Antynea/grub-btrfs
+- name: All services misc - start+enable grub-btrfsd (all)
+  ansible.builtin.systemd:
+    name: start+enable grub-btrfsd.service
+    state: started
+    enabled: true
+    daemon_reload: true
+  when:
+    - rootFsIsBtrfs != ''     # Variable aus packages_workstation-basic.yml
+    - etcdefgrub.stat.exists  # Status aus packages_workstation-basic.yml
+
+
 # ---------------------
 # ### cups OpenPrinting
 # ---------------------
@@ -261,7 +277,6 @@
     daemon_reload: true
   # when:
   #  - ansible_distribution in ["Ubuntu"]
-
 
 
 # ########
