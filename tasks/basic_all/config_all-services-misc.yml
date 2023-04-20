@@ -10,7 +10,7 @@
 # github.com/Antynea/grub-btrfs
 - name: All services misc - start+enable grub-btrfsd (all)
   ansible.builtin.systemd:
-    name: start+enable grub-btrfsd.service
+    name: grub-btrfsd.service
     state: started
     enabled: true
     daemon_reload: true
