@@ -4,22 +4,32 @@
 # systemweit
 
 
+- name: Config all services misc - Check if btrfs filesystem + register result in variable (all)
+  ansible.builtin.shell: mount | grep "^/dev" | grep "on / " | grep "btrfs"
+  register: rootFsIsBtrfs
+  ignore_errors: true
+
+- name: Config all services misc - Get stats of etc-default-grup (all)
+  ansible.builtin.stat:
+    path: /etc/default/grub
+  register: etcdefgrub
+
 # -------------------------------------------
 # ### grub-btrfsd - Regenerate grub-btrfs.cfg
 # -------------------------------------------
 # github.com/Antynea/grub-btrfs
-#
-# auskommentiert, da Ausführung service auf Fehler läuft
-#
-# - name: All services misc - start+enable grub-btrfsd (Archlinlux)
-#  ansible.builtin.systemd:
-#    name: grub-btrfsd.service
-#    state: started
-#    enabled: true
-#    daemon_reload: true
-#  when:
-#    - rootFsIsBtrfs != ''     # Variable aus packages_workstation-basic.yml
-#    - etcdefgrub.stat.exists  # Status aus packages_workstation-basic.yml
+# benötigt inotify-tools
+
+- name: All services misc - start+enable grub-btrfsd (Archlinlux)
+  ansible.builtin.systemd:
+    name: grub-btrfsd.service
+    state: started
+    enabled: true
+    daemon_reload: true
+  when:
+    - rootFsIsBtrfs != ''     # Variable aus packages_workstation-basic.yml; neu: s.o.
+    - etcdefgrub.stat.exists  # Status aus packages_workstation-basic.yml; neu: s.o.
+    # - ansible_distribution in ["Archlinux"]
 
 
 # ---------------------

@@ -38,6 +38,7 @@
       - htop
       - hunspell
       # - hyphen-de
+      - inotify-tools # benötigt von 'grub-btrfsd.service' # command-line programs providing a simple interface to inotify
       - inxi
       - kdeconnect
       - keepassxc
