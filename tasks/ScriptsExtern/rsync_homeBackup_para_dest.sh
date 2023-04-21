@@ -78,8 +78,8 @@ echo '========================================'
 echo -e "\n========================================"
 echo "Starte Backup ausgwählter Teile von '${source}/.config/' nach '${dest}/.config/'"
 #rsync -aPhEv "${paramRsync}" "${sourceConfigInclude}" "${sourceConfigExclude}" "${source}/.config/" "${dest}/.config/" | tee -a "/tmp/${logname}"
-#rsync -aPhEv "${paramRsync}" --include={'starship.toml','autokey/***','autostart/***','borg/***','rclone/***','remmina/***','syncthing/***','ulauncher/***'} --exclude='*' "${source}/.config/" "${dest}/.config/" | tee -a "/tmp/${logname}"
-rsync -aPhEv --include={'starship.toml','autokey/***','autostart/***','borg/***','rclone/***','remmina/***','syncthing/***','ulauncher/***'} --exclude='*' "${source}/.config/" "${dest}/.config/" | tee -a "/tmp/${logname}"
+#rsync -aPhEv "${paramRsync}" --include={'starship.toml','autokey/***','autostart/***','borg/***','Cryptomator/***','rclone/***','remmina/***','syncthing/***','ulauncher/***'} --exclude='*' "${source}/.config/" "${dest}/.config/" | tee -a "/tmp/${logname}"
+rsync -aPhEv --include={'starship.toml','autokey/***','autostart/***','borg/***','Cryptomator/***','rclone/***','remmina/***','syncthing/***','ulauncher/***'} --exclude='*' "${source}/.config/" "${dest}/.config/" | tee -a "/tmp/${logname}"
 echo '========================================'
 
 # 3: Sicherung $source/.local

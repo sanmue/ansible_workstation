@@ -27,7 +27,7 @@ fi
 /home/sandro/dev/Ansible/ansible_workstation/tasks/ScriptsExtern
 
 # Liste Sicherungspfade ausgehend von $source:
-arrBak=("dev/Ansible/ansible_workstation/tasks/ScriptsExtern" "RescueSystem/AppsConfBak" "Sync/Default/AppsConfBak/Keepass" ".config/borg" ".config/rclone" ".local/share/Vorta" ".ssh")
+arrBak=("dev/Ansible/ansible_workstation/tasks/ScriptsExtern" "RescueSystem/AppsConfBak" "Sync/Default/AppsConfBak/Keepass" ".config/borg" ".config/Cryptomator" ".config/rclone" ".local/share/Vorta" ".ssh")
 
 
 # ### ###########################
