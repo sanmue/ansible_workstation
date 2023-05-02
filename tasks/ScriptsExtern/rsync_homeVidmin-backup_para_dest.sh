@@ -2,12 +2,24 @@
 
 #set -x
 
+# ### Skript zur Sicherung Home-Verzeichnis aktueller User inkl. vorausgewählte .config-Dateien
+# ### und "01_Videos-min"
+#     - 1.) rsync von "Sync" (Dance) nach "01_Videos-min" (Dance)
+#     - 2.) rsync "01_Videos-min" Quelle nach "01_Videos-min" Ziel
+#
+# ### einfache Archivierung rsync Quelle-Ziel (mit include/exclude)
+# - Quellpfad: Home-Verzeichnis aktueller User (aus $HOME)
+# - Parameter 1: Zielpfad
+
+
 # ### rsync - zusätzliche Parameter:
 #paramRsync='--dry-run'
 #paramRsync=''
 
 # ### Variablen - für backup home Verzeichnis aktueller User
 source=${HOME}
+echo "Quellpfad ist: ${source}"
+
 #sourceInclude="--include={'.ssh/***','.bashrc','.zshrc'}"
 #sourceExclude="--exclude={'snap','Pictures/Screenshots/*','Downloads','.*','./*'}"
 #sourceConfigInclude="--include={'starship.toml','autokey/***','ulauncher/***'}"
@@ -91,15 +103,22 @@ rsync -aPhEv "${source}/.local/bin/rclone_pCloud-Mnt.sh" "${dest}/.local/bin/" |
 rsync -aPhEv "${source}/.local/share/Vorta" "${dest}/.local/share/" | tee -a "/tmp/${logname}"
 echo '========================================'
 
-# 4: Kopiere '$videosMinSyncDanceSrc' (Quelle) ins '$videosMinDanceDest' Verzeichnis (ebenfalls Quelle)
-# - ja, Dateien existieren dann doppelt auf Quelle
+# 4: Sicherung $source/.var (flatpak)
+echo -e "\n========================================"
+echo "Starte Backup ausgwählter Teile von '${source}/.var/' nach '${dest}/.var/'"
+#rsync -aPhEv "${paramRsync}" "${source}/.var/app/net.ankiweb.Anki/data" "${dest}/.var/app/net.ankiweb.Anki/data/" | tee -a "/tmp/${logname}"
+rsync -aPhEv "${source}/.var/app/net.ankiweb.Anki/data" "${dest}/.var/app/net.ankiweb.Anki/" | tee -a "/tmp/${logname}"
+echo '========================================'
+
+# 5: Kopiere '$videosMinSyncDanceSrc' (Quelle) ins '$videosMinDanceDest' Verzeichnis (ebenfalls Quelle)
+# - ja, Dateien existieren dann ggf. doppelt an der Quelle (wenn nicht vorher manuell bereinigt wurde)
 echo -e "\n========================================"
 echo "Starte Backup von '${videosMinSyncDanceSrc}/' nach '${videosMinDanceDest}/'"
 #rsync -aPhEv "${paramRsync}" "${videosMinSyncDanceSrc}" "${videosMinDanceDest}/" | tee -a "/tmp/${logname}"
 rsync -aPhEv "${videosMinSyncDanceSrc}/" "${videosMinDanceDest}/" | tee -a "/tmp/${logname}"
 echo '========================================'
 
-# 5: Sicherung '$videosMinSrc' (Quelle, gesamt inkl. Dance)
+# 6: Sicherung '$videosMinSrc' (Quelle, gesamt inkl. Dance)
 echo -e "\n========================================"
 echo "Starte Backup von '${videosMinSrc}' nach '${videosMinDest}'"
 #rsync -aPhEv "${paramRsync}" "${videosMinSrc}/" "${videosMinDest}/" | tee -a "/tmp/${logname}"

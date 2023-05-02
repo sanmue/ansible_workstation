@@ -51,9 +51,9 @@ function notify_allGuiUser {
 function mail_allLogonUser { 
 	# Param1: Mail Subject
     # Param2: Mail Message
-    arrUser=($(users))      # array of logged on users
+    arrUser="$(users)"      # array of logged on users
 
-    for user in ${arrUser}; do
+    for user in "${arrUser[@]}"; do
         echo -e "${2}" | /usr/bin/mail -s "${1}" "${user}"
     done
 }

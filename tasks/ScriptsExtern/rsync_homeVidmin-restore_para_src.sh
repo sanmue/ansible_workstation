@@ -2,6 +2,14 @@
 
 #set -x
 
+# ### Skript zur Wiederherstellung Home-Verzeichnis aktueller User inkl. vorausgewählte .config-Dateien
+# ### und "01_Videos-min"
+#
+# ### einfache Archivierung rsync Quelle-Ziel (mit include/exclude)
+# - Zielpfad: Home-Verzeichnis aktueller User (aus $HOME)
+# - Parameter 1: Quellpfad
+
+
 # ### rsync - zusätzliche Parameter:
 paramRsync='--dry-run'
 #paramRsync=''

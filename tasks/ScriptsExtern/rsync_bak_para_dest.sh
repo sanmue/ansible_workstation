@@ -8,6 +8,7 @@ paramRsync='--dry-run'
 
 # ### Variablen
 source=${HOME}
+echo "Zu sicherndes Home-Verzeichnis: ${source}"
 
 if [ $# -gt 0 ]; then   # wenn (mehr als 0) Übergabeparameter vorhanden
 	dest=$1             # erster Parameter: Pfad Sicherungsziel
@@ -24,10 +25,9 @@ else
 	echo "Parameter 1: Zielpfad '${dest}' existiert nicht, Ende."
 	exit 1
 fi
-/home/sandro/dev/Ansible/ansible_workstation/tasks/ScriptsExtern
 
 # Liste Sicherungspfade ausgehend von $source:
-arrBak=("dev/Ansible/ansible_workstation/tasks/ScriptsExtern" "RescueSystem/AppsConfBak" "Sync/Default/AppsConfBak/Keepass" ".config/borg" ".config/Cryptomator" ".config/rclone" ".local/share/Vorta" ".ssh")
+arrBak=("dev/Ansible/ansible_workstation/tasks/ScriptsExtern" "RescueSystem/AppsConfBak" "Sync/Default/AppsConfBak/Keepass" ".config/borg" ".config/Cryptomator" ".config/rclone" ".config/syncthing"  ".local/share/Vorta" ".ssh")
 
 
 # ### ###########################

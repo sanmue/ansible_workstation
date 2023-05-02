@@ -2,6 +2,12 @@
 
 #set -x
 
+# ### Skript rsync der VM-Images
+# ### einfache Archivierung rsync Quelle-Ziel
+# - Parameter1: Quell-Pfad
+# - Parameter2: Zielpfad
+
+
 # ### rsync - zusätzliche Parameter:
 paramRsync='--dry-run'
 #paramRsync=''

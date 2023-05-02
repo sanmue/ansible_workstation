@@ -42,14 +42,22 @@
 # ### ##########################
 - name: All settings misc - Create '/home/01_Videos-min' - env_user permission (all)
   ansible.builtin.file:
-    path: /home/01_Videos-min
+    path: '/home/01_Videos-min/'
     state: directory
     owner: "{{ env_user }}"
     group: "{{ env_user }}"
     mode: '0710'
-  when:
-    - ansible_distribution == "Archlinux"
-    - etcdefgrub.stat.exists
+
+# ######################
+# ### Create /home/01_VM
+# ### ##################
+- name: All settings misc - Create '/home/01_VM/images' (all)
+  ansible.builtin.file:
+    path: '/home/01_VM/images'
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
 
 
 # ##########################################
