@@ -83,23 +83,27 @@ echo "Starte Backup ausgwählter Teile von '${source}/' nach '${dest}/'"
 logname="rsync_homeBackup_para_dest_$(date +"%Y-%m-%d_%H%M%S").log"
 #rsync -aPhEv "${paramRsync}" "${sourceInclude}" "${sourceExclude} "${source}/" "${dest}/" | tee "/tmp/${logname}"
 #rsync -aPhEv "${paramRsync}" --include={'.ssh/***','.bashrc','.zshrc'} --exclude={'Downloads','pCloud-Mnt/*','Pictures/Screenshots/*','snap','.*','./*'} "${source}/" "${dest}/" | tee "/tmp/${logname}"
-rsync -aPhEv --include={'.ssh/***','.bashrc','.zshrc'} --exclude={'Downloads','pCloud-Mnt/*','Pictures/Screenshots/*','snap','.*','./*'} "${source}/" "${dest}/" | tee "/tmp/${logname}"
+rsync -aPhEv --include={'.ssh/***','.bashrc','.zshrc'} --exclude={'Downloads','pCloudDrive','pCloud-Mnt/*','Pictures/Screenshots/*','snap','.*','./*'} "${source}/" "${dest}/" | tee "/tmp/${logname}"
 echo '========================================'
 
 # 2: Sicherung $source/.config
 echo -e "\n========================================"
 echo "Starte Backup ausgwählter Teile von '${source}/.config/' nach '${dest}/.config/'"
 #rsync -aPhEv "${paramRsync}" "${sourceConfigInclude}" "${sourceConfigExclude}" "${source}/.config/" "${dest}/.config/" | tee -a "/tmp/${logname}"
-#rsync -aPhEv "${paramRsync}" --include={'starship.toml','autokey/***','autostart/***','borg/***','Cryptomator/***','rclone/***','remmina/***','syncthing/***','ulauncher/***'} --exclude='*' "${source}/.config/" "${dest}/.config/" | tee -a "/tmp/${logname}"
-rsync -aPhEv --include={'starship.toml','autokey/***','autostart/***','borg/***','Cryptomator/***','rclone/***','remmina/***','syncthing/***','ulauncher/***'} --exclude='*' "${source}/.config/" "${dest}/.config/" | tee -a "/tmp/${logname}"
+#rsync -aPhEv "${paramRsync}" --include={'starship.toml','autokey/***','autostart/***','borg/***','Cryptomator/***','evolution/***','rclone/***','remmina/***','syncthing/***','ulauncher/***'} --exclude='*' "${source}/.config/" "${dest}/.config/" | tee -a "/tmp/${logname}"
+rsync -aPhEv --include={'starship.toml','autokey/***','autostart/***','borg/***','Cryptomator/***','evolution/***','rclone/***','remmina/***','syncthing/***','ulauncher/***'} --exclude='*' "${source}/.config/" "${dest}/.config/" | tee -a "/tmp/${logname}"
 echo '========================================'
 
 # 3: Sicherung $source/.local
 echo -e "\n========================================"
 echo "Starte Backup ausgwählter Teile von '${source}/.local/' nach '${dest}/.local/'"
 #rsync -aPhEv "${paramRsync}" "${source}/.local/bin/rclone_pCloud-Mnt.sh" "${dest}/.local/bin/" | tee -a "/tmp/${logname}"
-#rsync -aPhEv "${paramRsync}" "${source}/.local/share/Vorta" "${dest}/.local/share/Vorta/" | tee -a "/tmp/${logname}"
+#rsync -aPhEv "${paramRsync}" "${source}/.local/share/evolution" "${dest}/.local/share/" | tee -a "/tmp/${logname}"
+#rsync -aPhEv "${paramRsync}" "${source}/.local/share/remmina" "${dest}/.local/share/" | tee -a "/tmp/${logname}"
+#rsync -aPhEv "${paramRsync}" "${source}/.local/share/Vorta" "${dest}/.local/share/" | tee -a "/tmp/${logname}"
 rsync -aPhEv "${source}/.local/bin/rclone_pCloud-Mnt.sh" "${dest}/.local/bin/" | tee -a "/tmp/${logname}"
+rsync -aPhEv "${source}/.local/share/evolution" "${dest}/.local/share/" | tee -a "/tmp/${logname}"
+rsync -aPhEv "${source}/.local/share/remmina" "${dest}/.local/share/" | tee -a "/tmp/${logname}"
 rsync -aPhEv "${source}/.local/share/Vorta" "${dest}/.local/share/" | tee -a "/tmp/${logname}"
 echo '========================================'
 
