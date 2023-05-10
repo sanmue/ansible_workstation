@@ -12,7 +12,6 @@
 
 # ### rsync - zusätzliche Parameter:
 paramRsync='--dry-run'
-#paramRsync=''
 
 # ### Variablen / Prüfung:
 dest="${HOME}"

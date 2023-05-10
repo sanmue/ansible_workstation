@@ -4,7 +4,6 @@
 
 # ### rsync - zusätzliche Parameter:
 paramRsync='--dry-run'
-#paramRsync=''
 
 # ### Variablen
 source=${HOME}

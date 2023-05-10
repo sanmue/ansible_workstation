@@ -10,7 +10,6 @@
 
 # ### rsync - zusätzliche Parameter:
 paramRsync='--dry-run'
-#paramRsync=''
 
 if [ $# -gt 1 ]; then   # wenn (mehr als 1) Übergabeparameter vorhanden
 	source=$1

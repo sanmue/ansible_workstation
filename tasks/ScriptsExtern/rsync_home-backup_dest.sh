@@ -14,7 +14,6 @@
 
 # ### rsync - zusätzliche Parameter:
 paramRsync='--dry-run'
-#paramRsync=''
 
 # ### Variablen - für backup home Verzeichnis aktueller User
 source=${HOME}
