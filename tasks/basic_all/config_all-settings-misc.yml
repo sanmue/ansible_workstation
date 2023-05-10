@@ -998,7 +998,7 @@
   become_user: "{{ env_user }}"
   ansible.builtin.copy:
     src: ./files/VSCode_Extension_Sync-Settings_settings.yml
-    dest: "/home/{{ env_user }}/.config/Code/User/globalStorage/zokugun.sync-settings/settings.yml"   # Pfad bei Install des VS Code deb-Pakets (nicht bei flatpakod oder snap)
+    dest: "/home/{{ env_user }}/.config/Code/User/globalStorage/zokugun.sync-settings/settings.yml"   # Pfad bei Install des VS Code deb-Pakets (nicht bei flatpak oder snap)
     owner: "{{ env_user }}"
     group: "{{ env_user }}"
     mode: u=rw
@@ -1009,7 +1009,7 @@
   tags: workstation,arch
   ansible.builtin.copy:
     src: ./files/VSCode_Extension_Sync-Settings_settings.yml
-    dest: "/home/{{ env_user }}/.config/Code - OSS//User/globalStorage/zokugun.sync-settings/settings.yml"   # Pfad bei Install des VS Code deb-Pakets (nicht bei flatpakod oder snap)
+    dest: "/home/{{ env_user }}/.config/Code - OSS//User/globalStorage/zokugun.sync-settings/settings.yml"   # Pfad bei Install des VS Code deb-Pakets (nicht bei flatpak oder snap)
     owner: "{{ env_user }}"
     group: "{{ env_user }}"
     mode: u=rw

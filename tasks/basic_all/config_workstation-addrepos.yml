@@ -67,19 +67,19 @@
 # https://learn.microsoft.com/de-de/powershell/scripting/install/installing-powershell-on-linux?view=powershell-5.1#ubuntu
 # https://learn.microsoft.com/de-de/powershell/scripting/install/install-ubuntu?view=powershell-5.1#installation-via-package-repository
 # https://www.ntweekly.com/2021/04/07/ansible-playbook-install-powershell-7-on-ubuntu-server-20-04/
-- name: Download the Microsoft repository GPG keys (apt, Ubuntu LTS)
-  ansible.builtin.get_url:
-    url: "https://packages.microsoft.com/config/ubuntu/{{ env_lsb }}/packages-microsoft-prod.deb"
-    dest: /tmp/packages-microsoft-prod.deb
-    force_basic_auth: true
-  when:
-    - ansible_distribution == "Ubuntu"
+# - name: Download the Microsoft repository GPG keys (apt, Ubuntu LTS)
+#   ansible.builtin.get_url:
+#     url: "https://packages.microsoft.com/config/ubuntu/{{ env_lsb }}/packages-microsoft-prod.deb"
+#     dest: /tmp/packages-microsoft-prod.deb
+#     force_basic_auth: true
+#   when:
+#     - ansible_distribution == "Ubuntu"
 
-- name: Register the Microsoft repository GPG keys (apt, Ubuntu)
-  ansible.builtin.command:
-    cmd: dpkg -i /tmp/packages-microsoft-prod.deb
-  when:
-    - ansible_distribution == "Ubuntu"
+# - name: Register the Microsoft repository GPG keys (apt, Ubuntu)
+#   ansible.builtin.command:
+#     cmd: dpkg -i /tmp/packages-microsoft-prod.deb
+#   when:
+#     - ansible_distribution == "Ubuntu"
 
 # 'add repo for ulauncher' nach bootstrap.sh verschoben
 #
@@ -103,11 +103,11 @@
 #  when:
 #    - ansible_distribution == "Ubuntu"
 
-- name: Update package lists
-  ansible.builtin.apt:
-    update_cache: true
-  when:
-    - ansible_pkg_mgr == "apt"
+# - name: Update package lists
+#   ansible.builtin.apt:
+#     update_cache: true
+#   when:
+#     - ansible_pkg_mgr == "apt"
 
 # neu: s.o.
 # - name: add repo for PowerShell (Ubuntu)

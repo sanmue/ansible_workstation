@@ -1,12 +1,12 @@
-- name: Install snap packages for workstations (all)
-  tags: workstation,ubuntu,arch,snap
-  community.general.snap:
-    state: present
-    name:
-      - whalebird
+# - name: Install snap packages for workstations (all)
+#   tags: workstation,ubuntu,arch,snap
+#   community.general.snap:
+#     state: present
+#     name:
+#       - whalebird
 
 # ersetzt durch AutoKey
-#- name: Install snap packages --classic for workstations (all)
+# - name: Install snap packages --classic for workstations (all)
 #  tags: workstation,ubuntu,arch,snap
 #  community.general.snap:
 #    state: present
@@ -14,12 +14,12 @@
 #      - espanso
 #    classic: true
 
-- name: Install snap packages --classic for workstations (Archlinux)
-  tags: workstation,ubuntu,arch,snap
-  community.general.snap:
-    state: present
-    name:
-      - powershell
-    classic: true
-  when:
-    - ansible_distribution == "Archlinux"
+# - name: Install snap packages --classic for workstations (Archlinux)
+#   tags: workstation,ubuntu,arch,snap
+#   community.general.snap:
+#     state: present
+#     name:
+#       - powershell
+#     classic: true
+#   when:
+#     - ansible_distribution == "Archlinux"
