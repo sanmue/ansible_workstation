@@ -17,7 +17,7 @@ paramRsync='--dry-run'
 
 # ### Variablen - für backup home Verzeichnis aktueller User
 source=${HOME}
-echo "Quellpfad ist: ${source}"
+echo "Quellpfad (Home) ist: ${source}"
 
 #sourceInclude="--include={'.ssh/***','.bashrc','.zshrc'}"
 #sourceExclude="--exclude={'snap','Pictures/Screenshots/*','Downloads','.*','./*'}"
