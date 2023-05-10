@@ -24,9 +24,9 @@ echo "Quellpfad (Home) ist: ${source}"
 # Quell-Pfade für Backup von $source/RescueSystem/AppConfData
 rescueAppConfDataPath="${source}/RescueSystem/AppConfData"
 if [ -e "${rescueAppConfDataPath}" ]; then
-	echo "Ziel rescueAppConfDataPath ist: ${rescueAppConfDataPath}"
+	echo "Quelle rescueAppConfDataPath ist: ${rescueAppConfDataPath}"
 else
-	echo "Ziel rescueAppConfDataPath '${rescueAppConfDataPath}' existiert nicht, Ende."
+	echo "Quelle rescueAppConfDataPath '${rescueAppConfDataPath}' existiert nicht, Ende."
 	exit 1
 fi
 
@@ -55,7 +55,7 @@ read -rp "Start nach Drücken der Eingabe-Taste"
 logname="rsync_appConfData-extern_dest.sh_$(date +"%Y-%m-%d_%H%M%S").log"
 
 echo -e "\n========================================"
-echo "Starte Update von '${rescueAppConfDataPath}' nach '${dest}'"
+echo "Starte Update von '${rescueAppConfDataPath}/' nach '${dest}/'"
 #rsync -aPhEv "${paramRsync}" "${rescueAppConfDataPath}/" "${dest}/" | tee -a "/tmp/${logname}"
 rsync -aPhEv "${rescueAppConfDataPath}/" "${dest}/" | tee -a "/tmp/${logname}"
 echo '========================================'
