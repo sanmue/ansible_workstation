@@ -282,14 +282,14 @@
 # ### cockpit.socket
 # ------------------
 # https://localhost:9090
-- name: All services misc - zsh plugins update - start+enable timer (all)
-  ansible.builtin.systemd:
-    name: cockpit.socket
-    state: started
-    enabled: true
-    daemon_reload: true
-  # when:
-  #  - ansible_distribution in ["Ubuntu"]
+# - name: All services misc - zsh plugins update - start+enable timer (all)
+#   ansible.builtin.systemd:
+#     name: cockpit.socket
+#     state: started
+#     enabled: true
+#     daemon_reload: true
+#   # when:
+#   #  - ansible_distribution in ["Ubuntu"]
 
 
 # ########
