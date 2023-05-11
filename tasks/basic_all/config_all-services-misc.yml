@@ -390,6 +390,69 @@
     XDG_RUNTIME_DIR: "{{ env_user_XDG_RUNTIME_DIR }}"
 
 
+# -------------------------------------------------------------------------------------------
+# ### Sicherung/Updata AppConfData (intern, -> in zentrales RescueSystem-Verzeichnis, doppel)
+# -------------------------------------------------------------------------------------------
+- name: All services misc - AppConfData - Create service unit file - user - rsync (all
+  ansible.builtin.blockinfile:
+    path: "/etc/systemd/user/AppConfData_rsync.service"
+    create: true
+    backup: true
+    marker: '# ### {mark} ANSIBLE MANAGED BLOCK - AppConfData_rsync ###'
+    block: |
+      [Unit]
+      Description=Sicherung/Updata AppConfData
+
+      [Service]
+      Type=oneshot
+      ExecStart=/bin/bash /usr/local/bin/rsync_appConfData-intern.sh 2>/dev/null
+      #User={{ env_user }}
+    state: present
+    group: root
+    owner: root
+    mode: '0644'
+  # when:
+  #   - ansible_distribution in ["Archlinux", "Ubuntu"]
+
+- name: All services misc - AppConfData - Create timer unit file - user - rsync (all)
+  ansible.builtin.blockinfile:
+    path: "/etc/systemd/user/AppConfData_rsync.timer"
+    create: true
+    backup: true
+    marker: '# ### {mark} ANSIBLE MANAGED BLOCK - AppConfData_rsync ###'
+    block: |
+      [Unit]
+      Description=Sicherung/Updata AppConfData
+
+      [Timer]
+      Unit=AppConfData_rsync.service
+      OnCalendar=hourly
+      #AccuracySec=1h
+      #RandomizedDelaySec=24h
+      Persistent=true
+
+      [Install]
+      WantedBy=timers.target
+    state: present
+    group: root
+    owner: root
+    mode: '0644'
+  # when:
+  #   - ansible_distribution in ["Archlinux", "Ubuntu"]
+
+- name: All services misc - AppConfData - start+enable timer - env_user - rsync (all)
+  ansible.builtin.systemd:
+    name: AppConfData_rsync.timer
+    state: started
+    enabled: true
+    daemon_reload: true
+    scope: user
+  become: true
+  become_user: "{{ env_user }}"
+  environment:
+    XDG_RUNTIME_DIR: "{{ env_user_XDG_RUNTIME_DIR }}"
+
+
 # -------------
 # ### ulauncher
 # -------------

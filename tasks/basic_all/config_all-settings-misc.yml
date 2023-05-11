@@ -847,7 +847,7 @@
   when:
     - ansible_distribution in ["Archlinux", "Ubuntu"]
 
-- name: All settings misc - Users - clamav - serevices - bashScript to scan HOME folder (Arch, Ubuntu)
+- name: All settings misc - Users - clamav - services - bashScript to scan HOME folder (Arch, Ubuntu)
   ansible.builtin.copy:
     src: "files/config_all-services-misc-clamav-scanHome.sh"
     dest: "/usr/local/bin/scanHome.sh"
@@ -1037,8 +1037,8 @@
     dest: "/home/{{ env_user }}/.local/share/ulauncher/extensions/{{ item.name }}"
     update: true
     clone: true
-    #single_branch: true
-    #version: "HEAD"   # default: "HEAD"
+    # single_branch: true
+    # version: "HEAD"   # default: "HEAD"
   loop:
     - { path: "https://github.com/Rapha149/ulauncher-bluetooth.git",              name: "ulauncher-bluetooth" }
     - { path: "https://github.com/tchar/ulauncher-albert-calculate-anything.git", name: "ulauncher-albert-calculate-anything" }
@@ -1081,3 +1081,18 @@
     owner: "{{ env_user }}"
     group: "{{ env_user }}"
     mode: '0755'
+
+
+# #############################
+# ### AppConfData backup/update
+# #############################
+- name: All settings misc - Users - AppConfData - services - bashScript to update AppConfData (all)
+  ansible.builtin.copy:
+    src: "tasks/ScriptsExtern/rsync_appConfData-intern.sh"
+    dest: "/usr/local/bin/rsync_appConfData-intern.sh"
+    owner: root
+    group: root
+    mode: '0755'
+    backup: true
+  # when:
+  #   - ansible_distribution in ["Archlinux", "Ubuntu"]
