@@ -1,36 +1,37 @@
 <domainsnapshot>
-  <name>2023-04-13_0105_ansible0</name>
+  <name>init</name>
+  <description>user &quot;sandro&quot; + Mitgl. Gruppe &quot;wheel&quot; + ssh-keys (ssh-copy-id LinuxLab); 
+Hostname &quot;rocky-110.local&quot;; 
+&quot;/etc/hosts&quot; angepasst: 127.0.1.1 rocky-110.local rocky-110,
+inkl. IPv4 - Hostname andere VMs; 
+statische IP: 10.0.3.110 auf 2. Netzwerkkarte</description>
   <state>shutoff</state>
-  <parent>
-    <name>2023-04-13_0029_init1</name>
-  </parent>
-  <creationTime>1681340756</creationTime>
+  <creationTime>1683806493</creationTime>
   <memory snapshot='no'/>
   <disks>
     <disk name='vda' snapshot='internal'/>
     <disk name='sda' snapshot='no'/>
   </disks>
   <domain type='kvm'>
-    <name>manjaro</name>
-    <uuid>5c61f85c-79d3-43be-9e77-a5028eb021c2</uuid>
+    <name>rocky-110</name>
+    <uuid>c8589cc9-7769-45b8-981c-7817ffe62ca7</uuid>
     <metadata>
       <libosinfo:libosinfo xmlns:libosinfo="http://libosinfo.org/xmlns/libvirt/domain/1.0">
-        <libosinfo:os id="http://manjaro.org/manjaro/rolling"/>
+        <libosinfo:os id="http://redhat.com/rhel/8.2"/>
       </libosinfo:libosinfo>
     </metadata>
-    <memory unit='KiB'>8388608</memory>
-    <currentMemory unit='KiB'>4194304</currentMemory>
+    <memory unit='KiB'>2097152</memory>
+    <currentMemory unit='KiB'>2097152</currentMemory>
     <vcpu placement='static'>2</vcpu>
     <os>
-      <type arch='x86_64' machine='pc-q35-7.2'>hvm</type>
-      <boot dev='hd'/>
+      <type arch='x86_64' machine='pc-q35-4.2'>hvm</type>
     </os>
     <features>
       <acpi/>
       <apic/>
       <vmport state='off'/>
     </features>
-    <cpu mode='host-passthrough' check='none' migratable='on'/>
+    <cpu mode='host-model' check='partial'/>
     <clock offset='utc'>
       <timer name='rtc' tickpolicy='catchup'/>
       <timer name='pit' tickpolicy='delay'/>
@@ -46,9 +47,10 @@
     <devices>
       <emulator>/usr/bin/qemu-system-x86_64</emulator>
       <disk type='file' device='disk'>
-        <driver name='qemu' type='qcow2' discard='unmap'/>
-        <source file='/var/lib/libvirt/images/manjaro.qcow2'/>
+        <driver name='qemu' type='qcow2'/>
+        <source file='/run/media/sandro/1TB-M2NVME/01_VM/images/rocky110.qcow2'/>
         <target dev='vda' bus='virtio'/>
+        <boot order='1'/>
         <address type='pci' domain='0x0000' bus='0x04' slot='0x00' function='0x0'/>
       </disk>
       <disk type='file' device='cdrom'>
@@ -59,6 +61,9 @@
       </disk>
       <controller type='usb' index='0' model='qemu-xhci' ports='15'>
         <address type='pci' domain='0x0000' bus='0x02' slot='0x00' function='0x0'/>
+      </controller>
+      <controller type='sata' index='0'>
+        <address type='pci' domain='0x0000' bus='0x00' slot='0x1f' function='0x2'/>
       </controller>
       <controller type='pci' index='0' model='pcie-root'/>
       <controller type='pci' index='1' model='pcie-root-port'>
@@ -96,52 +101,20 @@
         <target chassis='7' port='0x16'/>
         <address type='pci' domain='0x0000' bus='0x00' slot='0x02' function='0x6'/>
       </controller>
-      <controller type='pci' index='8' model='pcie-root-port'>
-        <model name='pcie-root-port'/>
-        <target chassis='8' port='0x17'/>
-        <address type='pci' domain='0x0000' bus='0x00' slot='0x02' function='0x7'/>
-      </controller>
-      <controller type='pci' index='9' model='pcie-root-port'>
-        <model name='pcie-root-port'/>
-        <target chassis='9' port='0x18'/>
-        <address type='pci' domain='0x0000' bus='0x00' slot='0x03' function='0x0' multifunction='on'/>
-      </controller>
-      <controller type='pci' index='10' model='pcie-root-port'>
-        <model name='pcie-root-port'/>
-        <target chassis='10' port='0x19'/>
-        <address type='pci' domain='0x0000' bus='0x00' slot='0x03' function='0x1'/>
-      </controller>
-      <controller type='pci' index='11' model='pcie-root-port'>
-        <model name='pcie-root-port'/>
-        <target chassis='11' port='0x1a'/>
-        <address type='pci' domain='0x0000' bus='0x00' slot='0x03' function='0x2'/>
-      </controller>
-      <controller type='pci' index='12' model='pcie-root-port'>
-        <model name='pcie-root-port'/>
-        <target chassis='12' port='0x1b'/>
-        <address type='pci' domain='0x0000' bus='0x00' slot='0x03' function='0x3'/>
-      </controller>
-      <controller type='pci' index='13' model='pcie-root-port'>
-        <model name='pcie-root-port'/>
-        <target chassis='13' port='0x1c'/>
-        <address type='pci' domain='0x0000' bus='0x00' slot='0x03' function='0x4'/>
-      </controller>
-      <controller type='pci' index='14' model='pcie-root-port'>
-        <model name='pcie-root-port'/>
-        <target chassis='14' port='0x1d'/>
-        <address type='pci' domain='0x0000' bus='0x00' slot='0x03' function='0x5'/>
-      </controller>
-      <controller type='sata' index='0'>
-        <address type='pci' domain='0x0000' bus='0x00' slot='0x1f' function='0x2'/>
-      </controller>
       <controller type='virtio-serial' index='0'>
         <address type='pci' domain='0x0000' bus='0x03' slot='0x00' function='0x0'/>
       </controller>
       <interface type='network'>
-        <mac address='52:54:00:12:cf:dd'/>
+        <mac address='52:54:00:30:f2:b2'/>
         <source network='default'/>
         <model type='virtio'/>
         <address type='pci' domain='0x0000' bus='0x01' slot='0x00' function='0x0'/>
+      </interface>
+      <interface type='network'>
+        <mac address='52:54:00:37:0e:20'/>
+        <source network='Lab-Linux'/>
+        <model type='virtio'/>
+        <address type='pci' domain='0x0000' bus='0x07' slot='0x00' function='0x0'/>
       </interface>
       <serial type='pty'>
         <target type='isa-serial' port='0'>
@@ -164,7 +137,7 @@
       </input>
       <input type='mouse' bus='ps2'/>
       <input type='keyboard' bus='ps2'/>
-      <graphics type='spice' autoport='yes'>
+      <graphics type='spice' autoport='yes' keymap='de'>
         <listen type='address'/>
         <image compression='off'/>
       </graphics>
@@ -173,7 +146,7 @@
       </sound>
       <audio id='1' type='spice'/>
       <video>
-        <model type='virtio' heads='1' primary='yes'/>
+        <model type='qxl' ram='65536' vram='65536' vgamem='16384' heads='1' primary='yes'/>
         <address type='pci' domain='0x0000' bus='0x00' slot='0x01' function='0x0'/>
       </video>
       <redirdev bus='usb' type='spicevmc'>

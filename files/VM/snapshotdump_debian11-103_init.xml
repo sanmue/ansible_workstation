@@ -1,13 +1,12 @@
 <domainsnapshot>
   <name>init</name>
-  <description>user &quot;sandro&quot; + Mitgl. Gruppe &quot;sudo&quot; + ssh-keys; 
+  <description>user &quot;sandro&quot; + Mitgl. Gruppe &quot;sudo&quot; + + ssh-keys (ssh-copy-id LinuxLab); 
 Hostname &quot;debian11-103.local&quot;; 
 &quot;/etc/hosts&quot; angepasst: 127.0.1.1 debian11-103.local debian11-103,
 inkl. IPv4 - Hostname andere VMs; 
-statische IP: 10.0.3.103 auf 2. Netzwerkkarte
-</description>
+statische IP: 10.0.3.103 auf 2. Netzwerkkarte</description>
   <state>shutoff</state>
-  <creationTime>1656776619</creationTime>
+  <creationTime>1683798398</creationTime>
   <memory snapshot='no'/>
   <disks>
     <disk name='vda' snapshot='internal'/>
@@ -49,7 +48,7 @@ statische IP: 10.0.3.103 auf 2. Netzwerkkarte
       <emulator>/usr/bin/qemu-system-x86_64</emulator>
       <disk type='file' device='disk'>
         <driver name='qemu' type='qcow2'/>
-        <source file='/var/lib/libvirt/images/debian11-103.qcow2'/>
+        <source file='/run/media/sandro/1TB-M2NVME/01_VM/images/debian11-103.qcow2'/>
         <target dev='vda' bus='virtio'/>
         <boot order='2'/>
         <address type='pci' domain='0x0000' bus='0x04' slot='0x00' function='0x0'/>
@@ -114,7 +113,7 @@ statische IP: 10.0.3.103 auf 2. Netzwerkkarte
       </interface>
       <interface type='network'>
         <mac address='52:54:00:bc:e4:70'/>
-        <source network='linuxlab-nat'/>
+        <source network='Lab-Linux'/>
         <model type='virtio'/>
         <address type='pci' domain='0x0000' bus='0x07' slot='0x00' function='0x0'/>
       </interface>

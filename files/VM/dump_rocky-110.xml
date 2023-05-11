@@ -1,9 +1,9 @@
 <domain type='kvm'>
-  <name>rocky110</name>
+  <name>rocky-110</name>
   <uuid>c8589cc9-7769-45b8-981c-7817ffe62ca7</uuid>
   <metadata>
     <libosinfo:libosinfo xmlns:libosinfo="http://libosinfo.org/xmlns/libvirt/domain/1.0">
-      <libosinfo:os id="http://rockylinux.org/rocky/9"/>
+      <libosinfo:os id="http://redhat.com/rhel/8.2"/>
     </libosinfo:libosinfo>
   </metadata>
   <memory unit='KiB'>2097152</memory>

@@ -1,20 +1,20 @@
 <domainsnapshot>
-  <name>2023-04-23_0016_init0</name>
+  <name>2023-05-10_2241_init0</name>
   <description>.ssh-keys + bootstrap.sh
 no run</description>
   <state>shutoff</state>
-  <creationTime>1681337790</creationTime>
+  <creationTime>1683751304</creationTime>
   <memory snapshot='no'/>
   <disks>
     <disk name='vda' snapshot='internal'/>
     <disk name='sda' snapshot='no'/>
   </disks>
   <domain type='kvm'>
-    <name>ubuntu</name>
-    <uuid>3fc9ac6d-dde3-424a-97c9-5efd6954b817</uuid>
+    <name>endeavour</name>
+    <uuid>7ed02eed-87c3-4e04-8bc7-639a687879d7</uuid>
     <metadata>
       <libosinfo:libosinfo xmlns:libosinfo="http://libosinfo.org/xmlns/libvirt/domain/1.0">
-        <libosinfo:os id="http://ubuntu.com/ubuntu/22.04"/>
+        <libosinfo:os id="http://archlinux.org/archlinux/rolling"/>
       </libosinfo:libosinfo>
     </metadata>
     <memory unit='KiB'>8388608</memory>
@@ -46,7 +46,7 @@ no run</description>
       <emulator>/usr/bin/qemu-system-x86_64</emulator>
       <disk type='file' device='disk'>
         <driver name='qemu' type='qcow2' discard='unmap'/>
-        <source file='/var/lib/libvirt/images/ubuntu.qcow2'/>
+        <source file='/run/media/sandro/1TB-M2NVME/01_VM/images/endeavour.qcow2'/>
         <target dev='vda' bus='virtio'/>
         <address type='pci' domain='0x0000' bus='0x04' slot='0x00' function='0x0'/>
       </disk>
@@ -137,7 +137,7 @@ no run</description>
         <address type='pci' domain='0x0000' bus='0x03' slot='0x00' function='0x0'/>
       </controller>
       <interface type='network'>
-        <mac address='52:54:00:11:c7:1e'/>
+        <mac address='52:54:00:ff:44:9d'/>
         <source network='default'/>
         <model type='virtio'/>
         <address type='pci' domain='0x0000' bus='0x01' slot='0x00' function='0x0'/>
