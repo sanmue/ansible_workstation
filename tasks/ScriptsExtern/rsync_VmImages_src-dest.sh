@@ -44,10 +44,11 @@ fi
 
 read -rp "Start mit beliebiger Eingabe"
 
+logname="rsync_VmImages_para_src-dest_$(date +"%Y-%m-%d_%H%M%S").log"
+
 # ### VM
 echo -e "\n ======================================== "
-echo "Starte rsync (sudo) von '${source}' nach '${dest}'"
-logname="rsync_VmImages_para_src-dest_$(date +"%Y-%m-%d_%H%M%S").log"
+echo "Starte rsync (sudo) von '${source}/' nach '${dest}/'"
 #sudo rsync "${paramRsync}" -aPhEv "${source}/" "${dest}/" | tee "/tmp/${logname}"
 sudo rsync -aPhEv "${source}/" "${dest}/" | tee "/tmp/${logname}"
 echo " ======================================== "
