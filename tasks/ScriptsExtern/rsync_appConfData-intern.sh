@@ -2,26 +2,32 @@
 
 #set -x
 
-# ### Skript zur Sicherung/Updata AppConfData (intern)
+# ### Skript zur Sicherung/Updata AppConfData (intern, -> in zentrales RescueSystem-Verzeichnis, doppel)
 #
-# - Quellpfade1: ${HOME}/${arrConfPath}
-# - Zielpfad1: ${HOME}/RescueSystem/AppConfData/01_bak-ScriptService
+# 1. Config etc von Apps (z.B. unter .config, .var, .local im Home-Verzeichnis):
+# 	- Quellpfade1: ausgewählte Dateien/Verzeichnisse in ${arrConfPath} (befinden sich unter ${HOME})
+# 	- Zielpfad1: arrConfAppDataBakPath (hier: nur $confAppData2ndBakPath)
 #
-# - Quellpfad2: ${HOME}/Sync/Default/AppConfData
-# - Zielpfad2: ${HOME}/RescueSystem/AppConfData
+# 2. Config / Backups / Daten von Apps im Sync-Verzeichnis (main) nach RescueSystem (zentral)
+# 	- Quellpfad2: $syncAppConfDataPath
+# 	- Zielpfad2: $rescueAppConfDataPath
 #
-# - Quellpfad3: ${HOME}/dev/Ansible/ansible_workstation/tasks/ScriptsExtern
-# - Zielpfad3: ${HOME}/RescueSystem/AppConfData/ScriptsExtern
+# 3. Sicherung/Update "ScriptsExtern" (aus ansible workstation)
+# 	- Quellpfad3: $scriptsExternPath (="${scriptsExternFolderpath}/${scriptsExternFoldername}")
+# 	- Zielpfad3: ${rescueAppConfDataPath}/${scriptsExternFoldername}
 
 
 # ### rsync - zusätzliche Parameter:
-paramRsync='--dry-run'
+paramRsync='--stats'
+#paramRsync+='--dry-run'
 
+
+# ### ######################################################
 # ### Variablen - für backup home Verzeichnis aktueller User
 source=${HOME}
 echo "Quellpfad ist: ${source}"
 
-# Zielpfade + Liste zu sichernde Daten aus $HOME und Unterverz. '.config', '.local', '.var' für confAppData/01_bak-ScriptService
+# ### Zielpfade + Liste zu sichernde Daten aus $HOME und Unterverz. '.config', '.local', '.var' für confAppData/01_bak-ScriptService
 confAppData2ndBakPath="${source}/RescueSystem/AppConfData/01_bak-ScriptService"
 if [ -e "${confAppData2ndBakPath}" ]; then
 	echo "Zweiter Backup-Path für confAppData ist: ${confAppData2ndBakPath}"
@@ -31,9 +37,10 @@ else
 fi
 arrConfAppDataBakPath=("${confAppData2ndBakPath}")
 
-# - Liste zu sichernde Daten aus $HOME und Unterverz. '.config', '.local', '.var'
-# 	- nemo bookmarks: 								.config/gtk-3.0/bookmarks
-# 	- gnome 'places-bookmarks' for filebrowser: 	.config/user-dirs.dirs
+# ### Liste zu sichernde Daten aus $HOME und Unterverz. '.config', '.local', '.var'
+#	Anmerkungen:
+# 	- nemo nimmt bookmarks aus:				.config/gtk-3.0/bookmarks 	(Gnome, Stand 05/2023)
+# 	- 'places'-bookmarks' for filebrowser: 	.config/user-dirs.dirs		(Gnome, Stand 05/2023)
 arrConfPath=('.bashrc' '.ssh' '.zshrc' \
 '.config/autokey' '.config/autostart' '.config/borg' '.config/BraveSoftware/Brave-Browser/Default/Bookmarks' \
 '.config/chromium/Default/Bookmarks' '.config/Cryptomator' '.config/evolution' '.config/gtk-3.0/bookmarks' '.config/rclone' \
@@ -41,7 +48,7 @@ arrConfPath=('.bashrc' '.ssh' '.zshrc' \
 '.local/bin/rclone_pCloud-Mnt.sh' '.local/share/evolution' '.local/share/remmina' '.local/share/Vorta' \
 '.var/app/net.ankiweb.Anki/data')
 
-# Pfade für Update (intern) von $source/Sync/Default/AppConfData nach $source/RescueSystem/AppConfData
+# ### Pfade für Update (intern) von $source/Sync/Default/AppConfData nach $source/RescueSystem/AppConfData
 syncAppConfDataPath="${source}/Sync/Default/AppConfData"
 rescueAppConfDataPath="${source}/RescueSystem/AppConfData"
 if [ -e "${syncAppConfDataPath}" ]; then
@@ -57,7 +64,7 @@ else
 	exit 1
 fi
 
-# Pfade für Update (intern) von dev/Ansible...ScriptsExtern nach $rescueAppConfDataPath/$scriptsExternFoldername
+# ### Pfade für Update (intern) von dev/Ansible...ScriptsExtern nach $rescueAppConfDataPath/$scriptsExternFoldername
 scriptsExternFoldername="ScriptsExtern"
 scriptsExternFolderpath="${source}/dev/Ansible/ansible_workstation/tasks"
 scriptsExternPath="${scriptsExternFolderpath}/${scriptsExternFoldername}"
@@ -69,7 +76,7 @@ else
 fi
 
 
-# ### ##############################################
+# ### ################################################################
 # ### Sicherung/Update AppDataConf
 # ### - verkürzte + angepasste Version von 'rsync_home-backup_dest.sh'
 
@@ -77,7 +84,7 @@ read -rp "Start nach Drücken der Eingabe-Taste"
 
 logname="rsync_appConfData-intern_$(date +"%Y-%m-%d_%H%M%S").log"
 
-# 1: Update (intern) und Sicherung (extern $dest) von: ${source}, .config, .local und .var:
+# ### 1: Update (intern) und Sicherung (extern $dest) von: ${source}, .config, .local und .var:
 echo -e "\n========================================"
 echo "Starte Update/Backup ausgwählter Teile von '${source}, .config, .local und .var' nach 'RescueSystem/...'"
 for bakPath in "${arrConfAppDataBakPath[@]}"; do
@@ -85,14 +92,12 @@ for bakPath in "${arrConfAppDataBakPath[@]}"; do
 		if [ -e "${source}/${confPath}" ]; then
 			if [ -d "${source}/${confPath}" ]; then		# wenn Verzeichnis
 				echo -e "\033[0;32m\n+ rsync von '${source}/${confPath}/' nach '${bakPath}/${confPath}/'\033[0m"
-				# rsync -aPhEv --mkpath "${paramRsync}" "${source}/${confPath}/" "${bakPath}/${confPath}/" | tee -a "/tmp/${logname}"
-				rsync -aPhEv --mkpath  "${source}/${confPath}/" "${bakPath}/${confPath}/" | tee -a "/tmp/${logname}"
+				rsync -aPhEv --mkpath "${paramRsync}" "${source}/${confPath}/" "${bakPath}/${confPath}/" | tee -a "/tmp/${logname}"
 			fi
 
 			if [ -f "${source}/${confPath}" ]; then		# wenn Datei
 				echo -e "\033[0;32m\n+ rsync von '${source}/${confPath}' nach '${bakPath}/${confPath}'\033[0m"
-				# rsync -aPhEv --mkpath "${paramRsync}"  "${source}/${confPath}" "${bakPath}/${confPath}" | tee -a "/tmp/${logname}"
-				rsync -aPhEv --mkpath  "${source}/${confPath}" "${bakPath}/${confPath}" | tee -a "/tmp/${logname}"
+				rsync -aPhEv --mkpath "${paramRsync}" "${source}/${confPath}" "${bakPath}/${confPath}" | tee -a "/tmp/${logname}"
 			fi		
 		else
 			echo -e "\033[0;31m\n- Quelle '${source}/${confPath}' nicht vorhanden, überspringe...\033[0m" >> "/tmp/${logname}"
@@ -101,15 +106,14 @@ for bakPath in "${arrConfAppDataBakPath[@]}"; do
 done
 echo '========================================'
 
-# 2: Update (intern) von $source/Sync/Default/AppConfData nach $source/RescueSystem/AppConfData
+# ### 2: Update (intern) von $source/Sync/Default/AppConfData nach $source/RescueSystem/AppConfData
 echo -e "\n========================================"
 echo "Starte Update von 'Sync/Default/AppConfData' nach 'RescueSystem/AppConfData'"
-# rsync -aPhEv "${paramRsync}" "${syncAppConfDataPath}/" "${rescueAppConfDataPath}/" | tee -a "/tmp/${logname}"
-rsync -aPhEv "${syncAppConfDataPath}/" "${rescueAppConfDataPath}/" | tee -a "/tmp/${logname}"
+rsync -aPhEv "${paramRsync}" "${syncAppConfDataPath}/" "${rescueAppConfDataPath}/" | tee -a "/tmp/${logname}"
 echo '========================================'
 
-# 3. Update (MIRROR) (intern) von dev/Ansible...ScriptsExtern nach $rescueAppConfDataPath/$scriptsExternFoldername
+# ### 3. Update (MIRROR) (intern) von dev/Ansible...ScriptsExtern nach $rescueAppConfDataPath/$scriptsExternFoldername
+echo -e "\n========================================"
 echo "Starte Update (MIRROR) von '${scriptsExternPath}/ nach '${rescueAppConfDataPath}/${scriptsExternFoldername}/'"
-# rsync -aPhEv --delete "${paramRsync}" "${scriptsExternPath}/" "${rescueAppConfDataPath}/${scriptsExternFoldername}" | tee -a "/tmp/${logname}"
-rsync -aPhEv --delete "${scriptsExternPath}/" "${rescueAppConfDataPath}/${scriptsExternFoldername}/" | tee -a "/tmp/${logname}"
+rsync -aPhEv --delete "${paramRsync}" "${scriptsExternPath}/" "${rescueAppConfDataPath}/${scriptsExternFoldername}/" | tee -a "/tmp/${logname}"
 echo '========================================'
