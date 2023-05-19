@@ -16,7 +16,7 @@
 - name: Config all services snapperBtrfs - Show value of 'rootFsIsBtrfs' (all)
   ansible.builtin.debug:
     var: rootFsIsBtrfs
-    # verbosity: 2
+    verbosity: 2
 
 # ### prüfe auf grub bootloader:
 - name: Config all services snapperBtrfs - Get stats of etc-default-grup (all)
