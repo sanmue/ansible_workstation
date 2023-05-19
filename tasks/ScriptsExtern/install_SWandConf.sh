@@ -57,10 +57,120 @@ echo "Verwendetes OS: ${os}"
 
 
 ### ---
+### Inst + config snapper
+### ---
+# https://unix.stackexchange.com/questions/34623/how-to-tell-what-type-of-filesystem-youre-on
+# https://www.tecmint.com/find-linux-filesystem-type/
+if [[ $(stat -f -c %T /) = 'btrfs' ]] && [[ ! -e "/home/${userid}/.ansible_bootstrap_snapperGrub" ]]; then   # prüfe '/' auf btrfs-filsystem;  -f, --file-system; -c, --format; %T - Type in human readable form
+    read -r -p "Soll 'snapper' installiert/konfiguriert werden ('j'=ja, sonstige Eingabe=nein)?: " doSnapper
+fi
+
+if [[ "${doSnapper}" = 'j' ]]; then   
+    echo -e "\nInst und config snapper"
+    case ${os} in
+        Archlinux* | EndeavourOS*)
+            # https://wiki.archlinux.org/title/Btrfs
+            # https://wiki.archlinux.org/title/Snapper
+            # https://documentation.suse.com/sles/15-SP4/html/SLES-all/cha-snapper.html
+
+            echo -e "\n*** Installation snapper+grub software packages..."
+            sudo pacman --needed --noconfirm -S snapper snap-pac inotify-tools grub-btrfs && \
+            # snap-sync
+
+            echo -e "\n*** (Re)create snapshots folder + create snapper root config..."
+            # mit Anlage des angepassten btrfs subvolume layouts wurde /.snapshots + subvolumen /@.snapshots bereits angelegt (+ in fstab eingetragen)
+            # beim erstellen der config root wird ein weiteres subvolume '/.snapshots' erstellt, welches gelöscht wird:
+            echo "Unmount + Löschen /.snapshots und erstelle snapper config 'root' für '/'..."
+            sudo umount /.snapshots && sudo rm -rf /.snapshots && sudo snapper -c root create-config / && \
+            echo "Lösche doppeltes Subvolume for Snapshots (aus autom. Erstellung bei snapper 'root' create-config)..."
+            sudo btrfs subvolume delete /.snapshots
+            echo "Erstelle (wieder) Verzeichnis '/.snapshots' und mount all..."
+            sudo sudo mkdir /.snapshots && sudo mount -a  && \
+
+            echo -e "\n*** Default-Subvolume festlegen"
+            echo "aktuelles default-Subvolume für '/': $(sudo btrfs subvolume get-default /)"
+            echo -e "Subvolume-Liste:\n$(sudo btrfs subvolume list /)"
+            endloop='n'
+            while [ ! "$endloop" = 'j' ]; do
+                read -r -p "Bitte ID von @ eingeben (initial i.d.R. 256): " idRootSubvol
+                read -r -p "Ist ID '${idRootSubvol}' korrekt ('j'=ja, beliebige Eingabe für Korrektur)?: " endloop
+            done
+            sudo btrfs subvolume set-default "${idRootSubvol}" / && \
+            echo "aktuelles root default-Subvolume: $(sudo btrfs subvolume get-default /)"
+
+            echo -e "\n*** Re-Install grub + Update grub boot-Einträge"
+            lsblk
+            endloop='n'
+            while [ ! "$endloop" = 'j' ]; do
+                read -r -p "Eingabe dev-Pfad für grub-install (z.B. '/dev/vda1'): " devGrubInstallPath
+                read -r -p "Ist '${devGrubInstallPath}' korrekt ('j'=ja, beliebige Eingabe für Korrektur)?: " endloop
+            done
+            sudo grub-install --target=i386-pc "${devGrubInstallPath}" && sudo grub-mkconfig -o /boot/grub/grub.cfg && \
+            sudo grub-mkconfig && \
+
+            echo -e "\n*** Snapper config 'root' wird angepasst..."   # /etc/snapper/configs/CONFIGS (z.B. /etc/sanpper/configs/root)
+            # sudo snapper -c root set-config "ALLOW_USERS=${userid}" && \
+            sudo snapper -c root set-config "ALLOW_GROUPS=wheel" && \
+            sudo snapper -c root set-config "TIMELINE_CREATE=no" && \
+            sudo snapper -c root set-config "TIMELINE_LIMIT_HOURLY=5" && \
+            sudo snapper -c root set-config "TIMELINE_LIMIT_DAILY=7" && \
+            sudo snapper -c root set-config "TIMELINE_LIMIT_WEEKLY=0" && \
+            sudo snapper -c root set-config "TIMELINE_LIMIT_MONTHLY=0" && \
+            sudo snapper -c root set-config "TIMELINE_LIMIT_YEARLY=0" && \
+            
+            echo -e "\n*** Zugriffs- und Besitzrechte für '/.snapshots' werden festgelegt..."
+            sudo chown -R :wheel /.snapshots && sudo chmod -R 750 /.snapshots && \
+
+            echo -e "\n*** Enable 'grub-btrfsd.service', 'snapper-cleanup.timer'..."
+            sudo systemctl enable --now grub-btrfsd.service && \
+            sudo systemctl enable --now snapper-cleanup.timer && \
+
+            echo -e "\n*** Erstelle Hook für backup '/boot' (benötigt rsync)"
+            echo "Installiere rsync..."
+            sudo pacman --needed --noconfirm -S rsync && \
+            echo "Erstelle (kopiere nach) '/etc/pacman.d/hooks/95-bootbackup.hook'..."
+            # SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)   # https://codefather.tech/blog/bash-get-script-directory/
+            SCRIPT_DIR=$(dirname "${BASH_SOURCE[0]}")
+            sudo mkdir -p /etc/pacman.d/hooks && \
+            sudo cp "${SCRIPT_DIR}/95-bootbackup.hook" /etc/pacman.d/hooks/95-bootbackup.hook && \
+            sudo chown root:root /etc/pacman.d/hooks/95-bootbackup.hook && \
+
+            echo -e "\n*** Erstelle snapshot (single) '***Base System Install***' und aktualisiere grub-boot Einträge"
+            sudo snapper -c root create -d "***Base System Install***" && \
+            echo "Aktuelle Liste der Snapshots:"
+            sudo snapper ls
+
+            echo -e "\n*** Aktualisiere Grub"
+            echo "Aktualisiere 'grub.cfg'"
+            sudo grub-mkconfig -o /boot/grub/grub.cfg && \
+            echo "(Re)Generiere Snapshots-(Sub)Menüeinträge in grub"
+            sudo grub-mkconfig
+        ;;
+
+        *)
+            echo "Aktuell nur für Archlinux, EndeavourOS getestet"
+            echo "Manuelle Konfigration notwendig"
+            read -r -p "Eingabe-Taste drücken um fortzufahren"
+            exit 0
+        ;;
+    esac
+
+    touch "/home/${userid}/.ansible_bootstrap_snapperGrub"
+
+    echo -e  "\n**********************************************"
+    #read -r -p "*** Ende Snapper-Teil, weiter mit Eingabetaste "
+    echo       "Ende Snapper-Teil"
+    echo       "**********************************************"
+# else 
+#     echo -e "\n'/' hat kein btrfs-Filesystem"
+fi
+
+
+### ---
 ### Installation initial benötigter Pakete und Services abhängig von Betriebssystem:
 ### ---
 
-# ### je System individuell:
+# ### distributionsspezifische Anpassungen:
 case ${os} in
     Manjaro* | EndeavourOS*)
         if [ ! -f "/home/${userid}/.ansible_bootstrapMirrorPool" ]; then
@@ -69,7 +179,7 @@ case ${os} in
             if [[ "${os}" = "Manjaro"* ]]; then
                 echo -e "\nReset custom mirror list + customize mirror pool + full refresh of the package database and update all packages on the system..."
                 # from listet countries:
-                sudo pacman-mirrors -c all && sudo pacman-mirrors --method rank --country 'Germany,France,Austria,Switzerland,Netherlands,Belgium,Sweden' && sudo pacman -Syyu --noconfirm
+                sudo pacman-mirrors -c all && sudo pacman-mirrors --method rank --country 'Germany,France,Austria,Switzerland,Sweden' && sudo pacman -Syyu --noconfirm
             fi
 
             if [[ "${os}" = "EndeavourOS"* ]]; then
@@ -84,16 +194,17 @@ case ${os} in
                 # rankmirrors für EndeavourOS (config: /etc/eos-rankmirrors.conf):
                 sudo eos-rankmirrors # --verbose
                 # Retrieve the latest mirror list from the Arch Linux Mirror Status page + listed countries:
-                # (relector conf: /etc/xdg/reflector/reflector.conf
-                sudo reflector --age 12 --protocol https --sort rate --country 'Germany,France,Austria,Switzerland,Netherlands,Belgium,Sweden' --save /etc/pacman.d/mirrorlist
-                #sudo systemctl start reflector.service
+                # (reflector conf: /etc/xdg/reflector/reflector.conf
+                echo "reflector - aktualisiere archlinux mirrors..."
+                sudo reflector --age 12 --protocol https --sort rate --country 'Germany,France,Austria,Switzerland,Sweden' --save /etc/pacman.d/mirrorlist
+                sudo systemctl enable --now reflector.service
                 # Update all packages on the system:    # (pacman conf: /etc/pacman.conf)
                 sudo pacman -Syyu --noconfirm
             fi
         fi
 
         echo -e "\nInstallation initial benoetigte Software (git, ansible, openssh, ufw)..."
-        sudo pacman -Syu --needed --noconfirm rsync git ansible openssh vim yay firewalld curl
+        sudo pacman -S --needed --noconfirm rsync git ansible openssh vim yay firewalld curl
 
         # if [ "${os}" = "EndeavourOS" ]; then
             # echo -e "\nInstallation Archlinux, EndeavourOS: 'pamac-all'..."
@@ -114,11 +225,11 @@ case ${os} in
             #fi
         # fi
 
-        echo -e "\nInstallation benoetigte Software zur Installation von AUR-Packages..."
+        echo -e "\nInstallation benoetigte Softwarepackages zur Installation von AUR-Packages..."
         sudo pacman -S --needed --noconfirm base-devel
 
-        echo -e "\n Installation (wenn VM) spice agent for Linux guests (z.B. für clipboard sharing host+guest)"
-        [[ $(systemd-detect-virt) != *"none"* ]] && sudo pacman -Syu --needed --noconfirm spice-vdagent
+        echo -e "\n Installation (wenn VM) spice agent for Linux guests (z.B. für clipboard sharing zwischen host+guest)"
+        [[ $(systemd-detect-virt) != *"none"* ]] && sudo pacman -S --needed --noconfirm spice-vdagent
 
         echo -e "\nAktiviere Firewall 'firewalld' und erlaube ssh ..."
         sudo systemctl enable --now firewalld.service && sudo firewall-cmd --zone=public --add-service=ssh --permanent && sudo firewall-cmd --reload
@@ -251,8 +362,13 @@ case ${os} in
     ;;
 esac
 
+
 # ### Alle Systeme:
-# Download 'Starshiop Shell Prompt' install-script
+
+### ---
+### Download 'Starship Shell Prompt' install-script
+### ---
+echo -e "\nDownload 'Starship Shell Prompt' install-script..."
 curl -sS "https://starship.rs/install.sh" > "/home/${userid}/starship_install.sh" && chmod +x "/home/${userid}/starship_install.sh"
 
 ### ---
@@ -335,30 +451,28 @@ ansible-playbook "/home/${userid}/${repodir}/${playbookdir}/${playbook}" -v -K
 
 
 ### ---
-### Archlinux/Manjaro: weitere Installationen
-### - am Schluss, damit nicht aufhalten
+### Archlinux (EndeavourOS), Manjaro: weitere Installationen
+### - am Schluss, damit Playbook nicht aufhalten
 ### ---
 read -r -p "Install from AUR: Citrix ICA-Client, autokey, virtio-win, MS TTF Fonts, ...? ('j'=ja, sonstige Eingabe: nein)" installAUR
 
 if [ "${installAUR}" == "j" ]; then
     case ${os} in
         Manjaro* | EndeavourOS*)
-            echo -e "\nInstall 'autokey-gtk' from AUR (Arch)"
+            echo -e "\nInstall 'autokey-gtk' from AUR (Arch)"   # da aktuell Gnome verwende
             yay -S --needed autokey-gtk && touch "/home/${userid}/.ansible_bootstrap_autokeyGtkInstalled"
 
             # echo -e "\nInstall 'autokey-qt' from AUR (Arch)"
             # yay -S --needed autokey-qt # && touch "/home/${userid}/.ansible_bootstrap_autokeyQtInstalled"
 
-            echo -e "\nInstall several AUR Packages: gsconnect,dashtopanel,gtkhash,steam,ttf-meslo(10k),ulauncher,vorta,... (Arch, Manjaro)"
+            echo -e "\nInstall several AUR Packages: gsconnect,dashtopanel,gtkhash,steam,ttf-meslo(10k),vorta,... (Arch, Manjaro)"
             yay -S --needed gnome-shell-extension-gsconnect gnome-shell-extension-dash-to-panel gtkhash linux-steam-integration ttf-meslo-nerd-font-powerlevel10k units vorta
-
-            if [[ ${os} = *"Endeavour"* ]]; then   # bei Manjaro bereits über dessen repo installiert
+            if [[ ${os} = *"Endeavour"* ]]; then   # bei Manjaro bereits im Playbook installiert (da in dessen repo drin)
                 yay -S --needed brave-bin
             fi
-
             echo -e "\nInstall ulauncher from AUR (Arch,Manjaro)"
             yay -S --needed ulauncher
-
+            # 'flag'-file:
             touch "/home/${userid}/.ansible_bootstrap_severalAurPkgInstalled"
 
             echo -e "\nStart + enable ulauncher.service für '${userid}'"
@@ -370,19 +484,15 @@ if [ "${installAUR}" == "j" ]; then
             yay -S --needed icaclient && touch "/home/${userid}/.ansible_bootstrap_pamac-icaclientInstalled"
 
             echo -e "\nInstall 'btrfs-assistant' from AUR (Archlinux; bei Manjaro (sollte) schon installiert (sein))"
-            #pamac build --no-confirm btrfs-assistant
             yay -S --needed btrfs-assistant && touch "/home/${userid}/.ansible_bootstrap_pamac-btrfsassistantInstalled"
 
             echo -e "\nVM - Install virtio-win image from AUR (Arch,Manjaro))"
-            #pamac build virtio-win && touch "/home/${userid}/.ansible_bootstrap_pamac-vmVirtioWinInstalled"
             yay -S --needed virtio-win && touch "/home/${userid}/.ansible_bootstrap_pamac-vmVirtioWinInstalled"
 
             echo -e "\nInstall Microsoft TTF Fonts from AUR (Arch,Manjaro))"
-            #pamac build ttf-ms-fonts && touch "/home/${userid}/.ansible_bootstrap_pamac-ttfmsfontsInstalled"
             yay -S --needed ttf-ms-fonts && touch "/home/${userid}/.ansible_bootstrap_pamac-ttfmsfontsInstalled"
 
-            #echo -e "\nInstall woeusb-ng from AUR (Arch,Manjaro))"
-            ##pamac build woeusb-ng && touch "/home/${userid}/.ansible_bootstrap_pamac-woeusbngInstalled"   # Tool to create Windows boot stick
+            #echo -e "\nInstall woeusb-ng (Tool to create Windows boot stick) from AUR (Arch,Manjaro)"  
             #yay -S --needed woeusb-ng && touch "/home/${userid}/.ansible_bootstrap_pamac-woeusbngInstalled"
         ;;
 

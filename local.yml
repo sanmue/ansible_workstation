@@ -1,5 +1,7 @@
 ---
 
+# tasks/basic_all/ScriptsExtern/install_SWandConf.sh
+
 - name: Gather Facts and Variables
   hosts: localhost
   connection: local
@@ -21,6 +23,20 @@
       ansible.builtin.import_tasks: tasks/fix/config_workstation-addrepos-ubuntu-fix.yml
     - name: Pre Tasks - all update
       ansible.builtin.import_tasks: tasks/basic_all/all_update.yml
+
+
+- name: Install and config snapper+btrfs
+  hosts: localhost
+  connection: local
+  become: true
+  tasks:
+    # wird in init-install-Script erledigt, da vor Inst aller (init) Software schon eingerichtet sein soll
+    # + müsste hier entsprechend angepasst/aktualisert werden
+    #
+    # - name: Installationen - snapper+btrfs
+    #   ansible.builtin.import_tasks: tasks/basic_all/packages_workstation-snapperBtrfs.yml
+    - name: Config Services - snapper+btrfs
+      ansible.builtin.import_tasks: tasks/basic_all/config_all-services-snapperBtrfs.yml
 
 
 - name: Software, Firewall, Servcices, VM, User, Settings

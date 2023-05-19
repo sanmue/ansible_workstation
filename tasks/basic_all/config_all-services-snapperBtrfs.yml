@@ -1,0 +1,47 @@
+# ##########
+# ### System
+# ##########
+# systemweit
+
+# - name: Config all services misc - Check if btrfs filesystem + register result in variable (all)
+#   ansible.builtin.shell: mount | grep "^/dev" | grep "on / " | grep "btrfs"
+#   register: rootFsIsBtrfs
+#   ignore_errors: true
+
+- name: Config all services snapperBtrfs - Check if / has btrfs filesystem + register result in variable (all)
+  ansible.builtin.shell: stat -f -c %T /
+  register: rootFsIsBtrfs
+  ignore_errors: true
+
+# ### prüfe auf grub bootloader:
+- name: Config all services snapperBtrfs - Get stats of etc-default-grup (all)
+  ansible.builtin.stat:
+    path: /etc/default/grub
+  register: etcdefgrub
+
+# ### grub-btrfsd - Regenerate grub-btrfs.cfg
+# github.com/Antynea/grub-btrfs
+# benötigt inotify-tools
+- name: Config all services snapperBtrfs - start+enable grub-btrfsd (Archlinux)
+  ansible.builtin.systemd:
+    name: grub-btrfsd.service
+    state: started
+    enabled: true
+    daemon_reload: true
+  when:
+    # - rootFsIsBtrfs != ''     # Variable aus packages_workstation-basic.yml; neu: s.o.
+    - rootFsIsBtrfs = 'btrfs'   # Variable aus packages_workstation-basic.yml; neu: s.o.
+    - etcdefgrub.stat.exists    # Status aus packages_workstation-basic.yml; neu: s.o.
+    - ansible_distribution in ["Archlinux"]
+
+- name: Config all services snapperBtrfs - start+enable grub-btrfsd (Archlinux)
+  ansible.builtin.systemd:
+    name: snapper-cleanup.timer
+    state: started
+    enabled: true
+    daemon_reload: true
+  when:
+    # - rootFsIsBtrfs != ''     # Variable aus packages_workstation-basic.yml; neu: s.o.
+    - rootFsIsBtrfs = 'btrfs'   # Variable aus packages_workstation-basic.yml; neu: s.o.
+    - etcdefgrub.stat.exists    # Status aus packages_workstation-basic.yml; neu: s.o.
+    - ansible_distribution in ["Archlinux"]
