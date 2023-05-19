@@ -2,6 +2,9 @@
 
 #set -x
 
+# ### Skript zur Sicherung $arrBak nach extern ($dest = Übergabe-Parameter)
+# WIRD NICHT MEHR BENÖTIGT, siehe neu: rsync_appConfData-extern_dest.sh (bwz. zuvor rsync_appConfData-intern.sh)
+
 # ### rsync - zusätzliche Parameter:
 paramRsync='--dry-run'
 
@@ -26,7 +29,7 @@ else
 fi
 
 # Liste Sicherungspfade ausgehend von $source:
-arrBak=("dev/Ansible/ansible_workstation/tasks/ScriptsExtern" "RescueSystem/AppsConfBak" "Sync/Default/AppsConfBak/Keepass" ".config/borg" ".config/Cryptomator" ".config/rclone" ".config/syncthing"  ".local/share/Vorta" ".ssh")
+arrBak=("dev/Ansible/ansible_workstation/tasks/ScriptsExtern" "RescueSystem/AppConfData" "Sync/Default/AppConfData/Keepass" ".config/borg" ".config/Cryptomator" ".config/rclone" ".config/syncthing" ".local/share/Vorta" ".ssh")
 
 
 # ### ###########################

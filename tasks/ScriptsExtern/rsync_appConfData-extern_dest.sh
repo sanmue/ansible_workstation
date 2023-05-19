@@ -2,17 +2,11 @@
 
 #set -x
 
-# ### Skript zur Sicherung/Updata AppConfData (intern)
+# ### Skript zur Sicherung/Update von $rescueAppConfDataPath nach extern ($dest = Übergabe-Parameter)
+# zuvor am besten noch Skript 'rsync_appConfData-intern.sh' ausführen
 #
-# - Quellpfade1: ${HOME}/${arrConfPath}
-# - Zielpfad1: ${HOME}/RescueSystem/AppConfData/01_bak-ScriptService
-#
-# - Quellpfad2: ${HOME}/Sync/Default/AppConfData
-# - Zielpfad2: ${HOME}/RescueSystem/AppConfData
-#
-# - Quellpfad3: ${HOME}/dev/Ansible/ansible_workstation/tasks/ScriptsExtern
-# - Zielpfad3: ${HOME}/RescueSystem/AppConfData/ScriptsExtern
-
+# - Quellpfad: $rescueAppConfDataPath
+# - Zielpfad: $dest (Übergabe-Parameter)
 
 # ### rsync - zusätzliche Parameter:
 paramRsync='--dry-run'
