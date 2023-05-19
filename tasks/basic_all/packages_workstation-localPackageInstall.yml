@@ -124,7 +124,7 @@
 # https://askubuntu.com/questions/1384501/installing-custom-fonts-on-ubuntu-server
 # install systemwide: /usr/share/fonts/ or /usr/local/share/fonts/
 # install for user: ~/.local/share/fonts/
-  ansible.builtin.shell: sudo curl -fLo "Meslo LG M Regular Nerd Font Complete Mono.ttf" https://github.com/ryanoasis/nerd-fonts/raw/HEAD/patched-fonts/Meslo/M/Regular/complete/Meslo%20LG%20M%20Regular%20Nerd%20Font%20Complete%20Mono.ttf
+  ansible.builtin.shell: sudo curl -fLo "Meslo LG M Regular Nerd Font Complete Mono.ttf" https://github.com/ryanoasis/nerd-fonts/raw/HEAD/patched-fonts/Meslo/M/Regular/MesloLGMNerdFontMono-Regular.ttf
   args:
     chdir: /usr/local/share/fonts/
     creates: "/usr/local/share/fonts/Meslo LG M Regular Nerd Font Complete Mono.ttf"
