@@ -30,7 +30,7 @@
     daemon_reload: true
   when:
     # - rootFsIsBtrfs != ''     # Variable aus packages_workstation-basic.yml; neu: s.o.
-    - rootFsIsBtrfs='btrfs'     # Variable aus packages_workstation-basic.yml; neu: s.o.
+    - rootFsIsBtrfs="btrfs"     # Variable aus packages_workstation-basic.yml; neu: s.o.
     - etcdefgrub.stat.exists    # Status aus packages_workstation-basic.yml; neu: s.o.
     - ansible_distribution in ["Archlinux"]
 
