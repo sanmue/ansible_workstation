@@ -13,6 +13,11 @@
   register: rootFsIsBtrfs
   ignore_errors: true
 
+- name: Config all services snapperBtrfs - Show value of 'rootFsIsBtrfs' (all)
+  ansible.builtin.debug:
+    var: rootFsIsBtrfs
+    # verbosity: 2
+
 # ### prüfe auf grub bootloader:
 - name: Config all services snapperBtrfs - Get stats of etc-default-grup (all)
   ansible.builtin.stat:
@@ -30,7 +35,7 @@
     daemon_reload: true
   when:
     # - rootFsIsBtrfs != ''     # Variable aus packages_workstation-basic.yml; neu: s.o.
-    - rootFsIsBtrfs="btrfs"     # Variable aus packages_workstation-basic.yml; neu: s.o.
+    - rootFsIsBtrfs = "btrfs"   # Variable aus packages_workstation-basic.yml; neu: s.o.
     - etcdefgrub.stat.exists    # Status aus packages_workstation-basic.yml; neu: s.o.
     - ansible_distribution in ["Archlinux"]
 
@@ -42,6 +47,6 @@
     daemon_reload: true
   when:
     # - rootFsIsBtrfs != ''     # Variable aus packages_workstation-basic.yml; neu: s.o.
-    - rootFsIsBtrfs = 'btrfs'   # Variable aus packages_workstation-basic.yml; neu: s.o.
+    - rootFsIsBtrfs = "btrfs"   # Variable aus packages_workstation-basic.yml; neu: s.o.
     - etcdefgrub.stat.exists    # Status aus packages_workstation-basic.yml; neu: s.o.
     - ansible_distribution in ["Archlinux"]
