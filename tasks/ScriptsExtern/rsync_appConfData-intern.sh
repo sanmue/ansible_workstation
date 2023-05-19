@@ -25,7 +25,7 @@ paramRsync='--stats'
 # ### ######################################################
 # ### Variablen - für backup home Verzeichnis aktueller User
 source=${HOME}
-echo "Quellpfad ist: ${source}"
+echo "Homepfad ist: ${source}"
 
 # ### Zielpfade + Liste zu sichernde Daten aus $HOME und Unterverz. '.config', '.local', '.var' für confAppData/01_bak-ScriptService
 confAppData2ndBakPath="${source}/RescueSystem/AppConfData/01_bak-ScriptService"
