@@ -13,7 +13,7 @@ paramRsync='--dry-run'
 
 # ### Variablen - für backup home Verzeichnis aktueller User
 source=${HOME}
-echo "Quellpfad (Home) ist: ${source}"
+echo "Home-Pfad ist: ${source}"
 
 # Quell-Pfade für Backup von $source/RescueSystem/AppConfData
 rescueAppConfDataPath="${source}/RescueSystem/AppConfData"
