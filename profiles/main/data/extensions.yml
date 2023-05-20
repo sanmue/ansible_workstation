@@ -38,8 +38,6 @@ enabled:
     uuid: 4ad0ce32-ff3f-49f0-83b5-93e5dc00cfff
   - id: ms-python.python
     uuid: f1f59ae4-9318-4f3c-a9b5-81b2eaa5f8a5
-  - id: ms-vscode.powershell
-    uuid: 40d39ce9-c381-47a0-80c8-a6661f731eab
   - id: ms-vscode.test-adapter-converter
     uuid: 47210ec2-0324-4cbb-9523-9dff02a5f9ec
   - id: njpwerner.autodocstring
