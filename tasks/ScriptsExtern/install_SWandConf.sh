@@ -65,6 +65,12 @@ if [[ $(stat -f -c %T /) = 'btrfs' ]] && [[ ! -e "/home/${userid}/.ansible_boots
     read -r -p "Soll 'snapper' installiert/konfiguriert werden ('j'=ja, sonstige Eingabe=nein)?: " doSnapper
 fi
 
+if [ ! -e "/.snapshots" ]; then
+    echo "Verzeichnis '/.snapshots' nicht vorhanden, manuelle Konfiguration erforderlich."
+    read -r -p "Weiter mit beliebiger Eingabe"
+    doSnapper='n'
+fi
+
 if [[ "${doSnapper}" = 'j' ]]; then   
     echo -e "\nInst und config snapper"
     case ${os} in
@@ -99,14 +105,21 @@ if [[ "${doSnapper}" = 'j' ]]; then
             echo "aktuelles root default-Subvolume: $(sudo btrfs subvolume get-default /)"
 
             echo -e "\n*** Re-Install grub + Update grub boot-Einträge"
-            lsblk
-            endloop='n'
-            while [ ! "$endloop" = 'j' ]; do
-                read -r -p "Eingabe dev-Pfad für grub-install (z.B. '/dev/vda1'): " devGrubInstallPath
-                read -r -p "Ist '${devGrubInstallPath}' korrekt ('j'=ja, beliebige Eingabe für Korrektur)?: " endloop
-            done
-            sudo grub-install --target=i386-pc "${devGrubInstallPath}" && sudo grub-mkconfig -o /boot/grub/grub.cfg && \
-            sudo grub-mkconfig && \
+            # https://wiki.archlinux.org/title/GRUB
+            if [ -e "/boot/grub" ]; then    # UEFI
+                sudo grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=endeavouros && \
+                sudo grub-mkconfig -o /boot/grub/grub.cfg && \
+                sudo grub-mkconfig
+            else                            # BIOS
+                lsblk
+                endloop='n'
+                while [ ! "$endloop" = 'j' ]; do
+                    read -r -p "Eingabe dev-Pfad für grub-install (z.B. '/dev/vda1'): " devGrubInstallPath
+                    read -r -p "Ist '${devGrubInstallPath}' korrekt ('j'=ja, beliebige Eingabe für Korrektur)?: " endloop
+                done
+                sudo grub-install --target=i386-pc "${devGrubInstallPath}" && sudo grub-mkconfig -o /boot/grub/grub.cfg && \
+                sudo grub-mkconfig
+            fi
 
             echo -e "\n*** Snapper config 'root' wird angepasst..."   # /etc/snapper/configs/CONFIGS (z.B. /etc/sanpper/configs/root)
             # sudo snapper -c root set-config "ALLOW_USERS=${userid}" && \
