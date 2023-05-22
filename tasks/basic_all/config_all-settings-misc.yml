@@ -80,7 +80,7 @@
     group: "{{ env_user }}"
     mode: u=rw,g=r,o=r
   when:
-    - ansible_distribution in ["Ubuntu", "Archlinux"]
+    # - ansible_distribution in ["Ubuntu", "Archlinux"]
     - not stat_bashrc_user.stat.exists   # oder: - stat_bashrc_user.stat.exists == false
 
 - name: All settings misc - Bashrc - Insert/Update additional paths and config - starship shell prompt (User, all)
@@ -99,8 +99,8 @@
       }
 
       starship_precmd_user_func="set_win_title"
-  when:
-    - ansible_distribution in ["Ubuntu", "Archlinux"]
+  # when:
+  #   - ansible_distribution in ["Ubuntu", "Archlinux"]
 
 - name: All settings misc - config all settings - copy starship shell prompt config file (User, all)
   become: true
@@ -110,8 +110,8 @@
     dest: "/home/{{ env_user }}/.config/starship.toml"
     mode: '0644'
     backup: true
-  when:
-    - ansible_distribution in ["Ubuntu", "Archlinux"]
+  # when:
+  #   - ansible_distribution in ["Ubuntu", "Archlinux"]
 
 - name: All settings misc - Bashrc - additional EXPORTS (User, all)
   ansible.builtin.blockinfile:
@@ -137,8 +137,8 @@
 
       # Show auto-completion list automatically, without double tab (einfacher tab genügt)
       if [[ $iatest -gt 0 ]]; then bind "set show-all-if-ambiguous On"; fi
-  when:
-    - ansible_distribution in ["Ubuntu", "Archlinux"]
+  # when:
+  #   - ansible_distribution in ["Ubuntu", "Archlinux"]
 
 - name: All settings misc - Bashrc - custom alias definitions (User, all)
   ansible.builtin.blockinfile:
@@ -161,10 +161,13 @@
       alias lst='ls --tree'           # lst = ls tree
       alias lstl='lst --long'         # lstl = ls tree long
       alias lstla='lstl --all'        # lstla = ls tree long all
-      alias lstlale='lstla --level'   # lstlale = ls tree long all level   # Aufruf: lstlale 3
+      alias lstlale='lstla --level'   # lstlale = ls tree long all level   # Aufruf: lstlale 3 (entspricht: ls --tree --long --all --level 3 )
       alias lstle='lst --level'       # lstle = ls tree level              # Aufruf: lstle 3   (entspricht: ls --tree --level 3)
-  when:
-    - ansible_distribution in ["Ubuntu", "Archlinux"]
+
+      # lsblk - list block devices
+      alias lsblk-u='lsblk -o NAME,MAJ:MIN,UUID,RM,SIZE,RO,TYPE,MOUNTPOINTS'   # mit UUID
+  # when:
+  #   - ansible_distribution in ["Ubuntu", "Archlinux"]
 
 - name: All settings misc - Bashrc - Insert/Update additional paths and config - nvm (User, all)
   ansible.builtin.blockinfile:
@@ -181,8 +184,8 @@
       export NVM_DIR="$HOME/.nvm"
       [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
       [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-  when:
-    - ansible_distribution in ["Ubuntu", "Archlinux"]
+  # when:
+  #   - ansible_distribution in ["Ubuntu", "Archlinux"]
 
 - name: All settings misc - Bashrc - Insert/Update additional paths and config - vim (User, all)
   ansible.builtin.blockinfile:
@@ -195,8 +198,8 @@
       # -------------------------------
       export VISUAL=vim
       export EDITOR="${VISUAL}"
-  when:
-    - ansible_distribution in ["Ubuntu", "Archlinux"]
+  # when:
+  #   - ansible_distribution in ["Ubuntu", "Archlinux"]
 
 - name: All settings misc - Bashrc - Insert/Update additional paths and config - user-bin (User, all)
   ansible.builtin.blockinfile:
@@ -208,8 +211,8 @@
       # Benutzer-bin Verzeichnis an PATH anhängen:
       # ------------------------------------------
       export PATH=~/.local/bin:$PATH
-  when:
-    - ansible_distribution in ["Ubuntu", "Archlinux"]
+  # when:
+  #   - ansible_distribution in ["Ubuntu", "Archlinux"]
 
 - name: All settings misc - Bashrc - Insert/Update additional paths and config - pyenv (User, Ubuntu)
   ansible.builtin.blockinfile:
@@ -265,8 +268,8 @@
       # systemd user import-environment
       # -----
       systemctl --user import-environment PATH
-  when:
-    - ansible_distribution in ["Archlinux", "Ubuntu"]
+  # when:
+  #   - ansible_distribution in ["Archlinux", "Ubuntu"]
 
 
 # --------
@@ -282,7 +285,7 @@
     state: touch
     mode: '0644'
   when:
-    - ansible_distribution in ["Ubuntu", "Archlinux"]
+    # - ansible_distribution in ["Ubuntu", "Archlinux"]
     - not stat_bashrc_root.stat.exists
 
 - name: All settings misc - Bashrc - Insert/Update additional paths and config - starship shell prompt (root, all)
@@ -295,8 +298,8 @@
       # starship shell prompt - Add the init script
       # -------------------------------------------
       eval "$(starship init bash)"
-  when:
-    - ansible_distribution in ["Ubuntu", "Archlinux"]
+  # when:
+    # - ansible_distribution in ["Ubuntu", "Archlinux"]
 
 - name: All settings misc - Bashrc - Insert/Update additional paths and config (root, all)
   ansible.builtin.blockinfile:
@@ -309,8 +312,8 @@
       # -------------------------------
       export VISUAL=vim
       export EDITOR="${VISUAL}"
-  when:
-    - ansible_distribution in ["Ubuntu", "Archlinux"]
+  # when:
+  #   - ansible_distribution in ["Ubuntu", "Archlinux"]
 
 
 # #######################################
@@ -349,12 +352,12 @@
     owner: "{{ env_user }}"
     group: "{{ env_user }}"
     mode: u=rw,g=r,o=r
-  when:
-    - ansible_distribution in ["Ubuntu", "Archlinux"]
-    # - not statzshrcUser.stat.exists
-    # oder: - statzshrcUser.stat.exists == false
+  # when:
+  #   - ansible_distribution in ["Ubuntu", "Archlinux"]
+  #   # - not statzshrcUser.stat.exists
+  #   # oder: - statzshrcUser.stat.exists == false
 
-- name: All settings misc - Zshrc - Insert/Update additional paths and config - starship shell prompt (User,all
+- name: All settings misc - Zshrc - Insert/Update additional paths and config - starship shell prompt (User,all)
   ansible.builtin.blockinfile:
     path: "/home/{{ env_user }}/.zshrc"
     backup: true
@@ -364,9 +367,9 @@
       # starship shell prompt - Add the init script
       # -------------------------------------------
       eval "$(starship init zsh)"
-  when:
-    - ansible_distribution in ["Ubuntu", "Archlinux"]
-    # - env_lsb_id != "ManjaroLinux"  # bei Manjaro ist zsh pompt von Werk aus schon angepasst
+  # when:
+  #   - ansible_distribution in ["Ubuntu", "Archlinux"]
+  #   # - env_lsb_id != "ManjaroLinux"  # bei Manjaro ist zsh pompt von Werk aus schon angepasst
 
 # Übernommen + anpgepasst aus manjaro-zsh-config (/usr/share/zsh/manjaro-zsh-config)
 # Anm.: zsh ist bei Manjaro die Standardshell und entsprechend vorkonfiguriert
@@ -382,9 +385,9 @@
     group: root
     mode: '0644'
     backup: true
-  when:
-    - ansible_distribution in ["Ubuntu", "Archlinux"]
-    # - env_lsb_id != "ManjaroLinux"
+  # when:
+  #   - ansible_distribution in ["Ubuntu", "Archlinux"]
+  #   # - env_lsb_id != "ManjaroLinux"
 
 
 # https://stackoverflow.com/questions/65020310/how-to-copy-file-content-to-another-file-in-ansible-without-overwriting-the-seco
@@ -399,9 +402,9 @@
       # custom zsh config
       # -----------------
       "{{ lookup('file', 'files/custom-zsh-config') }}"
-  when:
-    - ansible_distribution in ["Ubuntu", "Archlinux"]
-    # - env_lsb_id != "ManjaroLinux"
+  # when:
+  #   - ansible_distribution in ["Ubuntu", "Archlinux"]
+  #   # - env_lsb_id != "ManjaroLinux"
 
 # Zeichenfolge '"<feff>' wurde vor Inhalt aus 'files/custom-zsh-config' eingefügt
 # U+FEFF was called a ZERO WIDTH NO-BREAK SPACE
@@ -416,9 +419,9 @@
     path: "/home/{{ env_user }}/.zshrc"
     regexp: '^"##'
     replace: '##'
-  when:
-    - ansible_distribution in ["Ubuntu", "Archlinux"]
-    # - env_lsb_id != "ManjaroLinux"
+  # when:
+  #   - ansible_distribution in ["Ubuntu", "Archlinux"]
+  #   # - env_lsb_id != "ManjaroLinux"
 
 #- name: All settings misc - Zshrc - source cutom zsh config in .zshrc (User, all)
 #  ansible.builtin.blockinfile:
@@ -460,8 +463,8 @@
       alias lstla='lstl --all'        # lstla = ls tree long all
       alias lstlale='lstla --level'   # lstlale = ls tree long all level   # Aufruf: lstlale 3
       alias lstle='lst --level'       # lstle = ls tree level              # Aufruf: lstle 3   (entspricht: ls --tree --level 3)
-  when:
-    - ansible_distribution in ["Ubuntu", "Archlinux"]
+  # when:
+  #   - ansible_distribution in ["Ubuntu", "Archlinux"]
 
 - name: All settings misc - Zshrc - Insert/Update additional paths and config - nvm (User, all)
   ansible.builtin.blockinfile:
@@ -478,8 +481,8 @@
       export NVM_DIR="$HOME/.nvm"
       [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
       [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-  when:
-    - ansible_distribution in ["Ubuntu", "Archlinux"]
+  # when:
+  #   - ansible_distribution in ["Ubuntu", "Archlinux"]
 
 - name: All settings misc - Zshrc - Insert/Update additional paths and config - vim (User, all)
   ansible.builtin.blockinfile:
@@ -492,8 +495,8 @@
       # -------------------------------
       export VISUAL=vim
       export EDITOR="${VISUAL}"
-  when:
-    - ansible_distribution in ["Ubuntu", "Archlinux"]
+  # when:
+  #   - ansible_distribution in ["Ubuntu", "Archlinux"]
 
 - name: All settings misc - Zshrc - Insert/Update additional paths and config - user-bin (User, all)
   ansible.builtin.blockinfile:
@@ -505,8 +508,8 @@
       # Benutzer-bin Verzeichnis an PATH anhängen:
       # ------------------------------------------
       export PATH=~/.local/bin:$PATH
-  when:
-    - ansible_distribution in ["Ubuntu", "Archlinux"]
+  # when:
+  #   - ansible_distribution in ["Ubuntu", "Archlinux"]
 
 - name: All settings misc - Zshrc - Insert/Update additional paths and config - pyenv (User, Ubuntu)
   ansible.builtin.blockinfile:
@@ -562,8 +565,8 @@
       # systemd user import-environment
       # -----
       systemctl --user import-environment PATH
-  when:
-    - ansible_distribution in ["Archlinux", "Ubuntu"]
+  # when:
+  #   - ansible_distribution in ["Archlinux", "Ubuntu"]
 
 
 # --------
@@ -579,7 +582,7 @@
     state: touch
     mode: '0644'
   when:
-    - ansible_distribution in ["Ubuntu", "Archlinux"]
+    # - ansible_distribution in ["Ubuntu", "Archlinux"]
     - not stat_bashrc_root.stat.exists
 
 - name: All settings misc - Zshrc - Insert/Update additional paths and config - starship shell prompt (root, all)
@@ -592,9 +595,9 @@
       # starship shell prompt - Add the init script
       # -------------------------------------------
       eval "$(starship init zsh)"
-  when:
-    - ansible_distribution in ["Ubuntu", "Archlinux"]
-    # - env_lsb_id != "ManjaroLinux"  # bei Manjaro ist zsh bereits angepasst
+  # when:
+  #   - ansible_distribution in ["Ubuntu", "Archlinux"]
+  #   # - env_lsb_id != "ManjaroLinux"  # bei Manjaro ist zsh bereits angepasst
 
 - name: All settings misc - Zshrc - Insert/Update additional paths and config (root, all)
   ansible.builtin.blockinfile:
@@ -607,14 +610,14 @@
       # -------------------------------
       export VISUAL=vim
       export EDITOR="${VISUAL}"
-  when:
-    - ansible_distribution in ["Ubuntu", "Archlinux"]
+  # when:
+  #   - ansible_distribution in ["Ubuntu", "Archlinux"]
 
 
 # #########################
 # ### starship shell prompt
 # #########################
-- name: All settings misc - starship shell prompt - copy update-script to usr-local-bin (Arch, Ubuntu)
+- name: All settings misc - starship shell prompt - copy update-script to usr-local-bin (all)
   ansible.builtin.copy:
     src: "files/config_all-settings-misc-starship_update.sh"
     dest: "/usr/local/bin/starship_update.sh"
@@ -622,8 +625,8 @@
     group: root
     mode: '0755'
     backup: true
-  when:
-    - ansible_distribution in ["Archlinux", "Ubuntu"]
+  # when:
+  #   - ansible_distribution in ["Archlinux", "Ubuntu"]
 
 
 # #######
@@ -782,7 +785,7 @@
 
 # ### clamd
 
-- name: All settings misc - Set ClamAV - clamd global config - ExcludePath (arch, Ubuntu)
+- name: All settings misc - Set ClamAV - clamd global config - ExcludePath (all)
   ansible.builtin.blockinfile:
     path: "/etc/clamav/clamd.conf"
     backup: true
@@ -794,10 +797,10 @@
       #ExcludePath ^/proc/
       #ExcludePath ^/sys/
       ExcludePath ^/home/.*/\.clam/quarantine
-  when:
-    - ansible_distribution in ["Archlinux", "Ubuntu"]
+  # when:
+  #   - ansible_distribution in ["Archlinux", "Ubuntu"]
 
-- name: All settings misc - Set ClamAV - clamd global config - Limits (arch, Ubuntu)
+- name: All settings misc - Set ClamAV - clamd global config - Limits (all)
   ansible.builtin.blockinfile:
     path: "/etc/clamav/clamd.conf"
     backup: true
@@ -813,12 +816,12 @@
       # 2 GB at this time.
       # Default: 100M
       MaxFileSize 400M
-  when:
-    - ansible_distribution in ["Archlinux", "Ubuntu"]
+  # when:
+  #   - ansible_distribution in ["Archlinux", "Ubuntu"]
 
 # https://wiki.archlinux.org/title/Desktop_notifications#Bash
 # https://wiki.archlinux.org/title/ClamAV
-- name: All settings misc - Set ClamAV - clamd global config - VirusEvent - Desktop Notification (arch, Ubuntu)
+- name: All settings misc - Set ClamAV - clamd global config - VirusEvent - Desktop Notification (all)
   ansible.builtin.blockinfile:
     path: "/etc/clamav/clamd.conf"
     backup: true
@@ -832,11 +835,11 @@
       #VirusEvent /usr/local/bin/send_sms 123456789 "VIRUS ALERT: %v in %f"
       #VirusEvent /usr/bin/notify-send "VirusAlert: '${CLAM_VIRUSEVENT_VIRUSNAME}' in '${CLAM_VIRUSEVENT_FILENAME}'" "Virus found - notification." --icon=dialog-warning
       VirusEvent /etc/clamav/VirusEvent.sh
-  when:
-    - ansible_distribution in ["Archlinux", "Ubuntu"]
+  # when:
+  #   - ansible_distribution in ["Archlinux", "Ubuntu"]
 
 # https://wiki.archlinux.org/title/ClamAV
-- name: All settings misc - Users - clamav - bash-skript VirusEvent - notify-send on signature found (Arch, Ubuntu)
+- name: All settings misc - Users - clamav - bash-skript VirusEvent - notify-send on signature found (all)
   ansible.builtin.copy:
     src: "files/config_all-settings-misc-clamavVirusEvent.sh"
     dest: "/etc/clamav/VirusEvent.sh"
@@ -844,10 +847,10 @@
     group: root
     mode: '0755'
     backup: true
-  when:
-    - ansible_distribution in ["Archlinux", "Ubuntu"]
+  # when:
+  #   - ansible_distribution in ["Archlinux", "Ubuntu"]
 
-- name: All settings misc - Users - clamav - services - bashScript to scan HOME folder (Arch, Ubuntu)
+- name: All settings misc - Users - clamav - services - bashScript to scan HOME folder (all)
   ansible.builtin.copy:
     src: "files/config_all-services-misc-clamav-scanHome.sh"
     dest: "/usr/local/bin/scanHome.sh"
@@ -855,13 +858,13 @@
     group: root
     mode: '0755'
     backup: true
-  when:
-    - ansible_distribution in ["Archlinux", "Ubuntu"]
+  # when:
+  #   - ansible_distribution in ["Archlinux", "Ubuntu"]
 
 
 # ### custom folders (quarantine, logs)
 
-- name: All settings misc - Create 'quarantine' and 'logs' folder for ClamAV for env_user (Archlinux, Ubuntu)
+- name: All settings misc - Create 'quarantine' and 'logs' folder for ClamAV for env_user (all)
   ansible.builtin.file:
     path: "/home/{{ env_user }}/{{ item }}"
     state: directory
@@ -871,8 +874,8 @@
   loop:
     - .clam/logs
     - .clam/quarantine
-  when:
-    - ansible_distribution in ["Ubuntu", "Archlinux"]
+  # when:
+  #   - ansible_distribution in ["Ubuntu", "Archlinux"]
 
 
 # #############################################
