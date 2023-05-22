@@ -165,7 +165,7 @@
       alias lstle='lst --level'       # lstle = ls tree level              # Aufruf: lstle 3   (entspricht: ls --tree --level 3)
 
       # lsblk - list block devices
-      alias lsblk-u='lsblk -o NAME,MAJ:MIN,UUID,RM,SIZE,RO,TYPE,MOUNTPOINTS'   # mit UUID
+      alias lsblk-uuid='lsblk -o NAME,MAJ:MIN,UUID,RM,SIZE,RO,TYPE,MOUNTPOINTS'   # mit UUID
   # when:
   #   - ansible_distribution in ["Ubuntu", "Archlinux"]
 
