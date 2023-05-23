@@ -58,8 +58,9 @@ arrConfPath=('.bashrc' '.ssh' '.zshrc' \
 '.config/autokey' '.config/autostart' '.config/borg' '.config/BraveSoftware/Brave-Browser/Default/Bookmarks' \
 '.config/chromium/Default/Bookmarks' '.config/Cryptomator' '.config/evolution' '.config/gtk-3.0/bookmarks' '.config/rclone' \
 '.config/remmina' '.config/starship.toml' '.config/syncthing' '.config/ulauncher' '.config/user-dirs.dirs' \
-'.local/bin/rclone_pCloud-Mnt.sh' '.local/share/evolution' '.local/share/remmina' '.local/share/Vorta' \
+'.local/bin/rclone_pCloud-Mnt.sh' '.local/share/evolution' '.local/share/remmina' \
 '.var/app/net.ankiweb.Anki/data')
+# '.local/share/Vorta'   # entfernt, da gnome keyring (keyfile) i.d.R. nicht mitnehme und daher config nicht passt
 
 # Pfade für Update (intern) von $source/Sync/Default/AppConfData nach $source/RescueSystem/AppConfData
 syncAppConfDataPath="${source}/Sync/Default/AppConfData"
