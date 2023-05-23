@@ -115,6 +115,6 @@ echo '========================================'
 
 # ### 3. Update (MIRROR) (intern) von dev/Ansible...ScriptsExtern nach $rescueAppConfDataPath/$scriptsExternFoldername
 echo -e "\n========================================"
-echo "Starte Update (MIRROR) von '${scriptsExternPath}/ nach '${rescueAppConfDataPath}/${scriptsExternFoldername}/'"
+echo "Starte Update (MIRROR) von '${scriptsExternPath}/' nach '${rescueAppConfDataPath}/${scriptsExternFoldername}/'"
 rsync -aPhEv --delete "${paramRsync}" "${scriptsExternPath}/" "${rescueAppConfDataPath}/${scriptsExternFoldername}/" | tee -a "/tmp/${logname}"
 echo '========================================'
