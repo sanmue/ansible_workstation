@@ -1,0 +1,57 @@
+# ##############
+# lsblk mit UUID
+#
+NAME                                          MAJ:MIN UUID                                 RM   SIZE RO TYPE  MOUNTPOINTS
+sda                                             8:0                                         0 953,9G  0 disk  
+└─sda1                                          8:1   dca13319-4c13-4ecb-af1a-ac82b3c1aca7  0 953,9G  0 part  /run/media/er/1TB-M2NVME
+nvme0n1                                       259:0                                         0   1,8T  0 disk  
+├─nvme0n1p1                                   259:1   5DEB-2D31                             0  1000M  0 part  /boot/efi
+├─nvme0n1p2                                   259:2   8f1cf7bc-8064-422b-bd46-466438199874  0   1,8T  0 part  
+│ └─luks-8f1cf7bc-8064-422b-bd46-466438199874 254:1   a0076335-fff4-4d06-b250-f25eee9bd9f7  0   1,8T  0 crypt /var/tmp
+└─nvme0n1p3                                   259:3   c8eada5b-b8c7-4314-a775-949ecfdb00c5  0  34,3G  0 part  
+  └─luks-c8eada5b-b8c7-4314-a775-949ecfdb00c5 254:0   b49871e1-886b-41fb-a00b-f9b0cb2b0cd7  0  34,3G  0 crypt [SWAP]
+
+
+# ###########################
+# sudo btrfs subvolume list /
+#
+ID 256 gen 3944 top level 5 path @
+ID 257 gen 3944 top level 5 path @home
+ID 258 gen 2798 top level 5 path @cache
+ID 259 gen 3944 top level 5 path @log
+ID 260 gen 3731 top level 5 path @snapshots
+ID 261 gen 1729 top level 5 path @images
+ID 262 gen 2780 top level 5 path @varspool
+ID 263 gen 3943 top level 5 path @tmp
+ID 264 gen 1729 top level 5 path @opt
+ID 265 gen 1729 top level 5 path @varopt
+ID 266 gen 1729 top level 5 path @srv
+ID 267 gen 3943 top level 5 path @vartmp
+ID 268 gen 2195 top level 5 path @usrlocal
+
+
+# ###########################################
+# /etc/fstab: static file system information.
+#
+# Use 'blkid' to print the universally unique identifier for a device; this may
+# be used with UUID= as a more robust way to name devices that works even if
+# disks are added and removed. See fstab(5).
+#
+# <file system>             <mount point>  <type>  <options>  <dump>  <pass>
+UUID=5DEB-2D31                            /boot/efi      vfat    defaults,noatime 0 2
+/dev/mapper/luks-8f1cf7bc-8064-422b-bd46-466438199874 /              btrfs   subvol=/@,defaults,noatime,compress=zstd 0 0
+/dev/mapper/luks-8f1cf7bc-8064-422b-bd46-466438199874 /home          btrfs   subvol=/@home,defaults,noatime,compress=zstd 0 0
+/dev/mapper/luks-8f1cf7bc-8064-422b-bd46-466438199874 /var/cache     btrfs   subvol=/@cache,defaults,noatime,compress=zstd 0 0
+/dev/mapper/luks-8f1cf7bc-8064-422b-bd46-466438199874 /var/log       btrfs   subvol=/@log,defaults,noatime,compress=zstd 0 0
+/dev/mapper/luks-8f1cf7bc-8064-422b-bd46-466438199874 /.snapshots    btrfs   subvol=/@snapshots,noatime,compress=zstd 0 0
+/dev/mapper/luks-8f1cf7bc-8064-422b-bd46-466438199874 /var/lib/libvirt/images btrfs   subvol=/@images,defaults,noatime,compress=zstd 0 0
+/dev/mapper/luks-8f1cf7bc-8064-422b-bd46-466438199874 /var/spool     btrfs   subvol=/@varspool,defaults,noatime,compress=zstd 0 0
+/dev/mapper/luks-8f1cf7bc-8064-422b-bd46-466438199874 /tmp           btrfs   subvol=/@tmp,defaults,noatime,compress=zstd 0 0
+/dev/mapper/luks-8f1cf7bc-8064-422b-bd46-466438199874 /opt           btrfs   subvol=/@opt,defaults,noatime,compress=zstd 0 0
+/dev/mapper/luks-8f1cf7bc-8064-422b-bd46-466438199874 /var/opt       btrfs   subvol=/@varopt,defaults,noatime,compress=zstd 0 0
+/dev/mapper/luks-8f1cf7bc-8064-422b-bd46-466438199874 /srv           btrfs   subvol=/@srv,defaults,noatime,compress=zstd 0 0
+/dev/mapper/luks-8f1cf7bc-8064-422b-bd46-466438199874 /var/tmp       btrfs   subvol=/@vartmp,defaults,noatime,compress=zstd 0 0
+/dev/mapper/luks-8f1cf7bc-8064-422b-bd46-466438199874 /usr/local     btrfs   subvol=/@usrlocal,defaults,noatime,compress=zstd 0 0
+/dev/mapper/luks-c8eada5b-b8c7-4314-a775-949ecfdb00c5 swap           swap    defaults   0 0
+tmpfs                                     /tmp           tmpfs   defaults,noatime,mode=1777 0 0
+

@@ -1,6 +1,6 @@
 ---
 
-# tasks/basic_all/ScriptsExtern/install_SWandConf.sh
+# run first: tasks/basic_all/ScriptsExtern/install_SWandConf.sh
 
 - name: Gather Facts and Variables
   hosts: localhost

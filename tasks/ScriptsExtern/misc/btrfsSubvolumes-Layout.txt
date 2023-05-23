@@ -3,12 +3,12 @@ btrfsSubvolumes:
       subvolume: /@
     - mountPoint: /home
       subvolume: /@home
-    - mountPoint: /.snapshots
-      subvolume: /@snapshots
     - mountPoint: /var/log
       subvolume: /@log
     - mountPoint: /var/cache
       subvolume: /@cache
+    - mountPoint: /.snapshots
+      subvolume: /@snapshots
     - mountPoint: /var/lib/libvirt/images
       subvolume: /@images
     - mountPoint: /var/spool

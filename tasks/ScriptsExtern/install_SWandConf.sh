@@ -24,6 +24,21 @@ gitOnlineRepo="git@github.com:sanmue/${playbookdir}.git"
 gitdefaultBranchName="main"
 os=""
 oslist=("Ubuntu" "EndeavourOS" "ManjaroLinux")   # aktuell berücksichtige Distributionen
+snapperConfigName_root="root"
+snapperSnapshotFolder="/.snapshots"
+# Manjaro: 'associative array' mit zusätzlich anzulegende Subvolumes (neben den bereits vorhanden für '/', /home, /var/cache, /var/log)
+# # https://stackoverflow.com/questions/1494178/how-to-define-hash-tables-in-bash
+declare -A btrfsAdditionalSubvolList=(  ["snapshots"]="/.snapshots" 
+                                        ["images"]="/var/lib/libvirt/images" 
+                                        ["varspool"]="/var/spool" 
+                                        ["tmp"]="/tmp" 
+                                        ["opt"]="/opt" 
+                                        ["varopt"]="/var/opt" 
+                                        ["srv"]="/srv" 
+                                        ["vartmp"]="/var/tmp" 
+                                        ["usrlocal"]="/usr/local")
+btrfsFstabMountOptions_standard='defaults,noatime,compress=zstd,space_cache 0 0'   # Standard
+btrfsFstabMountOptions_manjaro='defaults 0 0'                                      # ggf. ersetzen (mit $btrfsFstabMountOptions_standard)
 
 
 ### ---
@@ -65,16 +80,18 @@ if [[ $(stat -f -c %T /) = 'btrfs' ]] && [[ ! -e "/home/${userid}/.ansible_boots
     read -r -p "Soll 'snapper' installiert/konfiguriert werden ('j'=ja, sonstige Eingabe=nein)?: " doSnapper
 fi
 
-if [ ! -e "/.snapshots" ]; then
-    echo "Verzeichnis '/.snapshots' nicht vorhanden, manuelle Konfiguration erforderlich."
+if [ ! -e "${snapperSnapshotFolder}" ]; then
+    echo -e "\e[0;33mVerzeichnis '${snapperSnapshotFolder}' nicht vorhanden, ggf. (zuvor) manueller Eingriff erforderlich.\e[39m" 
+    # Bei Archlinux+Endeavour sollte initial bereits "korrekt" angelegt sein, ansonsten manuell nachholen (noch nicht im Skript eingebaut)
+    # Bei Manjaro: alle zusätzlichen Subvol + Verz. werden angelegt, ...
     read -r -p "Weiter mit beliebiger Eingabe"
-    doSnapper='n'
+    # doSnapper='n'
 fi
 
 if [[ "${doSnapper}" = 'j' ]]; then   
     echo -e "\nInst und config snapper"
     case ${os} in
-        Archlinux* | EndeavourOS*)
+        Archlinux* | EndeavourOS* | Manjaro*)
             # https://wiki.archlinux.org/title/Btrfs
             # https://wiki.archlinux.org/title/Snapper
             # https://documentation.suse.com/sles/15-SP4/html/SLES-all/cha-snapper.html
@@ -83,15 +100,70 @@ if [[ "${doSnapper}" = 'j' ]]; then
             sudo pacman --needed --noconfirm -S snapper snap-pac inotify-tools grub-btrfs && \
             # snap-sync
 
-            echo -e "\n*** (Re)create snapshots folder + create snapper root config..."
-            # mit Anlage des angepassten btrfs subvolume layouts wurde /.snapshots + subvolumen /@.snapshots bereits angelegt (+ in fstab eingetragen)
+            echo -e "\n*** (Re)create snapshots folder + snapper config..."
+            # Archlinux | EndeavourOS:
+            # mit Anlage des angepassten btrfs subvolume layouts wurde Verzeichnis '/.snapshots' + subvolume '/@.snapshots' bereits angelegt
+            # (+ in fstab eingetragen)
             # beim erstellen der config root wird ein weiteres subvolume '/.snapshots' erstellt, welches gelöscht wird:
-            echo "Unmount + Löschen /.snapshots und erstelle snapper config 'root' für '/'..."
-            sudo umount /.snapshots && sudo rm -rf /.snapshots && sudo snapper -c root create-config / && \
-            echo "Lösche doppeltes Subvolume for Snapshots (aus autom. Erstellung bei snapper 'root' create-config)..."
-            sudo btrfs subvolume delete /.snapshots
-            echo "Erstelle (wieder) Verzeichnis '/.snapshots' und mount all..."
-            sudo sudo mkdir /.snapshots && sudo mount -a  && \
+            #
+            # Manjaro:
+            # '/.snapshots' wird NICHT standardmäßig erstellt / TODO: config subvolume layout (+ fstab einträge) vor Installation
+            #
+            if [ -e "${snapperSnapshotFolder}" ]; then   # Archlinux+EndevourOS mit angepasstem subvol layout
+                echo "Unmount + Löschen '${snapperSnapshotFolder}' + erstelle snapper config '${snapperConfigName_root}' für '/'"
+                sudo umount "${snapperSnapshotFolder}" && sudo rm -rf "${snapperSnapshotFolder}"
+            fi
+
+            echo "*** Erstelle snapper config '${snapperConfigName_root}' für '/'"
+            sudo snapper -c "${snapperConfigName_root}" create-config / && \
+
+            echo "*** Lösche Subvolume for Snapshots aus autom. Erstellung bei snapper '${snapperConfigName_root}' create-config..."
+            sudo btrfs subvolume delete "${snapperSnapshotFolder}"
+
+            echo "*** Erstelle (wieder) Verzeichnis '${snapperSnapshotFolder}'..."
+            sudo sudo mkdir "${snapperSnapshotFolder}"
+
+            if [[ "${os}" == *"Manjaro"* ]]; then
+                echo "*** Erstelle weitere Subvolumes und fstab-Einträge"
+                echo "Aktuelle /etc/fstab:"
+                cat /etc/fstab
+                filesystemName=$(grep subvol=/@, /etc/fstab | cut -d ' ' -f 1 | xargs)   # z.B.: luks-8f1cf7bc-8064-422b-bd46-466438199874
+                read -r -p "Nutze file system '${filesystemName}'. Ist das korrekt ('n'=nein, sonstige Eingabe=ja)?: " fsok
+                if [ "${fsok}" = "n" ]; then
+                    endloop='n'
+                    while [ ! "$endloop" = 'j' ]; do
+                        read -r -p "Manuelle Eingabe: " filesystemName
+                        read -r -p "Ist '${filesystemName}' korrekt ('j'=ja, beliebige Eingabe für Korrektur)?: " endloop
+                    done
+                fi
+
+                sudo cp /etc/fstab /etc/fstab.bak   # Sicherung
+                echo -e "\nMount: 'subvolid=5' '${filesystemName}' nach '/mnt'..."
+                sudo mount -t btrfs -o subvolid=5 "${filesystemName}" /mnt
+
+                for subvol in "${!btrfsAdditionalSubvolList[@]}"; do
+                    echo "|__ Erstelle Subvolume '/mnt/@${subvol}'..."
+                    sudo btrfs subvolume create "/mnt/@${subvol}"
+                done
+
+                echo -e "Unmount '/mnt'...\n"
+                sudo umount /mnt
+
+                for subvol in "${!btrfsAdditionalSubvolList[@]}"; do
+                    echo "|__ Erstelle fstab-Eintrag für Subvolume '@${subvol}' mit mount point '${btrfsAdditionalSubvolList[${subvol}]}'..."
+                    if [ ! -e  "${btrfsAdditionalSubvolList[${subvol}]}" ]; then
+                        echo -e "\e[0;33m    |__ Mount-Ziel '${btrfsAdditionalSubvolList[${subvol}]}' nicht vorhanden, Verzeichnis wird erstellt...\e[39m"
+                        sudo mkdir -p "${btrfsAdditionalSubvolList[${subvol}]}"
+                    fi
+                    echo "${filesystemName} ${btrfsAdditionalSubvolList[${subvol}]} btrfs subvol=/@${subvol},${btrfsFstabMountOptions_standard}" | sudo tee -a /etc/fstab
+                done
+
+                echo -e "\nErsetze fstab btrfs mount-option '...${btrfsFstabMountOptions_manjaro}' mit '...${btrfsFstabMountOptions_standard}'"
+                sudo sed -i "s/${btrfsFstabMountOptions_manjaro}/${btrfsFstabMountOptions_standard}/g" /etc/fstab
+
+                echo "Aktualisiere systemd units aus fstab + mount all..."
+                sudo systemctl daemon-reload && sudo mount -a
+            fi
 
             echo -e "\n*** Default-Subvolume festlegen"
             echo "aktuelles default-Subvolume für '/': $(sudo btrfs subvolume get-default /)"
@@ -106,7 +178,7 @@ if [[ "${doSnapper}" = 'j' ]]; then
 
             echo -e "\n*** Re-Install grub + Update grub boot-Einträge"
             # https://wiki.archlinux.org/title/GRUB
-            if [ -e "/boot/grub" ]; then    # UEFI
+            if [ -e "/boot/efi" ]; then    # UEFI
                 sudo grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=endeavouros && \
                 sudo grub-mkconfig -o /boot/grub/grub.cfg && \
                 sudo grub-mkconfig
@@ -123,16 +195,16 @@ if [[ "${doSnapper}" = 'j' ]]; then
 
             echo -e "\n*** Snapper config 'root' wird angepasst..."   # /etc/snapper/configs/CONFIGS (z.B. /etc/sanpper/configs/root)
             # sudo snapper -c root set-config "ALLOW_USERS=${userid}" && \
-            sudo snapper -c root set-config "ALLOW_GROUPS=wheel" && \
-            sudo snapper -c root set-config "TIMELINE_CREATE=no" && \
-            sudo snapper -c root set-config "TIMELINE_LIMIT_HOURLY=5" && \
-            sudo snapper -c root set-config "TIMELINE_LIMIT_DAILY=7" && \
-            sudo snapper -c root set-config "TIMELINE_LIMIT_WEEKLY=0" && \
-            sudo snapper -c root set-config "TIMELINE_LIMIT_MONTHLY=0" && \
-            sudo snapper -c root set-config "TIMELINE_LIMIT_YEARLY=0" && \
+            sudo snapper -c "${snapperConfigName_root}" set-config "ALLOW_GROUPS=wheel" && \
+            sudo snapper -c "${snapperConfigName_root}" set-config "TIMELINE_CREATE=no" && \
+            sudo snapper -c "${snapperConfigName_root}" set-config "TIMELINE_LIMIT_HOURLY=5" && \
+            sudo snapper -c "${snapperConfigName_root}" set-config "TIMELINE_LIMIT_DAILY=7" && \
+            sudo snapper -c "${snapperConfigName_root}" set-config "TIMELINE_LIMIT_WEEKLY=0" && \
+            sudo snapper -c "${snapperConfigName_root}" set-config "TIMELINE_LIMIT_MONTHLY=0" && \
+            sudo snapper -c "${snapperConfigName_root}" set-config "TIMELINE_LIMIT_YEARLY=0" && \
             
-            echo -e "\n*** Zugriffs- und Besitzrechte für '/.snapshots' werden festgelegt..."
-            sudo chown -R :wheel /.snapshots && sudo chmod -R 750 /.snapshots && \
+            echo -e "\n*** Zugriffs- und Besitzrechte für '${snapperSnapshotFolder}' werden festgelegt..."
+            sudo chown -R :wheel "${snapperSnapshotFolder}" && sudo chmod -R 750 "${snapperSnapshotFolder}" && \
 
             echo -e "\n*** Enable 'grub-btrfsd.service', 'snapper-cleanup.timer'..."
             sudo systemctl enable --now grub-btrfsd.service && \
@@ -149,7 +221,7 @@ if [[ "${doSnapper}" = 'j' ]]; then
             sudo chown root:root /etc/pacman.d/hooks/95-bootbackup.hook && \
 
             echo -e "\n*** Erstelle snapshot (single) '***Base System Install***' und aktualisiere grub-boot Einträge"
-            sudo snapper -c root create -d "***Base System Install***" && \
+            sudo snapper -c "${snapperConfigName_root}" create -d "***Base System Install***" && \
             echo "Aktuelle Liste der Snapshots:"
             sudo snapper ls
 
