@@ -1,18 +1,19 @@
 <domainsnapshot>
-  <name>2023-05-19_1800_ansible1</name>
+  <name>2023-05-22_1312_init2</name>
+  <description>playbook run + config dash2panel</description>
   <state>shutoff</state>
   <parent>
-    <name>2023-05-10_1558_init1</name>
+    <name>2023-05-22_1157_init1</name>
   </parent>
-  <creationTime>1684512038</creationTime>
+  <creationTime>1684753947</creationTime>
   <memory snapshot='no'/>
   <disks>
     <disk name='vda' snapshot='internal'/>
     <disk name='sda' snapshot='no'/>
   </disks>
   <domain type='kvm'>
-    <name>endeavour</name>
-    <uuid>288ce146-3790-4ef7-938f-a8f51817b9cb</uuid>
+    <name>endeavourBIOS</name>
+    <uuid>c667a29a-9d93-46f2-a488-bd3539af908d</uuid>
     <metadata>
       <libosinfo:libosinfo xmlns:libosinfo="http://libosinfo.org/xmlns/libvirt/domain/1.0">
         <libosinfo:os id="http://archlinux.org/archlinux/rolling"/>
@@ -47,7 +48,7 @@
       <emulator>/usr/bin/qemu-system-x86_64</emulator>
       <disk type='file' device='disk'>
         <driver name='qemu' type='qcow2' discard='unmap'/>
-        <source file='/run/media/sandro/1TB-M2NVME/01_VM/images/endeavour.qcow2'/>
+        <source file='/run/media/sandro/1TB-M2NVME/01_VM/images/endeavourBIOS.qcow2'/>
         <target dev='vda' bus='virtio'/>
         <address type='pci' domain='0x0000' bus='0x04' slot='0x00' function='0x0'/>
       </disk>
@@ -138,7 +139,7 @@
         <address type='pci' domain='0x0000' bus='0x03' slot='0x00' function='0x0'/>
       </controller>
       <interface type='network'>
-        <mac address='52:54:00:59:cb:57'/>
+        <mac address='52:54:00:dc:76:72'/>
         <source network='default'/>
         <model type='virtio'/>
         <address type='pci' domain='0x0000' bus='0x01' slot='0x00' function='0x0'/>

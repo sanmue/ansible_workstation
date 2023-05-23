@@ -1,20 +1,18 @@
 <domainsnapshot>
-  <name>2023-05-10_1558_init1</name>
-  <description>install_SWandConf.sh (inkl. snapper)
-bis vor playbook</description>
+  <name>2023-05-22_1151_init0</name>
+  <description>Btrfs (custom subvoluem layout via clamares mount.conf)
+Files/Folders: .ssh + Downloads/SkriptsExtern
+NO RUN</description>
   <state>shutoff</state>
-  <parent>
-    <name>2023-05-19_1549_init0</name>
-  </parent>
-  <creationTime>1684504735</creationTime>
+  <creationTime>1684749139</creationTime>
   <memory snapshot='no'/>
   <disks>
     <disk name='vda' snapshot='internal'/>
     <disk name='sda' snapshot='no'/>
   </disks>
   <domain type='kvm'>
-    <name>endeavour</name>
-    <uuid>288ce146-3790-4ef7-938f-a8f51817b9cb</uuid>
+    <name>endeavourBIOS</name>
+    <uuid>c667a29a-9d93-46f2-a488-bd3539af908d</uuid>
     <metadata>
       <libosinfo:libosinfo xmlns:libosinfo="http://libosinfo.org/xmlns/libvirt/domain/1.0">
         <libosinfo:os id="http://archlinux.org/archlinux/rolling"/>
@@ -49,7 +47,7 @@ bis vor playbook</description>
       <emulator>/usr/bin/qemu-system-x86_64</emulator>
       <disk type='file' device='disk'>
         <driver name='qemu' type='qcow2' discard='unmap'/>
-        <source file='/run/media/sandro/1TB-M2NVME/01_VM/images/endeavour.qcow2'/>
+        <source file='/run/media/sandro/1TB-M2NVME/01_VM/images/endeavourBIOS.qcow2'/>
         <target dev='vda' bus='virtio'/>
         <address type='pci' domain='0x0000' bus='0x04' slot='0x00' function='0x0'/>
       </disk>
@@ -140,7 +138,7 @@ bis vor playbook</description>
         <address type='pci' domain='0x0000' bus='0x03' slot='0x00' function='0x0'/>
       </controller>
       <interface type='network'>
-        <mac address='52:54:00:59:cb:57'/>
+        <mac address='52:54:00:dc:76:72'/>
         <source network='default'/>
         <model type='virtio'/>
         <address type='pci' domain='0x0000' bus='0x01' slot='0x00' function='0x0'/>

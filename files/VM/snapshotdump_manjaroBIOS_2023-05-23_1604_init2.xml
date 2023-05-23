@@ -1,20 +1,22 @@
 <domainsnapshot>
-  <name>2023-05-19_1549_init0</name>
-  <description>.ssh-keys + install-script
-no run</description>
+  <name>2023-05-23_1604_init2</name>
+  <description>playbook run + config dash2panel</description>
   <state>shutoff</state>
-  <creationTime>1684504202</creationTime>
+  <parent>
+    <name>2023-05-23_1518_init1</name>
+  </parent>
+  <creationTime>1684850699</creationTime>
   <memory snapshot='no'/>
   <disks>
     <disk name='vda' snapshot='internal'/>
     <disk name='sda' snapshot='no'/>
   </disks>
   <domain type='kvm'>
-    <name>endeavour</name>
-    <uuid>288ce146-3790-4ef7-938f-a8f51817b9cb</uuid>
+    <name>manjaroBIOS</name>
+    <uuid>6fbd9919-fb14-4715-95aa-b06ba6873d8d</uuid>
     <metadata>
       <libosinfo:libosinfo xmlns:libosinfo="http://libosinfo.org/xmlns/libvirt/domain/1.0">
-        <libosinfo:os id="http://archlinux.org/archlinux/rolling"/>
+        <libosinfo:os id="http://manjaro.org/manjaro/rolling"/>
       </libosinfo:libosinfo>
     </metadata>
     <memory unit='KiB'>8388608</memory>
@@ -46,7 +48,7 @@ no run</description>
       <emulator>/usr/bin/qemu-system-x86_64</emulator>
       <disk type='file' device='disk'>
         <driver name='qemu' type='qcow2' discard='unmap'/>
-        <source file='/run/media/sandro/1TB-M2NVME/01_VM/images/endeavour.qcow2'/>
+        <source file='/run/media/sandro/1TB-M2NVME/01_VM/images/manjaroBIOS.qcow2'/>
         <target dev='vda' bus='virtio'/>
         <address type='pci' domain='0x0000' bus='0x04' slot='0x00' function='0x0'/>
       </disk>
@@ -137,7 +139,7 @@ no run</description>
         <address type='pci' domain='0x0000' bus='0x03' slot='0x00' function='0x0'/>
       </controller>
       <interface type='network'>
-        <mac address='52:54:00:59:cb:57'/>
+        <mac address='52:54:00:4e:a1:5d'/>
         <source network='default'/>
         <model type='virtio'/>
         <address type='pci' domain='0x0000' bus='0x01' slot='0x00' function='0x0'/>
