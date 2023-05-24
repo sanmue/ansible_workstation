@@ -4,6 +4,9 @@
 
 # ### Skript zur Sicherung/Updata AppConfData (intern, -> in zentrales RescueSystem-Verzeichnis, doppel)
 #
+# ### wird auch nach '/usr/local/bin/'' kopiert und von systemd/Timer / service (user) aufgerufen
+# ### - 'AppConfData_rsync.timer' / 'AppConfData_rsync.service'
+#
 # 1. Config etc von Apps (z.B. unter .config, .var, .local im Home-Verzeichnis):
 # 	- Quellpfade1: ausgewählte Dateien/Verzeichnisse in ${arrConfPath} (befinden sich unter ${HOME})
 # 	- Zielpfad1: arrConfAppDataBakPath (hier: nur $confAppData2ndBakPath)
@@ -43,11 +46,12 @@ arrConfAppDataBakPath=("${confAppData2ndBakPath}")
 # 	- 'places'-bookmarks' for filebrowser: 	.config/user-dirs.dirs		(Gnome, Stand 05/2023)
 arrConfPath=('.bashrc' '.ssh' '.zshrc' \
 '.config/autokey' '.config/autostart' '.config/borg' '.config/BraveSoftware/Brave-Browser/Default/Bookmarks' \
-'.config/chromium/Default/Bookmarks' '.config/Cryptomator' '.config/evolution' '.config/gtk-3.0/bookmarks' '.config/rclone' \
-'.config/remmina' '.config/starship.toml' '.config/syncthing' '.config/ulauncher' '.config/user-dirs.dirs' \
-'.local/bin/rclone_pCloud-Mnt.sh' '.local/share/evolution' '.local/share/remmina' \
-'.var/app/net.ankiweb.Anki/data')
-# '.local/share/Vorta'   # entfernt, da gnome keyring (keyfile) i.d.R. nicht mitnehme und daher config nicht passt
+'.config/chromium/Default/Bookmarks' '.config/Cryptomator' '.config/evolution' '.config/gtk-3.0/bookmarks' \
+'.config/joplin-desktop' '.config/keepassxc' '.config/rclone' '.config/remmina' \
+'.config/starship.toml' '.config/syncthing' '.config/ulauncher' '.config/user-dirs.dirs' \
+'.local/bin/rclone_pCloud-Mnt.sh' '.local/share/evolution' '.local/share/keyrings' \
+'.local/share/remmina' '.local/share/Vorta' \
+'.var/app/de.haeckerfelix.Shortwave/data' '.var/app/net.ankiweb.Anki/data')
 
 # ### Pfade für Update (intern) von $source/Sync/Default/AppConfData nach $source/RescueSystem/AppConfData
 syncAppConfDataPath="${source}/Sync/Default/AppConfData"
@@ -81,13 +85,13 @@ fi
 # ### Sicherung/Update AppDataConf
 # ### - verkürzte + angepasste Version von 'rsync_home-backup_dest.sh'
 
-read -rp "Start nach Drücken der Eingabe-Taste"
+# read -rp "Start nach Drücken der Eingabe-Taste"
 
 logname="rsync_appConfData-intern_$(date +"%Y-%m-%d_%H%M%S").log"
 
-# ### 1: Update (intern) und Sicherung (extern $dest) von: ${source}, .config, .local und .var:
+# ### 1: Update (intern) und Sicherung (extern $dest) von: ${source}, .config, .local und .var nach RescueSystem/.../01_bak-ScriptService:
 echo -e "\n========================================"
-echo "Starte Update/Backup ausgwählter Teile von '${source}, .config, .local und .var' nach 'RescueSystem/...'"
+echo "*** Starte Update/Backup ausgwählter Teile von '${source}, .config, .local und .var' nach '${arrConfAppDataBakPath[*]}'"
 for bakPath in "${arrConfAppDataBakPath[@]}"; do
 	for confPath in "${arrConfPath[@]}"; do   # $confPath kann Pfad zu Verzeichnis oder Datei sein
 		if [ -e "${source}/${confPath}" ]; then
@@ -109,12 +113,12 @@ echo '========================================'
 
 # ### 2: Update (intern) von $source/Sync/Default/AppConfData nach $source/RescueSystem/AppConfData
 echo -e "\n========================================"
-echo "Starte Update von 'Sync/Default/AppConfData' nach 'RescueSystem/AppConfData'"
+echo "*** Starte Update von '${syncAppConfDataPath}/' nach '${rescueAppConfDataPath}/'"
 rsync -aPhEv "${paramRsync}" "${syncAppConfDataPath}/" "${rescueAppConfDataPath}/" | tee -a "/tmp/${logname}"
 echo '========================================'
 
 # ### 3. Update (MIRROR) (intern) von dev/Ansible...ScriptsExtern nach $rescueAppConfDataPath/$scriptsExternFoldername
 echo -e "\n========================================"
-echo "Starte Update (MIRROR) von '${scriptsExternPath}/' nach '${rescueAppConfDataPath}/${scriptsExternFoldername}/'"
+echo "*** Starte Update (MIRROR) von '${scriptsExternPath}/' nach '${rescueAppConfDataPath}/${scriptsExternFoldername}/'"
 rsync -aPhEv --delete "${paramRsync}" "${scriptsExternPath}/" "${rescueAppConfDataPath}/${scriptsExternFoldername}/" | tee -a "/tmp/${logname}"
 echo '========================================'

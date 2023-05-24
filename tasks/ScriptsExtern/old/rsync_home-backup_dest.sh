@@ -56,11 +56,12 @@ arrConfAppDataBakPath=("${confAppData2ndBakPath}" "${dest}")
 # 	- gnome 'places-bookmarks' for filebrowser: 	.config/user-dirs.dirs
 arrConfPath=('.bashrc' '.ssh' '.zshrc' \
 '.config/autokey' '.config/autostart' '.config/borg' '.config/BraveSoftware/Brave-Browser/Default/Bookmarks' \
-'.config/chromium/Default/Bookmarks' '.config/Cryptomator' '.config/evolution' '.config/gtk-3.0/bookmarks' '.config/rclone' \
-'.config/remmina' '.config/starship.toml' '.config/syncthing' '.config/ulauncher' '.config/user-dirs.dirs' \
-'.local/bin/rclone_pCloud-Mnt.sh' '.local/share/evolution' '.local/share/remmina' \
-'.var/app/net.ankiweb.Anki/data')
-# '.local/share/Vorta'   # entfernt, da gnome keyring (keyfile) i.d.R. nicht mitnehme und daher config nicht passt
+'.config/chromium/Default/Bookmarks' '.config/Cryptomator' '.config/evolution' '.config/gtk-3.0/bookmarks' \
+'.config/joplin-desktop' '.config/keepassxc' '.config/rclone' '.config/remmina' \
+'.config/starship.toml' '.config/syncthing' '.config/ulauncher' '.config/user-dirs.dirs' \
+'.local/bin/rclone_pCloud-Mnt.sh' '.local/share/evolution' '.local/share/keyrings' \
+'.local/share/remmina' '.local/share/Vorta' \
+'.var/app/de.haeckerfelix.Shortwave/data' '.var/app/net.ankiweb.Anki/data')
 
 # Pfade für Update (intern) von $source/Sync/Default/AppConfData nach $source/RescueSystem/AppConfData
 syncAppConfDataPath="${source}/Sync/Default/AppConfData"
@@ -127,7 +128,7 @@ logname="rsync_homeBackup_para_dest_$(date +"%Y-%m-%d_%H%M%S").log"
 
 # 1: Update (intern) und Sicherung (extern $dest) von: ${source}, .config, .local und .var:
 echo -e "\n========================================"
-echo "Starte Update/Backup ausgwählter Teile von '${source}, .config, .local und .var' nach '${dest}' und lokal in 'RescueSystem/...'"
+echo "Starte Update/Backup ausgwählter Teile von '${source}, .config, .local und .var' nach '${dest}' und lokal in '${arrConfAppDataBakPath[*]}"
 for bakPath in "${arrConfAppDataBakPath[@]}"; do
 	for confPath in "${arrConfPath[@]}"; do   # $confPath kann Pfad zu Verzeichnis oder Datei sein
 		if [ -e "${source}/${confPath}" ]; then
@@ -151,7 +152,7 @@ echo '========================================'
 
 # 2: Update (intern) von $source/Sync/Default/AppConfData nach $source/RescueSystem/AppConfData
 echo -e "\n========================================"
-echo "Starte Update von 'Sync/Default/AppConfData' nach 'RescueSystem/AppConfData'"
+echo "Starte Update von '${syncAppConfDataPath}/' nach '${rescueAppConfDataPath}/'"
 #rsync -aPhEv "${paramRsync}" "${syncAppConfDataPath}/" "${rescueAppConfDataPath}/" | tee -a "/tmp/${logname}"
 rsync -aPhEv "${syncAppConfDataPath}/" "${rescueAppConfDataPath}/" | tee -a "/tmp/${logname}"
 echo '========================================'

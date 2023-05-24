@@ -361,9 +361,9 @@
     XDG_RUNTIME_DIR: "{{ env_user_XDG_RUNTIME_DIR }}"
 
 
-# -------------------------------------------------------------------------------------------
-# ### Sicherung/Updata AppConfData (intern, -> in zentrales RescueSystem-Verzeichnis, doppel)
-# -------------------------------------------------------------------------------------------
+# ---------------------------------------------------------------------------------------------------------
+# ### Sicherung/Updata AppConfData (intern, -> in zentrales RescueSystem-Verzeichnis (-> ja, Daten doppelt)
+# ---------------------------------------------------------------------------------------------------------
 - name: All services misc - AppConfData - Create service unit file - user - rsync (all
   ansible.builtin.blockinfile:
     path: "/etc/systemd/user/AppConfData_rsync.service"
