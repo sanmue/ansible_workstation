@@ -13,32 +13,41 @@
 ### ---
 ### Variablen
 ### ---
-repodir="ansible-install"
-playbookdir="ansible_workstation"
+repodir="ansible-install"           # lokal
+playbookdir="ansible_workstation"   # github
 playbook="local.yml"
 sshkeydir=".ssh"
 userid=$(whoami)   # oder: userid=${USER}
+
 defaultDomain="universalaccount.de"
 defaultMail="${userid}@${defaultDomain}"
 gitOnlineRepo="git@github.com:sanmue/${playbookdir}.git"
 gitdefaultBranchName="main"
+
 os=""
 oslist=("Ubuntu" "EndeavourOS" "ManjaroLinux")   # aktuell berücksichtige Distributionen
+
 snapperConfigName_root="root"
 snapperSnapshotFolder="/.snapshots"
 # Manjaro: 'associative array' mit zusätzlich anzulegende Subvolumes (neben den bereits vorhanden für '/', /home, /var/cache, /var/log)
 # # https://stackoverflow.com/questions/1494178/how-to-define-hash-tables-in-bash
-declare -A btrfsAdditionalSubvolList=(  ["snapshots"]="/.snapshots" 
-                                        ["images"]="/var/lib/libvirt/images" 
-                                        ["varspool"]="/var/spool" 
-                                        ["tmp"]="/tmp" 
-                                        ["opt"]="/opt" 
-                                        ["varopt"]="/var/opt" 
-                                        ["srv"]="/srv" 
-                                        ["vartmp"]="/var/tmp" 
-                                        ["usrlocal"]="/usr/local")
-btrfsFstabMountOptions_standard='defaults,noatime,compress=zstd,space_cache 0 0'   # Standard
-btrfsFstabMountOptions_manjaro='defaults 0 0'                                      # ggf. ersetzen (mit $btrfsFstabMountOptions_standard)
+declare -A btrfsSubvolLayout=(  ["@"]="/" 
+                                ["@home"]="/home" 
+                                ["@snapshots"]="/.snapshots" 
+                                ["@log"]="/var/log" 
+                                ["@cache"]="/var/cache" 
+                                ["@varspool"]="/var/spool" 
+                                ["@tmp"]="/tmp" 
+                                ["@opt"]="/opt" 
+                                ["@varopt"]="/var/opt" 
+                                ["@srv"]="/srv" 
+                                ["@vartmp"]="/var/tmp" 
+                                ["@usrlocal"]="/usr/local"
+                                ["@images"]="/var/lib/libvirt/images")
+
+btrfsFstabMountOptions_standard='defaults,noatime,compress=zstd,space_cache 0 0'    # gewünschte MountOptions
+btrfsFstabMountOptions_manjaro='defaults 0 0'                                       # werden ersetzt mit $btrfsFstabMountOptions_standard
+btrfsFstabMountOptions_endeavour='defaults,noatime,compress=zstd 0 0'
 
 
 ### ---
@@ -77,19 +86,17 @@ echo "Verwendetes OS: ${os}"
 # https://unix.stackexchange.com/questions/34623/how-to-tell-what-type-of-filesystem-youre-on
 # https://www.tecmint.com/find-linux-filesystem-type/
 if [[ $(stat -f -c %T /) = 'btrfs' ]] && [[ ! -e "/home/${userid}/.ansible_bootstrap_snapperGrub" ]]; then   # prüfe '/' auf btrfs-filsystem;  -f, --file-system; -c, --format; %T - Type in human readable form
-    read -r -p "Soll 'snapper' installiert/konfiguriert werden ('j'=ja, sonstige Eingabe=nein)?: " doSnapper
+    read -r -p "Soll 'snapper' (für Snapshot-Erstellung) installiert/konfiguriert werden ('j'=ja, sonstige Eingabe=nein)?: " doSnapper
 fi
 
-if [ ! -e "${snapperSnapshotFolder}" ]; then
-    echo -e "\e[0;33mVerzeichnis '${snapperSnapshotFolder}' nicht vorhanden, ggf. (zuvor) manueller Eingriff erforderlich.\e[39m" 
-    # Bei Archlinux+Endeavour sollte initial bereits "korrekt" angelegt sein, ansonsten manuell nachholen (noch nicht im Skript eingebaut)
-    # Bei Manjaro: alle zusätzlichen Subvol + Verz. werden angelegt, ...
-    read -r -p "Weiter mit beliebiger Eingabe"
-    # doSnapper='n'
-fi
+if [[ "${doSnapper}" = 'j' ]]; then
+    if [ ! -e "${snapperSnapshotFolder}" ]; then
+        echo -e "\e[0;33mVerzeichnis '${snapperSnapshotFolder}' nicht vorhanden. Evlt. abweichendes Verzeichnis konfiguriert?!\nGgf. vorheriger manueller Eingriff erforderlich.\e[39m" 
+        read -r -p "Installation/Konfiguration fortsetzen mit beliebiger Eingabe, Abbrechen mit <STRG> + <C>"
+    fi
 
-if [[ "${doSnapper}" = 'j' ]]; then   
-    echo -e "\nInst und config snapper"
+    echo -e "\n*** ********************************************"
+    echo      "*** Start: Installation und config von 'snapper'"
     case ${os} in
         Archlinux* | EndeavourOS* | Manjaro*)
             # https://wiki.archlinux.org/title/Btrfs
@@ -97,73 +104,89 @@ if [[ "${doSnapper}" = 'j' ]]; then
             # https://documentation.suse.com/sles/15-SP4/html/SLES-all/cha-snapper.html
 
             echo -e "\n*** Installation snapper+grub software packages..."
-            sudo pacman --needed --noconfirm -S snapper snap-pac inotify-tools grub-btrfs && \
+            sudo pacman --needed --noconfirm -S snapper snap-pac inotify-tools grub-btrfs
             # snap-sync
 
             echo -e "\n*** (Re)create snapshots folder + snapper config..."
-            # Archlinux | EndeavourOS:
-            # mit Anlage des angepassten btrfs subvolume layouts wurde Verzeichnis '/.snapshots' + subvolume '/@.snapshots' bereits angelegt
-            # (+ in fstab eingetragen)
-            # beim erstellen der config root wird ein weiteres subvolume '/.snapshots' erstellt, welches gelöscht wird:
+            # Archlinux | EndeavourOS | Manjaro:
+            # - '/.snapshots' wird nicht standardmäßig erstellt
+            # - bei Archlinux natürlich ggf. manuell gemacht
             #
-            # Manjaro:
-            # '/.snapshots' wird NICHT standardmäßig erstellt / TODO: config subvolume layout (+ fstab einträge) vor Installation
+            # Info: beim erstellen der config ${snapperConfigName_root} wird automatisch ein Subvolume '/.snapshots' erstellt, 
+            # welches wieder gelöscht wird, da das Subvolume für Snapshots '@snapshots' heißen soll
             #
-            if [ -e "${snapperSnapshotFolder}" ]; then   # Archlinux+EndevourOS mit angepasstem subvol layout
-                echo "Unmount + Löschen '${snapperSnapshotFolder}' + erstelle snapper config '${snapperConfigName_root}' für '/'"
+            if [ -e "${snapperSnapshotFolder}" ]; then   # falls bereits vorhanden
+                echo "Unmount + Löschen '${snapperSnapshotFolder}', um angepasste Konfiguration durchzuführen..."
                 sudo umount "${snapperSnapshotFolder}" && sudo rm -rf "${snapperSnapshotFolder}"
             fi
 
             echo "*** Erstelle snapper config '${snapperConfigName_root}' für '/'"
-            sudo snapper -c "${snapperConfigName_root}" create-config / && \
+            sudo snapper -c "${snapperConfigName_root}" create-config /
 
-            echo "*** Lösche Subvolume for Snapshots aus autom. Erstellung bei snapper '${snapperConfigName_root}' create-config..."
+            echo "*** Lösche autom. angelegtes Subvolume '${snapperSnapshotFolder}' (aus vorherigem Schritt 'Erstelle snapper config')..."
             sudo btrfs subvolume delete "${snapperSnapshotFolder}"
 
             echo "*** Erstelle (wieder) Verzeichnis '${snapperSnapshotFolder}'..."
-            sudo sudo mkdir "${snapperSnapshotFolder}"
+            sudo sudo mkdir -p "${snapperSnapshotFolder}"
 
-            if [[ "${os}" == *"Manjaro"* ]]; then
-                echo "*** Erstelle weitere Subvolumes und fstab-Einträge"
-                echo "Aktuelle /etc/fstab:"
-                cat /etc/fstab
-                filesystemName=$(grep subvol=/@, /etc/fstab | cut -d ' ' -f 1 | xargs)   # z.B.: luks-8f1cf7bc-8064-422b-bd46-466438199874
-                read -r -p "Nutze file system '${filesystemName}'. Ist das korrekt ('n'=nein, sonstige Eingabe=ja)?: " fsok
-                if [ "${fsok}" = "n" ]; then
-                    endloop='n'
-                    while [ ! "$endloop" = 'j' ]; do
-                        read -r -p "Manuelle Eingabe: " filesystemName
-                        read -r -p "Ist '${filesystemName}' korrekt ('j'=ja, beliebige Eingabe für Korrektur)?: " endloop
-                    done
+
+            echo "*** Erstelle Subvolumes (sofern nicht schon vorhanden) und entsprechende fstab-Einträge"
+            echo "Aktuelle /etc/fstab:"
+            cat /etc/fstab
+            filesystemName=$(grep subvol=/@, /etc/fstab | cut -d ' ' -f 1 | xargs)   # z.B.: luks-8f1cf7bc-8064-422b-bd46-466438199874
+            read -r -p "Nutze file system '${filesystemName}'. Ist das korrekt ('n'=nein, sonstige Eingabe=ja)?: " fsok
+            if [ "${fsok}" = "n" ]; then
+                endloop='n'
+                while [ ! "$endloop" = 'j' ]; do
+                    read -r -p "Manuelle Eingabe: " filesystemName
+                    read -r -p "Ist '${filesystemName}' korrekt ('j'=ja, beliebige Eingabe für Korrektur)?: " endloop
+                done
+            fi
+
+            sudo cp /etc/fstab /etc/fstab.bak   # Sicherung
+            echo -e "\nMount: 'subvolid=5' '${filesystemName}' nach '/mnt'..."
+            sudo mount -t btrfs -o subvolid=5 "${filesystemName}" /mnt
+
+            for subvol in "${!btrfsSubvolLayout[@]}"; do
+                if [ ! -e "/mnt/${subvol}" ]; then      # wenn Subvolume noch nicht vorhanden
+                    echo "|__ Erstelle Subvolume '/mnt/${subvol}'..."
+                    sudo btrfs subvolume create "/mnt/${subvol}"
+                else
+                    echo -e "\e[0;33m|__ Subvolume '/mnt/${subvol}' bereits vorhanden\e[39m"                 
+                fi
+            done
+
+            echo "Unmount '/mnt'..."
+            sudo umount /mnt
+
+            echo -e "\n*** Erstelle Einträge in '/etc/fstab':"
+            for subvol in "${!btrfsSubvolLayout[@]}"; do
+                echo "|__ erstelle Eintrag für Subvolume '${subvol}' mit mount point '${btrfsSubvolLayout[${subvol}]}'..."
+
+                if [ ! -e  "${btrfsSubvolLayout[${subvol}]}" ]; then    # wenn Mount-Ziel (Verzeichnis) noch nicht vorhanden
+                    echo -e "\e[0;33m    |__ Mount-Ziel '${btrfsSubvolLayout[${subvol}]}' nicht vorhanden, Verzeichnis wird erstellt...\e[39m"
+                    sudo mkdir -p "${btrfsSubvolLayout[${subvol}]}"
                 fi
 
-                sudo cp /etc/fstab /etc/fstab.bak   # Sicherung
-                echo -e "\nMount: 'subvolid=5' '${filesystemName}' nach '/mnt'..."
-                sudo mount -t btrfs -o subvolid=5 "${filesystemName}" /mnt
+                if [[ $(grep "subvol=/${subvol}," /etc/fstab) ]]; then  # wenn Eintrag für z.B. ...'subvol=/@,'... bereits vorhanden
+                    echo -e "\e[0;33m    |__ Eintrag für Subvolume '${subvol}' bereits vorhanden, ggf. manuell prüfen/korrigieren\e[39m"
+                else
+                    #TODO: ggf. vorher noch prüfen, ob Mount-Ziel nicht auch bereits vorhanden (allgemeiner verwendbar, wenn andere Distris subvols anders benennen + mounten)
+                    echo "${filesystemName} ${btrfsSubvolLayout[${subvol}]} btrfs subvol=/${subvol},${btrfsFstabMountOptions_standard}" | sudo tee -a /etc/fstab
+                fi
+            done
 
-                for subvol in "${!btrfsAdditionalSubvolList[@]}"; do
-                    echo "|__ Erstelle Subvolume '/mnt/@${subvol}'..."
-                    sudo btrfs subvolume create "/mnt/@${subvol}"
-                done
+            echo -e "\nErsetze/korrigiere ggf. mount-options in '/etc/fstab':"
+            # Manjaro:
+            echo -e "Ersetze fstab btrfs mount-option '...${btrfsFstabMountOptions_manjaro}' mit '...${btrfsFstabMountOptions_standard}'"
+            sudo sed -i "s/${btrfsFstabMountOptions_manjaro}/${btrfsFstabMountOptions_standard}/g" /etc/fstab
+            # Endeavour:
+            echo -e "Ersetze fstab btrfs mount-option '...${btrfsFstabMountOptions_endeavour}' mit '...${btrfsFstabMountOptions_standard}'"
+            sudo sed -i "s/${btrfsFstabMountOptions_endeavour}/${btrfsFstabMountOptions_standard}/g" /etc/fstab
 
-                echo -e "Unmount '/mnt'...\n"
-                sudo umount /mnt
+            echo "Aktualisiere systemd units aus fstab + mount all..."
+            sudo systemctl daemon-reload && sudo mount -a
 
-                for subvol in "${!btrfsAdditionalSubvolList[@]}"; do
-                    echo "|__ Erstelle fstab-Eintrag für Subvolume '@${subvol}' mit mount point '${btrfsAdditionalSubvolList[${subvol}]}'..."
-                    if [ ! -e  "${btrfsAdditionalSubvolList[${subvol}]}" ]; then
-                        echo -e "\e[0;33m    |__ Mount-Ziel '${btrfsAdditionalSubvolList[${subvol}]}' nicht vorhanden, Verzeichnis wird erstellt...\e[39m"
-                        sudo mkdir -p "${btrfsAdditionalSubvolList[${subvol}]}"
-                    fi
-                    echo "${filesystemName} ${btrfsAdditionalSubvolList[${subvol}]} btrfs subvol=/@${subvol},${btrfsFstabMountOptions_standard}" | sudo tee -a /etc/fstab
-                done
-
-                echo -e "\nErsetze fstab btrfs mount-option '...${btrfsFstabMountOptions_manjaro}' mit '...${btrfsFstabMountOptions_standard}'"
-                sudo sed -i "s/${btrfsFstabMountOptions_manjaro}/${btrfsFstabMountOptions_standard}/g" /etc/fstab
-
-                echo "Aktualisiere systemd units aus fstab + mount all..."
-                sudo systemctl daemon-reload && sudo mount -a
-            fi
 
             echo -e "\n*** Default-Subvolume festlegen"
             echo "aktuelles default-Subvolume für '/': $(sudo btrfs subvolume get-default /)"
@@ -233,19 +256,17 @@ if [[ "${doSnapper}" = 'j' ]]; then
         ;;
 
         *)
-            echo "Aktuell nur für Archlinux, EndeavourOS getestet"
-            echo "Manuelle Konfigration notwendig"
+            echo -e "\e[0;33mFür verwendetes OS '${os}' wurde Installation/Konfiguration von 'snapper' noch nicht getestet."
+            echo -e "Manuelle Durchführung notwendig\e[39m"
             read -r -p "Eingabe-Taste drücken um fortzufahren"
             exit 0
         ;;
     esac
 
-    touch "/home/${userid}/.ansible_bootstrap_snapperGrub"
+    touch "/home/${userid}/.ansible_bootstrap_snapperGrub"   # auch bei default-switch - Zweig (-> Manuelle Durchführung notwendig)
 
-    echo -e  "\n**********************************************"
-    #read -r -p "*** Ende Snapper-Teil, weiter mit Eingabetaste "
-    echo       "Ende Snapper-Teil"
-    echo       "**********************************************"
+    echo -e  "*** Ende Snapper-Teil"
+    echo     "*** ********************************************"
 # else 
 #     echo -e "\n'/' hat kein btrfs-Filesystem"
 fi
