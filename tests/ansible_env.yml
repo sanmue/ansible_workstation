@@ -3,7 +3,7 @@
 # assuming beeing run local in the desired Desktop Environment
 - hosts: localhost
   connection: local
-#  become: sandro
+#  become: {{ env_user }}
   gather_facts: true
   tasks:
     - name: Display available ansible facts

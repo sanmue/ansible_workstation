@@ -161,6 +161,9 @@ if [[ "${doSnapper}" = 'j' ]]; then
 
             echo -e "\n*** Erstelle Einträge in '/etc/fstab':"
             for subvol in "${!btrfsSubvolLayout[@]}"; do
+                subvolInFstab='false'
+                mountPointInFstab='false'
+
                 echo "|__ erstelle Eintrag für Subvolume '${subvol}' mit mount point '${btrfsSubvolLayout[${subvol}]}'..."
 
                 if [ ! -e  "${btrfsSubvolLayout[${subvol}]}" ]; then    # wenn Mount-Ziel (Verzeichnis) noch nicht vorhanden
@@ -169,9 +172,17 @@ if [[ "${doSnapper}" = 'j' ]]; then
                 fi
 
                 if [[ $(grep "subvol=/${subvol}," /etc/fstab) ]]; then  # wenn Eintrag für z.B. ...'subvol=/@,'... bereits vorhanden
-                    echo -e "\e[0;33m    |__ Eintrag für Subvolume '${subvol}' bereits vorhanden, ggf. manuell prüfen/korrigieren\e[39m"
-                else
-                    #TODO: ggf. vorher noch prüfen, ob Mount-Ziel nicht auch bereits vorhanden (allgemeiner verwendbar, wenn andere Distris subvols anders benennen + mounten)
+                    echo -e "\e[0;33m    |__ Eintrag für Subvolume '${subvol}' bereits vorhanden, ggf. prüfen/korrigieren\e[39m"
+                    subvolInFstab='true'
+                fi
+
+                # if [[ $(grep -w "${btrfsSubvolLayout[${subvol}]}" /etc/fstab) ]]; then  # wenn Mount Point (z.B. /var/log) bereits vorhanden
+                if [[ $(grep -E " +${btrfsSubvolLayout[${subvol}]} +" /etc/fstab) ]]; then  # wenn Mount Point (z.B. /var/log) bereits vorhanden
+                    echo -e "\e[0;33m    |__ Mount-Ziel '${btrfsSubvolLayout[${subvol}]}' bereits vorhanden, '${subvol}' wird nicht (nochmal) hinterlegt, ggf. prüfen/korrigieren\e[39m"
+                    mountPointInFstab='true'
+                fi
+
+                if [ "${subvolInFstab}" = 'false' ] && [ "${mountPointInFstab}" = 'false' ]; then
                     echo "${filesystemName} ${btrfsSubvolLayout[${subvol}]} btrfs subvol=/${subvol},${btrfsFstabMountOptions_standard}" | sudo tee -a /etc/fstab
                 fi
             done
