@@ -1,11 +1,11 @@
 <domainsnapshot>
-  <name>2023-05-22_1312_init2</name>
+  <name>2023-05-24_2107_init2</name>
   <description>playbook run + config dash2panel</description>
   <state>shutoff</state>
   <parent>
     <name>2023-05-22_1157_init1</name>
   </parent>
-  <creationTime>1684753947</creationTime>
+  <creationTime>1684955243</creationTime>
   <memory snapshot='no'/>
   <disks>
     <disk name='vda' snapshot='internal'/>
