@@ -98,14 +98,16 @@ if [[ "${doSnapper}" = 'j' ]]; then
     echo -e "\n*** ********************************************"
     echo      "*** Start: Installation und config von 'snapper'"
     case ${os} in
-        Archlinux* | EndeavourOS* | Manjaro*)
+        EndeavourOS* | Manjaro*)        # aktuell für UEFI oder GRUB2 + Grub sowie für UEFI + systemd boot
             # https://wiki.archlinux.org/title/Btrfs
             # https://wiki.archlinux.org/title/Snapper
             # https://documentation.suse.com/sles/15-SP4/html/SLES-all/cha-snapper.html
 
             echo -e "\n*** Installation snapper+grub software packages..."
-            sudo pacman --needed --noconfirm -S snapper snap-pac inotify-tools grub-btrfs
-            # snap-sync
+            sudo pacman --needed --noconfirm -S snapper snap-pac inotify-tools  # snap-sync
+            if [ -e "/boot/efi/grub.cfg" ] || [ -e "/boot/grub" ]; then         # GRUB (UEFI oder BIOS)
+                sudo pacman --needed --noconfirm -S grub-btrfs
+            fi
 
             echo -e "\n*** (Re)create snapshots folder + snapper config..."
             # Archlinux | EndeavourOS | Manjaro:
@@ -176,8 +178,7 @@ if [[ "${doSnapper}" = 'j' ]]; then
                     subvolInFstab='true'
                 fi
 
-                # if [[ $(grep -w "${btrfsSubvolLayout[${subvol}]}" /etc/fstab) ]]; then  # wenn Mount Point (z.B. /var/log) bereits vorhanden
-                if [[ $(grep -E " +${btrfsSubvolLayout[${subvol}]} +" /etc/fstab) ]]; then  # wenn Mount Point (z.B. /var/log) bereits vorhanden
+                if [[ $(grep -E " +${btrfsSubvolLayout[${subvol}]} +" /etc/fstab) ]]; then  # wenn Mount Point (z.B. für '/') bereits vorhanden
                     echo -e "\e[0;33m    |__ Mount-Ziel '${btrfsSubvolLayout[${subvol}]}' bereits vorhanden, '${subvol}' wird nicht (nochmal) hinterlegt, ggf. prüfen/korrigieren\e[39m"
                     mountPointInFstab='true'
                 fi
@@ -189,10 +190,10 @@ if [[ "${doSnapper}" = 'j' ]]; then
 
             echo -e "\nErsetze/korrigiere ggf. mount-options in '/etc/fstab':"
             # Manjaro:
-            echo -e "Ersetze fstab btrfs mount-option '...${btrfsFstabMountOptions_manjaro}' mit '...${btrfsFstabMountOptions_standard}'"
+            echo -e "Ersetze ggf. fstab btrfs mount-option '...${btrfsFstabMountOptions_manjaro}' mit '...${btrfsFstabMountOptions_standard}'"
             sudo sed -i "s/${btrfsFstabMountOptions_manjaro}/${btrfsFstabMountOptions_standard}/g" /etc/fstab
             # Endeavour:
-            echo -e "Ersetze fstab btrfs mount-option '...${btrfsFstabMountOptions_endeavour}' mit '...${btrfsFstabMountOptions_standard}'"
+            echo -e "Ersetze ggf. fstab btrfs mount-option '...${btrfsFstabMountOptions_endeavour}' mit '...${btrfsFstabMountOptions_standard}'"
             sudo sed -i "s/${btrfsFstabMountOptions_endeavour}/${btrfsFstabMountOptions_standard}/g" /etc/fstab
 
             echo "Aktualisiere systemd units aus fstab + mount all..."
@@ -210,13 +211,16 @@ if [[ "${doSnapper}" = 'j' ]]; then
             sudo btrfs subvolume set-default "${idRootSubvol}" / && \
             echo "aktuelles root default-Subvolume: $(sudo btrfs subvolume get-default /)"
 
+
+            # UEFI+Grub / UEFI+systemD / BIOS+Grub
             echo -e "\n*** Re-Install grub + Update grub boot-Einträge"
             # https://wiki.archlinux.org/title/GRUB
-            if [ -e "/boot/efi" ]; then    # UEFI
+            # if [ -e "/sys/firmware/efi/efivars" ]; then    # check if booted into UEFI mode and UEFI variables are accessible
+            if [ -e "/boot/efi/grub.cfg" ]; then        # UEFI + Grub
                 sudo grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=endeavouros && \
                 sudo grub-mkconfig -o /boot/grub/grub.cfg && \
                 sudo grub-mkconfig
-            else                            # BIOS
+            elif [ -e "/boot/grub/grub.cfg" ]; then     # BIOS + Grub
                 lsblk
                 endloop='n'
                 while [ ! "$endloop" = 'j' ]; do
@@ -225,45 +229,70 @@ if [[ "${doSnapper}" = 'j' ]]; then
                 done
                 sudo grub-install --target=i386-pc "${devGrubInstallPath}" && sudo grub-mkconfig -o /boot/grub/grub.cfg && \
                 sudo grub-mkconfig
+            elif [ -e "/efi/loader/loader.conf" ]; then     # UEFI + Systemd Boot
+                echo -e "\e[0;33m UEFI + systemD boot, kein TODO\e[39m"
+            else
+                echo "--- Bootloader nicht erkennbar ---"
+                # systemd boot: kein Eintrag, manueller Sprung in tty (bzw. dracut mach neues img?)
             fi
 
-            echo -e "\n*** Snapper config 'root' wird angepasst..."   # /etc/snapper/configs/CONFIGS (z.B. /etc/sanpper/configs/root)
-            # sudo snapper -c root set-config "ALLOW_USERS=${userid}" && \
-            sudo snapper -c "${snapperConfigName_root}" set-config "ALLOW_GROUPS=wheel" && \
-            sudo snapper -c "${snapperConfigName_root}" set-config "TIMELINE_CREATE=no" && \
-            sudo snapper -c "${snapperConfigName_root}" set-config "TIMELINE_LIMIT_HOURLY=5" && \
-            sudo snapper -c "${snapperConfigName_root}" set-config "TIMELINE_LIMIT_DAILY=7" && \
-            sudo snapper -c "${snapperConfigName_root}" set-config "TIMELINE_LIMIT_WEEKLY=0" && \
-            sudo snapper -c "${snapperConfigName_root}" set-config "TIMELINE_LIMIT_MONTHLY=0" && \
-            sudo snapper -c "${snapperConfigName_root}" set-config "TIMELINE_LIMIT_YEARLY=0" && \
+
+            echo -e "\n*** Snapper config '${snapperConfigName_root}' wird angepasst..."   # /etc/snapper/configs/CONFIGS (z.B. /etc/sanpper/configs/root)
+            # sudo snapper -c root set-config "ALLOW_USERS=${userid}"
+            sudo snapper -c "${snapperConfigName_root}" set-config "ALLOW_GROUPS=wheel"
+            sudo snapper -c "${snapperConfigName_root}" set-config "TIMELINE_CREATE=no"
+            sudo snapper -c "${snapperConfigName_root}" set-config "TIMELINE_LIMIT_HOURLY=5"
+            sudo snapper -c "${snapperConfigName_root}" set-config "TIMELINE_LIMIT_DAILY=7"
+            sudo snapper -c "${snapperConfigName_root}" set-config "TIMELINE_LIMIT_WEEKLY=0"
+            sudo snapper -c "${snapperConfigName_root}" set-config "TIMELINE_LIMIT_MONTHLY=0"
+            sudo snapper -c "${snapperConfigName_root}" set-config "TIMELINE_LIMIT_YEARLY=0"
             
             echo -e "\n*** Zugriffs- und Besitzrechte für '${snapperSnapshotFolder}' werden festgelegt..."
-            sudo chown -R :wheel "${snapperSnapshotFolder}" && sudo chmod -R 750 "${snapperSnapshotFolder}" && \
+            sudo chown -R :wheel "${snapperSnapshotFolder}" && sudo chmod -R 750 "${snapperSnapshotFolder}"
 
-            echo -e "\n*** Enable 'grub-btrfsd.service', 'snapper-cleanup.timer'..."
-            sudo systemctl enable --now grub-btrfsd.service && \
-            sudo systemctl enable --now snapper-cleanup.timer && \
+            # UEFU oder BIOS + GRUB  # systemd boot: kein Eintrag, manueller Sprung in tty
+            if [ -e "/boot/efi/grub.cfg" ] || [ -e "/boot/grub" ]; then        # Grub
+                echo -e "\n*** Enable 'grub-btrfsd.service', 'snapper-cleanup.timer'..."
+                sudo systemctl enable --now grub-btrfsd.service
+                sudo systemctl enable --now snapper-cleanup.timer
+            fi
+
 
             echo -e "\n*** Erstelle Hook für backup '/boot' (benötigt rsync)"
-            echo "Installiere rsync..."
-            sudo pacman --needed --noconfirm -S rsync && \
+            echo "Installiere rsync, falls nicht vorhanden..."
+            sudo pacman --needed --noconfirm -S rsync
             echo "Erstelle (kopiere nach) '/etc/pacman.d/hooks/95-bootbackup.hook'..."
             # SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)   # https://codefather.tech/blog/bash-get-script-directory/
             SCRIPT_DIR=$(dirname "${BASH_SOURCE[0]}")
             sudo mkdir -p /etc/pacman.d/hooks && \
             sudo cp "${SCRIPT_DIR}/95-bootbackup.hook" /etc/pacman.d/hooks/95-bootbackup.hook && \
-            sudo chown root:root /etc/pacman.d/hooks/95-bootbackup.hook && \
+            sudo chown root:root /etc/pacman.d/hooks/95-bootbackup.hook
+
+            if [ -e "/efi/loader/loader.conf" ]; then           # systemd Boot
+                echo -e "\n*** Erstelle Hook für backup '/efi' (benötigt rsync)"
+                echo "Installiere rsync, falls nicht vorhanden..."
+                sudo pacman --needed --noconfirm -S rsync
+                echo "Erstelle (kopiere nach) '/etc/pacman.d/hooks/95-efibackup.hook'..."
+                # SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)   # https://codefather.tech/blog/bash-get-script-directory/
+                SCRIPT_DIR=$(dirname "${BASH_SOURCE[0]}")
+                sudo mkdir -p /etc/pacman.d/hooks && \
+                sudo cp "${SCRIPT_DIR}/95-efibackup.hook" /etc/pacman.d/hooks/95-efibackup.hook && \
+                sudo chown root:root /etc/pacman.d/hooks/95-efibackup.hook
+            fi
+
 
             echo -e "\n*** Erstelle snapshot (single) '***Base System Install***' und aktualisiere grub-boot Einträge"
             sudo snapper -c "${snapperConfigName_root}" create -d "***Base System Install***" && \
             echo "Aktuelle Liste der Snapshots:"
             sudo snapper ls
 
-            echo -e "\n*** Aktualisiere Grub"
-            echo "Aktualisiere 'grub.cfg'"
-            sudo grub-mkconfig -o /boot/grub/grub.cfg && \
-            echo "(Re)Generiere Snapshots-(Sub)Menüeinträge in grub"
-            sudo grub-mkconfig
+            if [ -e "/boot/efi/grub.cfg" ] || [ -e "/boot/grub" ]; then     # GRUB (bei systemd Boot: kein Booteintrag, manuell in tty)
+                echo -e "\n*** Aktualisiere Grub"
+                echo "Aktualisiere 'grub.cfg'"
+                sudo grub-mkconfig -o /boot/grub/grub.cfg && \
+                echo "(Re)Generiere Snapshots-(Sub)Menüeinträge in grub"
+                sudo grub-mkconfig
+            fi
         ;;
 
         *)
