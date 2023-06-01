@@ -89,7 +89,7 @@ fi
 
 logname="rsync_appConfData-intern_$(date +"%Y-%m-%d_%H%M%S").log"
 
-# ### 1: Update (intern) und Sicherung (extern $dest) von: ${source}, .config, .local und .var nach RescueSystem/.../01_bak-ScriptService:
+# ### 1: Update (intern) von: ${source}, .config, .local und .var nach RescueSystem/.../01_bak-ScriptService:
 echo -e "\n========================================"
 echo "*** Starte Update/Backup ausgwählter Teile von '${source}, .config, .local und .var' nach '${arrConfAppDataBakPath[*]}'"
 for bakPath in "${arrConfAppDataBakPath[@]}"; do
