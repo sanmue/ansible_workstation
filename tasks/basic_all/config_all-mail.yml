@@ -68,6 +68,28 @@
 
 # ### ##############################
 # ### config postfix for local mail:
+- name: Config_all-mail - postfix - local mail - create local mail folder (Archlinux)
+  ansible.builtin.file:
+    path: /var/spool/mail
+    state: directory
+    # owner: root
+    # group: root
+    mode: '0755'
+  when:
+    - ansible_distribution in ["Archlinux"]
+
+- name: Config_all-mail - postfix - local mail - create local mailbox file for env_user (Archlinux)
+  ansible.builtin.file:
+    path: "/var/spool/mail/{{ env_user }}"
+    state: touch
+    owner: "{{ env_user }}"
+    group: "{{ env_user }}"
+    mode: '0660'
+    modification_time: preserve
+    access_time: preserve
+  when:
+    - ansible_distribution in ["Archlinux"]
+
 - name: Config_all-mail - postfix - local mail - main.cf - myhostname (Archlinux)
   ansible.builtin.lineinfile:
     path: /etc/postfix/main.cf
