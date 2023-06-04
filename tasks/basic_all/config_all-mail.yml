@@ -83,8 +83,8 @@
     path: "/var/spool/mail/{{ env_user }}"
     state: touch
     owner: "{{ env_user }}"
-    group: mail
-    mode: '0660'
+    group: "{{ env_user }}"
+    mode: '0600'
     modification_time: preserve
     access_time: preserve
   when:
