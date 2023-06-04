@@ -74,7 +74,7 @@
     state: directory
     # owner: root
     # group: root
-    mode: '0755'
+    mode: '0777'
   when:
     - ansible_distribution in ["Archlinux"]
 
@@ -83,7 +83,7 @@
     path: "/var/spool/mail/{{ env_user }}"
     state: touch
     owner: "{{ env_user }}"
-    group: "{{ env_user }}"
+    group: mail
     mode: '0660'
     modification_time: preserve
     access_time: preserve
