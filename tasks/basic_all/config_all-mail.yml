@@ -68,7 +68,7 @@
 
 # ### ##############################
 # ### config postfix for local mail:
-- name: Config_all-mail - postfix - local mail - create local mail folder (Archlinux)
+- name: Config_all-mail - postfix - local mail - create local mail folder if not exists (Archlinux)
   ansible.builtin.file:
     path: /var/spool/mail
     state: directory
@@ -78,7 +78,7 @@
   when:
     - ansible_distribution in ["Archlinux"]
 
-- name: Config_all-mail - postfix - local mail - create local mailbox file for env_user (Archlinux)
+- name: Config_all-mail - postfix - local mail - create local mailbox file for env_user if not exists (Archlinux)
   ansible.builtin.file:
     path: "/var/spool/mail/{{ env_user }}"
     state: touch
