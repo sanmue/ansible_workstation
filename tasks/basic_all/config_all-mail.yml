@@ -72,8 +72,6 @@
   ansible.builtin.file:
     path: /var/spool/mail
     state: directory
-    # owner: root
-    # group: root
     mode: '0777'
   when:
     - ansible_distribution in ["Archlinux"]
