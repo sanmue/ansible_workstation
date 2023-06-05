@@ -1,22 +1,19 @@
 <domainsnapshot>
-  <name>2023-05-23_1604_init2</name>
-  <description>playbook run + config dash2panel</description>
+  <name>2023-06-05_1226_base0</name>
+  <description>base0</description>
   <state>shutoff</state>
-  <parent>
-    <name>2023-05-23_1518_init1</name>
-  </parent>
-  <creationTime>1684850699</creationTime>
+  <creationTime>1685960814</creationTime>
   <memory snapshot='no'/>
   <disks>
     <disk name='vda' snapshot='internal'/>
     <disk name='sda' snapshot='no'/>
   </disks>
   <domain type='kvm'>
-    <name>manjaroBIOS</name>
-    <uuid>6fbd9919-fb14-4715-95aa-b06ba6873d8d</uuid>
+    <name>opensuseTumbleweedBIOS</name>
+    <uuid>5ccb5b7b-d11c-42ea-829e-292eac1dcfd9</uuid>
     <metadata>
       <libosinfo:libosinfo xmlns:libosinfo="http://libosinfo.org/xmlns/libvirt/domain/1.0">
-        <libosinfo:os id="http://manjaro.org/manjaro/rolling"/>
+        <libosinfo:os id="http://opensuse.org/opensuse/tumbleweed"/>
       </libosinfo:libosinfo>
     </metadata>
     <memory unit='KiB'>8388608</memory>
@@ -48,7 +45,7 @@
       <emulator>/usr/bin/qemu-system-x86_64</emulator>
       <disk type='file' device='disk'>
         <driver name='qemu' type='qcow2' discard='unmap'/>
-        <source file='/run/media/sandro/1TB-M2NVME/01_VM/images/manjaroBIOS.qcow2'/>
+        <source file='/var/lib/libvirt/images/opensuseTumbleweedBIOS.qcow2'/>
         <target dev='vda' bus='virtio'/>
         <address type='pci' domain='0x0000' bus='0x04' slot='0x00' function='0x0'/>
       </disk>
@@ -139,7 +136,7 @@
         <address type='pci' domain='0x0000' bus='0x03' slot='0x00' function='0x0'/>
       </controller>
       <interface type='network'>
-        <mac address='52:54:00:4e:a1:5d'/>
+        <mac address='52:54:00:e7:96:11'/>
         <source network='default'/>
         <model type='virtio'/>
         <address type='pci' domain='0x0000' bus='0x01' slot='0x00' function='0x0'/>
