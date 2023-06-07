@@ -35,11 +35,11 @@ fi
 # ### ##############
 # ### rsync (Mirror)
 
-read -rp "Start mit beliebiger Eingabe"
+read -rp "Start MIRROR mit beliebiger Eingabe"
 
 logname="rsync_mirror_src-dest_$(date +"%Y-%m-%d_%H%M%S").log" 
 
 echo -e "\n========================================"
-echo "*** Starte rsync von '${source}' nach '${dest}' - MIRROR"
+echo "*** Starte rsync von '${source}/' nach '${dest}/' - MIRROR"
 rsync -aPhEv --delete --force "${paramRsync}" "${source}/" "${dest}/" | tee "/tmp/${logname}"
 echo "========================================"
