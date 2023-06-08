@@ -1,3 +1,19 @@
+# ####################
+# ## GDM configuration
+# ####################
+
+- name: Config-workstation-Gnome-DesktopPrefs - GDM config (all,Gnome,X11)
+  ansible.builtin.lineinfile:
+    path: /etc/gdm/custom.conf
+    insertafter: '#WaylandEnable=false'
+    line: 'WaylandEnable=false'
+    state: present
+    backup: true
+  when:
+    - env_desktop == "gnome"
+    - "{{ env_displayserver }} == x11"
+
+
 # ##########################
 # ## Create Desktop Launcher
 # ##########################

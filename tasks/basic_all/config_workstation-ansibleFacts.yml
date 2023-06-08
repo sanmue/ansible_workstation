@@ -22,11 +22,11 @@
 
 - name: AnsibleFacts - Get PWD (PATH) (all)
   set_fact:
-    env_PWD: "{{ ansible_facts['env']['PWD'] }}"   # z.B.: "/home/sandro/dev"
+    env_PWD: "{{ ansible_facts['env']['PWD'] }}"   # z.B.: "/home/userid/dev"
 
 - name: AnsibleFacts - Get user (USER) (all)
   set_fact:
-    env_user: "{{ ansible_facts['env']['USER'] }}"   # z.B.: "sandro"
+    env_user: "{{ ansible_facts['env']['USER'] }}"   # z.B.: "userid"
 
 - name: AnsibleFacts - Get XDG_RUNTIME_DIR (USER) (all)
   set_fact:
