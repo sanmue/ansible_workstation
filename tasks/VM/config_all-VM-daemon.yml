@@ -10,4 +10,4 @@
   ansible.builtin.service:
     name: libvirtd.service
     enabled: true
-  when: ansible_virtualization_role != "guest" 
+  when: ansible_virtualization_role != "guest"

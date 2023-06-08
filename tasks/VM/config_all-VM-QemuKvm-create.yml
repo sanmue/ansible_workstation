@@ -4,7 +4,7 @@
 #   - Networks
 #   - Storage Pools (02/2023: tmp. auskommentiert, siehe to do)
 #   - Snapshots
-# ############################################## 
+# ##############################################
 # https://serverfault.com/questions/434064/correct-way-to-move-kvm-vm
 # https://unix.stackexchange.com/questions/628454/how-can-i-migrate-backup-restore-a-virt-manager-snapshot
 
@@ -85,6 +85,41 @@
 #  args:
 #    creates: /home/{{ env_user }}/.ansible_vm_qemuKvmCreated
 #  when: ansible_virtualization_role != "guest"
+
+
+- name: VM - define user for QEMU processes run by system instance (Qemu-Kvm)
+  tags: VM
+  ansible.builtin.lineinfile:
+    path: /etc/libvirt/qemu.conf
+    insertafter: '#user = "libvirt-qemu"'
+    line: 'user = "root"'
+    backup: true
+  # when: ansible_virtualization_role != "guest"
+
+- name: VM - define group for QEMU processes run by system instance (Qemu-Kvm)
+  tags: VM
+  ansible.builtin.lineinfile:
+    path: /etc/libvirt/qemu.conf
+    insertafter: '#group = "libvirt-qemu"'
+    line: 'group = "root"'
+  # when: ansible_virtualization_role != "guest"
+
+- name: VM - libvirt should dynamically change file ownership to match the configured user/group above (Qemu-Kvm)
+  tags: VM
+  ansible.builtin.lineinfile:
+    path: /etc/libvirt/qemu.conf
+    insertafter: '#dynamic_ownership = 1'
+    line: 'dynamic_ownership = 1'
+  # when: ansible_virtualization_role != "guest"
+
+- name: VM - libvirt should remember and restore the original ownership over files it is relabeling (Qemu-Kvm)
+  tags: VM
+  ansible.builtin.lineinfile:
+    path: /etc/libvirt/qemu.conf
+    insertafter: '#remember_owner = 1'
+    line: 'remember_owner = 1'
+    state: "present"
+  # when: ansible_virtualization_role != "guest"
 
 
 - name: VM - create 'flag-file' indicating VM-stuff was created (Qemu-Kvm)
