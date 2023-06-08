@@ -10,7 +10,8 @@
     backup: true
   when:
     - env_desktop == "gnome"
-    - env_displayserver == "x11"
+    # - env_displayserver == "x11"
+    - env_displayserver == "wayland"
 
 
 # ##########################
