@@ -3,6 +3,8 @@
 # ####################
 
 - name: Config-workstation-Gnome-DesktopPrefs - GDM config (all,Gnome,X11)
+  become: true
+  # becom_user: root
   ansible.builtin.lineinfile:
     path: "/etc/gdm/custom.conf"
     insertafter: '#WaylandEnable=false'
