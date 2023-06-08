@@ -45,8 +45,8 @@ declare -A btrfsSubvolLayout=(  ["@"]="/"
                                 ["@usrlocal"]="/usr/local"
                                 ["@images"]="/var/lib/libvirt/images")
 
-btrfsFstabMountOptions_standard='defaults,noatime,compress=zstd,space_cache 0 0'    # gewünschte MountOptions
-btrfsFstabMountOptions_manjaro='defaults 0 0'                                       # werden ersetzt mit $btrfsFstabMountOptions_standard
+btrfsFstabMountOptions_standard='defaults,noatime,compress=zstd,space_cache=v2 0 0'    # gewünschte MountOptions
+btrfsFstabMountOptions_manjaro='defaults 0 0'                                          # werden ersetzt mit $btrfsFstabMountOptions_standard
 btrfsFstabMountOptions_endeavour='defaults,noatime,compress=zstd 0 0'
 
 
