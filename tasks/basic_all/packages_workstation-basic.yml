@@ -56,6 +56,7 @@
       # - manjaro-settings-samba   # Adds an smb.conf file for Manjaro and enables samba
       - shellcheck
       # - skanlite   # bei KDE Plasma Desktop
+      - speedtest-cli
       - steam
       - syncthing
       # - terminator   # Terminal emulator that supports tabs and grids
