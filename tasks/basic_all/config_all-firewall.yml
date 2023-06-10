@@ -39,7 +39,6 @@
     state: started
   when:
     - ansible_distribution in ["Archlinux"]
-    # - env_desktop == "kde"
   register: firewall_d
 
 ### firewalld - allow

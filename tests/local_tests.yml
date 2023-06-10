@@ -1,0 +1,13 @@
+---
+
+# ### ****
+# ### TEST
+# ### ****
+
+- name: Test
+  hosts: localhost
+  connection: local
+  become: true
+  tasks:
+    - name: Test firewalld
+      ansible.builtin.import_tasks: ansible_firewalld.yml
