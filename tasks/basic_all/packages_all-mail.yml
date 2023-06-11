@@ -1,9 +1,22 @@
+- name: Install packages for (local) mail - postfix (all)
+  ansible.builtin.package:
+    state: present
+    name:
+      - postfix   # Fast, easy to administer, secure mail server   # Mail Tranfer Agent (MTA)
+
 - name: Install packages for (local) mail (Archlinux, Ubuntu)
   ansible.builtin.package:
     state: present
     name:
       - s-nail    # Environment for sending and receiving mail  (Ubuntu: /usr/bin/s-nail; Arch: /usr/bin/mail)
                   # - Ubuntu: symlink --> /usr/bin/mail, damit mail-command verwendet werden kann (siehe config_all-mail.yml)
-      - postfix   # Fast, easy to administer, secure mail server   # Mail Tranfer Agent (MTA)
   when:
     - ansible_distribution in ["Archlinux", "Ubuntu"]
+
+- name: Install packages for (local) mail (Suse)
+  ansible.builtin.package:
+    state: present
+    name:
+      - mailutils
+  when:
+    - ansible_os_family == "Suse"

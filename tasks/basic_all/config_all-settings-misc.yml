@@ -51,13 +51,15 @@
 # ######################
 # ### Create /home/01_VM
 # ### ##################
-- name: All settings misc - Create '/home/01_VM/images' (all)
-  ansible.builtin.file:
-    path: '/home/01_VM/images'
-    state: directory
-    owner: root
-    group: root
-    mode: '0755'
+# - verlagert auf ext. Datenträger
+#
+# - name: All settings misc - Create '/home/01_VM/images' (all)
+#   ansible.builtin.file:
+#     path: '/home/01_VM/images'
+#     state: directory
+#     owner: root
+#     group: root
+#     mode: '0755'
 
 
 # ##########################################
@@ -635,7 +637,7 @@
 # #######
 # ### zsh
 # #######
-- name: All settings misc - zsh plugin git update - bash-skript (Ubuntu)
+- name: All settings misc - zsh plugin git update - bash-skript (Ubuntu,Suse)
   ansible.builtin.copy:
     src: "files/config_all-services-misc-zshpluginsgit_update.sh"
     dest: "/usr/local/bin/zshpluginsgit_update.sh"
@@ -643,24 +645,27 @@
     group: root
     mode: '0755'
     backup: true
-  when:
-    - ansible_distribution in ["Ubuntu"]
+  when: ansible_distribution in ["Ubuntu"] or
+        ansible_os_family == "Suse"
 
 # fatal: detected dubious ownership in repository at '/usr/share/zsh/plugins/...; To add an exception:
-- name: All settings misc - zsh plugin git repo - add safe.directory - autosuggestions (Ubuntu)
+- name: All settings misc - zsh plugin git repo - add safe.directory - autosuggestions (Ubuntu,Suse)
   ansible.builtin.shell: /usr/bin/git config --global --add safe.directory /usr/share/zsh/plugins/zsh-autosuggestions
   when:
-    - ansible_distribution in ["Ubuntu"]
+    - ansible_distribution in ["Ubuntu"] or
+        ansible_os_family == "Suse"
 
-- name: All settings misc - zsh plugin git repo - add safe.directory - syntax-highlighting (Ubuntu)
+- name: All settings misc - zsh plugin git repo - add safe.directory - syntax-highlighting (Ubuntu,Suse)
   ansible.builtin.shell: /usr/bin/git config --global --add safe.directory /usr/share/zsh/plugins/zsh-syntax-highlighting
   when:
-    - ansible_distribution in ["Ubuntu"]
+    - ansible_distribution in ["Ubuntu"] or
+        ansible_os_family == "Suse"
 
-- name: All settings misc - zsh plugin git repo - add safe.directory - history-substring-search (Ubuntu)
+- name: All settings misc - zsh plugin git repo - add safe.directory - history-substring-search (Ubuntu,Suse)
   ansible.builtin.shell: /usr/bin/git config --global --add safe.directory /usr/share/zsh/plugins/zsh-history-substring-search
   when:
-    - ansible_distribution in ["Ubuntu"]
+    - ansible_distribution in ["Ubuntu"] or
+        ansible_os_family == "Suse"
 
 
 # #######
@@ -718,8 +723,7 @@
   when:
     - ansible_distribution == "Ubuntu"
 
-
-- name: All settings misc - Set vim global config (arch)
+- name: All settings misc - Set vim global config (Arch,Suse)
   ansible.builtin.blockinfile:
     path: "/etc/vimrc"
     backup: true
@@ -756,8 +760,9 @@
       set hlsearch		" Highlight all search results
       set undolevels=1000	" Number of undo levels
       " #
-  when:
-    - ansible_distribution == "Archlinux"
+  when: ansible_distribution == "Archlinux" or
+        ansible_os_family == "Suse"
+
 
 # ---------------
 # ### VIM plugins
@@ -915,16 +920,16 @@
 # ### Visual Studio Code / Code - OSS
 # ###################################
 
-- name: All settings misc - Start 'Visual Studio Code' bzw 'Code-OSS' (Ubuntu)
+- name: All settings misc - Start 'Visual Studio Code' bzw 'Code-OSS' (Ubuntu,Suse)
   tags: workstation,ubuntu
+  become: true
+  become_user: "{{ env_user }}"
   ansible.builtin.shell:
     cmd: code >/dev/null 2>&1 &   # damit im Home-Verzeichnis der Config-Pfad von VS Code erstellt wird + später die settings.yml dorthin kopiert werden kann
   args:
       creates: "/home/{{ env_user }}/.config/Code/User/globalStorage/zokugun.sync-settings/settings.yml"   # nur ausführen, wenn nicht bereits z.B. in vorhergehendem Lauf gestartet/erstellt wurde
-  become: true
-  become_user: "{{ env_user }}"
-  when:
-    - ansible_distribution in ["Ubuntu"]
+  when: ansible_distribution in ["Ubuntu"] or
+        ansible_os_family == "Suse"
 
 - name: All settings misc - Start 'Code - OSS' (Arch)
   tags: workstation,arch
@@ -987,7 +992,7 @@
 #  when:
 #    - ansible_distribution == "Ubuntu"
 
-- name: All settings misc - Erstelle hilfsweise manuell 'Sync Settings' Extension Ordner für 'VS Code' (Ubuntu)
+- name: All settings misc - Erstelle hilfsweise manuell 'Sync Settings' Extension Ordner für 'VS Code' (Ubuntu,Suse)
   tags: workstation,arch
   become: true
   become_user: "{{ env_user }}"
@@ -995,10 +1000,10 @@
     path: "/home/{{ env_user }}/.config/Code/User/globalStorage/zokugun.sync-settings"
     state: directory
     mode: '0775'
-  when:
-    - ansible_distribution in ["Ubuntu"]
+  when: ansible_distribution in ["Ubuntu"] or
+        ansible_os_family == "Suse"
 
-- name: All settings misc - Set/Copy 'Visual Studio Code' settings-file for Extension 'Sync Settings' (Ubuntu)
+- name: All settings misc - Set/Copy 'Visual Studio Code' settings-file for Extension 'Sync Settings' (Ubuntu,Suse)
   tags: workstation,ubuntu
   become: true
   become_user: "{{ env_user }}"
@@ -1008,8 +1013,8 @@
     owner: "{{ env_user }}"
     group: "{{ env_user }}"
     mode: u=rw
-  when:
-    - ansible_distribution == "Ubuntu"
+  when: ansible_distribution == "Ubuntu" or
+        ansible_os_family == "Suse"
 
 - name: All settings misc - Set/Copy 'Code - OSS' settings-file for Extension 'Sync Settings' (Arch)
   tags: workstation,arch

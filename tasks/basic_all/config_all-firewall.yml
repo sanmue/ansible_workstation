@@ -31,39 +31,30 @@
 # ### firewalld ###
 # #################
 
-### firewalld - enable+start
-- name: Firewalld - enable (Archlinux)
+# ### firewalld - enable+start
+- name: Firewalld - enable (Archlinux, Suse)
   ansible.builtin.service:
     name: firewalld
     enabled: true
     state: started
-  when:
-    - ansible_distribution in ["Archlinux"]
+  when: ansible_distribution in ["Archlinux"] or
+        ansible_os_family == "Suse"
   register: firewall_d
 
-### firewalld - allow
-- name: Firewalld - allow ssh (Archlinux)
+# ### firewalld - allow
+- name: Firewalld - allow ssh (Archlinux, Suse))
   ansible.posix.firewalld:
     service: ssh
     permanent: true
     state: enabled
     immediate: true
     # zone: public
-  when:
-    - ansible_distribution in ["Archlinux"]
+  when: ansible_distribution in ["Archlinux)"] or
+        ansible_os_family == "Suse"
   register: firewall_d
 
-### firewalld - reload
-# - name: firewalld - reload (Archlinux)
-#   ansible.builtin.command: firewall-cmd --reload
-#   when:
-#     - ansible_distribution in ["Archlinux"]
-    # - firewall_d.changed
-
-- name: Firewalld - reload (Archlinux)
+- name: Firewalld - reload (Archlinux, Suse))
   ansible.builtin.service:
     name: firewalld
     state: reloaded
-  when:
-    - ansible_distribution in ["Archlinux"]
-    - firewall_d.changed
+  when: firewall_d.changed

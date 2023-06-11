@@ -8,20 +8,23 @@
 #   register: rootFsIsBtrfs
 #   ignore_errors: true
 
-- name: Config all services snapperBtrfs - Check if / has btrfs filesystem + register result in variable (all)
+- name: Config all services snapperBtrfs - Check if / has btrfs filesystem + register result in variable (all, not Suse)
   ansible.builtin.shell: stat -f -c %T /
   register: rootFsIsBtrfs
   ignore_errors: true
+  when: ansible_os_family != "Suse"
 
-- name: Config all services snapperBtrfs - Show value of 'rootFsIsBtrfs' (all)
+- name: Config all services snapperBtrfs - Show value of 'rootFsIsBtrfs' (all, not Suse)
   ansible.builtin.debug:
     var: rootFsIsBtrfs
+  when: ansible_os_family != "Suse"
 
 # ### prüfe auf grub bootloader:
-- name: Config all services snapperBtrfs - Get stats of etc-default-grup (all)
+- name: Config all services snapperBtrfs - Get stats of etc-default-grup (all, not Suse)
   ansible.builtin.stat:
     path: /etc/default/grub
   register: etcdefgrub
+  when: ansible_os_family != "Suse"
 
 # ### grub-btrfsd - Regenerate grub-btrfs.cfg
 # github.com/Antynea/grub-btrfs

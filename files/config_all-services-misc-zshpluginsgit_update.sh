@@ -5,7 +5,7 @@
 # ### ################################################################################################
 # ### Skript macht ein Update der zsh plugins
 # ### - diese wurden direkt vom git-repo bezogen
-# ### - nur für Ubuntu; bei Archlinux, Manjaro über paket installiert
+# ### - nur, wenn nicht Archlinux, Manjaro (dort über paket installiert)
 # ### ################################################################################################
 
 

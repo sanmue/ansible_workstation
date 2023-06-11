@@ -25,7 +25,7 @@ gitOnlineRepo="git@github.com:sanmue/${playbookdir}.git"
 gitdefaultBranchName="main"
 
 os=""
-oslist=("Ubuntu" "EndeavourOS" "ManjaroLinux")   # aktuell berücksichtige Distributionen
+oslist=("Ubuntu" "EndeavourOS" "ManjaroLinux" "openSUSE Tumbleweed")   # aktuell berücksichtige Distributionen
 
 snapperConfigName_root="root"
 snapperSnapshotFolder="/.snapshots"
@@ -78,6 +78,12 @@ else
 fi
 
 echo "Verwendetes OS: ${os}"
+
+
+### ---
+### Hostname
+### ---
+#TODO
 
 
 ### ---
@@ -481,7 +487,7 @@ case ${os} in
 
     openSUSE*)
         echo -e "\nUpdate Repos und Installation benoetigte Software (git,ansible,ssh,firewalld)..."
-        sudo zypper refresh && sudo zypper dist-upgrade -y --details && sudo zypper install -y --details rsync git ansible openssh firewalld vim curl
+        sudo zypper refresh && sudo zypper dist-upgrade -y --details && sudo zypper install -y --details rsync git ansible openssh vim firewalld curl
 
         #echo -e "\nInstalliere benötigte Packages für Installation von Microsoft PowerShell"
         # https://learn.microsoft.com/en-us/powershell/scripting/install/install-other-linux?view=powershell-7.3
@@ -489,9 +495,6 @@ case ${os} in
         # PowerShell is not provided by any official openSUSE repositories. ...ways for Leap and Tumbleweed:
         # Möglichkeit 1: snap-package (https://snapcraft.io/install/powershell/opensuse)
         # Möglichkeit 2: Install directly from RPM; Install binaries from tar.gz; Install using "sudo dotnet tool install --global powershell" command
-        
-        echo -e "\nInstalliere noch fehlende, benötigte Packages für Installation von Brave Web Browser"
-        sudo apt-get install -y --details curl
 
         # https://unix.stackexchange.com/questions/89714/easy-way-to-determine-the-virtualization-technology-of-a-linux-machine
         echo -e "\n Installation (wenn VM) spice agent for Linux guests (z.B. für clipboard sharing host+guest)"
@@ -595,16 +598,15 @@ ansible-playbook "/home/${userid}/${repodir}/${playbookdir}/${playbook}" -v -K
 #ansible-playbook "/home/${userid}/${repodir}/${playbookdir}/${playbook}" -v -K --vault-password-file "/home/${userid}/.ansibleVaultKey"
 
 
+case ${os} in
+    Manjaro* | EndeavourOS*)
+        ### ---
+        ### Archlinux (EndeavourOS), Manjaro: weitere Installationen
+        ### - am Schluss, damit Playbook nicht aufhalten
+        ### ---
+        read -r -p "Install from AUR: Citrix ICA-Client, autokey, virtio-win, MS TTF Fonts, ...? ('j'=ja, sonstige Eingabe: nein)" installAUR
 
-### ---
-### Archlinux (EndeavourOS), Manjaro: weitere Installationen
-### - am Schluss, damit Playbook nicht aufhalten
-### ---
-read -r -p "Install from AUR: Citrix ICA-Client, autokey, virtio-win, MS TTF Fonts, ...? ('j'=ja, sonstige Eingabe: nein)" installAUR
-
-if [ "${installAUR}" == "j" ]; then
-    case ${os} in
-        Manjaro* | EndeavourOS*)
+        if [ "${installAUR}" == "j" ]; then
             echo -e "\nInstall 'autokey-gtk' from AUR (Arch)"   # da aktuell Gnome verwende
             yay -S --needed autokey-gtk && touch "/home/${userid}/.ansible_bootstrap_autokeyGtkInstalled"
 
@@ -640,12 +642,12 @@ if [ "${installAUR}" == "j" ]; then
 
             #echo -e "\nInstall woeusb-ng (Tool to create Windows boot stick) from AUR (Arch,Manjaro)"  
             #yay -S --needed woeusb-ng && touch "/home/${userid}/.ansible_bootstrap_pamac-woeusbngInstalled"
-        ;;
+        fi
+    ;;
 
-        *)
-            echo -e "\nUnbehandelter Fall: switch os - Arch weitere Installationen - default-switch Zweig"
-            read -r -p "Eingabe-Taste drücken zum Beenden"
-            exit 0
-        ;;
-    esac
-fi
+    *)
+        echo -e "\nDefault-switch Zweig - keine zusätzlichen Installationen nach Ausführung Ansible Playbook."
+        read -r -p "Eingabe-Taste drücken zum Beenden"
+        exit 0
+    ;;
+esac

@@ -13,7 +13,7 @@
   register: firewall_d
 
 # ### firewalld - allow
-- name: Firewalld - allow ssh (Archlinux, Suse))
+- name: Firewalld - allow ssh (Archlinux, Suse)
   ansible.posix.firewalld:
     service: ssh
     permanent: true
@@ -24,9 +24,8 @@
         ansible_os_family == "Suse"
   register: firewall_d
 
-- name: Firewalld - reload (Archlinux, Suse))
+- name: Firewalld - reload (Archlinux, Suse)
   ansible.builtin.service:
     name: firewalld
     state: reloaded
-  when: ansible_distribution in ["Archlinux"] or
-        ansible_os_family == "Suse"
+  when: firewall_d.changed

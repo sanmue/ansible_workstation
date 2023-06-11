@@ -61,7 +61,7 @@
 #    - ansible_distribution in ["Archlinux"]
 #    - env_desktop == "gnome"
 
-#- name: Gnome - ulauncher - create flag-file (Archlinux)
+# - name: Gnome - ulauncher - create flag-file (Archlinux)
 #  ansible.builtin.file:
 #    path: "/home/{{ env_user }}/.ansible_gnome_pamacAUR-ulauncher"
 #    state: touch

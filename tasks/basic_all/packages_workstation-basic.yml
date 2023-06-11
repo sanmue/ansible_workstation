@@ -415,13 +415,13 @@
     - pyenvskript.stat.exists == true
 
 
-- name: Install basic packages (all + x11 display server)
+- name: Install basic packages - xclip (all + x11 display server)
   ansible.builtin.package:
     state: present
     name:
       - xclip   # Command line interface to the X11 clipboard   # Voraussetzung für snap-package "espanso"
   when:
-    - ansible_distribution in ["Ubuntu", "Archlinux"]
+#    - ansible_distribution in ["Ubuntu", "Archlinux"]
     - env_displayserver == "x11"
 
 

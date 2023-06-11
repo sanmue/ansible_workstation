@@ -30,21 +30,21 @@
 - name: Config_all-mail - postfix - aliases (Ubuntu)
   ansible.builtin.lineinfile:
     path: /etc/aliases
-    #regexp: '^postmaster:'
+    # regexp: '^postmaster:'
     insertbefore: "^postmaster:"
     line: "root: {{ env_user }}"
     backup: true
   when:
     - ansible_distribution in ["Ubuntu"]
 
-- name: Config_all-mail -  postfix - aliases (Archlinux)
+- name: Config_all-mail -  postfix - aliases (Archlinux, Suse)
   ansible.builtin.replace:
     path: /etc/postfix/aliases
     regexp: '^#root.*you'
     replace: "root: {{ env_user }}"
     backup: true
-  when:
-    - ansible_distribution in ["Archlinux"]
+  when: ansible_distribution in ["Archlinux)"] or
+        ansible_os_family == "Suse"
 
 - name: Config_all-mail - postfix - run postalias command (Ubuntu)
   ansible.builtin.shell:
@@ -52,19 +52,19 @@
   when:
     - ansible_distribution in ["Ubuntu"]
 
-- name: Config_all-mail - postfix - run postalias command (Archlinux)
+- name: Config_all-mail - postfix - run postalias command (Archlinux, Suse)
   ansible.builtin.shell:
     cmd: "sudo postalias /etc/postfix/aliases"
-  when:
-    - ansible_distribution in ["Archlinux"]
+  when: ansible_distribution in ["Archlinux)"] or
+        ansible_os_family == "Suse"
 
 - name: Config_all-mail - postfix - initialize alias database (all)
   ansible.builtin.shell:
     cmd: "sudo newaliases && touch /home/{{ env_user }}/.ansible_postfixNewaliases"
   args:
     creates: "/home/{{ env_user }}/.ansible_postfixNewaliases"
-  when:
-    - ansible_distribution in ["Archlinux", "Ubuntu"]
+  # when:
+  #   - ansible_distribution in ["Archlinux", "Ubuntu"]
 
 # ### ##############################
 # ### config postfix for local mail:
@@ -73,8 +73,7 @@
     path: /var/spool/mail
     state: directory
     mode: '0777'
-  when:
-    - ansible_distribution in ["Archlinux"]
+  when: ansible_distribution in ["Archlinux)"]
 
 - name: Config_all-mail - postfix - local mail - create local mailbox file for env_user if not exists (Archlinux)
   ansible.builtin.file:
@@ -82,66 +81,68 @@
     state: touch
     owner: "{{ env_user }}"
     group: "{{ env_user }}"
+    # group: "mail"
     mode: '0600'
+    # mode: '0660'
     modification_time: preserve
     access_time: preserve
-  when:
-    - ansible_distribution in ["Archlinux"]
+  when: ansible_distribution in ["Archlinux)"]
 
-- name: Config_all-mail - postfix - local mail - main.cf - myhostname (Archlinux)
+- name: Config_all-mail - postfix - local mail - main.cf - myhostname (Archlinux, Suse)
   ansible.builtin.lineinfile:
     path: /etc/postfix/main.cf
     insertafter: '^#myhostname.=.virtual.domain.tld'
     line: myhostname = localhost
     state: present
-  when:
-    - ansible_distribution in ["Archlinux"]
+  when: ansible_distribution in ["Archlinux)"] or
+        ansible_os_family == "Suse"
 
-- name: Config_all-mail - postfix - local mail - main.cf - mydomain (Archlinux)
+- name: Config_all-mail - postfix - local mail - main.cf - mydomain (Archlinux, Suse)
   ansible.builtin.lineinfile:
     path: /etc/postfix/main.cf
     insertafter: '^#mydomain.=.domain.tld'
     line: mydomain = localdomain
     state: present
-  when:
-    - ansible_distribution in ["Archlinux"]
+  when: ansible_distribution in ["Archlinux)"] or
+        ansible_os_family == "Suse"
 
-- name: Config_all-mail - postfix - local mail - main.cf - mydestination (Archlinux)
+- name: Config_all-mail - postfix - local mail - main.cf - mydestination (Archlinux, Suse)
   ansible.builtin.lineinfile:
     path: /etc/postfix/main.cf
     insertafter: '^#mydestination.=.\$myhostname,.localhost.\$mydomain,.localhost'
     line: mydestination = $myhostname, localhost.$mydomain, localhost
     firstmatch: true
     state: present
-  when:
-    - ansible_distribution in ["Archlinux"]
+  when: ansible_distribution in ["Archlinux)"] or
+        ansible_os_family == "Suse"
 
-- name: Config_all-mail - postfix - local mail - main.cf - inet_interfaces (Archlinux)
+- name: Config_all-mail - postfix - local mail - main.cf - inet_interfaces (Archlinux, Suse)
   ansible.builtin.lineinfile:
     path: /etc/postfix/main.cf
     insertafter: '^#inet_interfaces.=.\$myhostname'
     line: inet_interfaces = $myhostname, localhost
     state: present
-  when:
-    - ansible_distribution in ["Archlinux"]
+  when: ansible_distribution in ["Archlinux)"] or
+        ansible_os_family == "Suse"
 
-- name: Config_all-mail - postfix - local mail - main.cf - mynetworks_style (Archlinux)
+- name: Config_all-mail - postfix - local mail - main.cf - mynetworks_style (Archlinux, Suse)
   ansible.builtin.lineinfile:
     path: /etc/postfix/main.cf
     insertafter: '^#mynetworks_style.=.subnet'
     line: mynetworks_style = host
     state: present
-  when:
-    - ansible_distribution in ["Archlinux"]
+  when: ansible_distribution in ["Archlinux)"] or
+        ansible_os_family == "Suse"
 
-- name: Config_all-mail - postfix - local mail - main.cf - default_transport (Archlinux)
+- name: Config_all-mail - postfix - local mail - main.cf - default_transport (Archlinux, Suse)
   ansible.builtin.lineinfile:
     path: /etc/postfix/main.cf
-    insertafter: '^#relayhost.=.\[an.ip.add.ress\]'
+    # insertafter: '^#relayhost.=.\[an.ip.add.ress\]'
+    insertafter: '^#relayhost.=.*'
     line: 'default_transport = error: outside mail is not deliverable'
     state: present
-  when:
-    - ansible_distribution in ["Archlinux"]
+  when: ansible_distribution in ["Archlinux)"] or
+        ansible_os_family == "Suse"
 
 - name: Config_all-mail - postfix - local mail - main.cf - default_transport (Ubuntu)
   ansible.builtin.lineinfile:

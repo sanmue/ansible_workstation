@@ -33,20 +33,20 @@
 # ### firewalld ###
 # #################
 
-- name: Firewalld - allow KDE Connect (Archlinux)
+- name: Firewalld - allow KDE Connect (Archlinux,Suse)
   ansible.posix.firewalld:
     service: kdeconnect
     permanent: true
     state: enabled
     immediate: true
-  when:
-    - ansible_distribution in ["Archlinux"]
+  when: ansible_distribution in ["Archlinux"] or
+        ansible_os_family == "Suse"
   register: firewall_d
 
 - name: Firewalld - reload (Archlinux)
   ansible.builtin.service:
     name: firewalld
     state: reloaded
-  when:
-    - ansible_distribution in ["Archlinux"]
-    - firewall_d.changed
+  when: (ansible_distribution in ["Archlinux"] or
+        ansible_os_family == "Suse") and
+        firewall_d.changed

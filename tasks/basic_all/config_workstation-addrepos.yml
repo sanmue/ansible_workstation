@@ -24,6 +24,31 @@
     - pamac_conf.stat.exists
 
 
+# ########
+# ### Suse
+# ########
+
+# - https://en.opensuse.org/Visual_Studio_Code
+# - https://code.visualstudio.com/docs/setup/linux
+- name: config workstation - addrepos - add rpm key - Visual Studio Code (Suse)
+  ansible.builtin.rpm_key:
+    key: https://packages.microsoft.com/keys/microsoft.asc
+    state: present
+  when: ansible_os_family == "Suse"
+
+- name: config workstation - addrepos - Visual Studio Code (Suse)
+  community.general.zypper_repository:
+    name: vscode
+    # auto_import_keys: true
+    autorefresh: true
+    description: "Repo for Microsoft Visual Studio Code"
+    enabled: true
+    repo: https://packages.microsoft.com/yumrepos/vscode
+    runrefresh: true
+    state: present
+  when: ansible_os_family == "Suse"
+
+
 # ##########
 # ### Ubuntu
 # ##########
