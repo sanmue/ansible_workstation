@@ -3,8 +3,6 @@
   ansible.builtin.package:
     state: present
     name:
-      - gnome-shell-extensions
-      - gnome-shell-extension-appindicator
       - gnome-tweaks
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
@@ -15,6 +13,8 @@
   ansible.builtin.package:
     state: present
     name:
+      - gnome-shell-extensions
+      - gnome-shell-extension-appindicator
       - gnome-shell-extension-gsconnect
       - gnome-shell-extension-gsconnect-browsers
   when:
@@ -27,6 +27,8 @@
   ansible.builtin.package:
     state: present
     name:
+      - gnome-shell-extensions
+      - gnome-shell-extension-appindicator
       - gnome-shell-extension-gsconnect
       # - gnome-shell-extension-dash-to-dock
       - gnome-shell-extension-dash-to-panel   # Extension for GNOME shell to combine the dash and main panel
@@ -49,3 +51,16 @@
 #    - ansible_distribution in ["Archlinux"]
 #    - env_desktop == "gnome"
 #    - env_lsb_id != "ManjaroLinux"
+
+
+- name: Install gnomeshell extension stuff (Suse + Gnome)
+  tags: workstation,gnome,arch
+  ansible.builtin.package:
+    state: present
+    name:
+      - gnome-shell-extensions-common
+      - gnome-shell-extension-desktop-icons
+      - gnome-shell-extension-user-theme
+  when:
+    - ansible_os_family == "Suse"
+    - env_desktop == "gnome"

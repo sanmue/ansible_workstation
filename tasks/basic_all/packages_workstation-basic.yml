@@ -21,7 +21,7 @@
       - cryptsetup   # benötigt für LUKS # sollte schon installiert sein
       - cups
       - curl
-      - deja-dup   # A trivial-to-use personal backup tool to protect against accidental data loss
+      # - deja-dup   # aktuell genutzt: Vorta+borg # A trivial-to-use personal backup tool to protect against accidental data loss
       - dmidecode
       - duf   # Disk Usage/Free Utility
       - efivar
@@ -320,7 +320,8 @@
       # - timeshift
       - ufw   # bereits installiert (bootstrap)
       - units   # converts between different systems of units
-      - wmctrl   # autokey dependancy # sollte bereits installiert sein
+      - vorta   # Desktop Client for Borg Backup
+      # - wmctrl   # autokey dependancy # sollte bereits installiert sein   # Command line tool to interact with an EWMH/NetWM compatible X Window Manager
       # Multimedia; entspechend libs sollten bereits installiert sein (wenn mei Installer ausgewählt wurde)
       # - ffmpeg
       # - x264
@@ -380,7 +381,6 @@
       - libncursesw5-dev
       - xz-utils
       - tk-dev
-      - vorta   # Desktop Client for Borg Backup
   when: ansible_distribution == "Ubuntu"
 
 - name: Install basic packages - Get stat of .pyenv (all)
@@ -423,6 +423,73 @@
   when:
 #    - ansible_distribution in ["Ubuntu", "Archlinux"]
     - env_displayserver == "x11"
+
+
+- name: Install basic packages (Suse)
+  ansible.builtin.package:
+    state: present
+    name:
+    # ### Python - mit Versionsangabe im Paketnamen
+    - python311
+    - python311-pip
+    - python311-psutil
+    # ###
+    - adobe-sourcecodepro-fonts
+    - borgbackup
+    - brave-browser
+    - cockpit-networkmanager
+    - cockpit-podman
+    - chromium
+    - cronie
+    - cronie-anacron
+    - code   # Visual Studio Code   # Repo wurde hinzugefügt
+    - cups-pdf
+    - dejavu-fonts
+    - discord
+    - evolution-ews
+    - evolution-plugin-bogofilter
+    - evolution-plugin-spamassassin
+    - exfat-utils
+    - flatpak-remote-flathub
+    - flatpak-zsh-completion
+    - fuse-exfat
+    - fd
+    - foliate
+    - fzf
+    - fzf-zsh-completion
+    - gh   # The official CLI for GitHub 
+    - gpgme
+    - hunspell
+    - ksnip
+    - libnotify-tools
+    - libreoffice
+    - libreoffice-l10n-en
+    - lshw
+    - malcontent
+    - nextcloud-desktop
+    - openssh
+    - openssh-clients
+    - psutils
+    - pyenv
+    - pyenv-zsh-completion
+    - remmina
+    - remmina-plugin-rdp
+    - remmina-plugin-spice
+    - remmina-plugin-vnc
+    - remmina-plugin-www
+    - steam
+    - steamtricks
+    # - libopenssl1_0_0-steam
+    # - libopenssl1_0_0-steam-32bit
+    - torbrowser-launcher
+    - units
+    - vim-plugin-markdown
+    - vim-plugin-powerline
+    - vim-plugin-salt
+    # ### firmware:
+    - sof-firmware   # Firmware data files for SOF Drivers # Sound Open Firmware (SOF) is an open source audio Digital Signal Processing (DSP) firmware infrastructure and SDK. 
+    # - alsa-firmware
+  when: ansible_os_family == "Suse"
 
 
 # - name: install Vivaldi Browser (Ubuntu)

@@ -83,7 +83,13 @@ echo "Verwendetes OS: ${os}"
 ### ---
 ### Hostname
 ### ---
-#TODO
+echo -e "\naktueller Hostname: '$(hostname)'"
+read -r -p "Soll Hostname geändert werden ('j'=ja, sonstige Eingabe=nein)?: " changeHostname
+if [ "${changeHostname}" = 'j' ]; then
+    read -r -p "Neuen Hostnamen eingeben: " newHostname
+    sudo hostnamectl hostname "${newHostname}"
+    read -r -p  "Neuer Hostname wurde gesetzt, weiter mit beliebiger Eingabe"
+fi
 
 
 ### ---

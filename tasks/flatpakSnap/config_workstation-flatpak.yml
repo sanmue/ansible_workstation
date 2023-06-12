@@ -1,14 +1,13 @@
 
 - name: Add the flathub flatpak repository remote, system (Ubuntu)
   tags: workstation,ubuntu, flatpak
-  flatpak_remote:
+  community.general.flatpak_remote:
     name: flathub
     state: present
-    flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo
-    method: system
+    flatpakrepo_url: https://flathub.org/repo/flathub.flatpakrepo
+    method: system   # oder method: user
   when:
     - ansible_distribution == "Ubuntu"
-
 
 
 - name: Enable flatpak for pamac (Archlinux)
@@ -32,3 +31,6 @@
     - ansible_distribution == "Archlinux"
     - pamac_conf.stat.exists   # aus: config_workstation-addrepos.yml
     # - env_lsb_id == "ManjaroLinux"
+
+
+# ### Suse: package "flatpak-remote-flathub"   # Add Flathub repository to system flatpak

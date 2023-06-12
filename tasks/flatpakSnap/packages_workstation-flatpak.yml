@@ -34,9 +34,18 @@
     method: system
   with_items:
     - 'net.ankiweb.Anki'
-  when:
-    - ansible_distribution in ["Archlinux"]
+  when: ansible_distribution in ["Archlinux"]
 
+- name: Install flatpak packages for workstations (Suse)
+  tags: workstation,arch,flatpak
+  community.general.flatpak:
+    name: '{{ item }}'
+    state: present
+    method: system
+  with_items:
+    - 'net.ankiweb.Anki'
+    - 'org.signal.Signal'
+  when: ansible_os_family == "Suse"
 
 - name: Install flatpak packages for workstations (Ubuntu)
   tags: workstation,ubuntu,flatpak

@@ -15,7 +15,7 @@
     path: /etc/default/grub
   register: etcdefgrub
 
-- name: Install basic packages for snapper on btrfs filesystem - snapper (all)
+- name: Install basic packages for snapper on btrfs filesystem - snapper (Arch)
   ansible.builtin.package:
     state: present
     name:
@@ -27,9 +27,9 @@
   when:
     # - rootFsIsBtrfs != ''
     - rootFsIsBtrfs = 'btrfs'   # Variable aus packages_workstation-basic.yml; neu: s.o.
-    # - ansible_distribution in ["Archlinux"]
+    - ansible_distribution in ["Archlinux"]
 
-- name: Install basic packages for snapper on btrfs filesystem + grub - grub-btrfs (all, NOT Ubuntu)
+- name: Install basic packages for snapper on btrfs filesystem + grub - grub-btrfs (Arch)
   ansible.builtin.package:
     state: present
     name:
@@ -44,13 +44,17 @@
     - etcdefgrub.stat.exists
     - ansible_distribution in ["Archlinux"]
 
-- name: Check if default snapper config 'root' for '/' already exists (all)
+- name: Check if default snapper config 'root' for '/' already exists (Arch)
   ansible.builtin.shell: snapper list-configs | grep root
   register: snapperDefaultConfigExists
   ignore_errors: true
+  when:
+    # - rootFsIsBtrfs != ''
+    - rootFsIsBtrfs = 'btrfs'   # Variable aus packages_workstation-basic.yml; neu: s.o.
+    - ansible_distribution in ["Archlinux"]
 
 # https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/storage_administration_guide/ch-snapper
-- name: Create a default config for '/' with snapper cli named 'root' (all, NOT Ubuntu)
+- name: Create a default config for '/' with snapper cli named 'root' (Arch, NOT Manjaro)
   ansible.builtin.shell: snapper --config root create-config / && touch /home/{{ env_user }}/.ansible_snapperDefaultRootConfigCreated
   # with_items: ansible_mounts
   args:

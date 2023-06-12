@@ -211,30 +211,29 @@
 # ###############################
 # Anm.: bei Archlinux über paket, bei Manjaro schon von werk aus vorhanden
 
-- name: Local packages install - install zsh plugin - zsh-autosuggestions (Ubuntu)
+- name: Local packages install - install zsh plugin - zsh-autosuggestions (Ubuntu,Suse)
   ansible.builtin.git:
     repo: https://github.com/zsh-users/zsh-autosuggestions.git
     dest: /usr/share/zsh/plugins/zsh-autosuggestions
     clone: true
     update: true
-  when:
-    - ansible_distribution in ["Ubuntu"]
+  when: ansible_distribution in ["Ubuntu"] or
+        ansible_os_family == "Suse"
 
-- name: Local packages install - install zsh plugin - zsh-syntax-highlighting (Ubuntu)
+- name: Local packages install - install zsh plugin - zsh-syntax-highlighting (Ubuntu,Suse)
   ansible.builtin.git:
     repo: https://github.com/zsh-users/zsh-syntax-highlighting.git
     dest: /usr/share/zsh/plugins/zsh-syntax-highlighting
     clone: true
     update: true
-  when:
-    - ansible_distribution in ["Ubuntu"]
+  when: ansible_distribution in ["Ubuntu"] or
+        ansible_os_family == "Suse"
 
-- name: Local packages install - install zsh plugin - zsh-history-substring-search (Ubuntu)
+- name: Local packages install - install zsh plugin - zsh-history-substring-search (Ubuntu,Suse)
   ansible.builtin.git:
     repo: https://github.com/zsh-users/zsh-history-substring-search.git
     dest: /usr/share/zsh/plugins/zsh-history-substring-search
     clone: true
     update: true
-  when:
-    - ansible_distribution in ["Ubuntu"]
-
+  when: ansible_distribution in ["Ubuntu"] or
+        ansible_os_family == "Suse"

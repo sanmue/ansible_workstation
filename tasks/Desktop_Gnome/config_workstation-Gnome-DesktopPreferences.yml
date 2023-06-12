@@ -2,7 +2,7 @@
 # ## GDM configuration
 # ####################
 
-- name: Config-workstation-Gnome-DesktopPrefs - GDM config (all,Gnome,X11)
+- name: Config-workstation-Gnome-DesktopPrefs - GDM config (all, Gnome, X11)
   become: true
   become_user: root
   ansible.builtin.lineinfile:
@@ -57,7 +57,7 @@
 
 # ### Autostart-Verzeichnis erstellen (aktueller User):
 # ### -------------------------------------------------
-- name: Create autostart directory for current user if it does not exist
+- name: Create autostart directory for current user if it does not exist (all, Gnome)
   ansible.builtin.file:
     path: /home/{{ env_user }}/.config/autostart
     state: directory
@@ -81,7 +81,7 @@
     - env_desktop == "ubuntu:gnome"
     - ansible_distribution == "Ubuntu"
 
-- name: Copy autostart file for 'Nextcloud Client' to local user-folder (Arch + Gnome)
+- name: Copy autostart file for 'Nextcloud Client' to local user-folder (Arch,Suse + Gnome)
   ansible.builtin.copy:
     src: "files/gnome/Gnome_AutostartApp_User_NextcloudClient.desktop"
     dest: "/home/{{ env_user }}/.config/autostart/NextcloudClient.desktop"
@@ -89,11 +89,11 @@
     owner: "{{ env_user }}"
     group: "{{ env_user }}"
     mode: u=rw,g=rw,o=r   # mode: '0664'
-  when:
-    - env_desktop == "gnome"
-    - ansible_distribution == "Archlinux"
+  when: env_desktop == "gnome" and
+        (ansible_distribution == "Archlinux" or
+        ansible_os_family == "Suse")
 
-- name: Copy autostart file for 'Syncthing Start' to local user-folder (Arch + Gnome)
+- name: Copy autostart file for 'Syncthing Start' to local user-folder (Arch,Suse + Gnome)
   ansible.builtin.copy:
     src: "files/gnome/Gnome_DesktopLauncher_User_syncthing-start.desktop"
     dest: "/home/{{ env_user }}/.config/autostart/syncthing-start.desktop"
@@ -101,9 +101,9 @@
     owner: "{{ env_user }}"
     group: "{{ env_user }}"
     mode: u=rw,g=rw,o=r   # mode: '0664'
-  when:
-    - env_desktop == "gnome"
-    - ansible_distribution == "Archlinux"
+  when: env_desktop == "gnome" and
+        (ansible_distribution == "Archlinux" or
+        ansible_os_family == "Suse")
 
 
 # #######################

@@ -48,6 +48,25 @@
     state: present
   when: ansible_os_family == "Suse"
 
+# https://brave.com/linux/
+- name: config workstation - addrepos - add rpm key - brave browser (Suse)
+  ansible.builtin.rpm_key:
+    key: https://brave-browser-rpm-release.s3.brave.com/brave-core.asc
+    state: present
+  when: ansible_os_family == "Suse"
+
+- name: config workstation - addrepos - brave browser (Suse)
+  community.general.zypper_repository:
+    name: vscode
+    # auto_import_keys: true
+    autorefresh: true
+    description: "Repo for Brave Browser"
+    enabled: true
+    repo: https://brave-browser-rpm-release.s3.brave.com/brave-browser.repo
+    runrefresh: true
+    state: present
+  when: ansible_os_family == "Suse"
+
 
 # ##########
 # ### Ubuntu

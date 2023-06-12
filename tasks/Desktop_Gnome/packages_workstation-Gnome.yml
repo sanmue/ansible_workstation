@@ -32,7 +32,7 @@
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
 
-- name: Gnome - Install packages for workstations (Archlinux + Gnome)
+- name: Gnome - Install packages for workstations (Archlinux,Manjaro + Gnome)
   ansible.builtin.package:
     state: present
     name:
@@ -44,7 +44,7 @@
       - nemo
       - nemo-seahorse
       - nemo-share
-      - nemo-terminal
+      # - nemo-terminal
       - transmission-cli
       - transmission-gtk   # -> deluge
   when:
@@ -87,7 +87,7 @@
 #    - ansible_distribution in ["Archlinux"]
 #    - env_desktop == "gnome"
 
-- name: Gnome - Install packages for workstations (Archlinux/Manjaro)
+- name: Gnome - Install packages for workstations (Manjaro + Gnome)
   ansible.builtin.package:
     state: present
     name:
@@ -128,3 +128,18 @@
   when:
     - ansible_distribution == "Ubuntu"
     - env_desktop == "ubuntu:gnome"
+
+
+- name: Gnome - Install packages for workstations (Suse + Gnome)
+  ansible.builtin.package:
+    state: present
+    name:
+      - nemo
+      - nemo-extension-pastebin
+      - nemo-extension-seahorse
+      - remmina-plugin-secret
+      - transmission
+      - transmission-gtk
+  when:
+    - ansible_os_family == "Suse"
+    - env_desktop == "gnome"
