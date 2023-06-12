@@ -427,7 +427,7 @@
   #   - ansible_distribution in ["Ubuntu", "Archlinux"]
   #   # - env_lsb_id != "ManjaroLinux"
 
-#- name: All settings misc - Zshrc - source cutom zsh config in .zshrc (User, all)
+# - name: All settings misc - Zshrc - source cutom zsh config in .zshrc (User, all)
 #  ansible.builtin.blockinfile:
 #    path: "/home/{{ env_user }}/.zshrc"
 #    backup: true
@@ -838,6 +838,7 @@
   ansible.builtin.blockinfile:
     path: "/etc/clamav/clamd.conf"
     backup: true
+    create: true
     marker: '# ### {mark} ANSIBLE MANAGED BLOCK - ExcludePath ###'
     block: |
       # Don't scan files and directories matching regex
