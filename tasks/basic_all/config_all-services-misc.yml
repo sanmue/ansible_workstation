@@ -110,19 +110,33 @@
   # when: ansible_distribution in ["Ubuntu", "Archlinux"] or
   #       ansible_os_family == "Suse"
 
-- name: All services misc - Start+enable clamav-daemon.service (all)
+- name: All services misc - Start+enable clamav-daemon.service (Arch,Ubuntu)
   ansible.builtin.service:
     name: clamav-daemon.service
     state: started
     enabled: true
-  # when: ansible_distribution in ["Ubuntu", "Archlinux"]
+  when: ansible_distribution in ["Ubuntu", "Archlinux"]
 
-- name: All services misc - Start+enable clamav-freshclam.service (all)
+- name: All services misc - Start+enable clamd.service (Suse)
+  ansible.builtin.service:
+    name: clamd.service
+    state: started
+    enabled: true
+  when: ansible_os_family == "Suse"
+
+- name: All services misc - Start+enable clamav-freshclam.service (Arch,Ubuntu)
   ansible.builtin.service:
     name: clamav-freshclam.service
     state: started
     enabled: true
-  # when: ansible_distribution in ["Ubuntu", "Archlinux"]
+  when: ansible_distribution in ["Ubuntu", "Archlinux"]
+
+- name: All services misc - Start+enable freshclam.service (Suse)
+  ansible.builtin.service:
+    name: freshclam.service
+    state: started
+    enabled: true
+  when: ansible_os_family == "Suse"
 
 
 # -------------------------
