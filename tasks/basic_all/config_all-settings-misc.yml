@@ -335,16 +335,18 @@
     src: "/home/{{ env_user }}/.zshrc"
     dest: "/home/{{ env_user }}/.zshrc.old"
     backup: true
-  when: 
+  when:
     - statzshrcUser.stat.exists == true
+    - ansible_os_family != "Suse"   # nur, damit nächste condition bei Suse nicht mehr geprüft wird
     - env_lsb_id == "ManjaroLinux"
 
 - name: All settings misc - Zshrc - delete .zshrc (User, Manjaro)
   ansible.builtin.file:
     path: "/home/{{ env_user }}/.zshrc"
     state: absent
-  when: 
+  when:
     - statzshrcUser.stat.exists == true
+    - ansible_os_family != "Suse"
     - env_lsb_id == "ManjaroLinux"
 
 - name: All settings misc - Zshrc - touch (User, all)
@@ -723,7 +725,7 @@
   when:
     - ansible_distribution == "Ubuntu"
 
-- name: All settings misc - Set vim global config (Arch,Suse)
+- name: All settings misc - Set vim global config (Arch)
   ansible.builtin.blockinfile:
     path: "/etc/vimrc"
     backup: true
@@ -760,8 +762,47 @@
       set hlsearch		" Highlight all search results
       set undolevels=1000	" Number of undo levels
       " #
-  when: ansible_distribution == "Archlinux" or
-        ansible_os_family == "Suse"
+  when: ansible_distribution == "Archlinux"
+
+- name: All settings misc - Set vim config (Suse, env_user)
+  ansible.builtin.blockinfile:
+    path: "/home/{{ env_user }}/.vimrc"
+    backup: true
+    create: true
+    marker: '" ### {mark} ANSIBLE MANAGED BLOCK ###'
+    block: |
+      " #
+      " Vim5 and later versions support syntax highlighting.
+      syntax on
+
+      " If using a dark background within the editing area and syntax highlighting
+      " turn on this option as well
+      set background=dark
+
+      " The following are commented out as they cause vim to behave a lot
+      " differently from regular Vi. They are highly recommended though.
+      set showcmd			" Show (partial) command in status line.
+      set showmatch		" Show matching brackets.
+      set ignorecase		" Do case insensitive matching
+      set smartcase		" Do smart case matching
+      set incsearch		" Incremental search
+      set autowrite		" Automatically save before commands like :next and :make
+      set hidden			" Hide buffers when they are abandoned
+      set mouse=a			" Enable mouse usage (all modes)
+
+      " weitere Settings:
+      colorscheme koehler
+      set number			" Show line numbers
+      set ruler			" Show row and column ruler information
+      " set list
+      set nocompatible
+      set tabstop=4		" show existing tab with 4 spaces width
+      set shiftwidth=4	" Number of auto-indent spaces; when indentig with '>', use 4 spaces
+      " set expandtab		" On pressing tab, insert spaces
+      set hlsearch		" Highlight all search results
+      set undolevels=1000	" Number of undo levels
+      " #
+  when: ansible_os_family == "Suse"
 
 
 # ---------------

@@ -497,7 +497,7 @@
       - vim-plugin-powerline
       - vim-plugin-salt
       # ### firmware:
-      - sof-firmware   # Firmware data files for SOF Drivers # Sound Open Firmware (SOF) is an open source audio Digital Signal Processing (DSP) firmware infrastructure and SDK. 
+      - sof-firmware   # Firmware data files for SOF Drivers # Sound Open Firmware (SOF)
       # - alsa-firmware
   when: ansible_os_family == "Suse"
 
