@@ -25,13 +25,12 @@
       - dmidecode
       - duf   # Disk Usage/Free Utility
       - efivar
-      - eslint   # An AST-based pattern checker for JavaScript (für VS Code / Code - OSS Extension)
       - evolution
       - exa   # ls replacement
       - flatpak
       - font-manager
       - gimp
-      - gimp-help-en
+      # - gimp-help-en   # Suse: gimp-help-en_GB
       - git   # bereits installiert (bootstrap)
       - gpick
       - grsync
@@ -41,20 +40,17 @@
       # - hyphen-de
       - inotify-tools # benötigt von 'grub-btrfsd.service' # command-line programs providing a simple interface to inotify
       - inxi
-      - kdeconnect
       - keepassxc
       - kitty   # gpu beschleunigtes terminal
       - libfaketime   # Report fake dates and times to programs without having to change the system-wide time.
       - lsb-release
       - make
       # - man-pages-de
-      - neofetch
-      - packagekit   # sollte bereits installiert sein # notwendig u.a. für cockpit
+      - neofetch      
       - rclone   # sync tool
       - rsync   # bereits installiert (bootstrap)
       # - samba   # für VM: File sharing between host and Windows guest; https://wiki.manjaro.org/index.php/Virt-manager/en
       # - manjaro-settings-samba   # Adds an smb.conf file for Manjaro and enables samba
-      - shellcheck
       # - skanlite   # bei KDE Plasma Desktop
       - speedtest-cli
       - steam
@@ -70,7 +66,6 @@
       # firmware:
       - b43-fwcutter
       - fwupd
-      - linux-firmware
 
 
 - name: Install basic packages (Archlinux)
@@ -85,6 +80,7 @@
       - code              # The Open Source build of Visual Studio Code (vscode) editor
       - cups-pdf
       - discord
+      - eslint   # An AST-based pattern checker for JavaScript (für VS Code / Code - OSS Extension)
       - evolution-bogofilter
       - evolution-ews     # MS Exchange integration through Exchange Web Services
       - evolution-spamassassin
@@ -103,6 +99,7 @@
       - hunspell-de
       - hunspell-en_us
       # - ipset
+      - kdeconnect
       - ksnip
       - libnotify           # Library for sending desktop notifications
       - libreoffice-still
@@ -112,6 +109,7 @@
       - malcontent          # Parental control support for applications
       - nextcloud-client
       - openssh             # bereits installiert (bootstrap)
+      - packagekit
       # - powerline         # Statusline plugin for vim, an provides statuslines udn prompts for several other applications
       #                     # including zsh, bash, tmux, IPython, Awesome, i3 and qtile
       # - powerline-fonts   # patched fonts for powerline
@@ -121,6 +119,7 @@
       - python-psutil
       - pyenv
       - remmina
+      - shellcheck
       # - snapd                 # bei Manjaro in repo drin, bei Arch (EndeavourOS) nicht
       - signal-desktop
       - steam-native-runtime    # Native replacement for the Steam runtime using system libraries (installiert benötigte 32bit libs)
@@ -142,6 +141,7 @@
       # ---------
       # firmware:
       # - alsa-firmware               # unresolvable package conflicts detected
+      - linux-firmware
       - sof-firmware
   when: ansible_distribution in ["Archlinux"]
 
@@ -290,6 +290,7 @@
       - borgbackup   # Deduplicating backup program with compression and authenticated encryption
       - clamav-daemon
       - cockpit-networkmanager      # Cockpit user interface for networking
+      - eslint   # An AST-based pattern checker for JavaScript (für VS Code / Code - OSS Extension)
       - evolution-plugin-bogofilter
       - evolution-plugin-pstimport
       - evolution-plugin-spamassassin
@@ -306,11 +307,13 @@
       - gufw   # gui for ufw
       - hunspell-de-de
       - hunspell-en-us
+      - kdeconnect
       - libidn11-dev   # benötigt für Citrix Workspace app (ica client)
       - libnotify-bin   # sollte schon installiert sein
       # - luckybackup
       - openssh-client
-      - powershell   # repo wurde hinzugefügt
+      - packagekit   # sollte bereits installiert sein # notwendig u.a. für cockpit
+      # - powershell   # repo wurde hinzugefügt
       - printer-driver-cups-pdf
       - python3-pip
       - python3-psutil
@@ -334,6 +337,9 @@
       # - zsh-autosuggestions             # über git: https://github.com/zsh-users/zsh-autosuggestions
       # - zsh-syntax-highlighting         # über git: https://github.com/zsh-users/zsh-syntax-highlighting
           # zsh-history-substring-search  # über git: https://github.com/zsh-users/zsh-history-substring-search
+      #
+      # firmware:
+      - linux-firmware
   when: ansible_distribution == "Ubuntu"
 
 
@@ -429,66 +435,70 @@
   ansible.builtin.package:
     state: present
     name:
-    # ### Python - mit Versionsangabe im Paketnamen
-    - python311
-    - python311-pip
-    - python311-psutil
-    # ###
-    - adobe-sourcecodepro-fonts
-    - borgbackup
-    - brave-browser
-    - cockpit-networkmanager
-    - cockpit-podman
-    - chromium
-    - cronie
-    - cronie-anacron
-    - code   # Visual Studio Code   # Repo wurde hinzugefügt
-    - cups-pdf
-    - dejavu-fonts
-    - discord
-    - evolution-ews
-    - evolution-plugin-bogofilter
-    - evolution-plugin-spamassassin
-    - exfat-utils
-    - flatpak-remote-flathub
-    - flatpak-zsh-completion
-    - fuse-exfat
-    - fd
-    - foliate
-    - fzf
-    - fzf-zsh-completion
-    - gh   # The official CLI for GitHub 
-    - gpgme
-    - hunspell
-    - ksnip
-    - libnotify-tools
-    - libreoffice
-    - libreoffice-l10n-en
-    - lshw
-    - malcontent
-    - nextcloud-desktop
-    - openssh
-    - openssh-clients
-    - psutils
-    - pyenv
-    - pyenv-zsh-completion
-    - remmina
-    - remmina-plugin-rdp
-    - remmina-plugin-spice
-    - remmina-plugin-vnc
-    - remmina-plugin-www
-    - steam
-    - steamtricks
-    # - libopenssl1_0_0-steam
-    # - libopenssl1_0_0-steam-32bit
-    - torbrowser-launcher
-    - units
-    - vim-plugin-markdown
-    - vim-plugin-powerline
-    - vim-plugin-salt
-    # ### firmware:
-    - sof-firmware   # Firmware data files for SOF Drivers # Sound Open Firmware (SOF) is an open source audio Digital Signal Processing (DSP) firmware infrastructure and SDK. 
-    # - alsa-firmware
+      # ### Python - mit Versionsangabe im Paketnamen
+      - python311
+      - python311-pip
+      - python311-psutil
+      # ###
+      - adobe-sourcecodepro-fonts
+      - borgbackup
+      - brave-browser
+      - cockpit-networkmanager
+      - cockpit-podman
+      - chromium
+      - cronie
+      - cronie-anacron
+      - code   # Visual Studio Code   # Repo wurde hinzugefügt
+      - cups-pdf
+      - dejavu-fonts
+      - discord
+      - evolution-ews
+      - evolution-plugin-bogofilter
+      - evolution-plugin-spamassassin
+      - exfat-utils
+      - flatpak-remote-flathub
+      - flatpak-zsh-completion
+      - fuse-exfat
+      - fd
+      - foliate
+      - fzf
+      - fzf-zsh-completion
+      - gh   # The official CLI for GitHub 
+      - gpgme
+      - hunspell
+      - kdeconnect-kde
+      - kdeconnect-kde-zsh-completion
+      - ksnip
+      - libnotify-tools
+      - libreoffice
+      - libreoffice-l10n-en
+      - lshw
+      - malcontent
+      - nextcloud-desktop
+      - openssh
+      - openssh-clients
+      - PackageKit
+      - psutils
+      - pyenv
+      - pyenv-zsh-completion
+      - remmina
+      - remmina-plugin-rdp
+      - remmina-plugin-spice
+      - remmina-plugin-vnc
+      - remmina-plugin-www
+      - ShellCheck
+      - steam
+      - steamtricks
+      # - libopenssl1_0_0-steam
+      # - libopenssl1_0_0-steam-32bit
+      - torbrowser-launcher
+      - units
+      - vim-plugin-markdown
+      - vim-plugin-powerline
+      - vim-plugin-salt
+      # ### firmware:
+      - sof-firmware   # Firmware data files for SOF Drivers # Sound Open Firmware (SOF) is an open source audio Digital Signal Processing (DSP) firmware infrastructure and SDK. 
+      # - alsa-firmware
   when: ansible_os_family == "Suse"
 
 
