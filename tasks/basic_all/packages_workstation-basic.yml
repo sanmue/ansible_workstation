@@ -446,8 +446,7 @@
       - cockpit-networkmanager
       - cockpit-podman
       - chromium
-      - cronie
-      - cronie-anacron
+      - cron
       - code   # Visual Studio Code   # Repo wurde hinzugefügt
       - cups-pdf
       - dejavu-fonts

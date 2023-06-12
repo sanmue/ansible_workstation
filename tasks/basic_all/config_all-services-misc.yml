@@ -16,7 +16,7 @@
 
 
 # ------
-# Cronie
+# Cron / Cronie
 # ------
 # cron wird verwendet z.B. von von ClamTK und timeshift
 #
@@ -26,8 +26,14 @@
     name: cronie.service
     state: started
     enabled: true
-  when: ansible_distribution in ["Archlinux"] or
-        ansible_os_family == "Suse"
+  when: ansible_distribution in ["Archlinux"]
+
+- name: All services misc - start+enable cronie (Arch,Suse)
+  ansible.builtin.service:
+    name: cron.service
+    state: started
+    enabled: true
+  when: ansible_os_family == "Suse"
 
 
 # ---------------------------------------------
