@@ -57,7 +57,7 @@
 
 - name: config workstation - addrepos - brave browser (Suse)
   community.general.zypper_repository:
-    name: vscode
+    # name: vscode   # "msg": "Incompatible option: 'name'. Do not use name when adding .repo files"
     # auto_import_keys: true
     autorefresh: true
     description: "Repo for Brave Browser"
