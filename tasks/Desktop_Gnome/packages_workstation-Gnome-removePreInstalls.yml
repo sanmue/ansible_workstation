@@ -31,6 +31,7 @@
     name:
       - gnome-chess
       - gnome-clocks
+      - gnome-contacts
       - gnome-mahjongg
       - gnome-maps
       - gnome-music

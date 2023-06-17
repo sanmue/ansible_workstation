@@ -67,6 +67,18 @@
     state: present
   when: ansible_os_family == "Suse"
 
+# https://software.opensuse.org/download.html?project=home%3Astsiao&package=ulauncher
+- name: config workstation - addrepos - ulauncher (Suse)
+  community.general.zypper_repository:
+    auto_import_keys: true
+    autorefresh: true
+    description: "Repo for Ulauncher"
+    enabled: true
+    repo: https://download.opensuse.org/repositories/home:stsiao/openSUSE_Tumbleweed/home:stsiao.repo
+    runrefresh: true
+    state: present
+  when: ansible_os_family == "Suse"
+
 
 # ##########
 # ### Ubuntu

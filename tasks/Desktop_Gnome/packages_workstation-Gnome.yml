@@ -134,12 +134,15 @@
   ansible.builtin.package:
     state: present
     name:
+      - gnome-icon-theme-extras
       - nemo
       - nemo-extension-pastebin
       - nemo-extension-seahorse
+      - papirus-icon-theme
       - remmina-plugin-secret
       - transmission
       - transmission-gtk
+      - ulauncher   # repo wurde hinzugefügt
   when:
     - ansible_os_family == "Suse"
     - env_desktop == "gnome"
