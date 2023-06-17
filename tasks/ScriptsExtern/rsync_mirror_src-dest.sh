@@ -18,7 +18,7 @@ fi
 
 # Prüfung Quelle:
 if [ -e "${source}" ]; then			# Prüfung, ob Quelle existiert
-	echo "Quellpfad ist: ${dest}"
+	echo "Quellpfad ist: ${source}"
 else
 	echo "Parameter 1: Quellpfad '${source}' existiert nicht, Ende."
 	exit 1
