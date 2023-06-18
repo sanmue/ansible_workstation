@@ -35,12 +35,16 @@
 # - https://peps.python.org/pep-0668/#mark-the-installation-as-externally-managed
 # !!!
 
-- name: Install packages - pip - pyenv python 3.11.3 (env_user, all)
+# pythonVersion=$(python --version | cut -d ' ' -f2)
+
+- name: Install packages - pip - pyenv install python 3.11.3 (env_user, all)
   become: true
   become_user: "{{ env_user }}"
-  ansible.builtin.shell: pyenv install 3.11.3
+  ansible.builtin.shell: "pyenv install 3.11.3"
+  args:
+    creates: "/home/{{ env_user }}/.ansible_pyenvInst"
 
-- name: Install packages - pip - set pyenv global python version (env_user, all)
+- name: Install packages - pip - pyenv set global python version (env_user, all)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: pyenv global 3.11.3
