@@ -36,12 +36,21 @@
 # !!!
 
 # pythonVersion=$(python --version | cut -d ' ' -f2)
+- name: Install packages - pip - Get and register Python version (all)
+  ansible.builtin.shell: python --version | cut -d ' ' -f2
+  register: pythonVersion
+  ignore_errors: true
 
-- name: Install packages - pip - pyenv install python 3.11.3 (env_user, all)
+- name: Install packages - pip - MsgInfo für Install versch. Pakete (env_user, all)
+  ansible.builtin.debug:
+    msg: "pythonVersion: {{ pythonVersion }}"
+
+- name: Install packages - pip - pyenv install python (env_user, all)
   become: true
   become_user: "{{ env_user }}"
   #ansible.builtin.shell: "pyenv install 3.11.3 && touch /home/{{ env_user }}/.ansible_pyenvInst"
-  ansible.builtin.shell: "pyenv install 3.11.3"
+  #ansible.builtin.shell: "pyenv install 3.11.3"
+  ansible.builtin.shell: "pyenv install {{ pythonVersion }}"
   args:
     creates: "/home/{{ env_user }}/.ansible_pyenvInst"
 
@@ -58,7 +67,12 @@
 #   become_user: "{{ env_user }}"
 #   ansible.builtin.shell: pip install --upgrade pip
 
-- name: Install packages - pip - verschiedene pakete (env_user, all)
-  become: true
-  become_user: "{{ env_user }}"
-  ansible.builtin.shell: pip install --user bs4 deepl faker htmlentities parsedatetime pint pydbus pytz simpleeval wrapt_timeout_decorator
+# für Ulauncher-Extensions:
+# - name: Install packages - pip - verschiedene pakete (env_user, all)
+#   become: true
+#   become_user: "{{ env_user }}"
+#   ansible.builtin.shell: pip install --user bs4 deepl faker htmlentities parsedatetime pint pydbus pytz simpleeval wrapt_timeout_decorator
+
+- name: Install packages - pip - MsgInfo für Install versch. Pakete (env_user, all)
+  ansible.builtin.debug:
+    msg: "TODO: pip install --user bs4 deepl faker htmlentities parsedatetime pint pydbus pytz simpleeval wrapt_timeout_decorator"
