@@ -49,10 +49,10 @@
   become_user: "{{ env_user }}"
   ansible.builtin.shell: pyenv global 3.11.3
 
-- name: Install packages - pip - upgrade pip (env_user, all)
-  become: true
-  become_user: "{{ env_user }}"
-  ansible.builtin.shell: pip install --upgrade pip
+# - name: Install packages - pip - upgrade pip (env_user, all)
+#   become: true
+#   become_user: "{{ env_user }}"
+#   ansible.builtin.shell: pip install --upgrade pip
 
 - name: Install packages - pip - verschiedene pakete (env_user, all)
   become: true
