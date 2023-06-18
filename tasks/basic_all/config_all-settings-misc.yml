@@ -1127,6 +1127,14 @@
 # ### rclone
 # ##########
 
+- name: All settings misc - rclone - create folder .local/bin for pCloud-Mnt.sh (all, env_user)
+  ansible.builtin.file:
+    path: "/home/{{ env_user }}/.local/bin"
+    owner: "{{ env_user }}"
+    group: "{{ env_user }}"
+    mode: '0755'
+    state: directory
+
 - name: All settings misc - rclone - copy script to mount pcloud (all, env_user)
   ansible.builtin.copy:
     src: files/config_all-settings-misc-rclone_pCloud-Mnt.sh
