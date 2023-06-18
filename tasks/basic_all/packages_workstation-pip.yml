@@ -40,14 +40,18 @@
 - name: Install packages - pip - pyenv install python 3.11.3 (env_user, all)
   become: true
   become_user: "{{ env_user }}"
-  ansible.builtin.shell: "pyenv install 3.11.3 && touch /home/{{ env_user }}/.ansible_pyenvInst"
+  #ansible.builtin.shell: "pyenv install 3.11.3 && touch /home/{{ env_user }}/.ansible_pyenvInst"
+  ansible.builtin.shell: "pyenv install 3.11.3"
   args:
     creates: "/home/{{ env_user }}/.ansible_pyenvInst"
 
 - name: Install packages - pip - pyenv set global python version (env_user, all)
   become: true
   become_user: "{{ env_user }}"
-  ansible.builtin.shell: pyenv global 3.11.3
+  #ansible.builtin.shell: pyenv global 3.11.3
+  ansible.builtin.shell: "pyenv global 3.11.3 && touch /home/{{ env_user }}/.ansible_pyenvInst"
+  args:
+    creates: "/home/{{ env_user }}/.ansible_pyenvInst"
 
 # - name: Install packages - pip - upgrade pip (env_user, all)
 #   become: true
