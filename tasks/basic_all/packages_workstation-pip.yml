@@ -22,7 +22,35 @@
 #     - ansible_distribution in ["Archlinux", "Ubuntu"]
 #     - env_lsb_id != "EndeavourOS"
 
-- name: Install packages - pip (Python) (env_user, all)
+# !!!
+# - pyenv:
+#   - https://technicalnavigator.in/how-to-fix-error-externally-managed-environment-in-python-kali-linux/
+#
+# - allgemein:
+# - https://pythonspeed.com/articles/externally-managed-environment-pep-668/
+# - https://stackoverflow.com/questions/75616371/sudo-pip-install-cryptography-error-externally-managed-environment
+# - https://itsfoss.com/externally-managed-environment/#option-2-use-python-virtual-environment
+# - https://stackoverflow.com/questions/75608323/how-do-i-solve-error-externally-managed-environment-everytime-i-use-pip3
+# - https://stackoverflow.com/questions/75602063/pip-install-r-requirements-txt-is-failing-this-environment-is-externally-manag/75696359#75696359
+# - https://peps.python.org/pep-0668/#mark-the-installation-as-externally-managed
+# !!!
+
+- name: Install packages - pip - pyenv python 3.11.3 (env_user, all)
   become: true
   become_user: "{{ env_user }}"
-  ansible.builtin.shell: pip install --user deepl faker lorem parsedatetime pint pydbus simpleeval wrapt_timeout_decorator
+  ansible.builtin.shell: pyenv install 3.11.3
+
+- name: Install packages - pip - set pyenv global python version (env_user, all)
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.shell: pyenv global 3.11.3
+
+- name: Install packages - pip - upgrade pip (env_user, all)
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.shell: pip install --upgrade pip
+
+- name: Install packages - pip - verschiedene pakete (env_user, all)
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.shell: pip install --user bs4 deepl faker htmlentities parsedatetime pint pydbus pytz simpleeval wrapt_timeout_decorator

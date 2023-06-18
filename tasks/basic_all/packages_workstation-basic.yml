@@ -56,6 +56,7 @@
       - steam
       - syncthing
       # - terminator   # Terminal emulator that supports tabs and grids
+      - tk   # Graphical User Interface Toolkit for Tcl   # z.B. pyenv install 3.11.3: erscheint sonst meldung, dass nicht vorhanden
       - vim   # bereits installiert (bootstrap)
       - vlc
       - unzip
@@ -116,6 +117,7 @@
       # - powerline-vim     # vim plugin for powerline
       - psutils             # A set of postscript utilities
       - python-pip
+      # - python-pipx         # Install and Run Python Applications in Isolated Environments
       - python-psutil
       - pyenv
       - remmina
@@ -315,6 +317,7 @@
       - packagekit   # sollte bereits installiert sein # notwendig u.a. für cockpit
       # - powershell   # repo wurde hinzugefügt
       - printer-driver-cups-pdf
+      # - pipx
       - python3-pip
       - python3-psutil
       - python3-pyinotify
@@ -389,47 +392,6 @@
       - tk-dev
   when: ansible_distribution == "Ubuntu"
 
-- name: Install basic packages - Get stat of .pyenv (all)
-  ansible.builtin.stat:
-    path: "/home/{{ env_user }}/.pyenv"
-  register: pyenvfolder
-
-# nach bootstrap.sh verschoben wg. timeout
-# - name: Install basic packages - Download Installer-Skript for Pyenv (Ubuntu)
-#   ansible.builtin.get_url:
-#     url: https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer
-#     dest: "/home/{{ env_user }}/Downloads/pyenv-installer.sh"
-#     mode: u=rwx,g=rwx,o=rwx
-#   when:
-#     - ansible_distribution == "Ubuntu"
-#     - pyenvfolder.stat.exists == false
-
-- name: Install basic packages - Get stat of pyenv-installer skript (all)
-  ansible.builtin.stat:
-    path: "/home/{{ env_user }}/Downloads/pyenv-installer.sh"
-  register: pyenvskript
-
-- name: Install basic packages - Execute Installer-Skript for Pyenv (Ubuntu)
-  become: true
-  become_user: "{{ env_user }}"
-  ansible.builtin.script:
-    cmd: "/home/{{ env_user }}/Downloads/pyenv-installer.sh"
-  args:
-    creates: "/home/{{ env_user }}/.pyenv"   # Run only if '.pyenv'-directory does NOT exist (from previous run)
-  when:
-    - ansible_distribution == "Ubuntu"
-    - pyenvskript.stat.exists == true
-
-
-- name: Install basic packages - xclip (all + x11 display server)
-  ansible.builtin.package:
-    state: present
-    name:
-      - xclip   # Command line interface to the X11 clipboard   # Voraussetzung für snap-package "espanso"
-  when:
-#    - ansible_distribution in ["Ubuntu", "Archlinux"]
-    - env_displayserver == "x11"
-
 
 - name: Install basic packages (Suse)
   ansible.builtin.package:
@@ -438,6 +400,7 @@
       # ### Python - mit Versionsangabe im Paketnamen
       - python311
       - python311-pip
+      # - python311-pipx
       - python311-psutil
       # ###
       - adobe-sourcecodepro-fonts
@@ -499,6 +462,48 @@
       - sof-firmware   # Firmware data files for SOF Drivers # Sound Open Firmware (SOF)
       # - alsa-firmware
   when: ansible_os_family == "Suse"
+
+
+- name: Install basic packages - xclip (all + x11 display server)
+  ansible.builtin.package:
+    state: present
+    name:
+      - xclip   # Command line interface to the X11 clipboard   # Voraussetzung für snap-package "espanso"
+  when:
+#    - ansible_distribution in ["Ubuntu", "Archlinux"]
+    - env_displayserver == "x11"
+
+
+- name: Install basic packages - Get stat of .pyenv (all)
+  ansible.builtin.stat:
+    path: "/home/{{ env_user }}/.pyenv"
+  register: pyenvfolder
+
+# nach bootstrap.sh verschoben wg. timeout
+# - name: Install basic packages - Download Installer-Skript for Pyenv (Ubuntu)
+#   ansible.builtin.get_url:
+#     url: https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer
+#     dest: "/home/{{ env_user }}/Downloads/pyenv-installer.sh"
+#     mode: u=rwx,g=rwx,o=rwx
+#   when:
+#     - ansible_distribution == "Ubuntu"
+#     - pyenvfolder.stat.exists == false
+
+- name: Install basic packages - Get stat of pyenv-installer skript (all)
+  ansible.builtin.stat:
+    path: "/home/{{ env_user }}/Downloads/pyenv-installer.sh"
+  register: pyenvskript
+
+- name: Install basic packages - Execute Installer-Skript for Pyenv (Ubuntu)
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.script:
+    cmd: "/home/{{ env_user }}/Downloads/pyenv-installer.sh"
+  args:
+    creates: "/home/{{ env_user }}/.pyenv"   # Run only if '.pyenv'-directory does NOT exist (from previous run)
+  when:
+    - ansible_distribution == "Ubuntu"
+    - pyenvskript.stat.exists == true
 
 
 # - name: install Vivaldi Browser (Ubuntu)
