@@ -119,6 +119,7 @@
       - python-pip
       # - python-pipx         # Install and Run Python Applications in Isolated Environments
       - python-psutil
+      - python-setuptools   # Easily download, build, install, upgrade, and uninstall Python packages
       - pyenv
       - remmina
       - shellcheck
@@ -321,6 +322,7 @@
       - python3-pip
       - python3-psutil
       - python3-pyinotify
+      - python3-setuptools
       # - searchmonkey
       - ssh   # bereits installiert (bootstrap)
       # - timeshift
@@ -402,6 +404,7 @@
       - python311-pip
       # - python311-pipx
       - python311-psutil
+      - python311-setuptools
       # ###
       - adobe-sourcecodepro-fonts
       - borgbackup

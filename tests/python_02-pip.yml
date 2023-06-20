@@ -17,10 +17,36 @@
       args:
         creates: "/home/{{ env_user }}/.ansible_PythonPip"
 
-    # für Ulauncher-Extensions:
+    # # für Ulauncher-Extensions:
     - name: Install - Pip - verschiedene Pakete (env_user, all)
       become: true
       become_user: "{{ env_user }}"
-      ansible.builtin.shell: pip install --user bs4 deepl faker htmlentities parsedatetime pint pydbus pytz simpleeval wrapt_timeout_decorator && touch /home/{{ env_user }}/.ansible_PythonPip"
+      ansible.builtin.shell: pip install --user bs4 deepl faker htmlentities parsedatetime pint pydbus pytz simpleeval wrapt_timeout_decorator
+      args:
+        creates: "/home/{{ env_user }}/.ansible_PythonPip"
+
+    # Fehlermeldung: This environment is externally managed ...
+    # - name: Install - Pip - verschiedene Pakete (env_user, all)
+    #   become: true
+    #   become_user: "{{ env_user }}"
+    #   ansible.builtin.pip:
+    #     name:
+    #       - bs4
+    #       - deepl
+    #       - faker
+    #       - htmlentities
+    #       - parsedatetime
+    #       - pint
+    #       - pydbus
+    #       - pytz
+    #       - simpleeval
+    #       - wrapt_timeout_decorator
+    #     state: present
+    #     extra_args: --user
+
+    - name: Install - Pip - set flag file for pip installs (env_user, all)
+      become: true
+      become_user: "{{ env_user }}"
+      ansible.builtin.shell: "touch /home/{{ env_user }}/.ansible_PythonPip"
       args:
         creates: "/home/{{ env_user }}/.ansible_PythonPip"

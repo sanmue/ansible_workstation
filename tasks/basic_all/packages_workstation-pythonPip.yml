@@ -35,42 +35,29 @@
 # - https://peps.python.org/pep-0668/#mark-the-installation-as-externally-managed
 # !!!
 
-# pythonVersion=$(python --version | cut -d ' ' -f2)
-- name: Install packages - pip - Get and register Python version (all)
-  ansible.builtin.shell: python --version | cut -d ' ' -f2
-  register: pythonVersion
-  ignore_errors: true
-
-- name: Install packages - pip - msg pythonVersion (env_user, all)
-  ansible.builtin.debug:
-    msg: "pythonVersion: {{ pythonVersion }}"
-
-- name: Install packages - pip - pyenv install python (env_user, all)
+- name: Python - pip - Info zu möglicher Fehlermeldung (env_user, all)
   become: true
   become_user: "{{ env_user }}"
-  # ansible.builtin.shell: "pyenv install {{ pythonVersion }} && touch /home/{{ env_user }}/.ansible_pyenvInst"
-  ansible.builtin.shell: "pyenv install {{ pythonVersion }}"
-  args:
-    creates: "/home/{{ env_user }}/.ansible_pyenvInst"
+  ansible.builtin.debug:
+    msg: "Wenn es im Folgeschritt zu Fehlermelung kommt: source .zshrc/.bashrc oder Terminal neu starten und nochmal Playbook starten."
 
-- name: Install packages - pip - pyenv set global python version (env_user, all)
+- name: Python - pip - upgrade pip (env_user, all)
   become: true
   become_user: "{{ env_user }}"
-  ansible.builtin.shell: "pyenv global {{ pythonVersion }} && touch /home/{{ env_user }}/.ansible_pyenvInst"
+  ansible.builtin.shell: pip install --upgrade pip
   args:
-    creates: "/home/{{ env_user }}/.ansible_pyenvInst"
+    creates: "/home/{{ env_user }}/.ansible_PythonPip"
 
-# - name: Install packages - pip - upgrade pip (env_user, all)
-#   become: true
-#   become_user: "{{ env_user }}"
-#   ansible.builtin.shell: pip install --upgrade pip
+- name: Python - pip - Installation verschiedene Pakete für Ulauncher extensions (env_user, all)
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.shell: pip install --user bs4 deepl faker htmlentities parsedatetime pint pydbus pytz simpleeval wrapt_timeout_decorator
+  args:
+    creates: "/home/{{ env_user }}/.ansible_PythonPip"
 
-# für Ulauncher-Extensions:
-# - name: Install packages - pip - verschiedene pakete (env_user, all)
-#   become: true
-#   become_user: "{{ env_user }}"
-#   ansible.builtin.shell: pip install --user bs4 deepl faker htmlentities parsedatetime pint pydbus pytz simpleeval wrapt_timeout_decorator
-
-- name: Install packages - pip - MsgInfo für Install versch. Pakete (env_user, all)
-  ansible.builtin.debug:
-    msg: "TODO: pip install --user bs4 deepl faker htmlentities parsedatetime pint pydbus pytz simpleeval wrapt_timeout_decorator"
+- name: Python - pip - set flag file for pip installs (env_user, all)
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.shell: "touch /home/{{ env_user }}/.ansible_PythonPip"
+  args:
+    creates: "/home/{{ env_user }}/.ansible_PythonPip"

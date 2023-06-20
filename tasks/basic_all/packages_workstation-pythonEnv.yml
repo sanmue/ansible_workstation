@@ -1,0 +1,70 @@
+# ######################
+# ### Python Environment
+# ######################
+
+# pyenv ist bereits installiert
+
+# !!!
+# - pyenv:
+#   - https://technicalnavigator.in/how-to-fix-error-externally-managed-environment-in-python-kali-linux/
+#
+# - allgemein:
+# - https://pythonspeed.com/articles/externally-managed-environment-pep-668/
+# - https://stackoverflow.com/questions/75616371/sudo-pip-install-cryptography-error-externally-managed-environment
+# - https://itsfoss.com/externally-managed-environment/#option-2-use-python-virtual-environment
+# - https://stackoverflow.com/questions/75608323/how-do-i-solve-error-externally-managed-environment-everytime-i-use-pip3
+# - https://stackoverflow.com/questions/75602063/pip-install-r-requirements-txt-is-failing-this-environment-is-externally-manag/75696359#75696359
+# - https://peps.python.org/pep-0668/#mark-the-installation-as-externally-managed
+# !!!
+
+- name: Python Environment - Get and register Python version (Arch)
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.shell: python --version | cut -d ' ' -f2
+  register: pythonVersion
+  # ignore_errors: true
+  args:
+    creates: "/home/{{ env_user }}/.ansible_PythonEnv"
+  when:
+    - ansible_distribution in ["Archlinux"]
+
+- name: Python Environment - Get and register Python 3 version (all, not Arch)
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.shell: python3 --version | cut -d ' ' -f2
+  register: pythonVersion
+  # ignore_errors: true
+  args:
+    creates: "/home/{{ env_user }}/.ansible_PythonEnv"
+  when:
+    - ansible_distribution not in ["Archlinux"]
+
+# - name: Python Environment - msg pythonVersion (env_user, all)
+#   become: true
+#   become_user: "{{ env_user }}"
+#   ansible.builtin.debug:
+#     # msg: "pythonVersion: {{ pythonVersion }}"
+#     # var: pythonVersion
+#     msg: "pythonVersion.stdout: '{{ pythonVersion.stdout }}'"
+#     # var: pythonVersion.stdout
+
+- name: Python Environment - pyenv install python (env_user, all)
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.shell: "pyenv install {{ pythonVersion.stdout }}"
+  args:
+    creates: "/home/{{ env_user }}/.ansible_PythonEnv"
+
+- name: Python Environment - pyenv set global python version (env_user, all)
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.shell: "pyenv global {{ pythonVersion.stdout }}"
+  args:
+    creates: "/home/{{ env_user }}/.ansible_PythonEnv"
+
+- name: Python Environment - set flag file for Python Environment (env_user, all)
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.shell: "touch /home/{{ env_user }}/.ansible_PythonEnv"
+  args:
+    creates: "/home/{{ env_user }}/.ansible_PythonEnv"

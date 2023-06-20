@@ -113,9 +113,11 @@
     - name: Config postfix.service
       ansible.builtin.import_tasks: tasks/basic_all/config_all-mail-service.yml
     # ----------------------------------------------------------
-    # ### Python / Pip - Env + Inst:
-    # - name: Pip install
-    #   ansible.builtin.import_tasks: tasks/basic_all/packages_workstation-pip.yml
+    # ### Python
+    - name: Python Env
+      ansible.builtin.import_tasks: tasks/basic_all/packages_workstation-pythonEnv.yml
+    - name: Pip install
+      ansible.builtin.import_tasks: tasks/basic_all/packages_workstation-pythonPip.yml
     # ----------------------------------------------------------
     # ### cleanup:
     - name: Cleanup
