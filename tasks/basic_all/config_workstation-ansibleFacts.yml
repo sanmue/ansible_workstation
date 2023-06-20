@@ -1,61 +1,61 @@
 - name: AnsibleFacts - Get desktop environment (XDG_CURRENT_DESKTOP) (all)
-  set_fact:
+  ansible.builtin.set_fact:
     env_desktop: "{{ ansible_facts['env']['XDG_CURRENT_DESKTOP']|lower }}"   # z.B. "ubuntu:GNOME"
     # env_desktop: "{{ lookup('env','XDG_CURRENT_DESKTOP')|lower }}"
     env_hostname: "{{ ansible_facts['hostname'] }}"
 
 - name: AnsibleFacts - Get display server (XDG_SESSION_TYPE) (all)
-  set_fact:
+  ansible.builtin.set_fact:
     env_displayserver: "{{ ansible_facts['env']['XDG_SESSION_TYPE']|lower }}"   # z.B. "x11" oder "wayland"
 
 - name: AnsibleFacts - Get datadirs (XDG_DATA_DIRS) (all but Arch)
   # In Archlinux/KDE anscheinend nicht vorhanden
-  set_fact:
+  ansible.builtin.set_fact:
     env_datadirs: "{{ ansible_facts['env']['XDG_DATA_DIRS'] }}"   # z.B.: "/usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop"
   when:
     - ansible_distribution != "Archlinux"
 
 - name: AnsibleFacts - Get path (PATH) (all)
-  set_fact:
+  ansible.builtin.set_fact:
     env_path: "{{ ansible_facts['env']['PATH'] }}"
     # z.B.: "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin"
 
 - name: AnsibleFacts - Get PWD (PATH) (all)
-  set_fact:
+  ansible.builtin.set_fact:
     env_PWD: "{{ ansible_facts['env']['PWD'] }}"   # z.B.: "/home/userid/dev"
 
 - name: AnsibleFacts - Get user (USER) (all)
-  set_fact:
+  ansible.builtin.set_fact:
     env_user: "{{ ansible_facts['env']['USER'] }}"   # z.B.: "userid"
 
 - name: AnsibleFacts - Get XDG_RUNTIME_DIR (USER) (all)
-  set_fact:
+  ansible.builtin.set_fact:
     env_user_XDG_RUNTIME_DIR: "{{ ansible_facts['env']['XDG_RUNTIME_DIR'] }}"   # z.B.: "/run/user/1000"
 
 - name: AnsibleFacts - Get lsb lsb-release (Ubuntu,Arch)
-  set_fact:
+  ansible.builtin.set_fact:
     env_lsb: "{{ ansible_facts['lsb']['release'] }}"   # z.B. bei Ubuntu 20.04: "20.04"
     # env_lsbmajor: "{{ ansible_facts['lsb']['major_release'] }}"   # z.B. bei Ubuntu 20.04: "20"
   when:
     - ansible_distribution in ["Ubuntu","Archlinux"]
 
 - name: AnsibleFacts - Get lsb lsb-id (Ubuntu,Arch)
-  set_fact:
+  ansible.builtin.set_fact:
     env_lsb_id: "{{ ansible_facts['lsb']['id'] }}"   # z.B.: "ManjaroLinux" oder "EndeavourOS"
   when:
     - ansible_distribution in ["Ubuntu","Archlinux"]
 
 - name: AnsibleFacts - Get distribution version (all)
-  set_fact:
+  ansible.builtin.set_fact:
     distribution_version: "{{ ansible_facts['distribution_version'] }}"   # z.B. bei Ubuntu 20.04: "20.04"
 
 - name: AnsibleFacts - Get distribution major version (all)
-  set_fact:
+  ansible.builtin.set_fact:
     distribution_major_version: "{{ ansible_facts['distribution_major_version'] }}"   # z.B. bei Ubuntu 20.04: "20"
 
 
 - name: AnsibleFacts - Print variable (all)
-  debug:
+  ansible.builtin.debug:
 #    msg: "env_desktop: {{ env_desktop }}"
 #    msg: "env_hostname: {{ env_hostname }}"
 #    msg: "env_displayserver: {{ env_displayserver }}"

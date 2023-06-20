@@ -74,9 +74,6 @@
     # - lokal heruntergeladene Pakete:
     - name: Install local packages
       ansible.builtin.import_tasks: tasks/basic_all/packages_workstation-localPackageInstall.yml
-    # - Python pip install:
-    - name: Pip install
-      ansible.builtin.import_tasks: tasks/basic_all/packages_workstation-pip.yml
     # ----------------------------------------------------------
     # ### Config Firewall, Cron, Services, sonstige Settings:
     - name: Config Firewall all
@@ -115,6 +112,10 @@
       ansible.builtin.import_tasks: tasks/basic_all/config_all-mail.yml
     - name: Config postfix.service
       ansible.builtin.import_tasks: tasks/basic_all/config_all-mail-service.yml
+    # ----------------------------------------------------------
+    # ### Python / Pip - Env + Inst:
+    # - name: Pip install
+    #   ansible.builtin.import_tasks: tasks/basic_all/packages_workstation-pip.yml
     # ----------------------------------------------------------
     # ### cleanup:
     - name: Cleanup

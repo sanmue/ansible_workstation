@@ -10,4 +10,4 @@
   become: true
   tasks:
     - name: Test firewalld
-      ansible.builtin.import_tasks: ansible_firewalld.yml
+      ansible.builtin.import_tasks: tests_firewalld.yml

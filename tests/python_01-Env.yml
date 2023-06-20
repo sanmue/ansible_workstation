@@ -1,0 +1,48 @@
+---
+
+- name: Gather Facts and set variables
+  hosts: localhost
+  connection: local
+  become: false
+  gather_facts: true
+  tasks:
+    - name: AnsibleFacts - Get user (USER) (all)
+      ansible.builtin.set_fact:
+        env_user: "{{ ansible_facts['env']['USER'] }}"   # userid
+
+
+- name: Test Package Version
+  hosts: localhost
+  connection: local
+  become: true
+  become_user: "{{ env_user }}"
+  # gather_facts: true
+  tasks:
+    # pythonVersion=$(python --version | cut -d ' ' -f2)
+    - name: Get and register Python version (all)
+      ansible.builtin.shell: python --version | cut -d ' ' -f2
+      register: pythonVersion
+      # ignore_errors: true
+      args:
+        creates: "/home/{{ env_user }}/.ansible_PythonEnv"
+
+    # - name: Msg pythonVersion (env_user, all)
+    #   ansible.builtin.debug:
+    #     # msg: "pythonVersion: {{ pythonVersion }}"
+    #     # var: pythonVersion
+    #     msg: "pythonVersion.stdout: '{{ pythonVersion.stdout }}'"
+    #     # var: pythonVersion.stdout
+
+    - name: Pyenv install python (env_user, all)
+      become: true
+      become_user: "{{ env_user }}"
+      ansible.builtin.shell: "pyenv install {{ pythonVersion.stdout }}"
+      args:
+        creates: "/home/{{ env_user }}/.ansible_PythonEnv"
+
+    - name: Pyenv set global python version (env_user, all)
+      become: true
+      become_user: "{{ env_user }}"
+      ansible.builtin.shell: "pyenv global {{ pythonVersion.stdout }} && touch /home/{{ env_user }}/.ansible_PythonEnv"
+      args:
+        creates: "/home/{{ env_user }}/.ansible_PythonEnv"

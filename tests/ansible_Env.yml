@@ -1,13 +1,14 @@
 ---
 
 # assuming beeing run local in the desired Desktop Environment
-- hosts: localhost
+- name: TestEnv
+  hosts: localhost
   connection: local
 #  become: {{ env_user }}
   gather_facts: true
   tasks:
     - name: Display available ansible facts
-      debug:
+      ansible.builtin.debug:
 #        msg: "{{ ansible_env }}"
 #        oder:
         var: ansible_facts
