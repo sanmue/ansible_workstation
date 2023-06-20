@@ -44,8 +44,8 @@
   become_user: "{{ env_user }}"
   ansible.builtin.debug:
     # msg: "pythonVersion: {{ pythonVersion }}"
-    # var: pythonVersion
-    msg: "pythonVersion.stdout: '{{ pythonVersion.stdout }}'"
+    var: pythonVersion
+    # msg: "pythonVersion.stdout: '{{ pythonVersion.stdout }}'"
     # var: pythonVersion.stdout
 
 - name: Python Environment - pyenv install python (env_user, all)
