@@ -13,7 +13,7 @@
     mode: '0644'
     backup: true
   when:
-    - env_desktop in ["gnome"]
+    - env_desktop in ["gnome", "ubuntu:gnome"]
 
 - name: Fix Gnome-Settings for Citrix IcaClient - recompile schemas (all, Gnome)
   become: true
@@ -21,4 +21,4 @@
   args:
     chdir: /usr/share/glib-2.0/schemas/
   when:
-    - env_desktop in ["gnome"]
+    - env_desktop in ["gnome", "ubuntu:gnome"]
