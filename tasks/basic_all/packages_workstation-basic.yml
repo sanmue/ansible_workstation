@@ -29,6 +29,7 @@
       - exa   # ls replacement
       - flatpak
       - font-manager
+      - gcc
       - gimp
       # - gimp-help-en   # Suse: gimp-help-en_GB
       - git   # bereits installiert (bootstrap)
