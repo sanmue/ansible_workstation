@@ -74,6 +74,8 @@
     # - lokal heruntergeladene Pakete:
     - name: Install local packages
       ansible.builtin.import_tasks: tasks/basic_all/packages_workstation-localPackageInstall.yml
+    - name: Install local packages - fix for CitrixIcaclient on Gnome
+      ansible.builtin.import_tasks: tasks/fix/config_workstation-Gnome-citrixIcaclient.yml
     # ----------------------------------------------------------
     # ### Config Firewall, Cron, Services, sonstige Settings:
     - name: Config Firewall all

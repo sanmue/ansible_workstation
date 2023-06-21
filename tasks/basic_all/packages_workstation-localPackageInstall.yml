@@ -21,7 +21,7 @@
   when:
     - ansible_distribution == "Ubuntu"
 
-
+# ### --------------------------------------------------
 # ### Archlinux/Manjaro: ins bootstrap-script aufenommen
 
 # - name: TODO - Local packages install - Download and install Citrix Workspace App (icaclient) from AUR (Arch)
