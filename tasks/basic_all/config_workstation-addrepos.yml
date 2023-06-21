@@ -28,6 +28,40 @@
 # ### Suse
 # ########
 
+# https://brave.com/linux/
+- name: config workstation - addrepos - add rpm key - brave browser (Suse)
+  ansible.builtin.rpm_key:
+    key: https://brave-browser-rpm-release.s3.brave.com/brave-core.asc
+    state: present
+  when: ansible_os_family == "Suse"
+
+- name: config workstation - addrepos - brave browser (Suse)
+  community.general.zypper_repository:
+    # name: vscode   # "msg": "Incompatible option: 'name'. Do not use name when adding .repo files"
+    # auto_import_keys: true
+    autorefresh: true
+    description: "Repo for Brave Browser"
+    enabled: true
+    repo: https://brave-browser-rpm-release.s3.brave.com/brave-browser.repo
+    runrefresh: true
+    state: present
+  when: ansible_os_family == "Suse"
+
+
+# https://software.opensuse.org/download.html?project=home%3Astsiao&package=ulauncher
+- name: config workstation - addrepos - ulauncher (Suse TW)
+  community.general.zypper_repository:
+    auto_import_keys: true
+    autorefresh: true
+    description: "Repo for Ulauncher"
+    enabled: true
+    repo: https://download.opensuse.org/repositories/home:stsiao/openSUSE_Tumbleweed/home:stsiao.repo
+    runrefresh: true
+    state: present
+  when: 
+    - ansible_distribution in ["openSUSE Tumbleweed"]
+
+
 # - https://en.opensuse.org/Visual_Studio_Code
 # - https://code.visualstudio.com/docs/setup/linux
 - name: config workstation - addrepos - add rpm key - Visual Studio Code (Suse)
@@ -48,36 +82,18 @@
     state: present
   when: ansible_os_family == "Suse"
 
-# https://brave.com/linux/
-- name: config workstation - addrepos - add rpm key - brave browser (Suse)
-  ansible.builtin.rpm_key:
-    key: https://brave-browser-rpm-release.s3.brave.com/brave-core.asc
-    state: present
-  when: ansible_os_family == "Suse"
 
-- name: config workstation - addrepos - brave browser (Suse)
-  community.general.zypper_repository:
-    # name: vscode   # "msg": "Incompatible option: 'name'. Do not use name when adding .repo files"
-    # auto_import_keys: true
-    autorefresh: true
-    description: "Repo for Brave Browser"
-    enabled: true
-    repo: https://brave-browser-rpm-release.s3.brave.com/brave-browser.repo
-    runrefresh: true
-    state: present
-  when: ansible_os_family == "Suse"
-
-# https://software.opensuse.org/download.html?project=home%3Astsiao&package=ulauncher
-- name: config workstation - addrepos - ulauncher (Suse)
+- name: config workstation - addrepos - zlib (Suse TW)
   community.general.zypper_repository:
     auto_import_keys: true
     autorefresh: true
-    description: "Repo for Ulauncher"
+    description: "Repo for zlib"
     enabled: true
-    repo: https://download.opensuse.org/repositories/home:stsiao/openSUSE_Tumbleweed/home:stsiao.repo
+    repo: https://download.opensuse.org/repositories/openSUSE:Factory/standard/openSUSE:Factory.repo
     runrefresh: true
     state: present
-  when: ansible_os_family == "Suse"
+  when: 
+    - ansible_distribution in ["openSUSE Tumbleweed"]
 
 
 # ##########

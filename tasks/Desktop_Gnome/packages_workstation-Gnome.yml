@@ -142,7 +142,7 @@
       - remmina-plugin-secret
       - transmission
       - transmission-gtk
-      - ulauncher   # repo wurde hinzugefügt
+      - ulauncher   # repo wurde hinzugefügt (TW)
   when:
     - ansible_os_family == "Suse"
     - env_desktop == "gnome"
