@@ -83,13 +83,16 @@
   when: ansible_os_family == "Suse"
 
 
+# https://software.opensuse.org/download/package?package=zlib&project=openSUSE%3AFactory
+# insbes. wg. pyenv
 - name: config workstation - addrepos - zlib (Suse TW)
   community.general.zypper_repository:
     auto_import_keys: true
     autorefresh: true
     description: "Repo for zlib"
     enabled: true
-    repo: https://download.opensuse.org/repositories/openSUSE:Factory/standard/openSUSE:Factory.repo
+    # repo: https://download.opensuse.org/repositories/openSUSE:Factory/standard/openSUSE:Factory.repo
+    repo: https://download.opensuse.org/repositories/home:alveus:plex/openSUSE_Tumbleweed/home:alveus:plex.repo
     runrefresh: true
     state: present
   when: 
