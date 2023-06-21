@@ -6,6 +6,10 @@
 # ### Citrix Workspace App (ICA-Client)
 # #####################################
 
+# ### ---
+# ### Info: siehe ggf. Fix für Gnome 44+
+# ### ---
+
 - name: Local packages install - install Certificates for Citrix Workspace App (ICA-Client) from Mozilla cert-folder + pem-convert (Ubuntu)
   # requires installed Mozilla Firefox (was installed via a previous task)
   ansible.builtin.shell:

@@ -3,7 +3,7 @@
 #   - https://andreaskaris.github.io/blog/linux/org-gnome-shell-overrides/
 # - https://unix.stackexchange.com/questions/745262/settings-schema-org-gnome-shell-overrides-is-not-installed (user specific)
 
-- name: Fix Gnome-Settings for Citrix IcaClient - copy schema file (Arch, Gnome, systemwide)
+- name: Fix Gnome-Settings for Citrix IcaClient - copy schema file (all, Gnome, systemwide)
   become: true
   ansible.builtin.copy:
     src: tasks/fix/config_workstation-Gnome-org.gnome.shell.overrides.gschema.xml
@@ -13,14 +13,12 @@
     mode: '0644'
     backup: true
   when:
-    - ansible_distribution in ["Archlinux"]
     - env_desktop in ["gnome"]
 
-- name: Fix Gnome-Settings for Citrix IcaClient - recompile schemas (Arch, Gnome)
+- name: Fix Gnome-Settings for Citrix IcaClient - recompile schemas (all, Gnome)
   become: true
   ansible.builtin.shell: "sudo glib-compile-schemas ."
   args:
     chdir: /usr/share/glib-2.0/schemas/
   when:
-    - ansible_distribution in ["Archlinux"]
     - env_desktop in ["gnome"]
