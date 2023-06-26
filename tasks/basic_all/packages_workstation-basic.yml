@@ -462,7 +462,7 @@
       - vim-plugin-markdown
       - vim-plugin-powerline
       - vim-plugin-salt
-      - zlib   # repo wurde hinzugefügt (TW)
+      - zlib   # repo wurde hinzugefügt (TW), insbes. wg. pyenv
       # ### firmware:
       - sof-firmware   # Firmware data files for SOF Drivers # Sound Open Firmware (SOF)
       # - alsa-firmware

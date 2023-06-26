@@ -17,6 +17,10 @@
 # - https://peps.python.org/pep-0668/#mark-the-installation-as-externally-managed
 # !!!
 
+# -------------------------------------------------
+# TODO: Suse: Fehlermeldungen wg. Abhängikeiten ...
+# -------------------------------------------------
+
 - name: Python Environment - Get and register Python version (Arch)
   become: true
   become_user: "{{ env_user }}"

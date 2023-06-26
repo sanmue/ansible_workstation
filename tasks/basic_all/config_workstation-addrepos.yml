@@ -84,6 +84,7 @@
 
 
 # https://software.opensuse.org/download/package?package=zlib&project=openSUSE%3AFactory
+# https://software.opensuse.org/download/package?package=zlib&project=home%3Aalveus%3Aplex
 # insbes. wg. pyenv
 - name: config workstation - addrepos - zlib (Suse TW)
   community.general.zypper_repository:
@@ -95,7 +96,7 @@
     repo: https://download.opensuse.org/repositories/home:alveus:plex/openSUSE_Tumbleweed/home:alveus:plex.repo
     runrefresh: true
     state: present
-  when: 
+  when:
     - ansible_distribution in ["openSUSE Tumbleweed"]
 
 

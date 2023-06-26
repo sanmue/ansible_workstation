@@ -35,6 +35,10 @@
 # - https://peps.python.org/pep-0668/#mark-the-installation-as-externally-managed
 # !!!
 
+# -------------------------------------------------
+# TODO: Suse: Fehlermeldungen wg. Abhängikeiten ...
+# -------------------------------------------------
+
 - name: Python - pip - Info zu möglicher Fehlermeldung (env_user, all)
   become: true
   become_user: "{{ env_user }}"
