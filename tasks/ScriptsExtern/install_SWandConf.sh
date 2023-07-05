@@ -27,6 +27,8 @@ gitdefaultBranchName="main"
 os=""
 oslist=("Ubuntu" "EndeavourOS" "ManjaroLinux" "openSUSE Tumbleweed")   # aktuell berücksichtige Distributionen
 
+bootloaderId='endeavouros'
+
 snapperConfigName_root="root"
 snapperSnapshotFolder="/.snapshots"
 # Manjaro: 'associative array' mit zusätzlich anzulegende Subvolumes (neben den bereits vorhanden für '/', /home, /var/cache, /var/log)
@@ -224,33 +226,36 @@ if [[ "${doSnapper}" = 'j' ]]; then
             echo "aktuelles root default-Subvolume: $(sudo btrfs subvolume get-default /)"
 
 
-            # UEFI+Grub / UEFI+systemD / BIOS+Grub
+            # UEFI+Grub / BIOS+Grub / UEFI+systemD
             echo -e "\n*** Re-Install grub + Update grub boot-Einträge"
             # https://wiki.archlinux.org/title/GRUB
             # if [ -e "/sys/firmware/efi/efivars" ]; then    # check if booted into UEFI mode and UEFI variables are accessible
-            if [ -e "/boot/efi/grub.cfg" ]; then        # UEFI + Grub
-                sudo grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=endeavouros && \
+            if [ -e "/boot/efi/" ] && [ -e "/boot/grub/grub.cfg" ]; then    # UEFI + Grub
+                sudo grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id="${bootloaderId}" && \
                 sudo grub-mkconfig -o /boot/grub/grub.cfg && \
                 sudo grub-mkconfig
-            elif [ -e "/boot/grub/grub.cfg" ]; then     # BIOS + Grub
+            elif [ -e "/boot/grub/grub.cfg" ]; then    # BIOS + Grub
                 lsblk
                 endloop='n'
                 while [ ! "$endloop" = 'j' ]; do
-                    read -r -p "Eingabe dev-Pfad für grub-install (z.B. '/dev/vda1'): " devGrubInstallPath
+                    read -r -p "Eingabe dev-Pfad für grub-install (z.B. '/dev/vda'): " devGrubInstallPath    # nicht Partition (z.B. '/dev/vda1')
                     read -r -p "Ist '${devGrubInstallPath}' korrekt ('j'=ja, beliebige Eingabe für Korrektur)?: " endloop
                 done
+                # https://wiki.archlinux.org/title/GRUB#Installation_2
+                # BIOS: grub-install --target=i386-pc /dev/sdX;
+                # where i386-pc is deliberately used regardless of your actual architecture, and /dev/sdX is the disk (not a partition) where GRUB is to be installed.
                 sudo grub-install --target=i386-pc "${devGrubInstallPath}" && sudo grub-mkconfig -o /boot/grub/grub.cfg && \
                 sudo grub-mkconfig
-            elif [ -e "/efi/loader/loader.conf" ]; then     # UEFI + Systemd Boot
+            elif [ -e "/efi/loader/loader.conf" ]; then    # UEFI + Systemd Boot
                 echo -e "\e[0;33m UEFI + systemD boot, kein TODO\e[39m"
             else
                 echo "--- Bootloader nicht erkennbar ---"
-                # systemd boot: kein Eintrag, manueller Sprung in tty (bzw. dracut mach neues img?)
+                # systemd boot: kein Eintrag, manueller Sprung in tty (bzw. dracut macht neues img?)
             fi
 
 
-            echo -e "\n*** Snapper config '${snapperConfigName_root}' wird angepasst..."   # /etc/snapper/configs/CONFIGS (z.B. /etc/sanpper/configs/root)
-            # sudo snapper -c root set-config "ALLOW_USERS=${userid}"
+            echo -e "\n*** Snapper config '${snapperConfigName_root}' wird angepasst..."   # /etc/snapper/configs/CONFIGS (z.B. /etc/snapper/configs/root)
+            # sudo snapper -c "${snapperConfigName_root}" set-config "ALLOW_USERS=${userid}"
             sudo snapper -c "${snapperConfigName_root}" set-config "ALLOW_GROUPS=wheel"
             sudo snapper -c "${snapperConfigName_root}" set-config "TIMELINE_CREATE=no"
             sudo snapper -c "${snapperConfigName_root}" set-config "TIMELINE_LIMIT_HOURLY=5"
@@ -262,8 +267,9 @@ if [[ "${doSnapper}" = 'j' ]]; then
             echo -e "\n*** Zugriffs- und Besitzrechte für '${snapperSnapshotFolder}' werden festgelegt..."
             sudo chown -R :wheel "${snapperSnapshotFolder}" && sudo chmod -R 750 "${snapperSnapshotFolder}"
 
-            # UEFU oder BIOS + GRUB  # systemd boot: kein Eintrag, manueller Sprung in tty
-            if [ -e "/boot/efi/grub.cfg" ] || [ -e "/boot/grub" ]; then        # Grub
+            # UEFI oder BIOS + GRUB    # systemd boot: kein Eintrag, manueller Sprung in tty, um auf best. snapshot zurückzusetzen
+            # if [ -e "/boot/efi/grub.cfg" ] || [ -e "/boot/grub" ]; then    # Grub
+            if [ -e "/boot/grub" ]; then    # Grub
                 echo -e "\n*** Enable 'grub-btrfsd.service', 'snapper-cleanup.timer'..."
                 sudo systemctl enable --now grub-btrfsd.service
                 sudo systemctl enable --now snapper-cleanup.timer
