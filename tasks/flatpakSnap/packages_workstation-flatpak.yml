@@ -11,6 +11,7 @@
     - 'de.willuhn.Jameica'
     - 'net.cozic.joplin_desktop'
     - 'de.haeckerfelix.Shortwave'
+    - 'com.obsproject.Studio'
 
 
 - name: Install flatpak packages (Extension Manager) for Gnome (Gnome, all)
