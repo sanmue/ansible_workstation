@@ -94,6 +94,7 @@
       # - flameshot       # -> ksnip
       # - firewalld       # bereits installiert (bootstrap)
       - foliate
+      - freerdp
       - fzf   # Command-line fuzzy finder
       - github-cli
       - gnupg
