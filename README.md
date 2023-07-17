@@ -25,3 +25,4 @@
 - in VS Code:
   - `STRG + SHIFT + P`
   - `>Sync Settings: Upload (user -> repository)`
+
