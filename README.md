@@ -1,11 +1,11 @@
 # ansible_workstation Install
 - TestLab automatisierte Installation Workstation
-- Ubuntu oder Manjaro mit Gnome-Desktop
+- Ubuntu, Archlinux/EndeavourOS/Manjaro mit Gnome-Desktop
 
 # Infos
 ## Login / Startscript
 - Login am System mit Standard-User (mit sudo-Rechten) und
-- "bootstrap.sh" ausführen (im Verzeichnis: tasks/bootstrapScript)
+- "install_SWandConf.sh" ausführen (im Verzeichnis: tasks/ScriptsExtern)
 ## 'Visual Studio Code' bzw. 'Code - OSS' - Extension "Sync Settings"
 ### Config git-repo als Ablageziel der Einstellungen von VS Code
 - in VS Code:
