@@ -14,7 +14,7 @@
     state: link
     owner: root
     group: root
-    mode: 755
+    mode: '0755'
   when:
     - ansible_distribution in ["Ubuntu"]
 
@@ -72,7 +72,22 @@
   ansible.builtin.file:
     path: /var/spool/mail
     state: directory
-    mode: '0777'
+    mode: '0775'
+    owner: root
+    group: mail
+  when: ansible_distribution in ["Archlinux)"]
+
+- name: Config_all-mail - postfix - local mail - create local mailbox file for root-user if not exists (Archlinux)
+  ansible.builtin.file:
+    path: "/var/spool/mail/root"
+    state: touch
+    owner: root
+    # group: root
+    group: mail
+    mode: '0600'
+    # mode: '0660'
+    modification_time: preserve
+    access_time: preserve
   when: ansible_distribution in ["Archlinux)"]
 
 - name: Config_all-mail - postfix - local mail - create local mailbox file for env_user if not exists (Archlinux)
@@ -80,8 +95,8 @@
     path: "/var/spool/mail/{{ env_user }}"
     state: touch
     owner: "{{ env_user }}"
-    group: "{{ env_user }}"
-    # group: "mail"
+    # group: "{{ env_user }}"
+    group: mail
     mode: '0600'
     # mode: '0660'
     modification_time: preserve
@@ -152,3 +167,22 @@
     state: present
   when:
     - ansible_distribution in ["Ubuntu"]
+
+
+# ### ########################
+# ### Send initial test mails:
+- name: Config_all-mail - postfix - local mail - sending initial test mail to root (all)
+  community.general.mail:
+    subject: Config_all-mail - postfix - local mail - sending initial mail to root
+    body: Sending local mail to roo-user seems to work.
+    to: root@localhost
+  delegate_to: localhost
+
+- name: Config_all-mail - postfix - local mail - sending initial test mail to env_user (all)
+  community.general.mail:
+    subject: "Config_all-mail - postfix - local mail - sending initial mail to {{ env_user }}"
+    body: Sending local mail to user seems to work.
+    to: "{{ env_user }}@localhost"
+    # to: "{{ env_user }}@{{ ansible_hostname }}"
+    # to: "{{ env_user }}@{{ ansible_hostname }}.{{ ansible_domain }}"
+  delegate_to: localhost
