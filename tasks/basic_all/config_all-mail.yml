@@ -177,18 +177,18 @@
 - name: Config_all-mail - postfix - local mail - sending initial test mail to env_user (all)
   ansible.builtin.shell: "echo 'Sending local mail to user seems to work.' | mail -s 'config_all-mail - postfix - local mail - sending initial mail to user' {{ env_user }}"
 
-# - name: Config_all-mail - postfix - local mail - sending initial test mail to root (all)
-#   community.general.mail:
-#     subject: Config_all-mail - postfix - local mail - sending initial mail to root
-#     body: Sending local mail to root-user seems to work.
-#     # to: root@localhost
-#   delegate_to: localhost
+- name: Config_all-mail - postfix - local mail - sending initial test mail to root (all)
+  community.general.mail:
+    subject: Config_all-mail - postfix - local mail - sending initial mail to root
+    body: Sending local mail to root-user seems to work.
+    # to: root@localhost
+  delegate_to: localhost
 
-# - name: Config_all-mail - postfix - local mail - sending initial test mail to env_user (all)
-#   community.general.mail:
-#     subject: "Config_all-mail - postfix - local mail - sending initial mail to {{ env_user }}"
-#     body: Sending local mail to user seems to work.
-#     to: "{{ env_user }}@localhost"
-#     # to: "{{ env_user }}@{{ ansible_hostname }}"
-#     # to: "{{ env_user }}@{{ ansible_hostname }}.{{ ansible_domain }}"
-#   delegate_to: localhost
+- name: Config_all-mail - postfix - local mail - sending initial test mail to env_user (all)
+  community.general.mail:
+    subject: "Config_all-mail - postfix - local mail - sending initial mail to {{ env_user }}"
+    body: Sending local mail to user seems to work.
+    to: "{{ env_user }}@localhost"
+    # to: "{{ env_user }}@{{ ansible_hostname }}"
+    # to: "{{ env_user }}@{{ ansible_hostname }}.{{ ansible_domain }}"
+  delegate_to: localhost
