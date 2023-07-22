@@ -175,7 +175,7 @@
   community.general.mail:
     subject: Config_all-mail - postfix - local mail - sending initial mail to root
     body: Sending local mail to roo-user seems to work.
-    to: root@localhost
+    # to: root@localhost
   delegate_to: localhost
 
 - name: Config_all-mail - postfix - local mail - sending initial test mail to env_user (all)
