@@ -106,14 +106,16 @@
     - name: Config users
       ansible.builtin.import_tasks: tasks/basic_all/config_all-users.yml
     # ----------------------------------------------------------
-    # ### (Local) Mail:
-    # momentan nur wg. lokalem Mailversand bei VirusEvent von ClamAV
+    # ### Mail:
+    # momentan nur lokaler Mailversand bei Start/Ende Scan + VirusEvent von ClamAV
     - name: Install packages for (local) mail
       ansible.builtin.import_tasks: tasks/basic_all/packages_all-mail.yml
     - name: Config postfix
       ansible.builtin.import_tasks: tasks/basic_all/config_all-mail.yml
     - name: Config postfix.service
       ansible.builtin.import_tasks: tasks/basic_all/config_all-mail-service.yml
+    - name: Initial test mail
+      ansible.builtin.import_tasks: tasks/basic_all/config_all-mail-testmail.yml
     # ----------------------------------------------------------
     # ### Python
     - name: Python Env
