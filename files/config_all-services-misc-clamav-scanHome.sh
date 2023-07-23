@@ -51,7 +51,15 @@ function notify_allGuiUser {
 function mail_allLogonUser { 
 	# Param1: Mail Subject
     # Param2: Mail Message
-    arrUser="$(users)"      # array of logged on users
+
+    # array of logged on users:
+    # arrUser=( "$(users)" )                                        # 'users': user durch Leerzeichen getrennt in einer Zeile
+    mapfile -t arrUser < <(who | cut -d' ' -f1 | sort -u)           # 'w' und 'who': user (+x) in jeweils eigener Zeile
+    # mapfile -t arrUser < <(w -h | cut -d' ' -f1 | sort -u)        # sortiert + uniq
+    # readarray -t arrUser < <(w -h | cut -d' ' -f1 | sort -u)      # 'readarray' = synonym for 'mapfile'
+
+    # examine array:
+    # declare -p arrUser
 
     for user in "${arrUser[@]}"; do
         echo -e "${2}" | /usr/bin/mail -s "${1}" "${user}"
