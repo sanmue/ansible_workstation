@@ -8,6 +8,7 @@
   community.general.mail:
     subject: Config_all-mail - postfix - local mail - sending initial mail to root
     body: Sending local mail to root-user seems to work.
+    # to: root
     # to: root@localhost
   delegate_to: localhost
 
@@ -15,7 +16,6 @@
   community.general.mail:
     subject: "Config_all-mail - postfix - local mail - sending initial mail to {{ env_user }}"
     body: Sending local mail to user seems to work.
-    to: "{{ env_user }}@localhost"
-    # to: "{{ env_user }}@{{ ansible_hostname }}"   # TODO: testen
-    # to: "{{ env_user }}@{{ ansible_hostname }}.{{ ansible_domain }}"   # TODO: testen
+    to: "{{ env_user }}"
+    # to: "{{ env_user }}@localhost"
   delegate_to: localhost
