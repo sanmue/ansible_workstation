@@ -14,7 +14,7 @@
 ### parameter, variablen:
 #currentpath=$(pwd)
 #user=$(whoami)
-user="sandro"    # Standardwert, wird ggf. durch übergebenen Parameter geändert.
+user="${USER}"    # Standardwert, wird ggf. durch übergebenen Parameter geändert.
 errorfile=".error_vm_storagepool.txt"
 
 echo "Anzahl übergebene Parameter: '$#'"
