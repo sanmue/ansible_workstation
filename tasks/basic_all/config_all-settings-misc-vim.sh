@@ -3,10 +3,8 @@
 #set -x   # enable debug mode
 
 ###
-# wird nicht mehr verwendet, globale config für vim nun über files/.vimrc.local
-# welche nach /etc/vim/ kopiert wird
+# wird nicht mehr verwendet, globale config für vim in tasks/basic_all/config_all-settings-misc.yml
 ###
-
 
 
 # Grund-Konfiguration für vim
