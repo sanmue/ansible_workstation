@@ -59,6 +59,7 @@
       # - terminator   # Terminal emulator that supports tabs and grids
       - tk   # Graphical User Interface Toolkit for Tcl   # z.B. pyenv install 3.11.3: erscheint sonst meldung, dass nicht vorhanden
       - vim   # bereits installiert (bootstrap)
+      - vim-ale   # Lint Engine
       - vlc
       - unzip
       - wget
