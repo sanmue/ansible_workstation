@@ -118,11 +118,14 @@
       # - powerline-fonts   # patched fonts for powerline
       # - powerline-vim     # vim plugin for powerline
       - psutils             # A set of postscript utilities
+      - pyenv
       - python-pip
       # - python-pipx         # Install and Run Python Applications in Isolated Environments
       - python-psutil
       - python-setuptools   # Easily download, build, install, upgrade, and uninstall Python packages
-      - pyenv
+      - python-pylint
+      - python-pylint-venv
+      - python-pytest-pylint
       - remmina
       - shellcheck
       # - snapd                 # bei Manjaro in repo drin, bei Arch (EndeavourOS) nicht
@@ -324,6 +327,9 @@
       - python3-pip
       - python3-psutil
       - python3-pyinotify
+      - python3-pylint-common
+      - python3-pylint-venv
+      - python3-pytest-pylint
       - python3-setuptools
       # - searchmonkey
       - ssh   # bereits installiert (bootstrap)
@@ -430,7 +436,7 @@
       - foliate
       - fzf
       - fzf-zsh-completion
-      - gh   # The official CLI for GitHub 
+      - gh   # The official CLI for GitHub
       - gpgme
       - hunspell
       - kdeconnect-kde
