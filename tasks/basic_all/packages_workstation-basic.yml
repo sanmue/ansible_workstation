@@ -48,7 +48,7 @@
       - lsb-release
       - make
       # - man-pages-de
-      - neofetch      
+      - neofetch
       - rclone   # sync tool
       - rsync   # bereits installiert (bootstrap)
       # - samba   # für VM: File sharing between host and Windows guest; https://wiki.manjaro.org/index.php/Virt-manager/en
