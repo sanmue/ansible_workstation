@@ -9,6 +9,7 @@
       - ansible   # bereits installiert (bootstrap)
       - ansible-lint   # für z.B. ansible extension in VS Code
       - bash
+      - basdb   # A debugger for Bash scripts loosely modeled on the gdb command syntax
       - bleachbit
       - clamav
       - clamtk
