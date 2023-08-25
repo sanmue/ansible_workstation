@@ -23,6 +23,7 @@ defaultDomain="universalaccount.de"
 defaultMail="${userid}@${defaultDomain}"
 gitOnlineRepo="git@github.com:sanmue/${playbookdir}.git"
 gitdefaultBranchName="main"
+gitPagerStatus="true"   # (Standard: true) # z.B. bei git log, git diff wir in pager ausgegeben, nicht im Terminal
 
 os=""
 oslist=("Ubuntu" "EndeavourOS" "ManjaroLinux" "openSUSE Tumbleweed")   # aktuell berücksichtige Distributionen
@@ -539,8 +540,9 @@ echo -e "\nErstelle git config mit Name '${userid}', Email '${defaultMail}' und 
 git config --global user.name "${userid}"
 git config --global user.email "${defaultMail}"
 git config --global init.defaultBranch "${gitdefaultBranchName}"
+git config --global pager.status "${gitPagerStatus}"
 echo "Git-config ist nun:" 
-#git config --list   #bei openSUSE wird .gitconfig in vi geöffnet
+#git config --list   #bei openSUSE wird auch dieser Befehl in Pager (less?) geöffnet
 cat "/home/${userid}/.gitconfig"
 
 #echo ""
