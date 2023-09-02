@@ -2,4 +2,4 @@
 *.save
 *.yml~
 *.*~
-
+/.vscode/
