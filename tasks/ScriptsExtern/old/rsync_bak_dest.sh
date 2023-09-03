@@ -2,8 +2,6 @@
 
 #set -x
 
-# TEST
-
 # ### Skript zur Sicherung $arrBak nach extern ($dest = Übergabe-Parameter)
 # WIRD NICHT MEHR BENÖTIGT, siehe neu: rsync_appConfData-extern_dest.sh (bwz. zuvor rsync_appConfData-intern.sh)
 
