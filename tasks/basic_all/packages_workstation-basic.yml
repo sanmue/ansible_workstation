@@ -117,6 +117,7 @@
       - nextcloud-client
       - openssh             # bereits installiert (bootstrap)
       - packagekit
+      - pkgfile             # sollte bereits installiert sein (mit 'pacman') # tool for searching files from packages in the official repositories
       # - powerline         # Statusline plugin for vim, an provides statuslines udn prompts for several other applications
       #                     # including zsh, bash, tmux, IPython, Awesome, i3 and qtile
       # - powerline-fonts   # patched fonts for powerline
