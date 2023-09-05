@@ -14,27 +14,25 @@
   when: ansible_distribution in ["Archlinux"] or
         ansible_os_family == "Suse"
 
-
 # ------
 # Cron / Cronie
 # ------
 # cron wird verwendet z.B. von von ClamTK und timeshift
 #
 # https://wiki.archlinux.org/title/Cron
-- name: All services misc - start+enable cronie (Arch,Suse)
+- name: All services misc - start+enable cronie (Arch)
   ansible.builtin.service:
     name: cronie.service
     state: started
     enabled: true
   when: ansible_distribution in ["Archlinux"]
 
-- name: All services misc - start+enable cronie (Arch,Suse)
+- name: All services misc - start+enable cronie (Suse)
   ansible.builtin.service:
     name: cron.service
     state: started
     enabled: true
   when: ansible_os_family == "Suse"
-
 
 # ---------------------------------------------
 # # reflector - retrieve the latest mirror list
@@ -54,6 +52,28 @@
 #       /usr/lib/systemd/system/pamac-mirrorlist.timer
 #       /usr/lib/systemd/system/pamac-mirrorlist.service
 
+# ------------------------------
+# # update pacman files database (default: weekly)
+# ------------------------------
+# - https://wiki.archlinux.org/title/Pacman#Search_for_a_package_that_contains_a_specific_file
+# - https://wiki.archlinux.org/title/Pacman#Querying_package_databases
+- name: All services misc - start+enable update pacman files database (Arch)
+  ansible.builtin.service:
+    name: pacman-filesdb-refresh.timer
+    state: started
+    enabled: true
+  when: ansible_distribution in ["Archlinux"]
+
+# -------------------------
+# # update pkgfile database (default: daily)
+# -------------------------
+# - https://wiki.archlinux.org/title/Pkgfile#Automatic_updates
+- name: All services misc - start+enable update pkgfile database (Arch)
+  ansible.builtin.service:
+    name: pkgfile-update.timer
+    state: started
+    enabled: true
+  when: ansible_distribution in ["Archlinux"]
 
 # ------------
 # # SSH / SSHD
@@ -65,7 +85,6 @@
     enabled: true
   when: ansible_distribution in ["Ubuntu"]
 
-
 - name: All services misc - start + enable sshd (Archlinux,Suse)
   ansible.builtin.service:
     name: sshd
@@ -73,7 +92,6 @@
     enabled: true
   when: ansible_distribution in ["Archlinux"] or
         ansible_os_family == "Suse"
-
 
 # --------
 # # ClamAV
@@ -138,7 +156,6 @@
     enabled: true
   when: ansible_os_family == "Suse"
 
-
 # -------------------------
 # ### starship shell prompt
 # -------------------------
@@ -201,7 +218,6 @@
     daemon_reload: true
   # when: ansible_distribution in ["Ubuntu", "Archlinux"]
 
-
 # ---------------
 # ### zsh plugins
 # ---------------
@@ -263,7 +279,6 @@
   when: ansible_distribution in ["Archlinux"] or
         ansible_os_family == "Suse"
 
-
 # ------------------
 # ### cockpit.socket
 # ------------------
@@ -277,6 +292,8 @@
   # when:
   #  - ansible_distribution in ["Ubuntu"]
 
+# -------------------------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------------------------
 
 # ########
 # ### user
@@ -289,7 +306,6 @@
 # daher wird z.B. angezeigt:
 # "Loaded: loaded (/etc/xdg/systemd/user/clamav_scanHome.timer; enabled; preset: enabled)"
 # ----------------------------------------------------------------------------------------------------
-
 
 # -------------
 # ### Syncthing
@@ -307,7 +323,6 @@
   become_user: "{{ env_user }}"
   environment:
     XDG_RUNTIME_DIR: "{{ env_user_XDG_RUNTIME_DIR }}"
-
 
 # ----------
 # ### ClamAV
@@ -375,7 +390,6 @@
   environment:
     XDG_RUNTIME_DIR: "{{ env_user_XDG_RUNTIME_DIR }}"
 
-
 # ---------------------------------------------------------------------------------------------------------
 # ### Sicherung/Updata AppConfData (intern, -> in zentrales RescueSystem-Verzeichnis (-> ja, Daten doppelt)
 # ---------------------------------------------------------------------------------------------------------
@@ -437,7 +451,6 @@
   become_user: "{{ env_user }}"
   environment:
     XDG_RUNTIME_DIR: "{{ env_user_XDG_RUNTIME_DIR }}"
-
 
 # -------------
 # ### ulauncher
