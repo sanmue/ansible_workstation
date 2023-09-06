@@ -35,8 +35,8 @@ bootloaderId='endeavouros'
 
 snapperConfigName_root="root"
 snapperSnapshotFolder="/.snapshots"
-# Manjaro: 'associative array' mit zusätzlich anzulegende Subvolumes (neben den bereits vorhanden für '/', /home, /var/cache, /var/log)
-# # https://stackoverflow.com/questions/1494178/how-to-define-hash-tables-in-bash
+# Manjaro: 'associative array' with additional subvolumes to be created (in addition to the already existing for '/', '/home', '/var/cache', '/var/log')
+# - https://stackoverflow.com/questions/1494178/how-to-define-hash-tables-in-bash
 declare -A btrfsSubvolLayout=(  ["@"]="/" 
                                 ["@home"]="/home" 
                                 ["@snapshots"]="/.snapshots" 
@@ -89,12 +89,12 @@ echo "OS used: ${os}"
 ### ---
 ### Hostname
 ### ---
-echo -e "\naktueller Hostname: '$(hostname)'"
-read -r -p "Soll Hostname geändert werden ('j'=ja, sonstige Eingabe=nein)?: " changeHostname
-if [ "${changeHostname}" = 'j' ]; then
-    read -r -p "Neuen Hostnamen eingeben: " newHostname
+echo -e "\nCurrent hostname: '$(hostname)'"
+read -r -p "Should hostname be changed ('y'=yes, other input=no)?: " changeHostname
+if [ "${changeHostname}" = 'y' ]; then
+    read -r -p "Enter new hostname: " newHostname
     sudo hostnamectl hostname "${newHostname}"
-    read -r -p  "Neuer Hostname wurde gesetzt, weiter mit beliebiger Eingabe"
+    read -r -p  "New hostname set, continue with any input"
 fi
 
 
@@ -104,13 +104,13 @@ fi
 # https://unix.stackexchange.com/questions/34623/how-to-tell-what-type-of-filesystem-youre-on
 # https://www.tecmint.com/find-linux-filesystem-type/
 if [[ $(stat -f -c %T /) = 'btrfs' ]] && [[ ! -e "/home/${userid}/.ansible_bootstrap_snapperGrub" ]]; then   # prüfe '/' auf btrfs-filsystem;  -f, --file-system; -c, --format; %T - Type in human readable form
-    read -r -p "Soll 'snapper' (für Snapshot-Erstellung) installiert/konfiguriert werden ('j'=ja, sonstige Eingabe=nein)?: " doSnapper
+    read -r -p "Should 'snapper' (for snapshot creation) be installed/configured ('y'=yes, other input=no)?: " doSnapper
 fi
 
-if [[ "${doSnapper}" = 'j' ]]; then
+if [[ "${doSnapper}" = 'y' ]]; then
     if [ ! -e "${snapperSnapshotFolder}" ]; then
         echo -e "\e[0;33mVerzeichnis '${snapperSnapshotFolder}' nicht vorhanden. Evlt. abweichendes Verzeichnis konfiguriert?!\nGgf. vorheriger manueller Eingriff erforderlich.\e[39m" 
-        read -r -p "Installation/Konfiguration fortsetzen mit beliebiger Eingabe, Abbrechen mit <STRG> + <C>"
+        read -r -p "Installation/Konfiguration fortsetzen mit beliebiger Eingabe, Abbrechen mit <CTRL> + <c>"
     fi
 
     echo -e "\n*** ********************************************"
