@@ -31,25 +31,25 @@ gitPagerStatus="true"   # (standard: true) # e.g.: 'git log', 'git diff' output 
 os=""
 oslist=("Ubuntu" "EndeavourOS" "ManjaroLinux" "openSUSE Tumbleweed")   # currently supportet distributions
 
-bootloaderId='endeavouros'
+bootloaderId='GRUB'   # or 'endeavouros', ...
 
 snapperConfigName_root="root"
 snapperSnapshotFolder="/.snapshots"
 # Manjaro: 'associative array' with additional subvolumes to be created (in addition to the already existing for '/', '/home', '/var/cache', '/var/log')
 # - https://stackoverflow.com/questions/1494178/how-to-define-hash-tables-in-bash
 declare -A btrfsSubvolLayout=(  ["@"]="/" 
+                                ["@snapshots"]="${snapperSnapshotFolder}" 
                                 ["@home"]="/home" 
-                                ["@snapshots"]="/.snapshots" 
-                                ["@log"]="/var/log" 
-                                ["@cache"]="/var/cache" 
-                                ["@varspool"]="/var/spool" 
-                                ["@tmp"]="/tmp" 
                                 ["@opt"]="/opt" 
-                                ["@varopt"]="/var/opt" 
                                 ["@srv"]="/srv" 
-                                ["@vartmp"]="/var/tmp" 
+                                ["@tmp"]="/tmp" 
                                 ["@usrlocal"]="/usr/local"
-                                ["@images"]="/var/lib/libvirt/images")
+                                ["@varcache"]="/var/cache" 
+                                ["@varlog"]="/var/log" 
+                                ["@varopt"]="/var/opt" 
+                                ["@varspool"]="/var/spool" 
+                                ["@vartmp"]="/var/tmp" 
+                                ["@libvirtimages"]="/var/lib/libvirt/images" )
 
 btrfsFstabMountOptions_standard='defaults,noatime,compress=zstd,space_cache=v2 0 0'    # desired mountOptions for btrfs-filesystem
 btrfsFstabMountOptions_manjaro='defaults 0 0'                                          # searchString; fstab-entry will be replaced with $btrfsFstabMountOptions_standard
@@ -57,7 +57,7 @@ btrfsFstabMountOptions_endeavour='defaults,noatime,compress=zstd 0 0'           
 
 
 ### ---
-### Query used Operatin System (OS)
+### Query used Operating System (OS)
 ### ---
 if [ "$(hostnamectl)" ] ; then
     os=$(hostnamectl | grep "Operating System" | cut -d : -f 2 | xargs)
