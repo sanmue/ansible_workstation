@@ -125,6 +125,7 @@
       # additional EXPORTS 
       # ------------------
       # https://github.com/ChrisTitusTech/mybash/blob/main/.bashrc
+      # https://wiki.archlinux.org/title/Sudo#Colored_password_prompt
       iatest=$(expr index "$-" i)
 
       # Don't put duplicate lines in the history and do not add lines that start with a space
@@ -139,6 +140,9 @@
 
       # Show auto-completion list automatically, without double tab (einfacher tab genügt)
       if [[ $iatest -gt 0 ]]; then bind "set show-all-if-ambiguous On"; fi
+
+      # Colored password prompt
+      export SUDO_PROMPT="$(tput setaf 1 bold)[sudo]$(tput sgr0) password for $(tput setaf 6)%p$(tput sgr0): "
   # when:
   #   - ansible_distribution in ["Ubuntu", "Archlinux"]
 
@@ -443,6 +447,20 @@
 #    - ansible_distribution in ["Ubuntu", "Archlinux"]
 #    # - env_lsb_id != "ManjaroLinux"
 
+
+- name: All settings misc - Zshrc - additional EXPORTS (User, all)
+  ansible.builtin.blockinfile:
+    path: "/home/{{ env_user }}/.zshrc"
+    backup: true
+    marker: "### {mark} 'additional EXPORTS' ANSIBLE MANAGED BLOCK ###"
+    block: |
+      # ------------------
+      # additional EXPORTS 
+      # ------------------
+
+      # Colored password prompt
+      # https://wiki.archlinux.org/title/Sudo#Colored_password_prompt
+      export SUDO_PROMPT="$(tput setaf 1 bold)[sudo]$(tput sgr0) password for $(tput setaf 6)%p$(tput sgr0): "
 
 - name: All settings misc - Zshrc - custom alias definitions (User, all)
   ansible.builtin.blockinfile:
