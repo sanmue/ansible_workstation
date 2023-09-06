@@ -242,7 +242,7 @@ if [[ "${doSnapper}" = 'y' ]]; then
                 lsblk
                 endloop='n'
                 while [ ! "$endloop" = 'j' ]; do
-                    read -r -p "Eingabe dev-Pfad für grub-install (z.B. '/dev/vda'): " devGrubInstallPath    # nicht Partition (z.B. '/dev/vda1')
+                    read -r -p "Eingabe device-Pfad für grub-install (z.B. '/dev/vda'): " devGrubInstallPath    # nicht Partition (z.B. '/dev/vda1'), sondern Disk (z.B. '/dev/vda')
                     read -r -p "Ist '${devGrubInstallPath}' korrekt ('j'=ja, beliebige Eingabe für Korrektur)?: " endloop
                 done
                 # https://wiki.archlinux.org/title/GRUB#Installation_2
