@@ -13,20 +13,23 @@
 ### ---
 ### Variablen
 ### ---
-repodir="ansible-install"           # lokal
-playbookdir="ansible_workstation"   # github
+repodir="ansible-install"           # local (-> git clone to /home/${userid}/${repodir}/${playbookdir})
+playbookdir="ansible_workstation"   # github repo name
 playbook="local.yml"
-sshkeydir=".ssh"
-userid=$(whoami)   # oder: userid=${USER}
 
+userid=$(whoami)   # or: userid=${USER}
+githubUserid="sanmue"
 defaultDomain="universalaccount.de"
 defaultMail="${userid}@${defaultDomain}"
-gitOnlineRepo="git@github.com:sanmue/${playbookdir}.git"
+
+sshkeydir="/home/${userid}/.ssh"
+
+gitOnlineRepo="git@github.com:${githubUserid}/${playbookdir}.git"
 gitdefaultBranchName="main"
-gitPagerStatus="true"   # (Standard: true) # z.B. bei git log, git diff wir in pager ausgegeben, nicht im Terminal
+gitPagerStatus="true"   # (standard: true) # e.g.: 'git log', 'git diff' output goes to Pager, not terminal
 
 os=""
-oslist=("Ubuntu" "EndeavourOS" "ManjaroLinux" "openSUSE Tumbleweed")   # aktuell berücksichtige Distributionen
+oslist=("Ubuntu" "EndeavourOS" "ManjaroLinux" "openSUSE Tumbleweed")   # currently supportet distributions
 
 bootloaderId='endeavouros'
 
@@ -48,23 +51,23 @@ declare -A btrfsSubvolLayout=(  ["@"]="/"
                                 ["@usrlocal"]="/usr/local"
                                 ["@images"]="/var/lib/libvirt/images")
 
-btrfsFstabMountOptions_standard='defaults,noatime,compress=zstd,space_cache=v2 0 0'    # gewünschte MountOptions
-btrfsFstabMountOptions_manjaro='defaults 0 0'                                          # werden ersetzt mit $btrfsFstabMountOptions_standard
-btrfsFstabMountOptions_endeavour='defaults,noatime,compress=zstd 0 0'
+btrfsFstabMountOptions_standard='defaults,noatime,compress=zstd,space_cache=v2 0 0'    # desired mountOptions for btrfs-filesystem
+btrfsFstabMountOptions_manjaro='defaults 0 0'                                          # searchString; fstab-entry will be replaced with $btrfsFstabMountOptions_standard
+btrfsFstabMountOptions_endeavour='defaults,noatime,compress=zstd 0 0'                  # searchString; fstab-entry will be replaced with $btrfsFstabMountOptions_standard
 
 
 ### ---
-### Abfrage verwendetes Betriebssystem (OS)
+### Query used Operatin System (OS)
 ### ---
 if [ "$(hostnamectl)" ] ; then
     os=$(hostnamectl | grep "Operating System" | cut -d : -f 2 | xargs)
 else
-    echo "Befehl 'hostnamectl' nicht verfügbar, Eingabe verwendetes System erforderlich."
+    echo "Command 'hostnamectl' not available, manual input of OS necessary."
 
     promptOk=false
-    while [ ! "${promptOk}" = true ] ; do   #Eingabe-Schleife
-        echo "Aktuell mögliche Eingaben für OS: ${oslist[*]}"
-        read -r -p "OS eingeben, Ende mit 'x': " os
+    while [ ! "${promptOk}" = true ] ; do   #input-loop
+        echo "Currently valid input/supported for OS: ${oslist[*]}"
+        read -r -p "Enter name of your OS (exit program with 'x'): " os
 
         if [[ "${os}" == "x" ]] ; then
             exit 0
@@ -74,13 +77,13 @@ else
             echo -e "Falsche Eingabe\n"
         else
             promptOk=true
-            #echo "Eingegebenes OS: ${os}"
+            #echo "OS entered by you: ${os}"
         fi
 
     done
 fi
 
-echo "Verwendetes OS: ${os}"
+echo "OS used: ${os}"
 
 
 ### ---
@@ -567,10 +570,10 @@ cat "/home/${userid}/.gitconfig"
 ### Checke ssh-keys (einfache Prüfung)
 ### ---
 echo -e "\nPrüfe auf ssh-keys..."
-if [[ -n $(ls -I 'known_hosts' -I 'known_hosts.old' -I 'authorized_keys' "/home/${userid}/${sshkeydir}") ]] ; then   #einfacher Test; ggf. ssh-key für gitOnlineRepo trotzdem nicht vorhanden
-    echo "SSH-Key - Verzeichnis '/home/${userid}/${sshkeydir}' enthält SSH-Keys."
+if [[ -n $(ls -I 'known_hosts' -I 'known_hosts.old' -I 'authorized_keys' "${sshkeydir}") ]] ; then   #einfacher Test; ggf. ssh-key für gitOnlineRepo trotzdem nicht vorhanden
+    echo "SSH-Key - Verzeichnis '${sshkeydir}' enthält SSH-Keys."
 else
-    echo "SSH-Key - Verzeichnis '/home/${userid}/${sshkeydir}' scheint keine SSH-Keys zu enthalten."
+    echo "SSH-Key - Verzeichnis '${sshkeydir}' scheint keine SSH-Keys zu enthalten."
     echo "Bitte erforderliche(n) SSH-Key hinzufügen, das sonst das git-repo nicht heruntergeladen werden kann."
     read -r -p "Programmende, bitte Eingabetaste drücken."
     exit 0
