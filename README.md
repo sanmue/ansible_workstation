@@ -1,28 +1,36 @@
-# ansible_workstation Install
-- TestLab automatisierte Installation Workstation
-- Ubuntu, Archlinux/EndeavourOS/Manjaro mit Gnome-Desktop
+# ansible_workstation - automated post-installation of my workstation
+- completes after successful basic installation (including a desktop environment) the further installation and configuration of additionally defined software and services
+- currently only for my Gnome desktop environment + settings (Plasma: not up to date / re-tested)
+- initial bash script:
+  - works for Endeavour OS and Ubuntu
+  - if btrfs-filesystem: installs/creates/configures btrfs subvolumes and 'snapper' for (automatic and manual) system snapshots (optional)
 
-# Infos
-## Login / Startscript
-- Login am System mit Standard-User (mit sudo-Rechten) und
-- "install_SWandConf.sh" ausführen (im Verzeichnis: tasks/ScriptsExtern)
-## 'Visual Studio Code' bzw. 'Code - OSS' - Extension "Sync Settings"
-### Config git-repo als Ablageziel der Einstellungen von VS Code
+# Usage
+## Start initial bash script
+- boot to desktop environment + login
+- clone the repo
+  - `git clone https://gitlab.com/sanmue/ansible_workstation.git`
+- execute the initial bash script "install_SWandConf.sh"
+  - `cd ansible_workstation`
+  - `./tasks/ScriptsExtern/install_SWandConf.sh`
+
+# Further notes for myself
+## 'Visual Studio Code' respectively 'Code - OSS' with extension "Sync Settings"
+### Config git-repo as storage target of the settings of VS Code
 - in VS Code:
   - `STRG + SHIFT + P`
   - `>Sync Settings: open the repository Settings`
-- Pfad im Dateisystem:
+- Path in the file system:
   - Path: `/home/{{ env_user }}/.config/Code/User/globalStorage/zokugun.sync-settings`
   - File: `settings.yml`
-- verwendete settings: `files/VSCode_Extension_Sync-Settings_settings.yml`
-### Verzeichnis mit VS Code-Einstellungen im git-repo
-- Verzeichnis, in dem die Extension die VS Code-Einstellungen ablegt: `profiles/main`
-### Config importieren aus git-repo
+- settings used: `files/VSCode_Extension_Sync-Settings_settings.yml`
+### Folder with VS Code-settings in git-repo
+- directory where the extension stores the VS Code settings: `profiles/main`
+### Import config from git-repo
 - in VS Code:
   - `STRG + SHIFT + P`
   - `>Sync Settings: Download (repository -> user)`
-### Config exportieren ins git-repo
+### Export config to git-repo
 - in VS Code:
   - `STRG + SHIFT + P`
   - `>Sync Settings: Upload (user -> repository)`
-

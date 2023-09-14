@@ -33,6 +33,15 @@ oslist=("Ubuntu" "EndeavourOS" "ManjaroLinux" "openSUSE Tumbleweed")   # current
 
 bootloaderId='GRUB'   # or 'endeavouros', ...
 
+if [ -e "/efi" ]; then
+	efiDir="/efi"
+elif [ -e "/boot/efi" ]; then   # deprecated location
+	efiDir="/boot/efi"
+else
+	# echo "Bios boot mode, not in Uefi Boot mode"
+	efiDir=""
+fi
+
 snapperConfigName_root="root"
 snapperSnapshotFolder="/.snapshots"
 # Manjaro: 'associative array' with additional subvolumes to be created (in addition to the already existing for '/', '/home', '/var/cache', '/var/log')
@@ -123,7 +132,9 @@ if [[ "${doSnapper}" = 'y' ]]; then
 
             echo -e "\n*** Installation snapper+grub software packages..."
             sudo pacman --needed --noconfirm -S snapper snap-pac inotify-tools  # snap-sync
-            if [ -e "/boot/efi/grub.cfg" ] || [ -e "/boot/grub" ]; then         # GRUB (UEFI oder BIOS)
+
+            #if [ -e "/boot/efi/grub.cfg" ] || [ -e "/boot/grub" ]; then         # GRUB (UEFI oder BIOS)
+            if [ -e "${efiDir}/grub.cfg" ] || [ -e "/boot/grub" ]; then         # GRUB (UEFI oder BIOS)
                 sudo pacman --needed --noconfirm -S grub-btrfs
             fi
 
@@ -234,8 +245,8 @@ if [[ "${doSnapper}" = 'y' ]]; then
             echo -e "\n*** Re-Install grub + Update grub boot-Einträge"
             # https://wiki.archlinux.org/title/GRUB
             # if [ -e "/sys/firmware/efi/efivars" ]; then    # check if booted into UEFI mode and UEFI variables are accessible
-            if [ -e "/boot/efi/" ] && [ -e "/boot/grub/grub.cfg" ]; then    # UEFI + Grub
-                sudo grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id="${bootloaderId}" && \
+            if [ -e "${efiDir}/" ] && [ -e "/boot/grub/grub.cfg" ]; then    # UEFI + Grub
+                sudo grub-install --target=x86_64-efi --efi-directory="${efiDir}" --bootloader-id="${bootloaderId}" && \
                 sudo grub-mkconfig -o /boot/grub/grub.cfg && \
                 sudo grub-mkconfig
             elif [ -e "/boot/grub/grub.cfg" ]; then    # BIOS + Grub
@@ -250,7 +261,8 @@ if [[ "${doSnapper}" = 'y' ]]; then
                 # where i386-pc is deliberately used regardless of your actual architecture, and /dev/sdX is the disk (not a partition) where GRUB is to be installed.
                 sudo grub-install --target=i386-pc "${devGrubInstallPath}" && sudo grub-mkconfig -o /boot/grub/grub.cfg && \
                 sudo grub-mkconfig
-            elif [ -e "/efi/loader/loader.conf" ]; then    # UEFI + Systemd Boot
+            #elif [ -e "/efi/loader/loader.conf" ]; then    # UEFI + Systemd Boot
+            elif [ -e "${efiDir}/loader/loader.conf" ]; then    # UEFI + Systemd Boot
                 echo -e "\e[0;33m UEFI + systemD boot, kein TODO\e[39m"
             else
                 echo "--- Bootloader nicht erkennbar ---"
@@ -272,7 +284,7 @@ if [[ "${doSnapper}" = 'y' ]]; then
             sudo chown -R :wheel "${snapperSnapshotFolder}" && sudo chmod -R 750 "${snapperSnapshotFolder}"
 
             # UEFI oder BIOS + GRUB    # systemd boot: kein Eintrag, manueller Sprung in tty, um auf best. snapshot zurückzusetzen
-            # if [ -e "/boot/efi/grub.cfg" ] || [ -e "/boot/grub" ]; then    # Grub
+            # if [ -e "${efiDir}/grub.cfg" ] || [ -e "/boot/grub" ]; then    # Grub
             if [ -e "/boot/grub" ]; then    # Grub
                 echo -e "\n*** Enable 'grub-btrfsd.service', 'snapper-cleanup.timer'..."
                 sudo systemctl enable --now grub-btrfsd.service
@@ -290,13 +302,16 @@ if [[ "${doSnapper}" = 'y' ]]; then
             sudo cp "${SCRIPT_DIR}/95-bootbackup.hook" /etc/pacman.d/hooks/95-bootbackup.hook && \
             sudo chown root:root /etc/pacman.d/hooks/95-bootbackup.hook
 
-            if [ -e "/efi/loader/loader.conf" ]; then           # systemd Boot
-                echo -e "\n*** Erstelle Hook für backup '/efi' (benötigt rsync)"
+
+            #if [ -e "/efi/loader/loader.conf" ]; then           # systemd Boot
+            if [ -e "${efiDir}/loader/loader.conf" ]; then           # systemd Boot
+                #echo -e "\n*** Erstelle Hook für backup '/efi' (benötigt rsync)"
+                echo -e "\n*** Erstelle Hook für backup '${efiDir}' (benötigt rsync)"
                 echo "Installiere rsync, falls nicht vorhanden..."
                 sudo pacman --needed --noconfirm -S rsync
                 echo "Erstelle (kopiere nach) '/etc/pacman.d/hooks/95-efibackup.hook'..."
-                # SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)   # https://codefather.tech/blog/bash-get-script-directory/
-                SCRIPT_DIR=$(dirname "${BASH_SOURCE[0]}")
+                # SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)   # absolute path # https://codefather.tech/blog/bash-get-script-directory/ # absolute path
+                SCRIPT_DIR=$(dirname "${BASH_SOURCE[0]}")                    # relative path
                 sudo mkdir -p /etc/pacman.d/hooks && \
                 sudo cp "${SCRIPT_DIR}/95-efibackup.hook" /etc/pacman.d/hooks/95-efibackup.hook && \
                 sudo chown root:root /etc/pacman.d/hooks/95-efibackup.hook
@@ -308,7 +323,8 @@ if [[ "${doSnapper}" = 'y' ]]; then
             echo "Aktuelle Liste der Snapshots:"
             sudo snapper ls
 
-            if [ -e "/boot/efi/grub.cfg" ] || [ -e "/boot/grub" ]; then     # GRUB (bei systemd Boot: kein Booteintrag, manuell in tty)
+            #if [ -e "/boot/efi/grub.cfg" ] || [ -e "/boot/grub" ]; then     # GRUB (bei systemd Boot: kein Booteintrag, manuell in tty)
+            if [ -e "${efiDir}/grub.cfg" ] || [ -e "/boot/grub" ]; then     # GRUB (bei systemd Boot: kein Booteintrag, manuell in tty)
                 echo -e "\n*** Aktualisiere Grub"
                 echo "Aktualisiere 'grub.cfg'"
                 sudo grub-mkconfig -o /boot/grub/grub.cfg && \
