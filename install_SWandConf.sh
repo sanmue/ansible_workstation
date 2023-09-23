@@ -503,8 +503,9 @@ curl -sS "https://starship.rs/install.sh" > "/home/${userid}/starship_install.sh
 
 echo -e "\nStarte Ansible-Playbook ...\n"
 echo -e "\n\e[0;33m### Info\e[39m"
-echo -e "\e[0;33m#   If you encounter a problem/error within the playbook, e.g. with pip/pyenv/python\e[39m"
-echo -e "\e[0;33m#   make a restart an start the script / playbook again\e[39m"
+echo -e "\e[0;33m#   - If you encounter a problem/error while executing the playbook (e.g. with pip / python, ...)\e[39m"
+echo -e "\e[0;33m#     restart your system and start the script / playbook again\e[39m"
+echo -e "\e[0;33m#   - If VS Code opens you can simply close it again or leave it open until script is finished\e[39m"
 echo -e "\e[0;33m###\e[39m\n"
 ansible-playbook "/home/${userid}/${playbookdir}/${playbook}" -v -K
 # bei verschlüsselten Daten z.B.:
@@ -520,8 +521,8 @@ case ${os} in
         read -r -p "Install some predefined additonal software from AUR ? ('j'=ja, sonstige Eingabe: nein): " installAUR
 
         if [ "${installAUR}" == "j" ]; then
-            echo -e "\nInstall 'autokey-gtk' from AUR..."          # da aktuell Gnome verwende
-            yay -S --needed autokey-gtk && touch "/home/${userid}/.ansible_bootstrap_autokeyGtkInstalled"
+            # echo -e "\nInstall 'autokey-gtk' from AUR..."          # da aktuell Gnome verwende
+            # yay -S --needed autokey-gtk && touch "/home/${userid}/.ansible_bootstrap_autokeyGtkInstalled"
 
             # echo -e "\nInstall 'autokey-qt' from AUR (Arch)"   # e.g. when using Plasma
             # yay -S --needed autokey-qt # && touch "/home/${userid}/.ansible_bootstrap_autokeyQtInstalled"
@@ -546,7 +547,8 @@ case ${os} in
             yay -S --needed linux-steam-integration
 
             echo -e "\nInstall Citrix Workspace App (icaclient) from AUR..."
-            yay -S --needed icaclient && touch "/home/${userid}/.ansible_bootstrap_pamac-icaclientInstalled"
+            yay -S icaclient && touch "/home/${userid}/.ansible_bootstrap_pamac-icaclientInstalled" && mkdir -p "/home/${userid}/.ICAClient/cache" && \
+            sudo rsync -aPhEv /opt/Citrix/ICAClient/config/{All_Regions,Trusted_Region,Unknown_Region,canonicalization,regions}.ini "/home/${userid}/.ICAClient/"
 
             echo -e "\nInstall 'btrfs-assistant' from AUR..."
             yay -S --needed btrfs-assistant && touch "/home/${userid}/.ansible_bootstrap_pamac-btrfsassistantInstalled"
