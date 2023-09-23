@@ -51,7 +51,7 @@
       - neofetch
       - rclone                # sync tool
       - rsync                 # bereits installiert (bootstrap)
-      # - samba               # für VM: File sharing between host and Windows guest; https://wiki.manjaro.org/index.php/Virt-manager/en
+      # - samba               # z.B. für VM: File sharing between host and Windows guest; https://wiki.manjaro.org/index.php/Virt-manager/en
       # - skanlite            # bei KDE Plasma Desktop
       - speedtest-cli
       - steam
@@ -131,22 +131,20 @@
       - python-pytest-pylint
       - remmina
       - shellcheck
-      # - snapd               # bei Manjaro in repo drin, bei Arch (EndeavourOS) nicht
       - signal-desktop
       - steam-native-runtime  # Native replacement for the Steam runtime using system libraries (installiert benötigte 32bit libs)
       - torbrowser-launcher
       - ttf-dejavu
       - ttf-dejavu-nerd
-      # - ttf-font-awesome
       - ttf-sourcecodepro-nerd
       - vim-ansible
-      # # - zsh   # s.o. basic all
+      # # - zsh                       # s.o. basic all
       # # - zsh-doc
       - zsh-autosuggestions           # besser: install from git?
       # - # zsh-completions             # besser: install from git?
       - zsh-syntax-highlighting       # besser: install from git?
       - zsh-history-substring-search  # besser: install from git?
-      # # - zsh-theme-powerlevel10k   # bei Manjaro vorhanden (oh-my-zsh) # besser: install from git # There is also zsh-theme-powerlevel10k community package.
+      # # - zsh-theme-powerlevel10k   # besser: install from git # There is also zsh-theme-powerlevel10k community package.
                                       # Historically, it has been breaking often and for extended periods of time. Do not use it.
       # # - zshdb                     # A debugger for zsh scripts
       # ---------
@@ -155,25 +153,6 @@
       - linux-firmware
       - sof-firmware
   when: ansible_distribution in ["Archlinux"]
-
-- name: Install basic packages (Manjaro)
-  ansible.builtin.package:
-    name:
-      - brave-browser
-      - linux-steam-integration
-      - manjaro-keyring
-      # - snapd
-      # - timeshift
-      - ttf-meslo-nerd-font-powerlevel10k
-      # -----------------------------------
-      # flatpak- und snap-plugin für pamac:
-      # - libpamac-flatpak-plugin
-      # - pamac-snap-plugin
-    state: present
-  when:
-    - ansible_distribution in ["Archlinux"]
-    - env_lsb_id == "ManjaroLinux"
-
 
 - name: Install basic packages (Ubuntu)
   ansible.builtin.package:
@@ -246,7 +225,7 @@
 #  ansible.builtin.apt:
 #    state: present
 #    name:
-# #      - firefox                      # ab Ubuntu 22.04: Standard als snap package installiert (Probleme: z.B. Keepassxc Erweiterung)
+# #      - firefox                      # ab Ubuntu 22.04: Standard als snap package installiert (ggf. Probleme mit Erweiterungen, z.B. Keepassxc)
 # #      - firefox-dev
 #      - firefox                        # wenn alles korrekt vorher konfiguriert wurde, wird Firefox aus mozillateam ppa als deb-package installiert
 # #      - firefox-locale-de
@@ -284,16 +263,13 @@
       - tk-dev
   when: ansible_distribution == "Ubuntu"
 
-
 - name: Install basic packages - xclip (all + x11 display server)
   ansible.builtin.package:
     state: present
     name:
-      - xclip                           # Command line interface to the X11 clipboard # Voraussetzung für snap-package "espanso"
+      - xclip                               # Command line interface to the X11 clipboard # Voraussetzung für snap-package "espanso"
   when:
-#    - ansible_distribution in ["Ubuntu", "Archlinux"]
     - env_displayserver == "x11"
-
 
 - name: Install basic packages - Get stat of .pyenv (all)
   ansible.builtin.stat:
