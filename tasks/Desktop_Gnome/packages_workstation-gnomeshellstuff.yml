@@ -7,7 +7,6 @@
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
-
 - name: Install gnomeshell extension stuff (Ubuntu >=22 + Gnome)
   tags: workstation,gnome,ubuntu
   ansible.builtin.package:
