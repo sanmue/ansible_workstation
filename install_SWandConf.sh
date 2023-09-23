@@ -502,10 +502,10 @@ curl -sS "https://starship.rs/install.sh" > "/home/${userid}/starship_install.sh
 #fi
 
 echo -e "\nStarte Ansible-Playbook ...\n"
-echo -e "\n\e[0;33m### Info - Start\e[39m"
-echo -e "\n\e[0;33m#   If you encounter a problem/error within the playbook, e.g. with pip/pyenv/python\e[39m"
-echo -e "\n\e[0;33m#   make a restart an start the script / playbook again\e[39m"
-echo -e "\n\e[0;33m### Info - End\e[39m"
+echo -e "\n\e[0;33m### Info\e[39m"
+echo -e "\e[0;33m#   If you encounter a problem/error within the playbook, e.g. with pip/pyenv/python\e[39m"
+echo -e "\e[0;33m#   make a restart an start the script / playbook again\e[39m"
+echo -e "\e[0;33m###\e[39m\n"
 ansible-playbook "/home/${userid}/${playbookdir}/${playbook}" -v -K
 # bei verschlüsselten Daten z.B.:
 #ansible-playbook "/home/${userid}/${playbookdir}/${playbook}" -v -K --vault-password-file "/home/${userid}/.ansibleVaultKey"
