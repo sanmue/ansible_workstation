@@ -488,13 +488,6 @@ curl -sS "https://starship.rs/install.sh" > "/home/${userid}/starship_install.sh
 
 
 ### ---
-### Git-repo mit Ansible Playbook herunterladen (clone oder pull)
-### ---
-#echo -e "\nGit-repo mit Ansible Playbook herunterladen..."
-#git clone "${gitOnlineRepo}"
-
-
-### ---
 ### Test Ansbile Playbook
 ### ---
 #echo ""
@@ -508,8 +501,11 @@ curl -sS "https://starship.rs/install.sh" > "/home/${userid}/starship_install.sh
 #    echo "TEST des Playbooks wird NICHT durchgefürt"
 #fi
 
-
-echo -e "\nStarte Ansible-Playbook ..."
+echo -e "\nStarte Ansible-Playbook ...\n"
+echo -e "\n\e[0;33m### Info - Start\e[39m"
+echo -e "\n\e[0;33m#   If you encounter a problem/error within the playbook, e.g. with pip/pyenv/python\e[39m"
+echo -e "\n\e[0;33m#   make a restart an start the script / playbook again\e[39m"
+echo -e "\n\e[0;33m### Info - End\e[39m"
 ansible-playbook "/home/${userid}/${playbookdir}/${playbook}" -v -K
 # bei verschlüsselten Daten z.B.:
 #ansible-playbook "/home/${userid}/${playbookdir}/${playbook}" -v -K --vault-password-file "/home/${userid}/.ansibleVaultKey"
@@ -521,7 +517,7 @@ case ${os} in
         ### weitere Installationen mit yay (Arch Linux, EndeavourOS)
         ### - an den Schluss gestellt, damit Playbookausführung nicht aufgehalten wird
         ### ---
-        read -r -p "Install some predefined additonal software from AUR ? ('j'=ja, sonstige Eingabe: nein)" installAUR
+        read -r -p "Install some predefined additonal software from AUR ? ('j'=ja, sonstige Eingabe: nein): " installAUR
 
         if [ "${installAUR}" == "j" ]; then
             echo -e "\nInstall 'autokey-gtk' from AUR..."          # da aktuell Gnome verwende
@@ -567,8 +563,8 @@ case ${os} in
     ;;
 
     *)
-        echo -e "\nKeine abschließenden zusätzlichen Installationen definiert --- default switch (case os, final step)"
+        echo -e "\nNo final additional installations defined --- default switch (case os, final step)"
     ;;
 esac
 
-echo -e "\n\e[0;33mSkript beendet.\e[39m"
+echo -e "\n\e[0;33mScript finished.\e[39m"
