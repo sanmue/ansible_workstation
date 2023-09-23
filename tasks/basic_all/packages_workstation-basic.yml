@@ -6,67 +6,65 @@
   ansible.builtin.package:
     state: present
     name:
-      - ansible   # bereits installiert (bootstrap)
-      - ansible-lint   # für z.B. ansible extension in VS Code
+      - ansible               # bereits installiert (bootstrap)
+      - ansible-lint          # für z.B. ansible extension in VS Code
       - bash
-      - basdb   # A debugger for Bash scripts loosely modeled on the gdb command syntax
       - bleachbit
       - clamav
       - clamtk
-      - cockpit             # A systemd web based user interface for Linux servers
-      - cockpit-packagekit  # Cockpit user interface for packages
-      - cockpit-storaged    # Cockpit user interface for storage, using udisks
-      - cockpit-machines    # Cockpit UI for virtual machines
+      - cockpit               # A systemd web based user interface for Linux servers
+      - cockpit-packagekit    # Cockpit user interface for packages
+      - cockpit-storaged      # Cockpit user interface for storage, using udisks
+      - cockpit-machines      # Cockpit UI for virtual machines
       # - cockpit-podman      # Cockpit UI for podman containers
-      - cockpit-pcp         # Cockpit support for reading PCP metrics and loading PCP archives
-      - cryptsetup   # benötigt für LUKS # sollte schon installiert sein
+      - cockpit-pcp           # Cockpit support for reading PCP metrics and loading PCP archives
+      - cryptsetup            # benötigt für LUKS # sollte schon installiert sein
       - cups
       - curl
-      # - deja-dup   # aktuell genutzt: Vorta+borg # A trivial-to-use personal backup tool to protect against accidental data loss
+      # - deja-dup            # aktuell genutzt: Vorta+borg # A trivial-to-use personal backup tool to protect against accidental data loss
       - dmidecode
-      - duf   # Disk Usage/Free Utility
+      - duf                   # Disk Usage/Free Utility
       - efivar
       - evolution
-      - exa   # ls replacement
+      - exa                   # ls replacement
       - flatpak
       - font-manager
       - gcc
       - gimp
-      # - gimp-help-en   # Suse: gimp-help-en_GB
-      - git   # bereits installiert (bootstrap)
+      # - gimp-help-en
+      - git                   # bereits installiert (bootstrap)
       - gpick
       - grsync
-      - hplip   # Drivers for HP DeskJet, OfficeJet, Photosmart, Business Inkjet and some LaserJet
+      - hplip                 # Drivers for HP DeskJet, OfficeJet, Photosmart, Business Inkjet and some LaserJet
       - htop
       - hunspell
       # - hyphen-de
-      - inotify-tools # benötigt von 'grub-btrfsd.service' # command-line programs providing a simple interface to inotify
+      - inotify-tools         # benötigt von 'grub-btrfsd.service' # command-line programs providing a simple interface to inotify
       - inxi
-      - jq   # Command-line JSON processor
+      - jq                    # Command-line JSON processor
       - keepassxc
-      - kitty   # gpu beschleunigtes terminal
-      - libfaketime   # Report fake dates and times to programs without having to change the system-wide time.
+      - kitty                 # gpu beschleunigtes terminal
+      - libfaketime           # Report fake dates and times to programs without having to change the system-wide time.
       - lsb-release
       - make
       # - man-pages-de
       - neofetch
-      - rclone   # sync tool
-      - rsync   # bereits installiert (bootstrap)
-      # - samba   # für VM: File sharing between host and Windows guest; https://wiki.manjaro.org/index.php/Virt-manager/en
-      # - manjaro-settings-samba   # Adds an smb.conf file for Manjaro and enables samba
-      # - skanlite   # bei KDE Plasma Desktop
+      - rclone                # sync tool
+      - rsync                 # bereits installiert (bootstrap)
+      # - samba               # für VM: File sharing between host and Windows guest; https://wiki.manjaro.org/index.php/Virt-manager/en
+      # - skanlite            # bei KDE Plasma Desktop
       - speedtest-cli
       - steam
       - syncthing
-      # - terminator   # Terminal emulator that supports tabs and grids
-      - tk   # Graphical User Interface Toolkit for Tcl   # z.B. pyenv install 3.11.3: erscheint sonst meldung, dass nicht vorhanden
-      - vim   # bereits installiert (bootstrap)
-      - vim-ale   # Lint Engine
+      # - terminator          # Terminal emulator that supports tabs and grids
+      - tk                    # Graphical User Interface Toolkit for Tcl   # z.B. pyenv install 3.11.3: requirement 
+      - vim                   # bereits installiert (bootstrap)
+      - vim-ale               # Lint Engine (plugin for vim)
       - vlc
       - unzip
       - wget
       - xdg-utils
-      - yq   # Command-line YAML, XML, TOML processor - jq wrapper for YAML/XML/TOML documents
+      - yq                    # Command-line YAML, XML, TOML processor - jq wrapper for YAML/XML/TOML documents
       - zsh
       # ---------
       # firmware:
@@ -79,27 +77,27 @@
     state: present
     name:
       - archlinux-keyring
-      - base-devel        # insbes. wg. AUR Paketen   # bereits installiert (bootstrap)
-      - borg              # Deduplicating backup program with compression and authenticated encryption # GUI: vorta -> via yay in bootstrap.sh
+      - base-devel            # insbes. wg. AUR Paketen   # bereits installiert (bootstrap)
+      - borg                  # Deduplicating backup program with compression and authenticated encryption # GUI: vorta -> via yay in bootstrap.sh
       - chromium
-      - cronie            # z.B. für clamtk + timeshift # Daemon that runs specified programs at scheduled times and related tools
-      - code              # The Open Source build of Visual Studio Code (vscode) editor
+      - cronie                # z.B. für clamtk + timeshift # Daemon that runs specified programs at scheduled times and related tools
+      - code                  # The Open Source build of Visual Studio Code (vscode) editor
       - cups-pdf
       - discord
-      - eslint   # An AST-based pattern checker for JavaScript (für VS Code / Code - OSS Extension)
+      - eslint                # An AST-based pattern checker for JavaScript (für VS Code / Code - OSS Extension)
       - evolution-bogofilter
-      - evolution-ews     # MS Exchange integration through Exchange Web Services
+      - evolution-ews         # MS Exchange integration through Exchange Web Services
       - evolution-spamassassin
-      # - evolution-on    # Tray plugin for the Evolution email client
-      # - exfat-utils     # exfat-utils and exfatprogs are in conflict
-      - fd   # Simple, fast and user-friendly alternative to find
+      # - evolution-on        # Tray plugin for the Evolution email client
+      # - exfat-utils         # exfat-utils and exfatprogs are in conflict
+      - fd                    # Simple, fast and user-friendly alternative to find
       - firefox
       - firefox-i18n-en-us
-      # - flameshot       # -> ksnip
-      # - firewalld       # bereits installiert (bootstrap)
+      # - flameshot           # -> ksnip
+      # - firewalld           # ggf. bereits installiert (bootstrap)
       - foliate
       - freerdp
-      - fzf   # Command-line fuzzy finder
+      - fzf                   # Command-line fuzzy finder
       - github-cli
       - gnupg
       - gpgme
@@ -108,34 +106,34 @@
       # - ipset
       - kdeconnect
       - ksnip
-      - libnotify           # Library for sending desktop notifications
+      - libnotify             # Library for sending desktop notifications
       - libreoffice-still
       # - libreoffice-still-de
       - libreoffice-still-en-gb
       - lshw
-      - malcontent          # Parental control support for applications
+      - malcontent            # Parental control support for applications
       - nextcloud-client
-      - openssh             # bereits installiert (bootstrap)
+      - openssh               # bereits installiert (bootstrap)
       - packagekit
-      - pkgfile             # sollte bereits installiert sein (mit 'pacman') # tool for searching files from packages in the official repositories
-      # - powerline         # Statusline plugin for vim, an provides statuslines udn prompts for several other applications
-      #                     # including zsh, bash, tmux, IPython, Awesome, i3 and qtile
-      # - powerline-fonts   # patched fonts for powerline
-      # - powerline-vim     # vim plugin for powerline
-      - psutils             # A set of postscript utilities
+      - pkgfile               # sollte bereits installiert sein (mit 'pacman') # tool for searching files from packages in the official repositories
+      # - powerline           # Statusline plugin for vim, an provides statuslines udn prompts for several other applications
+      #                       # including zsh, bash, tmux, IPython, Awesome, i3 and qtile
+      # - powerline-fonts     # patched fonts for powerline
+      # - powerline-vim       # vim plugin for powerline
+      - psutils               # A set of postscript utilities
       - pyenv
       - python-pip
       # - python-pipx         # Install and Run Python Applications in Isolated Environments
       - python-psutil
-      - python-setuptools   # Easily download, build, install, upgrade, and uninstall Python packages
+      - python-setuptools     # Easily download, build, install, upgrade, and uninstall Python packages
       - python-pylint
       - python-pylint-venv
       - python-pytest-pylint
       - remmina
       - shellcheck
-      # - snapd                 # bei Manjaro in repo drin, bei Arch (EndeavourOS) nicht
+      # - snapd               # bei Manjaro in repo drin, bei Arch (EndeavourOS) nicht
       - signal-desktop
-      - steam-native-runtime    # Native replacement for the Steam runtime using system libraries (installiert benötigte 32bit libs)
+      - steam-native-runtime  # Native replacement for the Steam runtime using system libraries (installiert benötigte 32bit libs)
       - torbrowser-launcher
       - ttf-dejavu
       - ttf-dejavu-nerd
@@ -148,9 +146,9 @@
       # - # zsh-completions             # besser: install from git?
       - zsh-syntax-highlighting       # besser: install from git?
       - zsh-history-substring-search  # besser: install from git?
-      # # - zsh-theme-powerlevel10k     # bei Manjaro vorhanden (oh-my-zsh) # besser: install from git # There is also zsh-theme-powerlevel10k community package.
-      #                               Historically, it has been breaking often and for extended periods of time. Do not use it.
-      # # - zshdb                       # A debugger for zsh scripts
+      # # - zsh-theme-powerlevel10k   # bei Manjaro vorhanden (oh-my-zsh) # besser: install from git # There is also zsh-theme-powerlevel10k community package.
+                                      # Historically, it has been breaking often and for extended periods of time. Do not use it.
+      # # - zshdb                     # A debugger for zsh scripts
       # ---------
       # firmware:
       # - alsa-firmware               # unresolvable package conflicts detected
@@ -176,157 +174,40 @@
     - ansible_distribution in ["Archlinux"]
     - env_lsb_id == "ManjaroLinux"
 
-# - name: Install basic packages (Archlinux, NOT Manjaro)
-#  community.general.pacman:
-#    name:
-#      - awesome-terminal-fonts
-#  when:
-#    - ansible_distribution in ["Archlinux"]
-#    - env_lsb_id != "ManjaroLinux"
-
-# Inst für Archlinux, EndeavourOS: packages_workstation-localPackageInstall.yml
-# da aufgrund mehrerer Treffer mit yay Inst so nicht funktioniert
-# - name: Install basic packages (Archlinux, NOT Manjaro)
-#  community.general.pacman:
-#    name:
-#    - brave
-#    - btrfs-assistant
-#    - linux-steam-integration
-#    - snapd
-#    # # - timeshift
-#    # # - timeshift-systemd-timer
-#    # # - timeshift-autosnap
-#    # # - timeshift-autoupgrade
-#    state: present
-#    executable: yay
-#    extra_args: --noconfirm -S
-#  when:
-#  - ansible_distribution in ["Archlinux"]
-#  - env_lsb_id != "ManjaroLinux"
-
-
-# voreschoben nach bootstap.sh
-#
-# - name: Install basic packages - AUR - pamac - brave-bin (Archlinux, NOT Manjaro)
-#  # ansible.builtin.shell: "pamac build --no-confirm brave-bin linux-steam-integration snapd && touch /home/{{ env_user }}/.ansible_pamacArchBasicPackages"
-#  # müssen im Folgenden einzeln aufgeführt werden, da sonst Fehler-Rückmeldung
-#  # alternativ evtl. testen: über shell-skript
-#  ansible.builtin.shell: "pamac build --no-confirm brave-bin"
-#  args:
-#    creates: "/home/{{ env_user }}/.ansible_pamacArchBasicPackages"
-#  when:
-#    - ansible_distribution in ["Archlinux"]
-#    - env_lsb_id != "ManjaroLinux"
-
-# - name: Install basic packages - AUR - pamac - linux-steam-integration (Archlinux, NOT Manjaro)
-#  ansible.builtin.shell: "pamac build --no-confirm linux-steam-integration"
-#  args:
-#    creates: "/home/{{ env_user }}/.ansible_pamacArchBasicPackages"
-#  when:
-#    - ansible_distribution in ["Archlinux"]
-#    - env_lsb_id != "ManjaroLinux"
-
-# - name: Install basic packages - AUR - pamac - ttf-meslo-nerd-font-powerlevel10k (Archlinux, NOT Manjaro)
-#  ansible.builtin.shell: "pamac build --no-confirm ttf-meslo-nerd-font-powerlevel10k"
-#  args:
-#    creates: "/home/{{ env_user }}/.ansible_pamacArchBasicPackages"
-#  when:
-#    - ansible_distribution in ["Archlinux"]
-#    - env_lsb_id != "ManjaroLinux"
-
-# - name: Install basic packages - AUR - pamac - create flag file (Archlinux, NOT Manjaro)
-#  ansible.builtin.file:
-#    path: "/home/{{ env_user }}/.ansible_pamacArchBasicPackages"
-#    state: touch
-#    mode: u=rw,g=r,o=r
-#    modification_time: preserve
-#    access_time: preserve
-#  when:
-#    - ansible_distribution in ["Archlinux"]
-#    - env_lsb_id != "ManjaroLinux"
-
-
-# ---
-# snapd:
-# da im bootstrap.sh bereits mit yay pamac-all snapd installiert wird, hier nicht mehr notwendig
-# ---
-# Anmerkung: alterntiver install via git clone + makepkg (weiter unten) funktioniert ohne Unterbrechtung (Abrfrage sudo pw)
-# ---
-# - name: Install basic packages - AUR - pamac - snapd (Archlinux, NOT Manjaro)
-#  ansible.builtin.shell: "pamac build --no-confirm snapd"
-#  # become: true
-#  # become_user: "{{ env_user }}"   # Ablauf wird unterbroche und nach Berechtigung (root) gefragt; hat jeoch so funktioniert
-#  args:
-#    creates: "/home/{{ env_user }}/.ansible_pamacArchBasicPackagesSnapd"
-#  when:
-#    - ansible_distribution in ["Archlinux"]
-#    - env_lsb_id != "ManjaroLinux"
-
-# - name: IInstall basic packages - AUR - pamac - snapd - create flag file (Archlinux, NOT Manjaro)
-#  ansible.builtin.file:
-#    path: "/home/{{ env_user }}/.ansible_pamacArchBasicPackagesSnapd"
-#    state: touch
-#    mode: u=rw,g=r,o=r
-#    modification_time: preserve
-#    access_time: preserve
-#  when:
-#    - ansible_distribution in ["Archlinux"]
-#    - env_lsb_id != "ManjaroLinux"
-
-# # snapd: alternativer Install 'manuell' über gitclone + makepkg:
-# - name: Install basic packages from AUR (snapd) - git clone (Archlinux, NOT Manjaro)
-#  become: true
-#  become_user: "{{ env_user }}"   # damit Rechte stimmen für nächsten Schritt: makepkg
-#  ansible.builtin.git:
-#    repo: https://aur.archlinux.org/snapd.git
-#    dest: /tmp/snapd
-#  when:
-#    - ansible_distribution in ["Archlinux"]
-#    - env_lsb_id != "ManjaroLinux"
-#
-# - name: Install basic packages from AUR (snapd) - makepgk (Archlinux, NOT Manjaro)
-#  become: true
-#  become_user: "{{ env_user }}"   # makepkg darf nicht als root ausgeführt werden
-#  ansible.builtin.shell: makepkg -si --needed --noconfirm
-#  args:
-#    chdir: /tmp/snapd
-#  when:
-#    - ansible_distribution in ["Archlinux"]
-#    - env_lsb_id != "ManjaroLinux"
-
 
 - name: Install basic packages (Ubuntu)
   ansible.builtin.package:
     state: present
     name:
       - anki
-      - borgbackup   # Deduplicating backup program with compression and authenticated encryption
+      - bashdb                          # A debugger for Bash scripts loosely modeled on the gdb command syntax
+      - borgbackup                      # Deduplicating backup program with compression and authenticated encryption
       - clamav-daemon
-      - cockpit-networkmanager      # Cockpit user interface for networking
-      - eslint   # An AST-based pattern checker for JavaScript (für VS Code / Code - OSS Extension)
+      - cockpit-networkmanager          # Cockpit user interface for networking
+      - eslint                          # An AST-based pattern checker for JavaScript (für VS Code / Code - OSS Extension)
       - evolution-plugin-bogofilter
       - evolution-plugin-pstimport
       - evolution-plugin-spamassassin
       - evolution-plugins
       - exfat-fuse
-      - fd-find   # Simple, fast and user-friendly alternative to find
-      # - firefox # -> in Standard-Inst bereits vorhanden (ab 22.04: als snap package)
+      - fd-find                         # Simple, fast and user-friendly alternative to find
+      # - firefox                       # -> in Standard-Inst bereits vorhanden (ab 22.04: als snap package)
       # - firefox-locale-de
       # - firefox-locale-en
-      - fzf   # Command-line fuzzy finder
-      - gh   # GitHub CLI, GitHub\u2019s official command line tool
+      - fzf                             # Command-line fuzzy finder
+      - gh                              # GitHub CLI, GitHub\u2019s official command line tool
       - gitk
       - gpg
-      - gufw   # gui for ufw
+      - gufw                            # gui for ufw
       - hunspell-de-de
       - hunspell-en-us
       - kdeconnect
-      - libidn11-dev   # benötigt für Citrix Workspace app (ica client)
-      - libnotify-bin   # sollte schon installiert sein
+      - libidn11-dev                    # benötigt für Citrix Workspace app (ica client)
+      - libnotify-bin                   # sollte schon installiert sein
       # - luckybackup
       - openssh-client
-      - packagekit   # sollte bereits installiert sein # notwendig u.a. für cockpit
-      # - powershell   # repo wurde hinzugefügt
+      - packagekit                      # sollte bereits installiert sein # notwendig u.a. für cockpit
+      # - powershell                    # repo wurde hinzugefügt
       - printer-driver-cups-pdf
       # - pipx
       - python3-pip
@@ -337,51 +218,47 @@
       - python3-pytest-pylint
       - python3-setuptools
       # - searchmonkey
-      - ssh   # bereits installiert (bootstrap)
+      - ssh                             # bereits installiert (bootstrap)
       # - timeshift
-      - ufw   # bereits installiert (bootstrap)
-      - units   # converts between different systems of units
-      - vorta   # Desktop Client for Borg Backup
-      # - wmctrl   # autokey dependancy # sollte bereits installiert sein   # Command line tool to interact with an EWMH/NetWM compatible X Window Manager
-      # Multimedia; entspechend libs sollten bereits installiert sein (wenn mei Installer ausgewählt wurde)
+      - ufw                             # bereits installiert (bootstrap)
+      - units                           # converts between different systems of units
+      - vorta                           # Desktop Client for Borg Backup
+      # - wmctrl                        # autokey dependancy # sollte bereits installiert sein   
+                                        # Command line tool to interact with an EWMH/NetWM compatible X Window Manager
+      # Multimedia; entspechend libs sollten bereits installiert sein (wenn im Installer ausgewählt wurde)
       # - ffmpeg
       # - x264
       # - x265
       # #- gstreamer - kram
       # - ...
       # - youtube-dl
-      # - zsh   # s.o. basic all
+      # - zsh                           # s.o. basic all
       # zsh-plugins: siehe "packages_workstation-localPackageInstall.yml"
-      # - zsh-autosuggestions             # über git: https://github.com/zsh-users/zsh-autosuggestions
-      # - zsh-syntax-highlighting         # über git: https://github.com/zsh-users/zsh-syntax-highlighting
-          # zsh-history-substring-search  # über git: https://github.com/zsh-users/zsh-history-substring-search
+      # - zsh-autosuggestions           # über git: https://github.com/zsh-users/zsh-autosuggestions
+      # - zsh-syntax-highlighting       # über git: https://github.com/zsh-users/zsh-syntax-highlighting
+      # - zsh-history-substring-search  # über git: https://github.com/zsh-users/zsh-history-substring-search
       #
       # firmware:
       - linux-firmware
   when: ansible_distribution == "Ubuntu"
 
-
 # - name: Install packages for workstations - Firefox from MozillaTeam ppa (Ubuntu >=22 + Gnome)
 #  ansible.builtin.apt:
 #    state: present
 #    name:
-# #      - firefox              # ab Ubuntu 22.04: Standard als snap package installiert (Probleme: z.B. Keepassxc Erweiterung)
+# #      - firefox                      # ab Ubuntu 22.04: Standard als snap package installiert (Probleme: z.B. Keepassxc Erweiterung)
 # #      - firefox-dev
-#      - firefox               # wenn alles korrekt vorher konfiguriert wurde, wird Firefox aus mozillateam ppa als deb-package installiert
+#      - firefox                        # wenn alles korrekt vorher konfiguriert wurde, wird Firefox aus mozillateam ppa als deb-package installiert
 # #      - firefox-locale-de
 #      - firefox-locale-en
 # #      - firefox-esr
 # #      - firefox-esr-locale-en
-#    default_release: 'o=LP-PPA-mozillateam'   # damit aus ppa installiert wird, und nicht wieder von ubuntu als snap
+#    default_release: 'o=LP-PPA-mozillateam'  # damit aus ppa installiert wird, und nicht wieder von ubuntu als snap
 #    update_cache: yes
 #  when:
 #    - ansible_distribution == "Ubuntu"
 #    - ansible_distribution_major_version|int >= 22
 #    - env_desktop == "ubuntu:gnome"
-
-# ## Visual Studio Code - Install
-# ## - moved to packages_workstation-localPackageInstall.yml
-
 
 - name: Install basic packages - prereqesites for Pyenv (Ubuntu)
   ansible.builtin.package:
@@ -390,7 +267,7 @@
       # Pyenv
       # https://ostechnix.com/pyenv-python-version-management-made-easier/
       # https://github.com/pyenv/pyenv-installer
-      # manche Pakete sind schon installiert (s.o.):
+      # manche Pakete sind schon installiert (s.o.)
       - make
       - build-essential
       - libssl-dev
@@ -408,84 +285,11 @@
   when: ansible_distribution == "Ubuntu"
 
 
-- name: Install basic packages (Suse)
-  ansible.builtin.package:
-    state: present
-    name:
-      # ### Python - mit Versionsangabe im Paketnamen
-      - python311
-      - python311-pip
-      # - python311-pipx
-      - python311-psutil
-      - python311-setuptools
-      # ###
-      - adobe-sourcecodepro-fonts
-      - borgbackup
-      - brave-browser
-      - cockpit-networkmanager
-      - cockpit-podman
-      - chromium
-      - cron
-      - code   # Visual Studio Code   # Repo wurde hinzugefügt
-      - cups-pdf
-      - dejavu-fonts
-      - discord
-      - evolution-ews
-      - evolution-plugin-bogofilter
-      - evolution-plugin-spamassassin
-      - exfat-utils
-      - flatpak-remote-flathub
-      - flatpak-zsh-completion
-      - fuse-exfat
-      - fd
-      - foliate
-      - fzf
-      - fzf-zsh-completion
-      - gh   # The official CLI for GitHub
-      - gpgme
-      - hunspell
-      - kdeconnect-kde
-      - kdeconnect-kde-zsh-completion
-      - ksnip
-      - libnotify-tools
-      - libreoffice
-      - libreoffice-l10n-en
-      - lshw
-      - malcontent
-      - nextcloud-desktop
-      - openssh
-      - openssh-clients
-      - PackageKit
-      - psutils
-      - pyenv
-      - pyenv-zsh-completion
-      - remmina
-      - remmina-plugin-rdp
-      - remmina-plugin-spice
-      - remmina-plugin-vnc
-      - remmina-plugin-www
-      - ShellCheck
-      - steam
-      - steamtricks
-      # - libopenssl1_0_0-steam
-      # - libopenssl1_0_0-steam-32bit
-      - torbrowser-launcher
-      - units
-      - vim-plugin-markdown
-      - vim-plugin-powerline
-      - vim-plugin-salt
-      - zlib   # repo wurde hinzugefügt (TW), insbes. wg. pyenv
-      # ### firmware:
-      - sof-firmware   # Firmware data files for SOF Drivers # Sound Open Firmware (SOF)
-      # - alsa-firmware
-  when: ansible_os_family == "Suse"
-
-
 - name: Install basic packages - xclip (all + x11 display server)
   ansible.builtin.package:
     state: present
     name:
-      - xclip   # Command line interface to the X11 clipboard   # Voraussetzung für snap-package "espanso"
+      - xclip                           # Command line interface to the X11 clipboard # Voraussetzung für snap-package "espanso"
   when:
 #    - ansible_distribution in ["Ubuntu", "Archlinux"]
     - env_displayserver == "x11"
@@ -495,16 +299,6 @@
   ansible.builtin.stat:
     path: "/home/{{ env_user }}/.pyenv"
   register: pyenvfolder
-
-# nach bootstrap.sh verschoben wg. timeout
-# - name: Install basic packages - Download Installer-Skript for Pyenv (Ubuntu)
-#   ansible.builtin.get_url:
-#     url: https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer
-#     dest: "/home/{{ env_user }}/Downloads/pyenv-installer.sh"
-#     mode: u=rwx,g=rwx,o=rwx
-#   when:
-#     - ansible_distribution == "Ubuntu"
-#     - pyenvfolder.stat.exists == false
 
 - name: Install basic packages - Get stat of pyenv-installer skript (all)
   ansible.builtin.stat:
@@ -521,22 +315,3 @@
   when:
     - ansible_distribution == "Ubuntu"
     - pyenvskript.stat.exists == true
-
-
-# - name: install Vivaldi Browser (Ubuntu)
-#  ansible.builtin.package:
-#    state: present
-#    name:
-#      - vivaldi-stable
-# #  when: ansible_os_family == "Suse" or
-# #        ansible_distribution in ["Ubuntu"]
-#  when: ansible_distribution in ["Ubuntu"]
-
-# - name: Install Vivaldi Browser (Archlinux)
-#  ansible.builtin.package:
-#    state: present
-#    name:
-#      - vivaldi
-#      - vivaldi-ffmpeg-codecs
-#  when:
-#    - ansible_distribution in ["Archlinux"]

@@ -1,109 +1,92 @@
-# ####################################
-# ### pamac.conf - Archlinux (Manjaro)
-# ####################################
-
-- name: Check if exists pamac.conf (Archlinux/Manjaro)
-  ansible.builtin.stat:
-    path: /etc/pamac.conf
-  register: pamac_conf
+# ###########################
+# ### pacman.conf - Archlinux
+# ###########################
+- name: Config Workstation addrepos - pacman.conf - activate Color (Archlinux)
+  become: true
+  ansible.builtin.lineinfile:
+    path: "/etc/pacman.conf"
+    regexp: '^#Color'
+    line: 'Color'
+    backup: true
   when:
     - ansible_distribution == "Archlinux"
 
-- name: Enable AUR support for pamac gui (Archlinux/Manjaro)
-  ansible.builtin.shell:
-    cmd: sudo sed -Ei '/EnableAUR/s/^#//' /etc/pamac.conf
+- name: Config Workstation addrepos - pacman.conf - activate ParallelDownloads (Archlinux)
+  become: true
+  ansible.builtin.lineinfile:
+    path: "/etc/pacman.conf"
+    regexp: '^#ParallelDownloads.*'
+    line: 'ParallelDownloads = 5'
+    backup: true
   when:
     - ansible_distribution == "Archlinux"
-    - pamac_conf.stat.exists
 
-- name: Enable check updates for AUR packages in pamac (Archlinux/Manjaro)
-  ansible.builtin.shell:
-    cmd: sudo sed -Ei '/CheckAURUpdates/s/^#//' /etc/pamac.conf
+# multilib: If you want to run 32 bit applications on your x86_64 system... # e.g. for 'steam'
+- name: Config Workstation addrepos - pacman.conf - activate multilib repo - step1 (Archlinux)
+  become: true
+  ansible.builtin.lineinfile:
+    path: "/etc/pacman.conf"
+    search_string: '#Include = /etc/pacman.d/mirrorlist'
+    insertafter: '^#\[multilib\]'
+    line: 'Include = /etc/pacman.d/mirrorlist'
   when:
     - ansible_distribution == "Archlinux"
-    - pamac_conf.stat.exists
 
-
-# ########
-# ### Suse
-# ########
-
-# https://brave.com/linux/
-- name: config workstation - addrepos - add rpm key - brave browser (Suse)
-  ansible.builtin.rpm_key:
-    key: https://brave-browser-rpm-release.s3.brave.com/brave-core.asc
-    state: present
-  when: ansible_os_family == "Suse"
-
-- name: config workstation - addrepos - brave browser (Suse)
-  community.general.zypper_repository:
-    # name: vscode   # "msg": "Incompatible option: 'name'. Do not use name when adding .repo files"
-    # auto_import_keys: true
-    autorefresh: true
-    description: "Repo for Brave Browser"
-    enabled: true
-    repo: https://brave-browser-rpm-release.s3.brave.com/brave-browser.repo
-    runrefresh: true
-    state: present
-  when: ansible_os_family == "Suse"
-
-
-# https://software.opensuse.org/download.html?project=home%3Astsiao&package=ulauncher
-- name: config workstation - addrepos - ulauncher (Suse TW)
-  community.general.zypper_repository:
-    auto_import_keys: true
-    autorefresh: true
-    description: "Repo for Ulauncher"
-    enabled: true
-    repo: https://download.opensuse.org/repositories/home:stsiao/openSUSE_Tumbleweed/home:stsiao.repo
-    runrefresh: true
-    state: present
-  when: 
-    - ansible_distribution in ["openSUSE Tumbleweed"]
-
-
-# - https://en.opensuse.org/Visual_Studio_Code
-# - https://code.visualstudio.com/docs/setup/linux
-- name: config workstation - addrepos - add rpm key - Visual Studio Code (Suse)
-  ansible.builtin.rpm_key:
-    key: https://packages.microsoft.com/keys/microsoft.asc
-    state: present
-  when: ansible_os_family == "Suse"
-
-- name: config workstation - addrepos - Visual Studio Code (Suse)
-  community.general.zypper_repository:
-    name: vscode
-    # auto_import_keys: true
-    autorefresh: true
-    description: "Repo for Microsoft Visual Studio Code"
-    enabled: true
-    repo: https://packages.microsoft.com/yumrepos/vscode
-    runrefresh: true
-    state: present
-  when: ansible_os_family == "Suse"
-
-
-# https://software.opensuse.org/download/package?package=zlib&project=openSUSE%3AFactory
-# https://software.opensuse.org/download/package?package=zlib&project=home%3Aalveus%3Aplex
-# insbes. wg. pyenv
-- name: config workstation - addrepos - zlib (Suse TW)
-  community.general.zypper_repository:
-    auto_import_keys: true
-    autorefresh: true
-    description: "Repo for zlib"
-    enabled: true
-    # repo: https://download.opensuse.org/repositories/openSUSE:Factory/standard/openSUSE:Factory.repo
-    repo: https://download.opensuse.org/repositories/home:alveus:plex/openSUSE_Tumbleweed/home:alveus:plex.repo
-    runrefresh: true
-    state: present
+- name: Config Workstation addrepos - pacman.conf - activate multilib repo - step2 (Archlinux)
+  become: true
+  ansible.builtin.lineinfile:
+    path: "/etc/pacman.conf"
+    regexp: '^#\[multilib\]'
+    line: '[multilib]'
+    backup: true
   when:
-    - ansible_distribution in ["openSUSE Tumbleweed"]
+    - ansible_distribution == "Archlinux"
 
+# #####################################
+# ### pamac.conf - Archlinux with Pamac
+# #####################################
+# - name: Check if exists pamac.conf (Archlinux)
+#   ansible.builtin.stat:
+#     path: /etc/pamac.conf
+#   register: pamac_conf
+#   when:
+#     - ansible_distribution == "Archlinux"
+
+# - name: Enable AUR support for pamac gui (Archlinux)
+#   ansible.builtin.shell:
+#     cmd: sudo sed -Ei '/EnableAUR/s/^#//' /etc/pamac.conf
+#   when:
+#     - ansible_distribution == "Archlinux"
+#     - pamac_conf.stat.exists
+
+# - name: Enable check updates for AUR packages in pamac (Archlinux)
+#   ansible.builtin.shell:
+#     cmd: sudo sed -Ei '/CheckAURUpdates/s/^#//' /etc/pamac.conf
+#   when:
+#     - ansible_distribution == "Archlinux"
+#     - pamac_conf.stat.exists
 
 # ##########
 # ### Ubuntu
 # ##########
 
+- name: add repo for swtpm (apt, Ubuntu <22, not VM)   # wg. VM: Win11 (TPM 2.0)
+  # https://launchpad.net/~smoser/+archive/ubuntu/swtpm
+  # https://launchpad.net/~stefanberger/+archive/ubuntu/swtpm
+  tags: workstation,ubuntu,addrepos,pre
+  ansible.builtin.apt_repository:
+    # repo: deb http://ppa.launchpad.net/smoser/swtpm/ubuntu focal main
+    repo: ppa:smoser/swtpm
+    state: present
+    update_cache: true
+  when:
+    - ansible_pkg_mgr == "apt"
+    - ansible_distribution == "Ubuntu"
+    - ansible_distribution_major_version|int < 22
+    - ansible_virtualization_role != "guest"
+      # ab Ubuntu 22.04 ist swtpm anscheinend in Standard-Repo mit drin
+
+# --- Firefox
 # https://fostips.com/ubuntu-21-10-two-firefox-remove-snap/
 #
 # Anmerkung: wird aktuell nicht mehr benötigt, da als flatpak installiert wird
@@ -138,8 +121,7 @@
     - env_desktop in ["gnome", "ubuntu:gnome"]
     - "ansible_version.full is version('2.10.0', '>=')"   # 'ansible.builtin.script' ab ansible version 2.10 (welche bei Ubutnu 22.04 installiert wird)
 
-
-# PowerShell
+# --- PowerShell
 # https://learn.microsoft.com/de-de/powershell/scripting/install/installing-powershell-on-linux?view=powershell-5.1#ubuntu
 # https://learn.microsoft.com/de-de/powershell/scripting/install/install-ubuntu?view=powershell-5.1#installation-via-package-repository
 # https://www.ntweekly.com/2021/04/07/ansible-playbook-install-powershell-7-on-ubuntu-server-20-04/
@@ -157,34 +139,6 @@
 #   when:
 #     - ansible_distribution == "Ubuntu"
 
-# 'add repo for ulauncher' nach bootstrap.sh verschoben
-#
-# - name: add repo for ulauncher (apt, Ubuntu)
-#  tags: workstation,ubuntu,addrepos,pre
-#  ansible.builtin.apt_repository:
-#    repo: ppa:agornostal/ulauncher
-#    state: present
-#    update_cache: yes
-#  when:
-#    - ansible_distribution == "Ubuntu"
-#    - ansible_pkg_mgr == "apt"
-
-# 'add repo for ulauncher' nach bootstrap.sh verschoben
-#
-# - name: add repo for ulauncher (Ubuntu)
-#  tags: workstation,ubuntu,addrepos,pre
-#  ansible.builtin.shell: sudo add-apt-repository ppa:agornostal/ulauncher && touch "/home/{{ env_user }}/.ansible_ppaUlauncherAdded"
-#  args:
-#    creates: "/home/{{ env_user }}/.ansible_ppaUlauncherAdded"
-#  when:
-#    - ansible_distribution == "Ubuntu"
-
-# - name: Update package lists
-#   ansible.builtin.apt:
-#     update_cache: true
-#   when:
-#     - ansible_pkg_mgr == "apt"
-
 # neu: s.o.
 # - name: add repo for PowerShell (Ubuntu)
 #  tags: workstation,ubuntu,addrepos,pre
@@ -194,86 +148,3 @@
 #    update_cache: yes
 #  when:
 #    - ansible_distribution == "Ubuntu"
-
-
-- name: add repo for swtpm (apt, Ubuntu <22, not VM)   # wg. VM: Win11 (TPM 2.0)
-  # https://launchpad.net/~smoser/+archive/ubuntu/swtpm
-  # https://launchpad.net/~stefanberger/+archive/ubuntu/swtpm
-  tags: workstation,ubuntu,addrepos,pre
-  ansible.builtin.apt_repository:
-    # repo: deb http://ppa.launchpad.net/smoser/swtpm/ubuntu focal main
-    repo: ppa:smoser/swtpm
-    state: present
-    update_cache: true
-  when:
-    - ansible_pkg_mgr == "apt"
-    - ansible_distribution == "Ubuntu"
-    - ansible_distribution_major_version|int < 22
-    - ansible_virtualization_role != "guest"
-      # ab Ubuntu 22.04 ist swtpm anscheinend in Standard-Repo mit drin
-
-
-# MS Teams auskommentiert, da über jetzt über Browser nutze
-#
-# https://learn.microsoft.com/en-us/microsoftteams/get-clients?tabs=Linux#desktop-clients
-# - name: Add Apt signing key for Microsoft Teams repo (apt, Ubuntu)
-#  ansible.builtin.apt_key:
-#    url: "https://packages.microsoft.com/keys/microsoft.asc"
-#    state: present
-#  when:
-#    - ansible_pkg_mgr == "apt"
-#    - ansible_distribution == "Ubuntu"
-
-# - name: add repo for Microsoft Teams (apt, Ubuntu)
-#  tags: workstation,ubuntu,addrepos,pre
-#  ansible.builtin.apt_repository:
-#    repo: 'deb https://packages.microsoft.com/repos/ms-teams stable main'
-#    state: present
-#    update_cache: yes  # default ist yes, daher sollte man es weglassen können
-#  when:
-#    - ansible_pkg_mgr == "apt"
-#    - ansible_distribution == "Ubuntu"
-
-
-# Brave Browser
-# https://computingforgeeks.com/install-brave-web-browser-on-ubuntu-linux/
-#
-# umgestellt auf flatpak
-#
-# - name: Add Apt signing key for Brave Web Browser (apt, Ubuntu)
-#  ansible.builtin.apt_key:
-#    url: "https://brave-browser-apt-release.s3.brave.com/brave-core.asc"
-#    state: present
-#  when:
-#    - ansible_pkg_mgr == "apt"
-#    - ansible_distribution == "Ubuntu"
-
-# - name: add repo for Brave Web Browser (apt, Ubuntu)
-#  tags: workstation,ubuntu,addrepos,pre
-#  ansible.builtin.apt_repository:
-#    repo: 'deb [arch=amd64] https://brave-browser-apt-release.s3.brave.com stable main'
-#    state: present
-#    update_cache: yes
-#  when:
-#    - ansible_pkg_mgr == "apt"
-#    - ansible_distribution == "Ubuntu"
-
-
-# - name: add apt signing key for Vivaldi Browser repos (apt, Ubuntu)
-#  tags: workstation,ubuntu,addrepos,pre
-#  apt_key:
-#    url: https://repo.vivaldi.com/archive/linux_signing_key.pub
-#    state: present
-#  when:
-#    # - ansible_distribution == "Ubuntu"
-#    - ansible_pkg_mgr == "apt"
-
-# - name: add repo for Vivaldi Browser (Ubuntu)
-#  tags: workstation,ubuntu,addrepos,pre
-#  ansible.builtin.apt_repository:
-#    repo: deb https://repo.vivaldi.com/archive/deb/ stable main
-#    state: present
-#    update_cache: yes
-#  when:
-#    # - ansible_distribution == "Ubuntu"
-#    - ansible_pkg_mgr == "apt"

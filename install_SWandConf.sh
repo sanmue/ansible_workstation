@@ -533,9 +533,9 @@ case ${os} in
             echo -e "\nInstall some Gnome Extensions (gsconnect, dash-to-panel) from AUR ..."
             yay -S --needed gnome-shell-extension-gsconnect gnome-shell-extension-dash-to-panel
 
-            echo -e "\nInstall several Packages (gtkhash, ttf-meslo-nerd-font (10k), units, vorta from AUR..."
-            yay -S --needed gtkhash ttf-meslo-nerd-font-powerlevel10k units vorta 
-            # bashdb   # A debugger for Bash scripts loosely modeled on the gdb command syntax
+            echo -e "\nInstall several Packages (bashdb, gtkhash, ttf-meslo-nerd-font (10k), units, vorta from AUR..."
+            yay -S --needed bashdb gtkhash ttf-meslo-nerd-font-powerlevel10k units vorta
+            # bashdb: # A debugger for Bash scripts loosely modeled on the gdb command syntax
 
             echo -e "\nInstall Brave Browser from AUR..."
             yay -S --needed brave-bin
