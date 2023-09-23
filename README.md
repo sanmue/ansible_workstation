@@ -10,9 +10,10 @@
 - boot to desktop environment + login
 - clone the repo to the home directory of the current user
   - `git clone https://gitlab.com/sanmue/ansible_workstation.git`
-- execute the initial bash script "install_SWandConf.sh"
-  - `cd ansible_workstation`
-  - `./install_SWandConf.sh`
+- execute the initial bash script
+  - `./ansible_workstation/install_SWandConf.sh`
+  - check if script is executable first
+    - make executable: `chmod +x ./ansible_workstation/install_SWandConf.sh`
 
 # Further notes for myself
 ## 'Visual Studio Code' respectively 'Code - OSS' with extension "Sync Settings"
