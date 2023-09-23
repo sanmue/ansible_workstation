@@ -32,18 +32,18 @@
   ansible.builtin.set_fact:
     env_user_XDG_RUNTIME_DIR: "{{ ansible_facts['env']['XDG_RUNTIME_DIR'] }}"   # z.B.: "/run/user/1000"
 
-- name: AnsibleFacts - Get lsb lsb-release (Ubuntu,Arch)
+- name: AnsibleFacts - Get lsb lsb-release (Ubuntu)
   ansible.builtin.set_fact:
     env_lsb: "{{ ansible_facts['lsb']['release'] }}"   # z.B. bei Ubuntu 20.04: "20.04"
     # env_lsbmajor: "{{ ansible_facts['lsb']['major_release'] }}"   # z.B. bei Ubuntu 20.04: "20"
   when:
-    - ansible_distribution in ["Ubuntu","Archlinux"]
+    - ansible_distribution in ["Ubuntu"]
 
-- name: AnsibleFacts - Get lsb lsb-id (Ubuntu,Arch)
+- name: AnsibleFacts - Get lsb lsb-id (Ubuntu)
   ansible.builtin.set_fact:
     env_lsb_id: "{{ ansible_facts['lsb']['id'] }}"   # z.B.: "ManjaroLinux" oder "EndeavourOS"
   when:
-    - ansible_distribution in ["Ubuntu","Archlinux"]
+    - ansible_distribution in ["Ubuntu"]
 
 - name: AnsibleFacts - Get distribution version (all)
   ansible.builtin.set_fact:
