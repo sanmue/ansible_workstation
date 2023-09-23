@@ -8,11 +8,11 @@
 # Usage
 ## Start initial bash script
 - boot to desktop environment + login
-- clone the repo
+- clone the repo to the home directory of the current user
   - `git clone https://gitlab.com/sanmue/ansible_workstation.git`
 - execute the initial bash script "install_SWandConf.sh"
   - `cd ansible_workstation`
-  - `./tasks/ScriptsExtern/install_SWandConf.sh`
+  - `./install_SWandConf.sh`
 
 # Further notes for myself
 ## 'Visual Studio Code' respectively 'Code - OSS' with extension "Sync Settings"
