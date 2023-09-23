@@ -502,7 +502,7 @@ curl -sS "https://starship.rs/install.sh" > "/home/${userid}/starship_install.sh
 #fi
 
 echo -e "\nStarte Ansible-Playbook ...\n"
-echo -e "\n\e[0;33m### Info\e[39m"
+echo -e "\e[0;33m### Info\e[39m"
 echo -e "\e[0;33m#   - If you encounter a problem/error while executing the playbook (e.g. with pip / python, ...)\e[39m"
 echo -e "\e[0;33m#     restart your system and start the script / playbook again\e[39m"
 echo -e "\e[0;33m#   - If VS Code opens you can simply close it again or leave it open until script is finished\e[39m"

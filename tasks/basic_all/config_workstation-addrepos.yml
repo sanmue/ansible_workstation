@@ -22,6 +22,11 @@
     - ansible_distribution == "Archlinux"
 
 # multilib: If you want to run 32 bit applications on your x86_64 system... # e.g. for 'steam'
+- name: Config Workstation addrepos - pacman.conf - activate multilib repo - check status flagfile (Archlinux)
+  ansible.builtin.stat:
+    path: "/home/{{ env_user }}/.ansible_addrepoMultilib"
+  register: addrepomultilib
+
 - name: Config Workstation addrepos - pacman.conf - activate multilib repo - step1 (Archlinux)
   become: true
   ansible.builtin.lineinfile:
@@ -31,6 +36,7 @@
     line: 'Include = /etc/pacman.d/mirrorlist'
   when:
     - ansible_distribution == "Archlinux"
+    - addrepomultilib.stat.exists == false
 
 - name: Config Workstation addrepos - pacman.conf - activate multilib repo - step2 (Archlinux)
   become: true
@@ -41,25 +47,37 @@
     backup: true
   when:
     - ansible_distribution == "Archlinux"
+    - addrepomultilib.stat.exists == false
+
+# modify /etc/pacman.d/mirrorlist to activate repo multilib needs to be done only once
+- name: Config Workstation addrepos - pacman.conf - activate multilib repo - create flagfile (Archlinux)
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.shell: 
+    cmd: "touch /home/{{ env_user }}/.ansible_addrepoMultilib"
+  args:
+    creates: "/home/{{ env_user }}/.ansible_addrepoMultilib"
+  when:
+    - ansible_distribution == "Archlinux"
 
 # #####################################
 # ### pamac.conf - Archlinux with Pamac
 # #####################################
-# - name: Check if exists pamac.conf (Archlinux)
+# - name: Config Workstation addrepos - Check if exists pamac.conf (Archlinux)
 #   ansible.builtin.stat:
 #     path: /etc/pamac.conf
 #   register: pamac_conf
 #   when:
 #     - ansible_distribution == "Archlinux"
 
-# - name: Enable AUR support for pamac gui (Archlinux)
+# - name: Config Workstation addrepos - Enable AUR support for pamac gui (Archlinux)
 #   ansible.builtin.shell:
 #     cmd: sudo sed -Ei '/EnableAUR/s/^#//' /etc/pamac.conf
 #   when:
 #     - ansible_distribution == "Archlinux"
 #     - pamac_conf.stat.exists
 
-# - name: Enable check updates for AUR packages in pamac (Archlinux)
+# - name: Config Workstation addrepos - Enable check updates for AUR packages in pamac (Archlinux)
 #   ansible.builtin.shell:
 #     cmd: sudo sed -Ei '/CheckAURUpdates/s/^#//' /etc/pamac.conf
 #   when:
@@ -70,7 +88,7 @@
 # ### Ubuntu
 # ##########
 
-- name: add repo for swtpm (apt, Ubuntu <22, not VM)   # wg. VM: Win11 (TPM 2.0)
+- name: Config Workstation addrepos - add repo for swtpm (apt, Ubuntu <22, not VM)   # wg. VM: Win11 (TPM 2.0)
   # https://launchpad.net/~smoser/+archive/ubuntu/swtpm
   # https://launchpad.net/~stefanberger/+archive/ubuntu/swtpm
   tags: workstation,ubuntu,addrepos,pre
@@ -91,7 +109,7 @@
 #
 # Anmerkung: wird aktuell nicht mehr benötigt, da als flatpak installiert wird
 #
-# - name: add repo (Mozilla Team PPA) for Firefox (apt, Ubuntu >= 22)
+# - name: Config Workstation addrepos - add repo (Mozilla Team PPA) for Firefox (apt, Ubuntu >= 22)
 #  tags: workstation,ubuntu,addrepos,pre
 #  ansible.builtin.apt_repository:
 #    repo: ppa:mozillateam/ppa
@@ -102,7 +120,7 @@
 #    - ansible_distribution_major_version|int >= 22
 #    - ansible_pkg_mgr == "apt"
 
-# - name: Set PPA Priority for Mozillateam and block Firefox from Ubuntus own repository (Ubuntu >= 22)
+# - name: Config Workstation addrepos - Set PPA Priority for Mozillateam and block Firefox from Ubuntus own repository (Ubuntu >= 22)
 #  ansible.builtin.script: "{{ env_PWD }}/tasks/basic_all/config_workstation-addrepos-ubuntu.sh"
 #  when:
 #    - ansible_distribution == "Ubuntu"
@@ -112,7 +130,7 @@
 #    - "ansible_version.full is version('2.10.0', '>=')"   # 'ansible.builtin.script' ab ansible version 2.10 (welche bei Ubutnu 22.04 installiert wird)
 
 # verhindern, dass Firefox Snap-Package wieder installiert wird bei update
-- name: Block Firefox from Ubuntus own repository (Ubuntu >= 22)
+- name: Config Workstation addrepos - block Firefox from Ubuntus own repository (Ubuntu >= 22)
   ansible.builtin.script: "{{ env_PWD }}/tasks/basic_all/config_workstation-addrepos-ubuntu.sh"
   when:
     - ansible_distribution == "Ubuntu"
@@ -125,7 +143,7 @@
 # https://learn.microsoft.com/de-de/powershell/scripting/install/installing-powershell-on-linux?view=powershell-5.1#ubuntu
 # https://learn.microsoft.com/de-de/powershell/scripting/install/install-ubuntu?view=powershell-5.1#installation-via-package-repository
 # https://www.ntweekly.com/2021/04/07/ansible-playbook-install-powershell-7-on-ubuntu-server-20-04/
-# - name: Download the Microsoft repository GPG keys (apt, Ubuntu LTS)
+# - name: Config Workstation addrepos - Download the Microsoft repository GPG keys (apt, Ubuntu LTS)
 #   ansible.builtin.get_url:
 #     url: "https://packages.microsoft.com/config/ubuntu/{{ env_lsb }}/packages-microsoft-prod.deb"
 #     dest: /tmp/packages-microsoft-prod.deb
@@ -133,14 +151,14 @@
 #   when:
 #     - ansible_distribution == "Ubuntu"
 
-# - name: Register the Microsoft repository GPG keys (apt, Ubuntu)
+# - name: Config Workstation addrepos - Register the Microsoft repository GPG keys (apt, Ubuntu)
 #   ansible.builtin.command:
 #     cmd: dpkg -i /tmp/packages-microsoft-prod.deb
 #   when:
 #     - ansible_distribution == "Ubuntu"
 
 # neu: s.o.
-# - name: add repo for PowerShell (Ubuntu)
+# - name: Config Workstation addrepos - add repo for PowerShell (Ubuntu)
 #  tags: workstation,ubuntu,addrepos,pre
 #  ansible.builtin.apt_repository:
 #    repo: "deb https://packages.microsoft.com/config/ubuntu/{{ env_lsb }}/packages-microsoft-prod.deb"

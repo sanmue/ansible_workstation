@@ -51,16 +51,12 @@
   ansible.builtin.stat:
     path: /usr/bin/code
   register: usrbincode
-  # when:
-    # - ansible_distribution == "Ubuntu"
 
 # - name: Local packages install - get stat /tmp/code.deb (all)
 #  ansible.builtin.stat:
 #    # path: /tmp/code.deb
 #    path: "/home/{{ env_user }}/Downloads/code.deb"
 #  register: tmpcodedeb
-#  # when:
-#    # - ansible_distribution == "Ubuntu"
 
 # Download nach bootstrap.sh verschoben wg. timout
 #
@@ -99,8 +95,6 @@
     path: /usr/local/share/fonts
     mode: '0755'
     state: directory
-  # when:
-  #   - ansible_distribution in ["Archlinux", "Ubuntu"]
 
 # - name: Local packages install - Nerd Fonts - Meslo LG M Regular Complete Mono - systemwide (all)
 # # https://github.com/ryanoasis/nerd-fonts#option-6-ad-hoc-curl-download
@@ -118,8 +112,6 @@
 #    mode: '0644'
 #    creates: "/usr/local/share/fonts/Meslo LG M Regular Nerd Font Complete Mono.ttf"
 #  # register: result
-#  when:
-#    - ansible_distribution in ["Archlinux", "Ubuntu"]
 
 - name: Local packages install - Nerd Fonts - Meslo LG M Regular Complete MONO - systemwide (all)
 # https://github.com/ryanoasis/nerd-fonts#option-6-ad-hoc-curl-download
@@ -132,8 +124,6 @@
   args:
     chdir: /usr/local/share/fonts/
     creates: "/usr/local/share/fonts/Meslo LG M Regular Nerd Font Complete Mono.ttf"
-  # when:
-  #   - ansible_distribution in ["Archlinux", "Ubuntu"]
 
 # - name: Local packages install - Nerd Fonts - Meslo LG M Regular Complete - systemwide (all)
 #  ansible.builtin.uri:
@@ -144,21 +134,16 @@
 #    dest: "/usr/local/share/fonts/fonts/Meslo LG M Regular Nerd Font Complete.ttf"
 #    mode: '0644'
 #    creates: "/usr/local/share/fonts/Meslo LG M Regular Nerd Font Complete.ttf"
-#  when:
-#    - ansible_distribution in ["Archlinux", "Ubuntu"]
 
 - name: Local packages install - Nerd Fonts - Meslo LG M Regular Complete - systemwide (all)
   ansible.builtin.shell: sudo curl -fLo "Meslo LG M Regular Nerd Font Complete.ttf" https://github.com/ryanoasis/nerd-fonts/raw/HEAD/patched-fonts/Meslo/M/Regular/MesloLGMNerdFont-Regular.ttf
   args:
     chdir: /usr/local/share/fonts
     creates: "/usr/local/share/fonts/Meslo LG M Regular Nerd Font Complete.ttf"
-  # when:
-  #   - ansible_distribution in ["Archlinux", "Ubuntu"]
+
 
 - name: Local packages install - Fonts - Build font information cache files for apps using fontconfig (all)
   ansible.builtin.shell: fc-cache -f
-  # when:
-  #   - ansible_distribution in ["Archlinux", "Ubuntu"]
 
 
 # #########################
@@ -178,34 +163,25 @@
 #    mode: '0755'
 #    creates: "/home/{{ env_user }}/starship_install.sh"
 #  # register: result
-#  when:
-#    - ansible_distribution in ["Archlinux", "Ubuntu"]
-#    # - env_lsb_id != "ManjaroLinux"   # für bash in Manjaro, daher auskommentiert
 
 - name: Local packages install - starship shell prompt (env_user) - check install status (all)
   ansible.builtin.stat:
     path: /usr/local/bin/starship
   register: starship
-  # when:
-  #   - ansible_distribution in ["Archlinux", "Ubuntu"]
 
 - name: Local packages install - create dir usr-local-bin if not exists  (all)
   ansible.builtin.file:
     path: /usr/local/bin
     state: directory
     mode: '0755'
-  # when:
-  #   - ansible_distribution in ["Archlinux", "Ubuntu"]
-  #   - starship.stat.exists == false
 
 - name: Local packages install - starship shell prompt (env_user) - execute install-file (all)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: "/home/{{ env_user }}/starship_install.sh --yes"
   when:
-    # - ansible_distribution in ["Archlinux", "Ubuntu"]
     - starship.stat.exists == false
-    # - env_lsb_id != "ManjaroLinux"   # für bash in Manjaro, daher auskommentiert
+
 # config: in config_all-settingsmisc.yml; update: systemd timer
 # https://starship.rs/
 
@@ -215,7 +191,7 @@
 # ###############################
 # Anm.: bei Archlinux über paket, bei Manjaro schon von werk aus vorhanden
 
-- name: Local packages install - install zsh plugin - zsh-autosuggestions (Ubuntu,Suse)
+- name: Local packages install - install zsh plugin - zsh-autosuggestions (Ubuntu)
   ansible.builtin.git:
     repo: https://github.com/zsh-users/zsh-autosuggestions.git
     dest: /usr/share/zsh/plugins/zsh-autosuggestions
@@ -230,14 +206,12 @@
     dest: /usr/share/zsh/plugins/zsh-syntax-highlighting
     clone: true
     update: true
-  when: ansible_distribution in ["Ubuntu"] or
-        ansible_os_family == "Suse"
+  when: ansible_distribution in ["Ubuntu"]
 
-- name: Local packages install - install zsh plugin - zsh-history-substring-search (Ubuntu,Suse)
+- name: Local packages install - install zsh plugin - zsh-history-substring-search (Ubuntu)
   ansible.builtin.git:
     repo: https://github.com/zsh-users/zsh-history-substring-search.git
     dest: /usr/share/zsh/plugins/zsh-history-substring-search
     clone: true
     update: true
-  when: ansible_distribution in ["Ubuntu"] or
-        ansible_os_family == "Suse"
+  when: ansible_distribution in ["Ubuntu"]
