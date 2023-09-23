@@ -6,13 +6,12 @@
 # ---------------------
 # ### cups OpenPrinting
 # ---------------------
-- name: All services misc - start+enable cronie (Arch, Suse)
+- name: All services misc - start+enable cronie (Arch)
   ansible.builtin.service:
     name: cups.service
     state: started
     enabled: true
-  when: ansible_distribution in ["Archlinux"] or
-        ansible_os_family == "Suse"
+  when: ansible_distribution in ["Archlinux"]
 
 # ------
 # Cron / Cronie
@@ -27,13 +26,6 @@
     enabled: true
   when: ansible_distribution in ["Archlinux"]
 
-- name: All services misc - start+enable cronie (Suse)
-  ansible.builtin.service:
-    name: cron.service
-    state: started
-    enabled: true
-  when: ansible_os_family == "Suse"
-
 # ---------------------------------------------
 # # reflector - retrieve the latest mirror list
 # ---------------------------------------------
@@ -47,10 +39,6 @@
     enabled: true
   when:
     - ansible_distribution in ["Archlinux"]
-    - env_lsb_id != "ManjaroLinux"
-# Anm:  Manjaro hat eigenen systemd Timer/Service dafür:
-#       /usr/lib/systemd/system/pamac-mirrorlist.timer
-#       /usr/lib/systemd/system/pamac-mirrorlist.service
 
 # ------------------------------
 # # update pacman files database (default: weekly)
@@ -85,13 +73,12 @@
     enabled: true
   when: ansible_distribution in ["Ubuntu"]
 
-- name: All services misc - start + enable sshd (Archlinux,Suse)
+- name: All services misc - start + enable sshd (Archlinux)
   ansible.builtin.service:
     name: sshd
     state: started
     enabled: true
-  when: ansible_distribution in ["Archlinux"] or
-        ansible_os_family == "Suse"
+  when: ansible_distribution in ["Archlinux"]
 
 # --------
 # # ClamAV
@@ -110,8 +97,7 @@
     cmd: freshclam
   args:
     creates: /home/{{ env_user }}/.ansible_freshclamInitialStartExecuted
-  when: ansible_distribution in ["Archlinux"] or
-        ansible_os_family == "Suse"
+  when: ansible_distribution in ["Archlinux"]
 
 # - name: All services misc - Update clamav database (Ubuntu)
 #  # ansible.builtin.shell: freshclam
@@ -125,36 +111,18 @@
     cmd: touch /home/{{ env_user }}/.ansible_freshclamInitialStartExecuted
   args:
     creates: /home/{{ env_user }}/.ansible_freshclamInitialStartExecuted
-  # when: ansible_distribution in ["Ubuntu", "Archlinux"] or
-  #       ansible_os_family == "Suse"
 
-- name: All services misc - Start+enable clamav-daemon.service (Arch,Ubuntu)
+- name: All services misc - Start+enable clamav-daemon.service (all)
   ansible.builtin.service:
     name: clamav-daemon.service
     state: started
     enabled: true
-  when: ansible_distribution in ["Ubuntu", "Archlinux"]
 
-- name: All services misc - Start+enable clamd.service (Suse)
-  ansible.builtin.service:
-    name: clamd.service
-    state: started
-    enabled: true
-  when: ansible_os_family == "Suse"
-
-- name: All services misc - Start+enable clamav-freshclam.service (Arch,Ubuntu)
+- name: All services misc - Start+enable clamav-freshclam.service (all)
   ansible.builtin.service:
     name: clamav-freshclam.service
     state: started
     enabled: true
-  when: ansible_distribution in ["Ubuntu", "Archlinux"]
-
-- name: All services misc - Start+enable freshclam.service (Suse)
-  ansible.builtin.service:
-    name: freshclam.service
-    state: started
-    enabled: true
-  when: ansible_os_family == "Suse"
 
 # -------------------------
 # ### starship shell prompt
@@ -181,8 +149,6 @@
     group: root
     owner: root
     mode: '0644'
-  # when:
-  #   - ansible_distribution in ["Archlinux", "Ubuntu"]
 
 - name: All services misc - starship shell prompt update - Create timer unit file (all)
   ansible.builtin.blockinfile:
@@ -207,8 +173,6 @@
     group: root
     owner: root
     mode: '0644'
-  # when:
-  #   - ansible_distribution in ["Archlinux", "Ubuntu"]
 
 - name: All services misc - starship shell prompt update - start+enable timer (all)
   ansible.builtin.systemd:
@@ -216,14 +180,13 @@
     state: started
     enabled: true
     daemon_reload: true
-  # when: ansible_distribution in ["Ubuntu", "Archlinux"]
 
 # ---------------
 # ### zsh plugins
 # ---------------
 # zugehöriges, auszuführendes Script wird in 'config_all-services-misc.yml' in '/usr/local/bin' erstellt
 
-- name: All services misc - zsh plugins update - Create service unit file (Ubuntu,Suse)
+- name: All services misc - zsh plugins update - Create service unit file (Arch)
   ansible.builtin.blockinfile:
     path: "/etc/systemd/system/zshpluginsgit_update.service"
     create: true
@@ -240,11 +203,10 @@
     group: root
     owner: root
     mode: '0644'
-  when: ansible_distribution in ["Archlinux"] or
-        ansible_os_family == "Suse"
+  when: ansible_distribution in ["Archlinux"]
 
 # monatlich (am 1. um 11:05 Uhr); alternativ: 'OnCalendar=monthly' (= monatlich am 01. umd 00:00 Uhr)
-- name: All services misc - zsh plugins update - Create timer unit file (Ubuntu,Suse)
+- name: All services misc - zsh plugins update - Create timer unit file (Arch)
   ansible.builtin.blockinfile:
     path: "/etc/systemd/system/zshpluginsgit_update.timer"
     create: true
@@ -267,17 +229,15 @@
     group: root
     owner: root
     mode: '0644'
-  when: ansible_distribution in ["Archlinux"] or
-        ansible_os_family == "Suse"
+  when: ansible_distribution in ["Archlinux"]
 
-- name: All services misc - zsh plugins update - start+enable timer (Ubuntu, Suse)
+- name: All services misc - zsh plugins update - start+enable timer (Arch)
   ansible.builtin.systemd:
     name: zshpluginsgit_update.timer
     state: started
     enabled: true
     daemon_reload: true
-  when: ansible_distribution in ["Archlinux"] or
-        ansible_os_family == "Suse"
+  when: ansible_distribution in ["Archlinux"]
 
 # ------------------
 # ### cockpit.socket
@@ -289,8 +249,6 @@
     state: started
     enabled: true
     daemon_reload: true
-  # when:
-  #  - ansible_distribution in ["Ubuntu"]
 
 # -------------------------------------------------------------------------------------------------
 # -------------------------------------------------------------------------------------------------
@@ -349,8 +307,6 @@
     group: root
     owner: root
     mode: '0644'
-  # when:
-  #   - ansible_distribution in ["Archlinux", "Ubuntu"]
 
 - name: All services misc - ClamAV - Create timer unit file - user - scanHome (all)
   ansible.builtin.blockinfile:
@@ -375,8 +331,6 @@
     group: root
     owner: root
     mode: '0644'
-  # when:
-  #   - ansible_distribution in ["Archlinux", "Ubuntu"]
 
 - name: All services misc - ClamAV - start+enable timer - env_user - scanHome (all)
   ansible.builtin.systemd:
@@ -411,8 +365,6 @@
     group: root
     owner: root
     mode: '0644'
-  # when:
-  #   - ansible_distribution in ["Archlinux", "Ubuntu"]
 
 - name: All services misc - AppConfData - Create timer unit file - user - rsync (all)
   ansible.builtin.blockinfile:
@@ -437,8 +389,6 @@
     group: root
     owner: root
     mode: '0644'
-  # when:
-  #   - ansible_distribution in ["Archlinux", "Ubuntu"]
 
 - name: All services misc - AppConfData - start+enable timer - env_user - rsync (all)
   ansible.builtin.systemd:
@@ -460,7 +410,7 @@
 
 # install von ulauncher in bootstrap.sh im Anschluss an playbook verlagert, daher an dieser Stelle noch nicht vorhanden
 #
-# - name: All services misc - ulauncher - start+enable - env_user (Ubuntu, Arch)
+# - name: All services misc - ulauncher - start+enable - env_user (all)
 #   ansible.builtin.systemd:
 #     name: ulauncher.service
 #     state: started
