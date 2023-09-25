@@ -2,7 +2,7 @@
 - completes after successful basic installation (including a desktop environment) the further installation and configuration of additionally defined software and services
 - currently only for my Gnome desktop environment + settings (Plasma: not up to date / re-tested)
 - initial bash script:
-  - works for Endeavour OS and Ubuntu
+  - works for Arch Linux, Endeavour OS and Ubuntu
   - if btrfs-filesystem: installs/creates/configures btrfs subvolumes and 'snapper' for (automatic and manual) system snapshots (optional)
 
 # Usage
