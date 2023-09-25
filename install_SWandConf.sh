@@ -16,7 +16,7 @@
 playbookdir="ansible_workstation"   # also repo name
 playbook="local.yml"
 userid=$(whoami)   # or: userid=${USER}
-oslist=("Ubuntu" "EndeavourOS" "Arch Linux")   # currently supportet distributions
+oslist=("Arch Linux" "EndeavourOS" "Ubuntu")   # currently supportet distributions
 bootloaderId='GRUB'   # or 'endeavouros', ...
 
 if [ -e "/efi" ]; then          # Uefi - EFI path
@@ -25,7 +25,7 @@ elif [ -e "/boot/efi" ]; then   # Uefi - EFI path (deprecated location)
 	efiDir="/boot/efi"
 else                            # Bios
 	# echo "Bios boot mode"
-	efiDir=""
+	efiDir="/no/efi/dir/available"
 fi
 
 snapperConfigName_root="root"
@@ -47,6 +47,8 @@ declare -A btrfsSubvolLayout=(  ["@"]="/"
 btrfsFstabMountOptions_standard='defaults,noatime,discard=async,compress=zstd,space_cache=v2 0 0'   # desired mountOptions for btrfs-filesystem
 btrfsFstabMountOptions_endeavour='defaults,noatime,compress=zstd 0 0'                               # searchString; fstab-entry will be replaced with $btrfsFstabMountOptions_standard
 
+deleteOldRootInFstab="false"    # default: "false", may be modified later in the script
+                                # if Sytem was initially installed without speacial btrfs subvolume layout -> e.g.: "UUID=8a6bb50a-... / btrfs rw,noatime,...,subvolid=5,subvol=/ 0 0"
 
 ### ---
 ### Check Operating System (OS)
@@ -90,6 +92,13 @@ if [[ $(stat -f -c %T /) = 'btrfs' ]] && [[ ! -e "/home/${userid}/.ansible_boots
 fi
 
 if [[ "${doSnapper}" = 'y' ]]; then
+    filesystemName=$(grep -w "subvol=/" /etc/fstab | cut -f 1 | xargs)
+    if [ -n "${filesystemName}" ]; then 
+        echo -e "\e[0;31mKeine btrfs subvolumes vorhanden + gemounted. Snapper config über dieses Script nicht ausführbar.\e[39m"
+        echo -e "\e[0;31mManueller Engriff erforderlich. Sorry, Ende.\e[39m"
+        exit 1
+    fi
+
     if [ ! -e "${snapperSnapshotFolder}" ]; then   # check if ${snapperSnapshotFolder} exists
         echo -e "\e[0;33mVerzeichnis '${snapperSnapshotFolder}' nicht vorhanden. Evlt. abweichendes Verzeichnis konfiguriert?!\nGgf. vorheriger manueller Eingriff erforderlich.\e[39m" 
         read -r -p "Installation/Konfiguration fortsetzen mit beliebiger Eingabe, Abbrechen mit <CTRL> + <c>"
@@ -127,33 +136,37 @@ if [[ "${doSnapper}" = 'y' ]]; then
             echo "*** Erstelle snapper config '${snapperConfigName_root}' für '/'"
             sudo snapper -c "${snapperConfigName_root}" create-config /
 
-
-            echo "*** Lösche autom. angelegtes Subvolume '${snapperSnapshotInitialSubvolume}' (aus vorherigem Schritt 'Erstelle snapper config')..."
+            echo "*** Lösche autom. angelegtes Subvolume '${snapperSnapshotFolder}' (aus vorherigem Schritt 'Erstelle snapper config')..."
             sudo btrfs subvolume delete "${snapperSnapshotFolder}"
             echo "*** Erstelle (wieder) Verzeichnis '${snapperSnapshotFolder}'..."
             sudo sudo mkdir -p "${snapperSnapshotFolder}"
 
-
             echo "*** Erstelle Subvolumes (sofern nicht schon vorhanden) und entsprechende fstab-Einträge"
             echo "Aktuelle /etc/fstab:"
             cat /etc/fstab
-            filesystemName=$(grep -e "subvol=/@[^a-zA-Z]" /etc/fstab | cut -f 1 | xargs)   # Endeavour/Manjaro (mit btrfsSubvolLayouterschlüssellung) mounted schon subvols in fstab # z.B.: UUDI=luks-8f1cf7bc-8064-422b-bd46-466438199874
-            if [ -z "${filesystemName}" ]; then   # if filesystemName not found in the step before, make a new attempt:
-                filesystemName=$(grep -w "subvol=/" /etc/fstab | cut -f 1 | xargs)   # just default btrfs root subvol '/', if nothing else configured beforehand; default subvol not set to a seperately created subvol e.g. named '@' / ID XXX  # e.g.: UUID=0a6f7460-736b-4823-b959-846cb47cde34
+            filesystemName=$(grep -e "subvol=/@[^a-zA-Z]" /etc/fstab | cut -f 1 | xargs)    # btrfs subvolumes already created + mounted (+ encryption) # "/dev/mapper/luks-7bee452d-... / btrfs subvol=/@,defaults,... 0 0"
+                                                                                            # filesystemName e.g.: UUDI=luks-8f1cf7bc-8064-422b-bd46-466438199874
+            if [ -z "${filesystemName}" ]; then                                             # "default" btrfs root '/' without special subolumes: "initial" entry still in fstab at first position
+                filesystemName=$(grep -w "subvol=/" /etc/fstab | cut -f 1 | xargs)          # e.g.: "UUID=8a6bb50a-11d3-4aff-bba9-e7234a9228c5 / btrfs rw,noatime,...,subvolid=5,subvol=/ 0 0"
+                deleteOldRootInFstab="true"                                                 # marker, that this fstab entry has to be erased (or we will have 2 entries vor '/' in fstab)
+
+                echo -e "\e[0;31mEs muss schon ein entsprechendes btrfs subvolume-layout vorhanden und gemounted sein, damit dieses Script funkiontiert.\e[39m"
+                echo -e "\e[0;31mManueller Engriff erforderlich. Sorry, Ende.\e[39m"
+                exit 1
             fi
 
-            read -r -p "Nutze file system '${filesystemName}'. Ist das korrekt ('n'=nein, sonstige Eingabe=ja)?: " fsok
+            read -r -p "Nutze file system '${filesystemName}'. Ist das korrekt ? ('n'=nein, sonstige Eingabe=ja): " fsok
             if [ "${fsok}" = "n" ]; then
-                endloop='n'
+                endloop='no'
                 while [ ! "$endloop" = 'j' ]; do
                     read -r -p "Manuelle Eingabe: " filesystemName
-                    read -r -p "Ist '${filesystemName}' korrekt ('j'=ja, beliebige Eingabe für Korrektur)?: " endloop
+                    read -r -p "Ist '${filesystemName}' korrekt ? ('j'=ja, beliebige Eingabe für Korrektur): " endloop
                 done
             fi
 
-            sudo cp /etc/fstab /etc/fstab.bak   # Sicherung
+            sudo cp /etc/fstab /etc/fstab.bak   # Sicherung fstab
             echo -e "\nMount: 'subvolid=5' '${filesystemName}' nach '/mnt'..."
-            sudo mount -t btrfs -o subvolid=5 "${filesystemName}" /mnt
+            sudo mount -t btrfs -o subvolid=5 "$filesystemName" /mnt                        # bzw. sudo mount -t btrfs -o "$btrfsFstabMountOptions_standard" /dev/vda3 /mnt
 
             for subvol in "${!btrfsSubvolLayout[@]}"; do
                 if [ ! -e "/mnt/${subvol}" ]; then      # wenn Subvolume noch nicht vorhanden
@@ -175,12 +188,12 @@ if [[ "${doSnapper}" = 'y' ]]; then
 
                 echo "|__ erstelle Eintrag für Subvolume '${subvol}' mit mount point '${btrfsSubvolLayout[${subvol}]}'..."
 
-                if [ ! -e  "${btrfsSubvolLayout[${subvol}]}" ]; then    # wenn Mount-Ziel (Verzeichnis) noch nicht vorhanden
+                if [ ! -e  "${btrfsSubvolLayout[${subvol}]}" ]; then                        # wenn Mount-Ziel (Verzeichnis) noch nicht vorhanden
                     echo -e "\e[0;33m    |__ Mount-Ziel '${btrfsSubvolLayout[${subvol}]}' nicht vorhanden, Verzeichnis wird erstellt...\e[39m"
                     sudo mkdir -p "${btrfsSubvolLayout[${subvol}]}"
                 fi
 
-                if [[ $(grep "subvol=/${subvol}," /etc/fstab) ]]; then  # wenn Eintrag für z.B. ...'subvol=/@,'... bereits vorhanden
+                if [[ $(grep "subvol=/${subvol}," /etc/fstab) ]]; then                      # wenn Eintrag für z.B. ...'subvol=/@,'... bereits vorhanden
                     echo -e "\e[0;33m    |__ Eintrag für Subvolume '${subvol}' bereits vorhanden, ggf. prüfen/korrigieren\e[39m"
                     subvolInFstab='true'
                 fi
@@ -195,13 +208,18 @@ if [[ "${doSnapper}" = 'y' ]]; then
                 fi
             done
 
-            echo -e "\nErsetze/korrigiere ggf. mount-options in '/etc/fstab':"
-            echo -e "Ersetze ggf. fstab btrfs mount-option (Endeavour)'...${btrfsFstabMountOptions_endeavour}' mit '...${btrfsFstabMountOptions_standard}'"
-            sudo sed -i "s/${btrfsFstabMountOptions_endeavour}/${btrfsFstabMountOptions_standard}/g" /etc/fstab
+            if [ "${deleteOldRootInFstab}" = "true" ]; then
+                sudo sed -i "/subvolid=5,subvol=\//d" /etc/fstab                            # delete the line containing 'subvolid=5,subvol=/'
+            fi
+
+            if [[ "${os}" = "Endeavour*" ]]; then
+                echo -e "\nErsetze/korrigiere ggf. mount-options in '/etc/fstab':"
+                echo -e "Ersetze ggf. fstab btrfs mount-option (Endeavour)'...${btrfsFstabMountOptions_endeavour}' mit '...${btrfsFstabMountOptions_standard}'"
+                sudo sed -i "s/${btrfsFstabMountOptions_endeavour}/${btrfsFstabMountOptions_standard}/g" /etc/fstab
+            fi
 
             echo "Aktualisiere systemd units aus fstab + mount all..."
             sudo systemctl daemon-reload && sudo mount -a
-
 
             echo -e "\n*** Default-Subvolume festlegen"
             echo "aktuelles default-Subvolume für '/': $(sudo btrfs subvolume get-default /)"
@@ -213,7 +231,6 @@ if [[ "${doSnapper}" = 'y' ]]; then
             done
             sudo btrfs subvolume set-default "${idRootSubvol}" / && \
             echo "aktuelles root default-Subvolume: $(sudo btrfs subvolume get-default /)"
-
 
             # UEFI+Grub / BIOS+Grub / UEFI+systemD
             echo -e "\n*** Re-Install grub + Update grub boot-Einträge"
@@ -241,7 +258,6 @@ if [[ "${doSnapper}" = 'y' ]]; then
                 # systemd boot: kein Eintrag, manueller Sprung in tty (bzw. dracut macht neues img?)
             fi
 
-
             echo -e "\n*** Snapper config '${snapperConfigName_root}' wird angepasst..."   # /etc/snapper/configs/CONFIGS (z.B. /etc/snapper/configs/root)
             # sudo snapper -c "${snapperConfigName_root}" set-config "ALLOW_USERS=${userid}"
             sudo snapper -c "${snapperConfigName_root}" set-config "ALLOW_GROUPS=wheel"
@@ -251,7 +267,6 @@ if [[ "${doSnapper}" = 'y' ]]; then
             sudo snapper -c "${snapperConfigName_root}" set-config "TIMELINE_LIMIT_WEEKLY=0"
             sudo snapper -c "${snapperConfigName_root}" set-config "TIMELINE_LIMIT_MONTHLY=0"
             sudo snapper -c "${snapperConfigName_root}" set-config "TIMELINE_LIMIT_YEARLY=0"
-            
 
             echo -e "\n*** Zugriffs- und Besitzrechte für '${snapperSnapshotFolder}' werden festgelegt..."
             sudo chown -R :wheel "${snapperSnapshotFolder}" && sudo chmod -R 750 "${snapperSnapshotFolder}"
@@ -297,7 +312,7 @@ if [[ "${doSnapper}" = 'y' ]]; then
             sudo snapper ls
 
             #if [ -e "/boot/efi/grub.cfg" ] || [ -e "/boot/grub" ]; then     # GRUB (bei systemd Boot: kein Booteintrag, manuell in tty)
-            if [ -e "${efiDir}/grub.cfg" ] || [ -e "/boot/grub" ]; then     # GRUB (bei systemd Boot: kein Booteintrag, manuell in tty)
+            if [ -e "${efiDir}/grub.cfg" ] || [ -e "/boot/grub" ]; then      # GRUB (bei systemd Boot: kein Booteintrag, manuell in tty)
                 echo -e "\n*** Aktualisiere Grub"
                 echo "Aktualisiere 'grub.cfg'"
                 sudo grub-mkconfig -o /boot/grub/grub.cfg && \
@@ -507,6 +522,7 @@ echo -e "\e[0;33m#   - If you encounter a problem/error while executing the play
 echo -e "\e[0;33m#     restart your system and start the script / playbook again\e[39m"
 echo -e "\e[0;33m#   - If VS Code opens you can simply close it again or leave it open until script is finished\e[39m"
 echo -e "\e[0;33m###\e[39m\n"
+
 ansible-playbook "/home/${userid}/${playbookdir}/${playbook}" -v -K
 # bei verschlüsselten Daten z.B.:
 #ansible-playbook "/home/${userid}/${playbookdir}/${playbook}" -v -K --vault-password-file "/home/${userid}/.ansibleVaultKey"
