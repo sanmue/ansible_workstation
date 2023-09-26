@@ -92,10 +92,10 @@ if [[ $(stat -f -c %T /) = 'btrfs' ]] && [[ ! -e "/home/${userid}/.ansible_boots
 fi
 
 if [[ "${doSnapper}" = 'y' ]]; then
-    filesystemName=$(grep -w "subvol=/" /etc/fstab | cut -f 1 | xargs)
-    if [ -n "${filesystemName}" ]; then 
+    filesystemName=$(grep -w "subvol=/@" /etc/fstab | cut -f 1 | xargs)
+    if [ -z "${filesystemName}" ]; then 
         echo -e "\e[0;31mKeine btrfs subvolumes vorhanden + gemounted. Snapper config über dieses Script nicht ausführbar.\e[39m"
-        echo -e "\e[0;31mManueller Engriff erforderlich. Sorry, Ende.\e[39m"
+        echo -e "\e[0;31mManuelle Einrichtung erforderlich. Sorry, Ende.\e[39m"
         exit 1
     fi
 
