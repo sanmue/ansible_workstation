@@ -15,6 +15,10 @@
   - check if script is executable first
     - make executable: `chmod +x ./ansible_workstation/install_SWandConf.sh`
 
+# Known Issues
+## ansible playbook: installing/updating pip / python, ...
+- logout + login and start script again
+
 # Further notes for myself
 ## 'Visual Studio Code' respectively 'Code - OSS' with extension "Sync Settings"
 ### Config git-repo as storage target of the settings of VS Code
