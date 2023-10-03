@@ -105,7 +105,7 @@
       - hunspell-en_us
       # - ipset
       - kdeconnect
-      - ksnip
+      # - ksnip
       - libnotify             # Library for sending desktop notifications
       - libreoffice-still
       # - libreoffice-still-de

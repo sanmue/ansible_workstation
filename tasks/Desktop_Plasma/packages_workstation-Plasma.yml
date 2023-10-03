@@ -9,6 +9,7 @@
     name:
       - cantata               # Qt[x] client for the music player daemon (MPD)
       - krita                 # Gnome: inkscape
+      - ksnip
       - ktorrent
       - mpd                   # Music Player Daemon / Flexible, powerful, server-side application for playing music
       # - qt5-translations    # sollte schon installiert sein
