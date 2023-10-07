@@ -561,15 +561,15 @@ case ${os} in
             #if [ -n "${lsblkBtrfs}" ]; then
             if [[ $(stat -f -c %T /) = 'btrfs' ]]; then
                 echo -e "\nInstall 'btrfs-assistant' from AUR..."
-                yay -S --needed btrfs-assistant && touch "/home/${userid}/.ansible_installScript_pamac-btrfsassistantInstalled"
+                yay -S --needed btrfs-assistant && touch "/home/${userid}/.ansible_installScript_AUR-btrfsassistantInstalled"
             fi
 
             echo -e "\nInstall Citrix Workspace App (icaclient) from AUR..."
-            yay -S icaclient && touch "/home/${userid}/.ansible_installScript_pamac-icaclientInstalled" && mkdir -p "/home/${userid}/.ICAClient/cache" && \
+            yay -S icaclient && touch "/home/${userid}/.ansible_installScript_AUR-icaclientInstalled" && mkdir -p "/home/${userid}/.ICAClient/cache" && \
             sudo rsync -aPhEv /opt/Citrix/ICAClient/config/{All_Regions,Trusted_Region,Unknown_Region,canonicalization,regions}.ini "/home/${userid}/.ICAClient/"
 
             #echo -e "\nInstall Microsoft TTF Fonts from AUR..."
-            #yay -S --needed ttf-ms-fonts && touch "/home/${userid}/.ansible_installScript_pamac-ttfmsfontsInstalled"
+            #yay -S --needed ttf-ms-fonts && touch "/home/${userid}/.ansible_installScript_AUR-ttfmsfontsInstalled"
 
             # --- 'autokey' auskommentiert, da nicht mit Wayland funktioniert --- #
             # echo -e "\nInstall 'autokey-gtk' from AUR..."         # da aktuell Gnome verwende
@@ -578,10 +578,10 @@ case ${os} in
             # yay -S --needed autokey-qt # && touch "/home/${userid}/.ansible_installScript_autokeyQtInstalled"
 
             #echo -e "\nInstall woeusb-ng (Tool to create Windows boot stick) from AUR..."  
-            #yay -S --needed woeusb-ng && touch "/home/${userid}/.ansible_installScript_pamac-woeusbngInstalled"
+            #yay -S --needed woeusb-ng && touch "/home/${userid}/.ansible_installScript_AUR-woeusbngInstalled"
 
             #echo -e "\nVM - Install virtio-win image from AUR..."
-            #yay -S --needed virtio-win && touch "/home/${userid}/.ansible_installScript_pamac-vmVirtioWinInstalled"
+            #yay -S --needed virtio-win && touch "/home/${userid}/.ansible_installScript_AUR-vmVirtioWinInstalled"
         fi
     ;;
 
