@@ -3,7 +3,8 @@
   - currently only tested for my Gnome desktop environment + settings (Plasma: not up to date / re-tested)
 - initial bash script (works for Arch Linux, Endeavour OS and Ubuntu):
   - installs some initially required packages
-  - optionally installs/creates/configures btrfs subvolumes and 'snapper' for system snapshots (only if filesystem is btrfs)
+  - optionally installs/creates/configures 'snapper' for system snapshots and additional btrfs subvolumes if needed (only if filesystem is btrfs)
+    - at least a basic btrfs subvolume layout must exist
     - not tested for Ubuntu (will very probably not work, better skip this step when prompted in script)
   - starts the ansible playbook (local.yml)
   - Arch Linux / Endeavour OS: installs some packages from AUR
