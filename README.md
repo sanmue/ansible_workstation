@@ -1,9 +1,12 @@
 # ansible_workstation - automated post-installation of my workstation
 - completes after successful basic installation (including a desktop environment) the further installation and configuration of additionally defined software and services
 - currently only for my Gnome desktop environment + settings (Plasma: not up to date / re-tested)
-- initial bash script:
-  - works for Arch Linux, Endeavour OS and Ubuntu
-  - if btrfs-filesystem: installs/creates/configures btrfs subvolumes and 'snapper' for (automatic and manual) system snapshots (optional)
+- initial bash script (works for Arch Linux, Endeavour OS and Ubuntu):
+  - installs some initially required packages
+  - optionally installs/creates/configures btrfs subvolumes and 'snapper' for system snapshots (only if filesystem is btrfs)
+    - not tested for Ubuntu (will very probably not work, better skip this step when prompted in script)
+  - starts the ansible playbook (local.yml)
+  - Arch Linux / Endeavour OS: installs some packages from AUR
 
 # Usage
 ## Start initial bash script
@@ -16,8 +19,9 @@
     - make executable: `chmod +x ./ansible_workstation/install_SWandConf.sh`
 
 # Known Issues
-## ansible playbook: installing/updating pip / python, ...
-- logout + login and start script again
+## Installing/updating - pip update (python), ...
+- when ansible stops because of an error referring to pip update (python), ...:
+  - logout + login and start script/ansible playbook again
 
 # Further notes for myself
 ## 'Visual Studio Code' respectively 'Code - OSS' with extension "Sync Settings"
