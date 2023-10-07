@@ -87,7 +87,7 @@ fi
 ### ---
 
 # check filesystem type + aks if snapper should be installed:
-if [[ $(stat -f -c %T /) = 'btrfs' ]] && [[ ! -e "/home/${userid}/.ansible_bootstrap_snapperGrub" ]]; then   # prüfe '/' auf btrfs-filsystem;  -f, --file-system; -c, --format; %T - Type in human readable form
+if [[ $(stat -f -c %T /) = 'btrfs' ]] && [[ ! -e "/home/${userid}/.ansible_installScript_snapperGrub" ]]; then   # prüfe '/' auf btrfs-filsystem;  -f, --file-system; -c, --format; %T - Type in human readable form
     read -r -p "Should 'snapper' (for snapshot creation) be installed/configured ('y'=yes, other input=no)?: " doSnapper
 fi
 
@@ -329,7 +329,7 @@ if [[ "${doSnapper}" = 'y' ]]; then
         ;;
     esac
 
-    touch "/home/${userid}/.ansible_bootstrap_snapperGrub"   # wird auch bei default-switch - Zweig erstellt, d.h. snapper nicht konfiguriert (-> Manuelle Durchführung notwendig)
+    touch "/home/${userid}/.ansible_installScript_snapperGrub"   # wird auch bei default-switch - Zweig erstellt, d.h. snapper nicht konfiguriert (-> Manuelle Durchführung notwendig)
 
     echo -e  "*** Ende Snapper-Teil"
     echo     "*** ********************************************"
@@ -345,8 +345,8 @@ fi
 # ### distributionsspezifische Anpassungen:
 case ${os} in
     Arch* | Endeavour*)
-        if [ ! -f "/home/${userid}/.ansible_bootstrapMirrorPool" ]; then
-            touch "/home/${userid}/.ansible_bootstrapMirrorPool"
+        if [ ! -f "/home/${userid}/.ansible_installScript_MirrorPool" ]; then
+            touch "/home/${userid}/.ansible_installScript_MirrorPool"
 
             if [[ "${os}" = "EndeavourOS"* ]]; then
                 echo -e "\nRetrieve up-to-date Arch Linux mirror data, rank it and update all packages on the system..."
@@ -537,46 +537,51 @@ case ${os} in
         read -r -p "Install some predefined additonal software from AUR ? ('j'=ja, sonstige Eingabe: nein): " installAUR
 
         if [ "${installAUR}" == "j" ]; then
-            # echo -e "\nInstall 'autokey-gtk' from AUR..."          # da aktuell Gnome verwende
-            # yay -S --needed autokey-gtk && touch "/home/${userid}/.ansible_bootstrap_autokeyGtkInstalled"
-
-            # echo -e "\nInstall 'autokey-qt' from AUR (Arch)"   # e.g. when using Plasma
-            # yay -S --needed autokey-qt # && touch "/home/${userid}/.ansible_bootstrap_autokeyQtInstalled"
-
             echo -e "\nInstall some Gnome Extensions (gsconnect, dash-to-panel) from AUR ..."
             yay -S --needed gnome-shell-extension-gsconnect gnome-shell-extension-dash-to-panel
 
-            echo -e "\nInstall several Packages (bashdb, gtkhash, ttf-meslo-nerd-font (10k), units, vorta from AUR..."
-            yay -S --needed bashdb gtkhash ttf-meslo-nerd-font-powerlevel10k units vorta
-            # bashdb: # A debugger for Bash scripts loosely modeled on the gdb command syntax
+            echo -e "\nInstall several Packages (bashdb, gtkhash, ttf-meslo-nerd-font (10k), units) from AUR..."
+            yay -S --needed bashdb gtkhashtf-meslo-nerd-font-powerlevel10k units    # bashdb: # A debugger for Bash scripts loosely modeled on the gdb command syntax
+
+            echo -e "\nInstall several Applications (Joplin, Vorta) from AUR..."
+            yay -S --needed joplin-desktop vorta 
 
             echo -e "\nInstall Brave Browser from AUR..."
             yay -S --needed brave-bin
 
-            echo -e "\nInstall ulauncher from AUR..."
-            yay -S --needed ulauncher && touch "/home/${userid}/.ansible_bootstrap_severalAurPkgInstalled"
-
-            echo -e "\nStart + enable ulauncher.service for '${userid}'..."
-            systemctl --user enable --now ulauncher.service   # su -u "${userid}" -c "systemctl --user enable --now ulauncher.service"
-
             echo -e "\nInstall linux steam integration from AUR..."
             yay -S --needed linux-steam-integration
 
+            echo -e "\nInstall ulauncher from AUR..."
+            yay -S --needed ulauncher && touch "/home/${userid}/.ansible_installScript_severalAurPkgInstalled"
+            echo -e "\nStart + enable ulauncher.service for '${userid}'..."
+            systemctl --user enable --now ulauncher.service         # su -u "${userid}" -c "systemctl --user enable --now ulauncher.service"
+
+            #lsblkBtrfs=$(lsblk -P -o +FSTYPE | grep "btrfs")   # $(blkid | grep btrfs) # $(mount | grep "^/dev" | grep btrfs)  # $(grep btrfs /etc/fstab)
+            #if [ -n "${lsblkBtrfs}" ]; then
+            if [[ $(stat -f -c %T /) = 'btrfs' ]]; then
+                echo -e "\nInstall 'btrfs-assistant' from AUR..."
+                yay -S --needed btrfs-assistant && touch "/home/${userid}/.ansible_installScript_pamac-btrfsassistantInstalled"
+            fi
+
             echo -e "\nInstall Citrix Workspace App (icaclient) from AUR..."
-            yay -S icaclient && touch "/home/${userid}/.ansible_bootstrap_pamac-icaclientInstalled" && mkdir -p "/home/${userid}/.ICAClient/cache" && \
+            yay -S icaclient && touch "/home/${userid}/.ansible_installScript_pamac-icaclientInstalled" && mkdir -p "/home/${userid}/.ICAClient/cache" && \
             sudo rsync -aPhEv /opt/Citrix/ICAClient/config/{All_Regions,Trusted_Region,Unknown_Region,canonicalization,regions}.ini "/home/${userid}/.ICAClient/"
 
-            echo -e "\nInstall 'btrfs-assistant' from AUR..."
-            yay -S --needed btrfs-assistant && touch "/home/${userid}/.ansible_bootstrap_pamac-btrfsassistantInstalled"
-
             #echo -e "\nInstall Microsoft TTF Fonts from AUR..."
-            #yay -S --needed ttf-ms-fonts && touch "/home/${userid}/.ansible_bootstrap_pamac-ttfmsfontsInstalled"
+            #yay -S --needed ttf-ms-fonts && touch "/home/${userid}/.ansible_installScript_pamac-ttfmsfontsInstalled"
+
+            # --- 'autokey' auskommentiert, da nicht mit Wayland funktioniert --- #
+            # echo -e "\nInstall 'autokey-gtk' from AUR..."         # da aktuell Gnome verwende
+            # yay -S --needed autokey-gtk && touch "/home/${userid}/.ansible_installScript_autokeyGtkInstalled"
+            # echo -e "\nInstall 'autokey-qt' from AUR (Arch)"      # e.g. when using Plasma
+            # yay -S --needed autokey-qt # && touch "/home/${userid}/.ansible_installScript_autokeyQtInstalled"
 
             #echo -e "\nInstall woeusb-ng (Tool to create Windows boot stick) from AUR..."  
-            #yay -S --needed woeusb-ng && touch "/home/${userid}/.ansible_bootstrap_pamac-woeusbngInstalled"
+            #yay -S --needed woeusb-ng && touch "/home/${userid}/.ansible_installScript_pamac-woeusbngInstalled"
 
             #echo -e "\nVM - Install virtio-win image from AUR..."
-            #yay -S --needed virtio-win && touch "/home/${userid}/.ansible_bootstrap_pamac-vmVirtioWinInstalled"
+            #yay -S --needed virtio-win && touch "/home/${userid}/.ansible_installScript_pamac-vmVirtioWinInstalled"
         fi
     ;;
 

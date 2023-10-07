@@ -9,9 +9,9 @@
     - 'org.cryptomator.Cryptomator'
     - 'com.github.tchx84.Flatseal'
     - 'de.willuhn.Jameica'
-    - 'net.cozic.joplin_desktop'
+    # - 'net.cozic.joplin_desktop'    # Arch: AUR package 'joplin-desktop'
     - 'de.haeckerfelix.Shortwave'
-    - 'com.obsproject.Studio'
+    # - 'net.mkiol.SpeechNote'
 
 - name: Install flatpak packages (Extension Manager) for Gnome (Gnome, all)
   tags: workstation,ubuntu,arch,flatpak
@@ -47,10 +47,12 @@
     - 'com.discordapp.Discord'
     - 'org.mozilla.firefox'
     - 'com.github.johnfactotum.Foliate'
+    - 'net.cozic.joplin_desktop'
     - 'org.keepassxc.KeePassXC'
-    - 'org.ksnip.ksnip'   # im Ksnip-Editor können noch ergänzngen (Markieren, Rahemen, ... gemacht werden; im ggs. zu "Screenshot")
+    - 'org.ksnip.ksnip'   # im Ksnip-Editor können noch Ergänzungen (Markieren, Rahemen, ... gemacht werden; im ggs. zu Screenshot Tool unter Gnome)
     - 'org.libreoffice.LibreOffice'
     - 'com.nextcloud.desktopclient.nextcloud'
+    - 'com.obsproject.Studio'
     - 'org.remmina.Remmina'
     - 'org.signal.Signal'
     - 'com.github.micahflee.torbrowser-launcher'
