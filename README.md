@@ -1,6 +1,6 @@
 # ansible_workstation - automated post-installation of my workstation
-- completes after successful basic installation (including a desktop environment) the further installation and configuration of additionally defined software and services
-- currently only for my Gnome desktop environment + settings (Plasma: not up to date / re-tested)
+- executes further installation and configuration of additionally defined software and services after successful basic installation (including a desktop environment (Gnome or Plasma))
+  - currently only tested for my Gnome desktop environment + settings (Plasma: not up to date / re-tested)
 - initial bash script (works for Arch Linux, Endeavour OS and Ubuntu):
   - installs some initially required packages
   - optionally installs/creates/configures btrfs subvolumes and 'snapper' for system snapshots (only if filesystem is btrfs)
