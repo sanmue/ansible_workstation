@@ -90,20 +90,26 @@ fi
 # check filesystem type + aks if snapper should be installed:
 if [[ $(stat -f -c %T /) = 'btrfs' ]] && [[ ! -e "/home/${userid}/.ansible_installScript_snapperGrub" ]]; then   # prüfe '/' auf btrfs-filsystem;  -f, --file-system; -c, --format; %T - Type in human readable form
     echo -e "\n\e[0;33mSystem snapshots\e[39m"
-    read -r -p "Install + configure 'snapper'? ('y'=yes, other input=no): " doSnapper
+    read -r -p "Install + configure 'snapper' (only if basic btrfs subvolumes exist)? ('y'=yes, other input=no): " doSnapper
 fi
 
 if [[ "${doSnapper}" = 'y' ]]; then
-    filesystemName=$(grep -w "subvol=/@" /etc/fstab | cut -f 1 | xargs)
+    filesystemName=$(grep -w "subvol=/@" /etc/fstab | cut -f 1 | xargs)   # e.g.: 'UUID=8e144d47-02f9-49a4-bf7b-f915dbfe18a5' or '/dev/mapper/luks-cc2e4215-6edc-41c8-9b03-d478bee0a61c / btrfs subvol=/@,defaults,noatime,compress=zstd 0 0'
     if [ -z "${filesystemName}" ]; then 
-        echo -e "\e[0;31mKeine btrfs subvolumes vorhanden + gemounted. Snapper config über dieses Script nicht ausführbar.\e[39m"
+        echo -e "\e[0;31mKein(e) btrfs (root-)subvolume(s) vorhanden + gemounted. Snapper config über dieses Script nicht ausführbar.\e[39m"
         echo -e "\e[0;31mManuelle Einrichtung erforderlich. Sorry, Ende.\e[39m"
         exit 1
     fi
 
-    if [ ! -e "${snapperSnapshotFolder}" ]; then   # check if ${snapperSnapshotFolder} exists
-        echo -e "\e[0;33mVerzeichnis '${snapperSnapshotFolder}' nicht vorhanden. Evlt. abweichendes Verzeichnis konfiguriert?!\nGgf. vorheriger manueller Eingriff erforderlich.\e[39m" 
-        read -r -p "Installation/Konfiguration fortsetzen mit beliebiger Eingabe, Abbrechen mit <CTRL> + <c>"
+    if [ ! -e "${snapperSnapshotFolder}" ]; then        # check if ${snapperSnapshotFolder} exists
+        echo -e "\e[0;33m- Verzeichnis '${snapperSnapshotFolder}' nicht vorhanden. Evlt. abweichendes Verzeichnis konfiguriert?!\n- Ggf. vorheriger manueller Eingriff erforderlich.\e[39m"
+        echo "Current btrfs subvolume list:"
+        sudo btrfs subvolume list /
+        read -r -p "Installation/Konfiguration fortsetzen? (beliebige Eingabe = ja, 'n' = nein): " continueScript
+        if [ "${continueScript}" = "n" ]; then
+            echo "Stopping Script"
+            exit 0
+        fi
     fi
 
     echo -e "\n\e[0;33m*** ********************************************\e[39m"
@@ -155,6 +161,10 @@ if [[ "${doSnapper}" = 'y' ]]; then
                 echo -e "\e[0;31mEs muss schon ein entsprechendes btrfs subvolume-layout vorhanden und gemounted sein, damit dieses Script funkiontiert.\e[39m"
                 echo -e "\e[0;31mManueller Engriff erforderlich. Sorry, Ende.\e[39m"
                 exit 1
+            fi
+            if [[ "${filesystemName}" = /dev/* ]]; then       # '/dev/mapper/luks-cc2e4215-6edc-41c8-9b03-d478bee0a61c / btrfs subvol=/@,defaults,noatime,compress=zstd 0 0'
+                # echo "Correcting 'filesystemName'..."
+                filesystemName=$(echo "${filesystemName}" | cut -d ' ' -f 1 | xargs)   # '/dev/mapper/luks-cc2e4215-6edc-41c8-9b03-d478bee0a61c'
             fi
 
             read -r -p "Nutze file system '${filesystemName}'. Ist das korrekt ? ('n'=nein, sonstige Eingabe=ja): " fsok
