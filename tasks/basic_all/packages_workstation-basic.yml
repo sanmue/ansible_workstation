@@ -26,7 +26,8 @@
       - duf                   # Disk Usage/Free Utility
       - efivar
       - evolution
-      - exa                   # ls replacement
+      # - exa                   # ls replacement
+      - eza                   # A modern replacement for ls (community fork of exa)
       - flatpak
       - font-manager
       - gcc
