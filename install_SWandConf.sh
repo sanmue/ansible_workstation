@@ -17,6 +17,7 @@ playbookdir="ansible_workstation"   # also repo name
 playbook="local.yml"
 userid=$(whoami)   # or: userid=${USER}
 oslist=("Arch Linux" "EndeavourOS" "Ubuntu")   # currently supportet distributions
+currentHostname=$(hostname)
 bootloaderId='GRUB'   # or 'endeavouros', ...
 
 if [ -e "/efi" ]; then          # Uefi - EFI path
@@ -54,7 +55,7 @@ deleteOldRootInFstab="false"    # default: "false", may be modified later in the
 ### Check Operating System (OS)
 ### ---
 os=$(grep -e "^NAME=" /etc/os-release | cut -d '"' -f 2 | xargs)
-echo "Current OS: ${os}"
+echo -e "\n\e[0;33mCurrent OS:\e[39m ${os}"
 
 supportedOS="false"
 for osname in "${oslist[@]}"; do
@@ -65,7 +66,6 @@ done
 if [ "${supportedOS}" = "false" ]; then 
     echo -e "\e[0;31mSorry, your OS '${os}' is not supported. Script/Playbook won't work for you.\e[39m"
     echo "Skript will exit here :-("
-    #read -r -p
     exit 1
 fi
 
@@ -73,12 +73,13 @@ fi
 ### ---
 ### Hostname
 ### ---
-echo -e "\nCurrent hostname: '$(hostname)'"
-read -r -p "Change hostname? ('y'=yes, other input=no): " changeHostname
+echo -e "\e[0;33mCurrent hostname:\e[39m '${currentHostname}'"
+read -r -p "  |_ Change hostname? ('y'=yes, other input=no): " changeHostname
 if [ "${changeHostname}" = 'y' ]; then
-    read -r -p "Enter new hostname: " newHostname
+    read -r -p "     Enter new hostname: " newHostname
     sudo hostnamectl hostname "${newHostname}"
-    echo "New hostname '${newHostname}' set, continue with any input"
+    sudo sed -i "s/${currentHostname}/${newHostname}/g" /etc/hosts
+    echo "     Hostname set to '${newHostname}'"
 fi
 
 
@@ -88,7 +89,8 @@ fi
 
 # check filesystem type + aks if snapper should be installed:
 if [[ $(stat -f -c %T /) = 'btrfs' ]] && [[ ! -e "/home/${userid}/.ansible_installScript_snapperGrub" ]]; then   # prüfe '/' auf btrfs-filsystem;  -f, --file-system; -c, --format; %T - Type in human readable form
-    read -r -p "Should 'snapper' (for snapshot creation) be installed/configured ('y'=yes, other input=no)?: " doSnapper
+    echo -e "\n\e[0;33mSystem snapshots\e[39m"
+    read -r -p "Install + configure 'snapper'? ('y'=yes, other input=no): " doSnapper
 fi
 
 if [[ "${doSnapper}" = 'y' ]]; then
@@ -104,8 +106,8 @@ if [[ "${doSnapper}" = 'y' ]]; then
         read -r -p "Installation/Konfiguration fortsetzen mit beliebiger Eingabe, Abbrechen mit <CTRL> + <c>"
     fi
 
-    echo -e "\n*** ********************************************"
-    echo      "*** Start: Installation und config von 'snapper'"
+    echo -e "\n\e[0;33m*** ********************************************\e[39m"
+    echo -e   "\e[0;33m*** Start: Installation und config von 'snapper'\e[39m"
     case ${os} in
         Arch* | Endeavour*)        # aktuell für UEFI oder GRUB2 + Grub sowie für UEFI + systemd boot
             # https://wiki.archlinux.org/title/Btrfs
@@ -331,8 +333,8 @@ if [[ "${doSnapper}" = 'y' ]]; then
 
     touch "/home/${userid}/.ansible_installScript_snapperGrub"   # wird auch bei default-switch - Zweig erstellt, d.h. snapper nicht konfiguriert (-> Manuelle Durchführung notwendig)
 
-    echo -e  "*** Ende Snapper-Teil"
-    echo     "*** ********************************************"
+    echo -e "\e[0;33m*** Ende Snapper-Teil\e[39m"
+    echo -e "\e[0;33m*** ********************************************\e[39m"
 # else 
 #     echo -e "\n'/' hat kein btrfs-Filesystem"
 fi
