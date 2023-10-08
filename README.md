@@ -20,8 +20,8 @@
     - make executable: `chmod +x ./ansible_workstation/install_SWandConf.sh`
 
 # Known Issues
-## Installing/updating - pip update (python), ...
-- when ansible stops because of an error referring to pip update (python), ...:
+## Upgrade pip (Python)
+- when ansible stops because of an error referring to pip upgrade:
   - logout + login and start script/ansible playbook again
 
 # Further notes for myself
