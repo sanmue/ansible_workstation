@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-#set -x   # enable debug mode
+set -x   # enable debug mode
 
 ### ---------------------------------------------------------------------------
 ### Installation initial benötigter Pakete / Config (e.g. firewall, git, ...)
@@ -88,18 +88,56 @@ fi
 ### ---
 
 # check filesystem type + aks if snapper should be installed:
-if [[ $(stat -f -c %T /) = 'btrfs' ]] && [[ ! -e "/home/${userid}/.ansible_installScript_snapperGrub" ]]; then   # prüfe '/' auf btrfs-filsystem;  -f, --file-system; -c, --format; %T - Type in human readable form
+if [[ $(stat -f -c %T /) = 'btrfs' ]] && [[ ! -e "/home/${userid}/.ansible_installScript_snapperGrub" ]]; then   # prüfe '/' auf btrfs filesystem;  -f, --file-system; -c, --format; %T - Type in human readable form (e.g. 'btrfs', 'ext4', ...)
     echo -e "\n\e[0;33mSystem snapshots\e[39m"
-    read -r -p "Install + configure 'snapper' (only if basic btrfs subvolumes exist)? ('y'=yes, other input=no): " doSnapper
+    read -r -p "Install + configure 'snapper'? ('y' = yes, other input = no): " doSnapper
 fi
 
 if [[ "${doSnapper}" = 'y' ]]; then
-    filesystemName=$(grep -w "subvol=/@" /etc/fstab | cut -f 1 | xargs)   # e.g.: 'UUID=8e144d47-02f9-49a4-bf7b-f915dbfe18a5' or '/dev/mapper/luks-cc2e4215-6edc-41c8-9b03-d478bee0a61c / btrfs subvol=/@,defaults,noatime,compress=zstd 0 0'
-    if [ -z "${filesystemName}" ]; then 
-        echo -e "\e[0;31mKein(e) btrfs (root-)subvolume(s) vorhanden + gemounted. Snapper config über dieses Script nicht ausführbar.\e[39m"
-        echo -e "\e[0;31mManuelle Einrichtung erforderlich. Sorry, Ende.\e[39m"
+    # --- START check fstab + set file system name ----------------------------
+    # Script only works if btrfs subvolumes are already created (e.g. recommended subvolume layout, with subvolumes: '@', '@home', ...)
+    # therefore checking fstab: - for btrfs root subvolume '@/'
+    #                           - '<file system>' part will be used later for creating new fstab entries for subvolumes (see further below)
+
+    fstabEntryBtrfsRootSubvol=$(grep -e "subvol=/@[^a-zA-Z]" /etc/fstab)    # btrfs subvolumes already created + mounted + encryption
+                                                                            # e.g.: "/dev/mapper/luks-7bee452d-... / btrfs subvol=/@,defaults,... 0 0" or: "UUID=luks-8f1cf7bc-8064-...   / btrfs subvol=/@,defaults,... 0 0"
+    #filesystemName=$(grep -e "subvol=/@[^a-zA-Z]" /etc/fstab | cut -f 1 | xargs)
+
+    # if the above grep did not return a match, its perhaps because of no (recommended) btrfs subvolume layout has been created (-> e.g. no subvolumes: '@', '@home', ...):
+    if [ -z "${fstabEntryBtrfsRootSubvol}" ]; then                                  # "default" btrfs root '/' without (recommended) subvolumes: "initial" entry still in fstab
+        echo "Aktuelle /etc/fstab:"
+        cat /etc/fstab
+
+        # --- START #TODO: aktuell nicht implementiert 
+        # filesystemName=$(grep -w "subvol=/" /etc/fstab | cut -f 1 | xargs)        # e.g.: "UUID=8a6bb50a-11d3-4aff-bba9-e7234a9228c5 / btrfs rw,noatime,...,subvolid=5,subvol=/ 0 0"
+                                                                                    #       - can occur: standard install with btrfs, but without specifying (recommended) subvolume layout # '...subvolid=5,subvol=/...' is default entry for btrfs root subvolume
+        # --- ENDE aktuell nicht implementiert
+        deleteOldRootInFstab="true"                                                 # marker, that this fstab entry has to be erased (or we will have 2 entries for '/' in fstab later)
+
+        echo -e "\e[0;31mEs muss schon ein btrfs subvolume layout vorhanden sein, damit dieses Script funkiontiert.\e[39m"
+        echo -e "\e[0;31mManuelle Durchführung erforderlich. Sorry, Ende.\e[39m"
         exit 1
     fi
+
+    case ${fstabEntryBtrfsRootSubvol} in
+        /dev*)                                                                      # /dev/mapper/luks-cc2e4215-6edc-41c8-9b03-d478bee0a61c / btrfs subvol=/@,defaults,noatime,compress=zstd 0 0'   # EndeavourOS + luks encryption
+            filesystemName=$(echo "${fstabEntryBtrfsRootSubvol}" | cut -d ' ' -f 1 | xargs)    # /dev/mapper/luks-cc2e4215-6edc-41c8-9b03-d478bee0a61c
+        ;;
+
+        UUID*)                                                                          # UUID=luks-8f1cf7bc-8064-...   / btrfs subvol=/@,defaults,... 0 0
+            filesystemName=$(echo "${fstabEntryBtrfsRootSubvol}" | cut -f 1 | xargs)    # UUID=luks-8f1cf7bc-8064-...
+            if [ -z "${filesystemName}" ]; then filesystemName=$(echo "${filesystemName}" | cut -d ' ' -f 1 | xargs); fi
+        ;;
+
+        *)
+            filesystemName=$(echo "${fstabEntryBtrfsRootSubvol}" | cut -d ' ' -f 1 | xargs)
+            echo -e "\e[0;31mDefault case 'fstabEntryBtrfsRootSubvol': fstab file system name could not be defined clearly.\e[39m"
+        ;;
+    esac
+
+    echo -e "\e[0;33mSetting fstab file system name to\e[39m '${filesystemName}' \e[0;33mfor now.\nYou can correct this later manually when prompted for confirmation.\e[39m"
+    # --- END check fstab + set file system name ------------------------------
+
 
     if [ ! -e "${snapperSnapshotFolder}" ]; then        # check if ${snapperSnapshotFolder} exists
         echo -e "\e[0;33m- Verzeichnis '${snapperSnapshotFolder}' nicht vorhanden. Evlt. abweichendes Verzeichnis konfiguriert?!\n- Ggf. vorheriger manueller Eingriff erforderlich.\e[39m"
@@ -115,7 +153,7 @@ if [[ "${doSnapper}" = 'y' ]]; then
     echo -e "\n\e[0;33m*** ********************************************\e[39m"
     echo -e   "\e[0;33m*** Start: Installation und config von 'snapper'\e[39m"
     case ${os} in
-        Arch* | Endeavour*)        # aktuell für UEFI oder GRUB2 + Grub sowie für UEFI + systemd boot
+        Arch* | Endeavour*)        # aktuell für UEFI oder BIOS jeweils mit GRUB-Bootloader (TODO: sowie für UEFI + systemd boot -> not (re-)tested)
             # https://wiki.archlinux.org/title/Btrfs
             # https://wiki.archlinux.org/title/Snapper
             # https://documentation.suse.com/sles/15-SP4/html/SLES-all/cha-snapper.html
@@ -126,7 +164,6 @@ if [[ "${doSnapper}" = 'y' ]]; then
             if [ -e "${efiDir}/grub.cfg" ] || [ -e "/boot/grub" ]; then             # GRUB (UEFI oder BIOS)
                 sudo pacman --needed --noconfirm -S grub-btrfs
             fi
-
 
             echo -e "\n*** (Re)create snapshots folder + snapper config..."
             # Arch Linux | EndeavourOS:
@@ -152,20 +189,6 @@ if [[ "${doSnapper}" = 'y' ]]; then
             echo "*** Erstelle Subvolumes (sofern nicht schon vorhanden) und entsprechende fstab-Einträge"
             echo "Aktuelle /etc/fstab:"
             cat /etc/fstab
-            filesystemName=$(grep -e "subvol=/@[^a-zA-Z]" /etc/fstab | cut -f 1 | xargs)    # btrfs subvolumes already created + mounted (+ encryption) # "/dev/mapper/luks-7bee452d-... / btrfs subvol=/@,defaults,... 0 0"
-                                                                                            # filesystemName e.g.: UUDI=luks-8f1cf7bc-8064-422b-bd46-466438199874
-            if [ -z "${filesystemName}" ]; then                                             # "default" btrfs root '/' without special subolumes: "initial" entry still in fstab at first position
-                filesystemName=$(grep -w "subvol=/" /etc/fstab | cut -f 1 | xargs)          # e.g.: "UUID=8a6bb50a-11d3-4aff-bba9-e7234a9228c5 / btrfs rw,noatime,...,subvolid=5,subvol=/ 0 0"
-                deleteOldRootInFstab="true"                                                 # marker, that this fstab entry has to be erased (or we will have 2 entries vor '/' in fstab)
-
-                echo -e "\e[0;31mEs muss schon ein entsprechendes btrfs subvolume-layout vorhanden und gemounted sein, damit dieses Script funkiontiert.\e[39m"
-                echo -e "\e[0;31mManueller Engriff erforderlich. Sorry, Ende.\e[39m"
-                exit 1
-            fi
-            if [[ "${filesystemName}" = /dev/* ]]; then       # '/dev/mapper/luks-cc2e4215-6edc-41c8-9b03-d478bee0a61c / btrfs subvol=/@,defaults,noatime,compress=zstd 0 0'
-                # echo "Correcting 'filesystemName'..."
-                filesystemName=$(echo "${filesystemName}" | cut -d ' ' -f 1 | xargs)   # '/dev/mapper/luks-cc2e4215-6edc-41c8-9b03-d478bee0a61c'
-            fi
 
             read -r -p "Nutze file system '${filesystemName}'. Ist das korrekt ? ('n'=nein, sonstige Eingabe=ja): " fsok
             if [ "${fsok}" = "n" ]; then
