@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -x   # enable debug mode
+#set -x   # enable debug mode
 
 ### ---------------------------------------------------------------------------
 ### Installation initial benötigter Pakete / Config (e.g. firewall, git, ...)
@@ -99,20 +99,19 @@ if [[ "${doSnapper}" = 'y' ]]; then
     # therefore checking fstab: - for btrfs root subvolume '@/'
     #                           - '<file system>' part will be used later for creating new fstab entries for subvolumes (see further below)
 
-    fstabEntryBtrfsRootSubvol=$(grep -e "subvol=/@[^a-zA-Z]" /etc/fstab)    # btrfs subvolumes already created + mounted + encryption
+    fstabEntryBtrfsRootSubvol=$(grep -e "subvol=/@[^a-zA-Z]" /etc/fstab)    # btrfs subvolumes already created + mounted (+ encryption)
                                                                             # e.g.: "/dev/mapper/luks-7bee452d-... / btrfs subvol=/@,defaults,... 0 0" or: "UUID=luks-8f1cf7bc-8064-...   / btrfs subvol=/@,defaults,... 0 0"
-    #filesystemName=$(grep -e "subvol=/@[^a-zA-Z]" /etc/fstab | cut -f 1 | xargs)
 
     # if the above grep did not return a match, its perhaps because of no (recommended) btrfs subvolume layout has been created (-> e.g. no subvolumes: '@', '@home', ...):
-    if [ -z "${fstabEntryBtrfsRootSubvol}" ]; then                                  # "default" btrfs root '/' without (recommended) subvolumes: "initial" entry still in fstab
+    if [ -z "${fstabEntryBtrfsRootSubvol}" ]; then                                      # "default" btrfs root '/' without (recommended) subvolumes: "initial" entry still in fstab
         echo "Aktuelle /etc/fstab:"
         cat /etc/fstab
 
         # --- START #TODO: aktuell nicht implementiert 
-        # filesystemName=$(grep -w "subvol=/" /etc/fstab | cut -f 1 | xargs)        # e.g.: "UUID=8a6bb50a-11d3-4aff-bba9-e7234a9228c5 / btrfs rw,noatime,...,subvolid=5,subvol=/ 0 0"
-                                                                                    #       - can occur: standard install with btrfs, but without specifying (recommended) subvolume layout # '...subvolid=5,subvol=/...' is default entry for btrfs root subvolume
+        # fstabFileSystem=$(grep -w "subvol=/" /etc/fstab | cut -f 1 | xargs)           # e.g.: "UUID=8a6bb50a-11d3-4aff-bba9-e7234a9228c5 / btrfs rw,noatime,...,subvolid=5,subvol=/ 0 0"
+                                                                                        #       - can occur: standard install with btrfs, but without specifying (recommended) subvolume layout # '...subvolid=5,subvol=/...' is default entry for btrfs root subvolume
         # --- ENDE aktuell nicht implementiert
-        deleteOldRootInFstab="true"                                                 # marker, that this fstab entry has to be erased (or we will have 2 entries for '/' in fstab later)
+        deleteOldRootInFstab="true"                                                     # marker, that this fstab entry has to be erased (or we will have 2 entries for '/' in fstab later)
 
         echo -e "\e[0;31mEs muss schon ein btrfs subvolume layout vorhanden sein, damit dieses Script funkiontiert.\e[39m"
         echo -e "\e[0;31mManuelle Durchführung erforderlich. Sorry, Ende.\e[39m"
@@ -120,26 +119,27 @@ if [[ "${doSnapper}" = 'y' ]]; then
     fi
 
     case ${fstabEntryBtrfsRootSubvol} in
-        /dev*)                                                                      # /dev/mapper/luks-cc2e4215-6edc-41c8-9b03-d478bee0a61c / btrfs subvol=/@,defaults,noatime,compress=zstd 0 0'   # EndeavourOS + luks encryption
-            filesystemName=$(echo "${fstabEntryBtrfsRootSubvol}" | cut -d ' ' -f 1 | xargs)    # /dev/mapper/luks-cc2e4215-6edc-41c8-9b03-d478bee0a61c
+        /dev*)                                                                                  # /dev/mapper/luks-cc2e4215-6edc-41c8-9b03-d478bee0a61c / btrfs subvol=/@,defaults,noatime,compress=zstd 0 0'
+                                                                                                # e.g. EndeavourOS + luks encryption
+            fstabFileSystem=$(echo "${fstabEntryBtrfsRootSubvol}" | cut -d ' ' -f 1 | xargs)    # /dev/mapper/luks-cc2e4215-6edc-41c8-9b03-d478bee0a61c
         ;;
 
-        UUID*)                                                                          # UUID=luks-8f1cf7bc-8064-...   / btrfs subvol=/@,defaults,... 0 0
-            filesystemName=$(echo "${fstabEntryBtrfsRootSubvol}" | cut -f 1 | xargs)    # UUID=luks-8f1cf7bc-8064-...
-            if [ -z "${filesystemName}" ]; then filesystemName=$(echo "${filesystemName}" | cut -d ' ' -f 1 | xargs); fi
+        UUID*)                                                                                  # UUID=luks-8f1cf7bc-8064-...   / btrfs subvol=/@,defaults,... 0 0
+            fstabFileSystem=$(echo "${fstabEntryBtrfsRootSubvol}" | cut -f 1 | xargs)           # UUID=luks-8f1cf7bc-8064-...
+            if [ -z "${fstabFileSystem}" ]; then fstabFileSystem=$(echo "${fstabEntryBtrfsRootSubvol}" | cut -d ' ' -f 1 | xargs); fi
         ;;
 
         *)
-            filesystemName=$(echo "${fstabEntryBtrfsRootSubvol}" | cut -d ' ' -f 1 | xargs)
+            fstabFileSystem=$(echo "${fstabEntryBtrfsRootSubvol}" | cut -d ' ' -f 1 | xargs)
             echo -e "\e[0;31mDefault case 'fstabEntryBtrfsRootSubvol': fstab file system name could not be defined clearly.\e[39m"
         ;;
     esac
 
-    echo -e "\e[0;33mSetting fstab file system name to\e[39m '${filesystemName}' \e[0;33mfor now.\nYou can correct this later manually when prompted for confirmation.\e[39m"
+    echo -e "\e[0;33mSetting fstab file system name to\e[39m '${fstabFileSystem}' \e[0;33mfor now.\nYou can correct this later manually when prompted for confirmation.\e[39m"
     # --- END check fstab + set file system name ------------------------------
 
 
-    if [ ! -e "${snapperSnapshotFolder}" ]; then        # check if ${snapperSnapshotFolder} exists
+    if [ ! -e "${snapperSnapshotFolder}" ]; then                                    # check if ${snapperSnapshotFolder} exists
         echo -e "\e[0;33m- Verzeichnis '${snapperSnapshotFolder}' nicht vorhanden. Evlt. abweichendes Verzeichnis konfiguriert?!\n- Ggf. vorheriger manueller Eingriff erforderlich.\e[39m"
         echo "Current btrfs subvolume list:"
         sudo btrfs subvolume list /
@@ -190,21 +190,21 @@ if [[ "${doSnapper}" = 'y' ]]; then
             echo "Aktuelle /etc/fstab:"
             cat /etc/fstab
 
-            read -r -p "Nutze file system '${filesystemName}'. Ist das korrekt ? ('n'=nein, sonstige Eingabe=ja): " fsok
+            read -r -p "Nutze file system '${fstabFileSystem}'. Ist das korrekt ? ('n'=nein, sonstige Eingabe=ja): " fsok
             if [ "${fsok}" = "n" ]; then
                 endloop='no'
                 while [ ! "$endloop" = 'j' ]; do
-                    read -r -p "Manuelle Eingabe: " filesystemName
-                    read -r -p "Ist '${filesystemName}' korrekt ? ('j'=ja, beliebige Eingabe für Korrektur): " endloop
+                    read -r -p "Manuelle Eingabe: " fstabFileSystem
+                    read -r -p "Ist '${fstabFileSystem}' korrekt ? ('j'=ja, beliebige Eingabe für Korrektur): " endloop
                 done
             fi
 
-            sudo cp /etc/fstab /etc/fstab.bak   # Sicherung fstab
-            echo -e "\nMount: 'subvolid=5' '${filesystemName}' nach '/mnt'..."
-            sudo mount -t btrfs -o subvolid=5 "$filesystemName" /mnt                        # bzw. sudo mount -t btrfs -o "$btrfsFstabMountOptions_standard" /dev/vda3 /mnt
+            sudo cp /etc/fstab /etc/fstab.bak                                           # Sicherung fstab
+            echo -e "\nMount: 'subvolid=5' '${fstabFileSystem}' nach '/mnt'..."
+            sudo mount -t btrfs -o subvolid=5 "$fstabFileSystem" /mnt                    # bzw. sudo mount -t btrfs -o "$btrfsFstabMountOptions_standard" /dev/vda3 /mnt
 
             for subvol in "${!btrfsSubvolLayout[@]}"; do
-                if [ ! -e "/mnt/${subvol}" ]; then      # wenn Subvolume noch nicht vorhanden
+                if [ ! -e "/mnt/${subvol}" ]; then                                      # wenn Subvolume noch nicht vorhanden
                     echo "|__ Erstelle Subvolume '/mnt/${subvol}'..."
                     sudo btrfs subvolume create "/mnt/${subvol}"
                 else
@@ -239,7 +239,7 @@ if [[ "${doSnapper}" = 'y' ]]; then
                 fi
 
                 if [ "${subvolInFstab}" = 'false' ] && [ "${mountPointInFstab}" = 'false' ]; then
-                    echo "${filesystemName} ${btrfsSubvolLayout[${subvol}]} btrfs subvol=/${subvol},${btrfsFstabMountOptions_standard}" | sudo tee -a /etc/fstab
+                    echo "${fstabFileSystem} ${btrfsSubvolLayout[${subvol}]} btrfs subvol=/${subvol},${btrfsFstabMountOptions_standard}" | sudo tee -a /etc/fstab
                 fi
             done
 
