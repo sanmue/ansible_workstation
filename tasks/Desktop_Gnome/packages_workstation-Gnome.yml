@@ -19,6 +19,7 @@
       - gnome-disk-utility
       - gnome-keyring
       - gnome-terminal
+      - gnome-weather         # needed for extension "Weather O'Clock"
       - inkscape              # Plasma: Krita
       # - kdeconnect          # -> gnome-shell-extension-gsconnect
       - rhythmbox
