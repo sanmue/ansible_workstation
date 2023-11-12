@@ -9,7 +9,7 @@
     - 'org.cryptomator.Cryptomator'
     - 'com.github.tchx84.Flatseal'
     - 'de.willuhn.Jameica'
-    # - 'net.cozic.joplin_desktop'    # Arch: AUR package 'joplin-desktop'
+    - 'net.cozic.joplin_desktop'
     - 'de.haeckerfelix.Shortwave'
     # - 'net.mkiol.SpeechNote'
 
@@ -47,7 +47,7 @@
     - 'com.discordapp.Discord'
     - 'org.mozilla.firefox'
     - 'com.github.johnfactotum.Foliate'
-    - 'net.cozic.joplin_desktop'
+    # - 'net.cozic.joplin_desktop'   # s.o.: all
     - 'org.keepassxc.KeePassXC'
     - 'org.ksnip.ksnip'   # im Ksnip-Editor können noch Ergänzungen (Markieren, Rahemen, ... gemacht werden; im ggs. zu Screenshot Tool unter Gnome)
     - 'org.libreoffice.LibreOffice'
