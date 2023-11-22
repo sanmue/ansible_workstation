@@ -578,8 +578,8 @@ case ${os} in
             echo -e "\nInstall several Packages (bashdb, gtkhash, ttf-meslo-nerd-font (10k), units) from AUR..."
             yay -S --needed bashdb gtkhashtf-meslo-nerd-font-powerlevel10k units    # bashdb: # A debugger for Bash scripts loosely modeled on the gdb command syntax
 
-            echo -e "\nInstall several Applications (Vorta) from AUR..."
-            yay -S --needed vorta   # joplin-desktop -> flatpak
+            #echo -e "\nInstall several Applications (Vorta) from AUR..."
+            #yay -S --needed vorta   # joplin-desktop -> flatpak; # vorta -> flatpak
 
             echo -e "\nInstall Brave Browser from AUR..."
             yay -S --needed brave-bin
