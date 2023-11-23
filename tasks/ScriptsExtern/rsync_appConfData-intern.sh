@@ -44,6 +44,12 @@ arrConfAppDataBakPath=("${confAppData2ndBakPath}")
 #	Anmerkungen:
 # 	- nemo nimmt bookmarks aus:				.config/gtk-3.0/bookmarks 	(Gnome, Stand 05/2023)
 # 	- 'places'-bookmarks' for filebrowser: 	.config/user-dirs.dirs		(Gnome, Stand 05/2023)
+#   - Vorta
+#     - '.var/app/com.borgbase.Vorta'       -> wenn flatpak install
+#     - '.local/share/Vorta'                -> wenn AUR install
+#   - Joplin
+#     - '.var/app/net.cozic.joplin_desktop' -> wenn flatpak install
+#     - '.config/joplin-desktop'            -> wenn AUR install
 arrConfPath=('.bashrc' '.ssh' '.zshrc' \
 '.config/autokey' '.config/autostart' '.config/borg' '.config/BraveSoftware/Brave-Browser/Default/Bookmarks' \
 '.config/chromium/Default/Bookmarks' '.config/Cryptomator' '.config/evolution' '.config/gtk-3.0/bookmarks' \
@@ -51,7 +57,9 @@ arrConfPath=('.bashrc' '.ssh' '.zshrc' \
 '.config/starship.toml' '.config/syncthing' '.config/ulauncher' '.config/user-dirs.dirs' \
 '.local/bin/rclone_pCloud-Mnt.sh' '.local/share/evolution' '.local/share/keyrings' \
 '.local/share/remmina' '.local/share/Vorta' \
-'.var/app/de.haeckerfelix.Shortwave/data' '.var/app/net.ankiweb.Anki/data')
+'.var/app/de.haeckerfelix.Shortwave/data' '.var/app/net.ankiweb.Anki/data' \
+'.var/app/net.cozic.joplin_desktop' '.var/app/com.borgbase.Vorta')
+
 
 # ### Pfade für Update (intern) von $source/Sync/Default/AppConfData nach $source/RescueSystem/AppConfData
 syncAppConfDataPath="${source}/Sync/Default/AppConfData"
