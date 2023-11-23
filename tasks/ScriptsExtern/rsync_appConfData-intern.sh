@@ -79,7 +79,7 @@ fi
 
 # ### Pfade für Update (intern) von dev/Ansible...ScriptsExtern nach $rescueAppConfDataPath/$scriptsExternFoldername
 scriptsExternFoldername="ScriptsExtern"
-scriptsExternFolderpath="${source}/dev/Ansible/ansible_workstation/tasks"
+scriptsExternFolderpath="${source}/dev/Projects/Ansible/ansible_workstation/tasks"
 scriptsExternPath="${scriptsExternFolderpath}/${scriptsExternFoldername}"
 if [ -e "${scriptsExternPath}" ]; then
 	echo "Quelle scriptsExternPath ist: ${scriptsExternPath}"
