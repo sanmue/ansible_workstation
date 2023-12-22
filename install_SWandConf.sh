@@ -579,7 +579,7 @@ case ${os} in
             yay -S --needed bashdb gtkhashtf-meslo-nerd-font-powerlevel10k units    # bashdb: # A debugger for Bash scripts loosely modeled on the gdb command syntax
 
             #echo -e "\nInstall several Applications (Vorta) from AUR..."
-            #yay -S --needed vorta   # joplin-desktop -> flatpak; # vorta -> flatpak
+            #yay -S --needed vorta   # -> flatpak   # joplin-desktop -> flatpak   # vorta -> flatpak
 
             echo -e "\nInstall Brave Browser from AUR..."
             yay -S --needed brave-bin
@@ -588,7 +588,7 @@ case ${os} in
             yay -S --needed linux-steam-integration
 
             echo -e "\nInstall ulauncher from AUR..."
-            yay -S --needed ulauncher && touch "/home/${userid}/.ansible_installScript_severalAurPkgInstalled"
+            yay -S --needed ulauncher
             echo -e "\nStart + enable ulauncher.service for '${userid}'..."
             systemctl --user enable --now ulauncher.service         # su -u "${userid}" -c "systemctl --user enable --now ulauncher.service"
 
@@ -599,9 +599,15 @@ case ${os} in
                 yay -S --needed btrfs-assistant && touch "/home/${userid}/.ansible_installScript_AUR-btrfsassistantInstalled"
             fi
 
+            echo -e "\nInstall espanso (wayland) + espanso-gui from AUR..."
+            yay -S --needed espanso-wayland espanso-gui
+
             echo -e "\nInstall Citrix Workspace App (icaclient) from AUR..."
             yay -S icaclient && touch "/home/${userid}/.ansible_installScript_AUR-icaclientInstalled" && mkdir -p "/home/${userid}/.ICAClient/cache" && \
             sudo rsync -aPhEv /opt/Citrix/ICAClient/config/{All_Regions,Trusted_Region,Unknown_Region,canonicalization,regions}.ini "/home/${userid}/.ICAClient/"
+
+            echo -e "\nCreating flag-file '.ansible_installScript_severalAurPkgInstalled'..."
+            touch "/home/${userid}/.ansible_installScript_severalAurPkgInstalled"
 
             #echo -e "\nInstall Microsoft TTF Fonts from AUR..."
             #yay -S --needed ttf-ms-fonts && touch "/home/${userid}/.ansible_installScript_AUR-ttfmsfontsInstalled"
