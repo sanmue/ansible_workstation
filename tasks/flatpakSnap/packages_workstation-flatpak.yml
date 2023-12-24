@@ -8,12 +8,14 @@
     - 'com.belmoussaoui.Authenticator'
     - 'org.cryptomator.Cryptomator'
     - 'com.microsoft.Edge'
+    - 'org.ferdium.Ferdium'       # Messenger for the desktop - based on Franz
     - 'com.github.tchx84.Flatseal'
+    - 'com.meetfranz.Franz'       # Messenger for the desktop - based on Franz
     - 'de.willuhn.Jameica'
     - 'net.cozic.joplin_desktop'
     - 'de.haeckerfelix.Shortwave'
     # - 'net.mkiol.SpeechNote'
-    - org.tenacityaudio.Tenacity   # Audacity fork / replacement
+    - 'org.tenacityaudio.Tenacity'   # Audacity fork / replacement
     - 'com.borgbase.Vorta'
 
 - name: Install flatpak packages (Extension Manager) for Gnome (Gnome, all)
