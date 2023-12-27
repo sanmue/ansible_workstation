@@ -8,9 +8,10 @@
     - 'com.belmoussaoui.Authenticator'
     - 'org.cryptomator.Cryptomator'
     - 'com.microsoft.Edge'
-    - 'org.ferdium.Ferdium'       # Messenger for the desktop - based on Franz
+    # - im.riot.Riot                # "Element": Matrix Client -> Ferdium
+    - 'org.ferdium.Ferdium'         # Messenger for the desktop - based on Franz
     - 'com.github.tchx84.Flatseal'
-    - 'com.meetfranz.Franz'       # Messenger for the desktop - based on Franz
+    # - 'com.meetfranz.Franz'       # Messenger for the desktop -> Ferdium
     - 'de.willuhn.Jameica'
     - 'net.cozic.joplin_desktop'
     - 'de.haeckerfelix.Shortwave'
