@@ -142,6 +142,7 @@
       - ttf-dejavu-nerd
       - ttf-sourcecodepro-nerd
       - vim-ansible
+      - wireguard-tools
       # # - zsh                       # s.o. basic all
       # # - zsh-doc
       - zsh-autosuggestions           # besser: install from git?
@@ -206,8 +207,9 @@
       - ufw                             # bereits installiert (bootstrap)
       - units                           # converts between different systems of units
       - vorta                           # Desktop Client for Borg Backup
-      # - wmctrl                        # autokey dependancy # sollte bereits installiert sein   
+      # - wmctrl                        # autokey dependancy # sollte bereits installiert sein
                                         # Command line tool to interact with an EWMH/NetWM compatible X Window Manager
+      - wireguard
       # Multimedia; entspechend libs sollten bereits installiert sein (wenn im Installer ausgewählt wurde)
       # - ffmpeg
       # - x264
