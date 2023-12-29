@@ -1,23 +1,29 @@
 <domainsnapshot>
-  <name>2023-08-04_1030_init1</name>
-  <description>Inst (ansible playbook)</description>
+  <name>2023-12-13_1132_update</name>
+  <description>Update System + NC
+Install php-bz2, smbclient
+NC: created user &apos;user01&apos;</description>
   <state>shutoff</state>
-  <creationTime>1691137900</creationTime>
+  <parent>
+    <name>2023-08-06_2011_cockpitNet</name>
+  </parent>
+  <creationTime>1702463568</creationTime>
   <memory snapshot='no'/>
   <disks>
     <disk name='vda' snapshot='internal'/>
     <disk name='sda' snapshot='no'/>
   </disks>
   <domain type='kvm'>
-    <name>endeavourBIOS-02</name>
-    <uuid>177109a3-08f8-4d02-82ca-8f8aaf2278f4</uuid>
+    <name>debianSvr-01</name>
+    <uuid>bb439883-8c38-45ea-b190-b1034fb02c70</uuid>
+    <description>192.168.100.10, LAMP, Nextcloud</description>
     <metadata>
       <libosinfo:libosinfo xmlns:libosinfo="http://libosinfo.org/xmlns/libvirt/domain/1.0">
-        <libosinfo:os id="http://archlinux.org/archlinux/rolling"/>
+        <libosinfo:os id="http://debian.org/debian/12"/>
       </libosinfo:libosinfo>
     </metadata>
-    <memory unit='KiB'>8388608</memory>
-    <currentMemory unit='KiB'>8388608</currentMemory>
+    <memory unit='KiB'>2097152</memory>
+    <currentMemory unit='KiB'>2097152</currentMemory>
     <vcpu placement='static'>2</vcpu>
     <os>
       <type arch='x86_64' machine='pc-q35-8.0'>hvm</type>
@@ -45,9 +51,9 @@
       <emulator>/usr/bin/qemu-system-x86_64</emulator>
       <disk type='file' device='disk'>
         <driver name='qemu' type='qcow2' discard='unmap'/>
-        <source file='/run/media/sandro/1TB-M2NVME/01_VM/images/endeavourBIOS-02.qcow2'/>
+        <source file='/run/media/sandro/1TB-M2NVME/01_VM/images/debianSvr-01.qcow2'/>
         <target dev='vda' bus='virtio'/>
-        <address type='pci' domain='0x0000' bus='0x04' slot='0x00' function='0x0'/>
+        <address type='pci' domain='0x0000' bus='0x05' slot='0x00' function='0x0'/>
       </disk>
       <disk type='file' device='cdrom'>
         <driver name='qemu' type='raw'/>
@@ -56,7 +62,7 @@
         <address type='drive' controller='0' bus='0' target='0' unit='0'/>
       </disk>
       <controller type='usb' index='0' model='qemu-xhci' ports='15'>
-        <address type='pci' domain='0x0000' bus='0x02' slot='0x00' function='0x0'/>
+        <address type='pci' domain='0x0000' bus='0x03' slot='0x00' function='0x0'/>
       </controller>
       <controller type='pci' index='0' model='pcie-root'/>
       <controller type='pci' index='1' model='pcie-root-port'>
@@ -133,10 +139,10 @@
         <address type='pci' domain='0x0000' bus='0x00' slot='0x1f' function='0x2'/>
       </controller>
       <controller type='virtio-serial' index='0'>
-        <address type='pci' domain='0x0000' bus='0x03' slot='0x00' function='0x0'/>
+        <address type='pci' domain='0x0000' bus='0x04' slot='0x00' function='0x0'/>
       </controller>
       <interface type='network'>
-        <mac address='52:54:00:1a:36:72'/>
+        <mac address='52:54:00:1b:02:c9'/>
         <source network='Lab-Linux_isolated'/>
         <model type='virtio'/>
         <address type='pci' domain='0x0000' bus='0x01' slot='0x00' function='0x0'/>
@@ -182,11 +188,11 @@
       </redirdev>
       <watchdog model='itco' action='reset'/>
       <memballoon model='virtio'>
-        <address type='pci' domain='0x0000' bus='0x05' slot='0x00' function='0x0'/>
+        <address type='pci' domain='0x0000' bus='0x06' slot='0x00' function='0x0'/>
       </memballoon>
       <rng model='virtio'>
         <backend model='random'>/dev/urandom</backend>
-        <address type='pci' domain='0x0000' bus='0x06' slot='0x00' function='0x0'/>
+        <address type='pci' domain='0x0000' bus='0x07' slot='0x00' function='0x0'/>
       </rng>
     </devices>
   </domain>
