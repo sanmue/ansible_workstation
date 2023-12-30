@@ -128,7 +128,7 @@
     </controller>
     <interface type='network'>
       <mac address='52:54:00:1b:02:c9'/>
-      <source network='Lab-Linux_isolated'/>
+      <source network='Lab-Linux-isolated'/>
       <model type='virtio'/>
       <address type='pci' domain='0x0000' bus='0x01' slot='0x00' function='0x0'/>
     </interface>
