@@ -15,6 +15,8 @@
       - gedit-plugins
       - gjs                   # Javascript Bindings for GNOME   # + Ubnuntu: fehlendes Paket, damit ab 22.04 der Monitor in Engergiesparmodus kann
                                                                 # (Bildschirmausgabe wird ausgeschaltet nach längerer Inktivität)
+      - geany
+      - geany-plugins
       - gnome-calculator
       - gnome-disk-utility
       - gnome-keyring

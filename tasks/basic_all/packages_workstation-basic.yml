@@ -55,6 +55,7 @@
       # - samba               # z.B. für VM: File sharing between host and Windows guest; https://wiki.manjaro.org/index.php/Virt-manager/en
       # - skanlite            # bei KDE Plasma Desktop
       - speedtest-cli
+      - sqlitebrowser         # + s.u.: Arch: sqlite; debian: sqlite3
       - steam
       - syncthing
       # - terminator          # Terminal emulator that supports tabs and grids
@@ -136,6 +137,7 @@
       - remmina
       - shellcheck
       - signal-desktop
+      - sqlite
       - steam-native-runtime  # Native replacement for the Steam runtime using system libraries (installiert benötigte 32bit libs)
       - torbrowser-launcher
       - ttf-dejavu
@@ -202,6 +204,7 @@
       - python3-pytest-pylint
       - python3-setuptools
       # - searchmonkey
+      - sqlite3
       - ssh                             # bereits installiert (bootstrap)
       # - timeshift
       - ufw                             # bereits installiert (bootstrap)
