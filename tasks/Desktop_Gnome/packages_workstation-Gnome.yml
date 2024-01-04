@@ -26,6 +26,7 @@
       # - kdeconnect          # -> gnome-shell-extension-gsconnect
       - rhythmbox
       - seahorse              # bereits standardmäßig installiert
+      - solaar                # Linux device manager for a wide range of Logitech devices
       - tilix                 # A tiling terminal emulator for Linux using GTK+ 3
       - totem                 # -> vlc
       # ---------
