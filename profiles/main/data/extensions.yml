@@ -1,5 +1,9 @@
-disabled: []
+disabled:
+  - id: genuitecllc.codetogether
+    uuid: 00000000-0000-0000-0000-000000000000
 enabled:
+  - id: almenon.arepl
+    uuid: 88eb8072-5ab1-457b-9835-6d92196388a3
   - id: anseki.vscode-color
     uuid: 37d7747f-e652-4eac-83de-f2939f7e2121
   - id: batisteo.vscode-django
@@ -26,6 +30,8 @@ enabled:
     uuid: fcc7f3d5-c349-4329-85ab-4760fc641520
   - id: hbenl.vscode-test-explorer
     uuid: ff96f1b4-a4b8-45ef-8ecf-c232c0cb75c8
+  - id: hediet.vscode-drawio
+    uuid: ea6a6046-2132-421f-a984-664909fcf0b8
   - id: johnpapa.vscode-peacock
     uuid: 5a7017bf-c571-4d77-b902-6e56b16f539a
   - id: KevinRose.vsc-python-indent
@@ -40,6 +46,8 @@ enabled:
     uuid: f1f59ae4-9318-4f3c-a9b5-81b2eaa5f8a5
   - id: ms-vscode.test-adapter-converter
     uuid: 47210ec2-0324-4cbb-9523-9dff02a5f9ec
+  - id: ms-vsliveshare.vsliveshare
+    uuid: null
   - id: njpwerner.autodocstring
     uuid: 2d6fea35-f68e-461d-9b7b-5cd05be99451
   - id: oderwat.indent-rainbow
