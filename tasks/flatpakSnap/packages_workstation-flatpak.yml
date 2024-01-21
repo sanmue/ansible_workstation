@@ -7,11 +7,12 @@
   with_items:
     - 'com.belmoussaoui.Authenticator'
     - 'org.cryptomator.Cryptomator'
+    - 'com.jgraph.drawio.desktop'   # diagramming tool
     - 'com.microsoft.Edge'
-    # - im.riot.Riot                # "Element": Matrix Client -> Ferdium
+    # - im.riot.Riot                # "Element": Matrix Client -> siehe Ferdium
     - 'org.ferdium.Ferdium'         # Messenger for the desktop - based on Franz
     - 'com.github.tchx84.Flatseal'
-    # - 'com.meetfranz.Franz'       # Messenger for the desktop -> Ferdium
+    # - 'com.meetfranz.Franz'       # Messenger for the desktop -> siehe Ferdium
     - 'de.willuhn.Jameica'
     - 'net.cozic.joplin_desktop'
     - 'de.haeckerfelix.Shortwave'
