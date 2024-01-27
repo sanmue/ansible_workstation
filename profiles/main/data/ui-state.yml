@@ -4,7 +4,7 @@ mhutchie.git-graph: '{"lastKnownGitPath":"git"}'
 ms-vsliveshare.vsliveshare: '{"vsliveshare-first-activation-flag":"1.0.5905","firstActivationTime":1705840963150,"anonymousAuthReloadFlag":null,"wasForceReload":false,"firstActivationVersion":"1.0.5905","authenticationProvider":"microsoft","lastUse":1705846319173}'
 rangav.vscode-thunder-client: '{"tc.version-key":"2.15.3"}'
 vscode-icons-team.vscode-icons: '{"vsicons":{"version":"12.7.0","status":2,"welcomeShown":true}}'
-workbench.activity.pinnedViewlets2: '[{"id":"workbench.view.explorer","pinned":true,"visible":true,"order":0},{"id":"workbench.view.search","pinned":true,"visible":true,"order":1},{"id":"workbench.view.scm","pinned":true,"visible":true,"order":2},{"id":"workbench.view.debug","pinned":true,"visible":true,"order":3},{"id":"workbench.view.extensions","pinned":true,"visible":true,"order":4},{"id":"workbench.view.remote","pinned":true,"visible":false,"order":4},{"id":"workbench.view.extension.test","pinned":true,"visible":true,"order":6},{"id":"workbench.view.extension.references-view","pinned":true,"visible":false,"order":7},{"id":"workbench.view.extension.package-explorer","pinned":true,"visible":true,"order":8},{"id":"workbench.view.extension.gitlens","pinned":true,"visible":true,"order":9},{"id":"workbench.view.extension.gitlensInspect","pinned":true,"visible":true,"order":10},{"id":"workbench.view.extension.gitlensPatch","pinned":true,"order":11},{"id":"workbench.view.extension.todo-tree-container","pinned":true,"visible":true,"order":12},{"id":"workbench.view.extension.PowerShell","pinned":true,"visible":false,"order":13},{"id":"workbench.view.extension.thunder-client","pinned":true,"visible":true,"order":14},{"id":"workbench.view.extension.ansible-explorer","pinned":true,"order":15},{"id":"workbench.view.extension.ansible-lightspeed-explorer","pinned":true,"visible":true,"order":14},{"id":"workbench.view.extension.genuitec-codetogether-presence","pinned":true,"order":12},{"id":"workbench.view.extension.liveshare","pinned":true,"order":13},{"id":"workbench.panel.chatSidebar","pinned":true,"visible":false,"order":100},{"id":"userDataProfiles","pinned":true,"visible":false},{"id":"workbench.view.editSessions","pinned":true,"visible":false}]'
+workbench.activity.pinnedViewlets2: '[{"id":"workbench.view.explorer","pinned":true,"visible":true,"order":0},{"id":"workbench.view.search","pinned":true,"visible":true,"order":1},{"id":"workbench.view.scm","pinned":true,"visible":true,"order":2},{"id":"workbench.view.debug","pinned":true,"visible":true,"order":3},{"id":"workbench.view.extensions","pinned":true,"visible":true,"order":4},{"id":"workbench.view.remote","pinned":true,"visible":false,"order":4},{"id":"workbench.view.extension.test","pinned":true,"visible":true,"order":6},{"id":"workbench.view.extension.references-view","pinned":true,"visible":false,"order":7},{"id":"workbench.view.extension.package-explorer","pinned":true,"visible":true,"order":8},{"id":"workbench.view.extension.gitlens","pinned":true,"visible":true,"order":9},{"id":"workbench.view.extension.gitlensInspect","pinned":true,"visible":true,"order":10},{"id":"workbench.view.extension.gitlensPatch","pinned":true,"order":11},{"id":"workbench.view.extension.todo-tree-container","pinned":true,"visible":true,"order":12},{"id":"workbench.view.extension.PowerShell","pinned":true,"visible":false,"order":13},{"id":"workbench.view.extension.thunder-client","pinned":true,"visible":true,"order":14},{"id":"workbench.view.extension.ansible-explorer","pinned":true,"order":15},{"id":"workbench.view.extension.ansible-lightspeed-explorer","pinned":true,"visible":true,"order":14},{"id":"workbench.view.extension.genuitec-codetogether-presence","pinned":true,"order":12},{"id":"workbench.view.extension.liveshare","pinned":true,"order":13},{"id":"workbench.view.extension.cspell-explorer","pinned":true,"order":16},{"id":"workbench.panel.chatSidebar","pinned":true,"visible":false,"order":100},{"id":"userDataProfiles","pinned":true,"visible":false},{"id":"workbench.view.editSessions","pinned":true,"visible":false}]'
 workbench.activity.placeholderViewlets: "[{\"id\":\"workbench.view.explorer\",\
   \"themeIcon\":{\"id\":\"explorer-view-icon\"},\"name\":\"Explorer\",\"isBuilt\
   in\":true,\"views\":[{},{},{},{\"when\":\"timelineHasProvider\"},{\"when\":\"\
@@ -103,16 +103,20 @@ workbench.activity.placeholderViewlets: "[{\"id\":\"workbench.view.explorer\",\
   Share\",\"isBuiltin\":false,\"views\":[{},{\"when\":\"liveshare:isCollaborati\
   ng && liveshare:showExplorer &&
   liveshare:showHelpViewlet\"},{\"when\":\"config.liveshare.teamStatus ||
-  liveshare:isTeamMember\"}]},{\"id\":\"workbench.panel.chatSidebar\",\"themeIc\
-  on\":{\"id\":\"comment-discussion\"},\"name\":\"Chat\",\"isBuiltin\":true,\"v\
-  iews\":[]},{\"id\":\"userDataProfiles\",\"themeIcon\":{\"id\":\"defaultProfil\
-  e-icon\"},\"name\":\"Profiles\",\"isBuiltin\":true,\"views\":[]},{\"id\":\"wo\
-  rkbench.view.editSessions\",\"isBuiltin\":false}]"
+  liveshare:isTeamMember\"}]},{\"id\":\"workbench.view.extension.cspell-explorer\
+  \",\"iconUrl\":{\"$mid\":1,\"path\":\"%%EXTENSION_DATA_PATH%%/streetsidesoftw\
+  are.code-spell-checker-3.0.1-universal/resources/dark/check_circle.svg\",\"sc\
+  heme\":\"file\"},\"name\":\"Spell Checker
+  Info\",\"isBuiltin\":false,\"views\":[]},{\"id\":\"workbench.panel.chatSidebar\
+  \",\"themeIcon\":{\"id\":\"comment-discussion\"},\"name\":\"Chat\",\"isBuiltin\
+  \":true,\"views\":[]},{\"id\":\"userDataProfiles\",\"themeIcon\":{\"id\":\"de\
+  faultProfile-icon\"},\"name\":\"Profiles\",\"isBuiltin\":true,\"views\":[]},{\
+  \"id\":\"workbench.view.editSessions\",\"isBuiltin\":false}]"
 workbench.activityBar.location: side
 workbench.auxiliarybar.pinnedPanels: "[]"
 workbench.auxiliarybar.size: "300"
 workbench.auxiliaryBar.size: "300"
-workbench.editor.languageDetectionOpenedLanguages.global: '[["shellcheckrc",true],["django-txt",true],["xml",true],["ansible",true],["ignore",true],["markdown",true],["jsonc",true],["json",true],["yaml",true],["shellscript",true],["plaintext",true],["python",true]]'
+workbench.editor.languageDetectionOpenedLanguages.global: '[["shellcheckrc",true],["django-txt",true],["xml",true],["ansible",true],["ignore",true],["json",true],["yaml",true],["markdown",true],["shellscript",true],["plaintext",true],["jsonc",true],["python",true]]'
 workbench.explorer.views.state.hidden: '[{"id":"outline","isHidden":false},{"id":"timeline","isHidden":false},{"id":"workbench.explorer.openEditorsView","isHidden":true},{"id":"workbench.explorer.emptyView","isHidden":false},{"id":"workbench.explorer.fileView","isHidden":false},{"id":"npm","isHidden":true},{"id":"jupyterViewVariables","isHidden":false},{"id":"liveshare.session.explorer","isHidden":false}]'
 workbench.grid.height: "1347"
 workbench.grid.size: '{"height":1099,"width":1280}'

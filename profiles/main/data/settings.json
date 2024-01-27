@@ -31,5 +31,7 @@
             "!Module"
         ]
     },
-    "hediet.vscode-drawio.resizeImages": null
+    "hediet.vscode-drawio.resizeImages": null,
+    "cSpell.language": "en, de-de",
+    "cSpell.languageSettings": []
 }
