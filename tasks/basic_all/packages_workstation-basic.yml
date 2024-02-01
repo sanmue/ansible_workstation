@@ -53,6 +53,7 @@
       - rclone                # sync tool
       - rsync                 # bereits installiert (bootstrap)
       # - samba               # z.B. für VM: File sharing between host and Windows guest; https://wiki.manjaro.org/index.php/Virt-manager/en
+      - shfmt                 # Format shell programs # also uses by VS Code / Code OSS Extension "shell-format"
       # - skanlite            # bei KDE Plasma Desktop
       - speedtest-cli
       - sqlitebrowser         # + s.u.: Arch: sqlite; debian: sqlite3
