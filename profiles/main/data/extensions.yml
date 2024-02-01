@@ -1,6 +1,10 @@
 disabled:
   - id: genuitecllc.codetogether
     uuid: 00000000-0000-0000-0000-000000000000
+  - id: streetsidesoftware.code-spell-checker
+    uuid: f6dbd813-b0a0-42c1-90ea-10dde9d925a7
+  - id: streetsidesoftware.code-spell-checker-german
+    uuid: 911799f7-d784-4bdc-982b-f78afd435187
 enabled:
   - id: almenon.arepl
     uuid: 88eb8072-5ab1-457b-9835-6d92196388a3
@@ -40,6 +44,8 @@ enabled:
     uuid: b1b0f283-8246-4e90-832e-a6c409d378d1
   - id: mhutchie.git-graph
     uuid: 438221f8-1107-4ccd-a6fe-f3b7fe0856b7
+  - id: ms-python.black-formatter
+    uuid: 859e640c-c157-47da-8699-9080b81c8371
   - id: ms-python.isort
     uuid: 4ad0ce32-ff3f-49f0-83b5-93e5dc00cfff
   - id: ms-python.python
@@ -68,10 +74,6 @@ enabled:
     uuid: 8b477a76-974c-403d-a454-58028c1709d1
   - id: shd101wyy.markdown-preview-enhanced
     uuid: 3b1db1fc-c7f7-4bd6-9fa4-b499dfa99a8a
-  - id: streetsidesoftware.code-spell-checker
-    uuid: f6dbd813-b0a0-42c1-90ea-10dde9d925a7
-  - id: streetsidesoftware.code-spell-checker-german
-    uuid: 911799f7-d784-4bdc-982b-f78afd435187
   - id: timonwong.shellcheck
     uuid: f95d8fff-f70a-4ae5-bb06-5c47ddbc8fc6
   - id: usernamehw.errorlens

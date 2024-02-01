@@ -87,7 +87,7 @@ workbench.activity.placeholderViewlets: "[{\"id\":\"workbench.view.explorer\",\
   \"},\"name\":\"TODOs\",\"isBuiltin\":false,\"views\":[{\"when\":\"!todo-tree-\
   is-empty\"}]},{\"id\":\"workbench.view.extension.PowerShell\",\"isBuiltin\":f\
   alse},{\"id\":\"workbench.view.extension.thunder-client\",\"iconUrl\":{\"$mid\
-  \":1,\"path\":\"%%EXTENSION_DATA_PATH%%/rangav.vscode-thunder-client-2.17.1-u\
+  \":1,\"path\":\"%%EXTENSION_DATA_PATH%%/rangav.vscode-thunder-client-2.17.4-u\
   niversal/images/thunder-client.svg\",\"scheme\":\"file\"},\"name\":\"Thunder
   Client\",\"isBuiltin\":false,\"views\":[{}]},{\"id\":\"workbench.view.extensi\
   on.ansible-explorer\",\"iconUrl\":{\"$mid\":1,\"path\":\"%%EXTENSION_DATA_PAT\
@@ -104,19 +104,17 @@ workbench.activity.placeholderViewlets: "[{\"id\":\"workbench.view.explorer\",\
   ng && liveshare:showExplorer &&
   liveshare:showHelpViewlet\"},{\"when\":\"config.liveshare.teamStatus ||
   liveshare:isTeamMember\"}]},{\"id\":\"workbench.view.extension.cspell-explorer\
-  \",\"iconUrl\":{\"$mid\":1,\"path\":\"%%EXTENSION_DATA_PATH%%/streetsidesoftw\
-  are.code-spell-checker-3.0.1-universal/resources/dark/check_circle.svg\",\"sc\
-  heme\":\"file\"},\"name\":\"Spell Checker
-  Info\",\"isBuiltin\":false,\"views\":[]},{\"id\":\"workbench.panel.chatSidebar\
-  \",\"themeIcon\":{\"id\":\"comment-discussion\"},\"name\":\"Chat\",\"isBuiltin\
-  \":true,\"views\":[]},{\"id\":\"userDataProfiles\",\"themeIcon\":{\"id\":\"de\
-  faultProfile-icon\"},\"name\":\"Profiles\",\"isBuiltin\":true,\"views\":[]},{\
-  \"id\":\"workbench.view.editSessions\",\"isBuiltin\":false}]"
+  \",\"name\":\"Spell Checker
+  Info\",\"isBuiltin\":false},{\"id\":\"workbench.panel.chatSidebar\",\"themeIc\
+  on\":{\"id\":\"comment-discussion\"},\"name\":\"Chat\",\"isBuiltin\":true,\"v\
+  iews\":[]},{\"id\":\"userDataProfiles\",\"themeIcon\":{\"id\":\"defaultProfil\
+  e-icon\"},\"name\":\"Profiles\",\"isBuiltin\":true,\"views\":[]},{\"id\":\"wo\
+  rkbench.view.editSessions\",\"isBuiltin\":false}]"
 workbench.activityBar.location: side
 workbench.auxiliarybar.pinnedPanels: "[]"
 workbench.auxiliarybar.size: "300"
 workbench.auxiliaryBar.size: "300"
-workbench.editor.languageDetectionOpenedLanguages.global: '[["shellcheckrc",true],["django-txt",true],["xml",true],["ansible",true],["ignore",true],["json",true],["yaml",true],["markdown",true],["shellscript",true],["plaintext",true],["jsonc",true],["python",true]]'
+workbench.editor.languageDetectionOpenedLanguages.global: '[["shellcheckrc",true],["xml",true],["ansible",true],["ignore",true],["json",true],["markdown",true],["django-txt",true],["jsonc",true],["python",true],["plaintext",true],["yaml",true],["shellscript",true]]'
 workbench.explorer.views.state.hidden: '[{"id":"outline","isHidden":false},{"id":"timeline","isHidden":false},{"id":"workbench.explorer.openEditorsView","isHidden":true},{"id":"workbench.explorer.emptyView","isHidden":false},{"id":"workbench.explorer.fileView","isHidden":false},{"id":"npm","isHidden":true},{"id":"jupyterViewVariables","isHidden":false},{"id":"liveshare.session.explorer","isHidden":false}]'
 workbench.grid.height: "1347"
 workbench.grid.size: '{"height":1099,"width":1280}'
@@ -165,7 +163,7 @@ workbench.view.extensions.state.hidden: '[{"id":"workbench.views.extensions.inst
 workbench.view.remote.state.hidden: '[{"id":"targetsContainers","isHidden":false},{"id":"detailsContainers","isHidden":false},{"id":"devVolumes","isHidden":false},{"id":"sshHosts","isHidden":false},{"id":"targetsWsl","isHidden":false},{"id":"remoteTargets","isHidden":false}]'
 workbench.view.search.state.hidden: '[{"id":"workbench.view.search","isHidden":false}]'
 workbench.views.extensions.installed.empty: "372"
-workbench.views.extensions.installed.size: "41"
+workbench.views.extensions.installed.size: "44"
 workbench.views.service.auxiliarybar.daebbee6-a5e7-4e72-80c9-f8255b50cbe8.state.hidden: '[{"id":"gitlens.views.commitDetails","isHidden":false}]'
 workbench.welcomePage.walkthroughMetadata: '[["ms-python.python#pythonWelcome",{"firstSeen":1634843230248,"stepIDs":["python.installPythonWin","python.installPythonMac","python.installPythonLinux","python.selectInterpreter","python.runAndDebug","python.learnMore"],"manaullyOpened":false}],["ms-python.python#pythonDataScienceWelcome",{"firstSeen":1634843230249,"stepIDs":["python.installPythonWinDS","python.installPythonMacDS","python.installPythonLinuxDS","python.openFolderMac","python.openFolder","python.createNewNotebook","python.openInteractiveWindow","python.dataScienceLearnMore"],"manaullyOpened":false}],["ms-python.python#pythonWelcomeWithDS",{"firstSeen":1649442311501,"stepIDs":["python.installPythonWin","python.installPythonMac","python.installPythonLinux","python.createPythonFile","python.selectInterpreter","python.runAndDebug","python.learnMoreWithDS"],"manaullyOpened":false}],["ms-toolsai.jupyter#jupyterWelcome",{"firstSeen":1649442311501,"stepIDs":["jupyter.createNewNotebook","jupyter.selectKernel","jupyter.exploreAndDebug","jupyter.dataScienceLearnMore"],"manaullyOpened":false}]]'
 zokugun.cron-tasks: '{"version":"0.1.2"}'

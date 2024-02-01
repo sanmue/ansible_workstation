@@ -33,5 +33,12 @@
     },
     "hediet.vscode-drawio.resizeImages": null,
     "cSpell.language": "en, de-de",
-    "cSpell.languageSettings": []
+    "cSpell.languageSettings": [],
+    "workbench.editor.highlightModifiedTabs": true,
+    "editor.rulers": [
+        {
+            "column": 120,
+            "color": "#333333"
+        }
+    ]
 }
