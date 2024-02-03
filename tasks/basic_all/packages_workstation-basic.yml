@@ -127,7 +127,9 @@
       # - powerline-vim       # vim plugin for powerline
       - psutils               # A set of postscript utilities
       - pyenv
-      - python-pip
+      - python
+      - python-debugpy        # An implementation of the Debug Adapter Protocol for Python
+      - python-pip 
       # - python-pipx         # Install and Run Python Applications in Isolated Environments
       - python-psutil
       - python-setuptools     # Easily download, build, install, upgrade, and uninstall Python packages
@@ -197,6 +199,8 @@
       # - powershell                    # repo wurde hinzugefügt
       - printer-driver-cups-pdf
       # - pipx
+      - python3
+      - python3-debugpy
       - python3-pip
       - python3-psutil
       - python3-pyinotify
