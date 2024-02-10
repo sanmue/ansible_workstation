@@ -46,6 +46,8 @@ enabled:
     uuid: 438221f8-1107-4ccd-a6fe-f3b7fe0856b7
   - id: ms-python.black-formatter
     uuid: 859e640c-c157-47da-8699-9080b81c8371
+  - id: ms-python.debugpy
+    uuid: null
   - id: ms-python.isort
     uuid: 4ad0ce32-ff3f-49f0-83b5-93e5dc00cfff
   - id: ms-python.python
