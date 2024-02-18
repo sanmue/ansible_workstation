@@ -18,6 +18,8 @@ enabled:
     uuid: fe952d85-7386-49e9-aa9a-87cff42f24a2
   - id: dbaeumer.vscode-eslint
     uuid: 583b2b34-2c1e-4634-8c0b-0b82e283ea3a
+  - id: deerawan.vscode-faker
+    uuid: 0808d236-6faf-4f68-9f17-28f51a572ee4
   - id: donjayamanne.python-environment-manager
     uuid: 0c9f60fd-5588-42f7-9176-e80c3ae111ec
   - id: eamodio.gitlens
@@ -60,6 +62,8 @@ enabled:
     uuid: 2d6fea35-f68e-461d-9b7b-5cd05be99451
   - id: oderwat.indent-rainbow
     uuid: eaa2127d-cb69-4ab9-8505-a60c9ee5f28b
+  - id: qcz.text-power-tools
+    uuid: f05d5b1a-dd2d-4d27-bfd6-e3cff922bd7e
   - id: rangav.vscode-thunder-client
     uuid: 2fd56207-78ef-49d4-95d2-9b801eee4dbf
   - id: redhat.ansible
