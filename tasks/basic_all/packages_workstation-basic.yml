@@ -132,10 +132,11 @@
       - python-pip 
       # - python-pipx         # Install and Run Python Applications in Isolated Environments
       - python-psutil
-      - python-setuptools     # Easily download, build, install, upgrade, and uninstall Python packages
+      - python-pyarrow        # will become necessary dependency for Pandas
       - python-pylint
       - python-pylint-venv
       - python-pytest-pylint
+      - python-setuptools     # Easily download, build, install, upgrade, and uninstall Python packages
       - qt6-wayland           # 10/2023: for 'obs-studio' to work install 'qt6-wayland'
       - remmina
       - shellcheck
