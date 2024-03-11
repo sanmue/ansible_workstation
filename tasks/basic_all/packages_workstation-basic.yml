@@ -96,9 +96,10 @@
       - fd                    # Simple, fast and user-friendly alternative to find
       - firefox
       - firefox-i18n-en-us
+      - flake8                # The modular source code checker: pep8, pyflakes and co
       # - flameshot           # -> ksnip
       # - firewalld           # ggf. bereits installiert (bootstrap)
-      - foliate
+      - foliate               # A simple and modern GTK eBook reader
       - freerdp
       - fzf                   # Command-line fuzzy finder
       - github-cli
@@ -126,22 +127,29 @@
       # - powerline-fonts     # patched fonts for powerline
       # - powerline-vim       # vim plugin for powerline
       - psutils               # A set of postscript utilities
-      - pyenv
+      - pyenv                 # Easily switch between multiple versions of Python
       - python
+      - python-black          # Uncompromising Python code formatter
       - python-debugpy        # An implementation of the Debug Adapter Protocol for Python
-      - python-pip 
-      # - python-pipx         # Install and Run Python Applications in Isolated Environments
-      - python-psutil
+      - python-flake8-black   # Flake8 plugin to call black as a code style validator
+      - python-flake8-docstrings # Plugin to flake8 to include checks provided by pydocstyle
+      - python-flake8-isort   # Flake8 plugin to validate annotations complexity
+      - python-isort          # A Python utility / library to sort Python imports
+      - python-pip            # The PyPA recommended tool for installing Python packages
+      - python-pipx           # Install and Run Python Applications in Isolated Environments
+      - python-psutil         # A cross-platform process and system utilities module for Python
       - python-pyarrow        # will become necessary dependency for Pandas
-      - python-pylint
-      - python-pylint-venv
-      - python-pytest-pylint
+      - python-pydocstyle     # Docstring style checker
+      - python-pylint         # Analyzes Python code looking for bugs and signs of poor quality
+      - python-pylint-venv    # Make pylint respect virtualenvs
+      - python-pytest-flake8  # pytest plugin to check FLAKE8 requirements
+      - python-pytest-pylint  # pytest plugin to check source code with pylint
       - python-setuptools     # Easily download, build, install, upgrade, and uninstall Python packages
       - qt6-wayland           # 10/2023: for 'obs-studio' to work install 'qt6-wayland'
       - remmina
-      - shellcheck
+      - shellcheck            # Shell script analysis tool
       - signal-desktop
-      - sqlite
+      - sqlite                # A C library that implements an SQL database engine
       - steam-native-runtime  # Native replacement for the Steam runtime using system libraries (installiert benötigte 32bit libs)
       - torbrowser-launcher
       - ttf-dejavu
