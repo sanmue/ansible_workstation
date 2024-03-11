@@ -60,7 +60,7 @@
       - steam
       - syncthing
       # - terminator          # Terminal emulator that supports tabs and grids
-      - tk                    # Graphical User Interface Toolkit for Tcl   # z.B. pyenv install 3.11.3: requirement 
+      - tk                    # Graphical User Interface Toolkit for Tcl   # z.B. pyenv install 3.11.3: requirement
       - vim                   # bereits installiert (bootstrap)
       - vim-ale               # Lint Engine (plugin for vim)
       - vlc
