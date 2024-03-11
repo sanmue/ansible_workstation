@@ -119,7 +119,7 @@ workbench.activityBar.location: side
 workbench.auxiliarybar.pinnedPanels: "[]"
 workbench.auxiliarybar.size: "300"
 workbench.auxiliaryBar.size: "300"
-workbench.editor.languageDetectionOpenedLanguages.global: '[["shellcheckrc",true],["xml",true],["ansible",true],["json",true],["jsonc",true],["ignore",true],["markdown",true],["django-txt",true],["python",true],["plaintext",true],["shellscript",true],["yaml",true]]'
+workbench.editor.languageDetectionOpenedLanguages.global: '[["shellcheckrc",true],["xml",true],["ansible",true],["json",true],["ignore",true],["django-txt",true],["python",true],["plaintext",true],["jsonc",true],["markdown",true],["shellscript",true],["yaml",true]]'
 workbench.explorer.views.state.hidden: '[{"id":"outline","isHidden":false},{"id":"timeline","isHidden":false},{"id":"workbench.explorer.openEditorsView","isHidden":true},{"id":"workbench.explorer.emptyView","isHidden":false},{"id":"workbench.explorer.fileView","isHidden":false},{"id":"npm","isHidden":true},{"id":"jupyterViewVariables","isHidden":false},{"id":"liveshare.session.explorer","isHidden":false}]'
 workbench.grid.height: "1347"
 workbench.grid.size: '{"height":1099,"width":1280}'

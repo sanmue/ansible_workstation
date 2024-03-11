@@ -40,5 +40,6 @@
             "column": 120,
             "color": "#333333"
         }
-    ]
+    ],
+    "syncSettings.hooks.postUpload": ""
 }
