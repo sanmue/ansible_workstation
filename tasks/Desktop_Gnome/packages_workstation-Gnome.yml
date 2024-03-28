@@ -24,7 +24,6 @@
       - gnome-weather         # needed for extension "Weather O'Clock"
       - inkscape              # Plasma: Krita
       # - kdeconnect          # -> gnome-shell-extension-gsconnect
-      - mediathekview
       - rhythmbox
       - seahorse              # bereits standardmäßig installiert
       - solaar                # Linux device manager for a wide range of Logitech devices

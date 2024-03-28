@@ -91,7 +91,7 @@
       ansible.builtin.import_tasks: tasks/basic_all/config_all-cron.yml
     # ----------------------------------------------------------
     # ### Virtualisierung:
-    - name: VM - Qeumu KVM
+    - name: VM - Qemu KVM
       ansible.builtin.import_tasks: tasks/VM/packages_workstation-VM-QemuKvm.yml
     - name: VM - daemon
       ansible.builtin.import_tasks: tasks/VM/config_all-VM-daemon.yml
