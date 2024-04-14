@@ -6,6 +6,7 @@
     method: system
   with_items:
     - 'com.belmoussaoui.Authenticator'
+    - 'com.brave.Browser'
     - 'org.cryptomator.Cryptomator'
     - 'com.jgraph.drawio.desktop'   # diagramming tool
     - 'com.microsoft.Edge'
@@ -50,7 +51,6 @@
     state: present
     method: system
   with_items:
-    - 'com.brave.Browser'
     - 'org.chromium.Chromium'
     - 'com.discordapp.Discord'
     - 'org.mozilla.firefox'

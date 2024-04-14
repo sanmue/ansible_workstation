@@ -581,8 +581,8 @@ case ${os} in
             #echo -e "\nInstall several Applications (Vorta) from AUR..."
             #yay -S --needed vorta   # -> flatpak   # joplin-desktop -> flatpak   # vorta -> flatpak
 
-            echo -e "\nInstall Brave Browser from AUR..."
-            yay -S --needed brave-bin
+            #echo -e "\nInstall Brave Browser from AUR..."
+            #yay -S --needed brave-bin
 
             echo -e "\nInstall linux steam integration from AUR..."
             yay -S --needed linux-steam-integration
