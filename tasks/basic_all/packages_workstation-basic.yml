@@ -6,7 +6,8 @@
   ansible.builtin.package:
     state: present
     name:
-      - ansible               # bereits installiert (bootstrap)
+      - ansible-core          # Radically simple IT automation platform      # bereits installiert (bootstrap)
+      - ansible               # Official assortment of Ansible collections   # bereits installiert (bootstrap)
       - ansible-lint          # für z.B. ansible extension in VS Code
       - bash
       - bleachbit

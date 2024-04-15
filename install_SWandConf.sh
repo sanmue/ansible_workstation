@@ -404,7 +404,7 @@ case ${os} in
         fi
 
         echo -e "\nInstallation initial benoetigte Software (git, ansible, openssh, ufw)..."
-        sudo pacman -S --needed --noconfirm rsync git ansible openssh vim firewalld curl
+        sudo pacman -S --needed --noconfirm rsync git ansible-core ansible openssh vim firewalld curl
 
         echo -e "\nInstallation benoetigte Softwarepackages zur Installation von AUR-Packages..."
         sudo pacman -S --needed --noconfirm base-devel
