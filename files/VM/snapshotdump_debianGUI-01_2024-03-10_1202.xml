@@ -1,29 +1,30 @@
 <domainsnapshot>
-  <name>2023-10-08_0109_init2</name>
-  <description>after playbook</description>
+  <name>2024-03-10_1202</name>
+  <description>initial install: 2023-08-06_2011
+Inst Cockpit; config Network</description>
   <state>shutoff</state>
   <parent>
-    <name>2023-10-08_0033_init1</name>
+    <name>2023-08-06_2011_cockpitNet</name>
   </parent>
-  <creationTime>1696720180</creationTime>
+  <creationTime>1710068578</creationTime>
   <memory snapshot='no'/>
   <disks>
     <disk name='vda' snapshot='internal'/>
     <disk name='sda' snapshot='no'/>
   </disks>
   <domain type='kvm'>
-    <name>endeavourosBios-01</name>
-    <uuid>f298d749-ddb2-4388-be60-4bb4d7594c26</uuid>
+    <name>debianGUI-01</name>
+    <uuid>b22277d0-e609-47bd-9558-dd65589a9025</uuid>
     <metadata>
       <libosinfo:libosinfo xmlns:libosinfo="http://libosinfo.org/xmlns/libvirt/domain/1.0">
-        <libosinfo:os id="http://archlinux.org/archlinux/rolling"/>
+        <libosinfo:os id="http://debian.org/debian/12"/>
       </libosinfo:libosinfo>
     </metadata>
     <memory unit='KiB'>8388608</memory>
     <currentMemory unit='KiB'>8388608</currentMemory>
     <vcpu placement='static'>2</vcpu>
     <os>
-      <type arch='x86_64' machine='pc-q35-8.1'>hvm</type>
+      <type arch='x86_64' machine='pc-q35-8.0'>hvm</type>
       <boot dev='hd'/>
     </os>
     <features>
@@ -48,9 +49,9 @@
       <emulator>/usr/bin/qemu-system-x86_64</emulator>
       <disk type='file' device='disk'>
         <driver name='qemu' type='qcow2' discard='unmap'/>
-        <source file='/run/media/sandro/1TB-M2NVME/01_VM/images/endeavourosBios-01.qcow2'/>
+        <source file='/run/media/sandro/1TB-M2NVME/01_VM/images/debianGUI-01.qcow2'/>
         <target dev='vda' bus='virtio'/>
-        <address type='pci' domain='0x0000' bus='0x04' slot='0x00' function='0x0'/>
+        <address type='pci' domain='0x0000' bus='0x05' slot='0x00' function='0x0'/>
       </disk>
       <disk type='file' device='cdrom'>
         <driver name='qemu' type='raw'/>
@@ -59,7 +60,7 @@
         <address type='drive' controller='0' bus='0' target='0' unit='0'/>
       </disk>
       <controller type='usb' index='0' model='qemu-xhci' ports='15'>
-        <address type='pci' domain='0x0000' bus='0x02' slot='0x00' function='0x0'/>
+        <address type='pci' domain='0x0000' bus='0x03' slot='0x00' function='0x0'/>
       </controller>
       <controller type='pci' index='0' model='pcie-root'/>
       <controller type='pci' index='1' model='pcie-root-port'>
@@ -136,13 +137,19 @@
         <address type='pci' domain='0x0000' bus='0x00' slot='0x1f' function='0x2'/>
       </controller>
       <controller type='virtio-serial' index='0'>
-        <address type='pci' domain='0x0000' bus='0x03' slot='0x00' function='0x0'/>
+        <address type='pci' domain='0x0000' bus='0x04' slot='0x00' function='0x0'/>
       </controller>
       <interface type='network'>
-        <mac address='52:54:00:47:17:ae'/>
-        <source network='Lab-Linux_isolated'/>
+        <mac address='52:54:00:6a:2f:07'/>
+        <source network='Lab-Linux-isolated'/>
         <model type='virtio'/>
         <address type='pci' domain='0x0000' bus='0x01' slot='0x00' function='0x0'/>
+      </interface>
+      <interface type='network'>
+        <mac address='52:54:00:20:03:27'/>
+        <source network='default'/>
+        <model type='virtio'/>
+        <address type='pci' domain='0x0000' bus='0x02' slot='0x00' function='0x0'/>
       </interface>
       <serial type='pty'>
         <target type='isa-serial' port='0'>
@@ -185,11 +192,11 @@
       </redirdev>
       <watchdog model='itco' action='reset'/>
       <memballoon model='virtio'>
-        <address type='pci' domain='0x0000' bus='0x05' slot='0x00' function='0x0'/>
+        <address type='pci' domain='0x0000' bus='0x06' slot='0x00' function='0x0'/>
       </memballoon>
       <rng model='virtio'>
         <backend model='random'>/dev/urandom</backend>
-        <address type='pci' domain='0x0000' bus='0x06' slot='0x00' function='0x0'/>
+        <address type='pci' domain='0x0000' bus='0x07' slot='0x00' function='0x0'/>
       </rng>
     </devices>
   </domain>
