@@ -1,4 +1,4 @@
-<network connections='2'>
+<network>
   <name>pfsync</name>
   <uuid>0e495be5-bc82-4797-b325-3cc46601223e</uuid>
   <bridge name='virbr2' stp='on' delay='0'/>

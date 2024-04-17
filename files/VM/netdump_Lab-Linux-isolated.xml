@@ -1,4 +1,4 @@
-<network connections='3'>
+<network>
   <name>Lab-Linux-isolated</name>
   <uuid>6ad948c0-c7b1-4d4e-886d-08bab937e85f</uuid>
   <bridge name='virbr3' stp='on' delay='0'/>
