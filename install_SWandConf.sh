@@ -359,6 +359,7 @@ if [[ "${doSnapper}" = 'y' ]]; then
         *)
             echo -e "\e[0;33mFür verwendetes OS '${os}' wurde Installation/Konfiguration von 'snapper' noch nicht getestet."
             echo -e "Manuelle Durchführung notwendig\e[39m"
+            touch "/home/${userid}/.ansible_installScript_snapper_NOT-DONE"
             read -r -p "Eingabe-Taste drücken um fortzufahren"
             exit 0
         ;;
@@ -403,10 +404,10 @@ case ${os} in
             fi
         fi
 
-        echo -e "\nInstallation initial benoetigte Software (git, ansible, openssh, ufw)..."
+        echo -e "\nInstallation initial benoetigte Software (git, ansible, openssh, vi, firewalld, )..."
         sudo pacman -S --needed --noconfirm rsync git ansible-core ansible openssh vim firewalld curl
 
-        echo -e "\nInstallation benoetigte Softwarepackages zur Installation von AUR-Packages..."
+        echo -e "\nInstallation benoetigte Softwarepackages zur Installation von AUR helpers, AUR-Packages..."
         sudo pacman -S --needed --noconfirm base-devel
 
         echo -e "\nInstalling 'yay' - AUR helper..."
@@ -414,6 +415,10 @@ case ${os} in
         sudo chown -R "${userid}":users /opt/yay
         cd /opt/yay && makepkg -si --needed && cd || return
 
+        echo -e "\nInstalling 'paru' - AUR helper..."
+        sudo git clone https://aur.archlinux.org/paru.git /opt/paru
+        sudo chown -R "${userid}":users /opt/paru
+        cd /opt/paru && makepkg -si --needed && cd || return
 
         echo -e "\n Installation (wenn VM) spice agent for Linux guests (z.B. für clipboard sharing zwischen host+guest)"
         [[ $(systemd-detect-virt) != *"none"* ]] && sudo pacman -S --needed --noconfirm spice-vdagent
