@@ -50,7 +50,6 @@
       - lsb-release
       - make
       # - man-pages-de
-      - neofetch
       - rclone                # sync tool
       - rsync                 # bereits installiert (bootstrap)
       # - samba               # z.B. für VM: File sharing between host and Windows guest; https://wiki.manjaro.org/index.php/Virt-manager/en
@@ -96,6 +95,7 @@
       # - evolution-on        # Tray plugin for the Evolution email client
       # - exfat-utils         # exfat-utils and exfatprogs are in conflict
       - fd                    # Simple, fast and user-friendly alternative to find
+      - fastfetch
       - firefox
       - firefox-i18n-en-us
       - flake8                # The modular source code checker: pep8, pyflakes and co
@@ -205,6 +205,7 @@
       - libidn11-dev                    # benötigt für Citrix Workspace app (ica client)
       - libnotify-bin                   # sollte schon installiert sein
       # - luckybackup
+      - neofetch
       - openssh-client
       - packagekit                      # sollte bereits installiert sein # notwendig u.a. für cockpit
       # - powershell                    # repo wurde hinzugefügt
