@@ -41,5 +41,9 @@
             "color": "#333333"
         }
     ],
-    "syncSettings.hooks.postUpload": ""
+    "syncSettings.hooks.postUpload": "",
+    "[yaml]": {
+        "editor.defaultFormatter": "redhat.vscode-yaml"
+    },
+    "php.validate.executablePath": ""
 }

@@ -1,4 +1,8 @@
 disabled:
+  - id: eamodio.gitlens
+    uuid: 4de763bd-505d-4978-9575-2b7696ecf94e
+  - id: genuitecllc.codetogether
+    uuid: 406af941-64c7-49b5-8091-d579dc77a913
   - id: genuitecllc.codetogether
     uuid: 00000000-0000-0000-0000-000000000000
   - id: streetsidesoftware.code-spell-checker
@@ -22,8 +26,6 @@ enabled:
     uuid: 0808d236-6faf-4f68-9f17-28f51a572ee4
   - id: donjayamanne.python-environment-manager
     uuid: 0c9f60fd-5588-42f7-9176-e80c3ae111ec
-  - id: eamodio.gitlens
-    uuid: 4de763bd-505d-4978-9575-2b7696ecf94e
   - id: ecmel.vscode-html-css
     uuid: aaee577c-f062-495a-9816-0cbd442f1d25
   - id: esbenp.prettier-vscode
@@ -38,6 +40,8 @@ enabled:
     uuid: ff96f1b4-a4b8-45ef-8ecf-c232c0cb75c8
   - id: hediet.vscode-drawio
     uuid: ea6a6046-2132-421f-a984-664909fcf0b8
+  - id: jeanp413.open-remote-ssh
+    uuid: 9fc16cea-08e2-4ae5-bf75-224004d722ff
   - id: johnpapa.vscode-peacock
     uuid: 5a7017bf-c571-4d77-b902-6e56b16f539a
   - id: KevinRose.vsc-python-indent
@@ -46,6 +50,10 @@ enabled:
     uuid: b1b0f283-8246-4e90-832e-a6c409d378d1
   - id: mhutchie.git-graph
     uuid: 438221f8-1107-4ccd-a6fe-f3b7fe0856b7
+  - id: ms-azuretools.vscode-docker
+    uuid: 0479fc1c-3d67-49f9-b087-fb9069afe48f
+  - id: ms-kubernetes-tools.vscode-kubernetes-tools
+    uuid: 4837e4f3-1b01-4732-b1a6-daa57ef64cab
   - id: ms-python.black-formatter
     uuid: 859e640c-c157-47da-8699-9080b81c8371
   - id: ms-python.debugpy
