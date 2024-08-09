@@ -69,15 +69,15 @@
 - name: All services misc - start + enable ssh (Ubuntu)
   ansible.builtin.service:
     name: ssh
-    state: started
-    enabled: true
+    # state: started
+    enabled: false
   when: ansible_distribution in ["Ubuntu"]
 
 - name: All services misc - start + enable sshd (Archlinux)
   ansible.builtin.service:
     name: sshd
-    state: started
-    enabled: true
+    # state: started
+    enabled: false
   when: ansible_distribution in ["Archlinux"]
 
 # --------
