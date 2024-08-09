@@ -28,7 +28,7 @@ fi
 
 ### check storagepath:
 homepath="/home/${user}"
-storagedir="Downloads"
+storagedir="Downloads/iso"
 storagepath="${homepath}/${storagedir}"
 
 if [ -d "${storagepath}" ]; then
