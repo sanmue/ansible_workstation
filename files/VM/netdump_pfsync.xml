@@ -1,0 +1,8 @@
+<network>
+  <name>pfsync</name>
+  <uuid>0e495be5-bc82-4797-b325-3cc46601223e</uuid>
+  <bridge name='virbr2' stp='on' delay='0'/>
+  <mac address='52:54:00:ca:3a:e4'/>
+  <domain name='pfsync'/>
+</network>
+

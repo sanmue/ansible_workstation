@@ -1,0 +1,8 @@
+<network>
+  <name>Lab-Win-isolated</name>
+  <uuid>dab5587f-933c-4322-b28c-a1a19c841081</uuid>
+  <bridge name='virbr1' stp='on' delay='0'/>
+  <mac address='52:54:00:d2:e3:ac'/>
+  <domain name='Lab-Win_isolated'/>
+</network>
+
