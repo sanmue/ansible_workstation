@@ -3,6 +3,9 @@
 # ######################
 # python3-pip, python3-psutil, (python3-pyinotify): Installiert in packages_workstation-basic.yml
 
+# TODO: Verwendung ansible.builtin.pip module
+# - https://docs.ansible.com/ansible/latest/collections/ansible/builtin/pip_module.html
+
 # - name: Install packages - pip (Python) (env_user, all, not EnveavourOS)
 #   become: true
 #   become_user: "{{ env_user }}"
@@ -35,10 +38,6 @@
 # - https://peps.python.org/pep-0668/#mark-the-installation-as-externally-managed
 # !!!
 
-# -------------------------------------------------
-# TODO: Suse: Fehlermeldungen wg. Abhängikeiten ...
-# -------------------------------------------------
-
 - name: Python - pip - Info zu möglicher Fehlermeldung (env_user, all)
   become: true
   become_user: "{{ env_user }}"
@@ -56,6 +55,13 @@
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: pip install --user bs4 deepl faker htmlentities parsedatetime pint pydbus pytz simpleeval wrapt_timeout_decorator
+  args:
+    creates: "/home/{{ env_user }}/.ansible_PythonPip"
+
+- name: Python - pip - Installation cst-lsp - wg Zed editor Extension 'zed-python-refactoring' (env_user, all)
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.shell: pip install --user cst-lsp
   args:
     creates: "/home/{{ env_user }}/.ansible_PythonPip"
 

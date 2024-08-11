@@ -53,7 +53,8 @@
       - rclone                # sync tool
       - rsync                 # bereits installiert (bootstrap)
       # - samba               # z.B. für VM: File sharing between host and Windows guest; https://wiki.manjaro.org/index.php/Virt-manager/en
-      - shfmt                 # Format shell programs # also uses by VS Code / Code OSS Extension "shell-format"
+      - shellcheck            # Shell script analysis tool (u.a. Verwendet in Extension/Plugin vim, (VS)Code, Zed)
+      - shfmt                 # Format shell programs # also uses by VS Code / Code OSS Extension "shell-format", Zed bzw. bash-language-server
       # - skanlite            # bei KDE Plasma Desktop
       - speedtest-cli
       - sqlitebrowser         # + s.u.: Arch: sqlite; debian: sqlite3
@@ -81,6 +82,8 @@
     name:
       - archlinux-keyring
       - base-devel            # insbes. wg. AUR Paketen   # bereits installiert (bootstrap)
+      - bashdb                # A debugger for Bash scripts loosely modeled on the gdb command syntax
+      - bash-language-server  # benötigt von Zed editor Extension (Bash for Zed)
       - borg                  # Deduplicating backup program with compression and authenticated encryption # GUI: vorta -> via yay in bootstrap.sh
       - chromium
       - cronie                # z.B. für clamtk + timeshift # Daemon that runs specified programs at scheduled times and related tools
@@ -101,7 +104,7 @@
       # - flameshot           # -> ksnip
       # - firewalld           # ggf. bereits installiert (bootstrap)
       - foliate               # A simple and modern GTK eBook reader
-      - freerdp
+      - freerdp               # u.a. für Remmina
       - fzf                   # Command-line fuzzy finder
       - github-cli
       - gnupg
@@ -129,6 +132,7 @@
       # - powerline-vim       # vim plugin for powerline
       - psutils               # A set of postscript utilities
       - pyenv                 # Easily switch between multiple versions of Python
+      - pyright               # Type checker for the Python language # Zed Editor mit Ext zed-python-refactoring (+ pip install cst-lsp)
       - python
       - python-black          # Uncompromising Python code formatter
       - python-debugpy        # An implementation of the Debug Adapter Protocol for Python
@@ -143,21 +147,25 @@
       - python-pydocstyle     # Docstring style checker
       - python-pylint         # Analyzes Python code looking for bugs and signs of poor quality
       - python-pylint-venv    # Make pylint respect virtualenvs
-      - python-pytest-flake8  # pytest plugin to check FLAKE8 requirements
-      - python-pytest-pylint  # pytest plugin to check source code with pylint
+      - python-pytest         # Simple powerful testing with Python
+      # - python-pytest-flake8  # nicht mehr in repo # pytest plugin to check FLAKE8 requirements
+      # - python-pytest-pylint  # nicht mehr in repo# pytest plugin to check source code with pylint
       - python-setuptools     # Easily download, build, install, upgrade, and uninstall Python packages
       - qt6-wayland           # 10/2023: for 'obs-studio' to work install 'qt6-wayland'
       - remmina
-      - shellcheck            # Shell script analysis tool
       - signal-desktop
       - sqlite                # A C library that implements an SQL database engine
       - steam-native-runtime  # Native replacement for the Steam runtime using system libraries (installiert benötigte 32bit libs)
       - torbrowser-launcher
+      - tree-sitter           # Incremental parsing library
+      - tree-sitter-bash      # Bash grammar for tree-sitter # benötigt von Zed editor Extension (Bash for Zed)
+      - tree-sitter-cli       # CLI tool for developing, testing, and using Tree-sitter parsers
       - ttf-dejavu
       - ttf-dejavu-nerd
       - ttf-sourcecodepro-nerd
       - vim-ansible
       - wireguard-tools
+      - zed                           # A high-performance, multiplayer code editor from the creators of Atom and Tree-sitter
       # # - zsh                       # s.o. basic all
       # # - zsh-doc
       - zsh-autosuggestions           # besser: install from git?
@@ -179,7 +187,6 @@
     state: present
     name:
       - anki
-      - bashdb                          # A debugger for Bash scripts loosely modeled on the gdb command syntax
       - borgbackup                      # Deduplicating backup program with compression and authenticated encryption
       - clamav-daemon
       - cockpit-networkmanager          # Cockpit user interface for networking
