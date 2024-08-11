@@ -243,12 +243,13 @@
 # ### cockpit.socket
 # ------------------
 # https://localhost:9090
-- name: All services misc - zsh plugins update - start+enable timer (all)
-  ansible.builtin.systemd:
-    name: cockpit.socket
-    state: started
-    enabled: true
-    daemon_reload: true
+# vorerst Weiternutzung "Virtual Machine Manager" (s. auch packages_workstation-basic), daher auskommentiert:
+# - name: All services misc - zsh plugins update - start+enable timer (all)
+#   ansible.builtin.systemd:
+#     name: cockpit.socket
+#     state: started
+#     enabled: true
+#     daemon_reload: true
 
 # -------------------------------------------------------------------------------------------------
 # -------------------------------------------------------------------------------------------------

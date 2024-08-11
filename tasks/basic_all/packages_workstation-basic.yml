@@ -13,10 +13,10 @@
       - bleachbit
       - clamav
       - clamtk
-      - cockpit               # A systemd web based user interface for Linux servers
-      - cockpit-packagekit    # Cockpit user interface for packages
-      - cockpit-storaged      # Cockpit user interface for storage, using udisks
-      - cockpit-machines      # Cockpit UI for virtual machines
+      # - cockpit               # A systemd web based user interface for Linux servers # vorerst Weiternutzung "Virtual Machine Manager"
+      # - cockpit-packagekit    # Cockpit user interface for packages
+      # - cockpit-storaged      # Cockpit user interface for storage, using udisks
+      # - cockpit-machines      # Cockpit UI for virtual machines
       # - cockpit-podman      # Cockpit UI for podman containers
       - cockpit-pcp           # Cockpit support for reading PCP metrics and loading PCP archives
       - cryptsetup            # benötigt für LUKS # sollte schon installiert sein
