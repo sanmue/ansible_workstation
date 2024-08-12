@@ -54,7 +54,7 @@
 - name: Python - pip - Installation verschiedene Pakete für Ulauncher extensions (env_user, all)
   become: true
   become_user: "{{ env_user }}"
-  ansible.builtin.shell: pip install --user bs4 deepl faker htmlentities parsedatetime pint pydbus pytz simpleeval wrapt_timeout_decorator
+  ansible.builtin.shell: pip install --user bs4 deepl faker htmlentities lorem parsedatetime pint pydbus pytz simpleeval wrapt_timeout_decorator
   args:
     creates: "/home/{{ env_user }}/.ansible_PythonPip"
 
