@@ -21,7 +21,7 @@
       # - cockpit-storaged      # Cockpit user interface for storage, using udisks
       # - cockpit-machines      # Cockpit UI for virtual machines
       # - cockpit-podman      # Cockpit UI for podman containers
-      - cockpit-pcp           # Cockpit support for reading PCP metrics and loading PCP archives
+      # - cockpit-pcp           # Cockpit support for reading PCP metrics and loading PCP archives
       - cryptsetup            # benötigt für LUKS # sollte schon installiert sein
       - cups
       - curl
@@ -206,7 +206,7 @@
       - anki
       - borgbackup                      # Deduplicating backup program with compression and authenticated encryption
       - clamav-daemon
-      - cockpit-networkmanager          # Cockpit user interface for networking
+      # - cockpit-networkmanager          # Cockpit user interface for networking
       - eslint                          # An AST-based pattern checker for JavaScript (für VS Code / Code - OSS Extension)
       - evolution-plugin-bogofilter
       - evolution-plugin-pstimport
