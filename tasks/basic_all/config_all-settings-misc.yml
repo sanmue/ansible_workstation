@@ -137,7 +137,7 @@
       alias kssh="kitty +kitten ssh"
 
       # directory listing (+ using 'eza' instead of 'ls')
-      alias ls='eza --color=auto --icons --group --time-style=long-iso'   # '--group' und '--time-style' nur bei '-l'; dann schon dabei
+      alias ls='eza --color=auto --icons --group --time-style=long-iso --group-directories-first'   # '--group' und '--time-style' nur bei '-l'; dann schon dabei
       alias ll='ls -la --ignore-glob ..'            # show long listing of all except ".."
       alias l='ls -la --ignore-glob .?*'            # show long listing but no hidden dotfiles except "." (rekursiv bis 1. Unterverzeichnis, mit dessen Inhalt)
       # tree-view:
@@ -229,6 +229,7 @@
       export PYENV_ROOT="$HOME/.pyenv"
       command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
       eval "$(pyenv init -)"
+      eval "$(pyenv virtualenv-init -)"
   when:
     - ansible_distribution in ["Archlinux"]
 
@@ -239,9 +240,9 @@
     backup: true
     marker: "### {mark} 'systemd user' ANSIBLE MANAGED BLOCK ###"
     block: |
-      # -----
+      # -------------------------------
       # systemd user import-environment
-      # -----
+      # -------------------------------
       systemctl --user import-environment PATH
 
 # --------
@@ -359,7 +360,7 @@
 # Zeichenfolge '"<feff>' wurde vor Inhalt aus 'files/custom-zsh-config' eingefügt
 # U+FEFF was called a ZERO WIDTH NO-BREAK SPACE
 # Also, a quick trip to Wikipedia told us about the actual uses for U+FEFF, more commonly known as Byte order mark or BOM
-# --> Datei 'files/custom-zsh-config' war als UTF-8 mit BOM --> als 'normales' UTF-8 File ohne BOM gespeichert
+# Datei 'files/custom-zsh-config' war als UTF-8 mit BOM --> als 'normales' UTF-8 File ohne BOM gespeichert
 # https://www.freecodecamp.org/news/a-quick-tale-about-feff-the-invisible-character-cd25cd4630e7/
 # https://www.fileformat.info/info/unicode/char/feff/index.htm
 #
@@ -383,7 +384,7 @@
 #        source /usr/share/zsh/custom-zsh-config
 #      fi
 
-- name: All settings misc - Zshrc - additional EXPORTS (User, all)
+- name: All settings misc - Zshrc - additional EXPORTS - colored password prompt (User, all)
   ansible.builtin.blockinfile:
     path: "/home/{{ env_user }}/.zshrc"
     backup: true
@@ -411,7 +412,7 @@
       alias kssh="kitty +kitten ssh"
 
       # directory listing (+ using 'eza' instead of 'ls')
-      alias ls='eza --color=auto --icons --group --time-style=long-iso'   # '--group' und '--time-style' nur bei '-l'; dann schon dabei
+      alias ls='eza --color=auto --icons --group --time-style=long-iso --group-directories-first'   # '--group' und '--time-style' nur bei '-l'; dann schon dabei
       alias ll='ls -la --ignore-glob ..'            # show long listing of all except ".."
       alias l='ls -la --ignore-glob .?*'            # show long listing but no hidden dotfiles except "." (rekursiv bis 1. Unterverzeichnis, mit dessen Inhalt)
       # tree-view:
@@ -503,8 +504,88 @@
       export PYENV_ROOT="$HOME/.pyenv"
       command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
       eval "$(pyenv init -)"
+      eval "$(pyenv virtualenv-init -)"
   when:
     - ansible_distribution in ["Archlinux"]
+
+- name: All settings misc - Zshrc - Insert/Update additional paths and config - zoxide (User, all)
+  ansible.builtin.blockinfile:
+    path: "/home/{{ env_user }}/.zshrc"
+    backup: true
+    marker: "### {mark} 'zoxide' ANSIBLE MANAGED BLOCK ###"
+    block: |
+      # ------
+      # zoxide
+      # ------
+      eval "$(zoxide init zsh)"
+
+- name: All settings misc - Zshrc - Insert/Update additional paths and config - tilix - vte config (User, all)
+  ansible.builtin.blockinfile:
+    path: "/home/{{ env_user }}/.zshrc"
+    backup: true
+    marker: "### {mark} 'tilix' ANSIBLE MANAGED BLOCK ###"
+    block: |
+      # ------------------
+      # tilix - vte config
+      # ------------------
+      # * https://gnunn1.github.io/tilix-web/manual/vteconfig/
+      
+      if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
+        source /etc/profile.d/vte.sh
+      fi
+
+- name: All settings misc - Zshrc - Insert/Update additional paths and config - nnn (User, all)
+  ansible.builtin.blockinfile:
+    path: "/home/{{ env_user }}/.zshrc"
+    backup: true
+    marker: "### {mark} 'nnn' ANSIBLE MANAGED BLOCK ###"
+    block: |
+      # ---------------------------
+      # 'nnn' terminal file manager
+      # ---------------------------
+      # * https://github.com/jarun/nnn
+      
+      export NNN_FIFO='/tmp/nnn.fifo'
+      export NNN_TERMINAL='xterm'
+      export NNN_PLUG='d:diffs;o:fzopen;j:autojump;p:preview-tui;r:pdfread;u:getplugs;v:imgview'
+
+      alias n='nnn_cdonquit -deiU -P p'
+      # detailed; open txt in $VISUAL; show file info bar; show user+group; start Plugin 'p' (-> preview-tui)
+
+      # --- cd on quit:
+      # * https://github.com/jarun/nnn/wiki/Basic-use-cases#configure-cd-on-quit
+      # * https://github.com/jarun/nnn/blob/master/misc/quitcd/quitcd.bash_sh_zsh
+
+      nnn_cdonquit ()
+      {
+          # Block nesting of nnn in subshells
+          [ "${NNNLVL:-0}" -eq 0 ] || {
+              echo "nnn is already running"
+              return
+          }
+
+          # The behaviour is set to cd on quit (nnn checks if NNN_TMPFILE is set)
+          # If NNN_TMPFILE is set to a custom path, it must be exported for nnn to
+          # see. To cd on quit only on ^G, remove the "export" and make sure not to
+          # use a custom path, i.e. set NNN_TMPFILE *exactly* as follows:
+          NNN_TMPFILE="${XDG_CONFIG_HOME:-$HOME/.config}/nnn/.lastd"             # only 'cd on quit' when ^G
+          # export NNN_TMPFILE="${XDG_CONFIG_HOME:-$HOME/.config}/nnn/.lastd"    # always 'cd on quit'
+
+          # Unmask ^Q (, ^V etc.) (if required, see `stty -a`) to Quit nnn
+          # stty start undef
+          # stty stop undef
+          # stty lwrap undef
+          # stty lnext undef
+
+          # The command builtin allows one to alias nnn to n, if desired, without
+          # making an infinitely recursive alias
+          command nnn "$@"
+
+          [ ! -f "$NNN_TMPFILE" ] || {
+              . "$NNN_TMPFILE"
+              rm -f -- "$NNN_TMPFILE" > /dev/null
+          }
+      }
 
 # https://wiki.archlinux.org/title/Systemd/User#PATH
 - name: All settings misc - Zshrc - systemd user import-environment (User, all)
@@ -513,9 +594,9 @@
     backup: true
     marker: "### {mark} 'systemd user' ANSIBLE MANAGED BLOCK ###"
     block: |
-      # -----
+      # -------------------------------
       # systemd user import-environment
-      # -----
+      # -------------------------------
       systemctl --user import-environment PATH
 
 
@@ -556,6 +637,30 @@
       # -------------------------------
       export VISUAL=vim
       export EDITOR="${VISUAL}"
+
+
+# ###############################
+# ### xterm (wg. nnn preview-tui)
+# ###############################
+- name: All settings misc - xterm - touch (User, all)
+  ansible.builtin.file:
+    path: "/home/{{ env_user }}/.Xresources"
+    state: touch
+    owner: "{{ env_user }}"
+    group: "{{ env_user }}"
+    mode: u=rw,g=r,o=r
+
+- name: All settings misc - xterm - Insert/Update additional paths and config (User,all)
+  ansible.builtin.blockinfile:
+    path: "/home/{{ env_user }}/.Xresources"
+    backup: true
+    marker: "### {mark} 'starship shell prompt' ANSIBLE MANAGED BLOCK ###"
+    block: |
+      XTerm*background:   black
+      XTerm*foreground:   white
+      XTerm*renderFont:   true
+      XTerm*faceName:     DejaVuSansMono
+      XTerm*faceSize:     13
 
 
 # #########################

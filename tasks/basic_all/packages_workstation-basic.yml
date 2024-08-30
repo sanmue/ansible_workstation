@@ -10,7 +10,10 @@
       - ansible               # Official assortment of Ansible collections   # bereits installiert (bootstrap)
       - ansible-lint          # für z.B. ansible extension in VS Code
       - bash
+      - bat                   # Cat clone with syntax highlighting and git integration (u.a. wg. nnn)
       - bleachbit
+      - catimg                # Print images in a terminal with 256 colors support (u.a. wg. nnn)
+      - chafa                 # Image-to-text converter for terminal (u.a. wg. nnn)
       - clamav
       - clamtk
       # - cockpit               # A systemd web based user interface for Linux servers # vorerst Weiternutzung "Virtual Machine Manager"
@@ -31,6 +34,7 @@
       - eza                   # A modern replacement for ls (community fork of exa)
       - flatpak
       - font-manager
+      - fzf                   # Command-line fuzzy finder (u.a. wg. nnn)
       - gcc
       - gimp
       # - gimp-help-en
@@ -41,15 +45,19 @@
       - htop
       - hunspell
       # - hyphen-de
+      - imv                   # Image viewer for Wayland and X11 (u.a. wg. nnn)
       - inotify-tools         # benötigt von 'grub-btrfsd.service' # command-line programs providing a simple interface to inotify
       - inxi
       - jq                    # Command-line JSON processor
       - keepassxc
       - kitty                 # gpu beschleunigtes terminal
       - libfaketime           # Report fake dates and times to programs without having to change the system-wide time.
+      - lowdown               # A simple Markdown translator (u.a. wg. nnn)
       - lsb-release
       - make
       # - man-pages-de
+      - moreutils             # additional Unix utilities - parallel command; enthält z.B. vidir (u.a. wg. nnn)
+      - nnn                   # Free, fast, friendly terminal file manager
       - rclone                # sync tool
       - rsync                 # bereits installiert (bootstrap)
       # - samba               # z.B. für VM: File sharing between host and Windows guest; https://wiki.manjaro.org/index.php/Virt-manager/en
@@ -63,13 +71,17 @@
       # - terminator          # Terminal emulator that supports tabs and grids
       - tk                    # Graphical User Interface Toolkit for Tcl   # z.B. pyenv install 3.11.3: requirement
       - tmux
+      - trash-cli             # Command line trashcan (recycle bin) interface
+      - unzip
       - vim                   # bereits installiert (bootstrap)
       - vim-ale               # Lint Engine (plugin for vim)
       - vlc
-      - unzip
+      - w3m                   # Text-based Web browser as well as pager (u.a. wg. nnn)
       - wget
       - xdg-utils
       - yq                    # Command-line YAML, XML, TOML processor - jq wrapper for YAML/XML/TOML documents
+      - xterm                 # (u.a. wg. nnn)
+      - zoxide                # A smarter cd command for your terminal (u.a. wg. nnn)
       - zsh
       # ---------
       # firmware:
@@ -105,8 +117,8 @@
       # - firewalld           # ggf. bereits installiert (bootstrap)
       - foliate               # A simple and modern GTK eBook reader
       - freerdp               # u.a. für Remmina
-      - fzf                   # Command-line fuzzy finder
       - github-cli
+      - glow                  # Command-line markdown renderer 
       - gnupg
       - gpgme
       - hunspell-de
@@ -126,6 +138,7 @@
       - packagekit
       - pacman-contrib        # Contributed scripts and tools for pacman systems # e.g. for pacman-filesdb-refresh.timer, paccache.timer
       - pkgfile               # sollte bereits installiert sein (mit 'pacman') # tool for searching files from packages in the official repositories
+      - poppler               # PDF rendering library based on xpdf 3.0 (u.a. wg. nnn)
       # - powerline           # Statusline plugin for vim, an provides statuslines udn prompts for several other applications
       #                       # including zsh, bash, tmux, IPython, Awesome, i3 and qtile
       # - powerline-fonts     # patched fonts for powerline
@@ -141,7 +154,9 @@
       - python-flake8-isort   # Flake8 plugin to validate annotations complexity
       - python-isort          # A Python utility / library to sort Python imports
       - python-pip            # The PyPA recommended tool for installing Python packages
+      - python-pipenv         # Sacred Marriage of Pipfile, Pip, & Virtualenv
       - python-pipx           # Install and Run Python Applications in Isolated Environments
+      - python-poetry         # Python dependency management and packaging made easy
       - python-psutil         # A cross-platform process and system utilities module for Python
       - python-pyarrow        # will become necessary dependency for Pandas
       - python-pydocstyle     # Docstring style checker
@@ -149,7 +164,7 @@
       - python-pylint-venv    # Make pylint respect virtualenvs
       - python-pytest         # Simple powerful testing with Python
       # - python-pytest-flake8  # nicht mehr in repo # pytest plugin to check FLAKE8 requirements
-      # - python-pytest-pylint  # nicht mehr in repo# pytest plugin to check source code with pylint
+      # - python-pytest-pylint  # nicht mehr in repo # pytest plugin to check source code with pylint
       - python-setuptools     # Easily download, build, install, upgrade, and uninstall Python packages
       - qt6-wayland           # 10/2023: for 'obs-studio' to work install 'qt6-wayland'
       - remmina
@@ -163,7 +178,9 @@
       - ttf-dejavu
       - ttf-dejavu-nerd
       - ttf-sourcecodepro-nerd
+      - ueberzug              # command line utility which draws images on terminals (in combi with X11?) (u.a. wg. nnn)
       - vim-ansible
+      - viu                   # Simple terminal image viewer (u.a. wg. nnn)
       - wireguard-tools
       - zed                           # A high-performance, multiplayer code editor from the creators of Atom and Tree-sitter
       # # - zsh                       # s.o. basic all
@@ -214,6 +231,7 @@
       - neofetch
       - openssh-client
       - packagekit                      # sollte bereits installiert sein # notwendig u.a. für cockpit
+      - poppler-utils                   # PDF utilities (based on Poppler) (u.a. wg. nnn)
       # - powershell                    # repo wurde hinzugefügt
       - printer-driver-cups-pdf
       # - pipx
@@ -230,6 +248,7 @@
       - sqlite3
       - ssh                             # bereits installiert (bootstrap)
       # - timeshift
+      - ueberzug              # command line utility which draws images on terminals (in combi with X11?) (u.a. wg. nnn)
       - ufw                             # bereits installiert (bootstrap)
       - units                           # converts between different systems of units
       - vorta                           # Desktop Client for Borg Backup

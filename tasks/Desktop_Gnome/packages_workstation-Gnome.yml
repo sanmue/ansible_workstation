@@ -17,6 +17,7 @@
                                                                 # (Bildschirmausgabe wird ausgeschaltet nach längerer Inktivität)
       # - geany
       # - geany-plugins
+      - gnome-epub-thumbnailer # (u.a. wg. nnn)
       - gnome-calculator
       - gnome-disk-utility
       - gnome-keyring
