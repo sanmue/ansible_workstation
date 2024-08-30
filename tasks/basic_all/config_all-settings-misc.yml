@@ -658,6 +658,7 @@
   ansible.builtin.script: "/home/{{ env_user }}/Downloads/getplugs.sh"
 
 
+
 # ###############################
 # ### xterm (wg. nnn preview-tui)
 # ###############################
@@ -825,6 +826,9 @@
 
 # ---------------
 # ### VIM plugins
+#
+# Anmerkung: package "vim-ale" ist installiert über paketmanager
+#
 # - manuelle Installation für env_user
 # -
 # - https://opensource.com/article/20/2/how-install-vim-plugins
@@ -837,6 +841,14 @@
     cmd: mkdir -p /home/{{ env_user }}/.vim/pack/git-plugins/start
   args:
     creates: /home/{{ env_user }}/.vim/pack/git-plugins/start
+
+- name: All settings misc - vim plugin install from git repo - vim.nnn (all)
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.git: 
+    repo: 'https://github.com/mcchrish/nnn.vim'
+    dest: "/home/{{ env_user }}/.vim/pack/git-plugins/start"
+    depth: 1
 
 
 # ##########
