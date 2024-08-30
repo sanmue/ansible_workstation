@@ -842,13 +842,13 @@
   args:
     creates: /home/{{ env_user }}/.vim/pack/git-plugins/start
 
-- name: All settings misc - vim plugin install from git repo - vim.nnn (all)
+- name: All settings misc - vim plugin install from git repo - nnn.vim (all)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.git: 
     repo: 'https://github.com/mcchrish/nnn.vim'
-    dest: "/home/{{ env_user }}/.vim/pack/git-plugins/start"
-#    depth: 1
+    dest: "/home/{{ env_user }}/.vim/pack/git-plugins/start/nnn.vim"
+    depth: 1
 
 
 # ##########
