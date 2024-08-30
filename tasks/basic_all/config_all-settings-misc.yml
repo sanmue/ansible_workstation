@@ -838,7 +838,7 @@
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell:
-    cmd: mkdir -p /home/{{ env_user }}/.vim/pack/git-plugins/start
+    cmd: "mkdir -p /home/{{ env_user }}/.vim/pack/git-plugins/start"
   args:
     creates: /home/{{ env_user }}/.vim/pack/git-plugins/start
 
