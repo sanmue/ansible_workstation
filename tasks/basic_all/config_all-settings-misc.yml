@@ -848,7 +848,7 @@
   ansible.builtin.git: 
     repo: 'https://github.com/mcchrish/nnn.vim'
     dest: "/home/{{ env_user }}/.vim/pack/git-plugins/start"
-    depth: 1
+#    depth: 1
 
 
 # ##########
