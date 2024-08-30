@@ -639,6 +639,25 @@
       export EDITOR="${VISUAL}"
 
 
+# #################
+# ### nnn - plugins
+# #################
+# - https://github.com/jarun/nnn/tree/master/plugins#installation
+
+- name: All settings misc - nnn - plugins - download install script (all, env_user)
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.get_url:
+    url: https://raw.githubusercontent.com/jarun/nnn/master/plugins/getplugs
+    dest: "/home/{{ env_user }}/Downloads/getplugs.sh"
+    mode: '0777'
+
+- name: All settings misc - nnn - plugins - exec install script (all, env_user)
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.script: "/home/{{ env_user }}/Downloads/getplugs.sh"
+
+
 # ###############################
 # ### xterm (wg. nnn preview-tui)
 # ###############################
