@@ -8,7 +8,7 @@
 dconfdir=/com/gexperts/Tilix/profiles
 
 create_new_profile() {
-    local profile_name="$1"   # local profile_name="Test"
+    local profile_name="$1"
     local profile_id="$(uuidgen)"
 
     local arr_profileId=($(dconf list ${dconfdir}/ | sed 's/\///g'))
@@ -29,23 +29,31 @@ create_new_profile() {
     echo "${profile_id}"
 }
 
+# ############################
+# ### Set general preferences:
+dconf write "${dconfdir}"/close-with-last-session "false"
+dconf write "${dconfdir}"/control-scroll-zoom "true"
+dconf write "${dconfdir}"/paste-strip-trailing-whitespace "true"
+dconf write "${dconfdir}"/use-tabs "true"
 
-# ######################################
-# ### Create profile - "Custom_Standard"
+# #######################################
+# ### Create profile - "Custom_Standard":
 id=$(create_new_profile Custom_Standard)
-# Preferences:
+
+# ### Set preferences for new profile:
 dconf write "${dconfdir}/${id}"/background-color "'#272822'"
-dconf write "${dconfdir}/${id}"/foreground-color "'#F8F8F2'"
-dconf write "${dconfdir}/${id}"/palette "['#000000', '#CC0000', '#4D9A05', '#C3A000', '#3464A3', '#754F7B', '#05979A', '#D3D6CF', '#545652', '#EF2828', '#89E234', '#FBE84F', '#729ECF', '#AC7EA8', '#34E2E2', '#EDEDEB']"
+dconf write "${dconfdir}/${id}"/cursor-shape "'ibeam'"
 dconf write "${dconfdir}/${id}"/default-size-columns "100"
 dconf write "${dconfdir}/${id}"/default-size-rows "32"
 dconf write "${dconfdir}/${id}"/exit-action "'hold'"
-dconf write "${dconfdir}/${id}"/font "'MesloLGM Nerd Font 12'"
-dconf write "${dconfdir}/${id}"/use-system-font "false"
-dconf write "${dconfdir}/${id}"/cursor-shape "'ibeam'"
+dconf write "${dconfdir}/${id}"/font "'MesloLGS NF 13'"
+dconf write "${dconfdir}/${id}"/foreground-color "'#F8F8F2'"
+dconf write "${dconfdir}/${id}"/login-shell "true"
+dconf write "${dconfdir}/${id}"/palette "['#000000', '#CC0000', '#4D9A05', '#C3A000', '#3464A3', '#754F7B', '#05979A', '#D3D6CF', '#545652', '#EF2828', '#89E234', '#FBE84F', '#729ECF', '#AC7EA8', '#34E2E2', '#EDEDEB']"
 dconf write "${dconfdir}/${id}"/terminal-bell "'sound'"
+dconf write "${dconfdir}/${id}"/use-system-font "false"
 dconf write "${dconfdir}/${id}"/use-theme-colors "true"
 #dconf write "${dconfdir}/:${id}"/visible-name "Custom_Standard" # s.o.: Parameter Funktion 'create_new_profile'
 
-# Set as default profile:
+# ### Set as default profile:
 dconf write "${dconfdir}/default" "'$id'"
