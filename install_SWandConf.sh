@@ -426,8 +426,8 @@ case ${os} in
         echo -e "\nAktiviere Firewall 'firewalld' und erlaube ssh ..."
         sudo systemctl enable --now firewalld.service && sudo firewall-cmd --zone=public --add-service=ssh --permanent && sudo firewall-cmd --reload
 
-        echo -e "\nStarte und aktiviere sshd.service..."
-        sudo systemctl enable --now sshd.service
+        echo -e "\nStarte und aktiviere sshd.service..."  # wg. ssh von anderer Maschine für evtl. todos/checks, ...
+        sudo systemctl enable --now sshd.service  # wird später in Ansible task (services) wieder deaktiviert (ober noch nicht gestoppt)
 
         echo -e "\nVM - Qemu/KVM: Wiki empfiehlt inst. von 'iptables-nft'"
         echo -e "Bestätige, dass 'iptables' (und 'inxi') gelöscht und 'iptables-nft' installiert wird"
