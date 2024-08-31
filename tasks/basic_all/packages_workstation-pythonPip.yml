@@ -1,31 +1,8 @@
 # ######################
 # ### Python pip install
 # ######################
-# python3-pip, python3-psutil, (python3-pyinotify): Installiert in packages_workstation-basic.yml
+# python3-pip, python3-psutil, (python3-pyinotify), ...: Installiert in packages_workstation-basic.yml
 
-# TODO: Verwendung ansible.builtin.pip module
-# - https://docs.ansible.com/ansible/latest/collections/ansible/builtin/pip_module.html
-
-# - name: Install packages - pip (Python) (env_user, all, not EnveavourOS)
-#   become: true
-#   become_user: "{{ env_user }}"
-#   ansible.builtin.pip:
-#     state: present
-#     name:
-#       - deepl                     # Ulauncher Extension Requirement: DeepL Translator
-#       - faker                     # Ulauncher Extension Requirement: Faker
-#       - lorem                     # Ulauncher Extension Requirement: Lipsum
-#       - parsedatetime             # Ulauncher Extension Requirement: Calculate Anything
-#       - pint                      # Ulauncher Extension Requirement: Calculate Anything
-#       - pydbus                    # Ulauncher Extension Requirement: Bluetooth
-#       - simpleeval                # Ulauncher Extension Requirement: Calculate Anything
-#       - wrapt_timeout_decorator   # Ulauncher Extension Requirement: Bluetooth
-#     extra_args: --user
-#   when:
-#     - ansible_distribution in ["Archlinux", "Ubuntu"]
-#     - env_lsb_id != "EndeavourOS"
-
-# !!!
 # - pyenv:
 #   - https://technicalnavigator.in/how-to-fix-error-externally-managed-environment-in-python-kali-linux/
 #
@@ -54,7 +31,7 @@
 - name: Python - pip - Installation verschiedene Pakete für Ulauncher extensions (env_user, all)
   become: true
   become_user: "{{ env_user }}"
-  ansible.builtin.shell: pip install --user bs4 deepl faker htmlentities lorem parsedatetime pint pydbus pytz simpleeval wrapt_timeout_decorator
+  ansible.builtin.shell: pip install --user bs4 deepl faker htmlentities lorem parsedatetime Pint pydbus pytz simpleeval wrapt_timeout_decorator
   args:
     creates: "/home/{{ env_user }}/.ansible_PythonPip"
 
@@ -71,3 +48,29 @@
   ansible.builtin.shell: "touch /home/{{ env_user }}/.ansible_PythonPip"
   args:
     creates: "/home/{{ env_user }}/.ansible_PythonPip"
+
+# TODO: Verwendung ansible.builtin.pip module bzw. pipx
+# - https://docs.ansible.com/ansible/latest/collections/ansible/builtin/pip_module.html
+
+# - name: Python - pip - install packages (env_user, all, not EnveavourOS)
+# - name: Python - pipx - install packages
+#   become: true
+#   become_user: "{{ env_user }}"
+#   ansible.builtin.pip:
+#     state: present
+#     name:
+#       - bs4                       # Ulauncher Extension Requirement
+#       - deepl                     # Ulauncher Extension Requirement: DeepL Translator
+#       - faker                     # Ulauncher Extension Requirement: Faker
+#       - lorem                     # Ulauncher Extension Requirement: Lipsum
+#       - parsedatetime             # Ulauncher Extension Requirement: Calculate Anything
+#       - Pint                      # Ulauncher Extension Requirement: Calculate Anything
+#       - pydbus                    # Ulauncher Extension Requirement: Bluetooth
+#       - pytz                      # Ulauncher Extension Requirement
+#       - simpleeval                # Ulauncher Extension Requirement: Calculate Anything
+#       - wrapt_timeout_decorator   # Ulauncher Extension Requirement: Bluetooth
+#       - cst-lsp                   # Zed editor Extension 'zed-python-refactoring'
+#     extra_args: --user
+#   when:
+#     - ansible_distribution in ["Archlinux", "Ubuntu"]
+#     - env_lsb_id != "EndeavourOS"
