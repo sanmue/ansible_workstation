@@ -1740,7 +1740,7 @@
 # - name: Gnome Desktop Prefs - tilix terminal - close-with-last-session (Gnome)
 #   community.general.dconf:
 #     key: "/com/gexperts/Tilix/close-with-last-session"
-#     value: "true"
+#     value: "false"
 #     state: present
 #   when:
 #     - env_desktop in ["gnome", "ubuntu:gnome"]
@@ -1748,14 +1748,14 @@
 - name: Gnome Desktop Prefs - tilix terminal - close-with-last-session (Gnome)
   become: true
   become_user: "{{ env_user }}"
-  ansible.builtin.shell: dconf write "/com/gexperts/Tilix/close-with-last-session" "true"
+  ansible.builtin.shell: dconf write "/com/gexperts/Tilix/close-with-last-session" "false"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 
 # - name: Gnome Desktop Prefs - tilix terminal - control-scroll-zoom (Gnome)
 #   community.general.dconf:
 #     key: "/com/gexperts/Tilix/control-scroll-zoom"
-#     value: "false"
+#     value: "true"
 #     state: present
 #   when:
 #     - env_desktop in ["gnome", "ubuntu:gnome"]
@@ -1763,7 +1763,14 @@
 - name: Gnome Desktop Prefs - tilix terminal - control-scroll-zoom (Gnome)
   become: true
   become_user: "{{ env_user }}"
-  ansible.builtin.shell: dconf write "/com/gexperts/Tilix/control-scroll-zoom" "false"
+  ansible.builtin.shell: dconf write "/com/gexperts/Tilix/control-scroll-zoom" "true"
+  when:
+    - env_desktop in ["gnome", "ubuntu:gnome"]
+
+- name: Gnome Desktop Prefs - tilix terminal - paste-strip-trailing-whitespace (Gnome)
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.shell: dconf write "/com/gexperts/Tilix/paste-strip-trailing-whitespace" "true"
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
 

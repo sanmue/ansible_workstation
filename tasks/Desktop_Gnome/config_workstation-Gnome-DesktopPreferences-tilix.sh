@@ -31,10 +31,11 @@ create_new_profile() {
 
 # ############################
 # ### Set general preferences:
-dconf write "${dconfdir}"/close-with-last-session "false"
-dconf write "${dconfdir}"/control-scroll-zoom "true"
-dconf write "${dconfdir}"/paste-strip-trailing-whitespace "true"
-dconf write "${dconfdir}"/use-tabs "true"
+# dconf write "${dconfdir}"/close-with-last-session "false"         # bereits in task
+# dconf write "${dconfdir}"/control-scroll-zoom "true"              # bereits in task
+# dconf write "${dconfdir}"/paste-strip-trailing-whitespace "true"  # bereits in task
+# dconf write "${dconfdir}"/terminal-title-style "'small'"          # bereits in task
+# dconf write "${dconfdir}"/use-tabs "true"                         # bereits in task
 
 # #######################################
 # ### Create profile - "Custom_Standard":
@@ -55,5 +56,5 @@ dconf write "${dconfdir}/${id}"/use-system-font "false"
 dconf write "${dconfdir}/${id}"/use-theme-colors "true"
 #dconf write "${dconfdir}/:${id}"/visible-name "Custom_Standard" # s.o.: Parameter Funktion 'create_new_profile'
 
-# ### Set as default profile:
+# ### Set new profile as default profile:
 dconf write "${dconfdir}/default" "'$id'"
