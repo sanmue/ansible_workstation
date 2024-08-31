@@ -38,18 +38,18 @@
 # - https://peps.python.org/pep-0668/#mark-the-installation-as-externally-managed
 # !!!
 
-# - name: Python - pip - Info zu möglicher Fehlermeldung (env_user, all)
-#   become: true
-#   become_user: "{{ env_user }}"
-#   ansible.builtin.debug:
-#     msg: "Wenn es im Folgeschritt zu Fehlermelung kommt: source .zshrc/.bashrc oder Terminal neu starten und nochmal Playbook starten."
+- name: Python - pip - Info zu möglicher Fehlermeldung (env_user, all)
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.debug:
+    msg: "Wenn es im Folgeschritt zu Fehlermelung kommt: source .zshrc/.bashrc oder Terminal neu starten und nochmal Playbook starten."
 
-# - name: Python - pip - upgrade pip (env_user, all)
-#   become: true
-#   become_user: "{{ env_user }}"
-#   ansible.builtin.shell: pip install --upgrade pip
-#   args:
-#     creates: "/home/{{ env_user }}/.ansible_PythonPip"
+- name: Python - pip - upgrade pip (env_user, all)
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.shell: pip install --upgrade pip
+  args:
+    creates: "/home/{{ env_user }}/.ansible_PythonPip"
 
 - name: Python - pip - Installation verschiedene Pakete für Ulauncher extensions (env_user, all)
   become: true
