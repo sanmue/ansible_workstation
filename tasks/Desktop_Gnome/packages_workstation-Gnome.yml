@@ -21,7 +21,7 @@
       - gnome-calculator
       - gnome-disk-utility
       - gnome-keyring
-      - gnome-terminal
+      # - gnome-terminal
       - gnome-weather         # needed for extension "Weather O'Clock"
       - inkscape              # Plasma: Krita
       # - kdeconnect          # -> gnome-shell-extension-gsconnect
@@ -45,6 +45,7 @@
       # - deluge              # -> transmission-gtk
       - epiphany              # A GNOME web browser based on the WebKit rendering engin
       - evince                # Document viewer (PDF, PostScript, XPS, djvu, dvi, tiff, cbr, cbz, cb7, cbt)
+      - gnome-shell-extension-dash-to-panel
       # - guake               # Drop-down terminal for GNOME
       - gtk-vnc               # VNC viewer widget for GTK
       - nemo
