@@ -373,6 +373,39 @@ if [[ "${doSnapper}" = 'y' ]]; then
 #     echo -e "\n'/' hat kein btrfs-Filesystem"
 fi
 
+### ---
+### updatedb.conf anpassen: keine Indexierung des (Snapper) snapshotFolder
+### ---
+### * https://wiki.archlinux.org/title/Snapper#Preventing_slowdowns
+### * https://unix.stackexchange.com/questions/566495/how-can-i-change-the-configuration-of-etc-updatedb-conf-file
+### * https://serverfault.com/questions/454051/how-can-i-view-updatedb-database-content-and-then-exclude-certain-files-paths
+###   * https://serverfault.com/a/565094
+updbconf="/etc/updatedb.conf"
+pngrep="PRUNENAMES"
+snapshotFolder=$(gettext "${snapperSnapshotFolder}" | sed 's/^.//') # ohne führendes '/' in '/.snapshots' -> .snapshots
+#                gettext: damit nicht Pfad '/.snapshots' aufruft, sondern nur String nimmt
+
+echo -e "\n*** ************************************************************"
+echo -e "*** updatedb: '${snapshotFolder}' von Indexierung ausnehmen"
+
+if [[ -e "${snapperSnapshotFolder}" ]] && [[ -e "${updbconf}" ]]; then
+	if ! grep -q "${snapshotFolder}" "${updbconf}" && grep -q "${pngrep}" "${updbconf}"; then
+		# wenn .snapshots noch nicht in conf oder PRUNENAMES nicht in conf
+		
+		prunenamesOld=$(grep "${pngrep}" "${updbconf}" | sed 's/.$//')  # aktuelle Werte bei PRUNENAMES, ohne letztes Zeichen ('"')
+		echo "prunenames alt: ${prunenamesOld}\""
+		prunenamesNew="${prunenamesOld} ${snapshotFolder}\""
+		echo "prunenames neu: ${prunenamesNew}"
+
+		sudo sed -i "s/${prunenamesOld}\"/${prunenamesNew}/" "${updbconf}"
+		# sudo updatedb --add-prunenames "${snapshotFolder}"    # sudo updatedb --prunenames NAMES
+		# sudo updatedb --debug-pruning > ~/updatedb_debug.log 2>&1 &
+		sudo updatedb --debug-pruning 2>&1 | tee ~/updatedb_debug.log 1>/dev/null
+	else
+		echo "Eintrag '${snapshotFolder}' bereits in '${updbconf}' vorhanden oder '${pngrep}' nicht vorhanden"
+	fi
+fi
+
 
 ### ---
 ### Installation initial benötigter Pakete und Services abhängig von Betriebssystem:
