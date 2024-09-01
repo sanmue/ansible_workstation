@@ -30,7 +30,6 @@
       - duf                   # Disk Usage/Free Utility
       - efivar
       - evolution
-      # - exa                   # ls replacement
       - eza                   # A modern replacement for ls (community fork of exa)
       - flatpak
       - font-manager
@@ -44,7 +43,6 @@
       - hplip                 # Drivers for HP DeskJet, OfficeJet, Photosmart, Business Inkjet and some LaserJet
       - htop
       - hunspell
-      # - hyphen-de
       - imv                   # Image viewer for Wayland and X11 (u.a. wg. nnn)
       - inotify-tools         # benötigt von 'grub-btrfsd.service' # command-line programs providing a simple interface to inotify
       - inxi
@@ -113,8 +111,7 @@
       - firefox
       - firefox-i18n-en-us
       - flake8                # The modular source code checker: pep8, pyflakes and co
-      # - flameshot           # -> ksnip
-      # - firewalld           # ggf. bereits installiert (bootstrap)
+      - firewalld           # ggf. bereits installiert (bootstrap)
       - foliate               # A simple and modern GTK eBook reader
       - freerdp               # u.a. für Remmina
       - github-cli
@@ -125,7 +122,7 @@
       - hunspell-en_us
       # - ipset
       - kdeconnect
-      # - ksnip
+      - ksnip
       - libnotify             # Library for sending desktop notifications
       - libreoffice-still
       # - libreoffice-still-de
@@ -139,10 +136,6 @@
       - pacman-contrib        # Contributed scripts and tools for pacman systems # e.g. for pacman-filesdb-refresh.timer, paccache.timer
       - pkgfile               # sollte bereits installiert sein (mit 'pacman') # tool for searching files from packages in the official repositories
       - poppler               # PDF rendering library based on xpdf 3.0 (u.a. wg. nnn)
-      # - powerline           # Statusline plugin for vim, an provides statuslines udn prompts for several other applications
-      #                       # including zsh, bash, tmux, IPython, Awesome, i3 and qtile
-      # - powerline-fonts     # patched fonts for powerline
-      # - powerline-vim       # vim plugin for powerline
       - psutils               # A set of postscript utilities
       - pyenv                 # Easily switch between multiple versions of Python
       - pyright               # Type checker for the Python language # Zed Editor mit Ext zed-python-refactoring (+ pip install cst-lsp)
@@ -186,14 +179,10 @@
       - viu                   # Simple terminal image viewer (u.a. wg. nnn)
       - wireguard-tools
       - zed                           # A high-performance, multiplayer code editor from the creators of Atom and Tree-sitter
-      # # - zsh                       # s.o. basic all
-      # # - zsh-doc
       - zsh-autosuggestions           # besser: install from git?
       # - # zsh-completions             # besser: install from git?
       - zsh-syntax-highlighting       # besser: install from git?
       - zsh-history-substring-search  # besser: install from git?
-      # # - zsh-theme-powerlevel10k   # besser: install from git # There is also zsh-theme-powerlevel10k community package.
-                                      # Historically, it has been breaking often and for extended periods of time. Do not use it.
       # # - zshdb                     # A debugger for zsh scripts
       # ---------
       # firmware:
@@ -220,7 +209,6 @@
       # - firefox                       # -> in Standard-Inst bereits vorhanden (ab 22.04: als snap package)
       # - firefox-locale-de
       # - firefox-locale-en
-      - fzf                             # Command-line fuzzy finder
       - gh                              # GitHub CLI, GitHub\u2019s official command line tool
       - gitk
       - gpg
@@ -230,12 +218,10 @@
       - kdeconnect
       - libidn11-dev                    # benötigt für Citrix Workspace app (ica client)
       - libnotify-bin                   # sollte schon installiert sein
-      # - luckybackup
       - neofetch
       - openssh-client
       - packagekit                      # sollte bereits installiert sein # notwendig u.a. für cockpit
       - poppler-utils                   # PDF utilities (based on Poppler) (u.a. wg. nnn)
-      # - powershell                    # repo wurde hinzugefügt
       - printer-driver-cups-pdf
       - pipx                            # execute binaries from Python packages in isolated environments
       - python3
@@ -247,7 +233,6 @@
       - python3-pylint-venv
       - python3-pytest-pylint
       - python3-setuptools
-      # - searchmonkey
       - sqlite3
       - ssh                             # bereits installiert (bootstrap)
       # - timeshift
@@ -267,7 +252,6 @@
       # #- gstreamer - kram
       # - ...
       # - youtube-dl
-      # - zsh                           # s.o. basic all
       # zsh-plugins: siehe "packages_workstation-localPackageInstall.yml"
       # - zsh-autosuggestions           # über git: https://github.com/zsh-users/zsh-autosuggestions
       # - zsh-syntax-highlighting       # über git: https://github.com/zsh-users/zsh-syntax-highlighting
