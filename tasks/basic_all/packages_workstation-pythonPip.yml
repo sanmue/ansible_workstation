@@ -61,37 +61,15 @@
   ansible.builtin.shell:
     cmd: pipx ensurepath 
 
-- name: Python - pipx - install packages - cst-lsp
+- name: Python - pipx - install packages
   become: true
   become_user: "{{ env_user }}"
   community.general.pipx:
     state: present
-    name: cst-lsp     # Zed editor Extension 'zed-python-refactoring'
-
-- name: Python - pipx - install packages - deepl
-  become: true
-  become_user: "{{ env_user }}"
-  community.general.pipx:
-    state: present
-    name: deepl             # Ulauncher Extension Requirement DeepL Translator
-
-- name: Python - pipx - install packages - faker
-  become: true
-  become_user: "{{ env_user }}"
-  community.general.pipx:
-    state: present
-    name: faker             # Ulauncher Extension Requirement faker
-
-- name: Python - pipx - install packages - Pint
-  become: true
-  become_user: "{{ env_user }}"
-  community.general.pipx:
-    state: present
-    name: Pint     # Ulauncher Extension Requirement Calculate Anything
-
-- name: Python - pipx - install packages - wrapt_timeout_decorator 
-  become: true
-  become_user: "{{ env_user }}"
-  community.general.pipx:
-    state: present
-    name: wrapt_timeout_decorator      # Ulauncher Extension Requirement Bluetooth
+    name: "{{ item }}"
+  loop:
+    - cst-lsp                   # Zed editor Extension 'zed-python-refactoring'
+    - deepl                     # Ulauncher Extension Requirement DeepL Translator
+    - faker                     # Ulauncher Extension Requirement faker
+    - Pint                      # Ulauncher Extension Requirement Calculate Anything
+    - wrapt_timeout_decorator   # Ulauncher Extension Requirement Bluetooth
