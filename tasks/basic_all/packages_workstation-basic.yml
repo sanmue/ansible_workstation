@@ -234,7 +234,7 @@
       - poppler-utils                   # PDF utilities (based on Poppler) (u.a. wg. nnn)
       # - powershell                    # repo wurde hinzugefügt
       - printer-driver-cups-pdf
-      # - pipx
+      - pipx                            # execute binaries from Python packages in isolated environments
       - python3
       - python3-debugpy
       - python3-pip

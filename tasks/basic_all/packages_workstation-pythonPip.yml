@@ -13,7 +13,7 @@
 # - https://stackoverflow.com/questions/75608323/how-do-i-solve-error-externally-managed-environment-everytime-i-use-pip3
 # - https://stackoverflow.com/questions/75602063/pip-install-r-requirements-txt-is-failing-this-environment-is-externally-manag/75696359#75696359
 # - https://peps.python.org/pep-0668/#mark-the-installation-as-externally-managed
-# !!!
+
 
 - name: Python - pip - Info zu möglicher Fehlermeldung (env_user, all)
   become: true
@@ -28,49 +28,70 @@
   args:
     creates: "/home/{{ env_user }}/.ansible_PythonPip"
 
-- name: Python - pip - Installation verschiedene Pakete für Ulauncher extensions (env_user, all)
-  become: true
-  become_user: "{{ env_user }}"
-  ansible.builtin.shell: pip install --user bs4 deepl faker htmlentities lorem parsedatetime Pint pydbus pytz simpleeval wrapt_timeout_decorator
-  args:
-    creates: "/home/{{ env_user }}/.ansible_PythonPip"
-
-- name: Python - pip - Installation cst-lsp - wg Zed editor Extension 'zed-python-refactoring' (env_user, all)
-  become: true
-  become_user: "{{ env_user }}"
-  ansible.builtin.shell: pip install --user cst-lsp
-  args:
-    creates: "/home/{{ env_user }}/.ansible_PythonPip"
-
 - name: Python - pip - set flag file for pip installs (env_user, all)
   become: true
   become_user: "{{ env_user }}"
-  ansible.builtin.shell: "touch /home/{{ env_user }}/.ansible_PythonPip"
-  args:
-    creates: "/home/{{ env_user }}/.ansible_PythonPip"
+  ansible.builtin.file:
+    path: "/home/{{ env_user }}/.ansible_PythonPip"
+    state: touch
+    modification_time: preserve
+    mode: u=rw,g=r,o=r
 
-# TODO: Verwendung ansible.builtin.pip module bzw. pipx
-# - https://docs.ansible.com/ansible/latest/collections/ansible/builtin/pip_module.html
-
-# - name: Python - pip - install packages (env_user, all, not EnveavourOS)
-# - name: Python - pipx - install packages
+# - name: Python - pip - install packages - bs4
 #   become: true
 #   become_user: "{{ env_user }}"
 #   ansible.builtin.pip:
-#     state: present
-#     name:
-#       - bs4                       # Ulauncher Extension Requirement
-#       - deepl                     # Ulauncher Extension Requirement: DeepL Translator
-#       - faker                     # Ulauncher Extension Requirement: Faker
-#       - lorem                     # Ulauncher Extension Requirement: Lipsum
-#       - parsedatetime             # Ulauncher Extension Requirement: Calculate Anything
-#       - Pint                      # Ulauncher Extension Requirement: Calculate Anything
-#       - pydbus                    # Ulauncher Extension Requirement: Bluetooth
-#       - pytz                      # Ulauncher Extension Requirement
-#       - simpleeval                # Ulauncher Extension Requirement: Calculate Anything
-#       - wrapt_timeout_decorator   # Ulauncher Extension Requirement: Bluetooth
-#       - cst-lsp                   # Zed editor Extension 'zed-python-refactoring'
+#     name: bs4
 #     extra_args: --user
-#   when:
-#     - ansible_distribution in ["Archlinux", "Ubuntu"]
-#     - env_lsb_id != "EndeavourOS"
+# funtioniert nicht: error: externally-managed-environment\n\n\C3\97 This environment is externally managed
+# TODO: virtual environment
+
+- name: Python - pip - install packages - misc - Ulauncher requirement
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.shell:
+    cmd: pip install --user bs4 lorem parsedatetime pydbus pytz simpleeval  # Ulauncher Extension Requirement
+    # installation über modul pip (oder pipx, da lib und keine app) hat nicht funktioniert
+
+
+# https://pipx.pypa.io/stable/installation/#on-linux
+- name: Python - pipx - config - ensurepath
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.shell:
+    cmd: pipx ensurepath 
+
+- name: Python - pipx - install packages - cst-lsp
+  become: true
+  become_user: "{{ env_user }}"
+  community.general.pipx:
+    state: present
+    name: cst-lsp     # Zed editor Extension 'zed-python-refactoring'
+
+- name: Python - pipx - install packages - deepl
+  become: true
+  become_user: "{{ env_user }}"
+  community.general.pipx:
+    state: present
+    name: deepl             # Ulauncher Extension Requirement DeepL Translator
+
+- name: Python - pipx - install packages - faker
+  become: true
+  become_user: "{{ env_user }}"
+  community.general.pipx:
+    state: present
+    name: faker             # Ulauncher Extension Requirement faker
+
+- name: Python - pipx - install packages - Pint
+  become: true
+  become_user: "{{ env_user }}"
+  community.general.pipx:
+    state: present
+    name: Pint     # Ulauncher Extension Requirement Calculate Anything
+
+- name: Python - pipx - install packages - wrapt_timeout_decorator 
+  become: true
+  become_user: "{{ env_user }}"
+  community.general.pipx:
+    state: present
+    name: wrapt_timeout_decorator      # Ulauncher Extension Requirement Bluetooth
