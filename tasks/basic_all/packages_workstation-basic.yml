@@ -177,10 +177,10 @@
       - tree-sitter-cli       # CLI tool for developing, testing, and using Tree-sitter parsers
       - ttf-dejavu
       - ttf-dejavu-nerd
-      - ttf-firacode-nerd
-      - ttf-jetbrains-mono-nerd
-      - ttf-sourcecodepro-nerd
-      - ttf-zed-mono-nerd     # Patched font Zed Mono from nerd fonts library
+      # - ttf-firacode-nerd       # ~ 40 MB Install Size
+      # - ttf-jetbrains-mono-nerd # ~200 MB Install Size
+      - ttf-sourcecodepro-nerd    # ~ 85 MB Install Size
+      # - ttf-zed-mono-nerd       # ~680 MB Install Size
       - ueberzug              # command line utility which draws images on terminals (in combi with X11?) (u.a. wg. nnn)
       - vim-ansible
       - viu                   # Simple terminal image viewer (u.a. wg. nnn)
@@ -251,8 +251,8 @@
       - sqlite3
       - ssh                             # bereits installiert (bootstrap)
       # - timeshift
-      - fonts-firacode
-      - fonts-jetbrains-mono
+      # - fonts-firacode
+      # - fonts-jetbrains-mono
       - ueberzug              # command line utility which draws images on terminals (in combi with X11?) (u.a. wg. nnn)
       - ufw                             # bereits installiert (bootstrap)
       - units                           # converts between different systems of units
