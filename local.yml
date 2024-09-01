@@ -107,7 +107,7 @@
       ansible.builtin.import_tasks: tasks/basic_all/config_all-users.yml
     # ----------------------------------------------------------
     # ### Mail:
-    # momentan nur lokaler Mailversand bei Start/Ende Scan + VirusEvent von ClamAV
+    # Nur lokaler Mailversand bei Start/Ende Scan + VirusEvent von ClamAV
     - name: Install packages for (local) mail
       ansible.builtin.import_tasks: tasks/basic_all/packages_all-mail.yml
     - name: Config postfix
@@ -120,7 +120,7 @@
     # ### Python
     - name: Python Env
       ansible.builtin.import_tasks: tasks/basic_all/packages_workstation-pythonEnv.yml
-    - name: Pip install
+    - name: Pip and Pipx install
       ansible.builtin.import_tasks: tasks/basic_all/packages_workstation-pythonPip.yml
     # ----------------------------------------------------------
     # ### cleanup:
