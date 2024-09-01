@@ -7,7 +7,7 @@
 # #####################################
 
 # ### ---
-# ### Info: siehe ggf. Fix für Gnome 44+
+# ### Info: siehe ggf. Fix f�r Gnome 44+
 # ### ---
 
 - name: Local packages install - install Certificates for Citrix Workspace App (ICA-Client) from Mozilla cert-folder + pem-convert (Ubuntu)
@@ -24,23 +24,6 @@
     msg: "TODO: download from 'https://www.citrix.com/downloads/workspace-app/linux/'"
   when:
     - ansible_distribution == "Ubuntu"
-
-# ### --------------------------------------------------
-# ### Archlinux/Manjaro: ins bootstrap-script aufenommen
-
-# - name: TODO - Local packages install - Download and install Citrix Workspace App (icaclient) from AUR (Arch)
-#  ansible.builtin.debug:
-#    msg: "TODO: Install from AUR: 'sudo pamac build --no-confirm icaclient'"
-#  when:
-#    - ansible_distribution == "Archlinux"
-
-# - name: Local packages install - Download and install Citrix Workspace App (icaclient) from AUR (Archlinux)
-#  ansible.builtin.shell:
-#    cmd: "sudo pamac build --no-confirm icaclient && touch /home/{{ env_user }}/.ansible_pamac-icaclientInstalled"
-#  args:
-#    creates: "/home/{{ env_user }}/.ansible_pamac-icaclientInstalled"
-#  when:
-#    - ansible_distribution == "Archlinux"
 
 
 # ######################
@@ -85,62 +68,36 @@
 # #########
 # ### Fonts
 # #########
+# * https://askubuntu.com/questions/1384501/installing-custom-fonts-on-ubuntu-server
+# * https://wiki.archlinux.org/title/Fonts#Manual_installation
+# * https://ostechnix.com/install-nerd-fonts-to-add-glyphs-in-your-code-on-linux/
+# Meslo Nerd Font patched for Powerlevel10k: 
+# * https://github.com/romkatv/powerlevel10k?tab=readme-ov-file#meslo-nerd-font-patched-for-powerlevel10k
+# (Nerd Fonts:)
+# * https://github.com/ryanoasis/nerd-fonts/raw/HEAD/patched-fonts
+#
+# * systemwide:    /usr/share/fonts/         # is under the purview of the package manager, and should not be modified manually
+# *         or:    /usr/local/share/fonts/
+# * user:          ~/.local/share/fonts/
 
 - name: Local packages install - create local font directory - systemwide (all)
-  # https://wiki.archlinux.org/title/Fonts#Manual_installation
-  # systemwide (all users): /usr/share/fonts/   # is under the purview of the package manager, and should not be modified manually
-  # systemwide (all users): /usr/local/share/fonts/
-  # for single user: ~/.local/share/fonts/
   ansible.builtin.file:
     path: /usr/local/share/fonts
     mode: '0755'
     state: directory
 
-# - name: Local packages install - Nerd Fonts - Meslo LG M Regular Complete Mono - systemwide (all)
-# # https://github.com/ryanoasis/nerd-fonts#option-6-ad-hoc-curl-download
-# # https://github.com/ryanoasis/nerd-fonts/releases
-# # https://ostechnix.com/install-nerd-fonts-to-add-glyphs-in-your-code-on-linux/
-# # https://askubuntu.com/questions/1384501/installing-custom-fonts-on-ubuntu-server
-# # install systemwide: /usr/share/fonts/ or /usr/local/share/fonts/
-# # install for user: ~/.local/share/fonts/
-#  ansible.builtin.uri:
-#    url: https://github.com/ryanoasis/nerd-fonts/raw/HEAD/patched-fonts/Melso/M/Regular/complete/Meslo%20LG%20M%20Regular%20Nerd%20Font%20Complete%20Mono.ttf 
-#    method: GET
-#    follow_redirects: safe
-#    # dest: "/usr/local/share/fonts/Meslo LG M Regular Nerd Font Complete Mono.ttf"
-#    dest: /usr/local/share/fonts/
-#    mode: '0644'
-#    creates: "/usr/local/share/fonts/Meslo LG M Regular Nerd Font Complete Mono.ttf"
-#  # register: result
-
-- name: Local packages install - Nerd Fonts - Meslo LG M Regular Complete MONO - systemwide (all)
-# https://github.com/ryanoasis/nerd-fonts#option-6-ad-hoc-curl-download
-# https://github.com/ryanoasis/nerd-fonts/releases
-# https://ostechnix.com/install-nerd-fonts-to-add-glyphs-in-your-code-on-linux/
-# https://askubuntu.com/questions/1384501/installing-custom-fonts-on-ubuntu-server
-# install systemwide: /usr/share/fonts/ or /usr/local/share/fonts/
-# install for user: ~/.local/share/fonts/
-  ansible.builtin.shell: sudo curl -fLo "Meslo LG M Regular Nerd Font Complete Mono.ttf" https://github.com/ryanoasis/nerd-fonts/raw/HEAD/patched-fonts/Meslo/M/Regular/MesloLGMNerdFontMono-Regular.ttf
-  args:
-    chdir: /usr/local/share/fonts/
-    creates: "/usr/local/share/fonts/Meslo LG M Regular Nerd Font Complete Mono.ttf"
-
-# - name: Local packages install - Nerd Fonts - Meslo LG M Regular Complete - systemwide (all)
-#  ansible.builtin.uri:
-#    url: https://github.com/ryanoasis/nerd-fonts/raw/HEAD/patched-fonts/Melso/M/Regular/complete/Meslo%20LG%20M%20Regular%20Nerd%20Font%20Complete.ttf
-#    method: GET
-#    follow_redirects: safe
-#    # dest: "/usr/local/share/fonts/Meslo LG M Regular Nerd Font Complete.ttf"
-#    dest: "/usr/local/share/fonts/fonts/Meslo LG M Regular Nerd Font Complete.ttf"
-#    mode: '0644'
-#    creates: "/usr/local/share/fonts/Meslo LG M Regular Nerd Font Complete.ttf"
-
-- name: Local packages install - Nerd Fonts - Meslo LG M Regular Complete - systemwide (all)
-  ansible.builtin.shell: sudo curl -fLo "Meslo LG M Regular Nerd Font Complete.ttf" https://github.com/ryanoasis/nerd-fonts/raw/HEAD/patched-fonts/Meslo/M/Regular/MesloLGMNerdFont-Regular.ttf
-  args:
-    chdir: /usr/local/share/fonts
-    creates: "/usr/local/share/fonts/Meslo LG M Regular Nerd Font Complete.ttf"
-
+- name: Local packages install - Nerd Fonts - powerlevel10k - MesloLGS NF - systemwide (all)
+  ansible.builtin.uri:
+    url: "{{ item }}"
+    method: GET
+    follow_redirects: safe
+    dest: /usr/local/share/fonts/
+    mode: '0644'
+  loop:
+    - https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Regular.ttf
+    - https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold.ttf
+    - https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Italic.ttf
+    - https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold%20Italic.ttf
 
 - name: Local packages install - Fonts - Build font information cache files for apps using fontconfig (all)
   ansible.builtin.shell: fc-cache -f
@@ -189,7 +146,7 @@
 # ###############################
 # ### zsh plugins - from git repo
 # ###############################
-# Anm.: bei Archlinux über paket, bei Manjaro schon von werk aus vorhanden
+# Anm.: bei Archlinux �ber paket, bei Manjaro schon von werk aus vorhanden
 
 - name: Local packages install - install zsh plugin - zsh-autosuggestions (Ubuntu)
   ansible.builtin.git:

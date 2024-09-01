@@ -613,8 +613,8 @@ case ${os} in
             echo -e "\nInstall some Gnome Extensions (gsconnect, dash-to-panel) from AUR ..."
             yay -S --needed gnome-shell-extension-gsconnect
 
-            echo -e "\nInstall several Packages (bashdb, gtkhash, ttf-meslo-nerd-font (10k), units) from AUR..."
-            yay -S --needed bashdb gtkhash ttf-meslo-nerd-font-powerlevel10k units
+            echo -e "\nInstall several Packages (bashdb, gtkhash, units) from AUR..."
+            yay -S --needed bashdb gtkhash units
 
             #echo -e "\nInstall several Applications (Vorta) from AUR..."
             #yay -S --needed vorta joplin-desktop   # -> flatpak
