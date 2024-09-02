@@ -146,6 +146,7 @@
       - python-flake8-docstrings # Plugin to flake8 to include checks provided by pydocstyle
       - python-flake8-isort   # Flake8 plugin to validate annotations complexity
       - python-isort          # A Python utility / library to sort Python imports
+      - python-jedi           # Awesome autocompletion for python
       - python-pip            # The PyPA recommended tool for installing Python packages
       - python-pipenv         # Sacred Marriage of Pipfile, Pip, & Virtualenv
       - python-pipx           # Install and Run Python Applications in Isolated Environments
@@ -159,6 +160,8 @@
       # - python-pytest-flake8  # nicht mehr in repo # pytest plugin to check FLAKE8 requirements
       # - python-pytest-pylint  # nicht mehr in repo # pytest plugin to check source code with pylint
       - python-setuptools     # Easily download, build, install, upgrade, and uninstall Python packages
+      - python-virtualenv     # Virtual Python Environment builder
+      - python-virtualenvwrapper # Extensions to Ian Bicking's virtualenv tool
       - qt6-wayland           # 10/2023: for 'obs-studio' to work install 'qt6-wayland'
       - remmina
       - signal-desktop
@@ -176,6 +179,7 @@
       # - ttf-zed-mono-nerd       # ~680 MB Install Size
       - ueberzug              # command line utility which draws images on terminals (in combi with X11?) (u.a. wg. nnn)
       - vim-ansible
+      - vim-jedi              # Vim plugin for jedi, an awesome Python autocompletion
       - viu                   # Simple terminal image viewer (u.a. wg. nnn)
       - wireguard-tools
       - zed                           # A high-performance, multiplayer code editor from the creators of Atom and Tree-sitter
@@ -226,6 +230,7 @@
       - pipx                            # execute binaries from Python packages in isolated environments
       - python3
       - python3-debugpy
+      - python3-jedi                    # autocompletion tool for Python 3
       - python3-pip
       - python3-psutil
       - python3-pyinotify
@@ -242,6 +247,7 @@
       - ufw                             # bereits installiert (bootstrap)
       - units                           # converts between different systems of units
       - vorta                           # Desktop Client for Borg Backup
+      - vim-python-jedi                 # autocompletion tool for Python - VIM addon files
       # - wmctrl                        # autokey dependancy # sollte bereits installiert sein
                                         # Command line tool to interact with an EWMH/NetWM compatible X Window Manager
       - wireguard

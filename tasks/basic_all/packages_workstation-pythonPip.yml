@@ -37,22 +37,6 @@
     modification_time: preserve
     mode: u=rw,g=r,o=r
 
-# - name: Python - pip - install packages - bs4
-#   become: true
-#   become_user: "{{ env_user }}"
-#   ansible.builtin.pip:
-#     name: bs4
-#     extra_args: --user
-# funtioniert nicht: error: externally-managed-environment\n\n\C3\97 This environment is externally managed
-# TODO: virtual environment
-
-- name: Python - pip - install packages - misc - Ulauncher requirement
-  become: true
-  become_user: "{{ env_user }}"
-  ansible.builtin.shell:
-    cmd: pip install --user bs4 lorem parsedatetime pydbus pytz simpleeval  # Ulauncher Extension Requirement
-    # installation über modul pip (oder pipx, da lib und keine app) hat nicht funktioniert
-
 
 # https://pipx.pypa.io/stable/installation/#on-linux
 - name: Python - pipx - config - ensurepath
@@ -61,7 +45,7 @@
   ansible.builtin.shell:
     cmd: pipx ensurepath 
 
-- name: Python - pipx - install packages
+- name: Python - pipx - install apps
   become: true
   become_user: "{{ env_user }}"
   community.general.pipx:
@@ -71,5 +55,41 @@
     - cst-lsp                   # Zed editor Extension 'zed-python-refactoring'
     - deepl                     # Ulauncher Extension Requirement DeepL Translator
     - faker                     # Ulauncher Extension Requirement faker
+    - jedi-language-server      # jedi: autocompletion for python
     - Pint                      # Ulauncher Extension Requirement Calculate Anything
+    - python-lsp-server[all]    # Zed editor Extension 'Python LSP' (# Zed editor Extension 'zed-python-refactoring')
+    - virtualenv                # A tool for creating isolated virtual python environments.
     - wrapt_timeout_decorator   # Ulauncher Extension Requirement Bluetooth
+
+# - name: Python - pip - install packages - bs4
+#   become: true
+#   become_user: "{{ env_user }}"
+#   ansible.builtin.pip:
+#     name: bs4
+#     extra_args: --user
+# funtioniert nicht: error: externally-managed-environment\n\n\C3\97 This environment is externally managed
+# TODO: virtual environment
+
+
+- name: Python - pip - install libs - misc - Ulauncher requirement
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.shell:
+    cmd: pip install --user bs4 lorem parsedatetime pydbus pytz simpleeval
+    # installation über modul pip hat nicht funktioniert
+
+# https://github.com/pyenv/pyenv-virtualenv?tab=readme-ov-file#installing-as-a-pyenv-plugin
+- name: Python - git clone - install pyenv-virtualenv as pyenv plugin
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.git:
+    repo: https://github.com/pyenv/pyenv-virtualenv.git
+    dest: "home/{{ evn_user}}/.pyenv/plugins/pyenv-virtualenv"  # $(pyenv root)/plugins/pyenv-virtualenv
+    clone: true
+    update: true
+
+- name: Python - pip - install libs - virtualenv-pyenv
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.shell:
+    cmd: pip install --user virtualenv-pyenv # virtualenvwrapper
