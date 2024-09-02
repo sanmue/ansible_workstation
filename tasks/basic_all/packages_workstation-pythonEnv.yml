@@ -94,3 +94,13 @@
   ansible.builtin.shell: "touch /home/{{ env_user }}/.ansible_PythonEnv"
   args:
     creates: "/home/{{ env_user }}/.ansible_PythonEnv"
+
+# https://github.com/pyenv/pyenv-virtualenv?tab=readme-ov-file#installing-as-a-pyenv-plugin
+- name: Python Environment - pyenv - install pyenv-virtualenv as pyenv plugin
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.git:
+    repo: https://github.com/pyenv/pyenv-virtualenv.git
+    dest: "home/{{ evn_user}}/.pyenv/plugins/pyenv-virtualenv"  # $(pyenv root)/plugins/pyenv-virtualenv
+    clone: true
+    update: true

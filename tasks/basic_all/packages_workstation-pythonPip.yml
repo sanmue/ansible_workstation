@@ -52,6 +52,7 @@
     - virtualenv                # A tool for creating isolated virtual python environments.
     - wrapt_timeout_decorator   # Ulauncher Extension Requirement Bluetooth
 
+
 # - name: Python - pip - install packages - bs4
 #   become: true
 #   become_user: "{{ env_user }}"
@@ -60,7 +61,6 @@
 #     extra_args: --user
 # funtioniert nicht: error: externally-managed-environment\n\n\C3\97 This environment is externally managed
 # TODO: virtual environment
-
 
 - name: Python - pip - install libs - misc - Ulauncher requirement
   become: true
@@ -87,14 +87,3 @@
     state: touch
     modification_time: preserve
     mode: u=rw,g=r,o=r
-
-
-# https://github.com/pyenv/pyenv-virtualenv?tab=readme-ov-file#installing-as-a-pyenv-plugin
-- name: Python - git clone - install pyenv-virtualenv as pyenv plugin
-  become: true
-  become_user: "{{ env_user }}"
-  ansible.builtin.git:
-    repo: https://github.com/pyenv/pyenv-virtualenv.git
-    dest: "home/{{ evn_user}}/.pyenv/plugins/pyenv-virtualenv"  # $(pyenv root)/plugins/pyenv-virtualenv
-    clone: true
-    update: true
