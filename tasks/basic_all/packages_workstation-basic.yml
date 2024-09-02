@@ -6,14 +6,14 @@
   ansible.builtin.package:
     state: present
     name:
-      - ansible-core          # Radically simple IT automation platform      # bereits installiert (bootstrap)
-      - ansible               # Official assortment of Ansible collections   # bereits installiert (bootstrap)
-      - ansible-lint          # für z.B. ansible extension in VS Code
+      - ansible-core # Radically simple IT automation platform      # bereits installiert (bootstrap)
+      - ansible # Official assortment of Ansible collections   # bereits installiert (bootstrap)
+      - ansible-lint # für z.B. ansible extension in VS Code
       - bash
-      - bat                   # Cat clone with syntax highlighting and git integration (u.a. wg. nnn)
+      - bat # Cat clone with syntax highlighting and git integration (u.a. wg. nnn)
       - bleachbit
-      - catimg                # Print images in a terminal with 256 colors support (u.a. wg. nnn)
-      - chafa                 # Image-to-text converter for terminal (u.a. wg. nnn)
+      - catimg # Print images in a terminal with 256 colors support (u.a. wg. nnn)
+      - chafa # Image-to-text converter for terminal (u.a. wg. nnn)
       - clamav
       - clamtk
       # - cockpit               # A systemd web based user interface for Linux servers # vorerst Weiternutzung "Virtual Machine Manager"
@@ -22,100 +22,100 @@
       # - cockpit-machines      # Cockpit UI for virtual machines
       # - cockpit-podman      # Cockpit UI for podman containers
       # - cockpit-pcp           # Cockpit support for reading PCP metrics and loading PCP archives
-      - cryptsetup            # benötigt für LUKS # sollte schon installiert sein
+      - cryptsetup # benötigt für LUKS # sollte schon installiert sein
       - cups
       - curl
       # - deja-dup            # aktuell genutzt: Vorta+borg # A trivial-to-use personal backup tool to protect against accidental data loss
       - dmidecode
-      - duf                   # Disk Usage/Free Utility
+      - duf # Disk Usage/Free Utility
       - efivar
       - evolution
-      - eza                   # A modern replacement for ls (community fork of exa)
+      - eza # A modern replacement for ls (community fork of exa)
       - flatpak
       - font-manager
-      - fzf                   # Command-line fuzzy finder (u.a. wg. nnn)
+      - fzf # Command-line fuzzy finder (u.a. wg. nnn)
       - gcc
       - gimp
       # - gimp-help-en
-      - git                   # bereits installiert (bootstrap)
+      - git # bereits installiert (bootstrap)
       - gpick
       - grsync
-      - hplip                 # Drivers for HP DeskJet, OfficeJet, Photosmart, Business Inkjet and some LaserJet
+      - hplip # Drivers for HP DeskJet, OfficeJet, Photosmart, Business Inkjet and some LaserJet
       - htop
       - hunspell
-      - imv                   # Image viewer for Wayland and X11 (u.a. wg. nnn)
-      - inotify-tools         # benötigt von 'grub-btrfsd.service' # command-line programs providing a simple interface to inotify
+      - imv # Image viewer for Wayland and X11 (u.a. wg. nnn)
+      - inotify-tools # benötigt von 'grub-btrfsd.service' # command-line programs providing a simple interface to inotify
       - inxi
-      - jq                    # Command-line JSON processor
+      - jq # Command-line JSON processor
       - keepassxc
-      - kitty                 # gpu beschleunigtes terminal
-      - libfaketime           # Report fake dates and times to programs without having to change the system-wide time.
-      - lowdown               # A simple Markdown translator (u.a. wg. nnn)
+      - kitty # gpu beschleunigtes terminal
+      - libfaketime # Report fake dates and times to programs without having to change the system-wide time.
+      - lowdown # A simple Markdown translator (u.a. wg. nnn)
       - lsb-release
       - make
       # - man-pages-de
-      - moreutils             # additional Unix utilities - parallel command; enthält z.B. vidir (u.a. wg. nnn)
-      - nnn                   # Free, fast, friendly terminal file manager
-      - rclone                # sync tool
-      - rsync                 # bereits installiert (bootstrap)
+      - moreutils # additional Unix utilities - parallel command; enthält z.B. vidir (u.a. wg. nnn)
+      - nnn # Free, fast, friendly terminal file manager
+      - rclone # sync tool
+      - rsync # bereits installiert (bootstrap)
       # - samba               # z.B. für VM: File sharing between host and Windows guest; https://wiki.manjaro.org/index.php/Virt-manager/en
-      - shellcheck            # Shell script analysis tool (u.a. Verwendet in Extension/Plugin vim, (VS)Code, Zed)
-      - shfmt                 # Format shell programs # also uses by VS Code / Code OSS Extension "shell-format", Zed bzw. bash-language-server
+      - shellcheck # Shell script analysis tool (u.a. Verwendet in Extension/Plugin vim, (VS)Code, Zed)
+      - shfmt # Format shell programs # also uses by VS Code / Code OSS Extension "shell-format", Zed bzw. bash-language-server
       # - skanlite            # bei KDE Plasma Desktop
       - speedtest-cli
-      - sqlitebrowser         # + s.u.: Arch: sqlite; debian: sqlite3
+      - sqlitebrowser # + s.u.: Arch: sqlite; debian: sqlite3
       - steam
       - syncthing
       # - terminator          # Terminal emulator that supports tabs and grids
-      - tk                    # Graphical User Interface Toolkit for Tcl   # z.B. pyenv install 3.11.3: requirement
+      - tk # Graphical User Interface Toolkit for Tcl   # z.B. pyenv install 3.11.3: requirement
       - tmux
-      - trash-cli             # Command line trashcan (recycle bin) interface
+      - trash-cli # Command line trashcan (recycle bin) interface
       - unzip
-      - vim                   # bereits installiert (bootstrap)
-      - vim-ale               # Lint Engine (plugin for vim)
+      - vim # bereits installiert (bootstrap)
+      - vim-ale # Lint Engine (plugin for vim)
       - vlc
-      - w3m                   # Text-based Web browser as well as pager (u.a. wg. nnn)
+      - w3m # Text-based Web browser as well as pager (u.a. wg. nnn)
       - wget
       - xdg-utils
-      - yq                    # Command-line YAML, XML, TOML processor - jq wrapper for YAML/XML/TOML documents
-      - xterm                 # (u.a. wg. nnn)
-      - zoxide                # A smarter cd command for your terminal (u.a. wg. nnn)
+      - yq # Command-line YAML, XML, TOML processor - jq wrapper for YAML/XML/TOML documents
+      - xterm # (u.a. wg. nnn)
+      - zoxide # A smarter cd command for your terminal (u.a. wg. nnn)
       - zsh
       # ---------
       # firmware:
       - fwupd
-
 
 - name: Install basic packages (Archlinux)
   ansible.builtin.package:
     state: present
     name:
       - archlinux-keyring
-      - base-devel            # insbes. wg. AUR Paketen   # bereits installiert (bootstrap)
-      - bashdb                # A debugger for Bash scripts loosely modeled on the gdb command syntax
-      - bash-language-server  # benötigt von Zed editor Extension (Bash for Zed)
-      - borg                  # Deduplicating backup program with compression and authenticated encryption # GUI: vorta -> via yay in bootstrap.sh
+      - base-devel # insbes. wg. AUR Paketen   # bereits installiert (bootstrap)
+      - bashdb # A debugger for Bash scripts loosely modeled on the gdb command syntax
+      - bash-language-server # benötigt von Zed editor Extension (Bash for Zed)
+      - borg # Deduplicating backup program with compression and authenticated encryption # GUI: vorta -> via yay in bootstrap.sh
       - chromium
-      - cronie                # z.B. für clamtk + timeshift # Daemon that runs specified programs at scheduled times and related tools
-      - code                  # The Open Source build of Visual Studio Code (vscode) editor
+      - cronie # z.B. für clamtk + timeshift # Daemon that runs specified programs at scheduled times and related tools
+      - code # The Open Source build of Visual Studio Code (vscode) editor
       - cups-pdf
       - discord
-      - eslint                # An AST-based pattern checker for JavaScript (für VS Code / Code - OSS Extension)
+      - enchant # A wrapper library for generic spell checking
+      - eslint # An AST-based pattern checker for JavaScript (für VS Code / Code - OSS Extension)
       - evolution-bogofilter
-      - evolution-ews         # MS Exchange integration through Exchange Web Services
+      - evolution-ews # MS Exchange integration through Exchange Web Services
       - evolution-spamassassin
       # - evolution-on        # Tray plugin for the Evolution email client
       # - exfat-utils         # exfat-utils and exfatprogs are in conflict
-      - fd                    # Simple, fast and user-friendly alternative to find
+      - fd # Simple, fast and user-friendly alternative to find
       - fastfetch
       - firefox
       - firefox-i18n-en-us
-      - flake8                # The modular source code checker: pep8, pyflakes and co
-      - firewalld           # ggf. bereits installiert (bootstrap)
-      - foliate               # A simple and modern GTK eBook reader
-      - freerdp               # u.a. für Remmina
+      - flake8 # The modular source code checker: pep8, pyflakes and co
+      - firewalld # ggf. bereits installiert (bootstrap)
+      - foliate # A simple and modern GTK eBook reader
+      - freerdp # u.a. für Remmina
       - github-cli
-      - glow                  # Command-line markdown renderer 
+      - glow # Command-line markdown renderer
       - gnupg
       - gpgme
       - hunspell-de
@@ -123,74 +123,72 @@
       # - ipset
       - kdeconnect
       - ksnip
-      - libnotify             # Library for sending desktop notifications
+      - libnotify # Library for sending desktop notifications
       - libreoffice-still
       # - libreoffice-still-de
       - libreoffice-still-en-gb
       - lshw
-      - malcontent            # Parental control support for applications
+      - malcontent # Parental control support for applications
       - nextcloud-client
-      - obs-studio            # 10/2023: for 'obs-studio' to work install 'qt6-wayland' (see further below)
-      - openssh               # bereits installiert (bootstrap)
+      - obs-studio # 10/2023: for 'obs-studio' to work install 'qt6-wayland' (see further below)
+      - openssh # bereits installiert (bootstrap)
       - packagekit
-      - pacman-contrib        # Contributed scripts and tools for pacman systems # e.g. for pacman-filesdb-refresh.timer, paccache.timer
-      - pkgfile               # sollte bereits installiert sein (mit 'pacman') # tool for searching files from packages in the official repositories
-      - poppler               # PDF rendering library based on xpdf 3.0 (u.a. wg. nnn)
-      - psutils               # A set of postscript utilities
-      - pyenv                 # Easily switch between multiple versions of Python
-      - pyright               # Type checker for the Python language # Zed Editor mit Ext zed-python-refactoring (+ pip install cst-lsp)
+      - pacman-contrib # Contributed scripts and tools for pacman systems # e.g. for pacman-filesdb-refresh.timer, paccache.timer
+      - pkgfile # sollte bereits installiert sein (mit 'pacman') # tool for searching files from packages in the official repositories
+      - poppler # PDF rendering library based on xpdf 3.0 (u.a. wg. nnn)
+      - psutils # A set of postscript utilities
+      - pyenv # Easily switch between multiple versions of Python
+      # - pyright # Type checker for the Python language # Zed Editor mit Ext zed-python-refactoring (+ pip install cst-lsp)
       - python
-      - python-black          # Uncompromising Python code formatter
-      - python-debugpy        # An implementation of the Debug Adapter Protocol for Python
-      - python-flake8-black   # Flake8 plugin to call black as a code style validator
-      - python-flake8-docstrings # Plugin to flake8 to include checks provided by pydocstyle
-      - python-flake8-isort   # Flake8 plugin to validate annotations complexity
-      - python-isort          # A Python utility / library to sort Python imports
-      - python-jedi           # Awesome autocompletion for python
-      - python-pip            # The PyPA recommended tool for installing Python packages
-      - python-pipenv         # Sacred Marriage of Pipfile, Pip, & Virtualenv
-      - python-pipx           # Install and Run Python Applications in Isolated Environments
-      - python-poetry         # Python dependency management and packaging made easy
-      - python-psutil         # A cross-platform process and system utilities module for Python
-      - python-pyarrow        # will become necessary dependency for Pandas
-      - python-pydocstyle     # Docstring style checker
-      - python-pylint         # Analyzes Python code looking for bugs and signs of poor quality
-      - python-pylint-venv    # Make pylint respect virtualenvs
-      - python-pytest         # Simple powerful testing with Python
-      # - python-pytest-flake8  # nicht mehr in repo # pytest plugin to check FLAKE8 requirements
-      # - python-pytest-pylint  # nicht mehr in repo # pytest plugin to check source code with pylint
-      - python-setuptools     # Easily download, build, install, upgrade, and uninstall Python packages
-      - python-virtualenv     # Virtual Python Environment builder
-      - python-virtualenvwrapper # Extensions to Ian Bicking's virtualenv tool
-      - qt6-wayland           # 10/2023: for 'obs-studio' to work install 'qt6-wayland'
+      # - python-black # Uncompromising Python code formatter
+      # - python-debugpy # An implementation of the Debug Adapter Protocol for Python
+      # - python-flake8-black # Flake8 plugin to call black as a code style validator
+      # - python-flake8-docstrings # Plugin to flake8 to include checks provided by pydocstyle
+      # - python-flake8-isort # Flake8 plugin to validate annotations complexity
+      # - python-isort # A Python utility / library to sort Python imports
+      # - python-jedi # Awesome autocompletion for python
+      # - python-lsp-server # Fork of the python-language-server project, maintained by the Spyder IDE team and the community
+      # - python-lsp-black # python-lsp-server plugin that adds support to black autoformatter, forked from pyls-black
+      - python-pip # The PyPA recommended tool for installing Python packages
+      # - python-pipenv # Sacred Marriage of Pipfile, Pip, & Virtualenv
+      - python-pipx # Install and Run Python Applications in Isolated Environments
+      # - python-poetry # Python dependency management and packaging made easy
+      # - python-psutil # A cross-platform process and system utilities module for Python
+      # - python-pyarrow # will become necessary dependency for Pandas
+      # - python-pylint # Analyzes Python code looking for bugs and signs of poor quality
+      # - python-pylint-venv # Make pylint respect virtualenvs
+      # - python-pytest # Simple powerful testing with Python
+      # - python-setuptools # Easily download, build, install, upgrade, and uninstall Python packages
+      # - python-virtualenv # Virtual Python Environment builder
+      # - python-virtualenvwrapper # Extensions to Ian Bicking's virtualenv tool
+      - qt6-wayland # 10/2023: for 'obs-studio' to work install 'qt6-wayland'
       - remmina
       - signal-desktop
-      - sqlite                # A C library that implements an SQL database engine
-      - steam-native-runtime  # Native replacement for the Steam runtime using system libraries (installiert benötigte 32bit libs)
+      - sqlite # A C library that implements an SQL database engine
+      - steam-native-runtime # Native replacement for the Steam runtime using system libraries (installiert benötigte 32bit libs)
       - torbrowser-launcher
-      - tree-sitter           # Incremental parsing library
-      - tree-sitter-bash      # Bash grammar for tree-sitter # benötigt von Zed editor Extension (Bash for Zed)
-      - tree-sitter-cli       # CLI tool for developing, testing, and using Tree-sitter parsers
+      - tree-sitter # Incremental parsing library
+      - tree-sitter-bash # Bash grammar for tree-sitter # benötigt von Zed editor Extension (Bash for Zed)
+      - tree-sitter-cli # CLI tool for developing, testing, and using Tree-sitter parsers
       - ttf-dejavu
       - ttf-dejavu-nerd
-      # - ttf-firacode-nerd       # ~ 40 MB Install Size
+      # - ttf-firacode-nerd # ~ 40 MB Install Size
       # - ttf-jetbrains-mono-nerd # ~200 MB Install Size
-      - ttf-sourcecodepro-nerd    # ~ 85 MB Install Size
-      # - ttf-zed-mono-nerd       # ~680 MB Install Size
-      - ueberzug              # command line utility which draws images on terminals (in combi with X11?) (u.a. wg. nnn)
+      - ttf-sourcecodepro-nerd # ~ 85 MB Install Size
+      # - ttf-zed-mono-nerd # ~680 MB Install Size
+      - ueberzug # command line utility which draws images on terminals (in combi with X11?) (u.a. wg. nnn)
       - vim-ansible
-      - vim-jedi              # Vim plugin for jedi, an awesome Python autocompletion
-      - viu                   # Simple terminal image viewer (u.a. wg. nnn)
+      - vim-jedi # Vim plugin for jedi, an awesome Python autocompletion
+      - viu # Simple terminal image viewer (u.a. wg. nnn)
       - wireguard-tools
-      - zed                           # A high-performance, multiplayer code editor from the creators of Atom and Tree-sitter
-      - zsh-autosuggestions           # besser: install from git?
-      # - # zsh-completions             # besser: install from git?
-      - zsh-syntax-highlighting       # besser: install from git?
-      - zsh-history-substring-search  # besser: install from git?
-      # # - zshdb                     # A debugger for zsh scripts
+      - zed # A high-performance, multiplayer code editor from the creators of Atom and Tree-sitter
+      - zsh-autosuggestions # besser: install from git?
+      # - # zsh-completions # besser: install from git?
+      - zsh-syntax-highlighting # besser: install from git?
+      - zsh-history-substring-search # besser: install from git?
+      # # - zshdb # A debugger for zsh scripts
       # ---------
       # firmware:
-      # - alsa-firmware               # unresolvable package conflicts detected
       - linux-firmware
       - sof-firmware
   when: ansible_distribution in ["Archlinux"]
@@ -200,37 +198,37 @@
     state: present
     name:
       - anki
-      - borgbackup                      # Deduplicating backup program with compression and authenticated encryption
+      - borgbackup # Deduplicating backup program with compression and authenticated encryption
       - clamav-daemon
       # - cockpit-networkmanager          # Cockpit user interface for networking
-      - eslint                          # An AST-based pattern checker for JavaScript (für VS Code / Code - OSS Extension)
+      - eslint # An AST-based pattern checker for JavaScript (für VS Code / Code - OSS Extension)
       - evolution-plugin-bogofilter
       - evolution-plugin-pstimport
       - evolution-plugin-spamassassin
       - evolution-plugins
       - exfat-fuse
-      - fd-find                         # Simple, fast and user-friendly alternative to find
+      - fd-find # Simple, fast and user-friendly alternative to find
       # - firefox                       # -> in Standard-Inst bereits vorhanden (ab 22.04: als snap package)
       # - firefox-locale-de
       # - firefox-locale-en
-      - gh                              # GitHub CLI, GitHub\u2019s official command line tool
+      - gh # GitHub CLI, GitHub\u2019s official command line tool
       - gitk
       - gpg
-      - gufw                            # gui for ufw
+      - gufw # gui for ufw
       - hunspell-de-de
       - hunspell-en-us
       - kdeconnect
-      - libidn11-dev                    # benötigt für Citrix Workspace app (ica client)
-      - libnotify-bin                   # sollte schon installiert sein
+      - libidn11-dev # benötigt für Citrix Workspace app (ica client)
+      - libnotify-bin # sollte schon installiert sein
       - neofetch
       - openssh-client
-      - packagekit                      # sollte bereits installiert sein # notwendig u.a. für cockpit
-      - poppler-utils                   # PDF utilities (based on Poppler) (u.a. wg. nnn)
+      - packagekit # sollte bereits installiert sein # notwendig u.a. für cockpit
+      - poppler-utils # PDF utilities (based on Poppler) (u.a. wg. nnn)
       - printer-driver-cups-pdf
-      - pipx                            # execute binaries from Python packages in isolated environments
+      - pipx # execute binaries from Python packages in isolated environments
       - python3
       - python3-debugpy
-      - python3-jedi                    # autocompletion tool for Python 3
+      - python3-jedi # autocompletion tool for Python 3
       - python3-pip
       - python3-psutil
       - python3-pyinotify
@@ -239,17 +237,17 @@
       - python3-pytest-pylint
       - python3-setuptools
       - sqlite3
-      - ssh                             # bereits installiert (bootstrap)
+      - ssh # bereits installiert (bootstrap)
       # - timeshift
       # - fonts-firacode
       # - fonts-jetbrains-mono
-      - ueberzug              # command line utility which draws images on terminals (in combi with X11?) (u.a. wg. nnn)
-      - ufw                             # bereits installiert (bootstrap)
-      - units                           # converts between different systems of units
-      - vorta                           # Desktop Client for Borg Backup
-      - vim-python-jedi                 # autocompletion tool for Python - VIM addon files
+      - ueberzug # command line utility which draws images on terminals (in combi with X11?) (u.a. wg. nnn)
+      - ufw # bereits installiert (bootstrap)
+      - units # converts between different systems of units
+      - vorta # Desktop Client for Borg Backup
+      - vim-python-jedi # autocompletion tool for Python - VIM addon files
       # - wmctrl                        # autokey dependancy # sollte bereits installiert sein
-                                        # Command line tool to interact with an EWMH/NetWM compatible X Window Manager
+      # Command line tool to interact with an EWMH/NetWM compatible X Window Manager
       - wireguard
       # Multimedia; entspechend libs sollten bereits installiert sein (wenn im Installer ausgewählt wurde)
       # - ffmpeg
@@ -313,7 +311,7 @@
   ansible.builtin.package:
     state: present
     name:
-      - xclip                               # Command line interface to the X11 clipboard # Voraussetzung für snap-package "espanso"
+      - xclip # Command line interface to the X11 clipboard # Voraussetzung für snap-package "espanso"
   when:
     - env_displayserver == "x11"
 
@@ -333,7 +331,7 @@
   ansible.builtin.script:
     cmd: "/home/{{ env_user }}/Downloads/pyenv-installer.sh"
   args:
-    creates: "/home/{{ env_user }}/.pyenv"   # Run only if '.pyenv'-directory does NOT exist (from previous run)
+    creates: "/home/{{ env_user }}/.pyenv" # Run only if '.pyenv'-directory does NOT exist (from previous run)
   when:
     - ansible_distribution == "Ubuntu"
     - pyenvskript.stat.exists == true

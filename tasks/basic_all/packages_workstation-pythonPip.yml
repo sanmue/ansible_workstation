@@ -13,7 +13,9 @@
 # - https://stackoverflow.com/questions/75608323/how-do-i-solve-error-externally-managed-environment-everytime-i-use-pip3
 # - https://stackoverflow.com/questions/75602063/pip-install-r-requirements-txt-is-failing-this-environment-is-externally-manag/75696359#75696359
 # - https://peps.python.org/pep-0668/#mark-the-installation-as-externally-managed
-
+#
+# pipx: jupyter
+# - # jupyter: https://samedwardes.com/blog/2022-10-23-best-jupyter-lab-install/
 
 - name: Python - pip - Info zu möglicher Fehlermeldung (env_user, all)
   become: true
@@ -28,15 +30,7 @@
   args:
     creates: "/home/{{ env_user }}/.ansible_PythonPip"
 
-
-# https://pipx.pypa.io/stable/installation/#on-linux
-- name: Python - pipx - config - ensurepath
-  become: true
-  become_user: "{{ env_user }}"
-  ansible.builtin.shell:
-    cmd: pipx ensurepath 
-
-- name: Python - pipx - install apps
+- name: Python - pipx - install apps - with dependencies (all)
   become: true
   become_user: "{{ env_user }}"
   community.general.pipx:
@@ -44,39 +38,115 @@
     name: "{{ item }}"
     install_deps: true
   loop:
-    # - cst-lsp                   # Zed editor Extension 'zed-python-refactoring' # -> pip
-    - deepl                     # Ulauncher Extension Requirement DeepL Translator
-    - faker                     # Ulauncher Extension Requirement faker
-    # - jedi-language-server      # jedi: autocompletion for python # -> pip
-    - Pint                      # Ulauncher Extension Requirement Calculate Anything
-    # - python-lsp-server[all]    # Zed editor Extension 'Python LSP' (# Zed editor Extension 'zed-python-refactoring')  # -> pip
-    # - virtualenv                # A tool for creating isolated virtual python environments.  # -> pip
-    - wrapt_timeout_decorator   # Ulauncher Extension Requirement Bluetooth
+    #    - cst-lsp # -> pip # Zed editor Extension 'zed-python-refactoring'
+    #    - deepl # Ulauncher Extension Requirement DeepL Translator # einzige dependency 'normalizer' wird (auch) bei 'jupyter' installiert; pipx list: daher bei 'jupyter': (symlink missing or pointing to unexpected location)
+    #      -> deepl ohne deps installieren (s.u.)
+    - faker # Ulauncher Extension Requirement faker
+    - jedi-language-server # autocompletion for python (Anmerkung: 'jedi' installed via pip)
+    - jupyter # Jupyter metapackage: notebook jupyterlab ipython ipykernel jupyter-console nbconvert ipywidgets
+    - Pint # Ulauncher Extension Requirement Calculate Anything
+    #    - python-lsp-server[all] # -> pip # Zed editor Extension 'Python LSP' # Zed editor Extension 'zed-python-refactoring')
+    #    - virtualenv # A tool for creating isolated virtual python environments.
+    #      (symlink missing or pointing to unexpected location) -> 2nd install as dependency of virtualenv-pyenv
+    - virtualenv-pyenv # A virtualenv Python discovery plugin for pyenv–installed interpreters
+    - wrapt_timeout_decorator # Ulauncher Extension Requirement Bluetooth
 
-- name: Python - pip - install libs - misc
+- name: Python - pipx - install apps - without dependencies (all)
+  become: true
+  become_user: "{{ env_user }}"
+  community.general.pipx:
+    state: present
+    name: "{{ item }}"
+    install_deps: false
+  loop:
+    - deepl # Ulauncher Extension Requirement DeepL Translator
+
+# https://pipx.pypa.io/stable/installation/#on-linux
+- name: Python - pipx - config - ensurepath (all)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell:
-    cmd: pip install --user black cst-lsp flake8 jedi-language-server jupyter "python-lsp-server[all]" virtualenv virtualenv-pyenv # virtualenvwrapper
+    cmd: pipx ensurepath
+
+- name: Python - pip - shell install libs - setuptools (all)
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.shell:
+    cmd: pip install --user setuptools
   args:
     creates: "/home/{{ env_user }}/.ansible_PythonPip"
 
-# - name: Python - pip - install packages - bs4
+- name: Python - pip - register pyenv version-name (all)
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.shell: pyenv version-name
+  register: pyenvversionname
+  ignore_errors: true
+
+# Voraussetzung für ansible.builtin.pip - Modul: pip, virtualenv, setuptools or packaging
+- name: Python - pip - install packages via ansible builtin pip - python dev (all)
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.pip:
+    name: "{{ item }}"
+    extra_args: --user
+    virtualenv_command: "pyenv virtualenv"
+    virtualenv: "/home/{{ env_user }}/.pyenv/versions/{{ pyenvversionname.stdout }}"
+  loop:
+    - beautifulsoup4
+    - black
+    - build
+    - cst-lsp
+    - debugpy
+    - flake8
+    - html5lib
+    - isort
+    - jedi
+    - lxml
+    - pandas[excel, html, sql-other, mysql, output-formatting, performance, plot, xml]
+    - pipenv
+    - psutil
+    - pyarrow
+    - pylint
+    - pylint-venv
+    - pyright
+    - pytest
+    - python-lsp-server[all]
+#    - virtualenvwrapper
+
+- name: Python - pip - install packages via ansible builtin pip - Ulauncher requirements (all)
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.pip:
+    name: "{{ item }}"
+    extra_args: --user
+    virtualenv_command: "pyenv virtualenv"
+    virtualenv: "/home/{{ env_user }}/.pyenv/versions/{{ pyenvversionname.stdout }}"
+  loop:
+    - bs4 # This is a dummy package designed to prevent namesquatting on PyPI. You should install beautifulsoup4 instead.
+    - lorem
+    - parsedatetime
+    - pydbus
+    - pytz
+    - simpleeval
+
+# - name: Python - pip - install libs - misc (all)
 #   become: true
 #   become_user: "{{ env_user }}"
-#   ansible.builtin.pip:
-#     name: bs4
-#     extra_args: --user
-# funtioniert nicht: error: externally-managed-environment\n\n\C3\97 This environment is externally managed
-# TODO: virtual environment
+#   ansible.builtin.shell:
+#     cmd: pip install --user beautifulsoup4 black build cst-lsp debugpy flake8 html5lib isort jedi lxml pandas[excel, html, sql-other, mysql, output-formatting, performance, plot, xml] pipenv psutil pyarrow pylint pylint-venv pyright pytest python-lsp-server[all]
+#   args:
+#     creates: "/home/{{ env_user }}/.ansible_PythonPip"
+# nu: debugpy jedi pyright python-lsp-server
+# evtl: virtualenvwrapper
 
-- name: Python - pip - install libs - misc - Ulauncher requirement
-  become: true
-  become_user: "{{ env_user }}"
-  ansible.builtin.shell:
-    cmd: pip install --user bs4 lorem parsedatetime pydbus pytz simpleeval
-  args:
-    creates: "/home/{{ env_user }}/.ansible_PythonPip"
+#- name: Python - pip - install libs - misc - Ulauncher requirement (all)
+#  become: true
+#  become_user: "{{ env_user }}"
+#  ansible.builtin.shell:
+#    cmd: pip install --user beautifulsoup4 lorem parsedatetime pydbus pytz simpleeval
+#  args:
+#    creates: "/home/{{ env_user }}/.ansible_PythonPip"
 
 - name: Python - pip - set flag file for pip installs (env_user, all)
   become: true
