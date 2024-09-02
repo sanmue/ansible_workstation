@@ -101,6 +101,6 @@
   become_user: "{{ env_user }}"
   ansible.builtin.git:
     repo: https://github.com/pyenv/pyenv-virtualenv.git
-    dest: "home/{{ evn_user}}/.pyenv/plugins/pyenv-virtualenv"  # $(pyenv root)/plugins/pyenv-virtualenv
+    dest: "/home/{{ evn_user}}/.pyenv/plugins/pyenv-virtualenv"  # $(pyenv root)/plugins/pyenv-virtualenv
     clone: true
     update: true
