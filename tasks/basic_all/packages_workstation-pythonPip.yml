@@ -148,6 +148,15 @@
 #  args:
 #    creates: "/home/{{ env_user }}/.ansible_PythonPip"
 
+# WORKAROUND: pipx reinstall_all
+# installs über pip, die schon als deps bei pipx installiert wurden -> pipx list: (symlink missing or pointing to unexpected location)
+# TODO: pipx + pip deps checken
+- name: Python - pipx - WORKAROUND reinstall_all (all)
+  become: true
+  become_user: "{{ env_user }}"
+  community.general.pipx:
+    state: reinstall_all
+
 - name: Python - pip - set flag file for pip installs (env_user, all)
   become: true
   become_user: "{{ env_user }}"
