@@ -42,16 +42,24 @@
   community.general.pipx:
     state: present
     name: "{{ item }}"
+    install_deps: true
   loop:
-    - cst-lsp                   # Zed editor Extension 'zed-python-refactoring'
+    # - cst-lsp                   # Zed editor Extension 'zed-python-refactoring' # -> pip
     - deepl                     # Ulauncher Extension Requirement DeepL Translator
     - faker                     # Ulauncher Extension Requirement faker
-    - jedi-language-server      # jedi: autocompletion for python
+    # - jedi-language-server      # jedi: autocompletion for python # -> pip
     - Pint                      # Ulauncher Extension Requirement Calculate Anything
-    - python-lsp-server[all]    # Zed editor Extension 'Python LSP' (# Zed editor Extension 'zed-python-refactoring')
-    - virtualenv                # A tool for creating isolated virtual python environments.
+    # - python-lsp-server[all]    # Zed editor Extension 'Python LSP' (# Zed editor Extension 'zed-python-refactoring')  # -> pip
+    # - virtualenv                # A tool for creating isolated virtual python environments.  # -> pip
     - wrapt_timeout_decorator   # Ulauncher Extension Requirement Bluetooth
 
+- name: Python - pip - install libs - misc
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.shell:
+    cmd: pip install --user black cst-lsp flake8 jedi-language-server jupyter "python-lsp-server[all]" virtualenv virtualenv-pyenv # virtualenvwrapper
+  args:
+    creates: "/home/{{ env_user }}/.ansible_PythonPip"
 
 # - name: Python - pip - install packages - bs4
 #   become: true
@@ -67,15 +75,6 @@
   become_user: "{{ env_user }}"
   ansible.builtin.shell:
     cmd: pip install --user bs4 lorem parsedatetime pydbus pytz simpleeval
-    # installation über modul pip hat nicht funktioniert
-  args:
-    creates: "/home/{{ env_user }}/.ansible_PythonPip"
-
-- name: Python - pip - install libs - virtualenv-pyenv
-  become: true
-  become_user: "{{ env_user }}"
-  ansible.builtin.shell:
-    cmd: pip install --user virtualenv-pyenv # virtualenvwrapper
   args:
     creates: "/home/{{ env_user }}/.ansible_PythonPip"
 
