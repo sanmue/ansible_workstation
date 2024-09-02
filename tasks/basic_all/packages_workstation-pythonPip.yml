@@ -28,15 +28,6 @@
   args:
     creates: "/home/{{ env_user }}/.ansible_PythonPip"
 
-- name: Python - pip - set flag file for pip installs (env_user, all)
-  become: true
-  become_user: "{{ env_user }}"
-  ansible.builtin.file:
-    path: "/home/{{ env_user }}/.ansible_PythonPip"
-    state: touch
-    modification_time: preserve
-    mode: u=rw,g=r,o=r
-
 
 # https://pipx.pypa.io/stable/installation/#on-linux
 - name: Python - pipx - config - ensurepath
@@ -77,6 +68,26 @@
   ansible.builtin.shell:
     cmd: pip install --user bs4 lorem parsedatetime pydbus pytz simpleeval
     # installation über modul pip hat nicht funktioniert
+  args:
+    creates: "/home/{{ env_user }}/.ansible_PythonPip"
+
+- name: Python - pip - install libs - virtualenv-pyenv
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.shell:
+    cmd: pip install --user virtualenv-pyenv # virtualenvwrapper
+  args:
+    creates: "/home/{{ env_user }}/.ansible_PythonPip"
+
+- name: Python - pip - set flag file for pip installs (env_user, all)
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.file:
+    path: "/home/{{ env_user }}/.ansible_PythonPip"
+    state: touch
+    modification_time: preserve
+    mode: u=rw,g=r,o=r
+
 
 # https://github.com/pyenv/pyenv-virtualenv?tab=readme-ov-file#installing-as-a-pyenv-plugin
 - name: Python - git clone - install pyenv-virtualenv as pyenv plugin
@@ -87,9 +98,3 @@
     dest: "home/{{ evn_user}}/.pyenv/plugins/pyenv-virtualenv"  # $(pyenv root)/plugins/pyenv-virtualenv
     clone: true
     update: true
-
-- name: Python - pip - install libs - virtualenv-pyenv
-  become: true
-  become_user: "{{ env_user }}"
-  ansible.builtin.shell:
-    cmd: pip install --user virtualenv-pyenv # virtualenvwrapper
