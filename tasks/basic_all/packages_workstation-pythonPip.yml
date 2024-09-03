@@ -38,16 +38,14 @@
     name: "{{ item }}"
     install_deps: true
   loop:
-    #    - cst-lsp # -> pip # Zed editor Extension 'zed-python-refactoring'
-    #    - deepl # Ulauncher Extension Requirement DeepL Translator # einzige dependency 'normalizer' wird (auch) bei 'jupyter' installiert; pipx list: daher bei 'jupyter': (symlink missing or pointing to unexpected location)
-    #      -> deepl ohne deps installieren (s.u.)
+    # - cst-lsp # -> pip # Zed editor Extension 'zed-python-refactoring'
     - faker # Ulauncher Extension Requirement faker
     - jedi-language-server # autocompletion for python (Anmerkung: 'jedi' installed via pip)
     - jupyter # Jupyter metapackage: notebook jupyterlab ipython ipykernel jupyter-console nbconvert ipywidgets
     - Pint # Ulauncher Extension Requirement Calculate Anything
-    #    - python-lsp-server[all] # -> pip # Zed editor Extension 'Python LSP' # Zed editor Extension 'zed-python-refactoring')
-    #    - virtualenv # A tool for creating isolated virtual python environments.
-    #      (symlink missing or pointing to unexpected location) -> 2nd install as dependency of virtualenv-pyenv
+    # - python-lsp-server[all] # -> pip # Zed editor Extension 'Python LSP' # Zed editor Extension 'zed-python-refactoring')
+    #   - virtualenv # A tool for creating isolated virtual python environments.
+    #   (symlink missing or pointing to unexpected location) -> 2nd install as dependency of virtualenv-pyenv
     - virtualenv-pyenv # A virtualenv Python discovery plugin for pyenv–installed interpreters
     - wrapt_timeout_decorator # Ulauncher Extension Requirement Bluetooth
 
@@ -59,7 +57,8 @@
     name: "{{ item }}"
     install_deps: false
   loop:
-    - deepl # Ulauncher Extension Requirement DeepL Translator
+    - deepl # Ulauncher Extension Requirement DeepL Translator # einzige dependency 'normalizer' wird (auch) bei 'jupyter'  (s.o.) installiert;
+    # (symlink missing or pointing to unexpected location) daher bei 'jupyter' bei Ausführung pipx list
 
 # https://pipx.pypa.io/stable/installation/#on-linux
 - name: Python - pipx - config - ensurepath (all)
@@ -76,77 +75,23 @@
   args:
     creates: "/home/{{ env_user }}/.ansible_PythonPip"
 
-- name: Python - pip - register pyenv version-name (all)
-  become: true
-  become_user: "{{ env_user }}"
-  ansible.builtin.shell: pyenv version-name
-  register: pyenvversionname
-  ignore_errors: true
-
-# Voraussetzung für ansible.builtin.pip - Modul: pip, virtualenv, setuptools or packaging
-- name: Python - pip - install packages via ansible builtin pip - python dev (all)
+# Voraussetzung für 'ansible.builtin.pip' Modul: pip, virtualenv, setuptools or packaging
+- name: Python - pip - install libs via ansible builtin pip - pyhton_pip_requirements.txt (all)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.pip:
-    name: "{{ item }}"
+    requirements: "{{ playbook_dir }}/files/python_pip_requirements.txt"
     extra_args: --user
     virtualenv_command: "pyenv virtualenv"
-    virtualenv: "/home/{{ env_user }}/.pyenv/versions/{{ pyenvversionname.stdout }}"
-  loop:
-    - beautifulsoup4
-    - black
-    - build
-    - cst-lsp
-    - debugpy
-    - flake8
-    - html5lib
-    - isort
-    - jedi
-    - lxml
-    - pandas[excel, html, sql-other, mysql, output-formatting, performance, plot, xml]
-    - pipenv
-    - psutil
-    - pyarrow
-    - pylint
-    - pylint-venv
-    - pyright
-    - pytest
-    - python-lsp-server[all]
-#    - virtualenvwrapper
+    virtualenv: "{{ lookup('ansible.builtin.env', 'PYENV_ROOT') }}/versions/{{ ansible_python_version }}"
 
-- name: Python - pip - install packages via ansible builtin pip - Ulauncher requirements (all)
-  become: true
-  become_user: "{{ env_user }}"
-  ansible.builtin.pip:
-    name: "{{ item }}"
-    extra_args: --user
-    virtualenv_command: "pyenv virtualenv"
-    virtualenv: "/home/{{ env_user }}/.pyenv/versions/{{ pyenvversionname.stdout }}"
-  loop:
-    - bs4 # This is a dummy package designed to prevent namesquatting on PyPI. You should install beautifulsoup4 instead.
-    - lorem
-    - parsedatetime
-    - pydbus
-    - pytz
-    - simpleeval
-
-# - name: Python - pip - install libs - misc (all)
+# - name: Python - pip - install libs via builtin shell pyhton_pip_requirements.txt (all)
 #   become: true
 #   become_user: "{{ env_user }}"
 #   ansible.builtin.shell:
-#     cmd: pip install --user beautifulsoup4 black build cst-lsp debugpy flake8 html5lib isort jedi lxml pandas[excel, html, sql-other, mysql, output-formatting, performance, plot, xml] pipenv psutil pyarrow pylint pylint-venv pyright pytest python-lsp-server[all]
+#     cmd: "pip install --user -r {{ playbook_dir }}/files/python_pip_requirements.txt"
 #   args:
 #     creates: "/home/{{ env_user }}/.ansible_PythonPip"
-# nu: debugpy jedi pyright python-lsp-server
-# evtl: virtualenvwrapper
-
-#- name: Python - pip - install libs - misc - Ulauncher requirement (all)
-#  become: true
-#  become_user: "{{ env_user }}"
-#  ansible.builtin.shell:
-#    cmd: pip install --user beautifulsoup4 lorem parsedatetime pydbus pytz simpleeval
-#  args:
-#    creates: "/home/{{ env_user }}/.ansible_PythonPip"
 
 # WORKAROUND: pipx reinstall_all
 # installs über pip, die schon als deps bei pipx installiert wurden -> pipx list: (symlink missing or pointing to unexpected location)

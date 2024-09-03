@@ -1,0 +1,31 @@
+# ### ----------
+# ### python dev
+beautifulsoup4
+black
+build
+cst-lsp
+debugpy
+flake8
+html5lib
+isort
+jedi
+lxml
+pandas[excel, html, sql-other, mysql, output-formatting, performance, plot, xml]
+pipenv
+psutil
+pyarrow
+pylint
+pylint-venv
+pyright
+pytest
+python-lsp-server[all]
+# virtualenvwrapper
+# ### ----------------------
+# ### Ulauncher requirements
+bs4
+# This is a dummy package designed to prevent namesquatting on PyPI. You should install beautifulsoup4 instead.
+lorem
+parsedatetime
+pydbus
+pytz
+simpleeval
