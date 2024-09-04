@@ -6,9 +6,9 @@
   ansible.builtin.package:
     state: present
     name:
-      - ansible-core # Radically simple IT automation platform      # bereits installiert (bootstrap)
-      - ansible # Official assortment of Ansible collections   # bereits installiert (bootstrap)
-      - ansible-lint # für z.B. ansible extension in VS Code
+      - ansible # Official assortment of Ansible collections # oder nur min-version 'ansible-core' # bereits installiert (bootstrap)
+      # - ansible-core # Radically simple IT automation platform # wird bei 'ansible' mitinstalliert
+      - ansible-lint # für z.B. ansible extension in VS Code # -> pip
       - bash
       - bat # Cat clone with syntax highlighting and git integration (u.a. wg. nnn)
       - bleachbit
@@ -227,15 +227,15 @@
       - printer-driver-cups-pdf
       - pipx # execute binaries from Python packages in isolated environments
       - python3
-      - python3-debugpy
-      - python3-jedi # autocompletion tool for Python 3
+      # - python3-debugpy
+      # - python3-jedi # autocompletion tool for Python 3
       - python3-pip
-      - python3-psutil
-      - python3-pyinotify
-      - python3-pylint-common
-      - python3-pylint-venv
-      - python3-pytest-pylint
-      - python3-setuptools
+      # - python3-psutil
+      # - python3-pyinotify
+      # - python3-pylint-common
+      # - python3-pylint-venv
+      # - python3-pytest-pylint
+      # - python3-setuptools
       - sqlite3
       - ssh # bereits installiert (bootstrap)
       # - timeshift

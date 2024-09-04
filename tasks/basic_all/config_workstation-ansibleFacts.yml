@@ -1,67 +1,63 @@
 - name: AnsibleFacts - Get desktop environment (XDG_CURRENT_DESKTOP) (all)
   ansible.builtin.set_fact:
-    env_desktop: "{{ ansible_facts['env']['XDG_CURRENT_DESKTOP']|lower }}"            # z.B. "ubuntu:GNOME"
+    env_desktop: "{{ ansible_facts['env']['XDG_CURRENT_DESKTOP']|lower }}" # z.B. "ubuntu:GNOME"
     # env_desktop: "{{ lookup('env','XDG_CURRENT_DESKTOP')|lower }}"
     env_hostname: "{{ ansible_facts['hostname'] }}"
 
 - name: AnsibleFacts - Get display server (XDG_SESSION_TYPE) (all)
   ansible.builtin.set_fact:
-    env_displayserver: "{{ ansible_facts['env']['XDG_SESSION_TYPE']|lower }}"         # z.B. "x11" oder "wayland"
+    env_displayserver: "{{ ansible_facts['env']['XDG_SESSION_TYPE']|lower }}" # z.B. "x11" oder "wayland"
 
 - name: AnsibleFacts - Get datadirs (XDG_DATA_DIRS) (all but Arch)
-  # In Archlinux/KDE anscheinend nicht vorhanden
   ansible.builtin.set_fact:
-    env_datadirs: "{{ ansible_facts['env']['XDG_DATA_DIRS'] }}"                       # z.B.: "/usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop"
-  when:
-    - ansible_distribution != "Archlinux"
+    env_datadirs: "{{ ansible_facts['env']['XDG_DATA_DIRS'] }}" # z.B.: "/usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop"
+  # when:
+  #   - ansible_distribution != "Archlinux"
 
 - name: AnsibleFacts - Get path (PATH) (all)
   ansible.builtin.set_fact:
     env_path: "{{ ansible_facts['env']['PATH'] }}"
-    # z.B.: "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin"
 
 - name: AnsibleFacts - Get PWD (PATH) (all)
   ansible.builtin.set_fact:
-    env_PWD: "{{ ansible_facts['env']['PWD'] }}"                                      # z.B.: "/home/userid/dev"
+    env_PWD: "{{ ansible_facts['env']['PWD'] }}" # z.B.: "/home/userid/dev"
 
 - name: AnsibleFacts - Get user (USER) (all)
   ansible.builtin.set_fact:
-    env_user: "{{ ansible_facts['env']['USER'] }}"                                    # z.B.: "userid"
+    env_user: "{{ ansible_facts['env']['USER'] }}" # z.B.: "userid"
 
 - name: AnsibleFacts - Get XDG_RUNTIME_DIR (USER) (all)
   ansible.builtin.set_fact:
-    env_user_XDG_RUNTIME_DIR: "{{ ansible_facts['env']['XDG_RUNTIME_DIR'] }}"         # z.B.: "/run/user/1000"
+    env_user_XDG_RUNTIME_DIR: "{{ ansible_facts['env']['XDG_RUNTIME_DIR'] }}" # z.B.: "/run/user/1000"
 
 - name: AnsibleFacts - Get lsb lsb-release (Ubuntu)
   ansible.builtin.set_fact:
-    env_lsb: "{{ ansible_facts['lsb']['release'] }}"                                  # z.B. bei Ubuntu 20.04: "20.04"
-    # env_lsbmajor: "{{ ansible_facts['lsb']['major_release'] }}"   # z.B. bei Ubuntu 20.04: "20"
+    env_lsb: "{{ ansible_facts['lsb']['release'] }}" # z.B. bei Ubuntu 20.04: "20.04"
   when:
-    - ansible_distribution in ["Ubuntu"]
+    - ansible_distribution in ["Debian", "Ubuntu"]
 
 - name: AnsibleFacts - Get lsb lsb-id (Ubuntu)
   ansible.builtin.set_fact:
-    env_lsb_id: "{{ ansible_facts['lsb']['id'] }}"                                    # z.B.: "ManjaroLinux" oder "EndeavourOS"
+    env_lsb_id: "{{ ansible_facts['lsb']['id'] }}" # z.B.: "ManjaroLinux" oder "EndeavourOS"; bei Archlinux selbst nicht vorhanden
   when:
-    - ansible_distribution in ["Ubuntu"]
+    - ansible_distribution not in ["Archlinux"]
 
 - name: AnsibleFacts - Get distribution version (all)
   ansible.builtin.set_fact:
-    distribution_version: "{{ ansible_facts['distribution_version'] }}"               # z.B. bei Ubuntu 20.04: "20.04"
+    distribution_version: "{{ ansible_facts['distribution_version'] }}" # z.B. bei Ubuntu 20.04: "20.04"; EndeavourOS: rolling
 
 - name: AnsibleFacts - Get distribution major version (all)
   ansible.builtin.set_fact:
-    distribution_major_version: "{{ ansible_facts['distribution_major_version'] }}"   # z.B. bei Ubuntu 20.04: "20"
-
+    distribution_major_version: "{{ ansible_facts['distribution_major_version'] }}" # z.B. bei Ubuntu 20.04: "20"; EndeavourOS: rolling
 
 - name: AnsibleFacts - Print variable (all)
   ansible.builtin.debug:
-#    msg: "env_desktop: {{ env_desktop }}"
-#    msg: "env_hostname: {{ env_hostname }}"
-#    msg: "env_displayserver: {{ env_displayserver }}"
-#    msg: "env_datadirs: {{ env_datadirs }}"
-#    msg: "env_path: {{ env_path }}"
-#    msg: "env_PWD: {{ env_PWD }}"
+    #    msg: "env_desktop: {{ env_desktop }}"
+    #    msg: "env_hostname: {{ env_hostname }}"
+    #    msg: "env_displayserver: {{ env_displayserver }}"
+    #    msg: "env_datadirs: {{ env_datadirs }}"
+    #    msg: "env_path: {{ env_path }}"
+    #    msg: "env_PWD: {{ env_PWD }}"
     msg: "env_user: {{ env_user }}"
 #    msg: "env_lsb: {{ env_lsb }}"
 #    msg: "env_lsbmajor: {{ env_lsbmajor }}"

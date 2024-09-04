@@ -1,5 +1,11 @@
+# ### --------
+# ### ansible
+ansible-dev-tools
+ansible-compat
+
 # ### ----------
 # ### python dev
+autopep8
 beautifulsoup4
 black
 build
@@ -20,10 +26,10 @@ pyright
 pytest
 python-lsp-server[all]
 # virtualenvwrapper
+
 # ### ----------------------
 # ### Ulauncher requirements
-bs4
-# This is a dummy package designed to prevent namesquatting on PyPI. You should install beautifulsoup4 instead.
+bs4 # This is a dummy package designed to prevent namesquatting on PyPI. You should install beautifulsoup4 instead.
 lorem
 parsedatetime
 pydbus

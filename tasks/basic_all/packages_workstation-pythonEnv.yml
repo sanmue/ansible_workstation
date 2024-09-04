@@ -2,7 +2,7 @@
 # ### Python Environment
 # ######################
 
-# pyenv ist bereits installiert
+# pyenv ist bereits installiert pber Paketmanager (workstation-basic.yml)
 
 # !!!
 # - pyenv:
@@ -16,10 +16,6 @@
 # - https://stackoverflow.com/questions/75602063/pip-install-r-requirements-txt-is-failing-this-environment-is-externally-manag/75696359#75696359
 # - https://peps.python.org/pep-0668/#mark-the-installation-as-externally-managed
 # !!!
-
-# -------------------------------------------------
-# TODO: Suse: Fehlermeldungen wg. Abhängikeiten ...
-# -------------------------------------------------
 
 - name: Python Environment - Get and register Python version (Arch)
   become: true
@@ -101,6 +97,6 @@
   become_user: "{{ env_user }}"
   ansible.builtin.git:
     repo: https://github.com/pyenv/pyenv-virtualenv.git
-    dest: "/home/{{ env_user}}/.pyenv/plugins/pyenv-virtualenv"  # $(pyenv root)/plugins/pyenv-virtualenv
+    dest: "/home/{{ env_user}}/.pyenv/plugins/pyenv-virtualenv" # $(pyenv root)/plugins/pyenv-virtualenv
     clone: true
     update: true

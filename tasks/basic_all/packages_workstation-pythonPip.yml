@@ -39,14 +39,15 @@
     install_deps: true
   loop:
     # - cst-lsp # -> pip # Zed editor Extension 'zed-python-refactoring'
+    - ansible # https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html
     - faker # Ulauncher Extension Requirement faker
     - jedi-language-server # autocompletion for python (Anmerkung: 'jedi' installed via pip)
     - jupyter # Jupyter metapackage: notebook jupyterlab ipython ipykernel jupyter-console nbconvert ipywidgets
     - Pint # Ulauncher Extension Requirement Calculate Anything
     # - python-lsp-server[all] # -> pip # Zed editor Extension 'Python LSP' # Zed editor Extension 'zed-python-refactoring')
-    #   - virtualenv # A tool for creating isolated virtual python environments.
-    #   (symlink missing or pointing to unexpected location) -> 2nd install as dependency of virtualenv-pyenv
-    - virtualenv-pyenv # A virtualenv Python discovery plugin for pyenv–installed interpreters
+    # - virtualenv # A tool for creating isolated virtual python environments. # wird schon als dep von virtuelenv-pyenv installiert
+    #   -> sonst: (symlink missing or pointing to unexpected location)
+    - virtualenv-pyenv # A virtualenv Python discovery plugin for pyenv–installed interpreters # installiert 'virtualenv' als dependency
     - wrapt_timeout_decorator # Ulauncher Extension Requirement Bluetooth
 
 - name: Python - pipx - install apps - without dependencies (all)
