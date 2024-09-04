@@ -8,11 +8,11 @@
   ansible.builtin.set_fact:
     env_displayserver: "{{ ansible_facts['env']['XDG_SESSION_TYPE']|lower }}" # z.B. "x11" oder "wayland"
 
-- name: AnsibleFacts - Get datadirs (XDG_DATA_DIRS) (all but Arch)
+- name: AnsibleFacts - Get datadirs (XDG_DATA_DIRS) (all, not Arch)
   ansible.builtin.set_fact:
     env_datadirs: "{{ ansible_facts['env']['XDG_DATA_DIRS'] }}" # z.B.: "/usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop"
-  # when:
-  #   - ansible_distribution != "Archlinux"
+  when:
+    - ansible_distribution != "Archlinux"
 
 - name: AnsibleFacts - Get path (PATH) (all)
   ansible.builtin.set_fact:
