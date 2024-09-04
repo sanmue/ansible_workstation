@@ -39,7 +39,7 @@
     install_deps: true
   loop:
     # - cst-lsp # -> pip # Zed editor Extension 'zed-python-refactoring'
-    - ansible # https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html
+    # - ansible # https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html # zurück umgestellt auf inst via paketmanager
     - faker # Ulauncher Extension Requirement faker
     - jedi-language-server # autocompletion for python (Anmerkung: 'jedi' installed via pip)
     - jupyter # Jupyter metapackage: notebook jupyterlab ipython ipykernel jupyter-console nbconvert ipywidgets
