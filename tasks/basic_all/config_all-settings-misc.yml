@@ -92,7 +92,7 @@
     src: files/config_all-settings-misc-starship2.toml
     dest: "/home/{{ env_user }}/.config/starship.toml"
     mode: '0644'
-    backup: true
+    backup: false
 
 - name: All settings misc - Bashrc - additional EXPORTS (User, all)
   ansible.builtin.blockinfile:
@@ -126,7 +126,7 @@
 - name: All settings misc - Bashrc - custom alias definitions (User, all)
   ansible.builtin.blockinfile:
     path: "/home/{{ env_user }}/.bashrc"
-    backup: true
+    backup: false
     marker: "### {mark} 'custom alias definitions' ANSIBLE MANAGED BLOCK ###"
     block: |
       # ------------------------
@@ -153,7 +153,7 @@
 - name: All settings misc - Bashrc - Insert/Update additional paths and config - nvm (User, all)
   ansible.builtin.blockinfile:
     path: "/home/{{ env_user }}/.bashrc"
-    backup: true
+    backup: false
     marker: "### {mark} 'nvm' - ANSIBLE MANAGED BLOCK ###"
     block: |
       # --------------------------
@@ -169,7 +169,7 @@
 - name: All settings misc - Bashrc - Insert/Update additional paths and config - vim (User, all)
   ansible.builtin.blockinfile:
     path: "/home/{{ env_user }}/.bashrc"
-    backup: true
+    backup: false
     marker: "### {mark} 'vim' ANSIBLE MANAGED BLOCK ###"
     block: |
       # ------------------------------
@@ -181,7 +181,7 @@
 - name: All settings misc - Bashrc - Insert/Update additional paths and config - user-bin (User, all)
   ansible.builtin.blockinfile:
     path: "/home/{{ env_user }}/.bashrc"
-    backup: true
+    backup: false
     marker: "### {mark} 'user-bin' ANSIBLE MANAGED BLOCK ###"
     block: |
       # ------------------------------------------
@@ -192,7 +192,7 @@
 - name: All settings misc - Bashrc - Insert/Update additional paths and config - pyenv (User, Ubuntu)
   ansible.builtin.blockinfile:
     path: "/home/{{ env_user }}/.bashrc"
-    backup: true
+    backup: false
     marker: "### {mark} 'pyenv' ANSIBLE MANAGED BLOCK ###"
     block: |
       # -----
@@ -220,7 +220,7 @@
 - name: All settings misc - Bashrc - Insert/Update additional paths and config - pyenv (User, Arch)
   ansible.builtin.blockinfile:
     path: "/home/{{ env_user }}/.bashrc"
-    backup: true
+    backup: false
     marker: "### {mark} 'pyenv' ANSIBLE MANAGED BLOCK ###"
     block: |
       # -----
@@ -237,7 +237,7 @@
 - name: All settings misc - Bashrc - systemd user import-environment (User, all)
   ansible.builtin.blockinfile:
     path: "/home/{{ env_user }}/.bashrc"
-    backup: true
+    backup: false
     marker: "### {mark} 'systemd user' ANSIBLE MANAGED BLOCK ###"
     block: |
       # -------------------------------
@@ -274,7 +274,7 @@
 - name: All settings misc - Bashrc - Insert/Update additional paths and config (root, all)
   ansible.builtin.blockinfile:
     path: "/root/.bashrc"
-    backup: true
+    backup: false
     marker: "### {mark} 'vim' ANSIBLE MANAGED BLOCK ###"
     block: |
       # ------------------------------
@@ -342,14 +342,14 @@
     owner: root
     group: root
     mode: '0644'
-    backup: true
+    backup: false
 
 # https://stackoverflow.com/questions/65020310/how-to-copy-file-content-to-another-file-in-ansible-without-overwriting-the-seco
 # https://cloudlinuxtech.com/zsh-syntax-highlighting-autosuggestions/#How_to_install_the_zsh-syntax-highlighting_package_in_Linux
 - name: All settings misc - Zshrc - Insert 'files/custom-zsh-config' in .zshrc (User, all)
   ansible.builtin.blockinfile:
     path: "/home/{{ env_user }}/.zshrc"
-    backup: true
+    backup: false
     marker: "### {mark} 'custom zsh config' ANSIBLE MANAGED BLOCK ###"
     block: |
       # -----------------
@@ -387,7 +387,7 @@
 - name: All settings misc - Zshrc - additional EXPORTS - colored password prompt (User, all)
   ansible.builtin.blockinfile:
     path: "/home/{{ env_user }}/.zshrc"
-    backup: true
+    backup: false
     marker: "### {mark} 'additional EXPORTS' ANSIBLE MANAGED BLOCK ###"
     block: |
       # ------------------
@@ -401,7 +401,7 @@
 - name: All settings misc - Zshrc - custom alias definitions (User, all)
   ansible.builtin.blockinfile:
     path: "/home/{{ env_user }}/.zshrc"
-    backup: true
+    backup: false
     marker: "### {mark} 'custom alias definitions' ANSIBLE MANAGED BLOCK ###"
     block: |
       # ------------------------
@@ -428,7 +428,7 @@
 - name: All settings misc - Zshrc - Insert/Update additional paths and config - nvm (User, all)
   ansible.builtin.blockinfile:
     path: "/home/{{ env_user }}/.zshrc"
-    backup: true
+    backup: false
     marker: "### {mark} 'nvm' - ANSIBLE MANAGED BLOCK ###"
     block: |
       # --------------------------
@@ -444,7 +444,7 @@
 - name: All settings misc - Zshrc - Insert/Update additional paths and config - vim (User, all)
   ansible.builtin.blockinfile:
     path: "/home/{{ env_user }}/.zshrc"
-    backup: true
+    backup: false
     marker: "### {mark} 'vim' ANSIBLE MANAGED BLOCK ###"
     block: |
       # ------------------------------
@@ -456,7 +456,7 @@
 - name: All settings misc - Zshrc - Insert/Update additional paths and config - user-bin (User, all)
   ansible.builtin.blockinfile:
     path: "/home/{{ env_user }}/.zshrc"
-    backup: true
+    backup: false
     marker: "### {mark} 'user-bin' ANSIBLE MANAGED BLOCK ###"
     block: |
       # ------------------------------------------
@@ -467,7 +467,7 @@
 - name: All settings misc - Zshrc - Insert/Update additional paths and config - pyenv (User, Ubuntu)
   ansible.builtin.blockinfile:
     path: "/home/{{ env_user }}/.zshrc"
-    backup: true
+    backup: false
     marker: "### {mark} 'pyenv' ANSIBLE MANAGED BLOCK ###"
     block: |
       # -----
@@ -495,7 +495,7 @@
 - name: All settings misc - Zshrc - Insert/Update additional paths and config - pyenv (User, Arch)
   ansible.builtin.blockinfile:
     path: "/home/{{ env_user }}/.zshrc"
-    backup: true
+    backup: false
     marker: "### {mark} 'pyenv' ANSIBLE MANAGED BLOCK ###"
     block: |
       # -----
@@ -511,7 +511,7 @@
 - name: All settings misc - Zshrc - Insert/Update additional paths and config - zoxide (User, all)
   ansible.builtin.blockinfile:
     path: "/home/{{ env_user }}/.zshrc"
-    backup: true
+    backup: false
     marker: "### {mark} 'zoxide' ANSIBLE MANAGED BLOCK ###"
     block: |
       # ------
@@ -522,7 +522,7 @@
 - name: All settings misc - Zshrc - Insert/Update additional paths and config - tilix - vte config (User, all)
   ansible.builtin.blockinfile:
     path: "/home/{{ env_user }}/.zshrc"
-    backup: true
+    backup: false
     marker: "### {mark} 'tilix' ANSIBLE MANAGED BLOCK ###"
     block: |
       # ------------------
@@ -537,7 +537,7 @@
 - name: All settings misc - Zshrc - Insert/Update additional paths and config - nnn (User, all)
   ansible.builtin.blockinfile:
     path: "/home/{{ env_user }}/.zshrc"
-    backup: true
+    backup: false
     marker: "### {mark} 'nnn' ANSIBLE MANAGED BLOCK ###"
     block: |
       # ---------------------------
@@ -591,7 +591,7 @@
 - name: All settings misc - Zshrc - systemd user import-environment (User, all)
   ansible.builtin.blockinfile:
     path: "/home/{{ env_user }}/.zshrc"
-    backup: true
+    backup: false
     marker: "### {mark} 'systemd user' ANSIBLE MANAGED BLOCK ###"
     block: |
       # -------------------------------
@@ -629,7 +629,7 @@
 - name: All settings misc - Zshrc - Insert/Update additional paths and config (root, all)
   ansible.builtin.blockinfile:
     path: "/root/.zshrc"
-    backup: true
+    backup: false
     marker: "### {mark} 'vim' ANSIBLE MANAGED BLOCK ###"
     block: |
       # ------------------------------
