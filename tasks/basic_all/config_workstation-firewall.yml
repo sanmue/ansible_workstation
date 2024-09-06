@@ -34,21 +34,27 @@
 # #################
 # Info: firewalld.service in install script bereits gesatartet + enabled
 
-# Requirements für ansible.posix.firewalld Modul: firewalld >= 0.2.11 und python-firewall >= 0.2.11
-- name: Firewalld - allow KDE Connect (Archlinux)
-  ansible.posix.firewalld:
-    service: kdeconnect
-    permanent: true
-    state: enabled
-    immediate: true
-  when: ansible_distribution in ["Archlinux"]
-  register: firewall_d
-
+# # Requirements für ansible.posix.firewalld Modul: firewalld >= 0.2.11 und python-firewall >= 0.2.11
 # - name: Firewalld - allow KDE Connect (Archlinux)
-#   become: true
-#   ansible.builtin.shell:
-#     cmd: firewall-cmd --permanent --add-service kdeconnect
+#   ansible.posix.firewalld:
+#     service: kdeconnect
+#     permanent: true
+#     state: enabled
+#     immediate: true
 #   when: ansible_distribution in ["Archlinux"]
+#   register: firewall_d
+#
+# Fehlermeldung:
+# erst nach reboot nach Inst python pip, ...
+# fatal: [localhost]: FAILED! => {"changed": false, "msg": "Failed to import the required Python library (firewall) on eosbiostest01's Python /home/userID/.pyenv/versions/3.12.5/bin/python3.12. Please read the module documentation and install it in the appropriate location. If the required library is installed, but Ansible is using the wrong Python interpreter, please consult the documentation on ansible_python_interpreter. Version 0.2.11 or newer required (0.3.9 or newer for offline operations)"}
+# https://docs.ansible.com/ansible/latest/collections/ansible/posix/firewalld_module.html#notes
+# https://docs.ansible.com/ansible/latest/reference_appendices/python_3_support.html#using-python-3-on-the-managed-machines-with-commands-and-playbooks
+
+- name: Firewalld - allow KDE Connect (Archlinux)
+  become: true
+  ansible.builtin.shell:
+    cmd: firewall-cmd --permanent --add-service kdeconnect
+  when: ansible_distribution in ["Archlinux"]
 
 - name: Firewalld - reload (Archlinux)
   ansible.builtin.service:

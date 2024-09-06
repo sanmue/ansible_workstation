@@ -1,3 +1,17 @@
+# ### vorerst Umstellung pipx -> pip
+# mit deps:
+faker # Ulauncher Extension Requirement faker
+jedi-language-server # autocompletion for python (Anmerkung: 'jedi' installed via pip)
+jupyter # Jupyter metapackage: notebook jupyterlab ipython ipykernel jupyter-console nbconvert ipywidgets
+Pint # Ulauncher Extension Requirement Calculate Anything
+virtualenv-pyenv # A virtualenv Python discovery plugin for pyenv–installed interpreters # installiert 'virtualenv' als dependency
+wrapt_timeout_decorator # Ulauncher Extension Requirement Bluetooth
+# ohne deps:
+deepl
+
+# ### Zugabe
+ansible
+
 # ### --------
 # ### ansible
 ansible-dev-tools

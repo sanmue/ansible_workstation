@@ -151,7 +151,7 @@
       # - python-lsp-black # python-lsp-server plugin that adds support to black autoformatter, forked from pyls-black
       - python-pip # The PyPA recommended tool for installing Python packages
       # - python-pipenv # Sacred Marriage of Pipfile, Pip, & Virtualenv
-      - python-pipx # Install and Run Python Applications in Isolated Environments
+      # - python-pipx # Install and Run Python Applications in Isolated Environments
       # - python-poetry # Python dependency management and packaging made easy
       # - python-psutil # A cross-platform process and system utilities module for Python
       # - python-pyarrow # will become necessary dependency for Pandas
@@ -225,7 +225,7 @@
       - packagekit # sollte bereits installiert sein # notwendig u.a. für cockpit
       - poppler-utils # PDF utilities (based on Poppler) (u.a. wg. nnn)
       - printer-driver-cups-pdf
-      - pipx # execute binaries from Python packages in isolated environments
+      # - pipx # execute binaries from Python packages in isolated environments
       - python3
       # - python3-debugpy
       # - python3-jedi # autocompletion tool for Python 3

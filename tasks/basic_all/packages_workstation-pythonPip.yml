@@ -86,7 +86,7 @@
     virtualenv_command: "pyenv virtualenv"
     virtualenv: "{{ lookup('ansible.builtin.env', 'PYENV_ROOT') }}/versions/{{ ansible_python_version }}"
 
-# - name: Python - pip - install libs via builtin shell pyhton_pip_requirements.txt (all)
+# - name: Python - pip - install libs via builtin shell - pyhton_pip_requirements.txt (all)
 #   become: true
 #   become_user: "{{ env_user }}"
 #   ansible.builtin.shell:
@@ -102,6 +102,9 @@
   become_user: "{{ env_user }}"
   community.general.pipx:
     state: reinstall_all
+# Fehlermeldung:
+# erst nach reboot nach Inst python pip, ...
+# fatal: [localhost]: FAILED! => {"changed": false, "cmd": "/home/userID/.pyenv/versions/3.12.5/bin/python3.12 -m pipx list --include-injected --json", "msg": "/home/userID/.pyenv/versions/3.12.5/bin/python3.12: No module named pipx", "rc": 1, "stderr": "/home/userID/.pyenv/versions/3.12.5/bin/python3.12: No module named pipx\n", "stderr_lines": ["/home/userID/.pyenv/versions/3.12.5/bin/python3.12: No module named pipx"], "stdout": "", "stdout_lines": []}
 
 - name: Python - pip - set flag file for pip installs (env_user, all)
   become: true

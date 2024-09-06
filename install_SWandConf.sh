@@ -429,7 +429,7 @@ Arch* | Endeavour*)
         fi
     fi
 
-    echo -e "\nInstallation initial benoetigte Software (curl firewalld git openssh python-pipx rsync vim)"
+    echo -e "\nInstallation initial benoetigte Software (curl firewalld git openssh rsync vim)" # python-pipx
     sudo pacman -S --needed --noconfirm ansible ansible-core curl firewalld git openssh rsync vim # python-pipx
 
     echo -e "\nInstallation benoetigte Softwarepackages zur Installation von AUR helpers, AUR-Packages..."
@@ -597,6 +597,12 @@ echo -e "\e[0;33m###\e[39m\n"
 # echo -e "\e[0;33mShell neu starten (oder source der shell config) und dann Script erneut ausführen\e[39m\n"
 
 ansible-playbook "/home/${userid}/${playbookdir}/${playbook}" -v -K
+
+# ansible-playbook "/home/${userid}/${playbookdir}/${playbook}" -v -K -e 'ansible_python_interpreter=/usr/bin/python3'
+# https://docs.ansible.com/ansible/latest/collections/ansible/posix/firewalld_module.html#notes
+# - tasks/basic_all/config_workstation-firewall.yml: Firewalld - allow KDE Connect (Archlinux)
+# - tasks/basic_all/packages_workstation-pythonPip.yml: /home/userID/dev/Projects/Ansible/ansible_workstation/tasks/basic_all/packages_workstation-pythonPip.yml
+
 # bei verschlüsselten Daten z.B.:
 #ansible-playbook "/home/${userid}/${playbookdir}/${playbook}" -v -K --vault-password-file "/home/${userid}/.ansibleVaultKey"
 
