@@ -3,28 +3,27 @@
 # ###########
 
 # ### UFW - enable
-- name: UFW - enable (Ubuntu)
+- name: UFW - enable (all)
   community.general.ufw:
-    state: enabled
-  when: ansible_distribution == "Ubuntu"
+    state: disabled  # muss bei priv. Rechner nicht dauerhaft aktiviert sein
   register: firewall_ufw
 
 # ### UFW - allow
-- name: UFW - allow ssh (Ubuntu)
+# SSH: bereist bei install script
+- name: UFW - allow ssh (all)
   community.general.ufw:
     rule: limit
     port: ssh
     proto: tcp
     comment: SSH
-  when: ansible_distribution == "Ubuntu"
   register: firewall_ufw
 
 # ### UFW - reload
-- name: UFW - reload (Ubuntu)
+- name: UFW - reload (all)
   community.general.ufw:
     state: reloaded
-  when: ansible_distribution == "Ubuntu" and
-        firewall_ufw.changed
+  when: 
+    - firewall_ufw.changed
 
 
 # #################
@@ -32,29 +31,29 @@
 # #################
 
 # ### firewalld - enable+start
-- name: Firewalld - enable (Archlinux, Suse)
-  ansible.builtin.service:
-    name: firewalld
-    enabled: true
-    state: started
-  when: ansible_distribution in ["Archlinux"] or
-        ansible_os_family == "Suse"
-  register: firewall_d
+#- name: Firewalld - enable (Archlinux, Suse)
+#  ansible.builtin.service:
+#    name: firewalld
+#    enabled: false # muss bei priv. Rechner nicht dauerhaft aktiviert sein
+#    state: started
+#  when: ansible_distribution in ["Archlinux"] or
+#        ansible_os_family == "Suse"
+#  register: firewall_d
 
 # ### firewalld - allow
-- name: Firewalld - allow ssh (Archlinux, Suse))
-  ansible.posix.firewalld:
-    service: ssh
-    permanent: true
-    state: enabled
-    immediate: true
-    # zone: public
-  when: ansible_distribution in ["Archlinux)"] or
-        ansible_os_family == "Suse"
-  register: firewall_d
+# SSH: bereist bei install script
+#- name: Firewalld - allow ssh (Archlinux))
+#  ansible.posix.firewalld:
+#    service: ssh
+#    permanent: true
+#    state: enabled
+#    immediate: true
+#    # zone: public
+#  when: ansible_distribution in ["Archlinux)"]
+#  register: firewall_d
 
-- name: Firewalld - reload (Archlinux, Suse))
-  ansible.builtin.service:
-    name: firewalld
-    state: reloaded
-  when: firewall_d.changed
+#- name: Firewalld - reload if changed
+#  ansible.builtin.service:
+#    name: firewalld
+#    state: reloaded
+#  when: firewall_d.changed

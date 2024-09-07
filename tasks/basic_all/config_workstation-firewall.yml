@@ -4,30 +4,28 @@
 # # Info: ufw in install script bereits gesatartet + enabled
 
 # ### UFW - allow
-- name: UFW - allow KDE Connect / GSConnect (tcp) (Ubuntu)
+- name: UFW - allow KDE Connect / GSConnect (tcp) (all)
   community.general.ufw:
     rule: allow
     port: 1714:1764
     proto: tcp
     comment: KDE Connect / GSConnect
-  when: ansible_distribution == "Ubuntu"
   register: firewall_ufw
 
-- name: UFW - allow KDE Connect / GSConnect (udp) (Ubuntu)
+- name: UFW - allow KDE Connect / GSConnect (udp) (all)
   community.general.ufw:
     rule: allow
     port: 1714:1764
     proto: udp
     comment: KDE Connect / GSConnect
-  when: ansible_distribution == "Ubuntu"
   register: firewall_ufw
 
 # ### UFW - reload
-- name: UFW - reload (Ubuntu)
+- name: UFW - reload (all)
   community.general.ufw:
     state: reloaded
-  when: ansible_distribution == "Ubuntu" and
-    firewall_ufw.changed
+  when:
+    - firewall_ufw.changed
 
 # #################
 # ### firewalld ###
@@ -50,16 +48,16 @@
 # https://docs.ansible.com/ansible/latest/collections/ansible/posix/firewalld_module.html#notes
 # https://docs.ansible.com/ansible/latest/reference_appendices/python_3_support.html#using-python-3-on-the-managed-machines-with-commands-and-playbooks
 
-- name: Firewalld - allow KDE Connect (Archlinux)
-  become: true
-  ansible.builtin.shell:
-    cmd: firewall-cmd --permanent --add-service kdeconnect
-  when: ansible_distribution in ["Archlinux"]
+#- name: Firewalld - allow KDE Connect (Archlinux)
+#  become: true
+#  ansible.builtin.shell:
+#    cmd: firewall-cmd --permanent --add-service kdeconnect
+#  when: ansible_distribution in ["Archlinux"]
 
-- name: Firewalld - reload (Archlinux)
-  ansible.builtin.service:
-    name: firewalld
-    state: reloaded
-  when:
-    - ansible_distribution in ["Archlinux"]
-    - firewall_d.changed
+#- name: Firewalld - reload (Archlinux)
+#  ansible.builtin.service:
+#    name: firewalld
+#    state: reloaded
+#  when:
+#    - ansible_distribution in ["Archlinux"]
+#    - firewall_d.changed

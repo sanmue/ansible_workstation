@@ -40,6 +40,7 @@
       - git # bereits installiert (bootstrap)
       - gpick
       - grsync
+      - gufw # graphical user interface for ufw
       - hplip # Drivers for HP DeskJet, OfficeJet, Photosmart, Business Inkjet and some LaserJet
       - htop
       - hunspell
@@ -70,6 +71,7 @@
       - tk # Graphical User Interface Toolkit for Tcl   # z.B. pyenv install 3.11.3: requirement
       - tmux
       - trash-cli # Command line trashcan (recycle bin) interface
+      - ufw
       - unzip
       - vim # bereits installiert (bootstrap)
       - vim-ale # Lint Engine (plugin for vim)
@@ -111,7 +113,7 @@
       - firefox
       - firefox-i18n-en-us
       - flake8 # The modular source code checker: pep8, pyflakes and co
-      - firewalld # ggf. bereits installiert (bootstrap)
+      # - firewalld # ggf. bereits installiert (bootstrap) -> ufw (bereits installiert (bootstrap))
       - foliate # A simple and modern GTK eBook reader
       - freerdp # u.a. für Remmina
       - github-cli
@@ -214,7 +216,7 @@
       - gh # GitHub CLI, GitHub\u2019s official command line tool
       - gitk
       - gpg
-      - gufw # gui for ufw
+      # - gufw # gui for ufw
       - hunspell-de-de
       - hunspell-en-us
       - kdeconnect
@@ -242,7 +244,7 @@
       # - fonts-firacode
       # - fonts-jetbrains-mono
       - ueberzug # command line utility which draws images on terminals (in combi with X11?) (u.a. wg. nnn)
-      - ufw # bereits installiert (bootstrap)
+      # - ufw # bereits installiert (bootstrap) -> s. auch oben: alle (umstellung allgemein auf ufw)
       - units # converts between different systems of units
       - vorta # Desktop Client for Borg Backup
       - vim-python-jedi # autocompletion tool for Python - VIM addon files

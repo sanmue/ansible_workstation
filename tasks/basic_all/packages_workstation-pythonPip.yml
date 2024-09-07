@@ -77,7 +77,7 @@
     creates: "/home/{{ env_user }}/.ansible_PythonPip"
 
 # Voraussetzung für 'ansible.builtin.pip' Modul: pip, virtualenv, setuptools or packaging
-- name: Python - pip - install libs via ansible builtin pip - pyhton_pip_requirements.txt (all)
+- name: Python - pip - install libs via ansible builtin pip - python_pip_requirements.txt (all)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.pip:
@@ -86,7 +86,7 @@
     virtualenv_command: "pyenv virtualenv"
     virtualenv: "{{ lookup('ansible.builtin.env', 'PYENV_ROOT') }}/versions/{{ ansible_python_version }}"
 
-# - name: Python - pip - install libs via builtin shell - pyhton_pip_requirements.txt (all)
+# - name: Python - pip - install libs via builtin shell - python_pip_requirements.txt (all)
 #   become: true
 #   become_user: "{{ env_user }}"
 #   ansible.builtin.shell:

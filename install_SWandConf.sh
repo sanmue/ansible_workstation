@@ -429,8 +429,8 @@ Arch* | Endeavour*)
         fi
     fi
 
-    echo -e "\nInstallation initial benoetigte Software (curl firewalld git openssh rsync vim)" # python-pipx
-    sudo pacman -S --needed --noconfirm ansible ansible-core curl firewalld git openssh rsync vim # python-pipx
+    echo -e "\nInstallation initial benoetigte Software (curl  git openssh rsync ufw vim)" # python-pipx firewalld
+    sudo pacman -S --needed --noconfirm ansible ansible-core curl git openssh rsync ufw vim # python-pipx firewalld
 
     echo -e "\nInstallation benoetigte Softwarepackages zur Installation von AUR helpers, AUR-Packages..."
     sudo pacman -S --needed --noconfirm base-devel
@@ -449,7 +449,9 @@ Arch* | Endeavour*)
     [[ $(systemd-detect-virt) != *"none"* ]] && sudo pacman -S --needed --noconfirm spice-vdagent
 
     echo -e "\nAktiviere Firewall 'firewalld' und erlaube ssh ..."
-    sudo systemctl enable --now firewalld.service && sudo firewall-cmd --zone=public --add-service=ssh --permanent && sudo firewall-cmd --reload
+    # sudo systemctl enable --now firewalld.service && sudo firewall-cmd --zone=public --add-service=ssh --permanent && sudo firewall-cmd --reload
+    sudo ufw default deny && sudo sudo ufw limit ssh comment 'SSH' && sudo ufw enable && sudo ufw reload
+    sudo ufw status verbose
 
     echo -e "\nStarte und aktiviere sshd.service..." # wg. ssh von anderer Maschine für evtl. todos/checks, ...
     sudo systemctl enable --now sshd.service         # wird später in Ansible task (services) wieder deaktiviert (ober noch nicht gestoppt)
@@ -496,7 +498,8 @@ Ubuntu*)
     fi
 
     echo -e "\nAktiviere Firewall 'ufw' und erlaube ssh ..."
-    sudo ufw enable && sudo ufw allow ssh comment 'SSH' && sudo ufw reload
+    sudo ufw default deny && sudo sudo ufw limit ssh comment 'SSH' && sudo ufw enable && sudo ufw reload
+    sudo ufw status verbose
     ;;
 
 Debian*)
@@ -547,7 +550,8 @@ Debian*)
     sudo systemclt start ssh && sudo systemctl enable ssh
 
     echo -e "\nAktiviere Firewall 'ufw' und erlaube ssh ..."
-    sudo ufw enable && sudo ufw allow ssh comment 'SSH' && sudo ufw reload
+    sudo ufw default deny && sudo sudo ufw limit ssh comment 'SSH' && sudo ufw enable && sudo ufw reload
+    sudo ufw status verbose
     ;;
 
 *)
