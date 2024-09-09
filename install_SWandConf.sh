@@ -448,7 +448,7 @@ Arch* | Endeavour*)
     echo -e "\n Installation (wenn VM) spice agent for Linux guests (z.B. für clipboard sharing zwischen host+guest)"
     [[ $(systemd-detect-virt) != *"none"* ]] && sudo pacman -S --needed --noconfirm spice-vdagent
 
-    echo -e "\nAktiviere Firewall 'firewalld' und erlaube ssh ..."
+    echo -e "\nAktiviere Firewall und erlaube ssh ..."
     # sudo systemctl enable --now firewalld.service && sudo firewall-cmd --zone=public --add-service=ssh --permanent && sudo firewall-cmd --reload
     sudo ufw default deny && sudo sudo ufw limit ssh comment 'SSH' && sudo ufw enable && sudo ufw reload
     sudo ufw status verbose
@@ -591,8 +591,9 @@ curl -sS "https://starship.rs/install.sh" >"/home/${userid}/starship_install.sh"
 
 echo -e "\nAnsible-Playbook starten ..."
 echo -e "\e[0;33m### Info\e[39m"
-echo -e "\e[0;33m#   - If you encounter a problem/error while executing the playbook (e.g. with pip / python, ...)\e[39m"
-echo -e "\e[0;33m#     logout + login and start the script / playbook again (for other errors a reboot may be needed)\e[39m"
+echo -e "\e[0;33m#   - If you encounter a problem/error while executing the playbook (e.g. with pip / python, ...):\e[39m"
+echo -e "\e[0;33m#     Close and reopen terminal or logout + login and start the script / playbook again\e[39m"
+echo -e "\e[0;33m#     (For other errors a reboot may be needed)\e[39m"
 echo -e "\e[0;33m#   - If VS Code (Code OSS) opens you can simply close it again or leave it open until script is finished\e[39m"
 echo -e "\e[0;33m###\e[39m\n"
 

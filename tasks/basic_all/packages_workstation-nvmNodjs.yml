@@ -1,0 +1,92 @@
+# #################
+# ### NVM / Node.js
+# #################
+# siehe auch ...all-settings-misc.yml (shell config)
+
+# https://github.com/nvm-sh/nvm?tab=readme-ov-file#ansible
+# mit fester Versionsangabe
+# - name: Install nvm
+#   ansible.builtin.shell: >
+#     curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
+#   args:
+#     creates: "{{ ansible_env.HOME }}/.nvm/nvm.sh"
+
+# Variable Variante im Folgenden, nimmt aktuelle nvm Version
+# Kombi aus:
+# - https://github.com/nvm-sh/nvm?tab=readme-ov-file#git-install
+# - https://github.com/nvm-sh/nvm?tab=readme-ov-file#manual-install
+
+# - name: NvmNodejs - Clone nvm github repo (all)
+#   become: true
+#   become_user: "{{ env_user }}"
+#   ansible.builtin.git:
+#     repo: 'https://github.com/nvm-sh/nvm.git'
+#     dest: "/home/{{ env_user }}/.nvm"
+#     ssh_opts: "-o IdentitiesOnly=yes"
+#     accept_hostkey: true
+# fatal: [localhost]: FAILED! => {"changed": false, "msg": "Failed to init/update submodules: Submodule 'test/fixtures/nvmrc' (git@github.com:nvm-sh/nvmrc.git) registered for path 'test/fixtures/nvmrc'\nCloning into '/home/{{ env_user }}/.nvm/test/fixtures/nvmrc'...\ngit@github.com: Permission denied (publickey).\r\nfatal: Could not read from remote repository.\n\nPlease make sure you have the correct access rights\nand the repository exists. ...
+# TODO: fix
+
+- name: NvmNodejs - Clone nvm github repo (all)
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.shell:
+    cmd: "git clone https://github.com/nvm-sh/nvm.git /home/{{ env_user }}/.nvm"
+  args:
+    creates: "/home/{{ env_user }}/.nvm"
+
+- name: NvmNodejs - Register current nvm version of cloned git repo (all)
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.shell:
+    cmd: git describe --abbrev=0 --tags --match "v[0-9]*" $(git rev-list --tags --max-count=1) # letztes Tag mit "v[Ziffern]"" -> Versions-Nr
+    chdir: "/home/{{ env_user }}/.nvm/"
+  register: nvmversion
+
+- name: NvmNodejs - Print current nvm version from cloned git repo (all)
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.debug:
+    msg: "{{ nvmversion.stdout }}"
+
+- name: NvmNodejs - Checkout current nvm version of cloned git repo (all)
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.shell:
+    cmd: "git checkout {{ nvmversion.stdout }}"
+    chdir: /home/{{ env_user }}/.nvm/
+
+#    - name: NvmNodejs - Checkout latest nvm version of cloned git repo (all)
+#      become: true
+#      become_user: "{{ env_user }}"
+#      ansible.builtin.git:
+#        repo: 'https://github.com/nvm-sh/nvm.git'
+#        dest: /home/{{ env_user }}/.nvm
+#        accept_hostkey: true
+#        force: true
+#        update: true
+#        version: "{{ nvmversion.stdout }}"
+# Fehler # TODO
+
+# - name: NvmNodejs - Loads nvm + nvm bash_completion + installs current nodejs version via nvm (all)
+#   become: true
+#   become_user: "{{ env_user }}"
+#   ansible.builtin.shell: |
+#     NVM_DIR="$HOME/.nvm"
+#     [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # load nvm
+
+#     nvm install node
+
+#     exit 0
+
+- name: NvmNodejs - Loads nvm + installs current nodejs version via nvm (all)
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.shell:
+    cmd: "source /home/{{ env_user }}/.nvm/nvm.sh && nvm install node"
+
+- name: NvmNodejs - Install packages via npm (all)
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.shell:
+    cmd: npm install yaml-language-server

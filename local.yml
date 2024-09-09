@@ -1,5 +1,4 @@
 ---
-
 # run first: tasks/basic_all/ScriptsExtern/install_SWandConf.sh
 
 - name: Gather Facts and Variables
@@ -10,7 +9,6 @@
   pre_tasks:
     - name: Pre Tasks - Gather Facts and Variables
       ansible.builtin.import_tasks: tasks/basic_all/config_workstation-ansibleFacts.yml
-
 
 - name: Config + fix repos + update
   hosts: localhost
@@ -24,7 +22,6 @@
     - name: Pre Tasks - all update
       ansible.builtin.import_tasks: tasks/basic_all/all_update.yml
 
-
 - name: Install and config snapper+btrfs
   hosts: localhost
   connection: local
@@ -37,7 +34,6 @@
     #   ansible.builtin.import_tasks: tasks/basic_all/packages_workstation-snapperBtrfs.yml
     - name: Config Services - snapper+btrfs
       ansible.builtin.import_tasks: tasks/basic_all/config_all-services-snapperBtrfs.yml
-
 
 - name: Software, Firewall, Servcices, VM, User, Settings
   hosts: localhost
@@ -123,10 +119,13 @@
     - name: Pip and Pipx install
       ansible.builtin.import_tasks: tasks/basic_all/packages_workstation-pythonPip.yml
     # ----------------------------------------------------------
+    # ### NVM / Node.js
+    - name: NVM Node.js
+      ansible.builtin.import_tasks: tasks/basic_all/packages_workstation-nvmNodjs.yml
+    # ----------------------------------------------------------
     # ### cleanup:
     - name: Cleanup
       ansible.builtin.import_tasks: tasks/basic_all/all_cleanup.yml
-
 
 - name: Genome Shell Extension + Desktop Settings
   hosts: localhost
@@ -141,7 +140,6 @@
     - name: Config Gnome Desktop Preferences
       ansible.builtin.import_tasks: tasks/Desktop_Gnome/config_workstation-Gnome-DesktopPreferences.yml
 
-
 - name: Write Final Message
   hosts: localhost
   connection: local
@@ -151,8 +149,6 @@
     - name: Write Final Message
       ansible.builtin.debug:
         msg: "Please restart the system for the changes to take effect!"
-
-
 # - name: Reboot system
 #   hosts: localhost
 #   connection: local

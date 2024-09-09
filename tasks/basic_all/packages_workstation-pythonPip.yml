@@ -21,7 +21,7 @@
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.debug:
-    msg: "Wenn es im Folgeschritt zu Fehlermelung kommt: source .zshrc/.bashrc oder Terminal neu starten und nochmal Playbook starten."
+    msg: "Wenn es in einem Folgeschritt zu Fehlermelung kommt: Terminal schließen + wieder neu öffnen + nochmal Script/Playbook starten"
 
 - name: Python - pip - upgrade pip (env_user, all)
   become: true
