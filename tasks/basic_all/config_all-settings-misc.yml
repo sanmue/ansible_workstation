@@ -2,7 +2,7 @@
 # ### grub2 bootloader
 # ### ################
 
-- name: Get stats of etc-default-grup (all)
+- name: Get stats of etc-default-grub (all)
   ansible.builtin.stat:
     path: /etc/default/grub
   register: etcdefgrub
@@ -11,8 +11,8 @@
   ansible.builtin.lineinfile:
     path: /etc/default/grub
     # regexp: '^#GRUB_ENABLE_CRYPTODISK.*'
-    insertafter: '^#GRUB_ENABLE_CRYPTODISK.*'
-    line: 'GRUB_ENABLE_CRYPTODISK=y'
+    insertafter: "^#GRUB_ENABLE_CRYPTODISK.*"
+    line: "GRUB_ENABLE_CRYPTODISK=y"
     state: present
     backup: true
   when:
@@ -40,11 +40,11 @@
 # ### ##########################
 - name: All settings misc - Create '/home/01_Videos-min' - env_user permission (all)
   ansible.builtin.file:
-    path: '/home/01_Videos-min/'
+    path: "/home/01_Videos-min/"
     state: directory
     owner: "{{ env_user }}"
     group: "{{ env_user }}"
-    mode: '0710'
+    mode: "0710"
 
 # ##########################################
 # ### bashrc - add additional Paths + Config
@@ -66,7 +66,7 @@
     group: "{{ env_user }}"
     mode: u=rw,g=r,o=r
   when:
-    - not stat_bashrc_user.stat.exists   # oder: - stat_bashrc_user.stat.exists == false
+    - not stat_bashrc_user.stat.exists # oder: - stat_bashrc_user.stat.exists == false
 
 - name: All settings misc - Bashrc - Insert/Update additional paths and config - starship shell prompt (User, all)
   ansible.builtin.blockinfile:
@@ -91,7 +91,7 @@
   ansible.builtin.copy:
     src: files/config_all-settings-misc-starship2.toml
     dest: "/home/{{ env_user }}/.config/starship.toml"
-    mode: '0644'
+    mode: "0644"
     backup: false
 
 - name: All settings misc - Bashrc - additional EXPORTS (User, all)
@@ -101,7 +101,7 @@
     marker: "### {mark} 'additional EXPORTS' ANSIBLE MANAGED BLOCK ###"
     block: |
       # ------------------
-      # additional EXPORTS 
+      # additional EXPORTS
       # ------------------
       # https://github.com/ChrisTitusTech/mybash/blob/main/.bashrc
       # https://wiki.archlinux.org/title/Sudo#Colored_password_prompt
@@ -256,7 +256,7 @@
   ansible.builtin.file:
     path: "/root/.bashrc"
     state: touch
-    mode: '0644'
+    mode: "0644"
   when:
     - not stat_bashrc_root.stat.exists
 
@@ -341,7 +341,7 @@
     dest: /usr/share/zsh/custom-zsh-config
     owner: root
     group: root
-    mode: '0644'
+    mode: "0644"
     backup: false
 
 # https://stackoverflow.com/questions/65020310/how-to-copy-file-content-to-another-file-in-ansible-without-overwriting-the-seco
@@ -369,7 +369,7 @@
   ansible.builtin.replace:
     path: "/home/{{ env_user }}/.zshrc"
     regexp: '^"##'
-    replace: '##'
+    replace: "##"
 
 # - name: All settings misc - Zshrc - source cutom zsh config in .zshrc (User, all)
 #  ansible.builtin.blockinfile:
@@ -529,7 +529,7 @@
       # tilix - vte config
       # ------------------
       # * https://gnunn1.github.io/tilix-web/manual/vteconfig/
-      
+
       if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
         source /etc/profile.d/vte.sh
       fi
@@ -544,7 +544,7 @@
       # 'nnn' terminal file manager
       # ---------------------------
       # * https://github.com/jarun/nnn
-      
+
       export NNN_FIFO='/tmp/nnn.fifo'
       export NNN_TERMINAL='xterm'
       export NNN_PLUG='d:diffs;o:fzopen;j:autojump;p:preview-tui;r:pdfread;u:getplugs;v:imgview'
@@ -599,7 +599,6 @@
       # -------------------------------
       systemctl --user import-environment PATH
 
-
 # --------
 # ### root
 - name: All settings misc - Zshrc - check status (root, all)
@@ -611,7 +610,7 @@
   ansible.builtin.file:
     path: "/root/.zshrc"
     state: touch
-    mode: '0644'
+    mode: "0644"
   when:
     - not stat_bashrc_root.stat.exists
 
@@ -638,7 +637,6 @@
       export VISUAL=vim
       export EDITOR="${VISUAL}"
 
-
 # #################
 # ### nnn - plugins
 # #################
@@ -650,14 +648,12 @@
   ansible.builtin.get_url:
     url: https://raw.githubusercontent.com/jarun/nnn/master/plugins/getplugs
     dest: "/home/{{ env_user }}/Downloads/getplugs.sh"
-    mode: '0777'
+    mode: "0777"
 
 - name: All settings misc - nnn - plugins - exec install script (all, env_user)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.script: "/home/{{ env_user }}/Downloads/getplugs.sh"
-
-
 
 # ###############################
 # ### xterm (wg. nnn preview-tui)
@@ -682,7 +678,6 @@
       XTerm*faceName:     DejaVuSansMono
       XTerm*faceSize:     13
 
-
 # #########################
 # ### starship shell prompt
 # #########################
@@ -692,9 +687,8 @@
     dest: "/usr/local/bin/starship_update.sh"
     owner: root
     group: root
-    mode: '0755'
+    mode: "0755"
     backup: true
-
 
 # #######
 # ### zsh
@@ -705,10 +699,10 @@
     dest: "/usr/local/bin/zshpluginsgit_update.sh"
     owner: root
     group: root
-    mode: '0755'
+    mode: "0755"
     backup: true
   when: ansible_distribution in ["Ubuntu"] or
-        ansible_os_family == "Suse"
+    ansible_os_family == "Suse"
 
 # fatal: detected dubious ownership in repository at '/usr/share/zsh/plugins/...; To add an exception:
 - name: All settings misc - zsh plugin git repo - add safe.directory - autosuggestions (Ubuntu,Suse)
@@ -729,7 +723,6 @@
     - ansible_distribution in ["Ubuntu"] or
       ansible_os_family == "Suse"
 
-
 # #######
 # ### vim
 # #######
@@ -748,7 +741,7 @@
     path: "/etc/vim/vimrc.local"
     backup: true
     create: true
-    mode: '0644'
+    mode: "0644"
     marker: '" ### {mark} ANSIBLE MANAGED BLOCK ###'
     block: |
       " #
@@ -845,32 +838,31 @@
 - name: All settings misc - vim plugin install from git repo - nnn.vim (all)
   become: true
   become_user: "{{ env_user }}"
-  ansible.builtin.git: 
-    repo: 'https://github.com/mcchrish/nnn.vim'
+  ansible.builtin.git:
+    repo: "https://github.com/mcchrish/nnn.vim"
     dest: "/home/{{ env_user }}/.vim/pack/git-plugins/start/nnn.vim"
     depth: 1
 
 - name: All settings misc - vim plugin install from git repo - Powerline (all)
   become: true
   become_user: "{{ env_user }}"
-  ansible.builtin.git: 
-    repo: 'https://github.com/powerline/powerline.git'
+  ansible.builtin.git:
+    repo: "https://github.com/powerline/powerline.git"
     dest: "/home/{{ env_user }}/.vim/pack/git-plugins/start/powerline"
 
 - name: All settings misc - vim plugin install from git repo - vim-airline (all)
   become: true
   become_user: "{{ env_user }}"
-  ansible.builtin.git: 
-    repo: 'https://github.com/vim-airline/vim-airline.git'
+  ansible.builtin.git:
+    repo: "https://github.com/vim-airline/vim-airline.git"
     dest: "/home/{{ env_user }}/.vim/pack/git-plugins/start/vim-airline"
 
 - name: All settings misc - vim plugin install from git repo - vim-fugitive (git) (all)
   become: true
   become_user: "{{ env_user }}"
-  ansible.builtin.git: 
-    repo: 'https://github.com/tpope/vim-fugitive.git'
+  ansible.builtin.git:
+    repo: "https://github.com/tpope/vim-fugitive.git"
     dest: "/home/{{ env_user }}/.vim/pack/git-plugins/start/vim-fugitive"
-
 
 # ##########
 # ### ClamAV
@@ -883,7 +875,7 @@
     path: "/etc/clamav/clamd.conf"
     backup: true
     create: true
-    marker: '# ### {mark} ANSIBLE MANAGED BLOCK - ExcludePath ###'
+    marker: "# ### {mark} ANSIBLE MANAGED BLOCK - ExcludePath ###"
     block: |
       # Don't scan files and directories matching regex
       # This directive can be used multiple times
@@ -896,7 +888,7 @@
   ansible.builtin.blockinfile:
     path: "/etc/clamav/clamd.conf"
     backup: true
-    marker: '# ### {mark} ANSIBLE MANAGED BLOCK - Limits ###'
+    marker: "# ### {mark} ANSIBLE MANAGED BLOCK - Limits ###"
     block: |
       # Files larger than this limit won't be scanned. Affects the input file itself
       # as well as files contained inside it (when the input file is an archive, a
@@ -915,7 +907,7 @@
   ansible.builtin.blockinfile:
     path: "/etc/clamav/clamd.conf"
     backup: true
-    marker: '# ### {mark} ANSIBLE MANAGED BLOCK - VirusEvent ###'
+    marker: "# ### {mark} ANSIBLE MANAGED BLOCK - VirusEvent ###"
     block: |
       # Execute a command when virus is found. In the command string %v will
       # be replaced with the virus name and %f will be replaced with the file name.
@@ -933,7 +925,7 @@
     dest: "/etc/clamav/VirusEvent.sh"
     owner: root
     group: root
-    mode: '0755'
+    mode: "0755"
     backup: true
 
 - name: All settings misc - Users - clamav - services - bashScript to scan HOME folder (all)
@@ -942,7 +934,7 @@
     dest: "/usr/local/bin/scanHome.sh"
     owner: root
     group: root
-    mode: '0755'
+    mode: "0755"
     backup: true
 
 # ### custom folders (quarantine, logs)
@@ -952,11 +944,10 @@
     state: directory
     owner: "{{ env_user }}"
     group: "{{ env_user }}"
-    mode: '0755'
+    mode: "0755"
   loop:
     - .clam/logs
     - .clam/quarantine
-
 
 # #############################################
 # # reflector - retrieve the latest mirror list
@@ -966,8 +957,8 @@
   ansible.builtin.replace:
     path: /etc/xdg/reflector/reflector.conf
     # search_string: '# --country France,Germany'
-    regexp: '^# --country France,Germany'
-    replace: '--country Germany,France,Austria,Switzerland,Netherlands,Belgium,Sweden'
+    regexp: "^# --country France,Germany"
+    replace: "--country Germany,France,Austria,Switzerland,Netherlands,Belgium,Sweden"
     backup: true
   when:
     - ansible_distribution in ["Archlinux"]
@@ -976,8 +967,8 @@
   ansible.builtin.replace:
     path: /etc/xdg/reflector/reflector.conf
     # search_string: '--latest 5'
-    regexp: '^--latest 5'
-    replace: '--latest 8'
+    regexp: "^--latest 5"
+    replace: "--latest 8"
     backup: true
   when:
     - ansible_distribution in ["Archlinux"]
@@ -991,17 +982,17 @@
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell:
-    cmd: code >/dev/null 2>&1 &   # damit im Home-Verzeichnis der Config-Pfad von VS Code erstellt wird + später die settings.yml dorthin kopiert werden kann
+    cmd: code >/dev/null 2>&1 & # damit im Home-Verzeichnis der Config-Pfad von VS Code erstellt wird + später die settings.yml dorthin kopiert werden kann
   args:
-      creates: "/home/{{ env_user }}/.config/Code/User/globalStorage/zokugun.sync-settings/settings.yml"   # nur ausführen, wenn nicht bereits z.B. in vorhergehendem Lauf gestartet/erstellt wurde
+    creates: "/home/{{ env_user }}/.config/Code/User/globalStorage/zokugun.sync-settings/settings.yml" # nur ausführen, wenn nicht bereits z.B. in vorhergehendem Lauf gestartet/erstellt wurde
   when: ansible_distribution in ["Ubuntu"]
 
 - name: All settings misc - Start 'Code - OSS' (Arch)
   tags: workstation,arch
   ansible.builtin.shell:
-    cmd: code >/dev/null 2>&1 &   # damit im Home-Verzeichnis der Config-Pfad von VS Code erstellt wird + später die settings.yml dorthin kopiert werden kann
+    cmd: code >/dev/null 2>&1 & # damit im Home-Verzeichnis der Config-Pfad von VS Code erstellt wird + später die settings.yml dorthin kopiert werden kann
   args:
-      creates: "/home/{{ env_user }}/.config/Code - OSS/User/globalStorage/zokugun.sync-settings/settings.yml"   # nur ausführen, wenn nicht bereits z.B. in vorhergehendem Lauf gestartet/erstellt wurde
+    creates: "/home/{{ env_user }}/.config/Code - OSS/User/globalStorage/zokugun.sync-settings/settings.yml" # nur ausführen, wenn nicht bereits z.B. in vorhergehendem Lauf gestartet/erstellt wurde
   become: true
   become_user: "{{ env_user }}"
   when:
@@ -1015,7 +1006,7 @@
   ansible.builtin.file:
     path: "/home/{{ env_user }}/.config/Code - OSS//User/globalStorage/zokugun.sync-settings"
     state: directory
-    mode: '0775'
+    mode: "0775"
   when:
     - ansible_distribution in ["Archlinux"]
 
@@ -1036,7 +1027,7 @@
   ansible.builtin.file:
     path: "/home/{{ env_user }}/.config/Code/User/globalStorage/zokugun.sync-settings"
     state: directory
-    mode: '0775'
+    mode: "0775"
   when: ansible_distribution in ["Ubuntu"]
 
 - name: All settings misc - Set/Copy 'Visual Studio Code' settings-file for Extension 'Sync Settings' (Ubuntu)
@@ -1045,7 +1036,7 @@
   become_user: "{{ env_user }}"
   ansible.builtin.copy:
     src: ./files/VSCode_Extension_Sync-Settings_settings.yml
-    dest: "/home/{{ env_user }}/.config/Code/User/globalStorage/zokugun.sync-settings/settings.yml"   # Pfad bei Install des VS Code deb-Pakets (nicht bei flatpak oder snap)
+    dest: "/home/{{ env_user }}/.config/Code/User/globalStorage/zokugun.sync-settings/settings.yml" # Pfad bei Install des VS Code deb-Pakets (nicht bei flatpak oder snap)
     owner: "{{ env_user }}"
     group: "{{ env_user }}"
     mode: u=rw
@@ -1055,13 +1046,12 @@
   tags: workstation,arch
   ansible.builtin.copy:
     src: ./files/VSCode_Extension_Sync-Settings_settings.yml
-    dest: "/home/{{ env_user }}/.config/Code - OSS//User/globalStorage/zokugun.sync-settings/settings.yml"   # Pfad bei Install des VS Code deb-Pakets (nicht bei flatpak oder snap)
+    dest: "/home/{{ env_user }}/.config/Code - OSS//User/globalStorage/zokugun.sync-settings/settings.yml" # Pfad bei Install des VS Code deb-Pakets (nicht bei flatpak oder snap)
     owner: "{{ env_user }}"
     group: "{{ env_user }}"
     mode: u=rw
   when:
     - ansible_distribution == "Archlinux"
-
 
 # ########################
 # ### Ulauncher extensions
@@ -1073,7 +1063,7 @@
   ansible.builtin.file:
     path: "/home/{{ env_user }}/.local/share/ulauncher/extensions"
     state: directory
-    mode: '0755'
+    mode: "0755"
 
 - name: All settings misc - ulauncher - git clone extensions (all, env_user)
   become: true
@@ -1086,32 +1076,110 @@
     # single_branch: true
     # version: "HEAD"   # default: "HEAD"
   loop:
-    - { path: "https://github.com/Rapha149/ulauncher-bluetooth.git",              name: "ulauncher-bluetooth" }
-    - { path: "https://github.com/tchar/ulauncher-albert-calculate-anything.git", name: "ulauncher-albert-calculate-anything" }
-    - { path: "https://github.com/sergius02/ulauncher-colorconverter.git",        name: "ulauncher-colorconverter" }
-    - { path: "https://github.com/Rapha149/ulauncher-deepl.git",                  name: "ulauncher-deepl" }
-    - { path: "https://github.com/Ulauncher/ulauncher-emoji.git",                 name: "ulauncher-emoji" }
-    - { path: "https://github.com/brpaz/ulauncher-faker.git",                     name: "ulauncher-faker" }
-    - { path: "https://github.com/KuenzelIT/ulauncher-firefox-bookmarks.git",     name: "ulauncher-firefox-bookmarks" }
-    - { path: "https://github.com/hillaryychan/ulauncher-fzf.git",                name: "ulauncher-fzf" }
-    - { path: "https://github.com/friday/ulauncher-gnome-settings.git",           name: "ulauncher-gnome-settings" }
-    - { path: "https://github.com/SeoFernando25/ulauncher-gpt.git",               name: "ulauncher-gnome-settings" }
-    - { path: "https://github.com/pwnyprod/ulauncher-ipcopy.git",                 name: "ulauncher-ipcopy" }
-    - { path: "https://github.com/brpaz/ulauncher-lipsum.git",                    name: "ulauncher-lipsum" }
-    - { path: "https://github.com/RNairn01/ulauncher-meme-my-text.git",           name: "ulauncher-meme-my-text" }
-    - { path: "https://github.com/melianmiko/ulauncher-nmcli.git",                name: "ulauncher-nmcli" }
-    - { path: "https://github.com/mastdiekin/ulauncher-pypi-search.git",          name: "ulauncher-pypi-search" }
-    - { path: "https://github.com/noam09/ulauncher-remmina.git",                  name: "ulauncher-remmina" }
-    - { path: "https://github.com/lighttigerXIV/ulauncher-session-manager.git",   name: "ulauncher-session-manager" }
-    - { path: "https://github.com/xRealNeon/SpritpreiseUlauncher.git",            name: "SpritpreiseUlauncher" }
-    - { path: "https://github.com/jyvern/ulauncher-ssh.git",                      name: "ulauncher-ssh" }
-    - { path: "https://github.com/rootwork/ulauncher-symbol.git",                 name: "ulauncher-symbol" }
-    - { path: "https://github.com/lighttigerXIV/ulauncher-terminal-runner-extension.git", name: "ulauncher-terminal-runner-extension" }
-    - { path: "https://github.com/Ulauncher/ulauncher-timer.git",                 name: "ulauncher-timer" }
-    - { path: "https://github.com/brpaz/ulauncher-timestamp.git",                 name: "ulauncher-timestamp" }
-    - { path: "https://github.com/dhelmr/ulauncher-tldr.git",                     name: "ulauncher-tldr" }
-    - { path: "https://github.com/zensoup/ulauncher-unicode.git",                 name: "ulauncher-unicode" }
-    - { path: "https://github.com/NastuzziSamy/ulauncher-youtube-search.git",     name: "ulauncher-youtube-search" }
+    - {
+        path: "https://github.com/Rapha149/ulauncher-bluetooth.git",
+        name: "ulauncher-bluetooth",
+      }
+    - {
+        path: "https://github.com/tchar/ulauncher-albert-calculate-anything.git",
+        name: "ulauncher-albert-calculate-anything",
+      }
+    - {
+        path: "https://github.com/sergius02/ulauncher-colorconverter.git",
+        name: "ulauncher-colorconverter",
+      }
+    - {
+        path: "https://github.com/Rapha149/ulauncher-deepl.git",
+        name: "ulauncher-deepl",
+      }
+    - {
+        path: "https://github.com/Ulauncher/ulauncher-emoji.git",
+        name: "ulauncher-emoji",
+      }
+    - {
+        path: "https://github.com/brpaz/ulauncher-faker.git",
+        name: "ulauncher-faker",
+      }
+    - {
+        path: "https://github.com/KuenzelIT/ulauncher-firefox-bookmarks.git",
+        name: "ulauncher-firefox-bookmarks",
+      }
+    - {
+        path: "https://github.com/hillaryychan/ulauncher-fzf.git",
+        name: "ulauncher-fzf",
+      }
+    - {
+        path: "https://github.com/friday/ulauncher-gnome-settings.git",
+        name: "ulauncher-gnome-settings",
+      }
+    - {
+        path: "https://github.com/SeoFernando25/ulauncher-gpt.git",
+        name: "ulauncher-gnome-settings",
+      }
+    - {
+        path: "https://github.com/pwnyprod/ulauncher-ipcopy.git",
+        name: "ulauncher-ipcopy",
+      }
+    - {
+        path: "https://github.com/brpaz/ulauncher-lipsum.git",
+        name: "ulauncher-lipsum",
+      }
+    - {
+        path: "https://github.com/RNairn01/ulauncher-meme-my-text.git",
+        name: "ulauncher-meme-my-text",
+      }
+    - {
+        path: "https://github.com/melianmiko/ulauncher-nmcli.git",
+        name: "ulauncher-nmcli",
+      }
+    - {
+        path: "https://github.com/mastdiekin/ulauncher-pypi-search.git",
+        name: "ulauncher-pypi-search",
+      }
+    - {
+        path: "https://github.com/noam09/ulauncher-remmina.git",
+        name: "ulauncher-remmina",
+      }
+    - {
+        path: "https://github.com/lighttigerXIV/ulauncher-session-manager.git",
+        name: "ulauncher-session-manager",
+      }
+    - {
+        path: "https://github.com/xRealNeon/SpritpreiseUlauncher.git",
+        name: "SpritpreiseUlauncher",
+      }
+    - {
+        path: "https://github.com/jyvern/ulauncher-ssh.git",
+        name: "ulauncher-ssh",
+      }
+    - {
+        path: "https://github.com/rootwork/ulauncher-symbol.git",
+        name: "ulauncher-symbol",
+      }
+    - {
+        path: "https://github.com/lighttigerXIV/ulauncher-terminal-runner-extension.git",
+        name: "ulauncher-terminal-runner-extension",
+      }
+    - {
+        path: "https://github.com/Ulauncher/ulauncher-timer.git",
+        name: "ulauncher-timer",
+      }
+    - {
+        path: "https://github.com/brpaz/ulauncher-timestamp.git",
+        name: "ulauncher-timestamp",
+      }
+    - {
+        path: "https://github.com/dhelmr/ulauncher-tldr.git",
+        name: "ulauncher-tldr",
+      }
+    - {
+        path: "https://github.com/zensoup/ulauncher-unicode.git",
+        name: "ulauncher-unicode",
+      }
+    - {
+        path: "https://github.com/NastuzziSamy/ulauncher-youtube-search.git",
+        name: "ulauncher-youtube-search",
+      }
 
 # ##########
 # ### rclone
@@ -1121,7 +1189,7 @@
     path: "/home/{{ env_user }}/.local/bin"
     owner: "{{ env_user }}"
     group: "{{ env_user }}"
-    mode: '0755'
+    mode: "0755"
     state: directory
 
 - name: All settings misc - rclone - copy script to mount pcloud (all, env_user)
@@ -1130,8 +1198,7 @@
     dest: "/home/{{ env_user }}/.local/bin/rclone_pCloud-Mnt.sh"
     owner: "{{ env_user }}"
     group: "{{ env_user }}"
-    mode: '0755'
-
+    mode: "0755"
 
 # #############################
 # ### AppConfData backup/update
@@ -1142,5 +1209,5 @@
     dest: "/usr/local/bin/rsync_appConfData-intern.sh"
     owner: root
     group: root
-    mode: '0755'
+    mode: "0755"
     backup: true

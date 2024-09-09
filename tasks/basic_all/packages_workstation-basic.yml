@@ -79,6 +79,7 @@
       - w3m # Text-based Web browser as well as pager (u.a. wg. nnn)
       - wget
       - xdg-utils
+      - yaml-language-server
       - yq # Command-line YAML, XML, TOML processor - jq wrapper for YAML/XML/TOML documents
       - xterm # (u.a. wg. nnn)
       - zoxide # A smarter cd command for your terminal (u.a. wg. nnn)
@@ -99,6 +100,7 @@
       - chromium
       - cronie # z.B. für clamtk + timeshift # Daemon that runs specified programs at scheduled times and related tools
       - code # The Open Source build of Visual Studio Code (vscode) editor
+      - compsize # Calculate compression ratio of a set of files on Btrfs
       - cups-pdf
       - discord
       - enchant # A wrapper library for generic spell checking
@@ -201,6 +203,7 @@
     name:
       - anki
       - borgbackup # Deduplicating backup program with compression and authenticated encryption
+      # - btrfs-compsize
       - clamav-daemon
       # - cockpit-networkmanager          # Cockpit user interface for networking
       - eslint # An AST-based pattern checker for JavaScript (für VS Code / Code - OSS Extension)
@@ -285,6 +288,14 @@
 #    - ansible_distribution_major_version|int >= 22
 #    - env_desktop == "ubuntu:gnome"
 
+- name: Install basic packages - xclip (all + x11 display server)
+  ansible.builtin.package:
+    state: present
+    name:
+      - xclip # Command line interface to the X11 clipboard # Voraussetzung für snap-package "espanso"
+  when:
+    - env_displayserver == "x11"
+
 - name: Install basic packages - prereqesites for Pyenv (Ubuntu)
   ansible.builtin.package:
     state: present
@@ -308,32 +319,4 @@
       - xz-utils
       - tk-dev
   when: ansible_distribution == "Ubuntu"
-
-- name: Install basic packages - xclip (all + x11 display server)
-  ansible.builtin.package:
-    state: present
-    name:
-      - xclip # Command line interface to the X11 clipboard # Voraussetzung für snap-package "espanso"
-  when:
-    - env_displayserver == "x11"
-
-- name: Install basic packages - Get stat of .pyenv (all)
-  ansible.builtin.stat:
-    path: "/home/{{ env_user }}/.pyenv"
-  register: pyenvfolder
-
-- name: Install basic packages - Get stat of pyenv-installer skript (all)
-  ansible.builtin.stat:
-    path: "/home/{{ env_user }}/Downloads/pyenv-installer.sh"
-  register: pyenvskript
-
-- name: Install basic packages - Execute Installer-Skript for Pyenv (Ubuntu)
-  become: true
-  become_user: "{{ env_user }}"
-  ansible.builtin.script:
-    cmd: "/home/{{ env_user }}/Downloads/pyenv-installer.sh"
-  args:
-    creates: "/home/{{ env_user }}/.pyenv" # Run only if '.pyenv'-directory does NOT exist (from previous run)
-  when:
-    - ansible_distribution == "Ubuntu"
-    - pyenvskript.stat.exists == true
+# Pyenv Install: siehe ...localPackageInstall.yml

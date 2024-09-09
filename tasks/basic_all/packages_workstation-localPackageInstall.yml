@@ -2,12 +2,40 @@
 # Install from locally downloades packages
 # ----------------------------------------
 
+# ### #####
+# ### Pyenv
+# ### #####
+#
+# - Arch: via paketmanager (...workstation-basic.yml)
+# - Debian/Ubuntu: siehe installer script: "Download Installer-Skript for Pyenv"
+# #TODO: von installer script hierher
+- name: Install basic packages - Get stat of .pyenv (all)
+  ansible.builtin.stat:
+    path: "/home/{{ env_user }}/.pyenv"
+  register: pyenvfolder
+
+- name: Install basic packages - Get stat of pyenv-installer skript (all)
+  ansible.builtin.stat:
+    path: "/home/{{ env_user }}/Downloads/pyenv-installer.sh"
+  register: pyenvskript
+
+- name: Install basic packages - Execute Installer-Skript for Pyenv (Ubuntu)
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.script:
+    cmd: "/home/{{ env_user }}/Downloads/pyenv-installer.sh"
+  args:
+    creates: "/home/{{ env_user }}/.pyenv" # Run only if '.pyenv'-directory does NOT exist (from previous run)
+  when:
+    - ansible_distribution == "Ubuntu"
+    - pyenvskript.stat.exists == true
+
 # #####################################
 # ### Citrix Workspace App (ICA-Client)
 # #####################################
 
 # ### ---
-# ### Info: siehe ggf. Fix f�r Gnome 44+
+# ### Info: siehe ggf. Fix für Gnome 44+
 # ### ---
 
 - name: Local packages install - install Certificates for Citrix Workspace App (ICA-Client) from Mozilla cert-folder + pem-convert (Ubuntu)
@@ -25,10 +53,11 @@
   when:
     - ansible_distribution == "Ubuntu"
 
-
 # ######################
 # ### Visual Studio Code
 # ######################
+#
+# installer deb-file: download siehe installer script
 
 - name: Local packages install - get stat /usr/bin/code (all)
   ansible.builtin.stat:
@@ -64,14 +93,13 @@
     - ansible_distribution == "Ubuntu"
     - usrbincode.stat.exists == false
 
-
 # #########
 # ### Fonts
 # #########
 # * https://askubuntu.com/questions/1384501/installing-custom-fonts-on-ubuntu-server
 # * https://wiki.archlinux.org/title/Fonts#Manual_installation
 # * https://ostechnix.com/install-nerd-fonts-to-add-glyphs-in-your-code-on-linux/
-# Meslo Nerd Font patched for Powerlevel10k: 
+# Meslo Nerd Font patched for Powerlevel10k:
 # * https://github.com/romkatv/powerlevel10k?tab=readme-ov-file#meslo-nerd-font-patched-for-powerlevel10k
 # (Nerd Fonts:)
 # * https://github.com/ryanoasis/nerd-fonts/raw/HEAD/patched-fonts
@@ -83,7 +111,7 @@
 - name: Local packages install - create local font directory - systemwide (all)
   ansible.builtin.file:
     path: /usr/local/share/fonts
-    mode: '0755'
+    mode: "0755"
     state: directory
 
 - name: Local packages install - Nerd Fonts - powerlevel10k - MesloLGS NF - systemwide (all)
@@ -92,7 +120,7 @@
     method: GET
     follow_redirects: safe
     dest: /usr/local/share/fonts/
-    mode: '0644'
+    mode: "0644"
   loop:
     - https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Regular.ttf
     - https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold.ttf
@@ -101,7 +129,6 @@
 
 - name: Local packages install - Fonts - Build font information cache files for apps using fontconfig (all)
   ansible.builtin.shell: fc-cache -f
-
 
 # #########################
 # ### starship shell prompt
@@ -130,7 +157,7 @@
   ansible.builtin.file:
     path: /usr/local/bin
     state: directory
-    mode: '0755'
+    mode: "0755"
 
 - name: Local packages install - starship shell prompt (env_user) - execute install-file (all)
   become: true
@@ -141,7 +168,6 @@
 
 # config: in config_all-settingsmisc.yml; update: systemd timer
 # https://starship.rs/
-
 
 # ###############################
 # ### zsh plugins - from git repo
@@ -155,7 +181,7 @@
     clone: true
     update: true
   when: ansible_distribution in ["Ubuntu"] or
-        ansible_os_family == "Suse"
+    ansible_os_family == "Suse"
 
 - name: Local packages install - install zsh plugin - zsh-syntax-highlighting (Ubuntu,Suse)
   ansible.builtin.git:
