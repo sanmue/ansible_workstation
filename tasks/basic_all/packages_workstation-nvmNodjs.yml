@@ -68,22 +68,22 @@
 #        version: "{{ nvmversion.stdout }}"
 # Fehler # TODO
 
-# - name: NvmNodejs - Loads nvm + nvm bash_completion + installs current nodejs version via nvm (all)
-#   become: true
-#   become_user: "{{ env_user }}"
-#   ansible.builtin.shell: |
-#     NVM_DIR="$HOME/.nvm"
-#     [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # load nvm
-
-#     nvm install node
-
-#     exit 0
-
-- name: NvmNodejs - Loads nvm + installs current nodejs version via nvm (all)
+- name: NvmNodejs - Loads nvm + nvm bash_completion + installs current nodejs version via nvm (all)
   become: true
   become_user: "{{ env_user }}"
-  ansible.builtin.shell:
-    cmd: "source /home/{{ env_user }}/.nvm/nvm.sh && nvm install node"
+  ansible.builtin.shell: |
+    NVM_DIR="$HOME/.nvm"
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # load nvm
+
+    nvm install node
+
+    exit 0
+
+# - name: NvmNodejs - Loads nvm + installs current nodejs version via nvm (all)
+#   become: true
+#   become_user: "{{ env_user }}"
+#   ansible.builtin.shell:
+#     cmd: "source /home/{{ env_user }}/.nvm/nvm.sh && nvm install node"
 
 - name: NvmNodejs - Install packages via npm (all)
   become: true
