@@ -614,8 +614,8 @@ Arch* | Endeavour*)
         yay -S icaclient && touch "/home/${userid}/.ansible_installScript_AUR-icaclientInstalled" && mkdir -p "/home/${userid}/.ICAClient/cache" &&
             sudo rsync -aPhEv /opt/Citrix/ICAClient/config/{All_Regions,Trusted_Region,Unknown_Region,canonicalization,regions}.ini "/home/${userid}/.ICAClient/"
 
-        echo -e "\nCreating flag-file '.ansible_installScript_severalAurPkgInstalled'..."
-        touch "/home/${userid}/.ansible_installScript_severalAurPkgInstalled"
+        # echo -e "\nInstall Powershell from AUR..."
+        # yay -S --needed powershell-bin
 
         #echo -e "\nInstall Microsoft TTF Fonts from AUR..."
         #yay -S --needed ttf-ms-fonts && touch "/home/${userid}/.ansible_installScript_AUR-ttfmsfontsInstalled"
@@ -631,6 +631,9 @@ Arch* | Endeavour*)
 
         #echo -e "\nVM - Install virtio-win image from AUR..."
         #yay -S --needed virtio-win && touch "/home/${userid}/.ansible_installScript_AUR-vmVirtioWinInstalled"
+
+        echo -e "\nCreating flag-file '.ansible_installScript_severalAurPkgInstalled'..."
+        touch "/home/${userid}/.ansible_installScript_severalAurPkgInstalled"
     fi
     ;;
 

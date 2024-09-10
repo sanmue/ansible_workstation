@@ -43,7 +43,7 @@
   ansible.builtin.lineinfile:
     path: "/etc/pacman.conf"
     regexp: '^#\[multilib\]'
-    line: '[multilib]'
+    line: "[multilib]"
     backup: true
   when:
     - ansible_distribution == "Archlinux"
@@ -125,7 +125,6 @@
   when:
     - ansible_distribution == "Archlinux"
     - caur_exists.stat.exists | default(true) == false
-
 # #####################################
 # ### pamac.conf - Archlinux with Pamac
 # #####################################
@@ -151,84 +150,32 @@
 #     - pamac_conf.stat.exists
 
 # ##########
-# ### Ubuntu
+# ### Debian
 # ##########
 
-- name: Config Workstation addrepos - add repo for swtpm (apt, Ubuntu <22, not VM) # wg. VM: Win11 (TPM 2.0)
-  # https://launchpad.net/~smoser/+archive/ubuntu/swtpm
-  # https://launchpad.net/~stefanberger/+archive/ubuntu/swtpm
-  tags: workstation,ubuntu,addrepos,pre
-  ansible.builtin.apt_repository:
-    # repo: deb http://ppa.launchpad.net/smoser/swtpm/ubuntu focal main
-    repo: ppa:smoser/swtpm
-    state: present
-    update_cache: true
-  when:
-    - ansible_pkg_mgr == "apt"
-    - ansible_distribution == "Ubuntu"
-    - ansible_distribution_major_version|int < 22
-    - ansible_virtualization_role != "guest"
-      # ab Ubuntu 22.04 ist swtpm anscheinend in Standard-Repo mit drin
-
-# --- Firefox
-# https://fostips.com/ubuntu-21-10-two-firefox-remove-snap/
-#
-# Anmerkung: wird aktuell nicht mehr ben�tigt, da als flatpak installiert wird
-#
-# - name: Config Workstation addrepos - add repo (Mozilla Team PPA) for Firefox (apt, Ubuntu >= 22)
-#  tags: workstation,ubuntu,addrepos,pre
-#  ansible.builtin.apt_repository:
-#    repo: ppa:mozillateam/ppa
-#    state: present
-#    update_cache: yes
-#  when:
-#    - ansible_distribution == "Ubuntu"
-#    - ansible_distribution_major_version|int >= 22
-#    - ansible_pkg_mgr == "apt"
-
-# - name: Config Workstation addrepos - Set PPA Priority for Mozillateam and block Firefox from Ubuntus own repository (Ubuntu >= 22)
-#  ansible.builtin.script: "{{ env_PWD }}/tasks/basic_all/config_workstation-addrepos-ubuntu.sh"
-#  when:
-#    - ansible_distribution == "Ubuntu"
-#    - ansible_distribution_major_version|int >= 22   # Ubuntu 22.04 has transitioned from using /etc/apt/trusted.gpg to
-# using individual .gpg files located in /etc/apt/trusted.gpg.d
-#    - env_desktop in ["gnome", "ubuntu:gnome"]
-#    - "ansible_version.full is version('2.10.0', '>=')"   # 'ansible.builtin.script' ab ansible version 2.10 (welche bei Ubutnu 22.04 installiert wird)
-
-# verhindern, dass Firefox Snap-Package wieder installiert wird bei update
-- name: Config Workstation addrepos - block Firefox from Ubuntus own repository (Ubuntu >= 22)
-  ansible.builtin.script: "{{ env_PWD }}/tasks/basic_all/config_workstation-addrepos-ubuntu.sh"
-  when:
-    - ansible_distribution == "Ubuntu"
-    - ansible_distribution_major_version|int >= 22 # Ubuntu 22.04 has transitioned from using /etc/apt/trusted.gpg to
-      # using individual .gpg files located in /etc/apt/trusted.gpg.d
-    - env_desktop in ["gnome", "ubuntu:gnome"]
-    - "ansible_version.full is version('2.10.0', '>=')" # 'ansible.builtin.script' ab ansible version 2.10 (welche bei Ubutnu 22.04 installiert wird)
-
 # --- PowerShell
-# https://learn.microsoft.com/de-de/powershell/scripting/install/installing-powershell-on-linux?view=powershell-5.1#ubuntu
-# https://learn.microsoft.com/de-de/powershell/scripting/install/install-ubuntu?view=powershell-5.1#installation-via-package-repository
-# https://www.ntweekly.com/2021/04/07/ansible-playbook-install-powershell-7-on-ubuntu-server-20-04/
-# - name: Config Workstation addrepos - Download the Microsoft repository GPG keys (apt, Ubuntu LTS)
+# https://learn.microsoft.com/en-us/powershell/scripting/install/install-debian?view=powershell-7.4
+
+# - name: Config Workstation addrepos - Download the Microsoft repository GPG keys (Debian)
 #   ansible.builtin.get_url:
-#     url: "https://packages.microsoft.com/config/ubuntu/{{ env_lsb }}/packages-microsoft-prod.deb"
+#     url: "https://packages.microsoft.com/config/debian/{{ env_lsb }}/packages-microsoft-prod.deb"
 #     dest: /tmp/packages-microsoft-prod.deb
 #     force_basic_auth: true
 #   when:
-#     - ansible_distribution == "Ubuntu"
+#     - ansible_distribution == "Debian"
 
-# - name: Config Workstation addrepos - Register the Microsoft repository GPG keys (apt, Ubuntu)
+# - name: Config Workstation addrepos - Register the Microsoft repository GPG keys (Debian)
 #   ansible.builtin.command:
 #     cmd: dpkg -i /tmp/packages-microsoft-prod.deb
 #   when:
-#     - ansible_distribution == "Ubuntu"
-
-# neu: s.o.
-# - name: Config Workstation addrepos - add repo for PowerShell (Ubuntu)
-#  tags: workstation,ubuntu,addrepos,pre
-#  ansible.builtin.apt_repository:
-#    repo: "deb https://packages.microsoft.com/config/ubuntu/{{ env_lsb }}/packages-microsoft-prod.deb"
-#    state: present
-#    update_cache: yes
-#  when:
-#    - ansible_distribution == "Ubuntu"
+#     - ansible_distribution == "Debian"
+#
+# # neu: s.o.
+# - name: Config Workstation addrepos - add repo for PowerShell (Debian)
+#   tags: workstation,ubuntu,addrepos,pre
+#   ansible.builtin.apt_repository:
+#     repo: "deb https://packages.microsoft.com/config/Debian/{{ env_lsb }}/packages-microsoft-prod.deb"
+#     state: present
+#     update_cache: yes
+#   when:
+#     - ansible_distribution == "Debian"
