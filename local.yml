@@ -17,8 +17,6 @@
   pre_tasks:
     - name: Pre Tasks - Config + fix repos + update
       ansible.builtin.import_tasks: tasks/basic_all/config_workstation-addrepos.yml
-    - name: Pre Tasks - Fix config_workstation-addrepos-ubuntu-fix
-      ansible.builtin.import_tasks: tasks/fix/config_workstation-addrepos-ubuntu-fix.yml
     - name: Pre Tasks - all update
       ansible.builtin.import_tasks: tasks/basic_all/all_update.yml
 
