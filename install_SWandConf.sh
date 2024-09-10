@@ -15,7 +15,7 @@
 playbookdir="ansible_workstation" # also repo name
 playbook="local.yml"
 userid=$(whoami)                             # or: userid=${USER}
-oslist=("Arch Linux" "EndeavourOS" "Ubuntu") # currently supportet distributions
+oslist=("Arch Linux" "EndeavourOS" "Debian") # currently supportet distributions
 currentHostname=$(hostname)
 bootloaderId='GRUB' # or 'endeavouros', ...
 
@@ -462,46 +462,6 @@ Arch* | Endeavour*)
     sudo pacman -S --needed iptables-nft
     ;;
 
-Ubuntu*)
-    echo -e "\nUpdate Repos und Installation benoetigte Software (git,ansible,ssh,ufw,chrome-genome-shell)..."
-    sudo apt-get update && sudo apt-get dist-upgrade -y && sudo apt-get install -y --show-progress rsync git ansible chrome-gnome-shell ssh ufw vim curl
-
-    echo -e "\nInstalliere benötigte Packages für Installation von Microsoft PowerShell"
-    sudo apt-get install -y --show-progress wget apt-transport-https software-properties-common
-
-    echo -e "\nInstalliere noch fehlende, benötigte Packages für Installation von Brave Web Browser"
-    sudo apt-get install -y --show-progress curl
-
-    echo -e "\nInstallation (wenn VM) spice agent for Linux guests (z.B. für clipboard sharing host+guest)"
-    [[ $(systemd-detect-virt) != *"none"* ]] && sudo apt-get install -y --show-progress spice-vdagent
-
-    echo -e "\nFüge Repo für 'ulauncher' hinzu"
-    if [ -e "/home/${userid}/.ansible_ppaUlauncherAdded" ]; then
-        echo "Repo wurde bereits hinzugefügt, Schritt wird übersprungen"
-    else
-        sudo add-apt-repository ppa:agornostal/ulauncher && touch "/home/${userid}/.ansible_ppaUlauncherAdded"
-    fi
-
-    echo -e "\nDownload Visual Studio Code deb-file"
-    if [ -f "/home/${userid}/Downloads/code.deb" ]; then
-        echo "Datei '/home/${userid}/Downloads/code.deb' bereits vorhanden, Schritt wird übersprungen"
-    else
-        curl -L --create-file-mode 0755 -o "/home/${userid}/Downloads/code.deb" "https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64"
-    fi
-
-    echo -e "\nDownload Installer-Skript for Pyenv"
-    if [ -f "/home/${userid}/Downloads/pyenv-installer.sh" ]; then
-        echo "Datei '/home/${userid}/Downloads/pyenv-installer.sh' bereits vorhanden, Schritt wird übersprungen"
-    else
-        curl -L --create-file-mode 0755 -o "/home/${userid}/Downloads/pyenv-installer.sh" "https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer"
-        chmod +x "/home/${userid}/Downloads/pyenv-installer.sh" # --create-file-mode hat nicht funktioniert
-    fi
-
-    echo -e "\nAktiviere Firewall 'ufw' und erlaube ssh ..."
-    sudo ufw default deny && sudo sudo ufw limit ssh comment 'SSH' && sudo ufw enable && sudo ufw reload
-    sudo ufw status verbose
-    ;;
-
 Debian*)
     if [[ ! $(grep sudo /etc/group) = *"${userid}"* ]]; then
         echo "Füge User '${userid}' der sudo-Gruppe hinzu"
@@ -513,10 +473,10 @@ Debian*)
     fi
 
     echo -e "\nUpdate Repos und Installation benoetigte Software (git,ansible,ssh,ufw,chrome-genome-shell)..."
-    sudo apt-get update && sudo apt-get dist-upgrade -y && sudo apt-get install -y --show-progress ansible ansible-core chrome-gnome-shell curl git openssh-client openssh-server rsync ufw vim # pipx
+    sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get install -y --show-progress ansible ansible-core chrome-gnome-shell curl git openssh-client openssh-server rsync ufw vim # pipx
 
     echo -e "\nInstalliere benötigte Packages für Installation von Microsoft PowerShell"
-    sudo apt-get install -y --show-progress wget apt-transport-https software-properties-common
+    sudo apt-get install -y --show-progress apt-transport-https software-properties-common wget
 
     echo -e "\nInstalliere noch fehlende, benötigte Packages für Installation von Brave Web Browser"
     sudo apt-get install -y --show-progress curl

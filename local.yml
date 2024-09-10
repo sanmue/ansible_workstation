@@ -30,7 +30,7 @@
     # wird in init-install-Script erledigt, da vor Inst aller (init) Software schon eingerichtet sein soll
     # + müsste hier entsprechend angepasst/aktualisert werden
     #
-    # - name: Installationen - snapper+btrfs
+    # - name: Install packages - snapper+btrfs
     #   ansible.builtin.import_tasks: tasks/basic_all/packages_workstation-snapperBtrfs.yml
     - name: Config Services - snapper+btrfs
       ansible.builtin.import_tasks: tasks/basic_all/config_all-services-snapperBtrfs.yml
@@ -149,6 +149,7 @@
     - name: Write Final Message
       ansible.builtin.debug:
         msg: "Please restart the system for the changes to take effect!"
+#
 # - name: Reboot system
 #   hosts: localhost
 #   connection: local
