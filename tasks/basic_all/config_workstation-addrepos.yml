@@ -156,23 +156,21 @@
 # --- PowerShell
 # https://learn.microsoft.com/en-us/powershell/scripting/install/install-debian?view=powershell-7.4
 
-# - name: Config Workstation addrepos - Download the Microsoft repository GPG keys (Debian)
-#   ansible.builtin.get_url:
-#     url: "https://packages.microsoft.com/config/debian/{{ env_lsb }}/packages-microsoft-prod.deb"
-#     dest: /tmp/packages-microsoft-prod.deb
-#     force_basic_auth: true
-#   when:
-#     - ansible_distribution == "Debian"
+- name: Config Workstation addrepos - Download the Microsoft repository GPG keys (Debian)
+  ansible.builtin.get_url:
+    url: "https://packages.microsoft.com/config/debian/{{ env_lsb }}/packages-microsoft-prod.deb"
+    dest: /tmp/packages-microsoft-prod.deb
+    force_basic_auth: true
+  when:
+    - ansible_distribution == "Debian"
 
-# - name: Config Workstation addrepos - Register the Microsoft repository GPG keys (Debian)
-#   ansible.builtin.command:
-#     cmd: dpkg -i /tmp/packages-microsoft-prod.deb
-#   when:
-#     - ansible_distribution == "Debian"
-#
+- name: Config Workstation addrepos - Register the Microsoft repository GPG keys (Debian)
+  ansible.builtin.command:
+    cmd: dpkg -i /tmp/packages-microsoft-prod.deb
+  when:
+    - ansible_distribution == "Debian"
 # # neu: s.o.
 # - name: Config Workstation addrepos - add repo for PowerShell (Debian)
-#   tags: workstation,ubuntu,addrepos,pre
 #   ansible.builtin.apt_repository:
 #     repo: "deb https://packages.microsoft.com/config/Debian/{{ env_lsb }}/packages-microsoft-prod.deb"
 #     state: present
