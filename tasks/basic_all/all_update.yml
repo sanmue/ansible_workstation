@@ -1,20 +1,16 @@
-
 # #############
 # ### DistRepos
 # #############
 - name: update repository index and update system (apt)
-  tags: always,update
   ansible.builtin.apt:
     upgrade: dist
     update_cache: true
-#  when: ansible_distribution == "Ubuntu"
-#  when: ansible_os_family == "Debian"
+  #  when: ansible_os_family == "Debian"
   when:
     - ansible_pkg_mgr == "apt"
   changed_when: false
 
 - name: update repository index and update system (pacman)
-  tags: always,update
   community.general.pacman:
     update_cache: true
     upgrade: true
@@ -26,21 +22,19 @@
 # ### flatpak
 # ###########
 - name: update flatpak packages
-  tags: always,update,flatpak
   command: flatpak update
   when:
     - env_datadirs is defined
-#    - env_datadirs.find("/var/lib/flatpak") != -1
+    #    - env_datadirs.find("/var/lib/flatpak") != -1
     - env_datadirs.find("/var/lib/flatpak") == true
   changed_when: false
 
 # #########
 # ### snaps
 # #########
-# Snaps come with a built-in automatic update mechanism, whereby snaps are refreshed to a new version whenever there’s a new release in the Snap Store. 
+# Snaps come with a built-in automatic update mechanism, whereby snaps are refreshed to a new version whenever there’s a new release in the Snap Store.
 # Typically, the refresh occurs four times a day ...
 - name: update snap packages
-  tags: always,update,snap
   command: snap refresh
   when:
     - env_path is defined
