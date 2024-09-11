@@ -1,51 +1,50 @@
-# TODO: ggf. noch nested virtualization
+# TODO: nested virtualization
 
-- name: VM - install VM QEMU/KVM (Ubuntu, not VM guest)
-  tags: VM
+- name: VM - install VM QEMU/KVM (Debian, not VM guest)
   ansible.builtin.package:
     state: present
     name:
-      - qemu-kvm
+      # - qemu-kvm
+      - qemu-system # additional tool
+      - libvirt-daemon
       - libvirt-daemon-system
       - libvirt-clients
       - bridge-utils
-      - libguestfs-tools
-      - libosinfo-bin
+      - libguestfs-tools # additional tool
+      - libosinfo-bin # additional tool
       - virtinst
       - virt-top
-      - swtpm        # wg. Win11: TPM 2.0;
-      - swtpm-tools  # zumin. bis Ubuntu < 22 ist ppa erforderlich (ppa:smoser/swtpm)
+      - swtpm # wg. Win11: TPM 2.0
+      - swtpm-tools
   when:
-    - ansible_distribution == "Ubuntu"
+    - ansible_distribution == "Debian"
     - ansible_virtualization_role != "guest"
 
-
 - name: VM - install VM QEMU/KVM (Archlinux, not VM guest)
-  tags: VM
   ansible.builtin.package:
     state: present
     name:
-      - bridge-utils      # Utilities for configuring the Linux ethernet bridge
-      - dnsmasq           # Lightweight, easy to configure DNS forwarder and DHCP server
-      - iptables-nft      # conflicts with 'iptables' ('iptables" ist installiert (Standard), wird über bootstrap.sh geändert und durch iptables-nft ersetzt)
-                          # Linux kernel packet control tool (using nft interface)
-      - edk2-ovmf         # UEFI Support # Firmware for Virtual Machines
-      - libguestfs        # Access and modify virtual machine disk images
-      - libvirt           # # API for controlling virtualization engines (openvz,kvm,qemu,virtualbox,xen,etc)
-      - openbsd-netcat    # TCP/IP swiss army knife. OpenBSD variant. # network piping application
+      - bridge-utils # Utilities for configuring the Linux ethernet bridge
+      - dnsmasq # Lightweight, easy to configure DNS forwarder and DHCP server
+      - iptables-nft # conflicts with 'iptables' ('iptables" ist installiert (Standard), wird über bootstrap.sh geändert und durch iptables-nft ersetzt)
+        # Linux kernel packet control tool (using nft interface)
+      - edk2-ovmf # UEFI Support # Firmware for Virtual Machines
+      - libguestfs # Access and modify virtual machine disk images
+      - libvirt # # API for controlling virtualization engines (openvz,kvm,qemu,virtualbox,xen,etc)
+      - openbsd-netcat # TCP/IP swiss army knife. OpenBSD variant. # network piping application
       #- qemu              # hier muss aus 3 Optionen ausgewählt werden (base, desktop, full), daher bleibt da hängen
       #- qemu-base         # A basic QEMU setup for headless environments
       #- qemu-desktop      # A QEMU setup for desktop environments
-      - qemu-full         # A Full QEMU setup
-      - swtpm             # Libtpms-based TPM emulator with socket, character device, and Linux CUSE interface
-      - vde2              # Virtual Distributed Ethernet for emulators like qemu
-      - virt-install      # Command line tool for creating new KVM , Xen, or Linux container guests using the libvirt hypervisor
+      - qemu-full # A Full QEMU setup
+      - swtpm # Libtpms-based TPM emulator with socket, character device, and Linux CUSE interface
+      - vde2 # Virtual Distributed Ethernet for emulators like qemu
+      - virt-install # Command line tool for creating new KVM , Xen, or Linux container guests using the libvirt hypervisor
   when:
     - ansible_distribution == "Archlinux"
     - ansible_virtualization_role != "guest"
 
 # auskommentiert: dauert bei Install zu lange oder funktioniert nicht richtig
-# in bootstrap.sh enthalten (nach ansible playbook)
+# in install script enthalten (nach ansible playbook)
 #
 # - name: VM - install (download) virtio-drivers for Windows guests from AUR (Archlinux, not VM guest)
 #  tags: VM
@@ -58,7 +57,6 @@
 #    - ansible_virtualization_role != "guest"
 
 - name: VM - install VM QEMU/KVM - virt-manager/viewer (all, not VM guest)
-  tags: VM,workstation
   ansible.builtin.package:
     state: present
     name:
@@ -67,11 +65,10 @@
   when: ansible_virtualization_role != "guest"
 
 - name: VM - install VM QEMU/KVM - Guest (all, VM guest)
-  tags: VM,guest
   ansible.builtin.package:
     state: present
     name:
-      - spice-vdagent   # spice agent for Linux guests (z.B. für clipboard sharing host+guest)
+      - spice-vdagent # spice agent for Linux guests (z.B. für clipboard sharing host+guest)
   when:
     - ansible_virtualization_role == "guest"
-    - ansible_distribution in ["Archlinux", "Ubuntu"]
+    - ansible_distribution in ["Archlinux", "Debian"]
