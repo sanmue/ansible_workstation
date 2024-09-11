@@ -134,7 +134,7 @@
     path: "/etc/systemd/system/starship_update.service"
     create: true
     backup: true
-    marker: '# ### {mark} ANSIBLE MANAGED BLOCK - starship shell prompt update ###'
+    marker: "# ### {mark} ANSIBLE MANAGED BLOCK - starship shell prompt update ###"
     block: |
       [Unit]
       Description=starship shell prompt update
@@ -148,14 +148,14 @@
     state: present
     group: root
     owner: root
-    mode: '0644'
+    mode: "0644"
 
 - name: All services misc - starship shell prompt update - Create timer unit file (all)
   ansible.builtin.blockinfile:
     path: "/etc/systemd/system/starship_update.timer"
     create: true
     backup: true
-    marker: '# ### {mark} ANSIBLE MANAGED BLOCK - starship shell prompt update ###'
+    marker: "# ### {mark} ANSIBLE MANAGED BLOCK - starship shell prompt update ###"
     block: |
       [Unit]
       Description=starship shell prompt update
@@ -172,7 +172,7 @@
     state: present
     group: root
     owner: root
-    mode: '0644'
+    mode: "0644"
 
 - name: All services misc - starship shell prompt update - start+enable timer (all)
   ansible.builtin.systemd:
@@ -191,7 +191,7 @@
     path: "/etc/systemd/system/zshpluginsgit_update.service"
     create: true
     backup: true
-    marker: '# ### {mark} ANSIBLE MANAGED BLOCK - zshpluginsgit_update ###'
+    marker: "# ### {mark} ANSIBLE MANAGED BLOCK - zshpluginsgit_update ###"
     block: |
       [Unit]
       Description=zsh plugins git update
@@ -202,7 +202,7 @@
     state: present
     group: root
     owner: root
-    mode: '0644'
+    mode: "0644"
   when: ansible_distribution in ["Archlinux"]
 
 # monatlich (am 1. um 11:05 Uhr); alternativ: 'OnCalendar=monthly' (= monatlich am 01. umd 00:00 Uhr)
@@ -211,7 +211,7 @@
     path: "/etc/systemd/system/zshpluginsgit_update.timer"
     create: true
     backup: true
-    marker: '# ### {mark} ANSIBLE MANAGED BLOCK - zshpluginsgit_update ###'
+    marker: "# ### {mark} ANSIBLE MANAGED BLOCK - zshpluginsgit_update ###"
     block: |
       [Unit]
       Description=zsh plugins git update
@@ -228,7 +228,7 @@
     state: present
     group: root
     owner: root
-    mode: '0644'
+    mode: "0644"
   when: ansible_distribution in ["Archlinux"]
 
 - name: All services misc - zsh plugins update - start+enable timer (Arch)
@@ -288,12 +288,13 @@
 # ----------
 
 # https://stackoverflow.com/questions/45776003/fixing-a-systemd-service-203-exec-failure-no-such-file-or-directory
+# Check: systemctl --user status clamav_scanHome.service
 - name: All services misc - ClamAV - Create service unit file - user - scanHome (all)
   ansible.builtin.blockinfile:
     path: "/etc/systemd/user/clamav_scanHome.service"
     create: true
     backup: true
-    marker: '# ### {mark} ANSIBLE MANAGED BLOCK - ClamAV scanHOME ###'
+    marker: "# ### {mark} ANSIBLE MANAGED BLOCK - ClamAV scanHOME ###"
     block: |
       [Unit]
       Description=Scan home directory
@@ -307,14 +308,15 @@
     state: present
     group: root
     owner: root
-    mode: '0644'
+    mode: "0644"
 
+# Check: systemctl --user status clamav_scanHome.timer
 - name: All services misc - ClamAV - Create timer unit file - user - scanHome (all)
   ansible.builtin.blockinfile:
     path: "/etc/systemd/user/clamav_scanHome.timer"
     create: true
     backup: true
-    marker: '# ### {mark} ANSIBLE MANAGED BLOCK - ClamAV scanHOME ###'
+    marker: "# ### {mark} ANSIBLE MANAGED BLOCK - ClamAV scanHOME ###"
     block: |
       [Unit]
       Description=Scan home directory
@@ -331,7 +333,7 @@
     state: present
     group: root
     owner: root
-    mode: '0644'
+    mode: "0644"
 
 - name: All services misc - ClamAV - start+enable timer - env_user - scanHome (all)
   ansible.builtin.systemd:
@@ -353,7 +355,7 @@
     path: "/etc/systemd/user/AppConfData_rsync.service"
     create: true
     backup: true
-    marker: '# ### {mark} ANSIBLE MANAGED BLOCK - AppConfData_rsync ###'
+    marker: "# ### {mark} ANSIBLE MANAGED BLOCK - AppConfData_rsync ###"
     block: |
       [Unit]
       Description=Sicherung/Updata AppConfData
@@ -365,14 +367,14 @@
     state: present
     group: root
     owner: root
-    mode: '0644'
+    mode: "0644"
 
 - name: All services misc - AppConfData - Create timer unit file - user - rsync (all)
   ansible.builtin.blockinfile:
     path: "/etc/systemd/user/AppConfData_rsync.timer"
     create: true
     backup: true
-    marker: '# ### {mark} ANSIBLE MANAGED BLOCK - AppConfData_rsync ###'
+    marker: "# ### {mark} ANSIBLE MANAGED BLOCK - AppConfData_rsync ###"
     block: |
       [Unit]
       Description=Sicherung/Updata AppConfData
@@ -389,7 +391,7 @@
     state: present
     group: root
     owner: root
-    mode: '0644'
+    mode: "0644"
 
 - name: All services misc - AppConfData - start+enable timer - env_user - rsync (all)
   ansible.builtin.systemd:
@@ -402,7 +404,7 @@
   become_user: "{{ env_user }}"
   environment:
     XDG_RUNTIME_DIR: "{{ env_user_XDG_RUNTIME_DIR }}"
-
+#
 # -------------
 # ### ulauncher
 # -------------

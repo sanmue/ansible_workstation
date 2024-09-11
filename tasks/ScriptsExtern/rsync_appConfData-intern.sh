@@ -4,8 +4,12 @@
 
 # ### Skript zur Sicherung/Updata AppConfData (intern, -> in zentrales RescueSystem-Verzeichnis, doppel)
 #
-# ### wird auch nach '/usr/local/bin/'' kopiert und von systemd/Timer / service (user) aufgerufen
-# ### - 'AppConfData_rsync.timer' / 'AppConfData_rsync.service'
+# ### ------------------------------------
+# !!! *** Beachten bei Änderungen, ... !!!
+# ### ------------------------------------
+# wird auch nach '/usr/local/bin/'' kopiert und von systemd/Timer / service (user) aufgerufen
+# - 'AppConfData_rsync.timer' / 'AppConfData_rsync.service'
+# ### ------------------------------------
 #
 # 1. Config etc von Apps (z.B. unter .config, .var, .local im Home-Verzeichnis):
 # 	- Quellpfade1: ausgewählte Dateien/Verzeichnisse in ${arrConfPath} (befinden sich unter ${HOME})
@@ -115,7 +119,7 @@ for bakPath in "${arrConfAppDataBakPath[@]}"; do
 			if [ -f "${source}/${confPath}" ]; then		# wenn Datei
 				echo -e "\033[0;32m\n+ rsync von '${source}/${confPath}' nach '${bakPath}/${confPath}'\033[0m"
 				rsync -aPhEv --mkpath "${paramRsync}" "${source}/${confPath}" "${bakPath}/${confPath}" | tee -a "/tmp/${logname}"
-			fi		
+			fi
 		else
 			echo -e "\033[0;31m\n- Quelle '${source}/${confPath}' nicht vorhanden, überspringe...\033[0m" >> "/tmp/${logname}"
 		fi
