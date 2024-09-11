@@ -436,7 +436,7 @@ Arch* | Endeavour*)
     fi
 
     echo -e "\nInstallation initial benoetigte Software (curl  git openssh rsync ufw vim)" # python-pipx firewalld
-    sudo pacman -S --needed --noconfirm ansible ansible-core curl git openssh rsync ufw vim # python-pipx firewalld
+    sudo pacman -S --needed --noconfirm ansible curl git openssh rsync ufw vim # python-pipx # ansible-core firewalld
 
     echo -e "\nInstallation benoetigte Softwarepackages zur Installation von AUR helpers, AUR-Packages..."
     sudo pacman -S --needed --noconfirm base-devel
@@ -483,7 +483,7 @@ Debian*)
     sudo apt-get autoremove -y
 
     echo -e "\nInstallation benoetigte Software - ansible"
-    sudo apt-get install -y --show-progress ansible ansible-core
+    sudo apt-get install -y --show-progress ansible # ansible-core
 
     echo -e "\nInstallation benoetigte Software (git, rsync, ufw, vim, ..."
     sudo apt-get install -y --show-progress git rsync ssh ufw vim # pipx
