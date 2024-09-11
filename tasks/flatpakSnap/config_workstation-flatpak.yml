@@ -1,9 +1,8 @@
-- name: Add the flathub flatpak repository remote, system (Ubuntu)
-  tags: workstation,ubuntu, flatpak
+- name: Add the flathub flatpak repository remote, system (Debian)
   community.general.flatpak_remote:
     name: flathub
     state: present
-    flatpakrepo_url: https://flathub.org/repo/flathub.flatpakrepo
-    method: system   # oder method: user
+    flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo # old: https://flathub.org/repo/flathub.flatpakrepo
+    method: system # oder method: user
   when:
-    - ansible_distribution == "Ubuntu"
+    - ansible_distribution == "Debian"
