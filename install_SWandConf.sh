@@ -483,20 +483,20 @@ Debian*)
     sudo apt-get autoremove -y
 
     echo -e "\nInstallation benoetigte Software - ansible"
-    sudo apt-get install -y --show-progress ansible # ansible-core
+    sudo apt-get install -y ansible # ansible-core
 
     echo -e "\nInstallation benoetigte Software (git, rsync, ufw, vim, ..."
-    sudo apt-get install -y --show-progress git rsync ssh ufw vim # pipx
+    sudo apt-get install -y git rsync ssh ufw vim # pipx
     # bereits installiert: chrome-gnome-shell curl openssh-client openssh-server
 
     echo -e "\nInstalliere benötigte Packages für Installation von Microsoft PowerShell"
-    sudo apt-get install -y --show-progress apt-transport-https software-properties-common wget
+    sudo apt-get install -y apt-transport-https software-properties-common wget
 
     echo -e "\nInstalliere noch fehlende, benötigte Packages für Installation von Brave Web Browser"
-    sudo apt-get install -y --show-progress curl
+    sudo apt-get install -y curl
 
     echo -e "\nInstallation (wenn VM) spice agent for Linux guests (z.B. für clipboard sharing host+guest)"
-    [[ $(systemd-detect-virt) != *"none"* ]] && sudo apt-get install -y --show-progress spice-vdagent
+    [[ $(systemd-detect-virt) != *"none"* ]] && sudo apt-get install -y spice-vdagent
 
     echo -e "\nInstalliere Voraussetzuungen / ergänze Repo für 'ulauncher'"
     if [ -e "/home/${userid}/.ansible_ppaUlauncherAdded" ]; then
@@ -509,7 +509,7 @@ Debian*)
         echo "deb [signed-by=/usr/share/keyrings/ulauncher-archive-keyring.gpg] \
                   http://ppa.launchpad.net/agornostal/ulauncher/ubuntu jammy main" \
                   | sudo tee /etc/apt/sources.list.d/ulauncher-jammy.list
-        # sudo apt update && sudo apt install -y --show-progress ulauncher # installation in "packages_workstation-Gnome.yml"
+        # sudo apt update && sudo apt install -y ulauncher # installation in "packages_workstation-Gnome.yml"
 
         touch "/home/${userid}/.ansible_ppaUlauncherAdded"
     fi
