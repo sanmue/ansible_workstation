@@ -1,7 +1,5 @@
-
 ### DistRepos
 - name: cleanup package cache (apt)
-  tags: always,cleanup
   apt:
     autoclean: yes
   changed_when: false
@@ -10,46 +8,18 @@
 # - name: autoremove orphan packages (apt)
 #  tags: always,cleanup
 #  apt:
-#    autoremove: yes 
+#    autoremove: yes
 #    purge: yes
 #  when: ansible_pkg_mgr == "apt"
 
-
-- name: clean package cache und orphan packages (pacman)
-  tags: always,cleanup
+- name: clean package cache and orphaned packages (pacman)
   command: paccache -rk2 -ruk1
   when: ansible_pkg_mgr == "pacman"
 
-
-# Suse (zypper)
-#
-#  zypper packages --orphaned
-#  zypper remove --clean-deps [package] bzw. zypper remove -u [package]
-#
-# /etc/zypp/zypp.conf:
-## EXPERTS ONLY: Cleanup when deleting packages. Whether the solver should
-## per default try to remove packages exclusively required by the ones he's
-## asked to delete.
-##
-## This option should be used on a case by case basis, enabled via
-## command line options or switches the applications offer. Changing
-## the global default on a system where unattended actions are performed,
-## may easily damage your system.
-## 
-## CHANGING THE DEFAULT IS NOT RECOMMENDED.
-## 
-## Valid values:  boolean
-## Default value: false
-##
-# solver.cleandepsOnRemove = false
-
-
 ### flatpak
 - name: remove unused flatpak packages
-  tags: always,update,flatpak
   command: flatpak uninstall --unused -y
   when:
     - env_datadirs is defined
     - env_datadirs.find("/var/lib/flatpak") == true
   changed_when: false
-
