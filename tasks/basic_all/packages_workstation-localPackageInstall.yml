@@ -7,7 +7,7 @@
 # ### #####
 #
 # - Arch: via paketmanager (...workstation-basic.yml)
-# - Debian/Ubuntu: siehe installer script: "Download Installer-Skript for Pyenv"
+# - Debian: siehe installer script: "Download Installer-Skript for Pyenv"
 # #TODO: von installer script hierher
 - name: Install basic packages - Get stat of .pyenv (all)
   ansible.builtin.stat:
@@ -19,7 +19,7 @@
     path: "/home/{{ env_user }}/Downloads/pyenv-installer.sh"
   register: pyenvskript
 
-- name: Install basic packages - Execute Installer-Skript for Pyenv (Ubuntu)
+- name: Install basic packages - Execute Installer-Skript for Pyenv (Debian)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.script:
@@ -27,7 +27,7 @@
   args:
     creates: "/home/{{ env_user }}/.pyenv" # Run only if '.pyenv'-directory does NOT exist (from previous run)
   when:
-    - ansible_distribution == "Ubuntu"
+    - ansible_distribution == "Debian"
     - pyenvskript.stat.exists == true
 
 # #####################################
@@ -38,20 +38,21 @@
 # ### Info: siehe ggf. Fix für Gnome 44+
 # ### ---
 
-- name: Local packages install - install Certificates for Citrix Workspace App (ICA-Client) from Mozilla cert-folder + pem-convert (Ubuntu)
+- name: Local packages install - install Certificates for Citrix Workspace App (ICA-Client) from Mozilla cert-folder + pem-convert (Debian)
   # requires installed Mozilla Firefox (was installed via a previous task)
   ansible.builtin.shell:
     # chdir: tasks/basic_all/
     # cmd: ./config_workstation-localPackageInstall-CitrixWorkspaceApp.sh
     cmd: chmod +x ./tasks/basic_all/config_workstation-localPackageInstall-CitrixWorkspaceApp.sh && ./tasks/basic_all/config_workstation-localPackageInstall-CitrixWorkspaceApp.sh
   when:
-    - ansible_distribution == "Ubuntu"
+    - ansible_distribution == "Debian"
 
-- name: TODO - Download and install Citrix Workspace App + USB Support Package (Ubuntu)
+# ggf. TODO
+- name: TODO - Download and install Citrix Workspace App + USB Support Package (Debian)
   ansible.builtin.debug:
     msg: "TODO: download from 'https://www.citrix.com/downloads/workspace-app/linux/'"
   when:
-    - ansible_distribution == "Ubuntu"
+    - ansible_distribution == "Debian"
 
 # ######################
 # ### Visual Studio Code
@@ -72,7 +73,7 @@
 
 # Download nach bootstrap.sh verschoben wg. timout
 #
-# - name: Local packages install - download Visual Studio Code deb-package (Ubuntu)
+# - name: Local packages install - download Visual Studio Code deb-package (Debian)
 #  ansible.builtin.get_url:
 #    url: "https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64"
 #    dest: "/home/{{ env_user }}/Downloads/code.deb"
@@ -80,17 +81,17 @@
 #    force: false
 #    mode: '0755'
 #  when:
-#    - ansible_distribution == "Ubuntu"
+#    - ansible_distribution == "Debian"
 #    - (usrbincode.stat.exists == false) and (tmpcodedeb.stat.exists == false)
 
-- name: Local packages install - install Visual Studio Code deb-package (Ubuntu, apt)
+- name: Local packages install - install Visual Studio Code deb-package (Debian, apt)
   tags: workstation,ubuntu,apt
   ansible.builtin.apt:
     deb: "/home/{{ env_user }}/Downloads/code.deb"
     only_upgrade: true
   when:
     - ansible_pkg_mgr == "apt"
-    - ansible_distribution == "Ubuntu"
+    - ansible_distribution == "Debian"
     - usrbincode.stat.exists == false
 
 # #########
@@ -172,29 +173,28 @@
 # ###############################
 # ### zsh plugins - from git repo
 # ###############################
-# Anm.: bei Archlinux �ber paket, bei Manjaro schon von werk aus vorhanden
+# Anm.: bei Archlinux über paket, bei Manjaro schon von Werk aus vorhanden
 
-- name: Local packages install - install zsh plugin - zsh-autosuggestions (Ubuntu)
+- name: Local packages install - install zsh plugin - zsh-autosuggestions (Debian)
   ansible.builtin.git:
     repo: https://github.com/zsh-users/zsh-autosuggestions.git
     dest: /usr/share/zsh/plugins/zsh-autosuggestions
     clone: true
     update: true
-  when: ansible_distribution in ["Ubuntu"] or
-    ansible_os_family == "Suse"
+  when: ansible_distribution in ["Debian"]
 
-- name: Local packages install - install zsh plugin - zsh-syntax-highlighting (Ubuntu,Suse)
+- name: Local packages install - install zsh plugin - zsh-syntax-highlighting (Debian)
   ansible.builtin.git:
     repo: https://github.com/zsh-users/zsh-syntax-highlighting.git
     dest: /usr/share/zsh/plugins/zsh-syntax-highlighting
     clone: true
     update: true
-  when: ansible_distribution in ["Ubuntu"]
+  when: ansible_distribution in ["Debian"]
 
-- name: Local packages install - install zsh plugin - zsh-history-substring-search (Ubuntu)
+- name: Local packages install - install zsh plugin - zsh-history-substring-search (Debian)
   ansible.builtin.git:
     repo: https://github.com/zsh-users/zsh-history-substring-search.git
     dest: /usr/share/zsh/plugins/zsh-history-substring-search
     clone: true
     update: true
-  when: ansible_distribution in ["Ubuntu"]
+  when: ansible_distribution in ["Debian"]

@@ -46,7 +46,7 @@
     # - name: Entfernen nicht benötigter vorinstallierter Pakete (Plasma)
     #   ansible.builtin.import_tasks: tasks/Desktop_Plasma/packages_workstation-Plasma-removePreInstalls.yml
     # ----------------------------------------------------------
-    # ### Installation Software-Packages
+    # ### Installation Software-Packages inkl. Flatpak (Snap: derzeit keine)
     # - repo:
     - name: Basic packages
       ansible.builtin.import_tasks: tasks/basic_all/packages_workstation-basic.yml
@@ -56,16 +56,19 @@
       ansible.builtin.import_tasks: tasks/Desktop_Gnome/packages_workstation-Gnome.yml
     - name: Packages Gnomeshell
       ansible.builtin.import_tasks: tasks/Desktop_Gnome/packages_workstation-gnomeshellstuff.yml
+    #
     # - flatpak:
     - name: Config Flatpak
       ansible.builtin.import_tasks: tasks/flatpakSnap/config_workstation-flatpak.yml
     - name: Packages Flatpak
       ansible.builtin.import_tasks: tasks/flatpakSnap/packages_workstation-flatpak.yml
+    #
     # - snap:
     # - name: Config Snap
     #   ansible.builtin.import_tasks: tasks/flatpakSnap/config_workstation-snap.yml
     # - name: Packages Snap
     #   ansible.builtin.import_tasks: tasks/flatpakSnap/packages_workstation-snap.yml
+    #
     # - lokal heruntergeladene Pakete:
     - name: Install local packages
       ansible.builtin.import_tasks: tasks/basic_all/packages_workstation-localPackageInstall.yml
