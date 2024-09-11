@@ -189,7 +189,7 @@
       # ------------------------------------------
       export PATH=~/.local/bin:$PATH
 
-- name: All settings misc - Bashrc - Insert/Update additional paths and config - pyenv (User, Ubuntu)
+- name: All settings misc - Bashrc - Insert/Update additional paths and config - pyenv (User, Debian)
   ansible.builtin.blockinfile:
     path: "/home/{{ env_user }}/.bashrc"
     backup: false
@@ -204,7 +204,7 @@
       eval "$(pyenv init -)"
       eval "$(pyenv virtualenv-init -)"
   when:
-    - ansible_distribution in ["Ubuntu"]
+    - ansible_distribution in ["Debian"]
 
 # - name: All settings misc - Bashrc - initial command 'pyenv init' - pyenv (User, Arch)
 #  become: true
@@ -464,7 +464,7 @@
       # ------------------------------------------
       export PATH=~/.local/bin:$PATH
 
-- name: All settings misc - Zshrc - Insert/Update additional paths and config - pyenv (User, Ubuntu)
+- name: All settings misc - Zshrc - Insert/Update additional paths and config - pyenv (User, Debian)
   ansible.builtin.blockinfile:
     path: "/home/{{ env_user }}/.zshrc"
     backup: false
@@ -479,7 +479,7 @@
       eval "$(pyenv init -)"
       eval "$(pyenv virtualenv-init -)"
   when:
-    - ansible_distribution in ["Ubuntu"]
+    - ansible_distribution in ["Debian"]
 
 # - name: All settings misc - Zshrc - initial command 'pyenv init' - pyenv (User, Arch)
 #  become: true
@@ -693,7 +693,7 @@
 # #######
 # ### zsh
 # #######
-- name: All settings misc - zsh plugin git update - bash-skript (Ubuntu,Suse)
+- name: All settings misc - zsh plugin git update - bash-skript (Debian)
   ansible.builtin.copy:
     src: "files/config_all-services-misc-zshpluginsgit_update.sh"
     dest: "/usr/local/bin/zshpluginsgit_update.sh"
@@ -701,27 +701,23 @@
     group: root
     mode: "0755"
     backup: true
-  when: ansible_distribution in ["Ubuntu"] or
-    ansible_os_family == "Suse"
+  when: ansible_distribution in ["Debian"]
 
 # fatal: detected dubious ownership in repository at '/usr/share/zsh/plugins/...; To add an exception:
-- name: All settings misc - zsh plugin git repo - add safe.directory - autosuggestions (Ubuntu,Suse)
+- name: All settings misc - zsh plugin git repo - add safe.directory - autosuggestions (Debian)
   ansible.builtin.shell: /usr/bin/git config --global --add safe.directory /usr/share/zsh/plugins/zsh-autosuggestions
   when:
-    - ansible_distribution in ["Ubuntu"] or
-      ansible_os_family == "Suse"
+    - ansible_distribution in ["Debian"]
 
-- name: All settings misc - zsh plugin git repo - add safe.directory - syntax-highlighting (Ubuntu,Suse)
+- name: All settings misc - zsh plugin git repo - add safe.directory - syntax-highlighting (Debian)
   ansible.builtin.shell: /usr/bin/git config --global --add safe.directory /usr/share/zsh/plugins/zsh-syntax-highlighting
   when:
-    - ansible_distribution in ["Ubuntu"] or
-      ansible_os_family == "Suse"
+    - ansible_distribution in ["Debian"]
 
-- name: All settings misc - zsh plugin git repo - add safe.directory - history-substring-search (Ubuntu,Suse)
+- name: All settings misc - zsh plugin git repo - add safe.directory - history-substring-search (Debian)
   ansible.builtin.shell: /usr/bin/git config --global --add safe.directory /usr/share/zsh/plugins/zsh-history-substring-search
   when:
-    - ansible_distribution in ["Ubuntu"] or
-      ansible_os_family == "Suse"
+    - ansible_distribution in ["Debian"]
 
 # #######
 # ### vim
@@ -736,7 +732,7 @@
 #  args:
 #    creates: "/home/{{ env_user }}/.vimrc"
 
-- name: All settings misc - Set vim global config (ubuntu)
+- name: All settings misc - Set vim global config (Debian)
   ansible.builtin.blockinfile:
     path: "/etc/vim/vimrc.local"
     backup: true
@@ -776,7 +772,7 @@
       set undolevels=1000	" Number of undo levels
       " #
   when:
-    - ansible_distribution == "Ubuntu"
+    - ansible_distribution == "Debian"
 
 - name: All settings misc - Set vim global config (Arch)
   ansible.builtin.blockinfile:
@@ -953,7 +949,7 @@
 # # reflector - retrieve the latest mirror list
 # #############################################
 # Service: siehe "config_all-services-misc.yml"
-- name: All settings misc - reflector - insert countries (Arch, NOT Manjaro)
+- name: All settings misc - reflector - insert countries (Arch)
   ansible.builtin.replace:
     path: /etc/xdg/reflector/reflector.conf
     # search_string: '# --country France,Germany'
@@ -963,7 +959,7 @@
   when:
     - ansible_distribution in ["Archlinux"]
 
-- name: All settings misc - reflector - how many mirrors to use (Arch, NOT Manjaro)
+- name: All settings misc - reflector - how many mirrors to use (Arch)
   ansible.builtin.replace:
     path: /etc/xdg/reflector/reflector.conf
     # search_string: '--latest 5'
@@ -977,18 +973,16 @@
 # ### Visual Studio Code / Code - OSS
 # ###################################
 
-- name: All settings misc - Start 'Visual Studio Code' bzw 'Code-OSS' (Ubuntu)
-  tags: workstation,ubuntu
+- name: All settings misc - Start 'Visual Studio Code' bzw 'Code-OSS' (Debian)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell:
     cmd: code >/dev/null 2>&1 & # damit im Home-Verzeichnis der Config-Pfad von VS Code erstellt wird + später die settings.yml dorthin kopiert werden kann
   args:
     creates: "/home/{{ env_user }}/.config/Code/User/globalStorage/zokugun.sync-settings/settings.yml" # nur ausführen, wenn nicht bereits z.B. in vorhergehendem Lauf gestartet/erstellt wurde
-  when: ansible_distribution in ["Ubuntu"]
+  when: ansible_distribution in ["Debian"]
 
 - name: All settings misc - Start 'Code - OSS' (Arch)
-  tags: workstation,arch
   ansible.builtin.shell:
     cmd: code >/dev/null 2>&1 & # damit im Home-Verzeichnis der Config-Pfad von VS Code erstellt wird + später die settings.yml dorthin kopiert werden kann
   args:
@@ -1000,7 +994,6 @@
 
 # Verzeichnis der Extension manuell erstellen, damit unten die config-datei dorthin kopiert werden kann
 - name: All settings misc - Erstelle hilfsweise manuell 'Sync Settings' Extension Ordner für 'Code - OSS' (Arch)
-  tags: workstation,arch
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.file:
@@ -1010,28 +1003,25 @@
   when:
     - ansible_distribution in ["Archlinux"]
 
-# - name: All settings misc - Close Visual Studio Code (Ubuntu)
-#  tags: workstation,ubuntu
+# - name: All settings misc - Close Visual Studio Code (Debian)
 #  ansible.builtin.shell:
 #    cmd: pkill -15 code   # Signal: "-15" entspricht "SIGTERM" : Abschließen und beenden des Programms
 #    #cmd: killall code
 #  become: true
 #  become_user: "{{ env_user }}"
 #  when:
-#    - ansible_distribution == "Ubuntu"
+#    - ansible_distribution == "Debian"
 
-- name: All settings misc - Erstelle hilfsweise manuell 'Sync Settings' Extension Ordner für 'VS Code' (Ubuntu)
-  tags: workstation,arch
+- name: All settings misc - Erstelle hilfsweise manuell 'Sync Settings' Extension Ordner für 'VS Code' (Debian)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.file:
     path: "/home/{{ env_user }}/.config/Code/User/globalStorage/zokugun.sync-settings"
     state: directory
     mode: "0775"
-  when: ansible_distribution in ["Ubuntu"]
+  when: ansible_distribution in ["Debian"]
 
-- name: All settings misc - Set/Copy 'Visual Studio Code' settings-file for Extension 'Sync Settings' (Ubuntu)
-  tags: workstation,ubuntu
+- name: All settings misc - Set/Copy 'Visual Studio Code' settings-file for Extension 'Sync Settings' (Debian)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.copy:
@@ -1040,10 +1030,9 @@
     owner: "{{ env_user }}"
     group: "{{ env_user }}"
     mode: u=rw
-  when: ansible_distribution == "Ubuntu"
+  when: ansible_distribution == "Debian"
 
 - name: All settings misc - Set/Copy 'Code - OSS' settings-file for Extension 'Sync Settings' (Arch)
-  tags: workstation,arch
   ansible.builtin.copy:
     src: ./files/VSCode_Extension_Sync-Settings_settings.yml
     dest: "/home/{{ env_user }}/.config/Code - OSS//User/globalStorage/zokugun.sync-settings/settings.yml" # Pfad bei Install des VS Code deb-Pakets (nicht bei flatpak oder snap)
