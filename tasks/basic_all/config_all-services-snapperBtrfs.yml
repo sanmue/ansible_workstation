@@ -8,28 +8,25 @@
 #   register: rootFsIsBtrfs
 #   ignore_errors: true
 
-- name: Config all services snapperBtrfs - Check if / has btrfs filesystem + register result in variable (all, not Suse)
+- name: Config all services snapperBtrfs - Check if / has btrfs filesystem + register result in variable (all)
   ansible.builtin.shell: stat -f -c %T /
   register: rootFsIsBtrfs
   ignore_errors: true
-  when: ansible_os_family != "Suse"
 
-- name: Config all services snapperBtrfs - Show value of 'rootFsIsBtrfs' (all, not Suse)
+- name: Config all services snapperBtrfs - Show value of 'rootFsIsBtrfs' (all)
   ansible.builtin.debug:
     var: rootFsIsBtrfs
-  when: ansible_os_family != "Suse"
 
 # ### prüfe auf grub bootloader:
-- name: Config all services snapperBtrfs - Get stats of etc-default-grup (all, not Suse)
+- name: Config all services snapperBtrfs - Get stats of etc-default-grup (all)
   ansible.builtin.stat:
     path: /etc/default/grub
   register: etcdefgrub
-  when: ansible_os_family != "Suse"
 
 # ### grub-btrfsd - Regenerate grub-btrfs.cfg
 # github.com/Antynea/grub-btrfs
 # benötigt inotify-tools
-- name: Config all services snapperBtrfs - start and enable grub-btrfsd (Archlinux)
+- name: Config all services snapperBtrfs - start and enable grub-btrfsd.service (Archlinux)
   ansible.builtin.systemd:
     name: grub-btrfsd.service
     state: started
@@ -37,11 +34,11 @@
     daemon_reload: true
   when:
     # - rootFsIsBtrfs != ''     # Variable aus packages_workstation-basic.yml; neu: s.o.
-    - rootFsIsBtrfs == "btrfs"  # Variable aus packages_workstation-basic.yml; neu: s.o.
-    - etcdefgrub.stat.exists    # Status aus packages_workstation-basic.yml; neu: s.o.
+    - rootFsIsBtrfs == "btrfs" # Variable aus packages_workstation-basic.yml; neu: s.o.
+    - etcdefgrub.stat.exists # Status aus packages_workstation-basic.yml; neu: s.o.
     - ansible_distribution in ["Archlinux"]
 
-- name: Config all services snapperBtrfs - start+enable grub-btrfsd (Archlinux)
+- name: Config all services snapperBtrfs - start+enable snapper-cleanup.timer (Archlinux)
   ansible.builtin.systemd:
     name: snapper-cleanup.timer
     state: started
@@ -49,6 +46,6 @@
     daemon_reload: true
   when:
     # - rootFsIsBtrfs != ''     # Variable aus packages_workstation-basic.yml; neu: s.o.
-    - rootFsIsBtrfs == "btrfs"  # Variable aus packages_workstation-basic.yml; neu: s.o.
-    - etcdefgrub.stat.exists    # Status aus packages_workstation-basic.yml; neu: s.o.
+    - rootFsIsBtrfs == "btrfs" # Variable aus packages_workstation-basic.yml; neu: s.o.
+    - etcdefgrub.stat.exists # Status aus packages_workstation-basic.yml; neu: s.o.
     - ansible_distribution in ["Archlinux"]
