@@ -5,17 +5,17 @@
     name:
       - gnome-tweaks
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
-- name: Install gnomeshell extension stuff (Ubuntu >=22 + Gnome)
+- name: Install gnomeshell extension stuff (Debian + Gnome)
   tags: workstation,gnome,ubuntu
   ansible.builtin.package:
     state: present
     name:
-      - gnome-shell-extensions
+      - gnome-shell-extensions # sollte schon installiert sein
       - gnome-shell-extension-appindicator
       - gnome-shell-extension-gsconnect
       - gnome-shell-extension-gsconnect-browsers
   when:
-    - env_desktop == "ubuntu:gnome"
-    - ansible_distribution_major_version|int >= 22
+    - env_desktop == "gnome"
+    - ansible_distribution == "Debian"
