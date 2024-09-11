@@ -6,11 +6,10 @@
   ansible.builtin.file:
     path: /var/spool/anacron
     state: directory
-    mode: '0777'
+    mode: "0777"
   when:
     - ansible_distribution in ["Archlinux"]
-
-
+#
 # ### ###
 # ### ansible-pull für automatisches Update bei Änderungen in git-repo
 # ### ###
@@ -23,14 +22,13 @@
 #    minute: "*/10"
 #    job: ansible-pull -o -U https://github.com/sanmue/ansible_test.git
 
-
 # ##########
 # ### ClamAV
 # ##########
 
 # siehe neu bei services (mit systemd/Timer umgesetzt)
 
-# - name: Create Cronjob to scan home-folder of env_user (Archlinux, Ubuntu)
+# - name: Create Cronjob to scan home-folder of env_user (Archlinux, Debian)
 #  ansible.builtin.cron:
 #    name: "scan home-folder"
 #    special_time: weekly
@@ -38,4 +36,4 @@
 #    # job: /usr/bin/clamdscan --fdpass --multiscan --move="${HOME}/.clam/quarantine" --log="${HOME}/.clam/logs/$(date +\%Y\%m\%d)-weekly.log" "${HOME}" 2>/dev/null 1>&2
 #    job: '/etc/clamav/ScanHOME.sh "${HOME}" 2>/dev/null'
 #  when:
-#    - ansible_distribution in ["Ubuntu", "Archlinux"]
+#    - ansible_distribution in ["Debian", "Archlinux"]
