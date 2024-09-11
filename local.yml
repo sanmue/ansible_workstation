@@ -50,8 +50,8 @@
     # - repo:
     - name: Basic packages
       ansible.builtin.import_tasks: tasks/basic_all/packages_workstation-basic.yml
-    - name: Packages Plasma
-      ansible.builtin.import_tasks: tasks/Desktop_Plasma/packages_workstation-Plasma.yml
+    # - name: Packages Plasma
+    #   ansible.builtin.import_tasks: tasks/Desktop_Plasma/packages_workstation-Plasma.yml
     - name: Packages Gnome
       ansible.builtin.import_tasks: tasks/Desktop_Gnome/packages_workstation-Gnome.yml
     - name: Packages Gnomeshell
