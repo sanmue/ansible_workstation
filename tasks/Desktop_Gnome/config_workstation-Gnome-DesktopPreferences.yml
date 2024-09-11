@@ -7,13 +7,12 @@
   become_user: root
   ansible.builtin.lineinfile:
     path: "/etc/gdm/custom.conf"
-    insertafter: '#WaylandEnable=false'
-    line: 'WaylandEnable=false'
+    insertafter: "#WaylandEnable=false"
+    line: "WaylandEnable=false"
     backup: true
   when:
     - env_desktop == "gnome"
     - env_displayserver == "x11"
-
 
 # ##########################
 # ## Create Desktop Launcher
@@ -28,7 +27,7 @@
     remote_src: true
     owner: "{{ env_user }}"
     group: "{{ env_user }}"
-    mode: u=rw,g=r,o=r   # mode: '0644'
+    mode: u=rw,g=r,o=r # mode: '0644'
   when:
     - env_desktop == "gnome"
     - ansible_distribution == "Archlinux"
@@ -47,7 +46,6 @@
 #    - env_desktop == "gnome"
 #    - ansible_distribution == "Archlinux"
 
-
 # #######################################
 # ### Gnome Autostart Apps - Current User
 #
@@ -63,68 +61,45 @@
     state: directory
     owner: "{{ env_user }}"
     group: "{{ env_user }}"
-    mode: u=rwx   # mode: '0700'
+    mode: u=rwx # mode: '0700'
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 # ### Autostart-Programme:
 # ### --------------------
-- name: Copy autostart file for 'Nextcloud Client' (flatpak) to local user-folder (Ubuntu + Gnome)
+- name: Copy autostart file for 'Nextcloud Client' (flatpak) to local user-folder (Debian + Gnome)
   ansible.builtin.copy:
     src: "files/gnome/Gnome_AutostartApp_User_NextcloudClient_flatpak.desktop"
     dest: "/home/{{ env_user }}/.config/autostart/NextcloudClient.desktop"
     remote_src: true
     owner: "{{ env_user }}"
     group: "{{ env_user }}"
-    mode: u=rw,g=rw,o=r   # mode: '0664'
+    mode: u=rw,g=rw,o=r # mode: '0664'
   when:
-    - env_desktop == "ubuntu:gnome"
-    - ansible_distribution == "Ubuntu"
+    - env_desktop == "gnome"
+    - ansible_distribution == "Debian"
 
-- name: Copy autostart file for 'Nextcloud Client' to local user-folder (Arch,Suse + Gnome)
+- name: Copy autostart file for 'Nextcloud Client' to local user-folder (Arch + Gnome)
   ansible.builtin.copy:
     src: "files/gnome/Gnome_AutostartApp_User_NextcloudClient.desktop"
     dest: "/home/{{ env_user }}/.config/autostart/NextcloudClient.desktop"
     remote_src: true
     owner: "{{ env_user }}"
     group: "{{ env_user }}"
-    mode: u=rw,g=rw,o=r   # mode: '0664'
+    mode: u=rw,g=rw,o=r # mode: '0664'
   when: env_desktop == "gnome" and
-        (ansible_distribution == "Archlinux" or
-        ansible_os_family == "Suse")
+    (ansible_distribution == "Archlinux"
 
-- name: Copy autostart file for 'Syncthing Start' to local user-folder (Arch,Suse + Gnome)
+- name: Copy autostart file for 'Syncthing Start' to local user-folder (Arch + Gnome)
   ansible.builtin.copy:
     src: "files/gnome/Gnome_DesktopLauncher_User_syncthing-start.desktop"
     dest: "/home/{{ env_user }}/.config/autostart/syncthing-start.desktop"
     remote_src: true
     owner: "{{ env_user }}"
     group: "{{ env_user }}"
-    mode: u=rw,g=rw,o=r   # mode: '0664'
+    mode: u=rw,g=rw,o=r # mode: '0664'
   when: env_desktop == "gnome" and
-        (ansible_distribution == "Archlinux" or
-        ansible_os_family == "Suse")
-
-
-# #######################
-# ### Disable Ubuntu dock
-# #######################
-# Annahme: gnome extension "dash to dock" wurde installiert
-# - name: disable Ubuntu dock (Ubuntu + Gnome)
-#  tags: gnome
-#  command: gnome-extensions disable ubuntu-dock@ubuntu.com
-#  when:
-#    - env_desktop == "ubuntu:gnome"
-
-# # alternativ:
-# - name: Set gnome shell disabled-extensions - ubuntu-dock (Ubuntu + Gnome)
-# #  become_user: "{{ env_user }}"
-#  community.general.dconf:
-#    key: "/org/gnome/shell/disabled-extensions"
-#    value: "['ubuntu-dock@ubuntu.com']"
-#  when:
-#    - env_desktop in ["ubuntu:gnome"]
-
+    (ansible_distribution == "Archlinux"
 
 # #################
 # ### favorite apps
@@ -136,8 +111,7 @@
   # backup: ansible.builtin.shell: gsettings set org.gnome.shell favorite-apps "['com.belmoussaoui.Authenticator.desktop', 'org.keepassxc.KeePassXC.desktop', 'firefox.desktop', 'firefox-esr.desktop', 'org.mozilla.firefox.desktop', 'org.gnome.Epiphany.desktop', 'chromium.desktop', 'org.chromium.Chromium.desktop', 'com.microsoft.Edge.desktop', 'brave-browser.desktop', 'com.brave.Browser.desktop', 'one.ablaze.floorp.desktop', 'org.gnome.Evolution.desktop', 'com.gexperts.Tilix.desktop', 'nemo.desktop', 'org.gnome.TextEditor.desktop', 'net.cozic.joplin_desktop.desktop', 'org.libreoffice.LibreOffice.desktop', 'libreoffice-startcenter.desktop', 'dev.zed.Zed.desktop', 'code_code.desktop', 'code.desktop', 'code-oss.desktop', 'pycharm.desktop', 'anki.desktop', 'geany.desktop', 'net.ankiweb.Anki.desktop', 'de.willuhn.Jameica.desktop', 'rhythmbox.desktop', 'org.gnome.Rhythmbox3.desktop', 'de.haeckerfelix.Shortwave.desktop', 'org.signal.Signal.desktop', 'signal-desktop.desktop', 'org.ferdium.Ferdium.desktop', 'org.remmina.Remmina.desktop', 'virt-manager.desktop']"
   ansible.builtin.shell: gsettings set org.gnome.shell favorite-apps "['com.belmoussaoui.Authenticator.desktop', 'org.keepassxc.KeePassXC.desktop', 'firefox.desktop', 'firefox-esr.desktop', 'org.mozilla.firefox.desktop', 'org.gnome.Epiphany.desktop', 'chromium.desktop', 'org.chromium.Chromium.desktop', 'com.microsoft.Edge.desktop', 'brave-browser.desktop', 'com.brave.Browser.desktop', 'one.ablaze.floorp.desktop', 'org.gnome.Evolution.desktop', 'com.gexperts.Tilix.desktop', 'nemo.desktop', 'org.gnome.TextEditor.desktop', 'net.cozic.joplin_desktop.desktop', 'dev.zed.Zed.desktop', 'code_code.desktop', 'code.desktop', 'code-oss.desktop', 'pycharm.desktop', 'anki.desktop', 'net.ankiweb.Anki.desktop', 'de.willuhn.Jameica.desktop', 'rhythmbox.desktop', 'org.gnome.Rhythmbox3.desktop', 'de.haeckerfelix.Shortwave.desktop', 'org.signal.Signal.desktop', 'signal-desktop.desktop', 'org.ferdium.Ferdium.desktop', 'org.remmina.Remmina.desktop', 'virt-manager.desktop']"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
-
+    - env_desktop in ["gnome"]
 
 # ######################
 # ### desktop-background
@@ -147,9 +121,9 @@
   ansible.builtin.file:
     path: "/home/{{ env_user }}/.local/share/backgrounds"
     state: directory
-    mode: '0777'
+    mode: "0777"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 - name: Copy desktop-wallpaper file to local user-folder (Gnome)
   # become: true
@@ -162,7 +136,7 @@
     group: "{{ env_user }}"
     mode: u=rw,g=rw,o=rw
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 # - name: Set desktop - background (Gnome)
 #  community.general.dconf:
@@ -170,14 +144,14 @@
 #    value: '"file:///home/{{ env_user }}/.local/share/backgrounds/brad-huchteman-stone-mountain.jpg"'
 #    state: present   # standard-wert
 #  when:
-#    - env_desktop in ["gnome", "ubuntu:gnome"]
+#    - env_desktop in ["gnome"]
 
 - name: Set desktop - background (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write /org/gnome/desktop/background/picture-uri '"file:///home/sandro/.local/share/backgrounds/brad-huchteman-stone-mountain.jpg"'
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 # - name: Set desktop - dark background (Gnome)
 #  community.general.dconf:
@@ -185,14 +159,14 @@
 #    value: '"file:///home/{{ env_user }}/.local/share/backgrounds/brad-huchteman-stone-mountain.jpg"'
 #    state: present   # standard-wert
 #  when:
-#    - env_desktop in ["gnome", "ubuntu:gnome"]
+#    - env_desktop in ["gnome"]
 
 - name: Set desktop - dark background (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write /org/gnome/desktop/background/picture-uri-dark '"file:///home/{{ env_user }}/.local/share/backgrounds/brad-huchteman-stone-mountain.jpg"'
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 # - name: Set desktop-wallpaper picture-options (Gnome)
 #  community.general.dconf:
@@ -200,28 +174,28 @@
 #    value: "'zoom'"
 #    state: present   # standard-wert
 #  when:
-#    - env_desktop in ["gnome", "ubuntu:gnome"]
+#    - env_desktop in ["gnome"]
 
 - name: Set desktop-wallpaper picture-options (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write /org/gnome/desktop/background/picture-options "'zoom'"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 # - name: Set show-desktop-icons (Gnome)
 #  community.general.dconf:
 #    key: "/org/gnome/desktop/background/show-desktop-icons"
 #    value: "false"
 #  when:
-#    - env_desktop in ["gnome", "ubuntu:gnome"]
+#    - env_desktop in ["gnome"]
 
 - name: Set show-desktop-icons (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write /org/gnome/desktop/background/show-desktop-icons "false"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 # ### weitere desktop settings
 # ### ------------------------
@@ -233,14 +207,14 @@
 #  when:
 #    # - ansible_os_family == "Suse"
 #    # - env_desktop == "gnome"
-#    - env_desktop in ["gnome", "ubuntu:gnome"]
+#    - env_desktop in ["gnome"]
 
 - name: Set desktop interface - clock-format (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write /org/gnome/desktop/interface/clock-format "'24h'"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 # - name: Set desktop interface - clock-show-date (Gnome)
 #   community.general.dconf:
@@ -249,14 +223,14 @@
 #     state: present
 #   when:
 #     # - ansible_os_family == "Suse"
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set desktop interface - clock-show-date (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write /org/gnome/desktop/interface/clock-show-date "true"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 # - name: Set desktop interface - clock-show-weekday (Gnome)
 #   community.general.dconf:
@@ -264,15 +238,14 @@
 #     value: "true"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set desktop interface - clock-show-weekday (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write /org/gnome/desktop/interface/clock-show-weekday "true"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
-
+    - env_desktop in ["gnome"]
 
 # ### Appearance
 # - name: Set desktop interface - color-sheme - dark (Gnome)
@@ -281,15 +254,14 @@
 #     value: "'prefer-dark'"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set desktop interface - color-sheme - dark (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write /org/gnome/desktop/interface/color-scheme "'prefer-dark'"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
-
+    - env_desktop in ["gnome"]
 
 # ### gtk-theme ###
 # all
@@ -300,8 +272,7 @@
 #    state: directory
 # #    mode: '0755'
 #  when:
-# #    - ansible_os_family == "Suse"
-#    - env_desktop in ["gnome","ubuntu:gnome"]
+#    - env_desktop in ["gnome"]
 
 # - name: copy gtk-theme MateriaBreath-dark to userdir (all + Gnome)
 #  unarchive:
@@ -311,12 +282,10 @@
 #    remote_src: yes
 #    keep_newer: yes
 # #    owner: sandro
-# #    group: users # Suse
-# #    group: sandro # Ubuntu/Debian
+# #    group: sandro # Debian
 # #    mode: u=rwx,g=rwx,o=rwx
 #  when:
-# #    - ansible_os_family == "Suse"
-#    - env_desktop in ["gnome","ubuntu:gnome"]
+#    - env_desktop in ["gnome"]
 
 # - name: copy gtk-theme Ultimate-Dark-(Flat)-Green to userdir (all + Gnome)
 #  unarchive:
@@ -326,41 +295,30 @@
 #    remote_src: yes
 #    keep_newer: yes
 # #    owner: sandro
-# #    group: users # suse
-# #    group: sandro # ubuntu, debian
+# #    group: sandro # debian
 # #    mode: u=rwx,g=rwx,o=rwx
 #  when:
-# #    - ansible_os_family == "Suse"
-#    - env_desktop in ["gnome","ubuntu:gnome"]
+#    - env_desktop in ["gnome"]
 
 # #- name: Set desktop interface - gtk-theme MateriaBreath-dark (all + Gnome)
 # # bei theme "MateriaBreath-dark" sind die Optionskästchenen + Häkchen nicht zu sehen
-# - name: Set desktop interface - gtk-theme (Gnome, Ubuntu)
+# - name: Set desktop interface - gtk-theme (Gnome, Debian)
 #   community.general.dconf:
 #     key: "/org/gnome/desktop/interface/gtk-theme"
 #     # value: "'Adwaita-dark'"
 #     value: "'Yaru-prussiangreen-dark'"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome","ubuntu:gnome"]
-#     - ansible_distribution in ["Ubuntu"]
+#     - env_desktop in ["gnome"]
+#     - ansible_distribution in ["Debian"]
 
-- name: Set desktop interface - gtk-theme (Gnome, Ubuntu)
+- name: Set desktop interface - gtk-theme (Gnome, Debian)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write /org/gnome/desktop/interface/gtk-theme "'Yaru-prussiangreen-dark'"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
-    - ansible_distribution in ["Ubuntu"]
-
-# Suse  -'Adwaita-dark'
-# - name: Set desktop interface - gtk-theme (Suse + Gnome)
-#  community.general.dconf:
-#    key: "/org/gnome/desktop/interface/gtk-theme"
-#    value: "'Adwaita-dark'"
-#  when:
-#    - ansible_os_family == "Suse"
-#    - env_desktop == "gnome"
+    - env_desktop in ["gnome"]
+    - ansible_distribution in ["Debian"]
 
 # ### icon-theme ###
 
@@ -372,8 +330,7 @@
 #    state: directory
 # #    mode: '0755'
 #  when:
-# #    - ansible_os_family == "Suse"
-#    - env_desktop in ["gnome","ubuntu:gnome"]
+#    - env_desktop in ["gnome"]
 
 # - name: copy icon-theme Materia-Manjaro-Dark-2 to userdir (all + Gnome)
 #  unarchive:
@@ -383,15 +340,13 @@
 #    remote_src: yes
 #    keep_newer: yes
 # #    owner: sandro
-# #    group: users # suse
-# #    group: sandro # ubuntu, debian
+# #    group: sandro # debian
 # #    mode: u=rwx,g=rwx,o=rwx
 #  when:
-# #    - ansible_os_family == "Suse"
-#    - env_desktop in ["gnome","ubuntu:gnome"]
+#    - env_desktop in ["gnome"]
 
 # - name: Set desktop interface - icon-theme Materia-Manjaro-Dark-2 (Gnome)
-# - name: Set desktop interface - icon-theme (Gnome, Ubuntu)
+# - name: Set desktop interface - icon-theme (Gnome, Debian)
 #   community.general.dconf:
 #     # key: "/org/gnome/desktop/interface/icon-theme"
 #     # value: "'Materia-Manjaro-Dark-2'"
@@ -399,17 +354,16 @@
 #     value: "'Yaru-prussiangreen'"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
-#     - ansible_distribution in ["Ubuntu"]
+#     - env_desktop in ["gnome"]
+#     - ansible_distribution in ["Debian"]
 
-- name: Set desktop interface - icon-theme (Gnome, Ubuntu)
+- name: Set desktop interface - icon-theme (Gnome, Debian)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write /org/gnome/desktop/interface/icon-theme "'Yaru-prussiangreen'"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
-    - ansible_distribution in ["Ubuntu"]
-
+    - env_desktop in ["gnome"]
+    - ansible_distribution in ["Debian"]
 
 # ### Desktop interface, calendar, sceensaver, ...:
 # - name: Set desktop interface - show-battery-percentage (Gnome)
@@ -418,14 +372,14 @@
 #     value: "false"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set desktop interface - show-battery-percentage (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write /org/gnome/desktop/interface/show-battery-percentage "false"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 # - name: Set desktop interface - locate-pointer (Gnome)
 #   community.general.dconf:
@@ -433,14 +387,14 @@
 #     value: "true"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set desktop interface - locate-pointer (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write /org/gnome/desktop/interface/locate-pointer "true"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 # - name: Set desktop calendar - show-weekdate in calendar (Gnome)
 #   community.general.dconf:
@@ -448,14 +402,14 @@
 #     value: "true"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set desktop calendar - show-weekdate in calendar (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write /org/gnome/desktop/calendar/show-weekdate "true"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 # - name: Set desktop input-sources - show-all-sources (Gnome)
 #   community.general.dconf:
@@ -463,14 +417,14 @@
 #     value: "true"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set desktop input-sources - show-all-sources (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write /org/gnome/desktop/input-sources/show-all-sources "true"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 # - name: Set desktop screensaver - idle-activation-enabled (Gnome)
 #   community.general.dconf:
@@ -478,14 +432,14 @@
 #     value: "true"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set desktop screensaver - idle-activation-enabled (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write /org/gnome/desktop/screensaver/idle-activation-enabled "true"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 # - name: Set desktop screensaver - lock-enabled (Gnome)
 #   community.general.dconf:
@@ -493,14 +447,14 @@
 #     value: "true"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set desktop screensaver - lock-enabled (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write /org/gnome/desktop/screensaver/lock-enabled "true"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 # - name: Set desktop screensaver - lock-delay (Gnome)
 #   community.general.dconf:
@@ -508,14 +462,14 @@
 #     value: "'0'"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set desktop screensaver - lock-delay (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write /org/gnome/desktop/screensaver/lock-delay "'0'"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 # - name: Set desktop wm preferences - button-layout (Gnome)
 #   community.general.dconf:
@@ -523,14 +477,14 @@
 #     value: "'appmenu:minimize,maximize,close'"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set desktop wm preferences - button-layout (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write /org/gnome/desktop/wm/preferences/button-layout "'appmenu:minimize,maximize,close'"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 # ### power settings:
 # -------------------
@@ -540,14 +494,14 @@
 #     value: "'nothing'"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set settings-daemon - plugin - power - power-button-action (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write /org/gnome/settings-daemon/plugins/power/power-button-action "'nothing'"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 # - name: Set settings-daemon - plugin - power - sleep-inactive-ac-type (Gnome)
 #   community.general.dconf:
@@ -555,14 +509,14 @@
 #     value: "'nothing'"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set settings-daemon - plugin - power - sleep-inactive-ac-type (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write /org/gnome/settings-daemon/plugins/power/sleep-inactive-ac-type "'nothing'"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 # - name: Set settings-daemon - plugin - power - sleep-inactive-battery-type (Gnome)
 #   community.general.dconf:
@@ -570,14 +524,14 @@
 #     value: "'nothing'"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set settings-daemon - plugin - power - sleep-inactive-battery-type (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write /org/gnome/settings-daemon/plugins/power/sleep-inactive-battery-type "'nothing'"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 # ### set Display - Night Light
 # - name: Set settings-daemon - plugin - color - night-light-enabled (Gnome)
@@ -586,15 +540,14 @@
 #     value: "false"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set settings-daemon - plugin - color - night-light-enabled (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write /org/gnome/settings-daemon/plugins/color/night-light-enabled "false"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
-
+    - env_desktop in ["gnome"]
 
 # ### set Keyboard Shortcuts
 # ### ----------------------
@@ -613,14 +566,14 @@
 #     value: "['<Primary><Alt>p']"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set settings-daemon - plugin - media-keys - control-center (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/settings-daemon/plugins/media-keys/control-center" "['<Primary><Alt>p']"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 # - email- q
 # - name: Set settings-daemon - plugin - media-keys - email (Gnome)
@@ -629,14 +582,14 @@
 #     value: "['<Primary><Alt>q']"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set settings-daemon - plugin - media-keys - email (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/settings-daemon/plugins/media-keys/email" "['<Primary><Alt>q']"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 # - www (Standard-Browser) - w
 # - name: Set settings-daemon - plugin - media-keys - www (Gnome)
@@ -645,14 +598,14 @@
 #     value: "['<Primary><Alt>w']"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set settings-daemon - plugin - media-keys - www (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/settings-daemon/plugins/media-keys/www" "['<Primary><Alt>w']"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 # set custom Keyboard Shortcuts:
 # ------------------------------
@@ -664,14 +617,14 @@
 #     value: "'Authenticator'"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set settings-daemon - plugin - media-keys - Authenticator,name (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/name" "'Authenticator'"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 # - name: Set settings-daemon - plugin - media-keys - Authenticator,command (Gnome)
 #   community.general.dconf:
@@ -679,14 +632,14 @@
 #     value: "'flatpak run com.belmoussaoui.Authenticator'"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set settings-daemon - plugin - media-keys - Authenticator,command (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/command" "'flatpak run com.belmoussaoui.Authenticator'"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 # - name: Set settings-daemon - plugin - media-keys - Authenticator,binding (Gnome)
 #   community.general.dconf:
@@ -694,14 +647,14 @@
 #     value: "'<Primary><Alt>a'"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set settings-daemon - plugin - media-keys - Authenticator,binding (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/binding" "'<Primary><Alt>a'"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 # - KeepassXC (custom1) - k
 # - name: Set settings-daemon - plugin - media-keys - KeepassXC,name (Gnome)
@@ -710,31 +663,31 @@
 #     value: "'KeepassXC'"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set settings-daemon - plugin - media-keys - KeepassXC,name (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/name" "'KeepassXC'"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
-# - name: Set settings-daemon - plugin - media-keys - KeepassXC,command (Gnome, Ubuntu, flatpak)
+# - name: Set settings-daemon - plugin - media-keys - KeepassXC,command (Gnome, Debian, flatpak)
 #   community.general.dconf:
 #     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/command"
 #     value: "'flatpak run org.keepassxc.KeePassXC'"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
-#     - ansible_distribution == "Ubuntu"
+#     - env_desktop in ["gnome"]
+#     - ansible_distribution == "Debian"
 
-- name: Set settings-daemon - plugin - media-keys - KeepassXC,command (Gnome, Ubuntu, flatpak)
+- name: Set settings-daemon - plugin - media-keys - KeepassXC,command (Gnome, Debian, flatpak)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/command" "'flatpak run org.keepassxc.KeePassXC'"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
-    - ansible_distribution == "Ubuntu"
+    - env_desktop in ["gnome"]
+    - ansible_distribution == "Debian"
 
 # - name: Set settings-daemon - plugin - media-keys - KeepassXC,command (Gnome, Arch)
 #   community.general.dconf:
@@ -742,7 +695,7 @@
 #     value: "'KeePassXC'"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 #     - ansible_distribution == "Archlinux"
 
 - name: Set settings-daemon - plugin - media-keys - KeepassXC,command (Gnome, Arch)
@@ -750,7 +703,7 @@
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/command" "'KeePassXC'"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
     - ansible_distribution == "Archlinux"
 
 # - name: Set settings-daemon - plugin - media-keys - KeepassXC,binding (Gnome)
@@ -759,14 +712,14 @@
 #     value: "'<Primary><Alt>k'"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set settings-daemon - plugin - media-keys - KeepassXC,binding (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/binding" "'<Primary><Alt>k'"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 # ### Um zu prüfen, ob firefox-esr installiert ist:
 # https://dev.to/setevoy/ansible-check-if-a-package-installed-on-a-remote-system-4402
@@ -783,14 +736,14 @@
 #     value: "'Firefox'"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set settings-daemon - plugin - media-keys - firefox,name (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/name" "'Firefox'"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 # - name: Set settings-daemon - plugin - media-keys - firefox,command (Gnome)
 #   community.general.dconf:
@@ -798,7 +751,7 @@
 #     value: "'firefox'"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 #     - "'firefox-esr' not in ansible_facts.packages"
 
 - name: Set settings-daemon - plugin - media-keys - firefox,command (Gnome)
@@ -806,7 +759,7 @@
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/command" "'firefox'"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
     - "'firefox-esr' not in ansible_facts.packages"
 
 # - name: Set settings-daemon - plugin - media-keys - firefox-esr,command (Gnome)
@@ -815,7 +768,7 @@
 #     value: "'firefox-esr'"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 #     - "'firefox-esr' in ansible_facts.packages"
 
 - name: Set settings-daemon - plugin - media-keys - firefox-esr,command (Gnome)
@@ -823,7 +776,7 @@
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/command" "'firefox-esr'"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
     - "'firefox-esr' in ansible_facts.packages"
 
 # - name: Set settings-daemon - plugin - media-keys - Firefox,binding (Gnome)
@@ -832,14 +785,14 @@
 #     value: "'<Primary><Alt>f'"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set settings-daemon - plugin - media-keys - Firefox,binding (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/binding" "'<Primary><Alt>f'"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 # - Chromium (custom3) - c
 # - name: Set settings-daemon - plugin - media-keys - chromium,name (Gnome)
@@ -848,31 +801,31 @@
 #     value: "'Chromium'"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set settings-daemon - plugin - media-keys - chromium,name (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/name" "'Chromium'"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
-# - name: Set settings-daemon - plugin - media-keys - chromium,command (Gnome, Ubuntu, flatpak)
+# - name: Set settings-daemon - plugin - media-keys - chromium,command (Gnome, Debian, flatpak)
 #   community.general.dconf:
 #     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/command"
 #     value: "'flatpak run org.chromium.Chromium'"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
-#     - ansible_distribution == "Ubuntu"
+#     - env_desktop in ["gnome"]
+#     - ansible_distribution == "Debian"
 
-- name: Set settings-daemon - plugin - media-keys - chromium,command (Gnome, Ubuntu, flatpak)
+- name: Set settings-daemon - plugin - media-keys - chromium,command (Gnome, Debian, flatpak)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/command" "'flatpak run org.chromium.Chromium'"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
-    - ansible_distribution == "Ubuntu"
+    - env_desktop in ["gnome"]
+    - ansible_distribution == "Debian"
 
 # - name: Set settings-daemon - plugin - media-keys - chromium,command (Gnome, Arch)
 #   community.general.dconf:
@@ -880,7 +833,7 @@
 #     value: "'chromium'"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 #     - ansible_distribution == "Archlinux"
 
 - name: Set settings-daemon - plugin - media-keys - chromium,command (Gnome, Arch)
@@ -888,7 +841,7 @@
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/command" "'chromium'"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
     - ansible_distribution == "Archlinux"
 
 # - name: Set settings-daemon - plugin - media-keys - chromium,binding (Gnome)
@@ -897,14 +850,14 @@
 #     value: "'<Primary><Alt>c'"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set settings-daemon - plugin - media-keys - chromium,binding (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/binding" "'<Primary><Alt>c'"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 # - Brave Browser (custom4) - b
 # - name: Set settings-daemon - plugin - media-keys - Brave Browser,name (Gnome)
@@ -913,31 +866,31 @@
 #     value: "'Brave Browser'"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set settings-daemon - plugin - media-keys - Brave Browser,name (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/name" "'Brave Browser'"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
-# - name: Set settings-daemon - plugin - media-keys - Brave Browser,command (Gnome, Ubuntu)
+# - name: Set settings-daemon - plugin - media-keys - Brave Browser,command (Gnome, Debian)
 #   community.general.dconf:
 #     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/command"
 #     value: "'brave-browser'"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
-#     - ansible_distribution == "Ubuntu"
+#     - env_desktop in ["gnome"]
+#     - ansible_distribution == "Debian"
 
-- name: Set settings-daemon - plugin - media-keys - Brave Browser,command (Gnome, Ubuntu)
+- name: Set settings-daemon - plugin - media-keys - Brave Browser,command (Gnome, Debian)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/command" "'brave-browser'"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
-    - ansible_distribution == "Ubuntu"
+    - env_desktop in ["gnome"]
+    - ansible_distribution == "Debian"
 
 # - name: Set settings-daemon - plugin - media-keys - Brave Browser,command (Gnome, Arch)
 #   community.general.dconf:
@@ -945,7 +898,7 @@
 #     value: "'brave'"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 #     - ansible_distribution == "Archlinux"
 
 - name: Set settings-daemon - plugin - media-keys - Brave Browser,command (Gnome, Arch)
@@ -953,7 +906,7 @@
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/command" "'brave'"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
     - ansible_distribution == "Archlinux"
 
 # - name: Set settings-daemon - plugin - media-keys - Brave Browser,binding (Gnome)
@@ -962,14 +915,14 @@
 #     value: "'<Primary><Alt>b'"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set settings-daemon - plugin - media-keys - Brave Browser,binding (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/binding" "'<Primary><Alt>b'"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 # - Nemo (custom5) - e
 # - name: Set settings-daemon - plugin - media-keys - Nemo,name (Gnome)
@@ -978,14 +931,14 @@
 #     value: "'Nemo'"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set settings-daemon - plugin - media-keys - Nemo,name (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom5/name" "'Nemo'"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 # - name: Set settings-daemon - plugin - media-keys - Nemo,command (Gnome)
 #   community.general.dconf:
@@ -993,14 +946,14 @@
 #     value: "'nemo'"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set settings-daemon - plugin - media-keys - Nemo,command (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom5/command" "'nemo'"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 # - name: Set settings-daemon - plugin - media-keys - Nemo,binding (Gnome)
 #   community.general.dconf:
@@ -1008,14 +961,14 @@
 #     value: "'<Primary><Alt>e'"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set settings-daemon - plugin - media-keys - Nemo,binding (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom5/binding" "'<Primary><Alt>e'"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 # - gedit (custom6) - g
 # - name: Set settings-daemon - plugin - media-keys - gedit,name (Gnome)
@@ -1024,14 +977,14 @@
 #     value: "'gedit'"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set settings-daemon - plugin - media-keys - gedit,name (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom6/name" "'gedit'"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 # - name: Set settings-daemon - plugin - media-keys - gedit,command (Gnome)
 #   community.general.dconf:
@@ -1039,14 +992,14 @@
 #     value: "'gedit'"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set settings-daemon - plugin - media-keys - gedit,command (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom6/command" "'gedit'"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 # - name: Set settings-daemon - plugin - media-keys - gedit,binding (Gnome)
 #   community.general.dconf:
@@ -1054,14 +1007,14 @@
 #     value: "'<Primary><Alt>g'"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set settings-daemon - plugin - media-keys - gedit,binding (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom6/binding" "'<Primary><Alt>g'"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 # - Libre Office (custom7) - l
 # - name: Set settings-daemon - plugin - media-keys - Libre Office,name (Gnome)
@@ -1070,31 +1023,31 @@
 #     value: "'Libre Office'"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set settings-daemon - plugin - media-keys - Libre Office,name (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom7/name" "'Libre Office'"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
-# - name: Set settings-daemon - plugin - media-keys - Libre Office,command (Gnome, Ubuntu, flatpak)
+# - name: Set settings-daemon - plugin - media-keys - Libre Office,command (Gnome, Debian, flatpak)
 #   community.general.dconf:
 #     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom7/command"
 #     value: "'flatpak run org.libreoffice.LibreOffice'"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
-#     - ansible_distribution == "Ubuntu"
+#     - env_desktop in ["gnome"]
+#     - ansible_distribution == "Debian"
 
-- name: Set settings-daemon - plugin - media-keys - Libre Office,command (Gnome, Ubuntu, flatpak)
+- name: Set settings-daemon - plugin - media-keys - Libre Office,command (Gnome, Debian, flatpak)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom7/command" "'flatpak run org.libreoffice.LibreOffice'"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
-    - ansible_distribution == "Ubuntu"
+    - env_desktop in ["gnome"]
+    - ansible_distribution == "Debian"
 
 # - name: Set settings-daemon - plugin - media-keys - Libre Office,command (Gnome, Arch)
 #   community.general.dconf:
@@ -1102,7 +1055,7 @@
 #     value: "'libreoffice'"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 #     - ansible_distribution == "Archlinux"
 
 - name: Set settings-daemon - plugin - media-keys - Libre Office,command (Gnome, Arch)
@@ -1110,7 +1063,7 @@
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom7/command" "'libreoffice'"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
     - ansible_distribution == "Archlinux"
 
 # - name: Set settings-daemon - plugin - media-keys - Libre Office,binding (Gnome)
@@ -1119,32 +1072,32 @@
 #     value: "'<Primary><Alt>l'"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set settings-daemon - plugin - media-keys - Libre Office,binding (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom7/binding" "'<Primary><Alt>l'"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 # - VSCode / Code OSS (custom8) - m
-# - name: Set settings-daemon - plugin - media-keys - VSCode,name (Gnome, Ubuntu)
+# - name: Set settings-daemon - plugin - media-keys - VSCode,name (Gnome, Debian)
 #   community.general.dconf:
 #     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom8/name"
 #     value: "'VSCode'"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
-#     - ansible_distribution == "Ubuntu"
+#     - env_desktop in ["gnome"]
+#     - ansible_distribution == "Debian"
 
-- name: Set settings-daemon - plugin - media-keys - VSCode,name (Gnome, Ubuntu)
+- name: Set settings-daemon - plugin - media-keys - VSCode,name (Gnome, Debian)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom8/name" "'VSCode'"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
-    - ansible_distribution == "Ubuntu"
+    - env_desktop in ["gnome"]
+    - ansible_distribution == "Debian"
 
 # - name: Set settings-daemon - plugin - media-keys - CodeOSS,name (Gnome, Arch)
 #   community.general.dconf:
@@ -1152,7 +1105,7 @@
 #     value: "'Code OSS'"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 #     - ansible_distribution == "Archlinux"
 
 - name: Set settings-daemon - plugin - media-keys - CodeOSS,name (Gnome, Arch)
@@ -1160,7 +1113,7 @@
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom8/name" "'Code OSS'"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
     - ansible_distribution == "Archlinux"
 
 # - name: Set settings-daemon - plugin - media-keys - VSCode CodeOSS,command (Gnome)
@@ -1169,14 +1122,14 @@
 #     value: "'code'"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set settings-daemon - plugin - media-keys - VSCode CodeOSS,command (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom8/command" "'code'"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 # - name: Set settings-daemon - plugin - media-keys - VSCode,binding (Gnome)
 #   community.general.dconf:
@@ -1184,14 +1137,14 @@
 #     value: "'<Primary><Alt>m'"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set settings-daemon - plugin - media-keys - VSCode,binding (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom8/binding" "'<Primary><Alt>m'"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 # - Joplin (custom9) - j
 # - name: Set settings-daemon - plugin - media-keys - Joplin,name (Gnome)
@@ -1200,14 +1153,14 @@
 #     value: "'Joplin'"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set settings-daemon - plugin - media-keys - Joplin,name (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom9/name" "'Joplin'"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 # - name: Set settings-daemon - plugin - media-keys - Joplin,command (Gnome)
 #   community.general.dconf:
@@ -1215,14 +1168,14 @@
 #     value: "'flatpak run net.cozic.joplin_desktop'"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set settings-daemon - plugin - media-keys - Joplin,command (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom9/command" "'flatpak run net.cozic.joplin_desktop'"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 # - name: Set settings-daemon - plugin - media-keys - Joplin,binding (Gnome)
 #   community.general.dconf:
@@ -1230,14 +1183,14 @@
 #     value: "'<Primary><Alt>j'"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set settings-daemon - plugin - media-keys - Joplin,binding (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom9/binding" "'<Primary><Alt>j'"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 # - Remmina (custom10) - r
 # - name: Set settings-daemon - plugin - media-keys - Remmina,name (Gnome)
@@ -1246,14 +1199,14 @@
 #     value: "'Remmina'"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set settings-daemon - plugin - media-keys - Remmina,name (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom10/name" "'Remmina'"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 # - name: Set settings-daemon - plugin - media-keys - Remmina,command(Gnome)
 #   community.general.dconf:
@@ -1261,14 +1214,14 @@
 #     value: "'remmina'"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set settings-daemon - plugin - media-keys - Remmina,command (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom10/command" "'remmina'"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 # - name: Set settings-daemon - plugin - media-keys - Remmina,binding (Gnome)
 #   community.general.dconf:
@@ -1276,14 +1229,14 @@
 #     value: "'<Primary><Alt>r'"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set settings-daemon - plugin - media-keys - Remmina,binding (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom10/binding" "'<Primary><Alt>r'"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 # - Virtual Machine Manager (custom11) - v
 # - name: Set settings-daemon - plugin - media-keys - Virtual Machine Manager,name (Gnome)
@@ -1292,14 +1245,14 @@
 #     value: "'Virtual Machine Manager'"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set settings-daemon - plugin - media-keys - Virtual Machine Manager,name (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom11/name" "'Virtual Machine Manager'"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 # - name: Set settings-daemon - plugin - media-keys - Virtual Machine Manager,command (Gnome)
 #   community.general.dconf:
@@ -1307,14 +1260,14 @@
 #     value: "'virt-manager'"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set settings-daemon - plugin - media-keys - Virtual Machine Manager,command (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom11/command" "'virt-manager'"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 # - name: Set settings-daemon - plugin - media-keys - Virtual Machine Manager,binding (Gnome)
 #   community.general.dconf:
@@ -1322,66 +1275,66 @@
 #     value: "'<Primary><Alt>v'"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set settings-daemon - plugin - media-keys - Virtual Machine Manager,binding (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom11/binding" "'<Primary><Alt>v'"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
-# - Software Center 'Gnome Software' (Ubuntu) (custom12) - s
-# - name: Set settings-daemon - plugin - media-keys - Gnome Software,name (Gnome, Ubuntu)
+# - Software Center 'Gnome Software' (Debian) (custom12) - s
+# - name: Set settings-daemon - plugin - media-keys - Gnome Software,name (Gnome, Debian)
 #   community.general.dconf:
 #     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom12/name"
 #     value: "'Gnome Software'"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
-#     - ansible_distribution == "Ubuntu"
+#     - env_desktop in ["gnome"]
+#     - ansible_distribution == "Debian"
 
-- name: Set settings-daemon - plugin - media-keys - Gnome Software,name (Gnome, Ubuntu)
+- name: Set settings-daemon - plugin - media-keys - Gnome Software,name (Gnome, Debian)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom12/name" "'Gnome Software'"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
-    - ansible_distribution == "Ubuntu"
+    - env_desktop in ["gnome"]
+    - ansible_distribution == "Debian"
 
-# - name: Set settings-daemon - plugin - media-keys - Gnome Software,command (Gnome, Ubuntu)
+# - name: Set settings-daemon - plugin - media-keys - Gnome Software,command (Gnome, Debian)
 #   community.general.dconf:
 #     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom12/command"
 #     value: "'gnome-software'"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
-#     - ansible_distribution == "Ubuntu"
+#     - env_desktop in ["gnome"]
+#     - ansible_distribution == "Debian"
 
-- name: Set settings-daemon - plugin - media-keys - Gnome Software,command (Gnome, Ubuntu)
+- name: Set settings-daemon - plugin - media-keys - Gnome Software,command (Gnome, Debian)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom12/command" "'gnome-software'"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
-    - ansible_distribution == "Ubuntu"
+    - env_desktop in ["gnome"]
+    - ansible_distribution == "Debian"
 
-# - name: Set settings-daemon - plugin - media-keys - Gnome Software,binding (Gnome, Ubuntu)
+# - name: Set settings-daemon - plugin - media-keys - Gnome Software,binding (Gnome, Debian)
 #   community.general.dconf:
 #     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom12/binding"
 #     value: "'<Primary><Alt>s'"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
-#     - ansible_distribution == "Ubuntu"
+#     - env_desktop in ["gnome"]
+#     - ansible_distribution == "Debian"
 
-- name: Set settings-daemon - plugin - media-keys - Gnome Software,binding (Gnome, Ubuntu)
+- name: Set settings-daemon - plugin - media-keys - Gnome Software,binding (Gnome, Debian)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom12/binding" "'<Primary><Alt>s'"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
-    - ansible_distribution == "Ubuntu"
+    - env_desktop in ["gnome"]
+    - ansible_distribution == "Debian"
 
 # - Software Center 'Pamac-Manager' (Arch) (custom12) - s
 # - name: Set settings-daemon - plugin - media-keys - Pamac Manager,name (Gnome, Arch)
@@ -1390,7 +1343,7 @@
 #     value: "'Pamac-Manager'"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 #     - ansible_distribution == "Archlinux"
 
 - name: Set settings-daemon - plugin - media-keys - Pamac Manager,name (Gnome, Arch)
@@ -1398,7 +1351,7 @@
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom12/name" "'Pamac-Manager'"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
     - ansible_distribution == "Archlinux"
 
 # - name: Set settings-daemon - plugin - media-keys - Pamac Managercommand (Gnome, Arch)
@@ -1407,7 +1360,7 @@
 #     value: "'pamac-manager'"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 #     - ansible_distribution == "Archlinux"
 
 - name: Set settings-daemon - plugin - media-keys - Pamac Managercommand (Gnome, Arch)
@@ -1415,7 +1368,7 @@
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom12/command" "'pamac-manager'"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
     - ansible_distribution == "Archlinux"
 
 # - name: Set settings-daemon - plugin - media-keys - Pamac Manager,binding (Gnome, Arch)
@@ -1424,7 +1377,7 @@
 #     value: "'<Primary><Alt>s'"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 #     - ansible_distribution == "Archlinux"
 
 - name: Set settings-daemon - plugin - media-keys - Pamac Manager,binding (Gnome, Arch)
@@ -1432,7 +1385,7 @@
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom12/binding" "'<Primary><Alt>s'"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
     - ansible_distribution == "Archlinux"
 
 # - ulauncher (custom13) - ctrl+space
@@ -1443,14 +1396,14 @@
 #     value: "'ulauncher'"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set settings-daemon - plugin - media-keys - ulauncher,name (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom13/name" "'ulauncher'"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 # - name: Set settings-daemon - plugin - media-keys - ulauncher,command (Gnome)
 #   community.general.dconf:
@@ -1458,14 +1411,14 @@
 #     value: "'ulauncher-toggle'"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set settings-daemon - plugin - media-keys - ulauncher,command (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom13/command" "'ulauncher-toggle'"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 # - name: Set settings-daemon - plugin - media-keys - ulauncher,binding (Gnome)
 #   community.general.dconf:
@@ -1473,14 +1426,14 @@
 #     value: "'<Control>space'"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set settings-daemon - plugin - media-keys - ulauncher,binding (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom13/binding" "'<Control>space'"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 # ### ---------------------------------------------------
 # ### - set/create list for configured custom-keybindings
@@ -1491,15 +1444,14 @@
 #     value: "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom5/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom6/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom7/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom8/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom9/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom10/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom11/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom12/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom13/']"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set settings-daemon - plugin - media-keys - custom-keybindings (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings" "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom5/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom6/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom7/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom8/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom9/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom10/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom11/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom12/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom13/']"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
-
+    - env_desktop in ["gnome"]
 
 # ### Gnome Weather:
 # ------------------
@@ -1528,14 +1480,14 @@
 #     value: "'double'"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set nemo preferences - click-policy (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/nemo/preferences/click-policy" "'double'"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 # - name: Set nemo preferences - show-computer-icon-toolbar (Gnome)
 #   community.general.dconf:
@@ -1543,14 +1495,14 @@
 #     value: "true"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set nemo preferences - show-computer-icon-toolbar (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/nemo/preferences/show-computer-icon-toolbar" "true"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 # - name: Set nemo preferences - show-home-icon-toolbar (Gnome)
 #   community.general.dconf:
@@ -1558,14 +1510,14 @@
 #     value: "true"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set nemo preferences - show-home-icon-toolbar (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/nemo/preferences/show-home-icon-toolbar" "true"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 # - name: Set nemo preferences - show-list-view-icon-toolbar (Gnome)
 #   community.general.dconf:
@@ -1573,14 +1525,14 @@
 #     value: "true"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set nemo preferences - show-list-view-icon-toolbar (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/nemo/preferences/show-list-view-icon-toolbar" "true"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 # - name: Set nemo preferences - show-location-entry (Gnome)
 #   community.general.dconf:
@@ -1588,14 +1540,14 @@
 #     value: "true"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set nemo preferences - show-location-entry (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/nemo/preferences/show-location-entry" "true"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 # - name: Set nemo preferences - show-new-folder-icon-toolbar (Gnome)
 #   community.general.dconf:
@@ -1603,14 +1555,14 @@
 #     value: "true"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set nemo preferences - show-new-folder-icon-toolbar (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/nemo/preferences/show-new-folder-icon-toolbar" "true"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 # - name: Set nemo preferences - show-open-in-terminal-toolbar (Gnome)
 #   community.general.dconf:
@@ -1618,14 +1570,14 @@
 #     value: "true"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set nemo preferences - show-open-in-terminal-toolbar (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/nemo/preferences/show-open-in-terminal-toolbar" "true"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 # - name: Set nemo preferences - show-reload-icon-toolbar (Gnome)
 #   community.general.dconf:
@@ -1633,14 +1585,14 @@
 #     value: "true"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set nemo preferences - show-reload-icon-toolbar (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/nemo/preferences/show-reload-icon-toolbar" "true"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 # - name: Set nemo preferences - show-show-thumbnails-toolbar (Gnome)
 #   community.general.dconf:
@@ -1648,14 +1600,14 @@
 #     value: "true"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set nemo preferences - show-show-thumbnails-toolbar (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/nemo/preferences/show-show-thumbnails-toolbar" "true"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 # - name: Set nemo extensions - nemo terminal - default-visible (Gnome)
 #   community.general.dconf:
@@ -1663,15 +1615,14 @@
 #     value: "false"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set nemo extensions - nemo terminal - default-visible (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/nemo/extensions/nemo-terminal/default-visible" "false"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
-
+    - env_desktop in ["gnome"]
 
 # ### gedit -  preferences:
 # -------------------------
@@ -1681,15 +1632,14 @@
 #     value: "'solarized-dark'"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set gedit preferences - scheme (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/gedit/preferences/editor/scheme" "'solarized-dark'"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
-
+    - env_desktop in ["gnome"]
 
 # ### gnome terminal - profiles and preferences:
 # ----------------------------------------------
@@ -1697,7 +1647,7 @@
 # https://linuxconfig.org/introduction-to-the-dconf-configuration-system
 # https://askubuntu.com/questions/941770/how-do-i-create-gnome-terminal-profiles-at-a-global-level-for-all-users
 # #
-- name: Set gnome terminal - profiles and preferences (Gnome, Ubuntu)
+- name: Set gnome terminal - profiles and preferences (Gnome, Debian)
   ansible.builtin.script: "{{ env_PWD }}/tasks/Desktop_Gnome/config_workstation-Gnome-DesktopPreferences-terminal.sh" # funktioniert; ansible version 2.9
   # #  ansible.builtin.script: "{{ env_PWD }}/tasks/Desktop_Gnome/config_workstation-Gnome-DesktopPreferences-terminal.sh" # ab ansible version 2.10
   # #  ansible.builtin.script:  # ab ansible version 2.10
@@ -1714,11 +1664,11 @@
   args:
     creates: "/home/{{ env_user }}/.ansible_TerminalProfileSet"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
     # #    - "ansible_version.major is version('2', '=')"
     # #    - "ansible_version.minor is version('9', '<=')"
     # - "ansible_version.full is version('2.10.0', '>=')"
-    # - ansible_distribution in ["Ubuntu"]
+    # - ansible_distribution in ["Debian"]
 
 - name: Create flag - file .ansible_TerminalProfileSet (Gnome)
   ansible.builtin.file:
@@ -1728,9 +1678,8 @@
     modification_time: preserve
     access_time: preserve
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
-    # - ansible_distribution in ["Ubuntu"]
-
+    - env_desktop in ["gnome"]
+    # - ansible_distribution in ["Debian"]
 
 # ### tilix (tiling terminal emulator) - profiles and preferences:
 # ----------------------------------------------------------------
@@ -1743,14 +1692,14 @@
 #     value: "false"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Gnome Desktop Prefs - tilix terminal - close-with-last-session (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/com/gexperts/Tilix/close-with-last-session" "false"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 # - name: Gnome Desktop Prefs - tilix terminal - control-scroll-zoom (Gnome)
 #   community.general.dconf:
@@ -1758,21 +1707,21 @@
 #     value: "true"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Gnome Desktop Prefs - tilix terminal - control-scroll-zoom (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/com/gexperts/Tilix/control-scroll-zoom" "true"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 - name: Gnome Desktop Prefs - tilix terminal - paste-strip-trailing-whitespace (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/com/gexperts/Tilix/paste-strip-trailing-whitespace" "true"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 # - name: Gnome Desktop Prefs - tilix terminal - terminal-title-style (Gnome)
 #   community.general.dconf:
@@ -1780,14 +1729,14 @@
 #     value: "'small'"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Gnome Desktop Prefs - tilix terminal - terminal-title-style (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/com/gexperts/Tilix/terminal-title-style" "'small'"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 # - name: Gnome Desktop Prefs - tilix terminal - use-overlay-scrollbar (Gnome)
 #   community.general.dconf:
@@ -1795,14 +1744,14 @@
 #     value: "true"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Gnome Desktop Prefs - tilix terminal - use-overlay-scrollbar (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/com/gexperts/Tilix/use-overlay-scrollbar" "true"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 # - name: Gnome Desktop Prefs - tilix terminal - use-tabs (Gnome)
 #   community.general.dconf:
@@ -1810,21 +1759,21 @@
 #     value: "true"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Gnome Desktop Prefs - tilix terminal - use-tabs (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/com/gexperts/Tilix/use-tabs" "true"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 - name: Gnome Desktop Prefs - Set tilix terminal - profiles and preferences (Gnome)
   ansible.builtin.script: "tasks/Desktop_Gnome/config_workstation-Gnome-DesktopPreferences-tilix.sh"
   args:
     creates: "/home/{{ env_user }}/.ansible_tilixTerminalProfileSet"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 - name: Gnome Desktop Prefs - tilix terminal - ProfileSet - create flag - file (Gnome)
   ansible.builtin.file:
@@ -1834,8 +1783,7 @@
     modification_time: preserve
     access_time: preserve
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
-
+    - env_desktop in ["gnome"]
 
 # ### gnome shell extensions -  preferences:
 # ------------------------------------------
@@ -1849,14 +1797,14 @@
 #     value: "false"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set gnome shell extensions - ding - show-home (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/shell/extensions/ding/show-home" "false"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 # - name: Set gnome shell extensions - ding - start-corner (Gnome)
 #   # Settings - Appearance - Desktop Icons - Position of New Icons
@@ -1865,14 +1813,14 @@
 #     value: "'top-left'"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set gnome shell extensions - ding - start-corner (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/shell/extensions/ding/start-corner" "'top-left'"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 # # ### Dash to Dock:
 # - name: Set gnome shell extensions - dash-to-dock - custom-theme-shrink (Gnome)
@@ -1881,7 +1829,7 @@
 #     value: "true"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 # - name: Set gnome shell extensions - dash-to-dock - dash-max-icon-size (Gnome)
 #   # Appearence - Dock - Icon Size
@@ -1890,7 +1838,7 @@
 #     value: "32"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 # - name: Set gnome shell extensions - dash-to-dock - disable-overview-on-startup (Gnome)
 #   community.general.dconf:
@@ -1898,7 +1846,7 @@
 #     value: "true"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 # - name: Set gnome shell extensions - dash-to-dock - dock-fixed (Gnome)
 #   # Appearence - Dock - Auot-hide the Dock: enable
@@ -1907,7 +1855,7 @@
 #     value: "false"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 # - name: Set gnome shell extensions - dash-to-dock - dock-position (Gnome)
 #   # Appearence - Dock - Auot-hide the Dock: enable
@@ -1916,7 +1864,7 @@
 #     value: "'LEFT'"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 # - name: Set gnome shell extensions - dash-to-dock - extend-height (Gnome)
 #   # Appearence - Dock - Panel mode: enable
@@ -1925,7 +1873,7 @@
 #     value: "false"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 # - name: Set gnome shell extensions - dash-to-dock - height-fraction (Gnome)
 #   community.general.dconf:
@@ -1933,7 +1881,7 @@
 #     value: "'0.94999999999999996'"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 # - name: Set gnome shell extensions - dash-to-dock - isolate-workspaces (Gnome)
 #   community.general.dconf:
@@ -1941,7 +1889,7 @@
 #     value: "true"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 # - name: Set gnome shell extensions - dash-to-dock - multi-monitor" (Gnome)
 #   community.general.dconf:
@@ -1949,7 +1897,7 @@
 #     value: "true"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 # - name: Set gnome shell extensions - dash-to-dock - running-indicator-style" (Gnome)
 #   community.general.dconf:
@@ -1957,7 +1905,7 @@
 #     value: "'DOTS'"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 # - name: Set gnome shell extensions - dash-to-dock - scroll-action" (Gnome)
 #   community.general.dconf:
@@ -1965,7 +1913,7 @@
 #     value: "'switch-workspace'"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 # - name: Set gnome shell extensions - dash-to-dock - show-mounts (Gnome)
 #   community.general.dconf:
@@ -1973,7 +1921,7 @@
 #     value: "false"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 # - name: Set gnome shell extensions - dash-to-dock - show-mounts (Gnome)
 #   community.general.dconf:
@@ -1981,7 +1929,7 @@
 #     value: "false"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 # - name: Set gnome shell extensions - dash-to-dock - show-mounts-only-mounted (Gnome)
 #   community.general.dconf:
@@ -1989,7 +1937,7 @@
 #     value: "false"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 # - name: Set gnome shell extensions - dash-to-dock - show-trash (Gnome)
 #   community.general.dconf:
@@ -1997,8 +1945,7 @@
 #     value: "false"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
-
+#     - env_desktop in ["gnome"]
 
 # ### openweather:
 # - name: Set gnome shell extensions - openweather - city (Gnome)
@@ -2007,14 +1954,14 @@
 #     value: "'49.4641816,7.2484007>Niederkirchen, Kuseler Straße, Saal, Niederkirchen, Sankt Wendel, Landkreis St. Wendel, Saarland, 66606, Deutschland >-1 && 49.49342345,6.828330133618561>Nunkirchen, Wadern, Landkreis Merzig-Wadern, Saarland, Deutschland >-1'"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set gnome shell extensions - openweather - city (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/shell/extensions/openweather/city" "'49.4641816,7.2484007>Niederkirchen, Kuseler Straße, Saal, Niederkirchen, Sankt Wendel, Landkreis St. Wendel, Saarland, 66606, Deutschland >-1 && 49.49342345,6.828330133618561>Nunkirchen, Wadern, Landkreis Merzig-Wadern, Saarland, Deutschland >-1'"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 # - name: Set gnome shell extensions - openweather - actual-city" (Gnome)
 #   community.general.dconf:
@@ -2022,14 +1969,14 @@
 #     value: "0"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set gnome shell extensions - openweather - actual-city" (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/shell/extensions/openweather/actual-city" "0"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 # - name: Set gnome shell extensions - openweather - days-forecast (Gnome)
 #   community.general.dconf:
@@ -2037,14 +1984,14 @@
 #     value: "4"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set gnome shell extensions - openweather - days-forecast (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/shell/extensions/openweather/days-forecast" "4"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 # - name: Set gnome shell extensions - openweather - menu-alignment (Gnome)
 #   community.general.dconf:
@@ -2052,14 +1999,14 @@
 #     value: "80.099999999999994"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set gnome shell extensions - openweather - menu-alignment (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/shell/extensions/openweather/menu-alignment" "80.099999999999994"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 # - name: Set gnome shell extensions - openweather - position-in-panel (Gnome)
 #   community.general.dconf:
@@ -2067,14 +2014,14 @@
 #     value: "'center'"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set gnome shell extensions - openweather - position-in-panel (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/shell/extensions/openweather/position-in-panel" "'center'"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 # - name: Set gnome shell extensions - openweather - pressure-unit (Gnome)
 #   community.general.dconf:
@@ -2082,14 +2029,14 @@
 #     value: "'hPa'"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set gnome shell extensions - openweather - pressure-unit (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/shell/extensions/openweather/pressure-unit" "'hPa'"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 # - name: Set gnome shell extensions - openweather - unit (Gnome)
 #   community.general.dconf:
@@ -2097,14 +2044,14 @@
 #     value: "'celsius'"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set gnome shell extensions - openweather - unit (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/shell/extensions/openweather/unit" "'celsius'"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 # - name: Set gnome shell extensions - openweather - wind-speed-unit (Gnome)
 #   community.general.dconf:
@@ -2112,15 +2059,14 @@
 #     value: "'kph'"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set gnome shell extensions - openweather - wind-speed-unit (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/shell/extensions/openweather/wind-speed-unit" "'kph'"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
-
+    - env_desktop in ["gnome"]
 
 # ###################################################
 # TODO: ggf. GNOME Shell Apps Dashboard - Categories
@@ -2148,14 +2094,14 @@
 #     value: "false"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set gnome - epiphany - aks-for-default (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/epiphany/ask-for-default" "false"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 # - name: Set gnome - epiphany - default-search-engine (Gnome)
 #   community.general.dconf:
@@ -2163,14 +2109,14 @@
 #     value: "'DuckDuckGo'"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set gnome - epiphany - default-search-engine (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/epiphany/default-search-engine" "'DuckDuckGo'"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 # - name: Set gnome - epiphany - reader - color-scheme (Gnome)
 #   community.general.dconf:
@@ -2178,14 +2124,14 @@
 #     value: "'dark'"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set gnome - epiphany - reader - color-scheme (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/epiphany/reader/color-scheme" "'dark'"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 # - name: Set gnome - epiphany - web - remember-passwords (Gnome)
 #   community.general.dconf:
@@ -2193,15 +2139,14 @@
 #     value: "false"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set gnome - epiphany - web - remember-passwords (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/epiphany/web/remember-passwords" "false"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
-
+    - env_desktop in ["gnome"]
 
 # ##########################
 # ### Gnome Evolution (Mail)
@@ -2211,14 +2156,14 @@
 #     value: "true"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set gnome - evolution - calendar - classify-private (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/evolution/calendar/classify-private" "true"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 # - name: Set gnome - evolution - calendar - compress-weekend (Gnome)
 #   community.general.dconf:
@@ -2226,14 +2171,14 @@
 #     value: "false"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set gnome - evolution - calendar - compress-weekend (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/evolution/calendar/compress-weekend" "false"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 # - name: Set gnome - evolution - calendar - day-end-hour (Gnome)
 #   community.general.dconf:
@@ -2241,14 +2186,14 @@
 #     value: "16"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set gnome - evolution - calendar - day-end-hour (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/evolution/calendar/day-end-hour" "16"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 # - name: Set gnome - evolution - calendar - day-start-hour (Gnome)
 #   community.general.dconf:
@@ -2256,14 +2201,14 @@
 #     value: "7"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set gnome - evolution - calendar - day-start-hour (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/evolution/calendar/day-start-hour" "7"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 # - name: Set gnome - evolution - calendar - editor-show-timezone (Gnome)
 #   community.general.dconf:
@@ -2271,14 +2216,14 @@
 #     value: "true"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set gnome - evolution - calendar - editor-show-timezone (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/evolution/calendar/editor-show-timezone" "true"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 # - name: Set gnome - evolution - calendar - prefer-new-item (Gnome)
 #   community.general.dconf:
@@ -2286,14 +2231,14 @@
 #     value: "'event-new'"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set gnome - evolution - calendar - prefer-new-item (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/evolution/calendar/prefer-new-item" "'event-new'"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 # - name: Set gnome - evolution - calendar - primary-memos (Gnome)
 #   community.general.dconf:
@@ -2301,14 +2246,14 @@
 #     value: "'system-memo-list'"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set gnome - evolution - calendar - primary-memos (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/evolution/calendar/primary-memos" "'system-memo-list'"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 # - name: Set gnome - evolution - calendar - show-icons-month-view (Gnome)
 #   community.general.dconf:
@@ -2316,14 +2261,14 @@
 #     value: "true"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set gnome - evolution - calendar - show-icons-month-view (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/evolution/calendar/show-icons-month-view" "true"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 # - name: Set gnome - evolution - calendar - show-week-numbers (Gnome)
 #   community.general.dconf:
@@ -2331,14 +2276,14 @@
 #     value: "true"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set gnome - evolution - calendar - show-week-numbers (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/evolution/calendar/show-week-numbers" "true"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 # - name: Set gnome - evolution - calendar - use-24hour-format (Gnome)
 #   community.general.dconf:
@@ -2346,14 +2291,14 @@
 #     value: "true"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set gnome - evolution - calendar - use-24hour-format (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/evolution/calendar/use-24hour-format" "true"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 # - name: Set gnome - evolution - mail - browser-close-on-reply-policy (Gnome)
 #   community.general.dconf:
@@ -2361,14 +2306,14 @@
 #     value: "'never'"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set gnome - evolution - mail - browser-close-on-reply-policy (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/evolution/mail/browser-close-on-reply-policy" "'never'"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 # - name: Set gnome - evolution - mail - composer-delay-outbox-flush (Gnome)
 #   community.general.dconf:
@@ -2376,14 +2321,14 @@
 #     value: "0"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set gnome - evolution - mail - composer-delay-outbox-flush (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/evolution/mail/composer-delay-outbox-flush" "0"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 # - name: Set gnome - evolution - mail - composer-show-bcc (Gnome)
 #   community.general.dconf:
@@ -2391,14 +2336,14 @@
 #     value: "true"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set gnome - evolution - mail - composer-show-bcc (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/evolution/mail/composer-show-bcc" "true"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 # - name: Set gnome - evolution - mail - composer-spell-languages (Gnome)
 #   community.general.dconf:
@@ -2406,14 +2351,14 @@
 #     value: "['de_DE']"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set gnome - evolution - mail - composer-spell-languages (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/evolution/mail/composer-spell-languages" "['de_DE']"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 # - name: Set gnome - evolution - mail - composer-top-signature (Gnome)
 #   community.general.dconf:
@@ -2421,14 +2366,14 @@
 #     value: "true"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set gnome - evolution - mail - composer-top-signature (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/evolution/mail/composer-top-signature" "true"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 # - name: Set gnome - evolution - mail - forward-style-name (Gnome)
 #   community.general.dconf:
@@ -2436,14 +2381,14 @@
 #     value: "'inline'"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set gnome - evolution - mail - forward-style-name (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/evolution/mail/forward-style-name" "'inline'"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 # - name: Set gnome - evolution - mail - layout (Gnome)
 #   community.general.dconf:
@@ -2451,14 +2396,14 @@
 #     value: "1"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set gnome - evolution - mail - layout (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/evolution/mail/layout" "1"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 # - name: Set gnome - evolution - mail - mark-seen (Gnome)
 #   community.general.dconf:
@@ -2466,14 +2411,14 @@
 #     value: "false"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set gnome - evolution - mail - mark-seen (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/evolution/mail/mark-seen" "false"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 # - name: Set gnome - evolution - mail - show-sender-photo (Gnome)
 #   community.general.dconf:
@@ -2481,14 +2426,14 @@
 #     value: "true"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set gnome - evolution - mail - show-sender-photo (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/evolution/mail/show-sender-photo" "true"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 # - name: Set gnome - evolution - mail - show-to-do-bar (Gnome)
 #   community.general.dconf:
@@ -2496,14 +2441,14 @@
 #     value: "false"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set gnome - evolution - mail - show-to-do-bar (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/evolution/mail/show-to-do-bar" "false"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 # - name: Set gnome - evolution - mail - show-to-do-bar-sub (Gnome)
 #   community.general.dconf:
@@ -2511,14 +2456,14 @@
 #     value: "false"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set gnome - evolution - mail - show-to-do-bar-sub (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/evolution/mail/show-to-do-bar-sub" "false"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 # - name: Set gnome - evolution - mail - to-do-bar-show-no-duedate-tasks (Gnome)
 #   community.general.dconf:
@@ -2526,11 +2471,11 @@
 #     value: "true"
 #     state: present
 #   when:
-#     - env_desktop in ["gnome", "ubuntu:gnome"]
+#     - env_desktop in ["gnome"]
 
 - name: Set gnome - evolution - mail - to-do-bar-show-no-duedate-tasks (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/evolution/mail/to-do-bar-show-no-duedate-tasks" "true"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
