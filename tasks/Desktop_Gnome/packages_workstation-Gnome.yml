@@ -8,13 +8,13 @@
   ansible.builtin.package:
     state: present
     name:
-      - alacarte              # Menu editor for gnome
-      - baobab                # A graphical directory tree analyzer
+      - alacarte # Menu editor for gnome
+      - baobab # A graphical directory tree analyzer
       - dconf-editor
       - gedit
       - gedit-plugins
-      - gjs                   # Javascript Bindings for GNOME   # + Ubnuntu: fehlendes Paket, damit ab 22.04 der Monitor in Engergiesparmodus kann
-                                                                # (Bildschirmausgabe wird ausgeschaltet nach längerer Inktivität)
+      - gjs # Javascript Bindings for GNOME   # + Ubnuntu: fehlendes Paket, damit ab 22.04 der Monitor in Engergiesparmodus kann
+        # (Bildschirmausgabe wird ausgeschaltet nach längerer Inktivität)
       # - geany
       # - geany-plugins
       - gnome-epub-thumbnailer # (u.a. wg. nnn)
@@ -22,48 +22,47 @@
       - gnome-disk-utility
       - gnome-keyring
       # - gnome-terminal
-      - gnome-weather         # needed for extension "Weather O'Clock"
-      - inkscape              # Plasma: Krita
-      # - kdeconnect          # -> gnome-shell-extension-gsconnect
+      - gnome-weather # needed for extension "Weather O'Clock"
+      - inkscape # Plasma: Krita
+      # - kdeconnect # -> gnome-shell-extension-gsconnect
       - rhythmbox
-      - seahorse              # bereits standardmäßig installiert
-      - solaar                # Linux device manager for a wide range of Logitech devices
-      - tilix                 # A tiling terminal emulator for Linux using GTK+ 3
-      - totem                 # -> vlc
+      - seahorse # bereits standardmäßig installiert
+      - solaar # Linux device manager for a wide range of Logitech devices
+      - tilix # A tiling terminal emulator for Linux using GTK+ 3
+      - totem # -> vlc
       # ---------
       # firmware:
       - gnome-firmware
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
-
+    - env_desktop in ["gnome"]
 
 - name: Gnome - Install packages for workstations (Archlinux + Gnome)
   ansible.builtin.package:
     state: present
     name:
       - dconf
-      # - deluge              # -> transmission-gtk
-      - epiphany              # A GNOME web browser based on the WebKit rendering engin
-      - evince                # Document viewer (PDF, PostScript, XPS, djvu, dvi, tiff, cbr, cbz, cb7, cbt)
+      # - deluge # -> transmission-gtk
+      - epiphany # A GNOME web browser based on the WebKit rendering engin
+      - evince # Document viewer (PDF, PostScript, XPS, djvu, dvi, tiff, cbr, cbz, cb7, cbt)
       - gnome-shell-extension-dash-to-panel
-      # - guake               # Drop-down terminal for GNOME
-      - gtk-vnc               # VNC viewer widget for GTK
+      # - guake # Drop-down terminal for GNOME
+      - gtk-vnc # VNC viewer widget for GTK
       - nemo
       - nemo-seahorse
       - nemo-share
       # - nemo-terminal
       - transmission-cli
-      - transmission-gtk      # -> deluge
+      - transmission-gtk # -> deluge
   when:
     - ansible_distribution == "Archlinux"
     - env_desktop == "gnome"
 
-- name: Gnome - Install packages for workstations (Ubuntu + Gnome)
+- name: Gnome - Install packages for workstations (Debian + Gnome)
   ansible.builtin.package:
     state: present
     name:
       - autokey-gtk
-      - dconf-cli
+      - dconf-cli # sollte schon installiert sein
       - epiphany-browser
       - gnome-software-plugin-flatpak
       - gtkhash
@@ -72,8 +71,8 @@
       - language-pack-gnome-en-base
       - language-pack-gnome-en
       - nemo
-      - transmission          # torrent client
-      - ulauncher             # ppa wurde hinzugefügt
+      - transmission # torrent client # sollte schon installiert sein
+      - ulauncher # ppa wurde hinzugefügt im install script
   when:
-    - ansible_distribution == "Ubuntu"
-    - env_desktop == "ubuntu:gnome"
+    - ansible_distribution == "Debian"
+    - env_desktop == "gnome"

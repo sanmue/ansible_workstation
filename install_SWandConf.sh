@@ -509,7 +509,7 @@ Debian*)
         echo "deb [signed-by=/usr/share/keyrings/ulauncher-archive-keyring.gpg] \
                   http://ppa.launchpad.net/agornostal/ulauncher/ubuntu jammy main" \
                   | sudo tee /etc/apt/sources.list.d/ulauncher-jammy.list
-        sudo apt update && sudo apt install -y --show-progress ulauncher
+        # sudo apt update && sudo apt install -y --show-progress ulauncher # installation in "packages_workstation-Gnome.yml"
 
         touch "/home/${userid}/.ansible_ppaUlauncherAdded"
     fi
