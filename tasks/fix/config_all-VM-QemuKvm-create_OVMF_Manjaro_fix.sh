@@ -2,7 +2,7 @@
 
 #set -x   # enable debug mode
 
-### für Manjaro/Archlinux: Bei Neuerstellung QEMU/KVM-VMs aus Ubuntu
+### für Archlinux: Bei Neuerstellung QEMU/KVM-VMs aus Ubuntu
 ### Stand: 02/2023, VMs aus Ubuntu 22.04
 # - unter Ubuntu zeigen die Pfade für UEFI/Secureboot auf einen anderen Pfad
 # - erstelle daher Symlinks für entsprechende Pfade bei Manjaro
@@ -30,6 +30,5 @@ for listItem in ${ovmf64List}; do
 		sudo ln -s "${edk264Path}/${listItem}" "${ovmfPath}/${listItem}"
 	#else
 		#echo "'${ovmfPath}/${listItem}' bereits vorhanden"
-	fi	
+	fi
 done
-

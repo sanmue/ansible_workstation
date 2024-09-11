@@ -97,8 +97,8 @@
       ansible.builtin.import_tasks: tasks/VM/config_all-VM-users.yml
     - name: VM - create
       ansible.builtin.import_tasks: tasks/VM/config_all-VM-QemuKvm-create.yml
-    - name: VM - create fix
-      ansible.builtin.import_tasks: tasks/fix/config_all-VM-QemuKvm-create_fix.yml
+    # - name: VM - create fix
+    #   ansible.builtin.import_tasks: tasks/fix/config_all-VM-QemuKvm-create_fix.yml
     # ----------------------------------------------------------
     # ### Create Users / Config User privileges:
     - name: Config users
