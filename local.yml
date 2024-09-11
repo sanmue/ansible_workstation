@@ -10,12 +10,12 @@
     - name: Pre Tasks - Gather Facts and Variables
       ansible.builtin.import_tasks: tasks/basic_all/config_workstation-ansibleFacts.yml
 
-- name: Config + fix repos + update
+- name: Addrepos + update
   hosts: localhost
   connection: local
   become: true
   pre_tasks:
-    - name: Pre Tasks - Config + fix repos + update
+    - name: Pre Tasks - addrepos
       ansible.builtin.import_tasks: tasks/basic_all/config_workstation-addrepos.yml
     - name: Pre Tasks - all update
       ansible.builtin.import_tasks: tasks/basic_all/all_update.yml
