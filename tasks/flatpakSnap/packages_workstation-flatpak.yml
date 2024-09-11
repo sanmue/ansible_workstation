@@ -1,68 +1,68 @@
 - name: Install flatpak packages for workstations (all)
   tags: workstation,ubuntu,arch,flatpak
   community.general.flatpak:
-    name: '{{ item }}'
+    name: "{{ item }}"
     state: present
     method: system
   with_items:
-    - 'com.belmoussaoui.Authenticator'
-    - 'com.brave.Browser'
-    - 'org.cryptomator.Cryptomator'
-    - 'com.jgraph.drawio.desktop'   # diagramming tool
-    - 'com.microsoft.Edge'
-    # - im.riot.Riot                # "Element": Matrix Client -> siehe Ferdium
-    - 'org.ferdium.Ferdium'         # Messenger for the desktop - based on Franz
-    - 'com.github.tchx84.Flatseal'
-    # - 'com.meetfranz.Franz'       # Messenger for the desktop -> siehe Ferdium
-    - 'de.willuhn.Jameica'
-    - 'net.cozic.joplin_desktop'
+    - "com.belmoussaoui.Authenticator"
+    - "com.brave.Browser"
+    - "org.cryptomator.Cryptomator"
+    - "com.jgraph.drawio.desktop" # diagramming tool
+    - "com.microsoft.Edge"
+    # - im.riot.Riot # "Element": Matrix Client -> siehe Ferdium
+    - "org.ferdium.Ferdium" # Messenger for the desktop - based on Franz
+    - "com.github.tchx84.Flatseal"
+    # - 'com.meetfranz.Franz' # Messenger for the desktop -> siehe Ferdium
+    - "de.willuhn.Jameica"
+    - "net.cozic.joplin_desktop"
     - de.mediathekview.MediathekView
-    - 'de.haeckerfelix.Shortwave'
+    - "de.haeckerfelix.Shortwave"
     # - 'net.mkiol.SpeechNote'
-    - 'org.tenacityaudio.Tenacity'   # Audacity fork / replacement
-    - 'com.borgbase.Vorta'
+    - "org.tenacityaudio.Tenacity" # Audacity fork / replacement
+    - "com.borgbase.Vorta"
 
 - name: Install flatpak packages (Extension Manager) for Gnome (Gnome, all)
   tags: workstation,ubuntu,arch,flatpak
   community.general.flatpak:
-    name: '{{ item }}'
+    name: "{{ item }}"
     state: present
     method: system
   with_items:
-    - 'org.gnome.Extensions'
-    - 'com.mattjakeman.ExtensionManager'
+    - "org.gnome.Extensions"
+    - "com.mattjakeman.ExtensionManager"
   when:
-    - env_desktop in ["gnome", "ubuntu:gnome"]
+    - env_desktop in ["gnome"]
 
 - name: Install flatpak packages for workstations (Archlinux)
   tags: workstation,arch,flatpak
   community.general.flatpak:
-    name: '{{ item }}'
+    name: "{{ item }}"
     state: present
     method: system
   with_items:
-    - 'net.ankiweb.Anki'
+    - "net.ankiweb.Anki"
   when: ansible_distribution in ["Archlinux"]
 
-- name: Install flatpak packages for workstations (Ubuntu)
+- name: Install flatpak packages for workstations (Debian)
   tags: workstation,ubuntu,flatpak
   community.general.flatpak:
-    name: '{{ item }}'
+    name: "{{ item }}"
     state: present
     method: system
   with_items:
-    - 'org.chromium.Chromium'
-    - 'com.discordapp.Discord'
-    - 'org.mozilla.firefox'
-    - 'com.github.johnfactotum.Foliate'
-    # - 'net.cozic.joplin_desktop'   # s.o.: all
-    - 'org.keepassxc.KeePassXC'
-    - 'org.ksnip.ksnip'   # im Ksnip-Editor können noch Ergänzungen (Markieren, Rahemen, ... gemacht werden; im ggs. zu Screenshot Tool unter Gnome)
-    - 'org.libreoffice.LibreOffice'
-    - 'com.nextcloud.desktopclient.nextcloud'
-    - 'com.obsproject.Studio'
-    - 'org.remmina.Remmina'
-    - 'org.signal.Signal'
-    - 'com.github.micahflee.torbrowser-launcher'
+    - "org.chromium.Chromium"
+    - "com.discordapp.Discord"
+    - "org.mozilla.firefox"
+    - "com.github.johnfactotum.Foliate"
+    # - 'net.cozic.joplin_desktop' # s.o.: all
+    - "org.keepassxc.KeePassXC"
+    - "org.ksnip.ksnip" # es können direkt Ergänzungen (Markieren, Rahmen, Pfeile, Text, ... gemacht werden; im ggs. zu Screenshot Tool unter Gnome)
+    - "org.libreoffice.LibreOffice"
+    - "com.nextcloud.desktopclient.nextcloud"
+    - "com.obsproject.Studio"
+    - "org.remmina.Remmina"
+    - "org.signal.Signal"
+    - "com.github.micahflee.torbrowser-launcher"
   when:
-    - ansible_distribution in ["Ubuntu"]
+    - ansible_distribution in ["Debian"]
