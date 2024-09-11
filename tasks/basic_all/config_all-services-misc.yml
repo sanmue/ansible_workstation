@@ -32,7 +32,7 @@
 # https://man.archlinux.org/man/reflector.1#EXAMPLES
 # https://wiki.archlinux.org/title/Reflector#top-page
 # - conf: /etc/xdg/reflector/reflector.conf   -->   siehe config_all-settings-misc.yml
-- name: All services misc - start+enable reflector (Arch, NOT Manjaro)
+- name: All services misc - start+enable reflector (Arch)
   ansible.builtin.service:
     name: reflector.service
     # state: started
@@ -66,12 +66,12 @@
 # ------------
 # # SSH / SSHD
 # ------------
-- name: All services misc - disable ssh (Ubuntu)
+- name: All services misc - disable ssh (Debian)
   ansible.builtin.service:
     name: ssh
     # state: started
     enabled: false
-  when: ansible_distribution in ["Ubuntu"]
+  when: ansible_distribution in ["Debian"]
 
 - name: All services misc - disable sshd (Archlinux)
   ansible.builtin.service:
@@ -99,12 +99,12 @@
     creates: /home/{{ env_user }}/.ansible_freshclamInitialStartExecuted
   when: ansible_distribution in ["Archlinux"]
 
-# - name: All services misc - Update clamav database (Ubuntu)
+# - name: All services misc - Update clamav database (Debian)
 #  # ansible.builtin.shell: freshclam
 #  ansible.builtin.shell: freshclam --daemon --user=clamav   # Fehlermeldung
 #  args:
 #    creates: /home/{{ env_user }}/.ansible_freshclamInitialStartExecuted
-#  when: ansible_distribution in ["Ubuntu"]
+#  when: ansible_distribution in ["Debian"]
 
 - name: All services misc - Set flag file freshclamInitialStartExecuted (all)
   ansible.builtin.shell:
@@ -411,7 +411,7 @@
 # https://ulauncher.io/
 # https://github.com/Ulauncher/Ulauncher/
 
-# install von ulauncher in bootstrap.sh im Anschluss an playbook verlagert, daher an dieser Stelle noch nicht vorhanden
+# install von ulauncher in install script im Anschluss an playbook verlagert, daher an dieser Stelle noch nicht vorhanden
 #
 # - name: All services misc - ulauncher - start+enable - env_user (all)
 #   ansible.builtin.systemd:
