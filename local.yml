@@ -42,8 +42,9 @@
     # ### Entfernen nicht benötigter vorinstallierter Pakete
     - name: Entfernen nicht benötigter vorinstallierter Pakete (Gnome)
       ansible.builtin.import_tasks: tasks/Desktop_Gnome/packages_workstation-Gnome-removePreInstalls.yml
-    - name: Entfernen nicht benötigter vorinstallierter Pakete (Plasma)
-      ansible.builtin.import_tasks: tasks/Desktop_Plasma/packages_workstation-Plasma-removePreInstalls.yml
+    # TODO: Update + Test:
+    # - name: Entfernen nicht benötigter vorinstallierter Pakete (Plasma)
+    #   ansible.builtin.import_tasks: tasks/Desktop_Plasma/packages_workstation-Plasma-removePreInstalls.yml
     # ----------------------------------------------------------
     # ### Installation Software-Packages
     # - repo:

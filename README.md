@@ -1,11 +1,10 @@
 # ansible_workstation - automated post-installation of my workstation
-- executes further installation and configuration of additionally defined software and services after successful basic installation (including a desktop environment (Gnome or Plasma))
-  - currently only tested for my Gnome desktop environment + settings (Plasma: not up to date / re-tested)
-- initial bash script (works for Arch Linux, Endeavour OS and Ubuntu):
+- executes further installation and configuration of additionally defined software and services after successful basic installation (including desktop environment (Gnome))
+  - currently only tested for my Gnome desktop environment + settings (Plasma: not up to date / re-tested, therefore commented out)
+- initial bash script (works for Arch Linux, Endeavour OS and Debian):
   - installs some initially required packages
-  - optionally installs/creates/configures 'snapper' for system snapshots and additional btrfs subvolumes if needed (only if filesystem is btrfs)
+  - optionally installs/creates/configures 'snapper' for system snapshots and additional btrfs subvolumes if needed (only if filesystem is btrfs + Arch Linux / Endeavour OS)
     - at least a basic btrfs subvolume layout must exist
-    - not tested for Ubuntu (will very probably not work, better skip this step when prompted in script)
   - starts the ansible playbook (local.yml)
   - Arch Linux / Endeavour OS: installs some packages from AUR
 
@@ -22,7 +21,7 @@
 # Known Issues
 ## Upgrade pip (Python)
 - when ansible stops because of an error referring to pip upgrade:
-  - logout + login and start script/ansible playbook again
+  - Close + reopen terminal or logout + login and start script/ansible playbook again
 
 # Further notes for myself
 ## 'Visual Studio Code' respectively 'Code - OSS' with extension "Sync Settings"
