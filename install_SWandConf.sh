@@ -14,8 +14,8 @@
 ### ---
 playbookdir="ansible_workstation" # also repo name
 playbook="local.yml"
-userid=$(whoami)                             # or: userid=${USER}
-oslist=("Arch Linux" "EndeavourOS" "Debian") # currently supportet distributions
+userid=$(whoami) # or: userid=${USER}
+oslist=("Arch Linux" "EndeavourOS" "Debian GNU/Linux") # currently supported distributions
 currentHostname=$(hostname)
 bootloaderId='GRUB' # or 'endeavouros', ...
 
@@ -75,8 +75,14 @@ echo -e "\e[0;33mCurrent hostname:\e[39m '${currentHostname}'"
 read -r -p "  |_ Change hostname? ('y'=yes, other input=no): " changeHostname
 if [ "${changeHostname}" = 'y' ]; then
     read -r -p "     Enter new hostname: " newHostname
-    sudo hostnamectl hostname "${newHostname}"
-    sudo sed -i "s/${currentHostname}/${newHostname}/g" /etc/hosts
+
+    if [[ ! $(grep sudo /etc/group) = *"${userid}"* ]]; then # if user not in sudo group
+        su -l root --command "hostnamectl hostname ${newHostname}"
+        su -l root --command "sed -i 's/${currentHostname}/${newHostname}/g' /etc/hosts"
+    else
+        sudo hostnamectl hostname "${newHostname}"
+        sudo sed -i "s/${currentHostname}/${newHostname}/g" /etc/hosts
+    fi
     echo "     Hostname set to '${newHostname}'"
 fi
 
@@ -378,10 +384,10 @@ pngrep="PRUNENAMES"
 snapshotFolder=$(gettext "${snapperSnapshotFolder}" | sed 's/^.//') # ohne führendes '/' in '/.snapshots' -> .snapshots
 #                gettext: damit nicht Pfad '/.snapshots' aufruft, sondern nur String nimmt
 
-echo -e "\n*** ********************************************"
-echo -e "*** updatedb: '${snapshotFolder}' von Indexierung ausnehmen"
-
 if [[ -e "${snapperSnapshotFolder}" ]] && [[ -e "${updbconf}" ]]; then
+    echo -e "\n*** ********************************************"
+    echo -e "*** updatedb: '${snapshotFolder}' von Indexierung ausnehmen"
+
     if ! grep -q "${snapshotFolder}" "${updbconf}" && grep -q "${pngrep}" "${updbconf}"; then
         # wenn .snapshots noch nicht in conf oder PRUNENAMES nicht in conf
 
@@ -472,8 +478,16 @@ Debian*)
         pkill -KILL -u "${userid}"
     fi
 
-    echo -e "\nUpdate Repos und Installation benoetigte Software (git,ansible,ssh,ufw,chrome-genome-shell)..."
-    sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get install -y --show-progress ansible ansible-core chrome-gnome-shell curl git openssh-client openssh-server rsync ufw vim # pipx
+    echo -e "\nUpdate Repos, upgrade and autoremove"
+    sudo apt-get update && sudo apt-get upgrade -y
+    sudo apt-get autoremove -y
+
+    echo -e "\nInstallation benoetigte Software - ansible"
+    sudo apt-get install -y --show-progress ansible ansible-core
+
+    echo -e "\nInstallation benoetigte Software (git, rsync, ufw, vim, ..."
+    sudo apt-get install -y --show-progress git rsync ssh ufw vim # pipx
+    # bereits installiert: chrome-gnome-shell curl openssh-client openssh-server
 
     echo -e "\nInstalliere benötigte Packages für Installation von Microsoft PowerShell"
     sudo apt-get install -y --show-progress apt-transport-https software-properties-common wget
@@ -484,11 +498,20 @@ Debian*)
     echo -e "\nInstallation (wenn VM) spice agent for Linux guests (z.B. für clipboard sharing host+guest)"
     [[ $(systemd-detect-virt) != *"none"* ]] && sudo apt-get install -y --show-progress spice-vdagent
 
-    echo -e "\nFüge Repo für 'ulauncher' hinzu"
+    echo -e "\nInstalliere Voraussetzuungen / ergänze Repo für 'ulauncher'"
     if [ -e "/home/${userid}/.ansible_ppaUlauncherAdded" ]; then
         echo "Repo wurde bereits hinzugefügt, Schritt wird übersprungen"
     else
-        sudo add-apt-repository ppa:agornostal/ulauncher && touch "/home/${userid}/.ansible_ppaUlauncherAdded"
+        # https://ulauncher.io/#Download
+        sudo apt install -y gnupg
+        gpg --keyserver keyserver.ubuntu.com --recv 0xfaf1020699503176
+        gpg --export 0xfaf1020699503176 | sudo tee /usr/share/keyrings/ulauncher-archive-keyring.gpg > /dev/null
+        echo "deb [signed-by=/usr/share/keyrings/ulauncher-archive-keyring.gpg] \
+                  http://ppa.launchpad.net/agornostal/ulauncher/ubuntu jammy main" \
+                  | sudo tee /etc/apt/sources.list.d/ulauncher-jammy.list
+        sudo apt update && sudo apt install -y --show-progress ulauncher
+
+        touch "/home/${userid}/.ansible_ppaUlauncherAdded"
     fi
 
     echo -e "\nDownload Visual Studio Code deb-file"
@@ -507,7 +530,7 @@ Debian*)
     fi
 
     echo -e "\nStarte + Aktiviere ssh ..."
-    sudo systemclt start ssh && sudo systemctl enable ssh
+    sudo systemctl start ssh && sudo systemctl enable ssh
 
     echo -e "\nAktiviere Firewall 'ufw' und erlaube ssh ..."
     sudo ufw default deny && sudo sudo ufw limit ssh comment 'SSH' && sudo ufw enable && sudo ufw reload

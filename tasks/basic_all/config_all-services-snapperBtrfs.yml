@@ -18,7 +18,7 @@
     var: rootFsIsBtrfs
 
 # ### prüfe auf grub bootloader:
-- name: Config all services snapperBtrfs - Get stats of etc-default-grup (all)
+- name: Config all services snapperBtrfs - Get stats of etc-default-grub (all)
   ansible.builtin.stat:
     path: /etc/default/grub
   register: etcdefgrub
