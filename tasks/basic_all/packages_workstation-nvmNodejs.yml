@@ -3,6 +3,12 @@
 # #################
 # siehe auch ...all-settings-misc.yml (shell config)
 
+- name: Nvm / Nodejs - Info zu möglicher Fehlermeldung (env_user, all)
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.debug:
+    msg: "Wenn es in einem Folgeschritt zu Fehlermelung kommt: Terminal schließen + wieder neu öffnen + nochmal Script/Playbook starten"
+
 # https://github.com/nvm-sh/nvm?tab=readme-ov-file#ansible
 # mit fester Versionsangabe
 # - name: Install nvm

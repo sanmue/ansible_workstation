@@ -123,7 +123,7 @@
     # ----------------------------------------------------------
     # ### NVM / Node.js
     - name: NVM Node.js
-      ansible.builtin.import_tasks: tasks/basic_all/packages_workstation-nvmNodjs.yml
+      ansible.builtin.import_tasks: tasks/basic_all/packages_workstation-nvmNodejs.yml
     # ----------------------------------------------------------
     # ### cleanup:
     - name: Cleanup
