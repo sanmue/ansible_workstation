@@ -35,6 +35,22 @@
     - ansible_distribution == "Archlinux"
     - etcdefgrub.stat.exists
 
+# ##########
+# ### Locale
+# ### ######
+
+# insbes. wg. Debian (auf englisch installiert) und Formate auf Deutsch umstellen will
+- name: All settings misc - Locale - modify /etc/locale.gen (de_DE.UTF-8 UTF-8) (all)
+  ansible.builtin.replace:
+    path: /etc/locale.gen
+    regexp: "^# de_DE.UTF-8 UTF-8"
+    replace: "de_DE.UTF-8 UTF-8"
+    backup: true
+
+- name: All settings misc - Locale - locale-gen (all)
+  ansible.builtin.shell:
+    cmd: locale-gen
+
 # ##############################
 # ### Create /home/01_Videos-min
 # ### ##########################
