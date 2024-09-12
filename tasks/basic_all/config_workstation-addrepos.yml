@@ -166,29 +166,26 @@
     - ansible_distribution == "Debian"
 
 - name: Config Workstation addrepos - Steam block - Import Steam key and add Steam repo (Debian)
+  become: true # inhereted by tasks in the block
   block:
     - name: Config Workstation addrepos - Steam - Import Steam key (Debian)
       ansible.builtin.get_url:
         url: http://repo.steampowered.com/steam/archive/stable/steam.gpg
         dest: /usr/share/keyrings/steam.gpg
-      when:
-        - ansible_distribution == "Debian"
 
     - name: Config Workstation addrepos - Steam - Add Steam repo (Debian)
       ansible.builtin.apt_repository:
         repo: "deb [arch=amd64,i386 signed-by=/usr/share/keyrings/steam.gpg] http://repo.steampowered.com/steam/ stable steam"
         state: present
-      when:
-        - ansible_distribution == "Debian"
 
-- name: Config Workstation addrepos - Steam - remove unnecessary Steam sources lists (Debian)
-  ansible.builtin.file:
-    path: "{{ item }}"
-    state: absent
-  loop:
-    - /etc/apt/sources.list.d/steam-beta.list
-    - /etc/apt/sources.list.d/steam-stable.list
-  when:
+    - name: Config Workstation addrepos - Steam - remove unnecessary Steam sources lists (Debian)
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: absent
+      loop:
+        - /etc/apt/sources.list.d/steam-beta.list
+        - /etc/apt/sources.list.d/steam-stable.list
+  when: # applied to the tasks within a block, not to the block itself
     - ansible_distribution == "Debian"
 
 # --- PowerShell
