@@ -19,8 +19,8 @@
     - make executable: `chmod +x ./ansible_workstation/install_SWandConf.sh`
 
 # Known Issues
-## Upgrade pip (Python)
-- when ansible stops because of an error referring to pip upgrade:
+## Error Message: Python/pip, NVM
+- when ansible playbook stops because of an error referring to python/pip or NVM:
   - Close + reopen terminal or logout + login and start script/ansible playbook again
 
 # Further notes for myself
