@@ -160,7 +160,7 @@
           alias ls='exa --color=auto --icons --group --time-style=long-iso --group-directories-first'
           # '--group' und '--time-style' nur bei '-l'; dann schon dabei
       else
-          # echo "Using standrd ls, eza and exa not available";
+          # echo "Using standrd ls, eza and exa not available"
       fi
 
       alias ll='ls -la --ignore-glob ..'            # show long listing of all except ".."
@@ -444,7 +444,7 @@
           alias ls='exa --color=auto --icons --group --time-style=long-iso --group-directories-first'
           # '--group' und '--time-style' nur bei '-l'; dann schon dabei
       else
-          # echo "Using standrd ls, eza and exa not available";
+          # echo "Using standrd ls, eza and exa not available"
       fi
 
       alias ll='ls -la --ignore-glob ..'            # show long listing of all except ".."
