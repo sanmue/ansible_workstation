@@ -77,22 +77,24 @@
     creates: "/home/{{ env_user }}/.ansible_PythonPip"
 
 # Voraussetzung für 'ansible.builtin.pip' Modul: pip, virtualenv, setuptools or packaging
-- name: Python - pip - install libs via ansible builtin pip - python_pip_requirements.txt (all)
-  become: true
-  become_user: "{{ env_user }}"
-  ansible.builtin.pip:
-    requirements: "{{ playbook_dir }}/files/python_pip_requirements.txt"
-    extra_args: --user
-    virtualenv_command: "pyenv virtualenv"
-    virtualenv: "{{ lookup('ansible.builtin.env', 'PYENV_ROOT') }}/versions/{{ ansible_python_version }}"
-
-# - name: Python - pip - install libs via builtin shell - python_pip_requirements.txt (all)
+# - name: Python - pip - install libs via ansible builtin pip - python_pip_requirements.txt (all)
 #   become: true
 #   become_user: "{{ env_user }}"
-#   ansible.builtin.shell:
-#     cmd: "pip install --user -r {{ playbook_dir }}/files/python_pip_requirements.txt"
-#   args:
-#     creates: "/home/{{ env_user }}/.ansible_PythonPip"
+#   ansible.builtin.pip:
+#     requirements: "{{ playbook_dir }}/files/python_pip_requirements.txt"
+#     extra_args: --user
+#     virtualenv_command: "pyenv virtualenv"
+#     virtualenv: "{{ lookup('ansible.builtin.env', 'PYENV_ROOT') }}/versions/{{ ansible_python_version }}"
+#   # Debian, Fehler:
+#   # fatal: [localhost]: FAILED! => {"changed": false, "msg": "Unable to find pip in the virtualenv, /versions/3.11.2, under any of these names: pip3, pip. Make sure pip is present in the virtualenv."}
+
+- name: Python - pip - install libs via builtin shell - python_pip_requirements.txt (all)
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.shell:
+    cmd: "pip install --user -r {{ playbook_dir }}/files/python_pip_requirements.txt"
+  args:
+    creates: "/home/{{ env_user }}/.ansible_PythonPip"
 
 # # WORKAROUND: pipx reinstall_all
 # # installs über pip, die schon als deps bei pipx installiert wurden -> pipx list: (symlink missing or pointing to unexpected location)
