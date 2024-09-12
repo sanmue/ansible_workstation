@@ -95,4 +95,4 @@
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell:
-    cmd: npm install yaml-language-server
+    cmd: npm install --save-dev yaml-language-server
