@@ -30,7 +30,7 @@
       - duf # Disk Usage/Free Utility
       - efivar
       - evolution
-      - eza # A modern replacement for ls (community fork of exa)
+      # - eza # A modern replacement for ls (community fork of exa) nicht in Debian, dort: eza
       - flatpak
       - font-manager
       - fzf # Command-line fuzzy finder (u.a. wg. nnn)
@@ -59,15 +59,15 @@
       - nnn # Free, fast, friendly terminal file manager
       - rclone # sync tool
       - rsync # bereits installiert (bootstrap)
-      # - samba               # z.B. für VM: File sharing between host and Windows guest; https://wiki.manjaro.org/index.php/Virt-manager/en
+      # - samba # z.B. für VM: File sharing between host and Windows guest; https://wiki.manjaro.org/index.php/Virt-manager/en
       - shellcheck # Shell script analysis tool (u.a. Verwendet in Extension/Plugin vim, (VS)Code, Zed)
       - shfmt # Format shell programs # also uses by VS Code / Code OSS Extension "shell-format", Zed bzw. bash-language-server
-      # - skanlite            # bei KDE Plasma Desktop
+      # - skanlite # bei KDE Plasma Desktop
       - speedtest-cli
       - sqlitebrowser # + s.u.: Arch: sqlite; debian: sqlite3
-      - steam
+      # - steam # nicht (mehr) bei debian 12 verfügbar
       - syncthing
-      # - terminator          # Terminal emulator that supports tabs and grids
+      # - terminator # Terminal emulator that supports tabs and grids
       - tk # Graphical User Interface Toolkit for Tcl   # z.B. pyenv install 3.11.3: requirement
       - tmux
       - trash-cli # Command line trashcan (recycle bin) interface
@@ -79,7 +79,7 @@
       - w3m # Text-based Web browser as well as pager (u.a. wg. nnn)
       - wget
       - xdg-utils
-      - yaml-language-server
+      # - yaml-language-server # anscheinend nicht in debian 12
       - yq # Command-line YAML, XML, TOML processor - jq wrapper for YAML/XML/TOML documents
       - xterm # (u.a. wg. nnn)
       - zoxide # A smarter cd command for your terminal (u.a. wg. nnn)
@@ -110,6 +110,7 @@
       - evolution-spamassassin
       # - evolution-on        # Tray plugin for the Evolution email client
       # - exfat-utils         # exfat-utils and exfatprogs are in conflict
+      - eza
       - fd # Simple, fast and user-friendly alternative to find
       - fastfetch
       - firefox
@@ -169,6 +170,7 @@
       - remmina
       - signal-desktop
       - sqlite # A C library that implements an SQL database engine
+      - steam
       - steam-native-runtime # Native replacement for the Steam runtime using system libraries (installiert benötigte 32bit libs)
       - torbrowser-launcher
       - tree-sitter # Incremental parsing library
@@ -185,6 +187,7 @@
       - vim-jedi # Vim plugin for jedi, an awesome Python autocompletion
       - viu # Simple terminal image viewer (u.a. wg. nnn)
       - wireguard-tools
+      - yaml-language-server
       - zed # A high-performance, multiplayer code editor from the creators of Atom and Tree-sitter
       - zsh-autosuggestions # besser: install from git?
       # - # zsh-completions # besser: install from git?
@@ -201,7 +204,6 @@
   ansible.builtin.package:
     state: present
     name:
-      - anki
       - borgbackup # Deduplicating backup program with compression and authenticated encryption
       # - btrfs-compsize
       - clamav-daemon
@@ -211,6 +213,7 @@
       - evolution-plugin-pstimport
       - evolution-plugin-spamassassin
       - evolution-plugins
+      - exa
       - exfat-fuse
       - fd-find # Simple, fast and user-friendly alternative to find
       - firefox-esr # bereits installiert
@@ -265,7 +268,7 @@
       # - zsh-history-substring-search  # über git: https://github.com/zsh-users/zsh-history-substring-search
       #
       # firmware:
-      - linux-firmware
+      - firmware-linux # firmware-linux
   when: ansible_distribution == "Debian"
 
 - name: Install basic packages - xclip (all + x11 display server)
