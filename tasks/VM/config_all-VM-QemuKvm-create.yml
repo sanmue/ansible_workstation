@@ -8,62 +8,90 @@
 # https://serverfault.com/questions/434064/correct-way-to-move-kvm-vm
 # https://unix.stackexchange.com/questions/628454/how-can-i-migrate-backup-restore-a-virt-manager-snapshot
 
+# - name: VM - Ensure that 'default' network is active (Qemu-Kvm)
+#   community.libvirt.virt_net:
+#     state: active # ansonsten läuft nächster Schritt "destroy/undefine default virtual network" auf Fehler
+#     name: default
+#   # - ansible_virtualization_role != "guest"
+#
+# # fatal: [localhost]: FAILED! => {"changed": false, "msg": "The `libvirt` module is not importable. Check the requirements."}
 
-- name: VM - Ensure that 'default' network is active (Qemu-Kvm)
-  community.libvirt.virt_net:
-    state: active   # ansonsten läuft nächster Schritt "destroy/undefine default virtual network" auf Fehler
-    name: default
-  when: ansible_virtualization_role != "guest"
+# - name: VM - start 'default' virtual network (Qemu-Kvm)
+#   tags: VM
+#   ansible.builtin.shell:
+#     cmd: virsh net-start default
+#   args:
+#     creates: /home/{{ env_user }}/.ansible_vm_qemuKvmCreated
+#   ignore_errors: true
+#   when:
+#   # - ansible_virtualization_role != "guest"
+#
+#   # error: internal error: Network is already in use by interface enp1s0
+#   # -> wenn Rechner/VM und 'default' virtuel Network (i.d.R.) 192.168.122.0/24 -> z.B. 'default' subnet ändern
 
-- name: VM - destroy/undefine 'default' virtual network (Qemu-Kvm)
-  # da alle virtuellen Netzwerke aus den dump-files erstellt werden und 'default' dann schon da wäre (-> Fehler)
+# da alle virtuellen Netzwerke aus den dump-files erstellt werden und 'default' dann schon da wäre (-> Fehlermeldung)
+- name: VM - undefine 'default' virtual network (Qemu-Kvm)
   tags: VM
   ansible.builtin.shell:
-    cmd: virsh net-destroy default && virsh net-undefine default
+    cmd: virsh net-undefine default
+    # cmd: set -o pipefail && virsh net-destroy default --force && virsh net-undefine default
+    #      # 'default' initial nicht gestartet, daher auch nicht stoppen mit net-destroy
   args:
     creates: /home/{{ env_user }}/.ansible_vm_qemuKvmCreated
-  when: ansible_virtualization_role != "guest"
+  # ignore_errors: true # Rminder to delete default net manually
+  when:
+    - ansible_virtualization_role != "guest"
 
 - name: VM - create virtual networks (Qemu-Kvm)
   tags: VM
   ansible.builtin.shell:
-    cmd: ls files/VM/netdump_*.xml | xargs -I % sh -c "virsh net-define %"   # ls files/VM/netdump_*.xml: Dateiname inkl. Pfad
+    cmd: set -o pipefail && ls files/VM/netdump_*.xml | xargs -I % sh -c "virsh net-define %" # inkl. Pfad
+    # executable: /bin/bash
     # oder:
     # chdir: files/VM/
-    # cmd: ls netdump_*.xml | xargs -I % sh -c "virsh net-define %"   # nur Dateiname, da vorher in Verzeichnis gewechselt und dann erst ls
+    # cmd: ls netdump_*.xml | xargs -I % sh -c "virsh net-define %"
   args:
     creates: /home/{{ env_user }}/.ansible_vm_qemuKvmCreated
-  when: ansible_virtualization_role != "guest"
+  # ignore_errors: true # da 'default' schon/noch da
+  when:
+    - ansible_virtualization_role != "guest"
 
-- name: VM - start all virtual networks (Qemu-Kvm)
-  tags: VM
-  ansible.builtin.shell:
-    chdir: files/VM/
-    cmd: ls netdump_*.xml | xargs -I % sh -c "echo % | cut -d _ -f 2" | xargs -I % sh -c "echo % | cut -d . -f 1" | xargs -I % sh -c "virsh net-start %"
-    # z.B.: netdump_default.xml                        default.xml                                 default                            virsh net-start default
-  args:
-    creates: /home/{{ env_user }}/.ansible_vm_qemuKvmCreated
-  when: ansible_virtualization_role != "guest"
-
+# da alle virt. Netw. auf autostart + rechner sowiese neugestartet werden muss: auskommentiert
+# - name: VM - start all virtual networks (Qemu-Kvm)
+#   tags: VM
+#   ansible.builtin.shell:
+#     chdir: files/VM/
+#     cmd: set -o pipefail && ls netdump_*.xml | xargs -I % sh -c "echo % | cut -d _ -f 2" | xargs -I % sh -c "echo % | cut -d . -f 1" | xargs -I % sh -c "virsh net-start %"
+#     # z.B.: netdump_default.xml                        default.xml                                 default                            virsh net-start default
+#   args:
+#     creates: /home/{{ env_user }}/.ansible_vm_qemuKvmCreated
+#   ignore_errors: true # u.a.: Failed to start network default\nerror: internal error: Network is already in use by interface enp1s0
+#   #                   # +: Fehler bei den anderen in zusammenhang mit Firewall
+#   when:
+#     - ansible_virtualization_role != "guest"
+#
 - name: VM - autostart all virtual networks (Qemu-Kvm)
   tags: VM
   ansible.builtin.shell:
     chdir: files/VM/
-    cmd: ls netdump_*.xml | xargs -I % sh -c "echo % | cut -d _ -f 2" | xargs -I % sh -c "echo % | cut -d . -f 1" | xargs -I % sh -c "virsh net-autostart %"
+    cmd: set -o pipefail && ls netdump_*.xml | xargs -I % sh -c "echo % | cut -d _ -f 2" | xargs -I % sh -c "echo % | cut -d . -f 1" | xargs -I % sh -c "virsh net-autostart %"
   args:
     creates: /home/{{ env_user }}/.ansible_vm_qemuKvmCreated
-  when: ansible_virtualization_role != "guest"
-
+  # ignore_errors: true
+  when:
+    - ansible_virtualization_role != "guest"
 
 - name: VM - create virtual machines (Qemu-Kvm)
   tags: VM
   ansible.builtin.shell:
     chdir: files/VM/
-    cmd: ls dump_*.xml | xargs -I % sh -c "virsh define %"    # 'virsh define': just creates, does not start vm; 'virsh create': creates + starts vm
+    cmd: set -o pipefail && ls dump_*.xml | xargs -I % sh -c "virsh define %"
+    # 'virsh define': just creates, does not start vm; 'virsh create': creates + starts vm
   args:
     creates: /home/{{ env_user }}/.ansible_vm_qemuKvmCreated
-  when: ansible_virtualization_role != "guest"
-
+  # ignore_errors: true
+  when:
+    - ansible_virtualization_role != "guest"
 
 - name: VM - redefine + set current virtual machine snapshots (Qemu-Kvm)
   tags: VM
@@ -72,8 +100,9 @@
     cmd: ./vm_snapshotcreate-redefine.sh
   args:
     creates: /home/{{ env_user }}/.ansible_vm_qemuKvmCreated
-  when: ansible_virtualization_role != "guest"
-
+  # ignore_errors: true
+  when:
+    - ansible_virtualization_role != "guest"
 
 # TODO: anpassen / festlegen System-Device; aktuell nur für 1 nvme-SSD passend
 #
@@ -84,9 +113,9 @@
 #    cmd: ./vm_storagepool-define.sh {{ env_user }}
 #  args:
 #    creates: /home/{{ env_user }}/.ansible_vm_qemuKvmCreated
-#  when: ansible_virtualization_role != "guest"
-
-
+#  when:
+#    - ansible_virtualization_role != "guest"
+#
 - name: VM - define user for QEMU processes run by system instance (Qemu-Kvm)
   tags: VM
   ansible.builtin.lineinfile:
@@ -94,7 +123,8 @@
     insertafter: '#user = "libvirt-qemu"'
     line: 'user = "root"'
     backup: true
-  when: ansible_virtualization_role != "guest"
+  when:
+    - ansible_virtualization_role != "guest"
 
 - name: VM - define group for QEMU processes run by system instance (Qemu-Kvm)
   tags: VM
@@ -102,30 +132,34 @@
     path: /etc/libvirt/qemu.conf
     insertafter: '#group = "libvirt-qemu"'
     line: 'group = "root"'
-  when: ansible_virtualization_role != "guest"
+  when:
+    - ansible_virtualization_role != "guest"
 
 - name: VM - libvirt should dynamically change file ownership to match the configured user/group above (Qemu-Kvm)
   tags: VM
   ansible.builtin.lineinfile:
     path: /etc/libvirt/qemu.conf
-    insertafter: '#dynamic_ownership = 1'
-    line: 'dynamic_ownership = 1'
-  when: ansible_virtualization_role != "guest"
+    insertafter: "#dynamic_ownership = 1"
+    line: "dynamic_ownership = 1"
+  when:
+    - ansible_virtualization_role != "guest"
 
 - name: VM - libvirt should remember and restore the original ownership over files it is relabeling (Qemu-Kvm)
   tags: VM
   ansible.builtin.lineinfile:
     path: /etc/libvirt/qemu.conf
-    insertafter: '#remember_owner = 1'
-    line: 'remember_owner = 1'
+    insertafter: "#remember_owner = 1"
+    line: "remember_owner = 1"
     state: "present"
-  when: ansible_virtualization_role != "guest"
+  when:
+    - ansible_virtualization_role != "guest"
 
 - name: VM - create 'flag-file' indicating VM-stuff was created (Qemu-Kvm)
   tags: VM
   ansible.builtin.file:
     path: /home/{{ env_user }}/.ansible_vm_qemuKvmCreated
     state: touch
-    mode: '0644'
+    mode: "0644"
     modification_time: preserve
-  when: ansible_virtualization_role != "guest"
+  when:
+    - ansible_virtualization_role != "guest"
