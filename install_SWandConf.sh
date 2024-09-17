@@ -529,8 +529,9 @@ Debian*)
     ;;
 esac
 
-# ### Alle Systeme:
+# ### Alle Systeme: install ansible via pipx
 # auskommenitert, da vorerst ansible wieder über Paketmanager installiere
+#
 # echo -e "\npipx ensurepath..."
 # pipx ensurepath # pipx wurde erst (oben) neu installiert -> PATH
 # echo -e "\nInstallation ansible via pipx"
@@ -538,24 +539,18 @@ esac
 # pipx inject --include-apps ansible argcomplete
 
 ### ---
-### Download 'Starship Shell Prompt' install-script
-### ---
-echo -e "\nDownload 'Starship Shell Prompt' install-script..."
-curl -sS "https://starship.rs/install.sh" >"/home/${userid}/starship_install.sh" && chmod +x "/home/${userid}/starship_install.sh"
-
-### ---
 ### Test Ansbile Playbook
 ### ---
-#echo ""
-#read -rp "Soll TEST des Ansible-Playbooks durchgeführt werden (j/n)?: " testplay
-#if [ "${testplay}" = 'j' ]; then
+# echo ""
+# read -rp "Soll TEST des Ansible-Playbooks durchgeführt werden (j/n)?: " testplay
+# if [ "${testplay}" = 'j' ]; then
 #    echo "Starte TEST des Playbooks ..."
 #    ansible-playbook "/home/${userid}/${playbookdir}/${playbook}" -v --ask-become-pass --check
 #    # bei verschlüsselten Daten z.B.:
 #    #ansible-playbook "/home/${userid}/${playbookdir}/${playbook}" -v -K -C --vault-password-file "/home/${userid}/.ansibleVaultKey"
-#else
+# else
 #    echo "TEST des Playbooks wird NICHT durchgefürt"
-#fi
+# fi
 
 echo -e "\nAnsible-Playbook starten ..."
 echo -e "\e[0;33m### Info\e[39m"
@@ -565,8 +560,8 @@ echo -e "\e[0;33m#     (For other errors a reboot may be needed)\e[39m"
 echo -e "\e[0;33m#   - If VS Code (Code OSS) opens you can simply close it again or leave it open until script is finished\e[39m"
 echo -e "\e[0;33m###\e[39m\n"
 
-# auskommenitert, da vorerst ansible wieder über Paketmanager installiere
-# echo -e "\e[0;33m'ansible' Befehl evtl. zunächst nocht nicht verfügbar\e[39m"
+# auskommenitert, da vorerst ansible wieder über Paketmanager installiert wird
+# echo -e "\e[0;33m'ansible' Befehl evtl. zunächst noch nicht verfügbar\e[39m"
 # echo -e "\e[0;33mShell neu starten (oder source der shell config) und dann Script erneut ausführen\e[39m\n"
 
 ansible-playbook "/home/${userid}/${playbookdir}/${playbook}" -v -K
@@ -585,7 +580,7 @@ Arch* | Endeavour*)
     ### weitere Installationen mit yay (Arch Linux, EndeavourOS)
     ### - an den Schluss gestellt, damit Playbookausführung nicht aufgehalten wird
     ### ---
-    read -r -p "Install some predefined additonal software from AUR ? ('j'=ja, sonstige Eingabe: nein): " installAUR
+    read -r -p "Install some additonal software from AUR ? ('j'=ja, sonstige Eingabe: nein): " installAUR
 
     if [ "${installAUR}" == "j" ]; then
         echo -e "\nInstall some Gnome Extensions (gsconnect, dash-to-panel) from AUR ..."
@@ -594,11 +589,11 @@ Arch* | Endeavour*)
         echo -e "\nInstall several Packages (bashdb, gtkhash, units) from AUR..."
         yay -S --needed bashdb gtkhash units
 
-        #echo -e "\nInstall several Applications (Vorta) from AUR..."
-        #yay -S --needed vorta joplin-desktop   # -> flatpak
+        # echo -e "\nInstall several Applications (Vorta) from AUR..."
+        # yay -S --needed vorta joplin-desktop # -> change: als flatpak installiert
 
-        #echo -e "\nInstall Brave Browser from AUR..."
-        #yay -S --needed brave-bin  # -> flatpak
+        # echo -e "\nInstall Brave Browser from AUR..."
+        # yay -S --needed brave-bin # -> change: als flatpak installiert
 
         echo -e "\nInstall linux steam integration from AUR..."
         yay -S --needed linux-steam-integration
@@ -608,15 +603,15 @@ Arch* | Endeavour*)
         echo -e "\nStart + enable ulauncher.service for '${userid}'..."
         systemctl --user enable --now ulauncher.service # su -u "${userid}" -c "systemctl --user enable --now ulauncher.service"
 
-        #lsblkBtrfs=$(lsblk -P -o +FSTYPE | grep "btrfs")   # $(blkid | grep btrfs) # $(mount | grep "^/dev" | grep btrfs)  # $(grep btrfs /etc/fstab)
-        #if [ -n "${lsblkBtrfs}" ]; then
+        # lsblkBtrfs=$(lsblk -P -o +FSTYPE | grep "btrfs")   # $(blkid | grep btrfs) # $(mount | grep "^/dev" | grep btrfs)  # $(grep btrfs /etc/fstab)
+        # if [ -n "${lsblkBtrfs}" ]; then
         if [[ $(stat -f -c %T /) = 'btrfs' ]]; then
             echo -e "\nInstall 'btrfs-assistant' from AUR..."
-            yay -S --needed btrfs-assistant && touch "/home/${userid}/.ansible_installScript_AUR-btrfsassistantInstalled"
+            yay -S --needed btrfs-assistant # && touch "/home/${userid}/.ansible_installScript_AUR-btrfsassistantInstalled"
         fi
 
-        echo -e "\nInstall espanso (wayland) + espanso-gui from AUR..."
-        yay -S --needed espanso-wayland espanso-gui
+        echo -e "\nInstall espanso (wayland) from AUR..." # + espanso-gui
+        yay -S --needed espanso-wayland # espanso-gui
 
         echo -e "\nInstall Citrix Workspace App (icaclient) from AUR..."
         yay -S icaclient && touch "/home/${userid}/.ansible_installScript_AUR-icaclientInstalled" && mkdir -p "/home/${userid}/.ICAClient/cache" &&
@@ -625,8 +620,8 @@ Arch* | Endeavour*)
         # echo -e "\nInstall Powershell from AUR..."
         # yay -S --needed powershell-bin
 
-        #echo -e "\nInstall Microsoft TTF Fonts from AUR..."
-        #yay -S --needed ttf-ms-fonts && touch "/home/${userid}/.ansible_installScript_AUR-ttfmsfontsInstalled"
+        # echo -e "\nInstall Microsoft TTF Fonts from AUR..." # braucht relativ lange
+        # yay -S --needed ttf-ms-fonts && touch "/home/${userid}/.ansible_installScript_AUR-ttfmsfontsInstalled"
 
         # --- 'autokey' auskommentiert, da nicht mit Wayland funktioniert --- #
         # echo -e "\nInstall 'autokey-gtk' from AUR..."         # da aktuell Gnome verwende
@@ -634,14 +629,14 @@ Arch* | Endeavour*)
         # echo -e "\nInstall 'autokey-qt' from AUR (Arch)"      # e.g. when using Plasma
         # yay -S --needed autokey-qt # && touch "/home/${userid}/.ansible_installScript_autokeyQtInstalled"
 
-        #echo -e "\nInstall woeusb-ng (Tool to create Windows boot stick) from AUR..."
-        #yay -S --needed woeusb-ng && touch "/home/${userid}/.ansible_installScript_AUR-woeusbngInstalled"
+        # echo -e "\nInstall woeusb-ng (Tool to create Windows boot stick) from AUR..."
+        # yay -S --needed woeusb-ng && touch "/home/${userid}/.ansible_installScript_AUR-woeusbngInstalled"
 
-        #echo -e "\nVM - Install virtio-win image from AUR..."
-        #yay -S --needed virtio-win && touch "/home/${userid}/.ansible_installScript_AUR-vmVirtioWinInstalled"
+        # echo -e "\nVM - Download 'virtio-win' image from AUR..."
+        # yay -S --needed virtio-win && touch "/home/${userid}/.ansible_installScript_AUR-vmVirtioWinInstalled"
 
-        echo -e "\nCreating flag-file '.ansible_installScript_severalAurPkgInstalled'..."
-        touch "/home/${userid}/.ansible_installScript_severalAurPkgInstalled"
+        # echo -e "\nCreating flag-file '.ansible_installScript_severalAurPkgInstalled'..."
+        # touch "/home/${userid}/.ansible_installScript_severalAurPkgInstalled"
     fi
     ;;
 

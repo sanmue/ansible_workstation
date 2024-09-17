@@ -147,41 +147,39 @@
 # #########################
 # ### starship shell prompt
 # #########################
+# https://starship.rs/
+#
+# config: in 'config_all-settingsmisc.yml''
+# update: via systemd timer
 
-# download via curl in bootstrap.sh verschoben
-# - name: Local packages install - starship shell prompt (env_user) - download install-file (all)
-#  become: true
-#  become_user: "{{ env_user }}"
-#  ansible.builtin.uri:
-#    url: 'https://starship.rs/install.sh'
-#    method: GET
-#    dest: "/home/{{ env_user }}/starship_install.sh"
-#    owner: "{{ env_user }}"
-#    group: "{{ env_user }}"
-#    mode: '0755'
-#    creates: "/home/{{ env_user }}/starship_install.sh"
-#  # register: result
+# curl -sS "https://starship.rs/install.sh" >"/home/${userid}/starship_install.sh" && chmod +x "/home/${userid}/starship_install.sh"
+- name: Local packages install - Download 'Starship Shell Prompt' install script (all)
+  ansible.builtin.get_url:
+    url: "https://starship.rs/install.sh"
+    dest: "/home/{{ env_user }}/starship_install.sh"
+    timeout: 300
+    force: false
+    owner: "{{ env_user }}"
+    group: "{{ env_user }}"
+    mode: "0755"
 
-- name: Local packages install - starship shell prompt (env_user) - check install status (all)
+- name: Local packages install - starship shell prompt (env_user) - check installation status (all)
   ansible.builtin.stat:
     path: /usr/local/bin/starship
   register: starship
 
-- name: Local packages install - create dir usr-local-bin if not exists  (all)
+- name: Local packages install - create directory '/usr/local/bin' if not exists  (all)
   ansible.builtin.file:
     path: /usr/local/bin
     state: directory
     mode: "0755"
 
-- name: Local packages install - starship shell prompt (env_user) - execute install-file (all)
+- name: Local packages install - starship shell prompt (env_user) - execute install script (all)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: "/home/{{ env_user }}/starship_install.sh --yes"
   when:
     - starship.stat.exists == false
-
-# config: in config_all-settingsmisc.yml; update: systemd timer
-# https://starship.rs/
 
 # ###############################
 # ### zsh plugins - from git repo
