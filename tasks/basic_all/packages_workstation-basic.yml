@@ -145,6 +145,7 @@
       - pyenv # Easily switch between multiple versions of Python
       # - pyright # Type checker for the Python language # Zed Editor mit Ext zed-python-refactoring (+ pip install cst-lsp)
       - python
+      - python-pyasyncore # wg. ulauncher
       # - python-black # Uncompromising Python code formatter
       # - python-debugpy # An implementation of the Debug Adapter Protocol for Python
       # - python-flake8-black # Flake8 plugin to call black as a code style validator
