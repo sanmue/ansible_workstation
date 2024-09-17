@@ -498,7 +498,7 @@ Debian*)
     echo -e "\nInstallation (wenn VM) spice agent for Linux guests (z.B. für clipboard sharing host+guest)"
     [[ $(systemd-detect-virt) != *"none"* ]] && sudo apt-get install -y spice-vdagent
 
-    echo -e "\nInstalliere Voraussetzuungen / ergänze Repo für 'ulauncher'"
+    echo -e "\nInstalliere Voraussetzungen / ergänze Repo für 'ulauncher'"
     if [ -e "/home/${userid}/.ansible_ppaUlauncherAdded" ]; then
         echo "Repo wurde bereits hinzugefügt, Schritt wird übersprungen"
     else
@@ -507,19 +507,11 @@ Debian*)
         gpg --keyserver keyserver.ubuntu.com --recv 0xfaf1020699503176
         gpg --export 0xfaf1020699503176 | sudo tee /usr/share/keyrings/ulauncher-archive-keyring.gpg > /dev/null
         echo "deb [signed-by=/usr/share/keyrings/ulauncher-archive-keyring.gpg] \
-                  http://ppa.launchpad.net/agornostal/ulauncher/ubuntu jammy main" \
-                  | sudo tee /etc/apt/sources.list.d/ulauncher-jammy.list
+                http://ppa.launchpad.net/agornostal/ulauncher/ubuntu jammy main" \
+                | sudo tee /etc/apt/sources.list.d/ulauncher-jammy.list
         # sudo apt update && sudo apt install -y ulauncher # installation in "packages_workstation-Gnome.yml"
 
         touch "/home/${userid}/.ansible_ppaUlauncherAdded"
-    fi
-
-    echo -e "\nDownload Installer-Skript for Pyenv"
-    if [ -f "/home/${userid}/Downloads/pyenv-installer.sh" ]; then
-        echo "Datei '/home/${userid}/Downloads/pyenv-installer.sh' bereits vorhanden, Schritt wird übersprungen"
-    else
-        curl -L --create-file-mode 0755 -o "/home/${userid}/Downloads/pyenv-installer.sh" "https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer"
-        chmod +x "/home/${userid}/Downloads/pyenv-installer.sh" # --create-file-mode hat nicht funktioniert
     fi
 
     echo -e "\nStarte + Aktiviere ssh ..."

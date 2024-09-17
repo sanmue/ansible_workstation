@@ -5,10 +5,22 @@
 # ### #####
 # ### Pyenv
 # ### #####
-#
 # - Arch: via paketmanager (...workstation-basic.yml)
-# - Debian: siehe installer script: "Download Installer-Skript for Pyenv"
-# #TODO: von installer script hierher
+
+# wenn timeout-problem: timeout erhöhen oder manueller download
+# # -> manuell / install script: download via curl:
+# curl -L --create-file-mode 0755 -o "/home/${userid}/Downloads/pyenv-installer.sh" "https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer"
+# chmod +x "/home/${userid}/Downloads/pyenv-installer.sh" # --create-file-mode hat nicht funktioniert
+- name: Local packages install - download installer-script for Pyenv (Debian)
+  ansible.builtin.get_url:
+    url: "https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer"
+    dest: "/home/{{ env_user }}/Downloads/pyenv-installer.sh"
+    timeout: 300
+    force: false
+    mode: "0755"
+  when:
+    - ansible_distribution == "Debian"
+
 - name: Install basic packages - Get stat of .pyenv (all)
   ansible.builtin.stat:
     path: "/home/{{ env_user }}/.pyenv"
@@ -71,8 +83,8 @@
     path: "/home/{{ env_user }}/Downloads/code.deb"
   register: tmpcodedeb
 
-# je nach Geschwindigkeit ggf. timeout problem
-# -> manuell / install script: download via curl
+# wenn timeout-problem: timeout erhöhen oder manueller download
+# -> manuell / install script: download via curl:
 # curl -L --create-file-mode 0755 -o "/home/${userid}/Downloads/code.deb" "https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64"
 - name: Local packages install - download Visual Studio Code deb-package (Debian)
   ansible.builtin.get_url:
