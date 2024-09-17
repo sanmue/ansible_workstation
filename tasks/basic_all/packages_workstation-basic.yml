@@ -287,6 +287,7 @@
       # Pyenv
       # https://ostechnix.com/pyenv-python-version-management-made-easier/
       # https://github.com/pyenv/pyenv-installer
+      # Pyenv Install: siehe ...localPackageInstall.yml
       # manche Pakete sind schon installiert (s.o.)
       - build-essential
       - curl
@@ -303,7 +304,6 @@
       - xz-utils
       - zlib1g-dev
   when: ansible_distribution == "Debian"
-# Pyenv Install: siehe ...localPackageInstall.yml
 
 # - Steam ppa wurde hinzugefügt in config_workstation-addrepos.yml
 # - https://linuxcapable.com/how-to-install-steam-on-debian-linux/

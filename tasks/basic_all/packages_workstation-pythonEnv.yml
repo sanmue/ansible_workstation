@@ -2,7 +2,7 @@
 # ### Python Environment
 # ######################
 
-# pyenv ist bereits installiert über Paketmanager (...workstation-basic.yml)
+# pyenv ist bereits installiert über Paketmanager (Arch: ...workstation-basic.yml) bzw. InstalScript+localPackageIntstall.yml (Debian)
 # + siehe ...localPackageInstall.yml # + ...all-settings-misc.yml (shell config)
 
 # !!!
