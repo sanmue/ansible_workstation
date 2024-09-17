@@ -65,24 +65,25 @@
     path: /usr/bin/code
   register: usrbincode
 
-# - name: Local packages install - get stat /tmp/code.deb (all)
-#  ansible.builtin.stat:
-#    # path: /tmp/code.deb
-#    path: "/home/{{ env_user }}/Downloads/code.deb"
-#  register: tmpcodedeb
+- name: Local packages install - get stat /tmp/code.deb (all)
+  ansible.builtin.stat:
+    # path: /tmp/code.deb
+    path: "/home/{{ env_user }}/Downloads/code.deb"
+  register: tmpcodedeb
 
-# Download nach bootstrap.sh verschoben wg. timout
-#
-# - name: Local packages install - download Visual Studio Code deb-package (Debian)
-#  ansible.builtin.get_url:
-#    url: "https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64"
-#    dest: "/home/{{ env_user }}/Downloads/code.deb"
-#    # force_basic_auth: yes
-#    force: false
-#    mode: '0755'
-#  when:
-#    - ansible_distribution == "Debian"
-#    - (usrbincode.stat.exists == false) and (tmpcodedeb.stat.exists == false)
+# je nach Geschwindigkeit ggf. timeout problem
+# -> manuell / install script: download via curl
+# curl -L --create-file-mode 0755 -o "/home/${userid}/Downloads/code.deb" "https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64"
+- name: Local packages install - download Visual Studio Code deb-package (Debian)
+  ansible.builtin.get_url:
+    url: "https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64"
+    dest: "/home/{{ env_user }}/Downloads/code.deb"
+    timeout: 300
+    force: false
+    mode: "0755"
+  when:
+    - ansible_distribution == "Debian"
+    - (usrbincode.stat.exists == false) and (tmpcodedeb.stat.exists == false)
 
 - name: Local packages install - install Visual Studio Code deb-package (Debian, apt)
   tags: workstation,ubuntu,apt

@@ -514,13 +514,6 @@ Debian*)
         touch "/home/${userid}/.ansible_ppaUlauncherAdded"
     fi
 
-    echo -e "\nDownload Visual Studio Code deb-file"
-    if [ -f "/home/${userid}/Downloads/code.deb" ]; then
-        echo "Datei '/home/${userid}/Downloads/code.deb' bereits vorhanden, Schritt wird übersprungen"
-    else
-        curl -L --create-file-mode 0755 -o "/home/${userid}/Downloads/code.deb" "https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64"
-    fi
-
     echo -e "\nDownload Installer-Skript for Pyenv"
     if [ -f "/home/${userid}/Downloads/pyenv-installer.sh" ]; then
         echo "Datei '/home/${userid}/Downloads/pyenv-installer.sh' bereits vorhanden, Schritt wird übersprungen"
