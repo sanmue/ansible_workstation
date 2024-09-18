@@ -54,7 +54,9 @@
   become_user: "{{ env_user }}"
   ansible.builtin.shell: "pyenv install {{ pythonVersion.stdout }}"
   args:
-    creates: "/home/{{ env_user }}/.ansible_PythonEnv"
+    # creates: "/home/{{ env_user }}/.ansible_PythonEnv"
+    # falls shon ausgeführt, aber kein FlagFile gesetzt z.B. wg. Fehler in Folge-Task:
+    creates: "/home/{{ env_user }}/.pyenv/versions/{{ pythonVersion.stdout }}"
   when:
     - ansible_distribution in ["Archlinux"]
 
@@ -63,7 +65,9 @@
   become_user: "{{ env_user }}"
   ansible.builtin.shell: "pyenv install {{ python3Version.stdout }}"
   args:
-    creates: "/home/{{ env_user }}/.ansible_PythonEnv"
+    # creates: "/home/{{ env_user }}/.ansible_PythonEnv"
+    # # falls shon ausgeführt, aber kein FlagFile gesetzt z.B. wg. Fehler in Folge-Task:
+    creates: "/home/{{ env_user }}/.pyenv/versions/{{ python3Version.stdout }}"
   when:
     - ansible_distribution not in ["Archlinux"]
 
