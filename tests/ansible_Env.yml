@@ -1,18 +1,10 @@
 ---
 
-# assuming beeing run local in the desired Desktop Environment
-- name: TestEnv
-  hosts: localhost
-  connection: local
-#  become: {{ env_user }}
-  gather_facts: true
-  tasks:
-    - name: Display available ansible facts
-      ansible.builtin.debug:
-#        msg: "{{ ansible_env }}"
-#        oder:
-        var: ansible_facts
-
-#        msg: "{{ ansible_env.XDG_CURRENT_DESKTOP }}"
-#        oder:
-#        msg: "{{ ansible_facts['env']['XDG_CURRENT_DESKTOP']|lower }}"
+- name: Display available ansible facts
+  ansible.builtin.debug:
+#    msg: "{{ ansible_env }}"
+#    oder:
+    var: ansible_facts
+#    msg: "{{ ansible_env.XDG_CURRENT_DESKTOP }}"
+#    oder:
+#    msg: "{{ ansible_facts['env']['XDG_CURRENT_DESKTOP']|lower }}"

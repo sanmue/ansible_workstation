@@ -1,0 +1,20 @@
+---
+
+- name: All settings misc - config all settings - clone repo with starship.toml file (User, all)
+  ansible.builtin.git:
+    repo: https://gist.github.com/71eb35991107cf691336bfbf60c96b9f.git # "owo" (modified)
+    dest: "/home/{{ env_user }}/Downloads/starship"
+
+- name: All settings misc - config all settings - copy starship.toml to .config dir (User, all)
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.copy:
+    src: "/home/{{ env_user }}/Downloads/starship/starship.toml"
+    dest: "/home/{{ env_user }}/Downloads/starship.toml" # "/home/{{ env_user }}/.config/starship.toml"
+    mode: "0644"
+    backup: false
+
+- name: All settings misc - config all settings - remove local repo with starship.toml file (User, all)
+  ansible.builtin.file:
+    path: "/home/{{ env_user }}/Downloads/starship"
+    state: absent
