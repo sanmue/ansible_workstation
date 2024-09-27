@@ -57,6 +57,7 @@
     # creates: "/home/{{ env_user }}/.ansible_PythonEnv"
     # falls shon ausgeführt, aber kein FlagFile gesetzt z.B. wg. Fehler in Folge-Task:
     creates: "/home/{{ env_user }}/.pyenv/versions/{{ pythonVersion.stdout }}"
+  ignore_errors: true
   when:
     - ansible_distribution in ["Archlinux"]
 
@@ -68,6 +69,7 @@
     # creates: "/home/{{ env_user }}/.ansible_PythonEnv"
     # # falls shon ausgeführt, aber kein FlagFile gesetzt z.B. wg. Fehler in Folge-Task:
     creates: "/home/{{ env_user }}/.pyenv/versions/{{ python3Version.stdout }}"
+  ignore_errors: true
   when:
     - ansible_distribution not in ["Archlinux"]
 
