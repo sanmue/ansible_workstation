@@ -26,6 +26,7 @@
       - cups
       - curl
       # - deja-dup            # aktuell genutzt: Vorta+borg # A trivial-to-use personal backup tool to protect against accidental data loss
+      - direnv
       - dmidecode
       - duf # Disk Usage/Free Utility
       - efivar

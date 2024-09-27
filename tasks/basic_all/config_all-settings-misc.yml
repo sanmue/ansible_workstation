@@ -1,6 +1,6 @@
 # ####################
 # ### grub2 bootloader
-# ### ################
+# ####################
 
 - name: Get stats of etc-default-grub (all)
   ansible.builtin.stat:
@@ -37,7 +37,7 @@
 
 # ##########
 # ### Locale
-# ### ######
+# ##########
 
 # insbes. wg. Debian (auf englisch installiert) und Formate auf Deutsch umstellen will
 - name: All settings misc - Locale - modify /etc/locale.gen (de_DE.UTF-8 UTF-8) (all)
@@ -51,9 +51,9 @@
   ansible.builtin.shell:
     cmd: locale-gen
 
-# ##############################
-# ### Create /home/01_Videos-min
-# ### ##########################
+# #######################
+# ### /home/01_Videos-min
+# #######################
 - name: All settings misc - Create '/home/01_Videos-min' - env_user permission (all)
   ansible.builtin.file:
     path: "/home/01_Videos-min/"
@@ -62,9 +62,69 @@
     group: "{{ env_user }}"
     mode: "0710"
 
+# #################################
+# ### Starship - cross shell prompt
+# #################################
+# + s.u.: hook in .bahsrc + .zshrc
+
+# starship update skript
+- name: All settings misc - starship shell prompt - copy update-script to usr-local-bin (all)
+  ansible.builtin.copy:
+    src: "files/config_all-settings-misc-starship_update.sh"
+    dest: "/usr/local/bin/starship_update.sh"
+    owner: root
+    group: root
+    mode: "0755"
+    backup: true
+
+# starship config
+- name: All settings misc - starship - clone repo with starship.toml file (User, all)
+  ansible.builtin.git:
+    repo: https://gist.github.com/71eb35991107cf691336bfbf60c96b9f.git # "owo" (modified)
+    # repo: https://gist.github.com/f0ed97bed95c7bc7926cc3a88949bd39.git # "Power10"
+    dest: "/home/{{ env_user }}/Downloads/starship"
+
+- name: All settings misc - starship - copy starship.toml to .config dir (User, all)
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.copy:
+    src: "/home/{{ env_user }}/Downloads/starship/starship.toml"
+    dest: "/home/{{ env_user }}/.config/starship.toml"
+    mode: "0644"
+    backup: false
+
+- name: All settings misc - starship - remove local repo folder (User, all)
+  ansible.builtin.file:
+    path: "/home/{{ env_user }}/Downloads/starship"
+    state: absent
+
+# ##########
+# ### direnv
+# ##########
+# + s.u.: hook in .bahsrc + .zshrc
+- name: All settings misc - direnv - create config folder (User, all)
+  ansible.builtin.file:
+    path: "/home/{{ env_user }}/.config/direnv"
+    state: directory
+    owner: "{{ env_user }}"
+    group: "{{ env_user }}"
+    mode: 'u=rwx,g=rx,o=rx'
+
+- name: All settings misc - direnv - config (User, all)
+  ansible.builtin.blockinfile:
+    path: "/home/{{ env_user }}/.config/direnv/direnv.toml"
+    create: true
+    marker: "### {mark} 'direnv config' ANSIBLE MANAGED BLOCK ###"
+    block: |
+      [global]
+      hide_env_diff = true
+    owner: "{{ env_user }}"
+    group: "{{ env_user }}"
+    mode: u=rwx,g=rx,o=rx
+
 # ##########################################
 # ### bashrc - add additional Paths + Config
-# ### ######################################
+# ##########################################
 # - global wäre: /etc/bash_bashrc
 
 # -------------
@@ -100,25 +160,6 @@
       }
 
       starship_precmd_user_func="set_win_title"
-
-- name: All settings misc - config all settings - clone repo with starship.toml file (User, all)
-  ansible.builtin.git:
-    repo: https://gist.github.com/71eb35991107cf691336bfbf60c96b9f.git # "owo" (modified)
-    dest: "/home/{{ env_user }}/Downloads/starship"
-
-- name: All settings misc - config all settings - copy starship.toml to .config dir (User, all)
-  become: true
-  become_user: "{{ env_user }}"
-  ansible.builtin.copy:
-    src: "/home/{{ env_user }}/Downloads/starship/starship.toml"
-    dest: "/home/{{ env_user }}/.config/starship.toml"
-    mode: "0644"
-    backup: false
-
-- name: All settings misc - config all settings - remove local repo with starship.toml file (User, all)
-  ansible.builtin.file:
-    path: "/home/{{ env_user }}/Downloads/starship"
-    state: absent
 
 - name: All settings misc - Bashrc - additional EXPORTS (User, all)
   ansible.builtin.blockinfile:
@@ -280,6 +321,18 @@
       # -------------------------------
       systemctl --user import-environment PATH
 
+# https://github.com/direnv/direnv/blob/master/docs/hook.md
+- name: All settings misc - Bashrc - direnv hook (User, all)
+  ansible.builtin.blockinfile:
+    path: "/home/{{ env_user }}/.bashrc"
+    backup: false
+    marker: "### {mark} 'direnv hook' ANSIBLE MANAGED BLOCK ###"
+    block: |
+      # -----------
+      # direnv hook
+      # -----------
+      eval "$(direnv hook bash)"
+
 # --------
 # ### root
 - name: All settings misc - Bashrc - check status (root, all)
@@ -320,7 +373,7 @@
 
 # #######################################
 # ### zsh - add additional Paths + Config
-# ### ###################################
+# #######################################
 # - global wäre: /etc/zshrc   # https://linuxconfig.org/zsh-shell-installation-and-configuration-on-linux
 
 # --------
@@ -643,6 +696,18 @@
       # -------------------------------
       systemctl --user import-environment PATH
 
+# https://github.com/direnv/direnv/blob/master/docs/hook.md
+- name: All settings misc - Zshrc - direnv hook (User, all)
+  ansible.builtin.blockinfile:
+    path: "/home/{{ env_user }}/.zshrc"
+    backup: false
+    marker: "### {mark} 'direnv hook' ANSIBLE MANAGED BLOCK ###"
+    block: |
+      # -----------
+      # direnv hook
+      # -----------
+      eval "$(direnv hook zsh)"
+
 # --------
 # ### root
 - name: All settings misc - Zshrc - check status (root, all)
@@ -721,18 +786,6 @@
       XTerm*renderFont:   true
       XTerm*faceName:     DejaVuSansMono
       XTerm*faceSize:     13
-
-# #########################
-# ### starship shell prompt
-# #########################
-- name: All settings misc - starship shell prompt - copy update-script to usr-local-bin (all)
-  ansible.builtin.copy:
-    src: "files/config_all-settings-misc-starship_update.sh"
-    dest: "/usr/local/bin/starship_update.sh"
-    owner: root
-    group: root
-    mode: "0755"
-    backup: true
 
 # #######
 # ### zsh
