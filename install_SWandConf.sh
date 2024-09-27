@@ -441,15 +441,27 @@ Arch* | Endeavour*)
     echo -e "\nInstallation benoetigte Softwarepackages zur Installation von AUR helpers, AUR-Packages..."
     sudo pacman -S --needed --noconfirm base-devel
 
-    echo -e "\nInstalling 'yay' - AUR helper..."
-    sudo git clone https://aur.archlinux.org/yay.git /opt/yay
-    sudo chown -R "${userid}":users /opt/yay
-    cd /opt/yay && makepkg -si --needed && cd || return
+    echo -e "\nInstalling 'yay' - AUR helper..."   
+    if ! [ -x "$(command -v yay)" ]; then
+        sudo git clone https://aur.archlinux.org/yay.git /opt/yay
+        sudo chown -R "${userid}":users /opt/yay
+        cd /opt/yay && makepkg -si --needed && cd || return
+
+        sudo rm -rf /opt/yay
+    else
+        echo -e "yay is already available"
+    fi
 
     echo -e "\nInstalling 'paru' - AUR helper..."
-    sudo git clone https://aur.archlinux.org/paru.git /opt/paru
-    sudo chown -R "${userid}":users /opt/paru
-    cd /opt/paru && makepkg -si --needed && cd || return
+    if ! [ -x "$(command -v paru)" ]; then
+        sudo git clone https://aur.archlinux.org/paru.git "/home/${userid}/Downloads/paru"
+        sudo chown -R "${userid}":users "/home/${userid}/Downloads/paru"
+        cd "/home/${userid}/Downloads/paru" && makepkg -si --needed && cd || return
+        # cleanup:
+        sudo rm -rf "/home/${userid}/Downloads/paru"
+    else
+        echo -e "paru is already available"
+    fi
 
     echo -e "\n Installation (wenn VM) spice agent for Linux guests (z.B. für clipboard sharing zwischen host+guest)"
     [[ $(systemd-detect-virt) != *"none"* ]] && sudo pacman -S --needed --noconfirm spice-vdagent
