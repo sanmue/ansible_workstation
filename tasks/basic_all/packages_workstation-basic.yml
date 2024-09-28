@@ -169,6 +169,7 @@
       # - python-virtualenv # Virtual Python Environment builder
       # - python-virtualenvwrapper # Extensions to Ian Bicking's virtualenv tool
       - qt6-wayland # 10/2023: for 'obs-studio' to work install 'qt6-wayland'
+      - reflector # A Python 3 module and script to retrieve and filter the latest Pacman mirror list.
       - remmina
       - signal-desktop
       - sqlite # A C library that implements an SQL database engine
