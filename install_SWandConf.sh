@@ -412,6 +412,7 @@ fi
 # ### distributionsspezifische Anpassungen:
 case ${os} in
 Arch* | Endeavour*)
+    # ### Repo Mirrors / reflector
     if [ ! -f "/home/${userid}/.ansible_installScript_MirrorPool" ]; then
         touch "/home/${userid}/.ansible_installScript_MirrorPool"
 
@@ -435,6 +436,7 @@ Arch* | Endeavour*)
         fi
     fi
 
+    # ### Installs
     echo -e "\nInstallation initial benoetigte Software (curl  git openssh rsync ufw vim)" # python-pipx firewalld
     sudo pacman -S --needed --noconfirm ansible curl git openssh rsync ufw vim # python-pipx # ansible-core firewalld
 
@@ -463,17 +465,15 @@ Arch* | Endeavour*)
         echo -e "paru is already available"
     fi
 
+    # ### VM guest - spice-vdagent
     echo -e "\n Installation (wenn VM) spice agent for Linux guests (z.B. für clipboard sharing zwischen host+guest)"
     [[ $(systemd-detect-virt) != *"none"* ]] && sudo pacman -S --needed --noconfirm spice-vdagent
 
-    echo -e "\nAktiviere Firewall und erlaube ssh ..."
-    # sudo systemctl enable --now firewalld.service && sudo firewall-cmd --zone=public --add-service=ssh --permanent && sudo firewall-cmd --reload
-    sudo ufw default deny && sudo sudo ufw limit ssh comment 'SSH' && sudo ufw enable && sudo ufw reload
-    sudo ufw status verbose
-
+    # ### SSH
     echo -e "\nStarte und aktiviere sshd.service..." # wg. ssh von anderer Maschine für evtl. todos/checks, ...
     sudo systemctl enable --now sshd.service         # wird später in Ansible task (services) wieder deaktiviert (ober noch nicht gestoppt)
 
+    # ### VM Qemu/KVM: uninstall iptables, install iptables-nft
     echo -e "\nVM - Qemu/KVM: Wiki empfiehlt inst. von 'iptables-nft'"
     echo -e "Bestätige, dass 'iptables' (und 'inxi') gelöscht und 'iptables-nft' installiert wird"
     echo -e "Anmerkung: 'inxi' wird im Rahmen basis-inst wieder installiert"
@@ -481,6 +481,7 @@ Arch* | Endeavour*)
     ;;
 
 Debian*)
+    # ### sudo
     if [[ ! $(grep sudo /etc/group) = *"${userid}"* ]]; then
         echo "Füge User '${userid}' der sudo-Gruppe hinzu"
         su -l root --command "usermod -aG sudo ${userid}"
@@ -489,7 +490,8 @@ Debian*)
         read -rp "Bitte Eingabe-Taste drücken, um fortzufahren."
         pkill -KILL -u "${userid}"
     fi
-
+    
+    # ### Update / Upgrade + Installs
     echo -e "\nUpdate Repos, upgrade and autoremove"
     sudo apt-get update && sudo apt-get upgrade -y
     sudo apt-get autoremove -y
@@ -510,6 +512,7 @@ Debian*)
     echo -e "\nInstallation (wenn VM) spice agent for Linux guests (z.B. für clipboard sharing host+guest)"
     [[ $(systemd-detect-virt) != *"none"* ]] && sudo apt-get install -y spice-vdagent
 
+    # ### Ulauncher
     echo -e "\nInstalliere Voraussetzungen / ergänze Repo für 'ulauncher'"
     if [ -e "/home/${userid}/.ansible_ppaUlauncherAdded" ]; then
         echo "Repo wurde bereits hinzugefügt, Schritt wird übersprungen"
@@ -526,12 +529,9 @@ Debian*)
         touch "/home/${userid}/.ansible_ppaUlauncherAdded"
     fi
 
+    # ### SSH
     echo -e "\nStarte + Aktiviere ssh ..."
     sudo systemctl start ssh && sudo systemctl enable ssh
-
-    echo -e "\nAktiviere Firewall 'ufw' und erlaube ssh ..."
-    sudo ufw default deny && sudo sudo ufw limit ssh comment 'SSH' && sudo ufw enable && sudo ufw reload
-    sudo ufw status verbose
     ;;
 
 *)
@@ -540,6 +540,28 @@ Debian*)
     exit 0
     ;;
 esac
+
+# ### Firewall - aktivate + config rules
+echo -e "\nAktiviere Firewall und erlaube ssh ..."
+# --- firewalld:
+# sudo systemctl enable --now firewalld.service && sudo firewall-cmd --zone=public --add-service=ssh --permanent && sudo firewall-cmd --reload
+echo -e "- Prüfe zuerst auf firewalld und deaktiviere Service, wenn vorhanden"
+if [ -x "$(command -v firewalld)" ]; then
+    sudo systemctl disable --now firewalld
+
+    if [ -x "$(command -v pacman)" ]; then
+        sudo pacman --noconfirm -R firewalld
+    elif [ -x "$(command -v apt-get)" ]; then
+        # sudo apt-get purge -y firewalld
+        sudo apt-get remove -y firewalld
+    elif [ -x "$(command -v dnf)" ]; then
+        sudo dnf remove --assumeyes firewalld
+    fi
+fi
+# --- ufw
+echo -e "\nAktiviere Firewall und erlaube ssh ..."
+sudo ufw default deny && sudo ufw limit ssh comment 'SSH' && sudo ufw enable && sudo ufw reload
+sudo ufw status verbose
 
 # ### Alle Systeme: install ansible via pipx
 # auskommenitert, da vorerst ansible wieder über Paketmanager installiere
@@ -576,6 +598,7 @@ echo -e "\e[0;33m###\e[39m\n"
 # echo -e "\e[0;33m'ansible' Befehl evtl. zunächst noch nicht verfügbar\e[39m"
 # echo -e "\e[0;33mShell neu starten (oder source der shell config) und dann Script erneut ausführen\e[39m\n"
 
+echo -e "/home/${userid}/${playbookdir}/${playbook}"
 ansible-playbook "/home/${userid}/${playbookdir}/${playbook}" -v -K
 
 # ansible-playbook "/home/${userid}/${playbookdir}/${playbook}" -v -K -e 'ansible_python_interpreter=/usr/bin/python3'
