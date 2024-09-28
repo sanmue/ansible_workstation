@@ -16,7 +16,9 @@ playbookdir="ansible_workstation" # also repo name
 playbook="local.yml"
 userid=$(whoami) # or: userid=${USER}
 oslist=("Arch Linux" "EndeavourOS" "Debian GNU/Linux") # currently supported distributions
-currentHostname=$(hostname)
+# currentHostname=$(hostname) # command not available in arch (anymore); net-tool (deprecated) or inetutils not installed by default
+# currentHostname=$(cat /etc/hostname)
+currentHostname=$(hostnamectl hostname) # only systemd
 bootloaderId='GRUB' # or 'endeavouros', ...
 
 if [ -e "/efi" ]; then # Uefi - EFI path
