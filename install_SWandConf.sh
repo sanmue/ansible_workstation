@@ -450,7 +450,7 @@ Arch* | Endeavour*)
         sudo git clone https://aur.archlinux.org/yay.git /opt/yay
         sudo chown -R "${userid}":users /opt/yay
         cd /opt/yay && makepkg -si --needed && cd || return
-
+        # cleanup:
         sudo rm -rf /opt/yay
     else
         echo -e "yay is already available"
@@ -458,11 +458,11 @@ Arch* | Endeavour*)
 
     echo -e "\nInstalling 'paru' - AUR helper..."
     if ! [ -x "$(command -v paru)" ]; then
-        sudo git clone https://aur.archlinux.org/paru.git "/home/${userid}/Downloads/paru"
-        sudo chown -R "${userid}":users "/home/${userid}/Downloads/paru"
-        cd "/home/${userid}/Downloads/paru" && makepkg -si --needed && cd || return
+        sudo git clone https://aur.archlinux.org/paru.git /opt/paru
+        sudo chown -R "${userid}":users /opt/paru
+        cd /opt/paru && makepkg -si --needed && cd || return
         # cleanup:
-        sudo rm -rf "/home/${userid}/Downloads/paru"
+        sudo rm -rf /opt/paru
     else
         echo -e "paru is already available"
     fi
