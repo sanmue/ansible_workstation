@@ -95,7 +95,7 @@
     name:
       - archlinux-keyring
       - base-devel # insbes. wg. AUR Paketen   # bereits installiert (bootstrap)
-      - bashdb # A debugger for Bash scripts loosely modeled on the gdb command syntax
+      # - bashdb # nicht (mehr) in standard repos (aber AUR od. endeavouros repo)
       - bash-language-server # benötigt von Zed editor Extension (Bash for Zed)
       - borg # Deduplicating backup program with compression and authenticated encryption # GUI: vorta -> via yay in bootstrap.sh
       - chromium
