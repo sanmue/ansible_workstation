@@ -325,7 +325,7 @@ if [[ "${doSnapper}" = 'y' ]]; then
         # SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)   # https://codefather.tech/blog/bash-get-script-directory/
         SCRIPT_DIR=$(dirname "${BASH_SOURCE[0]}")
         sudo mkdir -p /etc/pacman.d/hooks &&
-            sudo cp "${SCRIPT_DIR}/95-bootbackup.hook" /etc/pacman.d/hooks/95-bootbackup.hook &&
+            sudo cp "${SCRIPT_DIR}/files/95-bootbackup.hook" /etc/pacman.d/hooks/95-bootbackup.hook &&
             sudo chown root:root /etc/pacman.d/hooks/95-bootbackup.hook
 
         #if [ -e "/efi/loader/loader.conf" ]; then           # systemd Boot
@@ -338,7 +338,7 @@ if [[ "${doSnapper}" = 'y' ]]; then
             # SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)   # absolute path # https://codefather.tech/blog/bash-get-script-directory/
             SCRIPT_DIR=$(dirname "${BASH_SOURCE[0]}") # relative path
             sudo mkdir -p /etc/pacman.d/hooks &&
-                sudo cp "${SCRIPT_DIR}/95-efibackup.hook" /etc/pacman.d/hooks/95-efibackup.hook &&
+                sudo cp "${SCRIPT_DIR}/files/95-efibackup.hook" /etc/pacman.d/hooks/95-efibackup.hook &&
                 sudo chown root:root /etc/pacman.d/hooks/95-efibackup.hook
         fi
 
