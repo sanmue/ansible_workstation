@@ -10,7 +10,7 @@
       # - ansible-core # Radically simple IT automation platform # wird bei 'ansible' mitinstalliert
       - ansible-lint # für z.B. ansible extension in VS Code # -> pip
       - bash
-      - bat # Cat clone with syntax highlighting and git integration (u.a. wg. nnn)
+      - bat # Cat clone with syntax highlighting and git integration (u.a. wg. nnn + alias (cat))
       - bleachbit
       - catimg # Print images in a terminal with 256 colors support (u.a. wg. nnn)
       - chafa # Image-to-text converter for terminal (u.a. wg. nnn)
@@ -20,12 +20,12 @@
       # - cockpit-packagekit    # Cockpit user interface for packages
       # - cockpit-storaged      # Cockpit user interface for storage, using udisks
       # - cockpit-machines      # Cockpit UI for virtual machines
-      # - cockpit-podman      # Cockpit UI for podman containers
+      # - cockpit-podman        # Cockpit UI for podman containers
       # - cockpit-pcp           # Cockpit support for reading PCP metrics and loading PCP archives
       - cryptsetup # benötigt für LUKS # sollte schon installiert sein
       - cups
       - curl
-      # - deja-dup            # aktuell genutzt: Vorta+borg # A trivial-to-use personal backup tool to protect against accidental data loss
+      # - deja-dup # aktuell genutzt: Vorta+borg # A trivial-to-use personal backup tool to protect against accidental data loss
       - direnv
       - dmidecode
       - duf # Disk Usage/Free Utility
@@ -109,8 +109,8 @@
       - evolution-bogofilter
       - evolution-ews # MS Exchange integration through Exchange Web Services
       - evolution-spamassassin
-      # - evolution-on        # Tray plugin for the Evolution email client
-      # - exfat-utils         # exfat-utils and exfatprogs are in conflict
+      # - evolution-on # Tray plugin for the Evolution email client
+      # - exfat-utils # exfat-utils and exfatprogs are in conflict
       - eza
       - fd # Simple, fast and user-friendly alternative to find
       - fastfetch
