@@ -32,7 +32,8 @@ fi
 
 snapperConfigName_root="root"
 snapperSnapshotFolder="/.snapshots"
-declare -A btrfsSubvolLayout=(["@"]="/"
+declare -A btrfsSubvolLayout=(
+    ["@"]="/"
     ["@snapshots"]="${snapperSnapshotFolder}"
     ["@home"]="/home"
     ["@opt"]="/opt"
