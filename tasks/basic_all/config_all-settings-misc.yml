@@ -234,6 +234,12 @@
       alias lsblku='lsblk -o NAME,MAJ:MIN,UUID,RM,SIZE,FSTYPE,RO,TYPE,MOUNTPOINTS' # u.a. mit UUID und FSTYPE
       alias lsblkf='lsblk --fs --paths' # u.a. mit: filesystem info, UUID und full device paths
 
+      # zoxide - A smarter cd command for your terminal (siehe auch unten; z = function)
+      if [[ $(command -v zoxide) ]]; then
+        alias cd='z'
+        alias cdi='zi' # cd with interactive selection (using fzf)
+      fi
+
 - name: All settings misc - Bashrc - Insert/Update additional paths and config - nvm (User, all)
   ansible.builtin.blockinfile:
     path: "/home/{{ env_user }}/.bashrc"
@@ -316,6 +322,17 @@
       eval "$(pyenv virtualenv-init -)"
   when:
     - ansible_distribution in ["Archlinux"]
+
+- name: All settings misc - Bashrc - Insert/Update additional paths and config - zoxide (User, all)
+  ansible.builtin.blockinfile:
+    path: "/home/{{ env_user }}/.zshrc"
+    backup: false
+    marker: "### {mark} 'zoxide' ANSIBLE MANAGED BLOCK ###"
+    block: |
+      # ------
+      # zoxide
+      # ------
+      eval "$(zoxide init bash)"
 
 # https://wiki.archlinux.org/title/Systemd/User#PATH
 - name: All settings misc - Bashrc - systemd user import-environment (User, all)
@@ -537,6 +554,12 @@
       # lsblk - list block devices
       alias lsblku='lsblk -o NAME,MAJ:MIN,UUID,RM,SIZE,FSTYPE,RO,TYPE,MOUNTPOINTS' # u.a. mit UUID und FSTYPE
       alias lsblkf='lsblk --fs --paths' # u.a. mit: filesystem info, UUID und full device paths
+
+      # zoxide - A smarter cd command for your terminal (siehe auch unten; z = function)
+      if [[ $(command -v zoxide) ]]; then
+        alias cd='z'
+        alias cdi='zi' # cd with interactive selection (using fzf)
+      fi
 
 - name: All settings misc - Zshrc - Insert/Update additional paths and config - nvm (User, all)
   ansible.builtin.blockinfile:
