@@ -240,6 +240,11 @@
         alias cdi='zi' # cd with interactive selection (using fzf)
       fi
 
+      # snapper-rollback
+      if [[ $(command -v snapper-rollback) ]]; then
+        alias snapshot='sudo snapper list && echo -e "\nsudo snapper -c root create -c number --description \"after snapper-rollback x\"\n"'
+      fi
+
 - name: All settings misc - Bashrc - Insert/Update additional paths and config - nvm (User, all)
   ansible.builtin.blockinfile:
     path: "/home/{{ env_user }}/.bashrc"
@@ -559,6 +564,11 @@
       if [[ $(command -v zoxide) ]]; then
         alias cd='z'
         alias cdi='zi' # cd with interactive selection (using fzf)
+      fi
+
+      # snapper-rollback
+      if [[ $(command -v snapper-rollback) ]]; then
+        alias snapshot='sudo snapper list && echo -e "\nsudo snapper -c root create -c number --description \"after snapper-rollback x\"\n"'
       fi
 
 - name: All settings misc - Zshrc - Insert/Update additional paths and config - nvm (User, all)
