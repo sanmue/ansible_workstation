@@ -6,33 +6,33 @@
 # ---------------------
 # ### cups OpenPrinting
 # ---------------------
-- name: All services misc - start+enable cronie (Arch)
+- name: All services misc - cups.service (Arch)
   ansible.builtin.service:
     name: cups.service
     state: started
     enabled: true
   when: ansible_distribution in ["Archlinux"]
 
-# ------
+# -------------
 # Cron / Cronie
-# ------
+# -------------
 # cron wird verwendet z.B. von von ClamTK und timeshift
 #
 # https://wiki.archlinux.org/title/Cron
-- name: All services misc - start+enable cronie (Arch)
+- name: All services misc - cronie.service (Arch)
   ansible.builtin.service:
     name: cronie.service
     state: started
     enabled: true
   when: ansible_distribution in ["Archlinux"]
 
-# ---------------------------------------------
-# # reflector - retrieve the latest mirror list
-# ---------------------------------------------
+# ---------------------------------
+# # retrieve the latest mirror list
+# ---------------------------------
 # https://man.archlinux.org/man/reflector.1#EXAMPLES
 # https://wiki.archlinux.org/title/Reflector#top-page
 # - conf: /etc/xdg/reflector/reflector.conf   -->   siehe config_all-settings-misc.yml
-- name: All services misc - start+enable reflector (Arch)
+- name: All services misc - reflector.service - etrieve the latest mirror list (Arch)
   ansible.builtin.service:
     name: reflector.service
     # state: started
@@ -40,26 +40,36 @@
   when:
     - ansible_distribution in ["Archlinux"]
 
-# ------------------------------
+# ------------------------------------------------
 # # update pacman files database (default: weekly)
-# ------------------------------
+# ------------------------------------------------
 # - https://wiki.archlinux.org/title/Pacman#Search_for_a_package_that_contains_a_specific_file
 # - https://wiki.archlinux.org/title/Pacman#Querying_package_databases
-- name: All services misc - start+enable update pacman files database (Arch)
+- name: All services misc - pacman-filesdb-refresh.timer - update pacman files database (Arch)
   ansible.builtin.service:
     name: pacman-filesdb-refresh.timer
     state: started
     enabled: true
   when: ansible_distribution in ["Archlinux"]
 
-# -------------------------
+# -------------------------------------------
 # # update pkgfile database (default: daily)
-# -------------------------
+# -------------------------------------------
 # - https://wiki.archlinux.org/title/Pkgfile#Automatic_updates
-- name: All services misc - start+enable update pkgfile database (Arch)
+- name: All services misc - pkgfile-update.timer - update pkgfile database (Arch)
   ansible.builtin.service:
     name: pkgfile-update.timer
     state: started
+    enabled: true
+  when: ansible_distribution in ["Archlinux"]
+
+# ----------------------------------------------
+# # cleaning the package cache (default: weekly)
+# ----------------------------------------------
+# - https://wiki.archlinux.org/title/Pkgfile#Automatic_updates
+- name: All services misc - paccache.timer - cleaning package cache (Arch)
+  ansible.builtin.service:
+    name: paccache.timer
     enabled: true
   when: ansible_distribution in ["Archlinux"]
 
