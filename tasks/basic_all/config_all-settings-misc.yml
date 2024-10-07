@@ -272,6 +272,7 @@
       # -------------------------------
       export VISUAL=vim
       export EDITOR="${VISUAL}"
+      export SUDO_EDITOR="${VISUAL}"
 
 - name: All settings misc - Bashrc - Insert/Update additional paths and config - user-bin (User, all)
   ansible.builtin.blockinfile:
@@ -400,6 +401,7 @@
       # -------------------------------
       export VISUAL=vim
       export EDITOR="${VISUAL}"
+      export SUDO_EDITOR="${VISUAL}"
 
 # #######################################
 # ### zsh - add additional Paths + Config
@@ -598,6 +600,7 @@
       # -------------------------------
       export VISUAL=vim
       export EDITOR="${VISUAL}"
+      export SUDO_EDITOR="${VISUAL}"
 
 - name: All settings misc - Zshrc - Insert/Update additional paths and config - user-bin (User, all)
   ansible.builtin.blockinfile:
@@ -794,6 +797,7 @@
       # -------------------------------
       export VISUAL=vim
       export EDITOR="${VISUAL}"
+      export SUDO_EDITOR="${VISUAL}"
 
 # #################
 # ### nnn - plugins
