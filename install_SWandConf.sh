@@ -446,24 +446,13 @@ Arch* | Endeavour*)
     echo -e "\nInstallation benoetigte Softwarepackages zur Installation von AUR helpers, AUR-Packages..."
     sudo pacman -S --needed --noconfirm base-devel
 
-    echo -e "\nInstalling 'yay' - AUR helper..."   
-    if ! [ -x "$(command -v yay)" ]; then
-        sudo git clone https://aur.archlinux.org/yay.git /opt/yay
-        sudo chown -R "${userid}":users /opt/yay
-        cd /opt/yay && makepkg -si --needed && cd || return
-        # cleanup:
-        sudo rm -rf /opt/yay
-    else
-        echo -e "yay is already available"
-    fi
-
     echo -e "\nInstalling 'paru' - AUR helper..."
     if ! [ -x "$(command -v paru)" ]; then
-        sudo git clone https://aur.archlinux.org/paru.git /opt/paru
-        sudo chown -R "${userid}":users /opt/paru
-        cd /opt/paru && makepkg -si --needed && cd || return
+        sudo git clone https://aur.archlinux.org/paru.git /tmp/paru
+        sudo chown -R "${userid}":users /tmp/paru
+        cd /tmp/paru && makepkg -sic --needed && cd || return
         # cleanup:
-        sudo rm -rf /opt/paru
+        sudo rm -rf /tmp/paru
     else
         echo -e "paru is already available"
     fi
