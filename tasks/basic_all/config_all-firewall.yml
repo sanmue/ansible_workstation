@@ -2,58 +2,100 @@
 # ### UFW ###
 # ###########
 
+# shell:
+# echo -e "\nAktiviere Firewall und erlaube ssh ..."
+# sudo ufw default deny && sudo ufw limit ssh comment 'SSH' && sudo ufw enable && sudo ufw reload
+# sudo ufw status verbose
+
 # ### UFW - enable
-- name: UFW - enable (all)
+- name: Config all firewall - UFW - enable (Debian)
   community.general.ufw:
-    state: disabled  # muss bei priv. Rechner nicht dauerhaft aktiviert sein
+    state: enabled
   register: firewall_ufw
+  when: ansible_distribution in ["Debian"]
+
+# ### UFW - deny all
+- name: Config all firewall - UFW - deny all (Debian)
+  community.general.ufw:
+    policy: deny
+  register: firewall_ufw
+  when: ansible_distribution in ["Debian"]
 
 # ### UFW - allow
 # SSH: bereist bei install script
-- name: UFW - allow ssh (all)
+- name: Config all firewall - UFW - allow ssh (Debian)
   community.general.ufw:
     rule: limit
     port: ssh
     proto: tcp
     comment: SSH
   register: firewall_ufw
+  when: ansible_distribution in ["Debian"]
 
 # ### UFW - reload
-- name: UFW - reload (all)
+- name: Config all firewall - UFW - reload (Debian)
   community.general.ufw:
     state: reloaded
-  when: 
+  when:
+    - ansible_distribution in ["Debian"]
     - firewall_ufw.changed
-
 
 # #################
 # ### firewalld ###
 # #################
 
-# ### firewalld - enable+start
-#- name: Firewalld - enable (Archlinux, Suse)
-#  ansible.builtin.service:
-#    name: firewalld
-#    enabled: false # muss bei priv. Rechner nicht dauerhaft aktiviert sein
-#    state: started
-#  when: ansible_distribution in ["Archlinux"] or
-#        ansible_os_family == "Suse"
+- name: Config all firewall - firewalld - enable (via shell) (Arch)
+  ansible.builtin.shell:
+    cmd: systemctl enable --now firewalld.service
+  args:
+    creates: /home/{{ env_user }}/.ansible_firewalldConfigDone
+  when: ansible_distribution in ["Archlinux"]
+
+- name: Config all firewall - firewalld - allow ssh (via shell) (Arch)
+  ansible.builtin.shell:
+    cmd: firewall-cmd --permanent --zone=public --add-service=ssh
+  args:
+    creates: /home/{{ env_user }}/.ansible_firewalldConfigDone
+  when: ansible_distribution in ["Archlinux"]
+
+- name: Config all firewall - firewalld - reload (via shell) (Arch)
+  ansible.builtin.shell:
+    cmd: firewall-cmd --reload
+  args:
+    creates: /home/{{ env_user }}/.ansible_firewalldConfigDone
+  when: ansible_distribution in ["Archlinux"]
+
+- name: Config all firewall - firewalld - Set flag file (via shell) (Arch)
+  ansible.builtin.shell:
+    cmd: touch /home/{{ env_user }}/.ansible_firewalldConfigDone
+  args:
+    creates: /home/{{ env_user }}/.ansible_firewalldConfigDone
+  when: ansible_distribution in ["Archlinux"]
+#
+# ansible.posix.firewalld module requirements: firewalld >= 0.2.11 and python-firewall >= 0.2.11 (tried also: python3-firewall)
+# ... + see Notes: https://docs.ansible.com/ansible/latest/collections/ansible/posix/firewalld_module.html#notes
+
+# ### firewalld - enable + start
+#- name: Config all firewall - Firewalld - enable (Archlinux)
+#  ansible.posix.firewalld:
+#    # name: firewalld
+#    state: enabled
+#  when: ansible_distribution in ["Archlinux"]
 #  register: firewall_d
 
-# ### firewalld - allow
-# SSH: bereist bei install script
-#- name: Firewalld - allow ssh (Archlinux))
+# ### firewalld - allow ssh
+#- name: Config all firewall - Firewalld - allow ssh in default zone (Archlinux))
 #  ansible.posix.firewalld:
 #    service: ssh
 #    permanent: true
 #    state: enabled
 #    immediate: true
-#    # zone: public
+#    # zone: default
 #  when: ansible_distribution in ["Archlinux)"]
 #  register: firewall_d
 
-#- name: Firewalld - reload if changed
-#  ansible.builtin.service:
-#    name: firewalld
+#- name: Config all firewall - Firewalld - reload if changed
+#  ansible.posix.firewalld:
+#    # name: firewalld
 #    state: reloaded
 #  when: firewall_d.changed

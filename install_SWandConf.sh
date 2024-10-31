@@ -440,8 +440,8 @@ Arch* | Endeavour*)
     fi
 
     # ### Installs
-    echo -e "\nInstallation initial benoetigte Software (curl  git openssh rsync ufw vim)" # python-pipx firewalld
-    sudo pacman -S --needed --noconfirm ansible curl git openssh rsync ufw vim # python-pipx # ansible-core firewalld
+    echo -e "\nInstallation initial benoetigte Software (curl  git openssh rsync vim)"
+    sudo pacman -S --needed --noconfirm ansible curl git openssh rsync vim # python-pipx # ansible-core firewalld
 
     echo -e "\nInstallation benoetigte Softwarepackages zur Installation von AUR helpers, AUR-Packages..."
     sudo pacman -S --needed --noconfirm base-devel
@@ -450,7 +450,8 @@ Arch* | Endeavour*)
     if ! [ -x "$(command -v paru)" ]; then
         sudo git clone https://aur.archlinux.org/paru.git /tmp/paru
         sudo chown -R "${userid}":users /tmp/paru
-        cd /tmp/paru && makepkg -sic --needed && cd || return
+        cd /tmp/paru && makepkg -sic --needed
+        cd || return
         # cleanup:
         sudo rm -rf /tmp/paru
     else
@@ -462,8 +463,9 @@ Arch* | Endeavour*)
     [[ $(systemd-detect-virt) != *"none"* ]] && sudo pacman -S --needed --noconfirm spice-vdagent
 
     # ### SSH
-    echo -e "\nStarte und aktiviere sshd.service..." # wg. ssh von anderer Maschine für evtl. todos/checks, ...
-    sudo systemctl enable --now sshd.service         # wird später in Ansible task (services) wieder deaktiviert (ober noch nicht gestoppt)
+    echo -e "\nStarte sshd.service..." # wg. ssh von anderer Maschine für evtl. todos/checks, ...
+    # sudo systemctl enable --now sshd.service # wird später in Ansible task (services) wieder deaktiviert (ober noch nicht gestoppt)
+    sudo systemctl start sshd.service
 
     # ### VM Qemu/KVM: uninstall iptables, install iptables-nft
     echo -e "\nVM - Qemu/KVM: Wiki empfiehlt inst. von 'iptables-nft'"
@@ -482,7 +484,7 @@ Debian*)
         read -rp "Bitte Eingabe-Taste drücken, um fortzufahren."
         pkill -KILL -u "${userid}"
     fi
-    
+
     # ### Update / Upgrade + Installs
     echo -e "\nUpdate Repos, upgrade and autoremove"
     sudo apt-get update && sudo apt-get upgrade -y
@@ -491,8 +493,8 @@ Debian*)
     echo -e "\nInstallation benoetigte Software - ansible"
     sudo apt-get install -y ansible # ansible-core
 
-    echo -e "\nInstallation benoetigte Software (git, rsync, ufw, vim, ..."
-    sudo apt-get install -y git rsync ssh ufw vim # pipx
+    echo -e "\nInstallation benoetigte Software (git, rsync, vim, ..."
+    sudo apt-get install -y git rsync ssh vim # pipx, ufw
     # bereits installiert: chrome-gnome-shell curl openssh-client openssh-server
 
     echo -e "\nInstalliere benötigte Packages für Installation von Microsoft PowerShell"
@@ -522,8 +524,8 @@ Debian*)
     fi
 
     # ### SSH
-    echo -e "\nStarte + Aktiviere ssh ..."
-    sudo systemctl start ssh && sudo systemctl enable ssh
+    echo -e "\nStarte ssh ..." # initial temporär
+    sudo systemctl start ssh # && sudo systemctl enable ssh
     ;;
 
 *)
@@ -532,28 +534,6 @@ Debian*)
     exit 0
     ;;
 esac
-
-# ### Firewall - aktivate + config rules
-echo -e "\nAktiviere Firewall und erlaube ssh ..."
-# --- firewalld:
-# sudo systemctl enable --now firewalld.service && sudo firewall-cmd --zone=public --add-service=ssh --permanent && sudo firewall-cmd --reload
-echo -e "- Prüfe zuerst auf firewalld und deaktiviere Service, wenn vorhanden"
-if [ -x "$(command -v firewalld)" ]; then
-    sudo systemctl disable --now firewalld
-
-    if [ -x "$(command -v pacman)" ]; then
-        sudo pacman --noconfirm -R firewalld
-    elif [ -x "$(command -v apt-get)" ]; then
-        # sudo apt-get purge -y firewalld
-        sudo apt-get remove -y firewalld
-    elif [ -x "$(command -v dnf)" ]; then
-        sudo dnf remove --assumeyes firewalld
-    fi
-fi
-# --- ufw
-echo -e "\nAktiviere Firewall und erlaube ssh ..."
-sudo ufw default deny && sudo ufw limit ssh comment 'SSH' && sudo ufw enable && sudo ufw reload
-sudo ufw status verbose
 
 # ### Alle Systeme: install ansible via pipx
 # auskommenitert, da vorerst ansible wieder über Paketmanager installiere
