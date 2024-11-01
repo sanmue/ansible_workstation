@@ -584,23 +584,23 @@ ansible-playbook "/home/${userid}/${playbookdir}/${playbook}" -v -K
 case ${os} in
 Arch* | Endeavour*)
     ### ---
-    ### weitere Installationen mit paru (Arch Linux, EndeavourOS)
-    ### - an den Schluss gestellt, damit Playbookausführung nicht aufgehalten wird
+    ### Further Installations via paru (Arch Linux, EndeavourOS)
+    ### - put at the and to not interfer with / lenthen ansible playbook execution
     ### ---
-    read -r -p "Install some additonal software from AUR ? ('j'=ja, sonstige Eingabe: nein): " installAUR
+    read -r -p "Install some additonal software from AUR ? ('y'=yes, other input=no): " installAUR
 
-    if [ "${installAUR}" == "j" ]; then
-        echo -e "\nInstall some Gnome Extensions (gsconnect, dash-to-panel) from AUR ..."
+    if [ "${installAUR}" == "y" ]; then
+        echo -e "\nInstall some Gnome Extensions (gsconnect) from AUR ..."
         paru -S --needed --skipreview gnome-shell-extension-gsconnect
 
         echo -e "\nInstall several Packages (bashdb, gtkhash, units) from AUR..."
         paru -S --needed --skipreview bashdb gtkhash units
 
         # echo -e "\nInstall several Applications (Vorta) from AUR..."
-        # paru -S --needed --skipreview vorta joplin-desktop # -> change: als flatpak installiert
+        # paru -S --needed --skipreview vorta joplin-desktop # -> change: flatpak
 
         # echo -e "\nInstall Brave Browser from AUR..."
-        # paru -S --needed --skipreview brave-bin # -> change: als flatpak installiert
+        # paru -S --needed --skipreview brave-bin # -> change: flatpak
 
         echo -e "\nInstall linux steam integration from AUR..."
         paru -S --needed --skipreview linux-steam-integration
@@ -627,7 +627,7 @@ Arch* | Endeavour*)
         # echo -e "\nInstall Powershell from AUR..."
         # paru -S --needed --skipreview powershell-bin
 
-        # echo -e "\nInstall Microsoft TTF Fonts from AUR..." # braucht relativ lange
+        # echo -e "\nInstall Microsoft TTF Fonts from AUR..." # takes quite some time
         # paru -S --needed --skipreview ttf-ms-fonts && touch "/home/${userid}/.ansible_installScript_AUR-ttfmsfontsInstalled"
 
         # --- 'autokey' auskommentiert, da nicht mit Wayland funktioniert --- #
