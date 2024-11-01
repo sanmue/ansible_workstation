@@ -47,8 +47,16 @@ declare -A btrfsSubvolLayout=(
     ["@vartmp"]="/var/tmp"
     ["@libvirtimages"]="/var/lib/libvirt/images")
 
-btrfsFstabMountOptions_standard='defaults,noatime,discard=async,compress=zstd,space_cache=v2 0 0' # desired mountOptions for btrfs-filesystem
-btrfsFstabMountOptions_endeavour='defaults,noatime,compress=zstd 0 0'                             # searchString; fstab-entry will be replaced with $btrfsFstabMountOptions_standard
+btrfsFstabMountOptions_standard='noatime,compress=zstd:3,space_cache=v2 0 0' # desired mountOptions for btrfs-filesystem
+btrfsFstabMountOptions_endeavour='noatime,compress=zstd 0 0' # searchString; fstab-entry will be replaced with $btrfsFstabMountOptions_standard
+# SSD TRIM: discard=asyncis enabled by default as of linux 6.2
+# - https://wiki.archlinux.org/title/Btrfs#SSD_TRIM
+# - https://wiki.archlinux.org/title/Dm-crypt/Specialties#Discard/TRIM_support_for_solid_state_drives_(SSD)
+#   - Solid state drive users should be aware that, by default, TRIM commands are not enabled by the device-mapper, i.e. block-devices are mounted without the discard option unless you override the default.
+# - https://wiki.archlinux.org/title/Solid_state_drive#TRIM
+#   - dm-crypt (https://wiki.archlinux.org/title/Solid_state_drive#dm-crypt): ... but has security implications
+#   - https://lore.kernel.org/linux-raid/508FA2C6.2050800@hesbynett.no/
+# - https://unix.stackexchange.com/a/465413: # disable: with 'nodiscard' mount option
 
 deleteOldRootInFstab="false" # default: "false", may be modified later in the script
 # if Sytem was initially installed without speacial btrfs subvolume layout -> e.g.: "UUID=8a6bb50a-... / btrfs rw,noatime,...,subvolid=5,subvol=/ 0 0"
