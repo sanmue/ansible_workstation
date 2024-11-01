@@ -584,29 +584,29 @@ ansible-playbook "/home/${userid}/${playbookdir}/${playbook}" -v -K
 case ${os} in
 Arch* | Endeavour*)
     ### ---
-    ### weitere Installationen mit yay (Arch Linux, EndeavourOS)
+    ### weitere Installationen mit paru (Arch Linux, EndeavourOS)
     ### - an den Schluss gestellt, damit Playbookausführung nicht aufgehalten wird
     ### ---
     read -r -p "Install some additonal software from AUR ? ('j'=ja, sonstige Eingabe: nein): " installAUR
 
     if [ "${installAUR}" == "j" ]; then
         echo -e "\nInstall some Gnome Extensions (gsconnect, dash-to-panel) from AUR ..."
-        yay -S --needed gnome-shell-extension-gsconnect
+        paru -S --needed --skipreview gnome-shell-extension-gsconnect
 
         echo -e "\nInstall several Packages (bashdb, gtkhash, units) from AUR..."
-        yay -S --needed bashdb gtkhash units
+        paru -S --needed --skipreview bashdb gtkhash units
 
         # echo -e "\nInstall several Applications (Vorta) from AUR..."
-        # yay -S --needed vorta joplin-desktop # -> change: als flatpak installiert
+        # paru -S --needed --skipreview vorta joplin-desktop # -> change: als flatpak installiert
 
         # echo -e "\nInstall Brave Browser from AUR..."
-        # yay -S --needed brave-bin # -> change: als flatpak installiert
+        # paru -S --needed --skipreview brave-bin # -> change: als flatpak installiert
 
         echo -e "\nInstall linux steam integration from AUR..."
-        yay -S --needed linux-steam-integration
+        paru -S --needed --skipreview linux-steam-integration
 
         echo -e "\nInstall ulauncher from AUR..."
-        yay -S --needed ulauncher
+        paru -S --needed --skipreview ulauncher
         echo -e "\nStart + enable ulauncher.service for '${userid}'..."
         systemctl --user enable --now ulauncher.service # su -u "${userid}" -c "systemctl --user enable --now ulauncher.service"
 
@@ -614,33 +614,33 @@ Arch* | Endeavour*)
         # if [ -n "${lsblkBtrfs}" ]; then
         if [[ $(stat -f -c %T /) = 'btrfs' ]]; then
             echo -e "\nInstall 'btrfs-assistant' from AUR..."
-            yay -S --needed btrfs-assistant # && touch "/home/${userid}/.ansible_installScript_AUR-btrfsassistantInstalled"
+            paru -S --needed --skipreview btrfs-assistant # && touch "/home/${userid}/.ansible_installScript_AUR-btrfsassistantInstalled"
         fi
 
         echo -e "\nInstall espanso (wayland) from AUR..." # + espanso-gui
-        yay -S --needed espanso-wayland # espanso-gui
+        paru -S --needed --skipreview espanso-wayland # espanso-gui
 
         echo -e "\nInstall Citrix Workspace App (icaclient) from AUR..."
-        yay -S icaclient && touch "/home/${userid}/.ansible_installScript_AUR-icaclientInstalled" && mkdir -p "/home/${userid}/.ICAClient/cache" &&
+        paru -S icaclient && touch "/home/${userid}/.ansible_installScript_AUR-icaclientInstalled" && mkdir -p "/home/${userid}/.ICAClient/cache" &&
             sudo rsync -aPhEv /opt/Citrix/ICAClient/config/{All_Regions,Trusted_Region,Unknown_Region,canonicalization,regions}.ini "/home/${userid}/.ICAClient/"
 
         # echo -e "\nInstall Powershell from AUR..."
-        # yay -S --needed powershell-bin
+        # paru -S --needed --skipreview powershell-bin
 
         # echo -e "\nInstall Microsoft TTF Fonts from AUR..." # braucht relativ lange
-        # yay -S --needed ttf-ms-fonts && touch "/home/${userid}/.ansible_installScript_AUR-ttfmsfontsInstalled"
+        # paru -S --needed --skipreview ttf-ms-fonts && touch "/home/${userid}/.ansible_installScript_AUR-ttfmsfontsInstalled"
 
         # --- 'autokey' auskommentiert, da nicht mit Wayland funktioniert --- #
         # echo -e "\nInstall 'autokey-gtk' from AUR..."         # da aktuell Gnome verwende
-        # yay -S --needed autokey-gtk && touch "/home/${userid}/.ansible_installScript_autokeyGtkInstalled"
+        # paru -S --needed --skipreview autokey-gtk && touch "/home/${userid}/.ansible_installScript_autokeyGtkInstalled"
         # echo -e "\nInstall 'autokey-qt' from AUR (Arch)"      # e.g. when using Plasma
-        # yay -S --needed autokey-qt # && touch "/home/${userid}/.ansible_installScript_autokeyQtInstalled"
+        # paru -S --needed --skipreview autokey-qt # && touch "/home/${userid}/.ansible_installScript_autokeyQtInstalled"
 
         # echo -e "\nInstall woeusb-ng (Tool to create Windows boot stick) from AUR..."
-        # yay -S --needed woeusb-ng && touch "/home/${userid}/.ansible_installScript_AUR-woeusbngInstalled"
+        # paru -S --needed --skipreview woeusb-ng && touch "/home/${userid}/.ansible_installScript_AUR-woeusbngInstalled"
 
         # echo -e "\nVM - Download 'virtio-win' image from AUR..."
-        # yay -S --needed virtio-win && touch "/home/${userid}/.ansible_installScript_AUR-vmVirtioWinInstalled"
+        # paru -S --needed --skipreview virtio-win && touch "/home/${userid}/.ansible_installScript_AUR-vmVirtioWinInstalled"
 
         # echo -e "\nCreating flag-file '.ansible_installScript_severalAurPkgInstalled'..."
         # touch "/home/${userid}/.ansible_installScript_severalAurPkgInstalled"
