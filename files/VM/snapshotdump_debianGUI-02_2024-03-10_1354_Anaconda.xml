@@ -1,6 +1,10 @@
 <domainsnapshot>
   <name>2024-03-10_1354_Anaconda</name>
-  <description>Install Anaconda</description>
+  <description>Install Anaconda
+Teminal:
+anaconda-navigator
+conda init
+conda exit</description>
   <state>shutoff</state>
   <creationTime>1710075267</creationTime>
   <memory snapshot='no'/>

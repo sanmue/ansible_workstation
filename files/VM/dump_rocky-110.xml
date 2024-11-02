@@ -1,6 +1,7 @@
 <domain type='kvm'>
   <name>rocky-110</name>
   <uuid>49acabdf-4eef-4d64-9a3c-093d5212b8b8</uuid>
+  <description>Network &quot;Lab-Linux-isolated&quot;:  192.168.100.23</description>
   <metadata>
     <libosinfo:libosinfo xmlns:libosinfo="http://libosinfo.org/xmlns/libvirt/domain/1.0">
       <libosinfo:os id="http://rockylinux.org/rocky/9"/>
@@ -92,14 +93,15 @@
     </controller>
     <interface type='network'>
       <mac address='52:54:00:8e:c1:57'/>
-      <source network='default'/>
+      <source network='Lab-Linux-isolated'/>
       <model type='virtio'/>
       <address type='pci' domain='0x0000' bus='0x01' slot='0x00' function='0x0'/>
     </interface>
     <interface type='network'>
       <mac address='52:54:00:19:01:ba'/>
-      <source network='Lab-Linux-isolated'/>
+      <source network='default'/>
       <model type='virtio'/>
+      <link state='down'/>
       <address type='pci' domain='0x0000' bus='0x07' slot='0x00' function='0x0'/>
     </interface>
     <serial type='pty'>

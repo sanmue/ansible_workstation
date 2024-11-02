@@ -1,6 +1,7 @@
 <domain type='kvm'>
   <name>debian-103</name>
   <uuid>77dce120-0516-4111-95e3-8fd84e62b7e9</uuid>
+  <description>Network &quot;Lab-Linux-isolated&quot;:  192.168.100.22</description>
   <metadata>
     <libosinfo:libosinfo xmlns:libosinfo="http://libosinfo.org/xmlns/libvirt/domain/1.0">
       <libosinfo:os id="http://debian.org/debian/12"/>
@@ -127,14 +128,16 @@
     </controller>
     <interface type='network'>
       <mac address='52:54:00:23:08:e8'/>
-      <source network='default'/>
+      <source network='Lab-Linux-isolated'/>
       <model type='virtio'/>
+      <link state='up'/>
       <address type='pci' domain='0x0000' bus='0x01' slot='0x00' function='0x0'/>
     </interface>
     <interface type='network'>
       <mac address='52:54:00:19:48:94'/>
-      <source network='Lab-Linux-isolated'/>
+      <source network='default'/>
       <model type='virtio'/>
+      <link state='down'/>
       <address type='pci' domain='0x0000' bus='0x02' slot='0x00' function='0x0'/>
     </interface>
     <serial type='pty'>

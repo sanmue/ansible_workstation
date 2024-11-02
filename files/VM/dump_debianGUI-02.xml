@@ -3,7 +3,7 @@
   <uuid>c08e9917-f09e-4f96-89b8-1362fa6d0d43</uuid>
   <description>Anaconda
 $ anaconda-navigator
-$ conda list</description>
+$ conda xxx</description>
   <metadata>
     <libosinfo:libosinfo xmlns:libosinfo="http://libosinfo.org/xmlns/libvirt/domain/1.0">
       <libosinfo:os id="http://debian.org/debian/12"/>
@@ -130,7 +130,7 @@ $ conda list</description>
     </controller>
     <interface type='network'>
       <mac address='52:54:00:13:e1:84'/>
-      <source network='Lab-Linux-isolated'/>
+      <source network='default'/>
       <model type='virtio'/>
       <address type='pci' domain='0x0000' bus='0x01' slot='0x00' function='0x0'/>
     </interface>

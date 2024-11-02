@@ -77,6 +77,7 @@
       <mac address='52:54:00:b4:18:1b'/>
       <source network='Lab-Linux-isolated'/>
       <model type='virtio'/>
+      <link state='up'/>
       <address type='pci' domain='0x0000' bus='0x00' slot='0x04' function='0x0'/>
     </interface>
     <interface type='network'>
