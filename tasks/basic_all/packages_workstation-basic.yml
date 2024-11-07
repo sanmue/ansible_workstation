@@ -99,7 +99,6 @@
       - borg # Deduplicating backup program with compression and authenticated encryption # GUI: vorta -> via yay in bootstrap.sh
       - chromium
       - cronie # z.B. für clamtk + timeshift # Daemon that runs specified programs at scheduled times and related tools
-      - code # The Open Source build of Visual Studio Code (vscode) editor
       - compsize # Calculate compression ratio of a set of files on Btrfs
       - cups-pdf
       - discord
@@ -181,8 +180,8 @@
       - tree-sitter-cli # CLI tool for developing, testing, and using Tree-sitter parsers
       - ttf-dejavu
       - ttf-dejavu-nerd
-      # - ttf-firacode-nerd # ~ 40 MB Install Size
-      # - ttf-jetbrains-mono-nerd # ~200 MB Install Size
+      - ttf-firacode-nerd # ~ 40 MB Install Size
+      - ttf-jetbrains-mono-nerd # ~200 MB Install Size
       - ttf-sourcecodepro-nerd # ~ 85 MB Install Size
       # - ttf-zed-mono-nerd # ~680 MB Install Size
       - ueberzug # command line utility which draws images on terminals (in combi with X11?) (u.a. wg. nnn)

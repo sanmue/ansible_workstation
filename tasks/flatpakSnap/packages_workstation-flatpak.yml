@@ -21,6 +21,7 @@
     # - 'net.mkiol.SpeechNote'
     - "org.tenacityaudio.Tenacity" # Audacity fork / replacement
     - "com.borgbase.Vorta"
+    - com.vscodium.codium
 
 - name: Install flatpak packages (Extension Manager) for Gnome (Gnome, all)
   community.general.flatpak:
