@@ -108,7 +108,7 @@
     state: directory
     owner: "{{ env_user }}"
     group: "{{ env_user }}"
-    mode: 'u=rwx,g=rx,o=rx'
+    mode: "u=rwx,g=rx,o=rx"
 
 - name: All settings misc - direnv - config (User, all)
   ansible.builtin.blockinfile:
@@ -891,35 +891,33 @@
     marker: '" ### {mark} ANSIBLE MANAGED BLOCK ###'
     block: |
       " #
-      " Vim5 and later versions support syntax highlighting.
-      syntax on
+      syntax on           " Vim5 and later versions support syntax highlighting
+      set background=dark " If dark background + syntax highlighting, turn on this option as well
 
-      " If using a dark background within the editing area and syntax highlighting
-      " turn on this option as well
-      set background=dark
+      " The following cause vim to behave a lot differently from regular Vi.
+      " They are highly recommended though.
+      set showcmd     " Show (partial) command in status line.
+      set showmatch   " Show matching brackets.
+      set ignorecase  " Do case insensitive matching
+      set smartcase   " Do smart case matching
+      set incsearch   " Incremental search
+      set autowrite   " Automatically save before commands like :next and :make
+      set hidden      " Hide buffers when they are abandoned
+      set mouse=a     " Enable mouse usage (all modes)
 
-      " The following are commented out as they cause vim to behave a lot
-      " differently from regular Vi. They are highly recommended though.
-      set showcmd			" Show (partial) command in status line.
-      set showmatch		" Show matching brackets.
-      set ignorecase		" Do case insensitive matching
-      set smartcase		" Do smart case matching
-      set incsearch		" Incremental search
-      set autowrite		" Automatically save before commands like :next and :make
-      set hidden			" Hide buffers when they are abandoned
-      set mouse=a			" Enable mouse usage (all modes)
-
-      " weitere Settings:
       colorscheme koehler
       set number			" Show line numbers
-      set ruler			" Show row and column ruler information
-      " set list
+      set ruler       " Show row and column ruler information
+      set listchars=eol:¬,tab:>·,trail:~,extends:>,precedes:<,space:·,nbsp:×
+      " set list      " show white space characters " set manual in cmd mode: ':set list'
+      " set nolist    " ':set nolist' in cmd mode to disable 'set list'
       set nocompatible
-      set tabstop=4		" show existing tab with 4 spaces width
-      set shiftwidth=4	" Number of auto-indent spaces; when indentig with '>', use 4 spaces
-      " set expandtab		" On pressing tab, insert spaces
-      set hlsearch		" Highlight all search results
-      set undolevels=1000	" Number of undo levels
+      set tabstop=4   " show existing tab with 4 spaces width
+      set shiftwidth=4 " Number of auto-indent spaces; when indentig with '>', use 4 spaces
+      set expandtab   " On pressing tab, insert spaces
+      set smarttab    " <Tab> in front of a line inserts blanks
+      set hlsearch    " Highlight all search results
+      set undolevels=1000 " Number of undo levels
       " #
   when:
     - ansible_distribution == "Debian"
@@ -931,35 +929,33 @@
     marker: '" ### {mark} ANSIBLE MANAGED BLOCK ###'
     block: |
       " #
-      " Vim5 and later versions support syntax highlighting.
-      syntax on
+      syntax on           " Vim5 and later versions support syntax highlighting
+      set background=dark " If dark background + syntax highlighting, turn on this option as well
 
-      " If using a dark background within the editing area and syntax highlighting
-      " turn on this option as well
-      set background=dark
+      " The following cause vim to behave a lot differently from regular Vi.
+      " They are highly recommended though.
+      set showcmd     " Show (partial) command in status line.
+      set showmatch   " Show matching brackets.
+      set ignorecase  " Do case insensitive matching
+      set smartcase   " Do smart case matching
+      set incsearch   " Incremental search
+      set autowrite   " Automatically save before commands like :next and :make
+      set hidden      " Hide buffers when they are abandoned
+      set mouse=a     " Enable mouse usage (all modes)
 
-      " The following are commented out as they cause vim to behave a lot
-      " differently from regular Vi. They are highly recommended though.
-      set showcmd			" Show (partial) command in status line.
-      set showmatch		" Show matching brackets.
-      set ignorecase		" Do case insensitive matching
-      set smartcase		" Do smart case matching
-      set incsearch		" Incremental search
-      set autowrite		" Automatically save before commands like :next and :make
-      set hidden			" Hide buffers when they are abandoned
-      set mouse=a			" Enable mouse usage (all modes)
-
-      " weitere Settings:
       colorscheme koehler
       set number			" Show line numbers
-      set ruler			" Show row and column ruler information
-      " set list
+      set ruler       " Show row and column ruler information
+      set listchars=eol:¬,tab:>·,trail:~,extends:>,precedes:<,space:·,nbsp:×
+      " set list      " show white space characters " set manual in cmd mode: ':set list'
+      " set nolist    " ':set nolist' in cmd mode to disable 'set list'
       set nocompatible
-      set tabstop=4		" show existing tab with 4 spaces width
-      set shiftwidth=4	" Number of auto-indent spaces; when indentig with '>', use 4 spaces
-      " set expandtab		" On pressing tab, insert spaces
-      set hlsearch		" Highlight all search results
-      set undolevels=1000	" Number of undo levels
+      set tabstop=4   " show existing tab with 4 spaces width
+      set shiftwidth=4 " Number of auto-indent spaces; when indentig with '>', use 4 spaces
+      set expandtab   " On pressing tab, insert spaces
+      set smarttab    " <Tab> in front of a line inserts blanks
+      set hlsearch    " Highlight all search results
+      set undolevels=1000 " Number of undo levels
       " #
   when: ansible_distribution == "Archlinux"
 
