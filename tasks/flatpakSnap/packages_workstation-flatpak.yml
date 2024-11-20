@@ -20,6 +20,7 @@
     - "de.haeckerfelix.Shortwave"
     # - 'net.mkiol.SpeechNote'
     - "org.tenacityaudio.Tenacity" # Audacity fork / replacement
+    - "com.visualstudio.code"
     - "com.borgbase.Vorta"
     - com.vscodium.codium
 
