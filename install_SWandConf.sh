@@ -41,11 +41,16 @@ declare -A btrfsSubvolLayout=(
     ["@tmp"]="/tmp"
     ["@usrlocal"]="/usr/local"
     ["@varcache"]="/var/cache"
+    ["@varlibclamav"]="/var/lib/clamav"
+    ["@varlibflatpak"]="/var/lib/flatpak"
+    ["@varlibdocker"]="/var/lib/docker"
+    ["@libvirtimages"]="/var/lib/libvirt/images"
+    ["@varlibmachines"]="/var/lib/machines"
+    ["@varlibportables"]="/var/lib/portables"
     ["@varlog"]="/var/log"
     ["@varopt"]="/var/opt"
     ["@varspool"]="/var/spool"
-    ["@vartmp"]="/var/tmp"
-    ["@libvirtimages"]="/var/lib/libvirt/images")
+    ["@vartmp"]="/var/tmp")
 
 btrfsFstabMountOptions_standard='noatime,compress=zstd:3,space_cache=v2 0 0' # desired mountOptions for btrfs-filesystem
 btrfsFstabMountOptions_endeavour='noatime,compress=zstd 0 0' # searchString; fstab-entry will be replaced with $btrfsFstabMountOptions_standard
