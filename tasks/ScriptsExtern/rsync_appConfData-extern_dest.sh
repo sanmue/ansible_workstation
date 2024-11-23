@@ -9,7 +9,7 @@
 # - Zielpfad: $dest (Übergabe-Parameter)
 
 # ### rsync - zusätzliche Parameter:
-paramRsync='--dry-run'
+# paramRsync='--dry-run'
 
 # ### Variablen - für backup home Verzeichnis aktueller User
 source="${HOME}"
