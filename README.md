@@ -5,10 +5,10 @@
   - (Plasma: not up to date / re-tested, therefore commented out)
 - initial bash script (works for Arch Linux, Endeavour OS and Debian):
   - installs some initially required packages
-  - optionally installs/creates/configures 'snapper' for system snapshots and additional btrfs subvolumes if needed (only if filesystem is btrfs + Arch Linux / Endeavour OS)
+  - optionally installs + configures 'snapper' for system snapshots and additional btrfs subvolumes if needed (only if filesystem is btrfs + OS is Arch Linux or Endeavour OS)
     - at least a basic btrfs subvolume layout must exist
   - starts the ansible playbook (local.yml)
-  - Arch Linux / Endeavour OS: installs some packages from AUR
+  - Arch Linux / Endeavour OS: installs some packages from AUR after completing ansible playbook
 
 ## Usage
 
@@ -27,11 +27,11 @@
 ### Error Message in ansible playbook regarding Python/pip, NVM
 
 - when ansible playbook stops because of an error referring to python/pip or NVM:
-  - close + reopen terminal or and start install script or just the ansible playbook again
+  - close + reopen terminal and start install script or just the ansible playbook again
 
 ## Further notes for myself
 
-### 'Visual Studio Code' respectively 'Code - OSS' with extension "Sync Settings"
+### 'Visual Studio Code' respectively 'Code - OSS' or "VSCodium" with extension "Sync Settings"
 
 #### Config git-repo as storage target of the settings of VS Code
 
