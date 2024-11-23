@@ -21,9 +21,9 @@ oslist=("Arch Linux" "EndeavourOS" "Debian GNU/Linux") # currently supported dis
 currentHostname=$(hostnamectl hostname) # only systemd
 bootloaderId='GRUB' # or 'endeavouros', ...
 
-if [ -e "/efi" ]; then # Uefi - EFI path
+if [ "$(ls "/efi")" ]; then # Uefi - EFI path
     efiDir="/efi"
-elif [ -e "/boot/efi" ]; then # Uefi - EFI path (deprecated location)
+elif [ "$(ls "/boot/efi")" ]; then # Uefi - EFI path (deprecated location)
     efiDir="/boot/efi"
 else # Bios
     # echo "Bios boot mode"
