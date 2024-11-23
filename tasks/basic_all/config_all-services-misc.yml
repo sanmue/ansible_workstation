@@ -368,7 +368,7 @@
     marker: "# ### {mark} ANSIBLE MANAGED BLOCK - AppConfData_rsync ###"
     block: |
       [Unit]
-      Description=Sicherung/Updata AppConfData
+      Description=Backup/Update AppConfData
 
       [Service]
       Type=oneshot
@@ -387,7 +387,7 @@
     marker: "# ### {mark} ANSIBLE MANAGED BLOCK - AppConfData_rsync ###"
     block: |
       [Unit]
-      Description=Sicherung/Updata AppConfData
+      Description=Backup/Update AppConfData
 
       [Timer]
       Unit=AppConfData_rsync.service

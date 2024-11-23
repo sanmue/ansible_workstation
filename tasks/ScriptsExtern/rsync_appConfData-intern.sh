@@ -31,7 +31,7 @@ paramRsync='--stats'
 
 # ### ######################################################
 # ### Variablen - für backup home Verzeichnis aktueller User
-source=${HOME}
+source="${HOME}"
 echo "Homepfad ist: ${source}"
 
 # ### Zielpfade + Liste zu sichernde Daten aus $HOME und Unterverz. '.config', '.local', '.var' für confAppData/01_bak-ScriptService
@@ -50,10 +50,10 @@ arrConfAppDataBakPath=("${confAppData2ndBakPath}")
 # 	- 'places'-bookmarks' for filebrowser: 	.config/user-dirs.dirs		(Gnome, Stand 05/2023)
 #   - Vorta
 #     - '.var/app/com.borgbase.Vorta'       -> wenn flatpak install
-#     - '.local/share/Vorta'                -> wenn AUR install
+#     - ()'.local/share/Vorta'                -> wenn AUR install)
 #   - Joplin
 #     - '.var/app/net.cozic.joplin_desktop' -> wenn flatpak install
-#     - '.config/joplin-desktop'            -> wenn AUR install
+#     - ()'.config/joplin-desktop'            -> wenn AUR install)
 #  - Syncthing: siehe https://docs.syncthing.net/users/config.html
 #    - alte Installationen: $HOME/.config/syncthing
 #    - bei neuen Instalaltionen:  $HOME/.local/state/syncthing or $XDG_STATE_HOME/syncthing
@@ -72,13 +72,13 @@ arrConfPath=('.bashrc' '.ssh' '.zshrc' \
 # ### Pfade für Update (intern) von $source/Sync/Default/AppConfData nach $source/RescueSystem/AppConfData
 syncAppConfDataPath="${source}/Sync/Default/AppConfData"
 rescueAppConfDataPath="${source}/RescueSystem/AppConfData"
-if [ -e "${syncAppConfDataPath}" ]; then
+if [ $(ls "${syncAppConfDataPath}") ]; then
 	echo "Quelle syncAppConfDataPath ist: ${syncAppConfDataPath}"
 else
 	echo "Quelle syncAppConfDataPath '${syncAppConfDataPath}' existiert nicht, Ende."
 	exit 1
 fi
-if [ -e "${rescueAppConfDataPath}" ]; then
+if [ $(ls "${rescueAppConfDataPath}") ]; then
 	echo "Ziel rescueAppConfDataPath ist: ${rescueAppConfDataPath}"
 else
 	echo "Ziel rescueAppConfDataPath '${rescueAppConfDataPath}' existiert nicht, Ende."
@@ -89,7 +89,7 @@ fi
 scriptsExternFoldername="ScriptsExtern"
 scriptsExternFolderpath="${source}/dev/Ansible/Projects/ansible_workstation/tasks"
 scriptsExternPath="${scriptsExternFolderpath}/${scriptsExternFoldername}"
-if [ -e "${scriptsExternPath}" ]; then
+if [ $(ls "${scriptsExternPath}") ]; then
 	echo "Quelle scriptsExternPath ist: ${scriptsExternPath}"
 else
 	echo "Quelle scriptsExternPath '${scriptsExternPath}' existiert nicht, Ende."

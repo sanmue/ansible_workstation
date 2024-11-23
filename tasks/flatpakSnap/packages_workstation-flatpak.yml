@@ -10,19 +10,19 @@
     - "org.cryptomator.Cryptomator"
     - "com.jgraph.drawio.desktop" # diagramming tool
     - "com.microsoft.Edge"
-    # - im.riot.Riot # "Element": Matrix Client -> siehe Ferdium
+    # - "im.riot.Riot" # "Element": Matrix Client -> siehe Ferdium
     - "org.ferdium.Ferdium" # Messenger for the desktop - based on Franz
     - "com.github.tchx84.Flatseal"
-    # - 'com.meetfranz.Franz' # Messenger for the desktop -> siehe Ferdium
+    # - "com.meetfranz.Franz" # Messenger for the desktop -> siehe Ferdium
     - "de.willuhn.Jameica"
     - "net.cozic.joplin_desktop"
-    - de.mediathekview.MediathekView
+    - "de.mediathekview.MediathekView"
     - "de.haeckerfelix.Shortwave"
-    # - 'net.mkiol.SpeechNote'
+    # - "net.mkiol.SpeechNote"
     - "org.tenacityaudio.Tenacity" # Audacity fork / replacement
     - "com.visualstudio.code"
     - "com.borgbase.Vorta"
-    - com.vscodium.codium
+    - "com.vscodium.codium"
 
 - name: Install flatpak packages (Extension Manager) for Gnome (Gnome, all)
   community.general.flatpak:
