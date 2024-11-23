@@ -37,8 +37,8 @@
   community.general.ufw:
     state: reloaded
   when:
-    - ansible_distribution in ["Debian"]
-    - firewall_ufw.changed
+  - ansible_distribution in ["Debian"]
+  - firewall_ufw.changed
 
 # #################
 # ### firewalld ###
@@ -71,12 +71,13 @@
   args:
     creates: /home/{{ env_user }}/.ansible_firewalldConfigDone
   when: ansible_distribution in ["Archlinux"]
+
 #
 # ansible.posix.firewalld module requirements: firewalld >= 0.2.11 and python-firewall >= 0.2.11 (tried also: python3-firewall)
 # ... + see Notes: https://docs.ansible.com/ansible/latest/collections/ansible/posix/firewalld_module.html#notes
 
 # ### firewalld - enable + start
-#- name: Config all firewall - Firewalld - enable (Archlinux)
+# - name: Config all firewall - Firewalld - enable (Archlinux)
 #  ansible.posix.firewalld:
 #    # name: firewalld
 #    state: enabled
@@ -84,7 +85,7 @@
 #  register: firewall_d
 
 # ### firewalld - allow ssh
-#- name: Config all firewall - Firewalld - allow ssh in default zone (Archlinux))
+# - name: Config all firewall - Firewalld - allow ssh in default zone (Archlinux))
 #  ansible.posix.firewalld:
 #    service: ssh
 #    permanent: true
@@ -94,7 +95,7 @@
 #  when: ansible_distribution in ["Archlinux)"]
 #  register: firewall_d
 
-#- name: Config all firewall - Firewalld - reload if changed
+# - name: Config all firewall - Firewalld - reload if changed
 #  ansible.posix.firewalld:
 #    # name: firewalld
 #    state: reloaded

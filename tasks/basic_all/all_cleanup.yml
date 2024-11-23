@@ -1,7 +1,7 @@
 ### DistRepos
-- name: cleanup package cache (apt)
-  apt:
-    autoclean: yes
+- name: Cleanup package cache (apt)
+  ansible.builtin.apt:
+    autoclean: true
   changed_when: false
   when: ansible_pkg_mgr == "apt"
 
@@ -12,14 +12,14 @@
 #    purge: yes
 #  when: ansible_pkg_mgr == "apt"
 
-- name: clean package cache and orphaned packages (pacman)
-  command: paccache -rk2 -ruk1
+- name: Clean package cache and orphaned packages (pacman)
+  ansible.builtin.command: paccache -rk2 -ruk1
   when: ansible_pkg_mgr == "pacman"
 
 ### flatpak
-- name: remove unused flatpak packages
-  command: flatpak uninstall --unused -y
+- name: Remove unused flatpak packages
+  ansible.builtin.command: flatpak uninstall --unused -y
   when:
-    - env_datadirs is defined
-    - env_datadirs.find("/var/lib/flatpak") == true
+  - env_datadirs is defined
+  - env_datadirs.find("/var/lib/flatpak") == true
   changed_when: false

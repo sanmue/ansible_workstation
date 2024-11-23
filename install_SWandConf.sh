@@ -14,12 +14,12 @@
 ### ---
 playbookdir="ansible_workstation" # also repo name
 playbook="local.yml"
-userid=$(whoami) # or: userid=${USER}
+userid=$(whoami)                                       # or: userid=${USER}
 oslist=("Arch Linux" "EndeavourOS" "Debian GNU/Linux") # currently supported distributions
 # currentHostname=$(hostname) # command not available in arch (anymore); net-tool (deprecated) or inetutils not installed by default
 # currentHostname=$(cat /etc/hostname)
 currentHostname=$(hostnamectl hostname) # only systemd
-bootloaderId='GRUB' # or 'endeavouros', ...
+bootloaderId='GRUB'                     # or 'endeavouros', ...
 
 if [ "$(ls "/efi")" ]; then # Uefi - EFI path
     efiDir="/efi"
@@ -53,7 +53,7 @@ declare -A btrfsSubvolLayout=(
     ["@vartmp"]="/var/tmp")
 
 btrfsFstabMountOptions_standard='noatime,compress=zstd:3,space_cache=v2 0 0' # desired mountOptions for btrfs-filesystem
-btrfsFstabMountOptions_endeavour='noatime,compress=zstd 0 0' # searchString; fstab-entry will be replaced with $btrfsFstabMountOptions_standard
+btrfsFstabMountOptions_endeavour='noatime,compress=zstd 0 0'                 # searchString; fstab-entry will be replaced with $btrfsFstabMountOptions_standard
 # SSD TRIM: discard=asyncis enabled by default as of linux 6.2
 # - https://wiki.archlinux.org/title/Btrfs#SSD_TRIM
 # - https://wiki.archlinux.org/title/Dm-crypt/Specialties#Discard/TRIM_support_for_solid_state_drives_(SSD)
@@ -527,10 +527,10 @@ Debian*)
         # https://ulauncher.io/#Download
         sudo apt install -y gnupg
         gpg --keyserver keyserver.ubuntu.com --recv 0xfaf1020699503176
-        gpg --export 0xfaf1020699503176 | sudo tee /usr/share/keyrings/ulauncher-archive-keyring.gpg > /dev/null
+        gpg --export 0xfaf1020699503176 | sudo tee /usr/share/keyrings/ulauncher-archive-keyring.gpg >/dev/null
         echo "deb [signed-by=/usr/share/keyrings/ulauncher-archive-keyring.gpg] \
-                http://ppa.launchpad.net/agornostal/ulauncher/ubuntu jammy main" \
-                | sudo tee /etc/apt/sources.list.d/ulauncher-jammy.list
+                http://ppa.launchpad.net/agornostal/ulauncher/ubuntu jammy main" |
+            sudo tee /etc/apt/sources.list.d/ulauncher-jammy.list
         # sudo apt update && sudo apt install -y ulauncher # installation in "packages_workstation-Gnome.yml"
 
         touch "/home/${userid}/.ansible_ppaUlauncherAdded"
@@ -538,7 +538,7 @@ Debian*)
 
     # ### SSH
     echo -e "\nStarte ssh ..." # initial temporär
-    sudo systemctl start ssh # && sudo systemctl enable ssh
+    sudo systemctl start ssh   # && sudo systemctl enable ssh
     ;;
 
 *)
@@ -631,7 +631,7 @@ Arch* | Endeavour*)
         fi
 
         echo -e "\nInstall espanso (wayland) from AUR..." # + espanso-gui
-        paru -S --needed --skipreview espanso-wayland # espanso-gui
+        paru -S --needed --skipreview espanso-wayland     # espanso-gui
 
         echo -e "\nInstall Citrix Workspace App (icaclient) from AUR..."
         paru -S icaclient && touch "/home/${userid}/.ansible_installScript_AUR-icaclientInstalled" && mkdir -p "/home/${userid}/.ICAClient/cache" &&
