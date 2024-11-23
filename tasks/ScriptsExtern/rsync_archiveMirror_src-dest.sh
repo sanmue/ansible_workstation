@@ -17,14 +17,14 @@ else
 fi
 
 # Prüfung Quelle:
-if [ -e "${source}" ]; then			# Prüfung, ob Quelle existiert
+if [ "$(ls "${source}")" ]; then			# Prüfung, ob Quelle existiert
 	echo "Quellpfad ist: ${source}"
 else
 	echo "Parameter 1: Quellpfad '${source}' existiert nicht, Ende."
 	exit 1
 fi
 # Prüfung Zielpfad:
-if [ -e "${dest}" ]; then			# Prüfung, ob Sicherungsziel existiert
+if [ "$(ls "${dest}")" ]; then			# Prüfung, ob Sicherungsziel existiert
 	echo "Zielpfad ist: ${dest}"
 else
 	echo "Parameter 2: Zielpfad '${dest}' existiert nicht, Ende."

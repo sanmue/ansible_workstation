@@ -1334,15 +1334,3 @@
     owner: "{{ env_user }}"
     group: "{{ env_user }}"
     mode: "0755"
-
-# #############################
-# ### AppConfData backup/update
-# #############################
-- name: All settings misc - Users - AppConfData - services - bashScript to update AppConfData (all)
-  ansible.builtin.copy:
-    src: "tasks/ScriptsExtern/rsync_appConfData-intern.sh"
-    dest: "/usr/local/bin/rsync_appConfData-intern.sh"
-    owner: root
-    group: root
-    mode: "0755"
-    backup: true
