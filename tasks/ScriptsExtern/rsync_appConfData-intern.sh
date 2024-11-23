@@ -54,9 +54,15 @@ arrConfAppDataBakPath=("${confAppData2ndBakPath}")
 #   - Joplin
 #     - '.var/app/net.cozic.joplin_desktop' -> wenn flatpak install
 #     - ()'.config/joplin-desktop'            -> wenn AUR install)
-#  - Syncthing: siehe https://docs.syncthing.net/users/config.html
-#    - alte Installationen: $HOME/.config/syncthing
-#    - bei neuen Instalaltionen:  $HOME/.local/state/syncthing or $XDG_STATE_HOME/syncthing
+#  - Syncthing - default location of the configuration and database directory
+#    - siehe https://docs.syncthing.net/users/config.html
+#    - alte Installationen:
+#      - $HOME/.config/syncthing (or $XDG_CONFIG_HOME/syncthing)
+#      - The database directory
+#        - $HOME/.config/syncthing (or, if the environment variable was set, $XDG_DATA_HOME/syncthing)
+#    - neue Installationen (ab 1.27.0):
+#      - $HOME/.local/state/syncthing (or $XDG_STATE_HOME/syncthing)
+#      - Database and config can now be set separately (ab 1.5.0)
 
 arrConfPath=('.bashrc' '.ssh' '.zshrc' \
 '.config/autokey' '.config/autostart' '.config/borg' '.config/BraveSoftware/Brave-Browser/Default/Bookmarks' \
