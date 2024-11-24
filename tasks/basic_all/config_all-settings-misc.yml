@@ -1112,24 +1112,16 @@
 # ######################
 # ### Visual Studio Code
 # ######################
+# - Arch: will be installed later via chaotic-aur
 
-- name: All settings misc - Start 'Visual Studio Code' (all)
-  become: true
-  become_user: "{{ env_user }}"
-  ansible.builtin.shell:
-    cmd: code >/dev/null 2>&1 & # damit im Home-Verzeichnis der Config-Pfad von VS Code erstellt wird + später die settings.yml dorthin kopiert werden kann
-  args:
-    creates: "/home/{{ env_user }}/.config/Code/User/globalStorage/zokugun.sync-settings/settings.yml"
-    # nur ausführen, wenn nicht bereits z.B. in vorhergehendem Lauf gestartet/erstellt wurde
-
-# - name: All settings misc - Close Visual Studio Code (Debian)
-#  ansible.builtin.shell:
-#    cmd: pkill -15 code   # Signal: "-15" entspricht "SIGTERM" : Abschließen und beenden des Programms
-#    #cmd: killall code
-#  become: true
-#  become_user: "{{ env_user }}"
-#  when:
-#    - ansible_distribution == "Debian"
+# - name: All settings misc - Start 'Visual Studio Code' (all)
+#   become: true
+#   become_user: "{{ env_user }}"
+#   ansible.builtin.shell:
+#     cmd: code >/dev/null 2>&1 & # damit im Home-Verzeichnis der Config-Pfad von VS Code erstellt wird + später die settings.yml dorthin kopiert werden kann
+#   args:
+#     creates: "/home/{{ env_user }}/.config/Code/User/globalStorage/zokugun.sync-settings/settings.yml"
+#     # nur ausführen, wenn nicht bereits z.B. in vorhergehendem Lauf gestartet/erstellt wurde
 
 - name: All settings misc - Erstelle hilfsweise manuell 'Sync Settings' Extension Ordner für 'VS Code' (all)
   become: true
@@ -1149,6 +1141,13 @@
     owner: "{{ env_user }}"
     group: "{{ env_user }}"
     mode: u=rw
+
+# - name: All settings misc - Close Visual Studio Code (all)
+#   become: true
+#   become_user: "{{ env_user }}"
+#   ansible.builtin.shell:
+#     cmd: pkill -15 code # Signal: "-15" entspricht "SIGTERM" : Abschließen und beenden des Programms
+#     # cmd: killall code
 
 # ########################
 # ### Ulauncher extensions

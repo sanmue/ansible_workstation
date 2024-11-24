@@ -634,13 +634,14 @@ Arch* | Endeavour*)
         paru -S --needed --skipreview espanso-wayland     # espanso-gui
 
         echo -e "\nInstall Citrix Workspace App (icaclient) from AUR..."
-        paru -S icaclient && touch "/home/${userid}/.ansible_installScript_AUR-icaclientInstalled" && mkdir -p "/home/${userid}/.ICAClient/cache" &&
+        paru -S --needed --skipreview icaclient && touch "/home/${userid}/.ansible_installScript_AUR-icaclientInstalled" && mkdir -p "/home/${userid}/.ICAClient/cache" &&
             sudo rsync -aPhEv /opt/Citrix/ICAClient/config/{All_Regions,Trusted_Region,Unknown_Region,canonicalization,regions}.ini "/home/${userid}/.ICAClient/"
 
         echo -e "\nInstall 'visual-studio-code-bin' from chaotic-aur..." # instead of flatpak
         sudo pacman -S --needed --noconfirm visual-studio-code-bin       # from chaotic-aur
 
         # echo -e "\nInstall Powershell from AUR..."
+        # sudo pacman -S --needed --noconfirm powershell-bin # from chaotic-aur
         # paru -S --needed --skipreview powershell-bin
 
         # echo -e "\nInstall Microsoft TTF Fonts from AUR..." # takes quite some time
