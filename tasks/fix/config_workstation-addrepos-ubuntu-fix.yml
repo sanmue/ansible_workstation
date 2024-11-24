@@ -1,8 +1,0 @@
-
-- name: Fix apt-update deprecation warning (Ubuntu >=22, Gnome)
-  ansible.builtin.script: "{{ env_PWD }}/tasks/fix/config_workstation-addrepos-ubuntu-fix.sh"
-  when:
-    - ansible_distribution == "Ubuntu"
-    - ansible_distribution_major_version|int >= 22        # Ubuntu 22.04 has transitioned from using /etc/apt/trusted.gpg to using individual .gpg files located in /etc/apt/trusted.gpg.d
-    - env_desktop in ["gnome", "ubuntu:gnome"]
-    #- "ansible_version.full is version('2.10.0', '>=')"   # 'ansible.builtin.script' ab ansible version 2.10 (welche bei Ubutnu 22.04 installiert wird)
