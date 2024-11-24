@@ -5,7 +5,6 @@
 #     name:
 #       - whalebird
 
-# ersetzt durch AutoKey
 # - name: Install snap packages --classic for workstations (all)
 #  tags: workstation,ubuntu,arch,snap
 #  community.general.snap:

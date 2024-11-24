@@ -63,6 +63,7 @@
     - name: Packages Flatpak
       ansible.builtin.import_tasks: tasks/flatpakSnap/packages_workstation-flatpak.yml
     #
+    # currently no snaps
     # - snap:
     # - name: Config Snap
     #   ansible.builtin.import_tasks: tasks/flatpakSnap/config_workstation-snap.yml
