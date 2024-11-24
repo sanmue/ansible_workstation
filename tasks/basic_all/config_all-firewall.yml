@@ -37,12 +37,13 @@
   community.general.ufw:
     state: reloaded
   when:
-  - ansible_distribution in ["Debian"]
-  - firewall_ufw.changed
+    - ansible_distribution in ["Debian"]
+    - firewall_ufw.changed
 
 # #################
 # ### firewalld ###
 # #################
+# unsing 'ansible.builtin.shell' since problems with 'ansible.posix.firewalld' module
 
 - name: Config all firewall - firewalld - enable (via shell) (Arch)
   ansible.builtin.shell:

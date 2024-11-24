@@ -1,7 +1,7 @@
 # #############
 # ### DistRepos
 # #############
-- name: update repository index and update system (apt)
+- name: Update repository index and update system (apt)
   ansible.builtin.apt:
     upgrade: dist
     update_cache: true
@@ -10,7 +10,7 @@
     - ansible_pkg_mgr == "apt"
   changed_when: false
 
-- name: update repository index and update system (pacman)
+- name: Update repository index and update system (pacman)
   community.general.pacman:
     update_cache: true
     upgrade: true
@@ -21,8 +21,8 @@
 # ###########
 # ### flatpak
 # ###########
-- name: update flatpak packages
-  command: flatpak update
+- name: Update flatpak packages
+  ansible.builtin.command: flatpak update
   when:
     - env_datadirs is defined
     #    - env_datadirs.find("/var/lib/flatpak") != -1
@@ -34,8 +34,8 @@
 # #########
 # Snaps come with a built-in automatic update mechanism, whereby snaps are refreshed to a new version whenever there’s a new release in the Snap Store.
 # Typically, the refresh occurs four times a day ...
-- name: update snap packages
-  command: snap refresh
+- name: Update snap packages
+  ansible.builtin.command: snap refresh
   when:
     - env_path is defined
     - env_path.find("/snap/bin") == true

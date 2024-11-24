@@ -1,12 +1,12 @@
 - name: AnsibleFacts - Get desktop environment (XDG_CURRENT_DESKTOP) (all)
   ansible.builtin.set_fact:
-    env_desktop: "{{ ansible_facts['env']['XDG_CURRENT_DESKTOP']|lower }}" # z.B. "ubuntu:GNOME"
+    env_desktop: "{{ ansible_facts['env']['XDG_CURRENT_DESKTOP'] | lower }}" # z.B. "ubuntu:GNOME"
     # env_desktop: "{{ lookup('env','XDG_CURRENT_DESKTOP')|lower }}"
     env_hostname: "{{ ansible_facts['hostname'] }}"
 
 - name: AnsibleFacts - Get display server (XDG_SESSION_TYPE) (all)
   ansible.builtin.set_fact:
-    env_displayserver: "{{ ansible_facts['env']['XDG_SESSION_TYPE']|lower }}" # z.B. "x11" oder "wayland"
+    env_displayserver: "{{ ansible_facts['env']['XDG_SESSION_TYPE'] | lower }}" # z.B. "x11" oder "wayland"
 
 - name: AnsibleFacts - Get datadirs (XDG_DATA_DIRS) (all, not Arch)
   ansible.builtin.set_fact:

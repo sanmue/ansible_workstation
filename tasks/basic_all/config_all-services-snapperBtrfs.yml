@@ -8,7 +8,7 @@
 #   register: rootFsIsBtrfs
 #   ignore_errors: true
 
-- name: Config all services snapperBtrfs - Check if / has btrfs filesystem + register result in variable (all)
+- name: Config all services snapperBtrfs - Check if '/' has btrfs filesystem + register result in variable (all)
   ansible.builtin.shell: stat -f -c %T /
   register: rootFsIsBtrfs
   ignore_errors: true

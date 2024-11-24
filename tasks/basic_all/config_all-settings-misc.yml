@@ -876,12 +876,6 @@
 # ----------------
 # ### VIM Settings
 
-# alt:
-# - name: All settings misc - set vim config for user env_user (.vimrc) (all)
-#  ansible.builtin.script: "{{ env_PWD }}/tasks/config_all-settings-misc-vim.sh"
-#  args:
-#    creates: "/home/{{ env_user }}/.vimrc"
-
 - name: All settings misc - Set vim global config (Debian)
   ansible.builtin.blockinfile:
     path: "/etc/vim/vimrc.local"
@@ -906,7 +900,7 @@
       set mouse=a     " Enable mouse usage (all modes)
 
       colorscheme koehler
-      set number			" Show line numbers
+      set number      " Show line numbers
       set ruler       " Show row and column ruler information
       set listchars=eol:¬,tab:>·,trail:~,extends:>,precedes:<,space:·,nbsp:×
       " set list      " show white space characters " set manual in cmd mode: ':set list'
@@ -944,7 +938,7 @@
       set mouse=a     " Enable mouse usage (all modes)
 
       colorscheme koehler
-      set number			" Show line numbers
+      set number      " Show line numbers
       set ruler       " Show row and column ruler information
       set listchars=eol:¬,tab:>·,trail:~,extends:>,precedes:<,space:·,nbsp:×
       " set list      " show white space characters " set manual in cmd mode: ':set list'
@@ -1212,109 +1206,109 @@
     # version: "HEAD"   # default: "HEAD"
   loop:
     - {
-        path: "https://github.com/Rapha149/ulauncher-bluetooth.git",
-        name: "ulauncher-bluetooth",
-      }
+      path: "https://github.com/Rapha149/ulauncher-bluetooth.git",
+      name: "ulauncher-bluetooth",
+    }
     - {
-        path: "https://github.com/tchar/ulauncher-albert-calculate-anything.git",
-        name: "ulauncher-albert-calculate-anything",
-      }
+      path: "https://github.com/tchar/ulauncher-albert-calculate-anything.git",
+      name: "ulauncher-albert-calculate-anything",
+    }
     - {
-        path: "https://github.com/sergius02/ulauncher-colorconverter.git",
-        name: "ulauncher-colorconverter",
-      }
+      path: "https://github.com/sergius02/ulauncher-colorconverter.git",
+      name: "ulauncher-colorconverter",
+    }
     - {
-        path: "https://github.com/Rapha149/ulauncher-deepl.git",
-        name: "ulauncher-deepl",
-      }
+      path: "https://github.com/Rapha149/ulauncher-deepl.git",
+      name: "ulauncher-deepl",
+    }
     - {
-        path: "https://github.com/Ulauncher/ulauncher-emoji.git",
-        name: "ulauncher-emoji",
-      }
+      path: "https://github.com/Ulauncher/ulauncher-emoji.git",
+      name: "ulauncher-emoji",
+    }
     - {
-        path: "https://github.com/brpaz/ulauncher-faker.git",
-        name: "ulauncher-faker",
-      }
+      path: "https://github.com/brpaz/ulauncher-faker.git",
+      name: "ulauncher-faker",
+    }
     - {
-        path: "https://github.com/KuenzelIT/ulauncher-firefox-bookmarks.git",
-        name: "ulauncher-firefox-bookmarks",
-      }
+      path: "https://github.com/KuenzelIT/ulauncher-firefox-bookmarks.git",
+      name: "ulauncher-firefox-bookmarks",
+    }
     - {
-        path: "https://github.com/hillaryychan/ulauncher-fzf.git",
-        name: "ulauncher-fzf",
-      }
+      path: "https://github.com/hillaryychan/ulauncher-fzf.git",
+      name: "ulauncher-fzf",
+    }
     - {
-        path: "https://github.com/friday/ulauncher-gnome-settings.git",
-        name: "ulauncher-gnome-settings",
-      }
+      path: "https://github.com/friday/ulauncher-gnome-settings.git",
+      name: "ulauncher-gnome-settings",
+    }
     - {
-        path: "https://github.com/SeoFernando25/ulauncher-gpt.git",
-        name: "ulauncher-gnome-settings",
-      }
+      path: "https://github.com/SeoFernando25/ulauncher-gpt.git",
+      name: "ulauncher-gnome-settings",
+    }
     - {
-        path: "https://github.com/pwnyprod/ulauncher-ipcopy.git",
-        name: "ulauncher-ipcopy",
-      }
+      path: "https://github.com/pwnyprod/ulauncher-ipcopy.git",
+      name: "ulauncher-ipcopy",
+    }
     - {
-        path: "https://github.com/brpaz/ulauncher-lipsum.git",
-        name: "ulauncher-lipsum",
-      }
+      path: "https://github.com/brpaz/ulauncher-lipsum.git",
+      name: "ulauncher-lipsum",
+    }
     - {
-        path: "https://github.com/RNairn01/ulauncher-meme-my-text.git",
-        name: "ulauncher-meme-my-text",
-      }
+      path: "https://github.com/RNairn01/ulauncher-meme-my-text.git",
+      name: "ulauncher-meme-my-text",
+    }
     - {
-        path: "https://github.com/melianmiko/ulauncher-nmcli.git",
-        name: "ulauncher-nmcli",
-      }
+      path: "https://github.com/melianmiko/ulauncher-nmcli.git",
+      name: "ulauncher-nmcli",
+    }
     - {
-        path: "https://github.com/mastdiekin/ulauncher-pypi-search.git",
-        name: "ulauncher-pypi-search",
-      }
+      path: "https://github.com/mastdiekin/ulauncher-pypi-search.git",
+      name: "ulauncher-pypi-search",
+    }
     - {
-        path: "https://github.com/noam09/ulauncher-remmina.git",
-        name: "ulauncher-remmina",
-      }
+      path: "https://github.com/noam09/ulauncher-remmina.git",
+      name: "ulauncher-remmina",
+    }
     - {
-        path: "https://github.com/lighttigerXIV/ulauncher-session-manager.git",
-        name: "ulauncher-session-manager",
-      }
+      path: "https://github.com/lighttigerXIV/ulauncher-session-manager.git",
+      name: "ulauncher-session-manager",
+    }
     - {
-        path: "https://github.com/xRealNeon/SpritpreiseUlauncher.git",
-        name: "SpritpreiseUlauncher",
-      }
+      path: "https://github.com/xRealNeon/SpritpreiseUlauncher.git",
+      name: "SpritpreiseUlauncher",
+    }
     - {
-        path: "https://github.com/jyvern/ulauncher-ssh.git",
-        name: "ulauncher-ssh",
-      }
+      path: "https://github.com/jyvern/ulauncher-ssh.git",
+      name: "ulauncher-ssh",
+    }
     - {
-        path: "https://github.com/rootwork/ulauncher-symbol.git",
-        name: "ulauncher-symbol",
-      }
+      path: "https://github.com/rootwork/ulauncher-symbol.git",
+      name: "ulauncher-symbol",
+    }
     - {
-        path: "https://github.com/lighttigerXIV/ulauncher-terminal-runner-extension.git",
-        name: "ulauncher-terminal-runner-extension",
-      }
+      path: "https://github.com/lighttigerXIV/ulauncher-terminal-runner-extension.git",
+      name: "ulauncher-terminal-runner-extension",
+    }
     - {
-        path: "https://github.com/Ulauncher/ulauncher-timer.git",
-        name: "ulauncher-timer",
-      }
+      path: "https://github.com/Ulauncher/ulauncher-timer.git",
+      name: "ulauncher-timer",
+    }
     - {
-        path: "https://github.com/brpaz/ulauncher-timestamp.git",
-        name: "ulauncher-timestamp",
-      }
+      path: "https://github.com/brpaz/ulauncher-timestamp.git",
+      name: "ulauncher-timestamp",
+    }
     - {
-        path: "https://github.com/dhelmr/ulauncher-tldr.git",
-        name: "ulauncher-tldr",
-      }
+      path: "https://github.com/dhelmr/ulauncher-tldr.git",
+      name: "ulauncher-tldr",
+    }
     - {
-        path: "https://github.com/zensoup/ulauncher-unicode.git",
-        name: "ulauncher-unicode",
-      }
+      path: "https://github.com/zensoup/ulauncher-unicode.git",
+      name: "ulauncher-unicode",
+    }
     - {
-        path: "https://github.com/NastuzziSamy/ulauncher-youtube-search.git",
-        name: "ulauncher-youtube-search",
-      }
+      path: "https://github.com/NastuzziSamy/ulauncher-youtube-search.git",
+      name: "ulauncher-youtube-search",
+    }
 
 # ##########
 # ### rclone

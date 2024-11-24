@@ -7,7 +7,7 @@
 #    name: s_ansible
 #    system: true
 
-#- name: Config all users - s_ansible - set up sudo (all)
+# - name: Config all users - s_ansible - set up sudo (all)
 #  ansible.builtin.copy:
 #    src: files/sudoer_s_ansible
 #    dest: /etc/sudoers.d/s_ansible
@@ -34,10 +34,10 @@
   # when:
   #   - ansible_distribution in ["Archlinux", "Debian"]
 
-# ############################
-# ### set zsh as default shell
-# ############################
-# https://stackoverflow.com/questions/43560657/edit-current-users-shell-with-ansible
+  # ############################
+  # ### set zsh as default shell
+  # ############################
+  # https://stackoverflow.com/questions/43560657/edit-current-users-shell-with-ansible
 - name: Config all users - env_user - set zsh as standard shell (all)
   ansible.builtin.shell: "usermod --shell $(which zsh) {{ env_user }}"
   # when:
