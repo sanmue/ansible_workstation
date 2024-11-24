@@ -2,14 +2,15 @@
 # ### firewalld ###
 # #################
 
+# does not work / needs testing: see also requirements of new ansible.posix.firewalld module
+
 # ### firewalld - enable+start
 - name: Firewalld - enable (Archlinux, Suse)
   ansible.builtin.service:
     name: firewalld
     enabled: true
     state: started
-  when: ansible_distribution in ["Archlinux"] or
-        ansible_os_family == "Suse"
+  when: ansible_distribution in ["Archlinux"] or ansible_os_family == "Suse"
   register: firewall_d
 
 # ### firewalld - allow
@@ -20,8 +21,7 @@
     state: enabled
     immediate: true
     # zone: public
-  when: ansible_distribution in ["Archlinux)"] or
-        ansible_os_family == "Suse"
+  when: ansible_distribution in ["Archlinux)"] or ansible_os_family == "Suse"
   register: firewall_d
 
 - name: Firewalld - reload (Archlinux, Suse)
