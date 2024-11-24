@@ -31,7 +31,7 @@
 
 ## Further notes for myself
 
-### 'Visual Studio Code' respectively 'Code - OSS' or "VSCodium" with extension "Sync Settings"
+### 'Visual Studio Code' respectively "VSCodium" with extension "Sync Settings"
 
 #### Config git-repo as storage target of the settings of VS Code
 
