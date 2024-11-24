@@ -9,9 +9,9 @@ dconfdir=/com/gexperts/Tilix/profiles
 
 create_new_profile() {
     local profile_name="$1"
-    local profile_id="$(uuidgen)"
+    local profile_id=""; profile_id="$(uuidgen)"
 
-    local arr_profileId=($(dconf list ${dconfdir}/ | sed 's/\///g'))
+    local arr_profileId=("$(dconf list ${dconfdir}/ | sed 's/\///g')")
     [ ${#arr_profileId[@]} -gt 0 ] && local delimiter=', '
     if [ -z "${arr_profileId}" ]; then
         local profileList="['${profile_id}']"

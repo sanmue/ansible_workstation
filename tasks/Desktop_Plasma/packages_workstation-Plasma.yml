@@ -5,7 +5,7 @@
 - name: Plasma - Install packages for workstations (Archlinux + KDE Plasma)
   tags: workstation,kde,arch
   ansible.builtin.package:
-    state: latest
+    state: present
     name:
       - cantata               # Qt[x] client for the music player daemon (MPD)
       - krita                 # Gnome: inkscape

@@ -135,10 +135,6 @@
   become: true
   become_user: "{{ env_user }}"
   tasks:
-    # - name: Gnomeshell Extension packages
-    #  ansible.builtin.import_tasks: tasks/Desktop_Gnome/packages_workstation-Gnome-GnomeshellExtensions.yml
-    # - name: Config Gnomeshell Extension
-    #  ansible.builtin.import_tasks: tasks/Desktop_Gnome/config_workstation-Gnome-GnomeshellExtensions.yml
     - name: Config Gnome Desktop Preferences
       ansible.builtin.import_tasks: tasks/Desktop_Gnome/config_workstation-Gnome-DesktopPreferences.yml
 
