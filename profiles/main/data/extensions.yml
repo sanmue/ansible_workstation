@@ -1,6 +1,4 @@
-disabled:
-  - id: genuitecllc.codetogether
-    uuid: 00000000-0000-0000-0000-000000000000
+disabled: []
 enabled:
   - id: anseki.vscode-color
     uuid: 37d7747f-e652-4eac-83de-f2939f7e2121
@@ -8,54 +6,56 @@ enabled:
     uuid: c6f98943-7f9b-4776-b2a8-409227a481e2
   - id: batisteo.vscode-django
     uuid: 4b41a5a8-170e-4156-b2c0-10efb270abbc
-  - id: bungcip.better-toml
-    uuid: 464f4ac7-af65-4aa9-9907-4ba7fa419085
-  - id: chouzz.vscode-better-align
-    uuid: fe952d85-7386-49e9-aa9a-87cff42f24a2
-  - id: codezombiech.gitignore
-    uuid: 3e891cf9-53cb-49a3-8d01-8f0b1f0afb29
-  - id: cweijan.dbclient-jdbc
-    uuid: 1fe0d785-8db6-44ef-8113-cb0d98a88473
-  - id: cweijan.vscode-mysql-client2
-    uuid: c0fde3ce-39d4-4ea8-89ce-e2a202eeacaf
+  - id: buianhthang.xml2json
+    uuid: b7e84ad6-5e59-4743-ba0d-a3b27322b648
   - id: DavidAnson.vscode-markdownlint
     uuid: daf8b44d-8aae-4da2-80c5-1f770219f643
   - id: deerawan.vscode-faker
     uuid: 0808d236-6faf-4f68-9f17-28f51a572ee4
+  - id: donjayamanne.githistory
+    uuid: 5960f38e-0bbe-4644-8f9c-9c8824e82511
   - id: donjayamanne.python-environment-manager
     uuid: 0c9f60fd-5588-42f7-9176-e80c3ae111ec
-  - id: ecmel.vscode-html-css
-    uuid: aaee577c-f062-495a-9816-0cbd442f1d25
+  - id: DotJoshJohnson.xml
+    uuid: 0cb81da2-1880-4755-9995-0ae9cc728e20
+  - id: emmanuelbeziat.vscode-great-icons
+    uuid: 829a192d-496c-44ac-87f3-0a84ce36a853
   - id: esbenp.prettier-vscode
     uuid: 96fa4707-6983-4489-b7c5-d5ffdfdcce90
+  - id: formulahendry.code-runner
+    uuid: a6a0c5b2-d078-4bf5-a9ee-4e37054414b3
   - id: foxundermoon.shell-format
     uuid: 5fb19573-2183-4cf2-b53d-0fb869dae7ae
-  - id: franneck94.vscode-python-config
-    uuid: d168b6ab-071b-460a-a0d9-5e267012a2c8
   - id: Gruntfuggly.todo-tree
     uuid: 261cac81-cd7b-4555-bb41-0c2d2bcd3e70
-  - id: jeanp413.open-remote-ssh
-    uuid: 9fc16cea-08e2-4ae5-bf75-224004d722ff
-  - id: johnpapa.vscode-peacock
-    uuid: 5a7017bf-c571-4d77-b902-6e56b16f539a
+  - id: hilleer.yaml-plus-json
+    uuid: a5c960d9-3d35-4b3f-9d53-bafe782ddf1a
+  - id: jeff-hykin.better-shellscript-syntax
+    uuid: f27ad139-0ff0-4fea-a7c3-d1af80eed6ae
+  - id: kennylong.kubernetes-yaml-formatter
+    uuid: ff7ddaea-da15-4049-972f-4408841beffa
   - id: KevinRose.vsc-python-indent
     uuid: f3cbfb84-b1e1-40ff-b70f-877253461260
   - id: mads-hartmann.bash-ide-vscode
     uuid: b1b0f283-8246-4e90-832e-a6c409d378d1
   - id: mhutchie.git-graph
     uuid: 438221f8-1107-4ccd-a6fe-f3b7fe0856b7
+  - id: mkhl.direnv
+    uuid: e365e970-aeef-4dcd-8e4a-17306a27ab62
+  - id: mohsen1.prettify-json
+    uuid: 67e66172-30c7-4478-8f5d-6eac4ae755dc
+  - id: mousavian.ssh-config-syntax-highlighter
+    uuid: 72b3be7c-2817-44c1-bf9b-e318629e4a29
   - id: ms-azuretools.vscode-docker
     uuid: 0479fc1c-3d67-49f9-b087-fb9069afe48f
   - id: ms-kubernetes-tools.vscode-kubernetes-tools
     uuid: 4837e4f3-1b01-4732-b1a6-daa57ef64cab
-  - id: ms-python.black-formatter
-    uuid: 859e640c-c157-47da-8699-9080b81c8371
   - id: ms-python.debugpy
     uuid: 4bd5d2c9-9d65-401a-b0b2-7498d9f17615
-  - id: ms-python.flake8
-    uuid: 856a00d7-c18a-406c-8461-d4914a12e193
   - id: ms-python.python
     uuid: f1f59ae4-9318-4f3c-a9b5-81b2eaa5f8a5
+  - id: ms-python.vscode-pylance
+    uuid: 364d2426-116a-433a-a5d8-a5098dc3afbd
   - id: ms-toolsai.jupyter
     uuid: 6c2f1801-1e7f-45b2-9b5c-7782f1e076e8
   - id: ms-toolsai.jupyter-keymap
@@ -66,30 +66,32 @@ enabled:
     uuid: ab4fb32a-befb-4102-adf9-1652d0cd6a5e
   - id: ms-toolsai.vscode-jupyter-slideshow
     uuid: e153ca70-b543-4865-b4c5-b31d34185948
-  - id: ms-vsliveshare.vsliveshare
-    uuid: null
+  - id: ms-vscode-remote.remote-ssh
+    uuid: 607fd052-be03-4363-b657-2bd62b83d28a
+  - id: ms-vscode-remote.remote-ssh-edit
+    uuid: bfeaf631-bcff-4908-93ed-fda4ef9a0c5c
+  - id: ms-vscode.remote-explorer
+    uuid: 11858313-52cc-4e57-b3e4-d7b65281e34b
   - id: njpwerner.autodocstring
     uuid: 2d6fea35-f68e-461d-9b7b-5cd05be99451
-  - id: njqdev.vscode-python-typehint
-    uuid: a7b7591e-f2b8-48f7-b8ea-6d62a0dd38c8
   - id: oderwat.indent-rainbow
     uuid: eaa2127d-cb69-4ab9-8505-a60c9ee5f28b
+  - id: redhat.ansible
+    uuid: f8cb4642-bc5c-46a1-be34-0977e817406c
   - id: redhat.vscode-xml
     uuid: 6703768d-d42f-474e-9f6e-5f288d53f6e8
   - id: redhat.vscode-yaml
     uuid: 2061917f-f76a-458a-8da9-f162de22b97e
   - id: rogalmic.bash-debug
     uuid: f4f0748b-9f86-461e-84f9-73bf2e1f91c2
-  - id: samuelcolvin.jinjahtml
-    uuid: 8b477a76-974c-403d-a454-58028c1709d1
+  - id: rpinski.shebang-snippets
+    uuid: 73b80ea3-7f20-4eb7-ab8c-e70ac36224df
   - id: shd101wyy.markdown-preview-enhanced
     uuid: 3b1db1fc-c7f7-4bd6-9fa4-b499dfa99a8a
   - id: tamasfe.even-better-toml
     uuid: b2215d5f-675e-4a2b-b6ac-1ca737518b78
   - id: timonwong.shellcheck
     uuid: f95d8fff-f70a-4ae5-bb06-5c47ddbc8fc6
-  - id: usernamehw.errorlens
-    uuid: 9d8c32ab-354c-4daf-a9bf-20b633734435
   - id: vscode-icons-team.vscode-icons
     uuid: 9ccc1dd7-7ec4-4a46-bd4f-7d7b8b9d322a
   - id: waderyan.gitblame
@@ -98,5 +100,7 @@ enabled:
     uuid: c941a679-d500-46a8-b2a9-208063125901
   - id: yzhang.markdown-all-in-one
     uuid: 98790d67-10fa-497c-9113-f6c7489207b2
+  - id: ZainChen.json
+    uuid: 311c4d7f-e81f-47f8-9956-6a9919ddef43
   - id: zokugun.cron-tasks
     uuid: b7bbbbd5-7a39-4312-87aa-ef6a41de67fb
