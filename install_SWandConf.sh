@@ -637,8 +637,8 @@ Arch* | Endeavour*)
         paru -S icaclient && touch "/home/${userid}/.ansible_installScript_AUR-icaclientInstalled" && mkdir -p "/home/${userid}/.ICAClient/cache" &&
             sudo rsync -aPhEv /opt/Citrix/ICAClient/config/{All_Regions,Trusted_Region,Unknown_Region,canonicalization,regions}.ini "/home/${userid}/.ICAClient/"
 
-        echo -e "\nInstall 'visual-studio-code-bin' from chaotic-aur..." # instead as flatpak
-        sudo pacman -S --needed --skipreview visual-studio-code-bin      # from chaotic-aur
+        echo -e "\nInstall 'visual-studio-code-bin' from chaotic-aur..." # instead of flatpak
+        sudo pacman -S --needed --noconfirm visual-studio-code-bin       # from chaotic-aur
 
         # echo -e "\nInstall Powershell from AUR..."
         # paru -S --needed --skipreview powershell-bin
