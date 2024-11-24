@@ -1109,39 +1109,18 @@
   when:
     - ansible_distribution in ["Archlinux"]
 
-# ###################################
-# ### Visual Studio Code / Code - OSS
-# ###################################
+# ######################
+# ### Visual Studio Code
+# ######################
 
-- name: All settings misc - Start 'Visual Studio Code' bzw 'Code-OSS' (Debian)
+- name: All settings misc - Start 'Visual Studio Code' (all)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell:
     cmd: code >/dev/null 2>&1 & # damit im Home-Verzeichnis der Config-Pfad von VS Code erstellt wird + später die settings.yml dorthin kopiert werden kann
   args:
-    creates: "/home/{{ env_user }}/.config/Code/User/globalStorage/zokugun.sync-settings/settings.yml" # nur ausführen, wenn nicht bereits z.B. in vorhergehendem Lauf gestartet/erstellt wurde
-  when: ansible_distribution in ["Debian"]
-
-- name: All settings misc - Start 'Code - OSS' (Arch)
-  ansible.builtin.shell:
-    cmd: code >/dev/null 2>&1 & # damit im Home-Verzeichnis der Config-Pfad von VS Code erstellt wird + später die settings.yml dorthin kopiert werden kann
-  args:
-    creates: "/home/{{ env_user }}/.config/Code - OSS/User/globalStorage/zokugun.sync-settings/settings.yml" # nur ausführen, wenn nicht bereits z.B. in vorhergehendem Lauf gestartet/erstellt wurde
-  become: true
-  become_user: "{{ env_user }}"
-  when:
-    - ansible_distribution in ["Archlinux"]
-
-# Verzeichnis der Extension manuell erstellen, damit unten die config-datei dorthin kopiert werden kann
-- name: All settings misc - Erstelle hilfsweise manuell 'Sync Settings' Extension Ordner für 'Code - OSS' (Arch)
-  become: true
-  become_user: "{{ env_user }}"
-  ansible.builtin.file:
-    path: "/home/{{ env_user }}/.config/Code - OSS//User/globalStorage/zokugun.sync-settings"
-    state: directory
-    mode: "0775"
-  when:
-    - ansible_distribution in ["Archlinux"]
+    creates: "/home/{{ env_user }}/.config/Code/User/globalStorage/zokugun.sync-settings/settings.yml"
+    # nur ausführen, wenn nicht bereits z.B. in vorhergehendem Lauf gestartet/erstellt wurde
 
 # - name: All settings misc - Close Visual Studio Code (Debian)
 #  ansible.builtin.shell:
@@ -1152,35 +1131,24 @@
 #  when:
 #    - ansible_distribution == "Debian"
 
-- name: All settings misc - Erstelle hilfsweise manuell 'Sync Settings' Extension Ordner für 'VS Code' (Debian)
+- name: All settings misc - Erstelle hilfsweise manuell 'Sync Settings' Extension Ordner für 'VS Code' (all)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.file:
     path: "/home/{{ env_user }}/.config/Code/User/globalStorage/zokugun.sync-settings"
     state: directory
     mode: "0775"
-  when: ansible_distribution in ["Debian"]
 
-- name: All settings misc - Set/Copy 'Visual Studio Code' settings-file for Extension 'Sync Settings' (Debian)
+# Pfad bei Install des VS Code deb-Pakets (nicht bei flatpak oder snap)
+- name: All settings misc - Set/Copy 'Visual Studio Code' settings-file for Extension 'Sync Settings' (all)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.copy:
     src: ./files/VSCode_Extension_Sync-Settings_settings.yml
-    dest: "/home/{{ env_user }}/.config/Code/User/globalStorage/zokugun.sync-settings/settings.yml" # Pfad bei Install des VS Code deb-Pakets (nicht bei flatpak oder snap)
+    dest: "/home/{{ env_user }}/.config/Code/User/globalStorage/zokugun.sync-settings/settings.yml"
     owner: "{{ env_user }}"
     group: "{{ env_user }}"
     mode: u=rw
-  when: ansible_distribution == "Debian"
-
-- name: All settings misc - Set/Copy 'Code - OSS' settings-file for Extension 'Sync Settings' (Arch)
-  ansible.builtin.copy:
-    src: ./files/VSCode_Extension_Sync-Settings_settings.yml
-    dest: "/home/{{ env_user }}/.config/Code - OSS//User/globalStorage/zokugun.sync-settings/settings.yml" # Pfad bei Install des VS Code deb-Pakets (nicht bei flatpak oder snap)
-    owner: "{{ env_user }}"
-    group: "{{ env_user }}"
-    mode: u=rw
-  when:
-    - ansible_distribution == "Archlinux"
 
 # ########################
 # ### Ulauncher extensions
