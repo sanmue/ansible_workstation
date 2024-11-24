@@ -1,0 +1,33 @@
+{
+  "ansible.python.interpreterPath": "/home/sandro/.pyenv/versions/3.12.5/bin/python",
+  "yaml.schemas": {
+    "https://raw.githubusercontent.com/ansible/ansible-lint/main/src/ansiblelint/schemas/ansible.json#/$defs/playbook": [
+      "file:///home/sandro/dev/Ansible/Projects/ansible_workstation/tasks/Desktop_Gnome/config_workstation-Gnome-DesktopPreferences.yml",
+      "file:///home/sandro/dev/Ansible/Projects/ansible_workstation/tasks/Desktop_Gnome/config_workstation-Gnome-GnomeshellExtensions.yml",
+      "file:///home/sandro/dev/Ansible/Projects/ansible_workstation/tasks/Desktop_Gnome/packages_workstation-Gnome-GnomeshellExtensions.yml",
+      "file:///home/sandro/dev/Ansible/Projects/ansible_workstation/tasks/Desktop_Gnome/packages_workstation-Gnome-removePreInstalls.yml",
+      "file:///home/sandro/dev/Ansible/Projects/ansible_workstation/tasks/Desktop_Gnome/packages_workstation-Gnome.yml",
+      "file:///home/sandro/dev/Ansible/Projects/ansible_workstation/tasks/Desktop_Gnome/packages_workstation-gnomeshellstuff.yml",
+      "file:///home/sandro/dev/Ansible/Projects/ansible_workstation/tasks/Desktop_Plasma/packages_workstation-Plasma.yml",
+      "file:///home/sandro/dev/Ansible/Projects/ansible_workstation/tasks/flatpakSnap/config_workstation-flatpak.yml",
+      "file:///home/sandro/dev/Ansible/Projects/ansible_workstation/tasks/flatpakSnap/packages_workstation-snap.yml",
+      "file:///home/sandro/dev/Ansible/Projects/ansible_workstation/tasks/flatpakSnap/packages_workstation-flatpak.yml",
+      "file:///home/sandro/dev/Ansible/Projects/ansible_workstation/tasks/flatpakSnap/config_workstation-snap.yml",
+      "file:///home/sandro/dev/Ansible/Projects/ansible_workstation/tasks/fix/config_workstation-Gnome-citrixIcaclient.yml",
+      "file:///home/sandro/dev/Ansible/Projects/ansible_workstation/tasks/basic_all/config_all-services-snapperBtrfs.yml",
+      "file:///home/sandro/dev/Ansible/Projects/ansible_workstation/tasks/basic_all/all_cleanup.yml",
+      "file:///home/sandro/dev/Ansible/Projects/ansible_workstation/tasks/basic_all/all_update.yml",
+      "file:///home/sandro/dev/Ansible/Projects/ansible_workstation/tasks/basic_all/config_all-firewall.yml",
+      "file:///home/sandro/dev/Ansible/Projects/ansible_workstation/tasks/basic_all/config_all-mail-service.yml",
+      "file:///home/sandro/dev/Ansible/Projects/ansible_workstation/tasks/basic_all/config_all-mail-testmail.yml",
+      "file:///home/sandro/dev/Ansible/Projects/ansible_workstation/tasks/basic_all/config_all-services-misc.yml",
+      "file:///home/sandro/dev/Ansible/Projects/ansible_workstation/tasks/basic_all/config_all-settings-misc.yml",
+      "file:///home/sandro/dev/Ansible/Projects/ansible_workstation/tasks/basic_all/config_workstation-addrepos.yml",
+      "file:///home/sandro/dev/Ansible/Projects/ansible_workstation/tasks/basic_all/packages_all-mail.yml",
+      "file:///home/sandro/dev/Ansible/Projects/ansible_workstation/tasks/basic_all/packages_workstation-basic.yml",
+      "file:///home/sandro/dev/Ansible/Projects/ansible_workstation/tasks/basic_all/packages_workstation-localPackageInstall.yml",
+      "file:///home/sandro/dev/Ansible/Projects/ansible_workstation/tasks/basic_all/packages_workstation-nvmNodejs.yml",
+      "file:///home/sandro/dev/Ansible/Projects/ansible_workstation/tasks/basic_all/packages_workstation-pythonPip.yml"
+    ]
+  }
+}
