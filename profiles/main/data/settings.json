@@ -2,7 +2,7 @@
   "workbench.iconTheme": "vscode-great-icons",
   "editor.minimap.enabled": false,
   "editor.fontFamily": "'MesloLGS NF','Droid Sans Mono', 'monospace', monospace",
-  "editor.fontSize": 16,
+  "editor.fontSize": 18,
   "telemetry.telemetryLevel": "crash",
   "terminal.integrated.shellIntegration.history": 200,
   "terminal.integrated.defaultProfile.linux": "zsh",
