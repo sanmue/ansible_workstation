@@ -429,47 +429,44 @@ fi
 case ${os} in
 Arch* | Endeavour*)
     # ### Repo Mirrors / reflector
+    # https://wiki.archlinux.org/title/Mirrors#top-page
+    # https://wiki.archlinux.org/title/Reflector#top-page
+    # https://man.archlinux.org/man/reflector.1#EXAMPLES
+
     if [ ! -f "${HOME}/.ansible_installScript_MirrorPool" ]; then
-        touch "${HOME}/.ansible_installScript_MirrorPool"
+        echo -e "\nRetrieve up-to-date Arch Linux mirror data, rank it and update all packages on the system..."
+        sudo pacman -Sy && sudo pacman -S --needed --noconfirm reflector
 
         if [[ "${os}" = "EndeavourOS"* ]]; then
-            echo -e "\nRetrieve up-to-date Arch Linux mirror data, rank it and update all packages on the system..."
-            # https://wiki.archlinux.org/title/Mirrors#top-page
-            # https://wiki.archlinux.org/title/Reflector#top-page
-            # https://man.archlinux.org/man/reflector.1#EXAMPLES
-
-            # Backup current mirrorlists:
+            echo -e "\nRetrieve up-to-date endeavouros mirror data and rank it..."
+            # Backup current endeavouros mirrorlists:
             sudo cp /etc/pacman.d/endeavouros-mirrorlist /etc/pacman.d/endeavouros-mirrorlist.backup
-            sudo cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup
             # rankmirrors für EndeavourOS (config: /etc/eos-rankmirrors.conf):
             sudo eos-rankmirrors # --verbose
-            # Retrieve the latest mirror list from the Arch Linux Mirror Status page + listed countries: # (reflector conf: /etc/xdg/reflector/reflector.conf
-            echo "reflector - aktualisiere archlinux mirrors..."
-            sudo reflector --age 12 --protocol https --sort rate --country 'Germany,France,Austria,Switzerland,Sweden' --save /etc/pacman.d/mirrorlist
-            sudo systemctl enable --now reflector.service
-            # Update all packages on the system:    # (pacman conf: /etc/pacman.conf)
-            sudo pacman -Syyu --noconfirm
         fi
+    
+        # Backup current mirrorlists:
+        sudo cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup
+
+        # Retrieve the latest mirror list from the Arch Linux Mirror Status page + listed countries:
+        # reflector conf: /etc/xdg/reflector/reflector.conf
+        echo "reflector - aktualisiere archlinux mirrors..."
+        sudo reflector --verbose --age 12 --protocol https --sort rate --country 'Germany,France,Austria,Switzerland' --save /etc/pacman.d/mirrorlist
+        sudo systemctl enable --now reflector.service
+
+        # Update all packages on the system:    # (pacman conf: /etc/pacman.conf)
+        sudo pacman -Syyu --noconfirm
+
+        # create 'flag'-file (for if condition)
+        touch "${HOME}/.ansible_installScript_MirrorPool"
     fi
 
     # ### Installs
-    echo -e "\nInstallation initial benoetigte Software (curl  git openssh rsync vim)"
+    echo -e "\nInstallation initial benoetigte Software (curl git openssh rsync vim)"
     sudo pacman -S --needed --noconfirm ansible curl git openssh rsync vim # python-pipx # ansible-core firewalld
 
     echo -e "\nInstallation benoetigte Softwarepackages zur Installation von AUR helpers, AUR-Packages..."
     sudo pacman -S --needed --noconfirm base-devel
-
-    echo -e "\nInstalling 'paru' - AUR helper..."
-    if ! [ -x "$(command -v paru)" ]; then
-        sudo git clone https://aur.archlinux.org/paru.git /tmp/paru
-        sudo chown -R "${userid}":users /tmp/paru
-        cd /tmp/paru && makepkg -sic --needed
-        cd || return
-        # cleanup:
-        sudo rm -rf /tmp/paru
-    else
-        echo -e "paru is already available"
-    fi
 
     # ### VM guest - spice-vdagent
     echo -e "\n Installation (wenn VM) spice agent for Linux guests (z.B. für clipboard sharing zwischen host+guest)"
@@ -599,9 +596,21 @@ Arch* | Endeavour*)
     ### Further Installations via paru (Arch Linux, EndeavourOS)
     ### - put at the and to not interfer with / lenthen ansible playbook execution
     ### ---
-    read -r -p "Install some additonal software from AUR ? ('y'=yes, other input=no): " installAUR
+    read -r -p "Install 'paru' AUR helper and some additonal software from AUR ? ('y'=yes, other input=no): " installAUR
 
     if [ "${installAUR}" == "y" ]; then
+        echo -e "\nInstalling 'paru' - AUR helper..."
+        if ! [ -x "$(command -v paru)" ]; then
+            sudo git clone https://aur.archlinux.org/paru.git /tmp/paru
+            sudo chown -R "${userid}":users /tmp/paru
+            cd /tmp/paru && makepkg -sic --needed
+            cd || return
+            # cleanup:
+            sudo rm -rf /tmp/paru
+        else
+            echo -e "'paru' is already installed, nothing to do."
+        fi
+
         echo -e "\nInstall some Gnome Extensions (gsconnect) from AUR ..."
         paru -S --needed --skipreview gnome-shell-extension-gsconnect
 
