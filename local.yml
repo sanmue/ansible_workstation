@@ -1,7 +1,16 @@
 ---
 # run first: tasks/basic_all/ScriptsExtern/install_SWandConf.sh
 
+# ### -----------
+# TAGS - Overview
+#
+# - 'always' (Special tag / reserved name): Gather Facts and Variables
+# - 'shellrc': create / update shell conf (e.g. .bashrc, .zshrc) + Starship cross shell prompt
+#
+# ### -----------
+
 - name: Gather Facts and Variables
+  tags: always
   hosts: localhost
   connection: local
   become: false

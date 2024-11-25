@@ -69,6 +69,7 @@
 
 # starship update skript
 - name: All settings misc - starship shell prompt - copy update-script to usr-local-bin (all)
+  tags: shellrc
   ansible.builtin.copy:
     src: "files/config_all-settings-misc-starship_update.sh"
     dest: "/usr/local/bin/starship_update.sh"
@@ -79,21 +80,24 @@
 
 # starship config
 - name: All settings misc - starship - clone repo with starship.toml file (User, all)
+  tags: shellrc
   ansible.builtin.git:
     repo: https://gist.github.com/71eb35991107cf691336bfbf60c96b9f.git # "owo" (modified)
     # repo: https://gist.github.com/f0ed97bed95c7bc7926cc3a88949bd39.git # "Power10"
     dest: "/home/{{ env_user }}/Downloads/starship"
 
 - name: All settings misc - starship - copy starship.toml to .config dir (User, all)
-  become: true
+  tags: shellrc
+  # become: true
   become_user: "{{ env_user }}"
   ansible.builtin.copy:
     src: "/home/{{ env_user }}/Downloads/starship/starship.toml"
     dest: "/home/{{ env_user }}/.config/starship.toml"
     mode: "0644"
-    backup: false
+    backup: true
 
 - name: All settings misc - starship - remove local repo folder (User, all)
+  tags: shellrc
   ansible.builtin.file:
     path: "/home/{{ env_user }}/Downloads/starship"
     state: absent
@@ -130,11 +134,13 @@
 # -------------
 # ### env_user:
 - name: All settings misc - Bashrc - check status .bashrc (User, all)
+  tags: shellrc
   ansible.builtin.stat:
     path: "/home/{{ env_user }}/.bashrc"
   register: stat_bashrc_user
 
 - name: All settings misc - Bashrc - create (User, all)
+  tags: shellrc
   ansible.builtin.file:
     path: "/home/{{ env_user }}/.bashrc"
     state: touch
@@ -145,6 +151,7 @@
     - not stat_bashrc_user.stat.exists # oder: - stat_bashrc_user.stat.exists == false
 
 - name: All settings misc - Bashrc - Insert/Update additional paths and config - starship shell prompt (User, all)
+  tags: shellrc
   ansible.builtin.blockinfile:
     path: "/home/{{ env_user }}/.bashrc"
     backup: true
@@ -162,6 +169,7 @@
       starship_precmd_user_func="set_win_title"
 
 - name: All settings misc - Bashrc - additional EXPORTS (User, all)
+  tags: shellrc
   ansible.builtin.blockinfile:
     path: "/home/{{ env_user }}/.bashrc"
     backup: true
@@ -191,6 +199,7 @@
       export SUDO_PROMPT="$(tput setaf 1 bold)[sudo]$(tput sgr0) password for $(tput setaf 6)%p$(tput sgr0): "
 
 - name: All settings misc - Bashrc - custom alias definitions (User, all)
+  tags: shellrc
   ansible.builtin.blockinfile:
     path: "/home/{{ env_user }}/.bashrc"
     backup: false
@@ -246,6 +255,7 @@
       fi
 
 - name: All settings misc - Bashrc - Insert/Update additional paths and config - nvm (User, all)
+  tags: shellrc
   ansible.builtin.blockinfile:
     path: "/home/{{ env_user }}/.bashrc"
     backup: false
@@ -262,6 +272,7 @@
       [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 - name: All settings misc - Bashrc - Insert/Update additional paths and config - vim (User, all)
+  tags: shellrc
   ansible.builtin.blockinfile:
     path: "/home/{{ env_user }}/.bashrc"
     backup: false
@@ -272,9 +283,10 @@
       # -------------------------------
       export VISUAL=vim
       export EDITOR="${VISUAL}"
-      export SUDO_EDITOR="${VISUAL}"
+      export SUDO_EDITOR=rvim
 
 - name: All settings misc - Bashrc - Insert/Update additional paths and config - user-bin (User, all)
+  tags: shellrc
   ansible.builtin.blockinfile:
     path: "/home/{{ env_user }}/.bashrc"
     backup: false
@@ -286,6 +298,7 @@
       export PATH=~/.local/bin:$PATH
 
 - name: All settings misc - Bashrc - Insert/Update additional paths and config - pyenv (User, Debian)
+  tags: shellrc
   ansible.builtin.blockinfile:
     path: "/home/{{ env_user }}/.bashrc"
     backup: false
@@ -303,6 +316,7 @@
     - ansible_distribution in ["Debian"]
 
 # - name: All settings misc - Bashrc - initial command 'pyenv init' - pyenv (User, Arch)
+#  tags: shellrc
 #  become: true
 #  become_user: "{{ env_user }}"
 #  ansible.builtin.shell:
@@ -314,6 +328,7 @@
 #    - ansible_distribution in ["Archlinux"]
 
 - name: All settings misc - Bashrc - Insert/Update additional paths and config - pyenv (User, Arch)
+  tags: shellrc
   ansible.builtin.blockinfile:
     path: "/home/{{ env_user }}/.bashrc"
     backup: false
@@ -330,6 +345,7 @@
     - ansible_distribution in ["Archlinux"]
 
 - name: All settings misc - Bashrc - Insert/Update additional paths and config - zoxide (User, all)
+  tags: shellrc
   ansible.builtin.blockinfile:
     path: "/home/{{ env_user }}/.bashrc"
     backup: false
@@ -342,6 +358,7 @@
 
 # https://wiki.archlinux.org/title/Systemd/User#PATH
 - name: All settings misc - Bashrc - systemd user import-environment (User, all)
+  tags: shellrc
   ansible.builtin.blockinfile:
     path: "/home/{{ env_user }}/.bashrc"
     backup: false
@@ -354,6 +371,7 @@
 
 # https://github.com/direnv/direnv/blob/master/docs/hook.md
 - name: All settings misc - Bashrc - direnv hook (User, all)
+  tags: shellrc
   ansible.builtin.blockinfile:
     path: "/home/{{ env_user }}/.bashrc"
     backup: false
@@ -367,11 +385,13 @@
 # --------
 # ### root
 - name: All settings misc - Bashrc - check status (root, all)
+  tags: shellrc
   ansible.builtin.stat:
     path: "/root/.bashrc"
   register: stat_bashrc_root
 
 - name: All settings misc - Bashrc - create (root, all)
+  tags: shellrc
   ansible.builtin.file:
     path: "/root/.bashrc"
     state: touch
@@ -380,6 +400,7 @@
     - not stat_bashrc_root.stat.exists
 
 - name: All settings misc - Bashrc - Insert/Update additional paths and config - starship shell prompt (root, all)
+  tags: shellrc
   ansible.builtin.blockinfile:
     path: "/root/.bashrc"
     backup: true
@@ -391,6 +412,7 @@
       eval "$(starship init bash)"
 
 - name: All settings misc - Bashrc - Insert/Update additional paths and config (root, all)
+  tags: shellrc
   ansible.builtin.blockinfile:
     path: "/root/.bashrc"
     backup: false
@@ -401,7 +423,7 @@
       # -------------------------------
       export VISUAL=vim
       export EDITOR="${VISUAL}"
-      export SUDO_EDITOR="${VISUAL}"
+      export SUDO_EDITOR=rvim
 
 # #######################################
 # ### zsh - add additional Paths + Config
@@ -411,26 +433,30 @@
 # --------
 # ### user
 - name: All settings misc - Zshrc - check status .zshrc (User, all)
+  tags: shellrc
   ansible.builtin.stat:
     path: "/home/{{ env_user }}/.zshrc"
   register: statzshrcUser
 
-- name: All settings misc - Zshrc - copy .zshrc - .zshrc.old (User, Manjaro)
+- name: All settings misc - Zshrc - copy .zshrc - .zshrc.old (User, all)
+  tags: shellrc
   ansible.builtin.copy:
     src: "/home/{{ env_user }}/.zshrc"
     dest: "/home/{{ env_user }}/.zshrc.old"
     backup: true
   when:
-    - statzshrcUser.stat.exists == true
+    - statzshrcUser.stat.exists
 
-- name: All settings misc - Zshrc - delete .zshrc (User, Manjaro)
+- name: All settings misc - Zshrc - delete .zshrc (User, all)
+  tags: shellrc
   ansible.builtin.file:
     path: "/home/{{ env_user }}/.zshrc"
     state: absent
   when:
-    - statzshrcUser.stat.exists == true
+    - statzshrcUser.stat.exists
 
 - name: All settings misc - Zshrc - touch (User, all)
+  tags: shellrc
   ansible.builtin.file:
     path: "/home/{{ env_user }}/.zshrc"
     state: touch
@@ -439,6 +465,7 @@
     mode: u=rw,g=r,o=r
 
 - name: All settings misc - Zshrc - Insert/Update additional paths and config - starship shell prompt (User,all)
+  tags: shellrc
   ansible.builtin.blockinfile:
     path: "/home/{{ env_user }}/.zshrc"
     backup: true
@@ -456,6 +483,7 @@
 #
 # nicht mehr notwendig, da im nächsten task der INHALT von 'files/custom-zsh-config' in .zshrc reinkopiert wird
 - name: All settings misc - Zshrc - copy custom zsh config file (User, all)
+  tags: shellrc
   ansible.builtin.copy:
     src: files/custom-zsh-config
     dest: /usr/share/zsh/custom-zsh-config
@@ -467,6 +495,7 @@
 # https://stackoverflow.com/questions/65020310/how-to-copy-file-content-to-another-file-in-ansible-without-overwriting-the-seco
 # https://cloudlinuxtech.com/zsh-syntax-highlighting-autosuggestions/#How_to_install_the_zsh-syntax-highlighting_package_in_Linux
 - name: All settings misc - Zshrc - Insert 'files/custom-zsh-config' in .zshrc (User, all)
+  tags: shellrc
   ansible.builtin.blockinfile:
     path: "/home/{{ env_user }}/.zshrc"
     backup: false
@@ -484,14 +513,16 @@
 # https://www.freecodecamp.org/news/a-quick-tale-about-feff-the-invisible-character-cd25cd4630e7/
 # https://www.fileformat.info/info/unicode/char/feff/index.htm
 #
-# danach wurde noch ein '"' vor den Inhalt aus der Datei gesetezt. entfernt:
+# danach wurde noch ein '"' vor den Inhalt aus der Datei gesetzt. entfernt:
 - name: All settings misc - Zshrc -  Delete '"' at beginnning of insterted text form 'custom-zsh-config' in .zshrc (User, all)
+  tags: shellrc
   ansible.builtin.replace:
     path: "/home/{{ env_user }}/.zshrc"
     regexp: '^"##'
     replace: "##"
 
 # - name: All settings misc - Zshrc - source cutom zsh config in .zshrc (User, all)
+#  tags: shellrc
 #  ansible.builtin.blockinfile:
 #    path: "/home/{{ env_user }}/.zshrc"
 #    backup: true
@@ -505,6 +536,7 @@
 #      fi
 
 - name: All settings misc - Zshrc - additional EXPORTS - colored password prompt (User, all)
+  tags: shellrc
   ansible.builtin.blockinfile:
     path: "/home/{{ env_user }}/.zshrc"
     backup: false
@@ -519,6 +551,7 @@
       export SUDO_PROMPT="$(tput setaf 1 bold)[sudo]$(tput sgr0) password for $(tput setaf 6)%p$(tput sgr0): "
 
 - name: All settings misc - Zshrc - custom alias definitions (User, all)
+  tags: shellrc
   ansible.builtin.blockinfile:
     path: "/home/{{ env_user }}/.zshrc"
     backup: false
@@ -574,6 +607,7 @@
       fi
 
 - name: All settings misc - Zshrc - Insert/Update additional paths and config - nvm (User, all)
+  tags: shellrc
   ansible.builtin.blockinfile:
     path: "/home/{{ env_user }}/.zshrc"
     backup: false
@@ -590,6 +624,7 @@
       [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 - name: All settings misc - Zshrc - Insert/Update additional paths and config - vim (User, all)
+  tags: shellrc
   ansible.builtin.blockinfile:
     path: "/home/{{ env_user }}/.zshrc"
     backup: false
@@ -600,9 +635,10 @@
       # -------------------------------
       export VISUAL=vim
       export EDITOR="${VISUAL}"
-      export SUDO_EDITOR="${VISUAL}"
+      export SUDO_EDITOR=rvim
 
 - name: All settings misc - Zshrc - Insert/Update additional paths and config - user-bin (User, all)
+  tags: shellrc
   ansible.builtin.blockinfile:
     path: "/home/{{ env_user }}/.zshrc"
     backup: false
@@ -614,6 +650,7 @@
       export PATH=~/.local/bin:$PATH
 
 - name: All settings misc - Zshrc - Insert/Update additional paths and config - pyenv (User, Debian)
+  tags: shellrc
   ansible.builtin.blockinfile:
     path: "/home/{{ env_user }}/.zshrc"
     backup: false
@@ -631,6 +668,7 @@
     - ansible_distribution in ["Debian"]
 
 # - name: All settings misc - Zshrc - initial command 'pyenv init' - pyenv (User, Arch)
+#  tags: shellrc
 #  become: true
 #  become_user: "{{ env_user }}"
 #  ansible.builtin.shell:
@@ -642,6 +680,7 @@
 #    - ansible_distribution in ["Archlinux"]
 
 - name: All settings misc - Zshrc - Insert/Update additional paths and config - pyenv (User, Arch)
+  tags: shellrc
   ansible.builtin.blockinfile:
     path: "/home/{{ env_user }}/.zshrc"
     backup: false
@@ -658,6 +697,7 @@
     - ansible_distribution in ["Archlinux"]
 
 - name: All settings misc - Zshrc - Insert/Update additional paths and config - zoxide (User, all)
+  tags: shellrc
   ansible.builtin.blockinfile:
     path: "/home/{{ env_user }}/.zshrc"
     backup: false
@@ -668,7 +708,8 @@
       # ------
       eval "$(zoxide init zsh)"
 
-- name: All settings misc - Zshrc - Insert/Update additional paths and config - tilix - vte config (User, all)
+- name: All settings misc - Zshrc - Insert/Update additional paths and conig - tilix - vte config (User, all)
+  tags: shellrc
   ansible.builtin.blockinfile:
     path: "/home/{{ env_user }}/.zshrc"
     backup: false
@@ -684,6 +725,7 @@
       fi
 
 - name: All settings misc - Zshrc - Insert/Update additional paths and config - nnn (User, all)
+  tags: shellrc
   ansible.builtin.blockinfile:
     path: "/home/{{ env_user }}/.zshrc"
     backup: false
@@ -738,6 +780,7 @@
 
 # https://wiki.archlinux.org/title/Systemd/User#PATH
 - name: All settings misc - Zshrc - systemd user import-environment (User, all)
+  tags: shellrc
   ansible.builtin.blockinfile:
     path: "/home/{{ env_user }}/.zshrc"
     backup: false
@@ -750,6 +793,7 @@
 
 # https://github.com/direnv/direnv/blob/master/docs/hook.md
 - name: All settings misc - Zshrc - direnv hook (User, all)
+  tags: shellrc
   ansible.builtin.blockinfile:
     path: "/home/{{ env_user }}/.zshrc"
     backup: false
@@ -763,6 +807,7 @@
 # --------
 # ### root
 - name: All settings misc - Zshrc - check status (root, all)
+  tags: shellrc
   ansible.builtin.stat:
     path: "/root/.zshrc"
   register: stat_bashrc_root
@@ -776,6 +821,7 @@
     - not stat_bashrc_root.stat.exists
 
 - name: All settings misc - Zshrc - Insert/Update additional paths and config - starship shell prompt (root, all)
+  tags: shellrc
   ansible.builtin.blockinfile:
     path: "/root/.zshrc"
     backup: true
@@ -787,6 +833,7 @@
       eval "$(starship init zsh)"
 
 - name: All settings misc - Zshrc - Insert/Update additional paths and config (root, all)
+  tags: shellrc
   ansible.builtin.blockinfile:
     path: "/root/.zshrc"
     backup: false
@@ -797,7 +844,7 @@
       # -------------------------------
       export VISUAL=vim
       export EDITOR="${VISUAL}"
-      export SUDO_EDITOR="${VISUAL}"
+      export SUDO_EDITOR=rvim
 
 # #################
 # ### nnn - plugins
@@ -821,6 +868,7 @@
 # ### xterm (wg. nnn preview-tui)
 # ###############################
 - name: All settings misc - xterm - touch (User, all)
+  tags: shellrc
   ansible.builtin.file:
     path: "/home/{{ env_user }}/.Xresources"
     state: touch
@@ -829,10 +877,11 @@
     mode: u=rw,g=r,o=r
 
 - name: All settings misc - xterm - Insert/Update additional paths and config (User,all)
+  tags: shellrc
   ansible.builtin.blockinfile:
     path: "/home/{{ env_user }}/.Xresources"
     backup: true
-    marker: "### {mark} 'starship shell prompt' ANSIBLE MANAGED BLOCK ###"
+    marker: "### {mark} 'xterm' ANSIBLE MANAGED BLOCK ###"
     block: |
       XTerm*background:   black
       XTerm*foreground:   white
@@ -844,6 +893,7 @@
 # ### zsh
 # #######
 - name: All settings misc - zsh plugin git update - bash-skript (Debian)
+  tags: shellrc
   ansible.builtin.copy:
     src: "files/config_all-services-misc-zshpluginsgit_update.sh"
     dest: "/usr/local/bin/zshpluginsgit_update.sh"
@@ -855,16 +905,20 @@
 
 # fatal: detected dubious ownership in repository at '/usr/share/zsh/plugins/...; To add an exception:
 - name: All settings misc - zsh plugin git repo - add safe.directory - autosuggestions (Debian)
+  tags: shellrc
+  become: true
   ansible.builtin.shell: /usr/bin/git config --global --add safe.directory /usr/share/zsh/plugins/zsh-autosuggestions
   when:
     - ansible_distribution in ["Debian"]
 
 - name: All settings misc - zsh plugin git repo - add safe.directory - syntax-highlighting (Debian)
+  tags: shellrc
   ansible.builtin.shell: /usr/bin/git config --global --add safe.directory /usr/share/zsh/plugins/zsh-syntax-highlighting
   when:
     - ansible_distribution in ["Debian"]
 
 - name: All settings misc - zsh plugin git repo - add safe.directory - history-substring-search (Debian)
+  tags: shellrc
   ansible.builtin.shell: /usr/bin/git config --global --add safe.directory /usr/share/zsh/plugins/zsh-history-substring-search
   when:
     - ansible_distribution in ["Debian"]

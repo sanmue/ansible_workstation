@@ -7,6 +7,8 @@
 - name: AnsibleFacts - Get display server (XDG_SESSION_TYPE) (all)
   ansible.builtin.set_fact:
     env_displayserver: "{{ ansible_facts['env']['XDG_SESSION_TYPE'] | lower }}" # z.B. "x11" oder "wayland"
+  when:
+    - not "'shellrc' in ansible_run_tags"
 
 - name: AnsibleFacts - Get datadirs (XDG_DATA_DIRS) (all, not Arch)
   ansible.builtin.set_fact:
@@ -29,6 +31,8 @@
 - name: AnsibleFacts - Get XDG_RUNTIME_DIR (USER) (all)
   ansible.builtin.set_fact:
     env_user_XDG_RUNTIME_DIR: "{{ ansible_facts['env']['XDG_RUNTIME_DIR'] }}" # z.B.: "/run/user/1000"
+  when:
+    - not "'shellrc' in ansible_run_tags"
 
 - name: AnsibleFacts - Get lsb lsb-release (Debian)
   ansible.builtin.set_fact:
