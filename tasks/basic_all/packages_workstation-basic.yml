@@ -65,7 +65,6 @@
       # - skanlite # bei KDE Plasma Desktop
       - speedtest-cli
       - sqlitebrowser # + s.u.: Arch: sqlite; debian: sqlite3
-      # - steam # nicht (mehr) bei debian 12 verfügbar
       - syncthing
       # - terminator # Terminal emulator that supports tabs and grids
       - tk # Graphical User Interface Toolkit for Tcl   # z.B. pyenv install 3.11.3: requirement
