@@ -5,7 +5,9 @@
 # TAGS - Overview
 #
 # - 'always' (Special tag / reserved name): Gather Facts and Variables
-# - 'shellrc': create / update shell conf (e.g. .bashrc, .zshrc) + Starship cross shell prompt
+# - 'shellrc': create / update shell conf (e.g. .bashrc, .zshrc) + 'Starship' cross shell prompt
+# - 'vimrc': create / update vim conf + plugins
+# - 'nnnplugs' create / update 'nnn' plugins + xterm conf for nnn-peview-tui
 #
 # ### -----------
 

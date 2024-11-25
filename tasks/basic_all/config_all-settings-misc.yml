@@ -254,6 +254,14 @@
         alias snapshot='sudo snapper list && echo -e "\nsudo snapper -c root create -c number --description \"after snapper-rollback x\"\n"'
       fi
 
+      # execute selected tasks of ansible playbook using 'tags'
+      # - 'shellrc': create / update shell conf (e.g. .bashrc, .zshrc)
+      alias upshellrc='sudo true && ansible-playbook "${HOME}/dev/Ansible/Projects/ansible_workstation/local.yml" -v -k --tags "shellrc"'
+      # - 'vimrc': create / update vim conf + plugins
+      alias upvimrc='sudo true && ansible-playbook "${HOME}/dev/Ansible/Projects/ansible_workstation/local.yml" -v -k --tags "vimrc"'
+      # - 'nnnplugs': create / update 'nnn' plugins + xterm conf for nnn-peview-tui
+      alias upnnnplugs='sudo true && ansible-playbook "${HOME}/dev/Ansible/Projects/ansible_workstation/local.yml" -v -k --tags "nnnplugs"'
+
 - name: All settings misc - Bashrc - Insert/Update additional paths and config - nvm (User, all)
   tags: shellrc
   ansible.builtin.blockinfile:
@@ -606,6 +614,14 @@
         alias snapshot='sudo snapper list && echo -e "\nsudo snapper -c root create -c number --description \"after snapper-rollback x\"\n"'
       fi
 
+      # execute selected tasks of ansible playbook using 'tags'
+      # - 'shellrc': create / update shell conf (e.g. .bashrc, .zshrc)
+      alias upshellrc='sudo true && ansible-playbook "${HOME}/dev/Ansible/Projects/ansible_workstation/local.yml" -v -k --tags "shellrc"'
+      # - 'vimrc': create / update vim conf + plugins
+      alias upvimrc='sudo true && ansible-playbook "${HOME}/dev/Ansible/Projects/ansible_workstation/local.yml" -v -k --tags "vimrc"'
+      # - 'nnnplugs': create / update 'nnn' plugins + xterm conf for nnn-peview-tui
+      alias upnnnplugs='sudo true && ansible-playbook "${HOME}/dev/Ansible/Projects/ansible_workstation/local.yml" -v -k --tags "nnnplugs"'
+
 - name: All settings misc - Zshrc - Insert/Update additional paths and config - nvm (User, all)
   tags: shellrc
   ansible.builtin.blockinfile:
@@ -852,6 +868,7 @@
 # - https://github.com/jarun/nnn/tree/master/plugins#installation
 
 - name: All settings misc - nnn - plugins - download install script (all, env_user)
+  tags: nnnplugs
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.get_url:
@@ -860,6 +877,7 @@
     mode: "0777"
 
 - name: All settings misc - nnn - plugins - exec install script (all, env_user)
+  tags: nnnplugs
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.script: "/home/{{ env_user }}/Downloads/getplugs.sh"
@@ -868,7 +886,7 @@
 # ### xterm (wg. nnn preview-tui)
 # ###############################
 - name: All settings misc - xterm - touch (User, all)
-  tags: shellrc
+  tags: nnnplugs
   ansible.builtin.file:
     path: "/home/{{ env_user }}/.Xresources"
     state: touch
@@ -877,7 +895,7 @@
     mode: u=rw,g=r,o=r
 
 - name: All settings misc - xterm - Insert/Update additional paths and config (User,all)
-  tags: shellrc
+  tags: nnnplugs
   ansible.builtin.blockinfile:
     path: "/home/{{ env_user }}/.Xresources"
     backup: true
@@ -931,6 +949,7 @@
 # ### VIM Settings
 
 - name: All settings misc - Set vim global config (Debian)
+  tags: vimrc
   ansible.builtin.blockinfile:
     path: "/etc/vim/vimrc.local"
     backup: true
@@ -971,6 +990,7 @@
     - ansible_distribution == "Debian"
 
 - name: All settings misc - Set vim global config (Arch)
+  tags: vimrc
   ansible.builtin.blockinfile:
     path: "/etc/vimrc"
     backup: true
@@ -1018,6 +1038,7 @@
 # - https://github.com/vim/vim/blob/03c3bd9fd094c1aede2e8fe3ad8fd25b9f033053/runtime/doc/repeat.txt#L515
 
 - name: All settings misc - Create folder for vim git-plugins (all)
+  tags: vimrc
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell:
@@ -1026,6 +1047,7 @@
     creates: /home/{{ env_user }}/.vim/pack/git-plugins/start
 
 - name: All settings misc - vim plugin install from git repo - nnn.vim (all)
+  tags: vimrc
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.git:
@@ -1034,6 +1056,7 @@
     depth: 1
 
 - name: All settings misc - vim plugin install from git repo - Powerline (all)
+  tags: vimrc
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.git:
@@ -1041,6 +1064,7 @@
     dest: "/home/{{ env_user }}/.vim/pack/git-plugins/start/powerline"
 
 - name: All settings misc - vim plugin install from git repo - vim-airline (all)
+  tags: vimrc
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.git:
@@ -1048,6 +1072,7 @@
     dest: "/home/{{ env_user }}/.vim/pack/git-plugins/start/vim-airline"
 
 - name: All settings misc - vim plugin install from git repo - vim-fugitive (git) (all)
+  tags: vimrc
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.git:
