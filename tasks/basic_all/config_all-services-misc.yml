@@ -117,10 +117,12 @@
 #  when: ansible_distribution in ["Debian"]
 
 - name: All services misc - Set flag file freshclamInitialStartExecuted (all)
-  ansible.builtin.shell:
-    cmd: touch /home/{{ env_user }}/.ansible_freshclamInitialStartExecuted
-  args:
-    creates: /home/{{ env_user }}/.ansible_freshclamInitialStartExecuted
+  ansible.builtin.file:
+    path: "/home/{{ env_user }}/.ansible_freshclamInitialStartExecuted"
+    state: touch
+    owner: "{{ env_user }}"
+    group: "{{ env_user }}"
+    mode: u=rw,g=r,o=r
 
 - name: All services misc - Start+enable clamav-daemon.service (all)
   ansible.builtin.service:
