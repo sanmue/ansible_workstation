@@ -71,7 +71,6 @@
       - tk # Graphical User Interface Toolkit for Tcl   # z.B. pyenv install 3.11.3: requirement
       - tmux
       - trash-cli # Command line trashcan (recycle bin) interface
-      # - ufw
       - unzip
       - vim # bereits installiert (bootstrap)
       - vim-ale # Lint Engine (plugin for vim)
