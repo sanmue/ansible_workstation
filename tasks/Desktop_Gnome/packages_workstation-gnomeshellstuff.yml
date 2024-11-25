@@ -1,5 +1,4 @@
 - name: Install gnomeshell extension stuff (Gnome, all)
-  tags: workstation,gnome,ubuntu
   ansible.builtin.package:
     state: present
     name:
@@ -8,7 +7,6 @@
     - env_desktop in ["gnome"]
 
 - name: Install gnomeshell extension stuff (Debian + Gnome)
-  tags: workstation,gnome,ubuntu
   ansible.builtin.package:
     state: present
     name:

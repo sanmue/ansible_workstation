@@ -972,37 +972,37 @@
     - env_desktop in ["gnome"]
 
 # - gedit (custom6) - g
-# - name: Gnome Desktop - Preferences - Set settings-daemon - plugin - media-keys - gedit,name (Gnome)
+# - name: Gnome Desktop - Preferences - Set settings-daemon - plugin - media-keys - gnome-text-editor, name (Gnome)
 #   community.general.dconf:
 #     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom6/name"
-#     value: "'gedit'"
+#     value: "'gnome-text-editor'"
 #     state: present
 #   when:
 #     - env_desktop in ["gnome"]
 
-- name: Gnome Desktop - Preferences - Set settings-daemon - plugin - media-keys - gedit,name (Gnome)
+- name: Gnome Desktop - Preferences - Set settings-daemon - plugin - media-keys - gnome-text-editor, name (Gnome)
   become: true
   become_user: "{{ env_user }}"
-  ansible.builtin.shell: dconf write "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom6/name" "'gedit'"
+  ansible.builtin.shell: dconf write "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom6/name" "'gnome-text-editor'"
   when:
     - env_desktop in ["gnome"]
 
-# - name: Gnome Desktop - Preferences - Set settings-daemon - plugin - media-keys - gedit,command (Gnome)
+# - name: Gnome Desktop - Preferences - Set settings-daemon - plugin - media-keys - gnome-text-editor, command (Gnome)
 #   community.general.dconf:
 #     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom6/command"
-#     value: "'gedit'"
+#     value: "'gnome-text-editor'"
 #     state: present
 #   when:
 #     - env_desktop in ["gnome"]
 
-- name: Gnome Desktop - Preferences - Set settings-daemon - plugin - media-keys - gedit,command (Gnome)
+- name: Gnome Desktop - Preferences - Set settings-daemon - plugin - media-keys - gnome-text-editor, command (Gnome)
   become: true
   become_user: "{{ env_user }}"
-  ansible.builtin.shell: dconf write "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom6/command" "'gedit'"
+  ansible.builtin.shell: dconf write "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom6/command" "'gnome-text-editor'"
   when:
     - env_desktop in ["gnome"]
 
-# - name: Gnome Desktop - Preferences - Set settings-daemon - plugin - media-keys - gedit,binding (Gnome)
+# - name: Gnome Desktop - Preferences - Set settings-daemon - plugin - media-keys - gnome-text-editor, binding (Gnome)
 #   community.general.dconf:
 #     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom6/binding"
 #     value: "'<Primary><Alt>g'"
@@ -1010,7 +1010,7 @@
 #   when:
 #     - env_desktop in ["gnome"]
 
-- name: Gnome Desktop - Preferences - Set settings-daemon - plugin - media-keys - gedit,binding (Gnome)
+- name: Gnome Desktop - Preferences - Set settings-daemon - plugin - media-keys - gnome-text-editor, binding (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom6/binding" "'<Primary><Alt>g'"
@@ -1083,56 +1083,29 @@
     - env_desktop in ["gnome"]
 
 # - VSCode / Code OSS (custom8) - m
-# - name: Gnome Desktop - Preferences - Set settings-daemon - plugin - media-keys - VSCode,name (Gnome, Debian)
+# - name: Gnome Desktop - Preferences - Set settings-daemon - plugin - media-keys - VSCode, name (Gnome)
 #   community.general.dconf:
 #     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom8/name"
 #     value: "'VSCode'"
 #     state: present
 #   when:
 #     - env_desktop in ["gnome"]
-#     - ansible_distribution == "Debian"
 
-- name: Gnome Desktop - Preferences - Set settings-daemon - plugin - media-keys - VSCode,name (Gnome, Debian)
+- name: Gnome Desktop - Preferences - Set settings-daemon - plugin - media-keys - VSCode, name (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom8/name" "'VSCode'"
   when:
     - env_desktop in ["gnome"]
-    - ansible_distribution == "Debian"
 
-# - name: Gnome Desktop - Preferences - Set settings-daemon - plugin - media-keys - CodeOSS,name (Gnome, Arch)
-#   community.general.dconf:
-#     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom8/name"
-#     value: "'Code OSS'"
-#     state: present
-#   when:
-#     - env_desktop in ["gnome"]
-#     - ansible_distribution == "Archlinux"
-
-- name: Gnome Desktop - Preferences - Set settings-daemon - plugin - media-keys - CodeOSS,name (Gnome, Arch)
-  become: true
-  become_user: "{{ env_user }}"
-  ansible.builtin.shell: dconf write "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom8/name" "'Code OSS'"
-  when:
-    - env_desktop in ["gnome"]
-    - ansible_distribution == "Archlinux"
-
-# - name: Gnome Desktop - Preferences - Set settings-daemon - plugin - media-keys - VSCode CodeOSS,command (Gnome)
-#   community.general.dconf:
-#     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom8/command"
-#     value: "'code'"
-#     state: present
-#   when:
-#     - env_desktop in ["gnome"]
-
-- name: Gnome Desktop - Preferences - Set settings-daemon - plugin - media-keys - VSCode CodeOSS,command (Gnome)
+- name: Gnome Desktop - Preferences - Set settings-daemon - plugin - media-keys - VSCode, command (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom8/command" "'code'"
   when:
     - env_desktop in ["gnome"]
 
-# - name: Gnome Desktop - Preferences - Set settings-daemon - plugin - media-keys - VSCode,binding (Gnome)
+# - name: Gnome Desktop - Preferences - Set settings-daemon - plugin - media-keys - VSCode, binding (Gnome)
 #   community.general.dconf:
 #     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom8/binding"
 #     value: "'<Primary><Alt>m'"
@@ -1140,7 +1113,7 @@
 #   when:
 #     - env_desktop in ["gnome"]
 
-- name: Gnome Desktop - Preferences - Set settings-daemon - plugin - media-keys - VSCode,binding (Gnome)
+- name: Gnome Desktop - Preferences - Set settings-daemon - plugin - media-keys - VSCode, binding (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom8/binding" "'<Primary><Alt>m'"
@@ -1789,6 +1762,13 @@
 
 # ### gnome shell extensions -  preferences:
 # ------------------------------------------
+
+- name: Gnome Desktop - Preferences - Set gnome shell extensions - enabled-extension (Gnome)
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.shell: dconf write /org/gnome/shell enabled-extensions "['dash-to-panel@jderose9.github.com', 'user-theme@gnome-shell-extensions.gcampax.github.com']"
+  when:
+    - env_desktop in ["gnome"]
 
 # ### ding
 # https://ubuntuhandbook.org/index.php/2022/03/show-trash-ubuntu-2204-desktop/
