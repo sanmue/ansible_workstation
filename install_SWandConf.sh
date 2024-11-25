@@ -573,10 +573,9 @@ esac
 
 echo -e "\nAnsible-Playbook starten ..."
 echo -e "\e[0;33m### Info\e[39m"
-echo -e "\e[0;33m#   - If you encounter a problem/error while executing the playbook (e.g. with pip / python, ...):\e[39m"
-echo -e "\e[0;33m#     Close and reopen terminal or logout + login and start the script / playbook again\e[39m"
-echo -e "\e[0;33m#     (For other errors a reboot may be needed)\e[39m"
-echo -e "\e[0;33m#   - If VS Code (Code OSS) opens you can simply close it again or leave it open until script is finished\e[39m"
+echo -e "\e[0;33m#   - If you encounter a problem/error while executing the playbook (e.g. with pip / python, NVM, ...):\e[39m"
+echo -e "\e[0;33m#     Close and reopen terminal and start the script or just the playbook again\e[39m"
+echo -e "\e[0;33m#   - If VS Code app opens you can simply close it again or leave it open until script is finished\e[39m"
 echo -e "\e[0;33m###\e[39m\n"
 
 # auskommenitert, da vorerst ansible wieder über Paketmanager installiert wird
@@ -630,15 +629,15 @@ Arch* | Endeavour*)
             paru -S --needed --skipreview btrfs-assistant # && touch "/home/${userid}/.ansible_installScript_AUR-btrfsassistantInstalled"
         fi
 
-        echo -e "\nInstall espanso (wayland) from AUR..." # + espanso-gui
-        paru -S --needed --skipreview espanso-wayland     # espanso-gui
-
         echo -e "\nInstall Citrix Workspace App (icaclient) from AUR..."
         paru -S --needed --skipreview icaclient && touch "/home/${userid}/.ansible_installScript_AUR-icaclientInstalled" && mkdir -p "/home/${userid}/.ICAClient/cache" &&
             sudo rsync -aPhEv /opt/Citrix/ICAClient/config/{All_Regions,Trusted_Region,Unknown_Region,canonicalization,regions}.ini "/home/${userid}/.ICAClient/"
 
         echo -e "\nInstall 'visual-studio-code-bin' from chaotic-aur..." # instead of flatpak
         sudo pacman -S --needed --noconfirm visual-studio-code-bin       # from chaotic-aur
+
+        echo -e "\nInstall espanso (wayland) from AUR (will takes some time)..."
+        paru -S --needed --skipreview espanso-wayland     # espanso-gui
 
         # echo -e "\nInstall Powershell from AUR..."
         # sudo pacman -S --needed --noconfirm powershell-bin # from chaotic-aur
