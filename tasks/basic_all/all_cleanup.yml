@@ -20,6 +20,6 @@
 - name: Remove unused flatpak packages
   ansible.builtin.command: flatpak uninstall --unused -y
   when:
-  - env_datadirs is defined
-  - env_datadirs.find("/var/lib/flatpak") == true
+    - env_datadirs is defined
+    - env_datadirs.find("/var/lib/flatpak")
   changed_when: false

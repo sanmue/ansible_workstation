@@ -88,7 +88,7 @@
 
 - name: All settings misc - starship - copy starship.toml to .config dir (User, all)
   tags: shellrc
-  # become: true
+  become: true
   become_user: "{{ env_user }}"
   ansible.builtin.copy:
     src: "/home/{{ env_user }}/Downloads/starship/starship.toml"
@@ -451,6 +451,9 @@
   ansible.builtin.copy:
     src: "/home/{{ env_user }}/.zshrc"
     dest: "/home/{{ env_user }}/.zshrc.old"
+    owner: "{{ env_user }}"
+    group: "{{ env_user }}"
+    mode: u=rw,g=r,o=r
     backup: true
   when:
     - statzshrcUser.stat.exists
@@ -1098,6 +1101,9 @@
       #ExcludePath ^/proc/
       #ExcludePath ^/sys/
       ExcludePath ^/home/.*/\.clam/quarantine
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
 
 - name: All settings misc - Set ClamAV - clamd global config - Limits (all)
   ansible.builtin.blockinfile:

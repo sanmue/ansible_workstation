@@ -21,24 +21,24 @@
 - name: Python Environment - Get and register Python version (Arch)
   become: true
   become_user: "{{ env_user }}"
-  ansible.builtin.shell: python --version | cut -d ' ' -f2
+  ansible.builtin.shell: set -o pipefail && python --version | cut -d ' ' -f2
   register: pythonVersion
   # ignore_errors: true
   args:
     creates: "/home/{{ env_user }}/.ansible_PythonEnv"
   when:
-  - ansible_distribution in ["Archlinux"]
+    - ansible_distribution in ["Archlinux"]
 
 - name: Python Environment - Get and register Python 3 version (all, not Arch)
   become: true
   become_user: "{{ env_user }}"
-  ansible.builtin.shell: python3 --version | cut -d ' ' -f2
+  ansible.builtin.shell: set -o pipefail && python3 --version | cut -d ' ' -f2
   register: python3Version
   # ignore_errors: true
   args:
     creates: "/home/{{ env_user }}/.ansible_PythonEnv"
   when:
-  - ansible_distribution not in ["Archlinux"]
+    - ansible_distribution not in ["Archlinux"]
 
 # - name: Python Environment - msg pythonVersion (env_user, all)
 #   become: true
@@ -59,7 +59,7 @@
     creates: "/home/{{ env_user }}/.pyenv/versions/{{ pythonVersion.stdout }}"
   ignore_errors: true
   when:
-  - ansible_distribution in ["Archlinux"]
+    - ansible_distribution in ["Archlinux"]
 
 - name: Python Environment - pyenv install python 3 (env_user, all, not Arch)
   become: true
@@ -71,7 +71,7 @@
     creates: "/home/{{ env_user }}/.pyenv/versions/{{ python3Version.stdout }}"
   ignore_errors: true
   when:
-  - ansible_distribution not in ["Archlinux"]
+    - ansible_distribution not in ["Archlinux"]
 
 - name: Python Environment - pyenv set global python version (env_user, Arch)
   become: true
@@ -80,7 +80,7 @@
   args:
     creates: "/home/{{ env_user }}/.ansible_PythonEnv"
   when:
-  - ansible_distribution in ["Archlinux"]
+    - ansible_distribution in ["Archlinux"]
 
 - name: Python Environment - pyenv set global python 3 version (env_user, all, not Arch)
   become: true
@@ -89,7 +89,7 @@
   args:
     creates: "/home/{{ env_user }}/.ansible_PythonEnv"
   when:
-  - ansible_distribution not in ["Archlinux"]
+    - ansible_distribution not in ["Archlinux"]
 
 - name: Python Environment - set flag file for Python Environment (env_user, all)
   become: true
@@ -104,6 +104,6 @@
   become_user: "{{ env_user }}"
   ansible.builtin.git:
     repo: https://github.com/pyenv/pyenv-virtualenv.git
-    dest: "/home/{{ env_user}}/.pyenv/plugins/pyenv-virtualenv" # $(pyenv root)/plugins/pyenv-virtualenv
+    dest: "/home/{{ env_user }}/.pyenv/plugins/pyenv-virtualenv" # $(pyenv root)/plugins/pyenv-virtualenv
     clone: true
     update: true

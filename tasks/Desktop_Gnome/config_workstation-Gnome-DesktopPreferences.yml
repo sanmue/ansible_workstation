@@ -1359,8 +1359,8 @@
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom12/binding" "'<Primary><Alt>s'"
   when:
-  - env_desktop in ["gnome"]
-  - ansible_distribution == "Archlinux"
+    - env_desktop in ["gnome"]
+    - ansible_distribution == "Archlinux"
 
 # - ulauncher (custom13) - ctrl+space
 # https://github.com/Ulauncher/Ulauncher/discussions/991
@@ -1631,7 +1631,7 @@
   # #  ansible.builtin.command: "{{ env_PWD }}/tasks/Desktop_Gnome/config_workstation-Gnome-DesktopPreferences-terminal.sh" # ab ansible version 2.10
   # #  ansible.builtin.command: # ab ansible version 2.10
   # #    cmd: "{{ env_PWD }}/tasks/Desktop_Gnome/config_workstation-Gnome-DesktopPreferences-terminal.sh"
-  # # The command(s) will not be processed through the shell, so variables like $HOME and operations like "<", ">", "|", ";" and "&" will not work. 
+  # # The command(s) will not be processed through the shell, so variables like $HOME and operations like "<", ">", "|", ";" and "&" will not work.
   # # Use the shell module if you need these features.
   # #
   # #  shell: "{{ env_PWD }}/tasks/Desktop_Gnome/config_workstation-Gnome-DesktopPreferences-terminal.sh" # funktioniert; ansible version 2.9

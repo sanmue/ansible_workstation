@@ -40,7 +40,7 @@
     creates: "/home/{{ env_user }}/.pyenv" # Run only if '.pyenv'-directory does NOT exist (from previous run)
   when:
     - ansible_distribution == "Debian"
-    - pyenvskript.stat.exists == true
+    - pyenvskript.stat.exists
 
 # #####################################
 # ### Citrix Workspace App (ICA-Client)
@@ -95,7 +95,7 @@
     mode: "0755"
   when:
     - ansible_distribution == "Debian"
-    - (usrbincode.stat.exists == false) and (tmpcodedeb.stat.exists == false)
+    - usrbincode.stat.exists and not tmpcodedeb.stat.exists
 
 - name: Local packages install - install Visual Studio Code deb-package (Debian, apt)
   ansible.builtin.apt:
@@ -104,7 +104,7 @@
   when:
     - ansible_pkg_mgr == "apt"
     - ansible_distribution == "Debian"
-    - usrbincode.stat.exists == false
+    - usrbincode.stat.exists
 
 # ##############
 # ### Zed Editor
@@ -211,7 +211,7 @@
   become_user: "{{ env_user }}"
   ansible.builtin.shell: "/home/{{ env_user }}/starship_install.sh --yes"
   when:
-    - starship.stat.exists == false
+    - starship.stat.exists
 
 # ###############################
 # ### zsh plugins - from git repo
