@@ -107,7 +107,7 @@ fi
 ### ---
 
 # check filesystem type + aks if snapper should be installed:
-if [[ $(stat -f -c %T /) = 'btrfs' ]] && [[ ! -e "/home/${userid}/.ansible_installScript_snapperGrub" ]]; then # prüfe '/' auf btrfs filesystem;  -f, --file-system; -c, --format; %T - Type in human readable form (e.g. 'btrfs', 'ext4', ...)
+if [[ $(stat -f -c %T /) = 'btrfs' ]] && [[ ! -e "${HOME}/.ansible_installScript_snapperGrub" ]]; then # prüfe '/' auf btrfs filesystem;  -f, --file-system; -c, --format; %T - Type in human readable form (e.g. 'btrfs', 'ext4', ...)
     echo -e "\n\e[0;33mSystem snapshots\e[39m"
     read -r -p "Install + configure 'snapper'? ('y' = yes, other input = no): " doSnapper
 fi
@@ -374,13 +374,13 @@ if [[ "${doSnapper}" = 'y' ]]; then
     *)
         echo -e "\e[0;33mFür verwendetes OS '${os}' wurde Installation/Konfiguration von 'snapper' noch nicht getestet."
         echo -e "Manuelle Durchführung notwendig\e[39m"
-        touch "/home/${userid}/.ansible_installScript_snapper_NOT-DONE"
+        touch "${HOME}/.ansible_installScript_snapper_NOT-DONE"
         read -r -p "Eingabe-Taste drücken um fortzufahren"
         exit 0
         ;;
     esac
 
-    touch "/home/${userid}/.ansible_installScript_snapperGrub" # wird auch bei default-switch - Zweig erstellt, d.h. snapper nicht konfiguriert (-> Manuelle Durchführung notwendig)
+    touch "${HOME}/.ansible_installScript_snapperGrub" # wird auch bei default-switch - Zweig erstellt, d.h. snapper nicht konfiguriert (-> Manuelle Durchführung notwendig)
 
     echo -e "\e[0;33m*** Ende Snapper-Teil\e[39m"
     echo -e "\e[0;33m*** ********************************************\e[39m"
@@ -429,8 +429,8 @@ fi
 case ${os} in
 Arch* | Endeavour*)
     # ### Repo Mirrors / reflector
-    if [ ! -f "/home/${userid}/.ansible_installScript_MirrorPool" ]; then
-        touch "/home/${userid}/.ansible_installScript_MirrorPool"
+    if [ ! -f "${HOME}/.ansible_installScript_MirrorPool" ]; then
+        touch "${HOME}/.ansible_installScript_MirrorPool"
 
         if [[ "${os}" = "EndeavourOS"* ]]; then
             echo -e "\nRetrieve up-to-date Arch Linux mirror data, rank it and update all packages on the system..."
@@ -521,7 +521,7 @@ Debian*)
 
     # ### Ulauncher
     echo -e "\nInstalliere Voraussetzungen / ergänze Repo für 'ulauncher'"
-    if [ -e "/home/${userid}/.ansible_ppaUlauncherAdded" ]; then
+    if [ -e "${HOME}/.ansible_ppaUlauncherAdded" ]; then
         echo "Repo wurde bereits hinzugefügt, Schritt wird übersprungen"
     else
         # https://ulauncher.io/#Download
@@ -533,7 +533,7 @@ Debian*)
             sudo tee /etc/apt/sources.list.d/ulauncher-jammy.list
         # sudo apt update && sudo apt install -y ulauncher # installation in "packages_workstation-Gnome.yml"
 
-        touch "/home/${userid}/.ansible_ppaUlauncherAdded"
+        touch "${HOME}/.ansible_ppaUlauncherAdded"
     fi
 
     # ### SSH
@@ -564,9 +564,9 @@ esac
 # read -rp "Soll TEST des Ansible-Playbooks durchgeführt werden (j/n)?: " testplay
 # if [ "${testplay}" = 'j' ]; then
 #    echo "Starte TEST des Playbooks ..."
-#    ansible-playbook "/home/${userid}/${playbookdir}/${playbook}" -v --ask-become-pass --check
+#    ansible-playbook "${HOME}/${playbookdir}/${playbook}" -v --ask-become-pass --check
 #    # bei verschlüsselten Daten z.B.:
-#    #ansible-playbook "/home/${userid}/${playbookdir}/${playbook}" -v -K -C --vault-password-file "/home/${userid}/.ansibleVaultKey"
+#    #ansible-playbook "${HOME}/${playbookdir}/${playbook}" -v -K -C --vault-password-file "${HOME}/.ansibleVaultKey"
 # else
 #    echo "TEST des Playbooks wird NICHT durchgefürt"
 # fi
@@ -582,16 +582,16 @@ echo -e "\e[0;33m###\e[39m\n"
 # echo -e "\e[0;33m'ansible' Befehl evtl. zunächst noch nicht verfügbar\e[39m"
 # echo -e "\e[0;33mShell neu starten (oder source der shell config) und dann Script erneut ausführen\e[39m\n"
 
-echo -e "/home/${userid}/${playbookdir}/${playbook}"
-ansible-playbook "/home/${userid}/${playbookdir}/${playbook}" -v -K
+echo -e "Path to playbook: ${HOME}/${playbookdir}/${playbook}"
+ansible-playbook "${HOME}/${playbookdir}/${playbook}" -v -K
 
-# ansible-playbook "/home/${userid}/${playbookdir}/${playbook}" -v -K -e 'ansible_python_interpreter=/usr/bin/python3'
+# ansible-playbook "${HOME}/${playbookdir}/${playbook}" -v -K -e 'ansible_python_interpreter=/usr/bin/python3'
 # https://docs.ansible.com/ansible/latest/collections/ansible/posix/firewalld_module.html#notes
 # - tasks/basic_all/config_workstation-firewall.yml: Firewalld - allow KDE Connect (Archlinux)
 # - tasks/basic_all/packages_workstation-pythonPip.yml: /home/userID/dev/Projects/Ansible/ansible_workstation/tasks/basic_all/packages_workstation-pythonPip.yml
 
 # bei verschlüsselten Daten z.B.:
-#ansible-playbook "/home/${userid}/${playbookdir}/${playbook}" -v -K --vault-password-file "/home/${userid}/.ansibleVaultKey"
+#ansible-playbook "${HOME}/${playbookdir}/${playbook}" -v -K --vault-password-file "${HOME}/.ansibleVaultKey"
 
 case ${os} in
 Arch* | Endeavour*)
@@ -626,12 +626,12 @@ Arch* | Endeavour*)
         # if [ -n "${lsblkBtrfs}" ]; then
         if [[ $(stat -f -c %T /) = 'btrfs' ]]; then
             echo -e "\nInstall 'btrfs-assistant' from AUR..."
-            paru -S --needed --skipreview btrfs-assistant # && touch "/home/${userid}/.ansible_installScript_AUR-btrfsassistantInstalled"
+            paru -S --needed --skipreview btrfs-assistant # && touch "${HOME}/.ansible_installScript_AUR-btrfsassistantInstalled"
         fi
 
         echo -e "\nInstall Citrix Workspace App (icaclient) from AUR..."
-        paru -S --needed --skipreview icaclient && touch "/home/${userid}/.ansible_installScript_AUR-icaclientInstalled" && mkdir -p "/home/${userid}/.ICAClient/cache" &&
-            sudo rsync -aPhEv /opt/Citrix/ICAClient/config/{All_Regions,Trusted_Region,Unknown_Region,canonicalization,regions}.ini "/home/${userid}/.ICAClient/"
+        paru -S --needed --skipreview icaclient && touch "${HOME}/.ansible_installScript_AUR-icaclientInstalled" && mkdir -p "${HOME}/.ICAClient/cache" &&
+            sudo rsync -aPhEv /opt/Citrix/ICAClient/config/{All_Regions,Trusted_Region,Unknown_Region,canonicalization,regions}.ini "${HOME}/.ICAClient/"
 
         echo -e "\nInstall 'visual-studio-code-bin' from chaotic-aur..." # instead of flatpak
         sudo pacman -S --needed --noconfirm visual-studio-code-bin       # from chaotic-aur
@@ -644,22 +644,22 @@ Arch* | Endeavour*)
         paru -S --needed --skipreview espanso-wayland     # espanso-gui
 
         # echo -e "\nInstall Microsoft TTF Fonts from AUR..." # takes quite some time
-        # paru -S --needed --skipreview ttf-ms-fonts && touch "/home/${userid}/.ansible_installScript_AUR-ttfmsfontsInstalled"
+        # paru -S --needed --skipreview ttf-ms-fonts && touch "${HOME}/.ansible_installScript_AUR-ttfmsfontsInstalled"
 
         # --- 'autokey' auskommentiert, da nicht mit Wayland funktioniert --- #
         # echo -e "\nInstall 'autokey-gtk' from AUR..."         # da aktuell Gnome verwende
-        # paru -S --needed --skipreview autokey-gtk && touch "/home/${userid}/.ansible_installScript_autokeyGtkInstalled"
+        # paru -S --needed --skipreview autokey-gtk && touch "${HOME}/.ansible_installScript_autokeyGtkInstalled"
         # echo -e "\nInstall 'autokey-qt' from AUR (Arch)"      # e.g. when using Plasma
-        # paru -S --needed --skipreview autokey-qt # && touch "/home/${userid}/.ansible_installScript_autokeyQtInstalled"
+        # paru -S --needed --skipreview autokey-qt # && touch "${HOME}/.ansible_installScript_autokeyQtInstalled"
 
         # echo -e "\nInstall woeusb-ng (Tool to create Windows boot stick) from AUR..."
-        # paru -S --needed --skipreview woeusb-ng && touch "/home/${userid}/.ansible_installScript_AUR-woeusbngInstalled"
+        # paru -S --needed --skipreview woeusb-ng && touch "${HOME}/.ansible_installScript_AUR-woeusbngInstalled"
 
         # echo -e "\nVM - Download 'virtio-win' image from AUR..."
-        # paru -S --needed --skipreview virtio-win && touch "/home/${userid}/.ansible_installScript_AUR-vmVirtioWinInstalled"
+        # paru -S --needed --skipreview virtio-win && touch "${HOME}/.ansible_installScript_AUR-vmVirtioWinInstalled"
 
         # echo -e "\nCreating flag-file '.ansible_installScript_severalAurPkgInstalled'..."
-        # touch "/home/${userid}/.ansible_installScript_severalAurPkgInstalled"
+        # touch "${HOME}/.ansible_installScript_severalAurPkgInstalled"
     fi
     ;;
 
