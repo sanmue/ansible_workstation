@@ -33,7 +33,8 @@
       "file:///home/sandro/dev/Ansible/Projects/ansible_workstation/tasks/VM/config_all-VM-QemuKvm-create.yml",
       "file:///home/sandro/dev/Ansible/Projects/ansible_workstation/tasks/VM/config_all-VM-daemon.yml",
       "file:///home/sandro/dev/Ansible/Projects/ansible_workstation/tasks/basic_all/config_workstation-ansibleFacts.yml",
-      "file:///home/sandro/dev/Ansible/Projects/ansible_workstation/tasks/basic_all/packages_workstation-pythonEnv.yml"
+      "file:///home/sandro/dev/Ansible/Projects/ansible_workstation/tasks/basic_all/packages_workstation-pythonEnv.yml",
+      "file:///home/sandro/dev/Ansible/Projects/ansible_workstation/tasks/basic_all/config_workstation-firewall.yml"
     ]
   }
 }
