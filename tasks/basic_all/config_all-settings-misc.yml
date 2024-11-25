@@ -148,7 +148,7 @@
     group: "{{ env_user }}"
     mode: u=rw,g=r,o=r
   when:
-    - not stat_bashrc_user.stat.exists # oder: - stat_bashrc_user.stat.exists == false
+    - not stat_bashrc_user.stat.exists
 
 - name: All settings misc - Bashrc - Insert/Update additional paths and config - starship shell prompt (User, all)
   tags: shellrc

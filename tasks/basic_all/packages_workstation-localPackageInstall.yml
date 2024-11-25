@@ -95,7 +95,7 @@
     mode: "0755"
   when:
     - ansible_distribution == "Debian"
-    - usrbincode.stat.exists and not tmpcodedeb.stat.exists
+    - not tmpcodedeb.stat.exists
 
 - name: Local packages install - install Visual Studio Code deb-package (Debian, apt)
   ansible.builtin.apt:
@@ -198,7 +198,7 @@
 - name: Local packages install - starship shell prompt (env_user) - check installation status (all)
   ansible.builtin.stat:
     path: /usr/local/bin/starship
-  register: starship
+  register: starshipbin
 
 - name: Local packages install - create directory '/usr/local/bin' if not exists  (all)
   ansible.builtin.file:
@@ -211,7 +211,7 @@
   become_user: "{{ env_user }}"
   ansible.builtin.shell: "/home/{{ env_user }}/starship_install.sh --yes"
   when:
-    - starship.stat.exists
+    - not starshipbin.stat.exists
 
 # ###############################
 # ### zsh plugins - from git repo
