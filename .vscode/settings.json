@@ -27,7 +27,11 @@
       "file:///home/sandro/dev/Ansible/Projects/ansible_workstation/tasks/basic_all/packages_workstation-basic.yml",
       "file:///home/sandro/dev/Ansible/Projects/ansible_workstation/tasks/basic_all/packages_workstation-localPackageInstall.yml",
       "file:///home/sandro/dev/Ansible/Projects/ansible_workstation/tasks/basic_all/packages_workstation-nvmNodejs.yml",
-      "file:///home/sandro/dev/Ansible/Projects/ansible_workstation/tasks/basic_all/packages_workstation-pythonPip.yml"
+      "file:///home/sandro/dev/Ansible/Projects/ansible_workstation/tasks/basic_all/packages_workstation-pythonPip.yml",
+      "file:///home/sandro/dev/Ansible/Projects/ansible_workstation/tasks/VM/packages_workstation-VM-QemuKvm.yml",
+      "file:///home/sandro/dev/Ansible/Projects/ansible_workstation/tasks/VM/config_all-VM-users.yml",
+      "file:///home/sandro/dev/Ansible/Projects/ansible_workstation/tasks/VM/config_all-VM-QemuKvm-create.yml",
+      "file:///home/sandro/dev/Ansible/Projects/ansible_workstation/tasks/VM/config_all-VM-daemon.yml"
     ]
   }
 }
