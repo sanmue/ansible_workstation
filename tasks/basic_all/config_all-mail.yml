@@ -57,11 +57,17 @@
 
 - name: Config_all-mail - postfix - initialize alias database (all)
   ansible.builtin.shell:
-    cmd: "sudo newaliases && touch /home/{{ env_user }}/.ansible_postfixNewaliases"
+    cmd: "sudo newaliases"
   args:
     creates: "/home/{{ env_user }}/.ansible_postfixNewaliases"
-  # when:
-  #   - ansible_distribution in ["Archlinux", "Debian"]
+
+- name: Config_all-mail - postfix - set flag file postfixNewaliases (all)
+  ansible.builtin.file:
+    path: "/home/{{ env_user }}/.ansible_postfixNewaliases"
+    owner: "{{ env_user }}"
+    group: "{{ env_user }}"
+    state: touch
+    mode: u=rw,g=r,o=r
 
 # ### ##############################
 # ### config postfix for local mail:

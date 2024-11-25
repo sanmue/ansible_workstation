@@ -159,6 +159,8 @@
   ansible.builtin.file:
     path: /home/{{ env_user }}/.ansible_vm_qemuKvmCreated
     state: touch
+    owner: "{{ env_user }}"
+    group: "{{ env_user }}"
     mode: "0644"
     modification_time: preserve
   when:

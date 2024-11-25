@@ -67,13 +67,14 @@
   when: ansible_distribution in ["Archlinux"]
 
 - name: Config all firewall - firewalld - Set flag file (via shell) (Arch)
-  ansible.builtin.shell:
-    cmd: touch /home/{{ env_user }}/.ansible_firewalldConfigDone
-  args:
-    creates: /home/{{ env_user }}/.ansible_firewalldConfigDone
+  ansible.builtin.file:
+    path: "/home/{{ env_user }}/.ansible_firewalldConfigDone"
+    state: touch
+    owner: "{{ env_user }}"
+    group: "{{ env_user }}"
+    mode: u=rw,g=r,o=r
   when: ansible_distribution in ["Archlinux"]
 
-#
 # ansible.posix.firewalld module requirements: firewalld >= 0.2.11 and python-firewall >= 0.2.11 (tried also: python3-firewall)
 # ... + see Notes: https://docs.ansible.com/ansible/latest/collections/ansible/posix/firewalld_module.html#notes
 

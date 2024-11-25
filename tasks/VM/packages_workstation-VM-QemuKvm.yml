@@ -49,7 +49,8 @@
     name:
       - virt-manager
       - virt-viewer
-  when: ansible_virtualization_role != "guest"
+  when:
+    - ansible_virtualization_role != "guest"
 
 - name: VM - install VM QEMU/KVM - Guest (all, VM guest)
   ansible.builtin.package:
@@ -58,4 +59,4 @@
       - spice-vdagent # spice agent for Linux guests (z.B. für clipboard sharing host+guest)
   when:
     - ansible_virtualization_role == "guest"
-    # - ansible_distribution in ["Archlinux", "Debian"]
+
