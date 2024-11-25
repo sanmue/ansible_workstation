@@ -636,12 +636,12 @@ Arch* | Endeavour*)
         echo -e "\nInstall 'visual-studio-code-bin' from chaotic-aur..." # instead of flatpak
         sudo pacman -S --needed --noconfirm visual-studio-code-bin       # from chaotic-aur
 
+        echo -e "\nInstall Powershell from chaotic-aur..."
+        sudo pacman -S --needed --noconfirm powershell-bin # from chaotic-aur
+        #paru -S --needed --skipreview powershell-bin
+
         echo -e "\nInstall espanso (wayland) from AUR (will takes some time)..."
         paru -S --needed --skipreview espanso-wayland     # espanso-gui
-
-        # echo -e "\nInstall Powershell from AUR..."
-        # sudo pacman -S --needed --noconfirm powershell-bin # from chaotic-aur
-        # paru -S --needed --skipreview powershell-bin
 
         # echo -e "\nInstall Microsoft TTF Fonts from AUR..." # takes quite some time
         # paru -S --needed --skipreview ttf-ms-fonts && touch "/home/${userid}/.ansible_installScript_AUR-ttfmsfontsInstalled"
