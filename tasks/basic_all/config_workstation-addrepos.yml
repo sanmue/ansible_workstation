@@ -79,7 +79,7 @@
 - name: Config Workstation addrepos - Check if Chaotic-AUR is installed already (Arch)
   ansible.builtin.stat:
     path: /etc/pacman.d/chaotic-mirrorlist
-  register: caur_exists
+  register: caurmirrorlist
   when:
     - ansible_distribution == "Archlinux"
 
@@ -89,7 +89,7 @@
     cmd: pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com && pacman-key --lsign-key 3056513887B78AEB
   when:
     - ansible_distribution == "Archlinux"
-    - caur_exists.stat.exists | default(true)
+    - not caurmirrorlist.stat.exists | default(true)
 
 - name: Config Workstation addrepos - Install Chaotic-AUR keyring and mirrorlist (Arch)
   become: true
@@ -100,7 +100,7 @@
     state: present
   when:
     - ansible_distribution == "Archlinux"
-    - caur_exists.stat.exists | default(true)
+    - not caurmirrorlist.stat.exists | default(true)
 
 - name: Config Workstation addrepos - Include chaotic-mirrorlist in pacman.conf (Arch)
   become: true
@@ -116,7 +116,7 @@
       Include = /etc/pacman.d/chaotic-mirrorlist
   when:
     - ansible_distribution == "Archlinux"
-    - caur_exists.stat.exists | default(true)
+    - not caurmirrorlist.stat.exists | default(true)
 
 - name: Config Workstation addrepos - update_cache (pacman -Sy) (Arch)
   become: true
@@ -124,7 +124,8 @@
     update_cache: true
   when:
     - ansible_distribution == "Archlinux"
-    - caur_exists.stat.exists | default(true)
+    - not caurmirrorlist.stat.exists | default(true)
+#
 # #####################################
 # ### pamac.conf - Archlinux with Pamac
 # #####################################

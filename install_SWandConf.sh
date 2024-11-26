@@ -462,26 +462,25 @@ Arch* | Endeavour*)
     fi
 
     # ### Installs
-    echo -e "\nInstallation initial benoetigte Software (curl git openssh rsync vim)"
-    sudo pacman -S --needed --noconfirm ansible curl git openssh rsync vim # python-pipx # ansible-core firewalld
+    if [ ! -f "${HOME}/.ansible_installScript_initalSofware" ]; then
+        echo -e "\nInstallation initial benoetigte Software (curl git openssh rsync vim)"
+        sudo pacman -S --needed --noconfirm ansible curl git openssh rsync vim # python-pipx # ansible-core firewalld
 
-    echo -e "\nInstallation benoetigte Softwarepackages zur Installation von AUR helpers, AUR-Packages..."
-    sudo pacman -S --needed --noconfirm base-devel
+        echo -e "\nInstallation benoetigte Softwarepackages zur Installation von AUR helpers, AUR-Packages..."
+        sudo pacman -S --needed --noconfirm base-devel
 
-    # ### VM guest - spice-vdagent
-    echo -e "\n Installation (wenn VM) spice agent for Linux guests (z.B. für clipboard sharing zwischen host+guest)"
-    [[ $(systemd-detect-virt) != *"none"* ]] && sudo pacman -S --needed --noconfirm spice-vdagent
+        # ### VM guest - spice-vdagent
+        echo -e "\n Installation (wenn VM) spice agent for Linux guests (z.B. für clipboard sharing zwischen host+guest)"
+        [[ $(systemd-detect-virt) != *"none"* ]] && sudo pacman -S --needed --noconfirm spice-vdagent
 
-    # ### SSH
-    echo -e "\nStarte sshd.service..." # wg. ssh von anderer Maschine für evtl. todos/checks, ...
-    # sudo systemctl enable --now sshd.service # wird später in Ansible task (services) wieder deaktiviert (ober noch nicht gestoppt)
-    sudo systemctl start sshd.service
+        # ### VM Qemu/KVM: uninstall iptables, install iptables-nft
+        echo -e "\nVM - Qemu/KVM: Wiki empfiehlt inst. von 'iptables-nft'"
+        echo -e "Bestätige, dass 'iptables' (und 'inxi') gelöscht und 'iptables-nft' installiert wird"
+        echo -e "Anmerkung: 'inxi' wird im Rahmen basis-inst wieder installiert"
+        sudo pacman -S --needed --noconfirm iptables-nft
 
-    # ### VM Qemu/KVM: uninstall iptables, install iptables-nft
-    echo -e "\nVM - Qemu/KVM: Wiki empfiehlt inst. von 'iptables-nft'"
-    echo -e "Bestätige, dass 'iptables' (und 'inxi') gelöscht und 'iptables-nft' installiert wird"
-    echo -e "Anmerkung: 'inxi' wird im Rahmen basis-inst wieder installiert"
-    sudo pacman -S --needed iptables-nft
+        touch "${HOME}/.ansible_installScript_initalSofware"
+    fi
     ;;
 
 Debian*)
@@ -532,10 +531,6 @@ Debian*)
 
         touch "${HOME}/.ansible_ppaUlauncherAdded"
     fi
-
-    # ### SSH
-    echo -e "\nStarte ssh ..." # initial temporär
-    sudo systemctl start ssh   # && sudo systemctl enable ssh
     ;;
 
 *)
@@ -572,7 +567,7 @@ echo -e "\nAnsible-Playbook starten ..."
 echo -e "\e[0;33m### Info\e[39m"
 echo -e "\e[0;33m#   - If you encounter a problem/error while executing the playbook (e.g. with pip / python, NVM, ...):\e[39m"
 echo -e "\e[0;33m#     Close and reopen terminal and start the script or just the playbook again\e[39m"
-echo -e "\e[0;33m#   - If VS Code app opens you can simply close it again or leave it open until script is finished\e[39m"
+# echo -e "\e[0;33m#   - If VS Code app opens you can simply close it again or leave it open until script is finished\e[39m"
 echo -e "\e[0;33m###\e[39m\n"
 
 # auskommenitert, da vorerst ansible wieder über Paketmanager installiert wird
@@ -605,8 +600,7 @@ Arch* | Endeavour*)
             sudo chown -R "${userid}":users /tmp/paru
             cd /tmp/paru && makepkg -sic --needed
             cd || return
-            # cleanup:
-            sudo rm -rf /tmp/paru
+            sudo rm -rf /tmp/paru # cleanup
         else
             echo -e "'paru' is already installed, nothing to do."
         fi
@@ -638,9 +632,12 @@ Arch* | Endeavour*)
             paru -S --needed --skipreview btrfs-assistant # && touch "${HOME}/.ansible_installScript_AUR-btrfsassistantInstalled"
         fi
 
-        echo -e "\nInstall Citrix Workspace App (icaclient) from AUR..."
-        paru -S --needed --skipreview icaclient && touch "${HOME}/.ansible_installScript_AUR-icaclientInstalled" && mkdir -p "${HOME}/.ICAClient/cache" &&
-            sudo rsync -aPhEv /opt/Citrix/ICAClient/config/{All_Regions,Trusted_Region,Unknown_Region,canonicalization,regions}.ini "${HOME}/.ICAClient/"
+        echo -e "\nInstall Citrix Workspace App (icaclient) from chaotic-aur..."
+        sudo pacman -S --needed --noconfirm icaclient
+        # echo -e "\nInstall Citrix Workspace App (icaclient) from AUR..."
+        # paru -S --needed --skipreview icaclient && touch "${HOME}/.ansible_installScript_AUR-icaclientInstalled"
+        mkdir -p "${HOME}/.ICAClient/cache" && \
+        sudo rsync -aPhEv /opt/Citrix/ICAClient/config/{All_Regions,Trusted_Region,Unknown_Region,canonicalization,regions}.ini "${HOME}/.ICAClient/"
 
         echo -e "\nInstall 'visual-studio-code-bin' from chaotic-aur..." # instead of flatpak
         sudo pacman -S --needed --noconfirm visual-studio-code-bin       # from chaotic-aur
@@ -650,7 +647,7 @@ Arch* | Endeavour*)
         #paru -S --needed --skipreview powershell-bin
 
         echo -e "\nInstall espanso (wayland) from AUR (will takes some time)..."
-        paru -S --needed --skipreview espanso-wayland     # espanso-gui
+        paru -S --needed --skipreview espanso-wayland   # espanso-gui
 
         # echo -e "\nInstall Microsoft TTF Fonts from AUR..." # takes quite some time
         # paru -S --needed --skipreview ttf-ms-fonts && touch "${HOME}/.ansible_installScript_AUR-ttfmsfontsInstalled"
