@@ -28,8 +28,8 @@
   pre_tasks:
     - name: Pre Tasks - addrepos
       ansible.builtin.import_tasks: tasks/basic_all/config_workstation-addrepos.yml
-    - name: Pre Tasks - all update
-      ansible.builtin.import_tasks: tasks/basic_all/all_update.yml
+    # - name: Pre Tasks - all update
+    #   ansible.builtin.import_tasks: tasks/basic_all/all_update.yml
 
 - name: Install and config snapper+btrfs
   hosts: localhost

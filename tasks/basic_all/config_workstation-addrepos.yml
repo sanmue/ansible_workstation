@@ -36,7 +36,7 @@
     line: "Include = /etc/pacman.d/mirrorlist"
   when:
     - ansible_distribution == "Archlinux"
-    - addrepomultilib.stat.exists
+    - not addrepomultilib.stat.exists
 
 - name: Config Workstation addrepos - pacman.conf - activate multilib repo - step2 (Archlinux)
   become: true
@@ -47,7 +47,7 @@
     backup: true
   when:
     - ansible_distribution == "Archlinux"
-    - addrepomultilib.stat.exists
+    - not addrepomultilib.stat.exists
 
 # modify /etc/pacman.d/mirrorlist to activate repo multilib needs to be done only once
 - name: Config Workstation addrepos - pacman.conf - activate multilib repo - create flagfile (Archlinux)
@@ -59,6 +59,7 @@
     creates: "/home/{{ env_user }}/.ansible_addrepoMultilib"
   when:
     - ansible_distribution == "Archlinux"
+    - not addrepomultilib.stat.exists
 
 # ### ########################
 # ### Chaotic-AUR  - Archlinux
