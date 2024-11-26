@@ -105,16 +105,25 @@ if [ "${supportedOS}" = "false" ]; then
 fi
 
 ### Hostname
+# https://en.wikipedia.org/wiki/Hostname
+# TODO: error handling
 echo -e "\e[0;33mCurrent hostname:\e[39m '${currentHostname}'"
 read -r -p "  |_ Change hostname? ('y'=yes, other input=no): " changeHostname
 if [ "${changeHostname}" = 'y' ]; then
     read -r -p "     Enter new hostname: " newHostname
+    newHostname="${newHostname// /}"           # remove any spaces
+    newHostname="${newHostname,,}"             # change uppercase to lowercase letters
+    echo "     -> newHostname: ${newHostname}" # simplyfied validy check # no check if starts or ends with '-' or has any other invalid (special) characters
 
     if [[ ! $(grep sudo /etc/group) = *"${userid}"* ]]; then # if user not in sudo group
+        echo "     Changing hostname (hostnamectl)..."
         su -l root --command "hostnamectl hostname ${newHostname}"
+        echo "     Changing hostname (/etc/hosts)..."
         su -l root --command "sed -i 's/${currentHostname}/${newHostname}/g' /etc/hosts"
     else
+        echo "     Changing hostname (hostnamectl)..."
         sudo hostnamectl hostname "${newHostname}"
+        echo "     Changing hostname (/etc/hosts)..."
         sudo sed -i "s/${currentHostname}/${newHostname}/g" /etc/hosts
     fi
     echo "     Hostname set to '${newHostname}'"

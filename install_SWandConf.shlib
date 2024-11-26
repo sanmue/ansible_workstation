@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# shellcheck disable=SC2154
 
 # set -x   # enable debug mode
 
@@ -27,21 +28,21 @@ config-snapper() {
         exit 1
     fi
 
-    case ${fstabEntryBtrfsRootSubvol} in
-    /dev*) # /dev/mapper/luks-cc2e4215-6edc-41c8-9b03-d478bee0a61c / btrfs subvol=/@,defaults,noatime,compress=zstd 0 0'
-        # e.g. EndeavourOS + luks encryption
-        fstabFileSystem=$(echo "${fstabEntryBtrfsRootSubvol}" | cut -d ' ' -f 1 | xargs) # /dev/mapper/luks-cc2e4215-6edc-41c8-9b03-d478bee0a61c
-        ;;
+    case "${fstabEntryBtrfsRootSubvol}" in
+        /dev*) # /dev/mapper/luks-cc2e4215-6edc-41c8-9b03-d478bee0a61c / btrfs subvol=/@,defaults,noatime,compress=zstd 0 0'
+            # e.g. EndeavourOS + luks encryption
+            fstabFileSystem=$(echo "${fstabEntryBtrfsRootSubvol}" | cut -d ' ' -f 1 | xargs) # /dev/mapper/luks-cc2e4215-6edc-41c8-9b03-d478bee0a61c
+            ;;
 
-    UUID*)                                                                        # UUID=luks-8f1cf7bc-8064-...   / btrfs subvol=/@,defaults,... 0 0
-        fstabFileSystem=$(echo "${fstabEntryBtrfsRootSubvol}" | cut -f 1 | xargs) # UUID=luks-8f1cf7bc-8064-...
-        if [ -z "${fstabFileSystem}" ]; then fstabFileSystem=$(echo "${fstabEntryBtrfsRootSubvol}" | cut -d ' ' -f 1 | xargs); fi
-        ;;
+        UUID*)                                                                        # UUID=luks-8f1cf7bc-8064-...   / btrfs subvol=/@,defaults,... 0 0
+            fstabFileSystem=$(echo "${fstabEntryBtrfsRootSubvol}" | cut -f 1 | xargs) # UUID=luks-8f1cf7bc-8064-...
+            if [ -z "${fstabFileSystem}" ]; then fstabFileSystem=$(echo "${fstabEntryBtrfsRootSubvol}" | cut -d ' ' -f 1 | xargs); fi
+            ;;
 
-    *)
-        fstabFileSystem=$(echo "${fstabEntryBtrfsRootSubvol}" | cut -d ' ' -f 1 | xargs)
-        echo -e "\e[0;31mDefault case 'fstabEntryBtrfsRootSubvol': fstab file system name could not be defined clearly.\e[39m"
-        ;;
+        *)
+            fstabFileSystem=$(echo "${fstabEntryBtrfsRootSubvol}" | cut -d ' ' -f 1 | xargs)
+            echo -e "\e[0;31mDefault case 'fstabEntryBtrfsRootSubvol': fstab file system name could not be defined clearly.\e[39m"
+            ;;
     esac
 
     echo -e "\e[0;33mSetting fstab file system name to\e[39m '${fstabFileSystem}' \e[0;33mfor now.\nYou can correct this later manually when prompted for confirmation.\e[39m"
@@ -60,222 +61,220 @@ config-snapper() {
 
     echo -e "\n\e[0;33m*** ********************************************\e[39m"
     echo -e "\e[0;33m*** Start: Installation und config von 'snapper'\e[39m"
-    case ${os} in
-    Arch* | Endeavour*) # aktuell für UEFI oder BIOS jeweils mit GRUB-Bootloader (TODO: sowie für UEFI + systemd boot -> not (re-)tested)
-        # https://wiki.archlinux.org/title/Btrfs
-        # https://wiki.archlinux.org/title/Snapper
-        # https://documentation.suse.com/sles/15-SP4/html/SLES-all/cha-snapper.html
+    case "${os}" in
+        Arch* | Endeavour*) # aktuell für UEFI oder BIOS jeweils mit GRUB-Bootloader (TODO: sowie für UEFI + systemd boot -> not (re-)tested)
+            # https://wiki.archlinux.org/title/Btrfs
+            # https://wiki.archlinux.org/title/Snapper
+            # https://documentation.suse.com/sles/15-SP4/html/SLES-all/cha-snapper.html
 
-        echo -e "\n*** Installation snapper+grub software packages..."
-        sudo pacman --needed --noconfirm -S snapper snap-pac inotify-tools # snap-sync
+            echo -e "\n*** Installation snapper+grub software packages..."
+            sudo pacman --needed --noconfirm -S snapper snap-pac inotify-tools # snap-sync
 
-        if [ -e "${efiDir}/grub.cfg" ] || [ -e "/boot/grub" ]; then # GRUB (UEFI oder BIOS)
-            sudo pacman --needed --noconfirm -S grub-btrfs
-        fi
+            if [ -e "${efiDir}/grub.cfg" ] || [ -e "/boot/grub" ]; then # GRUB (UEFI oder BIOS)
+                sudo pacman --needed --noconfirm -S grub-btrfs
+            fi
 
-        echo -e "\n*** (Re)create snapshots folder + snapper config..."
-        # Arch Linux | EndeavourOS:
-        # - '/.snapshots' wird nicht standardmäßig erstellt
-        #
-        # Info: beim erstellen der config ${snapperConfigName_root} wird automatisch ein Subvolume (und damit Verzeichnis) '.snapshots' auf '/' erstellt
-        # welches wieder gelöscht wird, da das Subvolume für Snapshots '@snapshots' heißen soll
-        #
-        if [ -e "${snapperSnapshotFolder}" ]; then # falls bereits vorhanden
-            echo "Unmount + Löschen '${snapperSnapshotFolder}', um angepasste Konfiguration durchzuführen..."
-            sudo umount "${snapperSnapshotFolder}"
-            sudo rm -rf "${snapperSnapshotFolder}" # entspricht löschen subvolume
-        fi
+            echo -e "\n*** (Re)create snapshots folder + snapper config..."
+            # Arch Linux | EndeavourOS:
+            # - '/.snapshots' wird nicht standardmäßig erstellt
+            #
+            # Info: beim erstellen der config ${snapperConfigName_root} wird automatisch ein Subvolume (und damit Verzeichnis) '.snapshots' auf '/' erstellt
+            # welches wieder gelöscht wird, da das Subvolume für Snapshots '@snapshots' heißen soll
+            #
+            if [ -e "${snapperSnapshotFolder}" ]; then # falls bereits vorhanden
+                echo "Unmount + Löschen '${snapperSnapshotFolder}', um angepasste Konfiguration durchzuführen..."
+                sudo umount "${snapperSnapshotFolder}"
+                sudo rm -rf "${snapperSnapshotFolder}" # entspricht löschen subvolume
+            fi
 
-        echo "*** Erstelle snapper config '${snapperConfigName_root}' für '/'"
-        sudo snapper -c "${snapperConfigName_root}" create-config /
+            echo "*** Erstelle snapper config '${snapperConfigName_root}' für '/'"
+            sudo snapper -c "${snapperConfigName_root}" create-config /
 
-        echo "*** Lösche autom. angelegtes Subvolume '${snapperSnapshotFolder}' (aus vorherigem Schritt 'Erstelle snapper config')..."
-        sudo btrfs subvolume delete "${snapperSnapshotFolder}"
-        echo "*** Erstelle (wieder) Verzeichnis '${snapperSnapshotFolder}'..."
-        sudo sudo mkdir -p "${snapperSnapshotFolder}"
+            echo "*** Lösche autom. angelegtes Subvolume '${snapperSnapshotFolder}' (aus vorherigem Schritt 'Erstelle snapper config')..."
+            sudo btrfs subvolume delete "${snapperSnapshotFolder}"
+            echo "*** Erstelle (wieder) Verzeichnis '${snapperSnapshotFolder}'..."
+            sudo sudo mkdir -p "${snapperSnapshotFolder}"
 
-        echo "*** Erstelle Subvolumes (sofern nicht schon vorhanden) und entsprechende fstab-Einträge"
-        echo "Aktuelle /etc/fstab:"
-        cat /etc/fstab
+            echo "*** Erstelle Subvolumes (sofern nicht schon vorhanden) und entsprechende fstab-Einträge"
+            echo "Aktuelle /etc/fstab:"
+            cat /etc/fstab
 
-        read -r -p "Nutze file system '${fstabFileSystem}'. Ist das korrekt ? ('n'=nein, sonstige Eingabe=ja): " fsok
-        if [ "${fsok}" = "n" ]; then
-            endloop='no'
-            while [ ! "$endloop" = 'j' ]; do
-                read -r -p "Manuelle Eingabe: " fstabFileSystem
-                read -r -p "Ist '${fstabFileSystem}' korrekt ? ('j'=ja, beliebige Eingabe für Korrektur): " endloop
+            read -r -p "Nutze file system '${fstabFileSystem}'. Ist das korrekt ? ('n'=nein, sonstige Eingabe=ja): " fsok
+            if [ "${fsok}" = "n" ]; then
+                endloop='no'
+                while [ ! "$endloop" = 'j' ]; do
+                    read -r -p "Manuelle Eingabe: " fstabFileSystem
+                    read -r -p "Ist '${fstabFileSystem}' korrekt ? ('j'=ja, beliebige Eingabe für Korrektur): " endloop
+                done
+            fi
+
+            sudo cp /etc/fstab /etc/fstab.bak # Sicherung fstab
+            echo -e "\nMount: 'subvolid=5' '${fstabFileSystem}' nach '/mnt'..."
+            sudo mount -t btrfs -o subvolid=5 "$fstabFileSystem" /mnt # bzw. sudo mount -t btrfs -o "$btrfsFstabMountOptions_standard" /dev/vda3 /mnt
+
+            for subvol in "${!btrfsSubvolLayout[@]}"; do
+                if [ ! -e "/mnt/${subvol}" ]; then # wenn Subvolume noch nicht vorhanden
+                    echo "|__ Erstelle Subvolume '/mnt/${subvol}'..."
+                    sudo btrfs subvolume create "/mnt/${subvol}"
+                else
+                    echo -e "\e[0;33m|__ Subvolume '/mnt/${subvol}' bereits vorhanden\e[39m"
+                fi
             done
-        fi
 
-        sudo cp /etc/fstab /etc/fstab.bak # Sicherung fstab
-        echo -e "\nMount: 'subvolid=5' '${fstabFileSystem}' nach '/mnt'..."
-        sudo mount -t btrfs -o subvolid=5 "$fstabFileSystem" /mnt # bzw. sudo mount -t btrfs -o "$btrfsFstabMountOptions_standard" /dev/vda3 /mnt
+            echo "Unmount '/mnt'..."
+            sudo umount /mnt
 
-        for subvol in "${!btrfsSubvolLayout[@]}"; do
-            if [ ! -e "/mnt/${subvol}" ]; then # wenn Subvolume noch nicht vorhanden
-                echo "|__ Erstelle Subvolume '/mnt/${subvol}'..."
-                sudo btrfs subvolume create "/mnt/${subvol}"
-            else
-                echo -e "\e[0;33m|__ Subvolume '/mnt/${subvol}' bereits vorhanden\e[39m"
-            fi
-        done
+            echo -e "\n*** Erstelle Einträge in '/etc/fstab':"
+            for subvol in "${!btrfsSubvolLayout[@]}"; do
+                subvolInFstab='false'
+                mountPointInFstab='false'
 
-        echo "Unmount '/mnt'..."
-        sudo umount /mnt
+                echo "|__ erstelle Eintrag für Subvolume '${subvol}' mit mount point '${btrfsSubvolLayout[${subvol}]}'..."
 
-        echo -e "\n*** Erstelle Einträge in '/etc/fstab':"
-        for subvol in "${!btrfsSubvolLayout[@]}"; do
-            subvolInFstab='false'
-            mountPointInFstab='false'
+                if [ ! -e "${btrfsSubvolLayout[${subvol}]}" ]; then # wenn Mount-Ziel (Verzeichnis) noch nicht vorhanden
+                    echo -e "\e[0;33m    |__ Mount-Ziel '${btrfsSubvolLayout[${subvol}]}' nicht vorhanden, Verzeichnis wird erstellt...\e[39m"
+                    sudo mkdir -p "${btrfsSubvolLayout[${subvol}]}"
+                fi
 
-            echo "|__ erstelle Eintrag für Subvolume '${subvol}' mit mount point '${btrfsSubvolLayout[${subvol}]}'..."
+                if [[ $(grep "subvol=/${subvol}," /etc/fstab) ]]; then # wenn Eintrag für z.B. ...'subvol=/@,'... bereits vorhanden
+                    echo -e "\e[0;33m    |__ Eintrag für Subvolume '${subvol}' bereits vorhanden, ggf. prüfen/korrigieren\e[39m"
+                    subvolInFstab='true'
+                fi
 
-            if [ ! -e "${btrfsSubvolLayout[${subvol}]}" ]; then # wenn Mount-Ziel (Verzeichnis) noch nicht vorhanden
-                echo -e "\e[0;33m    |__ Mount-Ziel '${btrfsSubvolLayout[${subvol}]}' nicht vorhanden, Verzeichnis wird erstellt...\e[39m"
-                sudo mkdir -p "${btrfsSubvolLayout[${subvol}]}"
-            fi
+                if [[ $(grep -E " +${btrfsSubvolLayout[${subvol}]} +" /etc/fstab) ]]; then # wenn Mount Point (z.B. für '/') bereits vorhanden
+                    echo -e "\e[0;33m    |__ Mount-Ziel '${btrfsSubvolLayout[${subvol}]}' bereits vorhanden, '${subvol}' wird nicht (nochmal) hinterlegt, ggf. prüfen/korrigieren\e[39m"
+                    mountPointInFstab='true'
+                fi
 
-            if [[ $(grep "subvol=/${subvol}," /etc/fstab) ]]; then # wenn Eintrag für z.B. ...'subvol=/@,'... bereits vorhanden
-                echo -e "\e[0;33m    |__ Eintrag für Subvolume '${subvol}' bereits vorhanden, ggf. prüfen/korrigieren\e[39m"
-                subvolInFstab='true'
-            fi
+                if [ "${subvolInFstab}" = 'false' ] && [ "${mountPointInFstab}" = 'false' ]; then
+                    echo "${fstabFileSystem} ${btrfsSubvolLayout[${subvol}]} btrfs subvol=/${subvol},${btrfsFstabMountOptions_standard}" | sudo tee -a /etc/fstab
+                fi
+            done
 
-            if [[ $(grep -E " +${btrfsSubvolLayout[${subvol}]} +" /etc/fstab) ]]; then # wenn Mount Point (z.B. für '/') bereits vorhanden
-                echo -e "\e[0;33m    |__ Mount-Ziel '${btrfsSubvolLayout[${subvol}]}' bereits vorhanden, '${subvol}' wird nicht (nochmal) hinterlegt, ggf. prüfen/korrigieren\e[39m"
-                mountPointInFstab='true'
+            if [ "${deleteOldRootInFstab}" = "true" ]; then
+                sudo sed -i "/subvolid=5,subvol=\//d" /etc/fstab # delete the line containing 'subvolid=5,subvol=/'
             fi
 
-            if [ "${subvolInFstab}" = 'false' ] && [ "${mountPointInFstab}" = 'false' ]; then
-                echo "${fstabFileSystem} ${btrfsSubvolLayout[${subvol}]} btrfs subvol=/${subvol},${btrfsFstabMountOptions_standard}" | sudo tee -a /etc/fstab
+            if [[ "${os}" = "Endeavour*" ]]; then
+                echo -e "\nErsetze/korrigiere ggf. mount-options in '/etc/fstab':"
+                echo -e "Ersetze ggf. fstab btrfs mount-option (Endeavour)'...${btrfsFstabMountOptions_endeavour}' mit '...${btrfsFstabMountOptions_standard}'"
+                sudo sed -i "s/${btrfsFstabMountOptions_endeavour}/${btrfsFstabMountOptions_standard}/g" /etc/fstab
             fi
-        done
 
-        if [ "${deleteOldRootInFstab}" = "true" ]; then
-            sudo sed -i "/subvolid=5,subvol=\//d" /etc/fstab # delete the line containing 'subvolid=5,subvol=/'
-        fi
+            echo "Aktualisiere systemd units aus fstab + mount all..."
+            sudo systemctl daemon-reload && sudo mount -a
 
-        if [[ "${os}" = "Endeavour*" ]]; then
-            echo -e "\nErsetze/korrigiere ggf. mount-options in '/etc/fstab':"
-            echo -e "Ersetze ggf. fstab btrfs mount-option (Endeavour)'...${btrfsFstabMountOptions_endeavour}' mit '...${btrfsFstabMountOptions_standard}'"
-            sudo sed -i "s/${btrfsFstabMountOptions_endeavour}/${btrfsFstabMountOptions_standard}/g" /etc/fstab
-        fi
-
-        echo "Aktualisiere systemd units aus fstab + mount all..."
-        sudo systemctl daemon-reload && sudo mount -a
-
-        echo -e "\n*** Default-Subvolume festlegen"
-        echo "aktuelles default-Subvolume für '/': $(sudo btrfs subvolume get-default /)"
-        echo -e "Subvolume-Liste:\n$(sudo btrfs subvolume list /)"
-        endloop='n'
-        while [ ! "$endloop" = 'j' ]; do
-            read -r -p "Bitte ID von @ eingeben: " idRootSubvol
-            read -r -p "Ist ID '${idRootSubvol}' korrekt ('j'=ja, beliebige Eingabe für Korrektur)?: " endloop
-        done
-        sudo btrfs subvolume set-default "${idRootSubvol}" / &&
-            echo "aktuelles root default-Subvolume: $(sudo btrfs subvolume get-default /)"
-
-        # UEFI+Grub / BIOS+Grub / UEFI+systemD
-        echo -e "\n*** Re-Install grub + Update grub boot-Einträge"
-        # https://wiki.archlinux.org/title/GRUB
-        # if [ -e "/sys/firmware/efi/efivars" ]; then    # check if booted into UEFI mode and UEFI variables are accessible
-        if [ -e "${efiDir}/" ] && [ -e "/boot/grub/grub.cfg" ]; then # UEFI + Grub
-            sudo grub-install --target=x86_64-efi --efi-directory="${efiDir}" --bootloader-id="${bootloaderId}" &&
-                sudo grub-mkconfig -o /boot/grub/grub.cfg &&
-                sudo grub-mkconfig
-        elif [ -e "/boot/grub/grub.cfg" ]; then # BIOS + Grub
-            lsblk
+            echo -e "\n*** Default-Subvolume festlegen"
+            echo "aktuelles default-Subvolume für '/': $(sudo btrfs subvolume get-default /)"
+            echo -e "Subvolume-Liste:\n$(sudo btrfs subvolume list /)"
             endloop='n'
             while [ ! "$endloop" = 'j' ]; do
-                read -r -p "Eingabe device-Pfad für grub-install (z.B. '/dev/vda'): " devGrubInstallPath # nicht Partition (z.B. '/dev/vda1'), sondern Disk (z.B. '/dev/vda')
-                read -r -p "Ist '${devGrubInstallPath}' korrekt ('j'=ja, beliebige Eingabe für Korrektur)?: " endloop
+                read -r -p "Bitte ID von @ eingeben: " idRootSubvol
+                read -r -p "Ist ID '${idRootSubvol}' korrekt ('j'=ja, beliebige Eingabe für Korrektur)?: " endloop
             done
-            # https://wiki.archlinux.org/title/GRUB#Installation_2
-            # BIOS: grub-install --target=i386-pc /dev/sdX; where i386-pc is deliberately used regardless of your actual architecture, and /dev/sdX is the disk (not a partition) where GRUB is to be installed.
-            sudo grub-install --target=i386-pc "${devGrubInstallPath}" && sudo grub-mkconfig -o /boot/grub/grub.cfg &&
-                sudo grub-mkconfig
-        elif [ -e "${efiDir}/loader/loader.conf" ]; then # UEFI + Systemd Boot
-            echo -e "\e[0;33m UEFI + systemD boot, kein TODO\e[39m"
-        else
-            echo "--- Bootloader nicht erkennbar ---"
-            # systemd boot: kein Eintrag, manueller Sprung in tty (bzw. dracut macht neues img?)
-        fi
+            sudo btrfs subvolume set-default "${idRootSubvol}" / &&
+                echo "aktuelles root default-Subvolume: $(sudo btrfs subvolume get-default /)"
 
-        echo -e "\n*** Snapper config '${snapperConfigName_root}' wird angepasst..." # /etc/snapper/configs/CONFIGS (z.B. /etc/snapper/configs/root)
-        # sudo snapper -c "${snapperConfigName_root}" set-config "ALLOW_USERS=${userid}"
-        sudo snapper -c "${snapperConfigName_root}" set-config "ALLOW_GROUPS=wheel"
-        sudo snapper -c "${snapperConfigName_root}" set-config "TIMELINE_CREATE=no"
-        sudo snapper -c "${snapperConfigName_root}" set-config "TIMELINE_LIMIT_HOURLY=5"
-        sudo snapper -c "${snapperConfigName_root}" set-config "TIMELINE_LIMIT_DAILY=7"
-        sudo snapper -c "${snapperConfigName_root}" set-config "TIMELINE_LIMIT_WEEKLY=0"
-        sudo snapper -c "${snapperConfigName_root}" set-config "TIMELINE_LIMIT_MONTHLY=0"
-        sudo snapper -c "${snapperConfigName_root}" set-config "TIMELINE_LIMIT_YEARLY=0"
+            # UEFI+Grub / BIOS+Grub / UEFI+systemD
+            echo -e "\n*** Re-Install grub + Update grub boot-Einträge"
+            # https://wiki.archlinux.org/title/GRUB
+            # if [ -e "/sys/firmware/efi/efivars" ]; then    # check if booted into UEFI mode and UEFI variables are accessible
+            if [ -e "${efiDir}/" ] && [ -e "/boot/grub/grub.cfg" ]; then # UEFI + Grub
+                sudo grub-install --target=x86_64-efi --efi-directory="${efiDir}" --bootloader-id="${bootloaderId}" &&
+                    sudo grub-mkconfig -o /boot/grub/grub.cfg &&
+                    sudo grub-mkconfig
+            elif [ -e "/boot/grub/grub.cfg" ]; then # BIOS + Grub
+                lsblk
+                endloop='n'
+                while [ ! "$endloop" = 'j' ]; do
+                    read -r -p "Eingabe device-Pfad für grub-install (z.B. '/dev/vda'): " devGrubInstallPath # nicht Partition (z.B. '/dev/vda1'), sondern Disk (z.B. '/dev/vda')
+                    read -r -p "Ist '${devGrubInstallPath}' korrekt ('j'=ja, beliebige Eingabe für Korrektur)?: " endloop
+                done
+                # https://wiki.archlinux.org/title/GRUB#Installation_2
+                # BIOS: grub-install --target=i386-pc /dev/sdX; where i386-pc is deliberately used regardless of your actual architecture, and /dev/sdX is the disk (not a partition) where GRUB is to be installed.
+                sudo grub-install --target=i386-pc "${devGrubInstallPath}" && sudo grub-mkconfig -o /boot/grub/grub.cfg &&
+                    sudo grub-mkconfig
+            elif [ -e "${efiDir}/loader/loader.conf" ]; then # UEFI + Systemd Boot
+                echo -e "\e[0;33m UEFI + systemD boot, kein TODO\e[39m"
+            else
+                echo "--- Bootloader nicht erkennbar ---"
+                # systemd boot: kein Eintrag, manueller Sprung in tty (bzw. dracut macht neues img?)
+            fi
 
-        echo -e "\n*** Zugriffs- und Besitzrechte für '${snapperSnapshotFolder}' werden festgelegt..."
-        sudo chown -R :wheel "${snapperSnapshotFolder}" && sudo chmod -R 750 "${snapperSnapshotFolder}"
+            echo -e "\n*** Snapper config '${snapperConfigName_root}' wird angepasst..." # /etc/snapper/configs/CONFIGS (z.B. /etc/snapper/configs/root)
+            # sudo snapper -c "${snapperConfigName_root}" set-config "ALLOW_USERS=${userid}"
+            sudo snapper -c "${snapperConfigName_root}" set-config "ALLOW_GROUPS=wheel"
+            sudo snapper -c "${snapperConfigName_root}" set-config "TIMELINE_CREATE=no"
+            sudo snapper -c "${snapperConfigName_root}" set-config "TIMELINE_LIMIT_HOURLY=5"
+            sudo snapper -c "${snapperConfigName_root}" set-config "TIMELINE_LIMIT_DAILY=7"
+            sudo snapper -c "${snapperConfigName_root}" set-config "TIMELINE_LIMIT_WEEKLY=0"
+            sudo snapper -c "${snapperConfigName_root}" set-config "TIMELINE_LIMIT_MONTHLY=0"
+            sudo snapper -c "${snapperConfigName_root}" set-config "TIMELINE_LIMIT_YEARLY=0"
 
-        # UEFI oder BIOS + GRUB    # systemd boot: kein Eintrag, manueller Sprung in tty, um auf best. snapshot zurückzusetzen
-        # if [ -e "${efiDir}/grub.cfg" ] || [ -e "/boot/grub" ]; then    # Grub
-        if [ -e "/boot/grub" ]; then # Grub
-            echo -e "\n*** Enable 'grub-btrfsd.service', 'snapper-cleanup.timer'..."
-            sudo systemctl enable --now grub-btrfsd.service
-            sudo systemctl enable --now snapper-cleanup.timer
-        fi
+            echo -e "\n*** Zugriffs- und Besitzrechte für '${snapperSnapshotFolder}' werden festgelegt..."
+            sudo chown -R :wheel "${snapperSnapshotFolder}" && sudo chmod -R 750 "${snapperSnapshotFolder}"
 
-        echo -e "\n*** Erstelle Hook für backup '/boot' (benötigt rsync)"
-        echo "Installiere rsync, falls nicht vorhanden..."
-        sudo pacman --needed --noconfirm -S rsync
+            # UEFI oder BIOS + GRUB    # systemd boot: kein Eintrag, manueller Sprung in tty, um auf best. snapshot zurückzusetzen
+            # if [ -e "${efiDir}/grub.cfg" ] || [ -e "/boot/grub" ]; then    # Grub
+            if [ -e "/boot/grub" ]; then # Grub
+                echo -e "\n*** Enable 'grub-btrfsd.service', 'snapper-cleanup.timer'..."
+                sudo systemctl enable --now grub-btrfsd.service
+                sudo systemctl enable --now snapper-cleanup.timer
+            fi
 
-        echo "Erstelle (kopiere nach) '/etc/pacman.d/hooks/95-bootbackup.hook'..."
-        # SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)   # https://codefather.tech/blog/bash-get-script-directory/
-        SCRIPT_DIR=$(dirname "${BASH_SOURCE[0]}")
-        sudo mkdir -p /etc/pacman.d/hooks &&
-            sudo cp "${SCRIPT_DIR}/files/95-bootbackup.hook" /etc/pacman.d/hooks/95-bootbackup.hook &&
-            sudo chown root:root /etc/pacman.d/hooks/95-bootbackup.hook
-
-        #if [ -e "/efi/loader/loader.conf" ]; then           # systemd Boot
-        if [ -e "${efiDir}/loader/loader.conf" ]; then # systemd Boot
-            #echo -e "\n*** Erstelle Hook für backup '/efi' (benötigt rsync)"
-            echo -e "\n*** Erstelle Hook für backup '${efiDir}' (benötigt rsync)"
+            echo -e "\n*** Erstelle Hook für backup '/boot' (benötigt rsync)"
             echo "Installiere rsync, falls nicht vorhanden..."
             sudo pacman --needed --noconfirm -S rsync
-            echo "Erstelle (kopiere nach) '/etc/pacman.d/hooks/95-efibackup.hook'..."
-            # SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)   # absolute path # https://codefather.tech/blog/bash-get-script-directory/
-            SCRIPT_DIR=$(dirname "${BASH_SOURCE[0]}") # relative path
+
+            echo "Erstelle (kopiere nach) '/etc/pacman.d/hooks/95-bootbackup.hook'..."
+            # SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)   # https://codefather.tech/blog/bash-get-script-directory/
+            SCRIPT_DIR=$(dirname "${BASH_SOURCE[0]}")
             sudo mkdir -p /etc/pacman.d/hooks &&
-                sudo cp "${SCRIPT_DIR}/files/95-efibackup.hook" /etc/pacman.d/hooks/95-efibackup.hook &&
-                sudo chown root:root /etc/pacman.d/hooks/95-efibackup.hook
-        fi
+                sudo cp "${SCRIPT_DIR}/files/95-bootbackup.hook" /etc/pacman.d/hooks/95-bootbackup.hook &&
+                sudo chown root:root /etc/pacman.d/hooks/95-bootbackup.hook
 
-        echo -e "\n*** Erstelle snapshot (single) '***Base System Install***' und aktualisiere grub-boot Einträge"
-        sudo snapper -c "${snapperConfigName_root}" create -d "***Base System Install***" &&
-            echo "Aktuelle Liste der Snapshots:"
-        sudo snapper ls
+            #if [ -e "/efi/loader/loader.conf" ]; then           # systemd Boot
+            if [ -e "${efiDir}/loader/loader.conf" ]; then # systemd Boot
+                #echo -e "\n*** Erstelle Hook für backup '/efi' (benötigt rsync)"
+                echo -e "\n*** Erstelle Hook für backup '${efiDir}' (benötigt rsync)"
+                echo "Installiere rsync, falls nicht vorhanden..."
+                sudo pacman --needed --noconfirm -S rsync
+                echo "Erstelle (kopiere nach) '/etc/pacman.d/hooks/95-efibackup.hook'..."
+                # SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)   # absolute path # https://codefather.tech/blog/bash-get-script-directory/
+                SCRIPT_DIR=$(dirname "${BASH_SOURCE[0]}") # relative path
+                sudo mkdir -p /etc/pacman.d/hooks &&
+                    sudo cp "${SCRIPT_DIR}/files/95-efibackup.hook" /etc/pacman.d/hooks/95-efibackup.hook &&
+                    sudo chown root:root /etc/pacman.d/hooks/95-efibackup.hook
+            fi
 
-        #if [ -e "/boot/efi/grub.cfg" ] || [ -e "/boot/grub" ]; then     # GRUB (bei systemd Boot: kein Booteintrag, manuell in tty)
-        if [ -e "${efiDir}/grub.cfg" ] || [ -e "/boot/grub" ]; then # GRUB (bei systemd Boot: kein Booteintrag, manuell in tty)
-            echo -e "\n*** Aktualisiere Grub"
-            echo "Aktualisiere 'grub.cfg'"
-            sudo grub-mkconfig -o /boot/grub/grub.cfg &&
-                echo "(Re)Generiere Snapshots-(Sub)Menüeinträge in grub"
-            sudo grub-mkconfig
-        fi
-        ;;
+            echo -e "\n*** Erstelle snapshot (single) '***Base System Install***' und aktualisiere grub-boot Einträge"
+            sudo snapper -c "${snapperConfigName_root}" create -d "***Base System Install***" &&
+                echo "Aktuelle Liste der Snapshots:"
+            sudo snapper ls
 
-    *)
-        echo -e "\e[0;33mFür verwendetes OS '${os}' wurde Installation/Konfiguration von 'snapper' noch nicht getestet."
-        echo -e "Manuelle Durchführung notwendig\e[39m"
-        touch "${HOME}/.ansible_installScript_snapper_NOT-DONE"
-        read -r -p "Eingabe-Taste drücken um fortzufahren"
-        exit 0
-        ;;
+            #if [ -e "/boot/efi/grub.cfg" ] || [ -e "/boot/grub" ]; then     # GRUB (bei systemd Boot: kein Booteintrag, manuell in tty)
+            if [ -e "${efiDir}/grub.cfg" ] || [ -e "/boot/grub" ]; then # GRUB (bei systemd Boot: kein Booteintrag, manuell in tty)
+                echo -e "\n*** Aktualisiere Grub"
+                echo "Aktualisiere 'grub.cfg'"
+                sudo grub-mkconfig -o /boot/grub/grub.cfg &&
+                    echo "(Re)Generiere Snapshots-(Sub)Menüeinträge in grub"
+                sudo grub-mkconfig
+            fi
+            ;;
+
+        *)
+            echo -e "\e[0;33mFür verwendetes OS '${os}' wurde Installation/Konfiguration von 'snapper' noch nicht getestet."
+            echo -e "Manuelle Durchführung notwendig\e[39m"
+            touch "${HOME}/.ansible_installScript_snapper_NOT-DONE"
+            read -r -p "Eingabe-Taste drücken um fortzufahren"
+            exit 0
+            ;;
     esac
 
     touch "${HOME}/.ansible_installScript_snapperGrub" # wird auch bei default-switch - Zweig erstellt, d.h. snapper nicht konfiguriert (-> Manuelle Durchführung notwendig)
 
     echo -e "\e[0;33m*** Ende Snapper-Teil\e[39m"
     echo -e "\e[0;33m*** ********************************************\e[39m"
-# else
-#     echo -e "\n'/' hat kein btrfs-Filesystem"
 }
 
 config-updatedb() {
