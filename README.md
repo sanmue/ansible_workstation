@@ -17,10 +17,12 @@
 - boot to desktop environment + login
 - clone the repo to the home directory of the current user
   - `git clone https://gitlab.com/sanmue/ansible_workstation.git`
+- cd into the repo folder
+  - `cd ansible_workstation`
 - execute the initial bash script
-  - `./ansible_workstation/install_SWandConf.sh`
+  - `./install_SWandConf.sh`
   - check if script is executable first
-    - make executable: `chmod +x ./ansible_workstation/install_SWandConf.sh`
+    - make executable: `chmod +x install_SWandConf.sh`
 
 ## Known Issues
 
