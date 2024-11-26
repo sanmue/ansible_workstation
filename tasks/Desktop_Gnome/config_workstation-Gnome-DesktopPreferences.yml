@@ -1771,7 +1771,7 @@
   when:
     - env_desktop in ["gnome"]
 
-- name: Gnome Desktop - Preferences - Set gnome shell extensions - enabled-extension (Gnome)
+- name: Gnome Desktop - Preferences - Set gnome shell extensions - enabled-extensions (Gnome)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: dconf write /org/gnome/shell/enabled-extensions "['dash-to-panel@jderose9.github.com', 'user-theme@gnome-shell-extensions.gcampax.github.com']"
