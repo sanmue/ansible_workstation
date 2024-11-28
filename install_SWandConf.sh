@@ -106,14 +106,14 @@ fi
 
 ### Hostname
 # https://en.wikipedia.org/wiki/Hostname
-# TODO: error handling
+# TODO: error handling, validy check
 echo -e "\e[0;33mCurrent hostname:\e[39m '${currentHostname}'"
 read -r -p "  |_ Change hostname? ('y'=yes, other input=no): " changeHostname
 if [ "${changeHostname}" = 'y' ]; then
     read -r -p "     Enter new hostname: " newHostname
     newHostname="${newHostname// /}"           # remove any spaces
     newHostname="${newHostname,,}"             # change uppercase to lowercase letters
-    echo "     -> newHostname: ${newHostname}" # simplyfied validy check # no check if starts or ends with '-' or has any other invalid (special) characters
+    echo "     -> newHostname: ${newHostname}" # no validy check if starts or ends with '-' or contains any other invalid characters
 
     if [[ ! $(grep sudo /etc/group) = *"${userid}"* ]]; then # if user not in sudo group
         echo "     Changing hostname (hostnamectl)..."
@@ -239,7 +239,7 @@ esac
 ### ---
 echo -e "\n\e[0;35mAnsible-Playbook\e[39m"
 echo -e "\e[0;33m### Info\e[39m"
-echo -e "\e[0;33m# If you encounter a problem/error while executing the playbook (e.g. with pip / python, NVM, ...):\e[39m"
+echo -e "\e[0;33m# If an error occurs in context with pip, pyenv, nvm, ... while executing the playbook:\e[39m"
 echo -e "\e[0;33m# Close and reopen terminal and start the script or just the playbook again\e[39m"
 # echo -e "\e[0;33m#   - If VS Code app opens you can simply close it again or leave it open until script is finished\e[39m"
 echo -e "\e[0;33m###\e[39m\n"

@@ -17,7 +17,56 @@
 # pipx: jupyter
 # - # jupyter: https://samedwardes.com/blog/2022-10-23-best-jupyter-lab-install/
 
-- name: Python - pip - Info zu möglicher Fehlermeldung (env_user, all)
+# ### -----------------------------------------------------------------------------------------------------------------
+# ### intended to prevent: "error: externally-managed-environment\n\n\C3\97 This environment is externally managed..."
+# TODO: but does not help
+#
+# - name: Python - pip - make sure pyenv is in PATH and initialized (env_user, Arch)
+#   become: true
+#   become_user: "{{ env_user }}"
+#   ansible.builtin.shell: |
+#     export "PYENV_ROOT=/home/{{ env_user }}/.pyenv"
+#     command -v pyenv >/dev/null || export "PATH=$PYENV_ROOT/bin:$PATH"
+#     export "PATH=/home/{{ env_user }}/.pyenv/bin:$PATH" && eval "$(pyenv init -)" && eval "$(pyenv virtualenv-init -)"
+#   args:
+#     creates: "/home/{{ env_user }}/.ansible_PythonPip"
+#   when:
+#     - ansible_distribution in ["Archlinux"]
+#
+# - name: Python Environment - Source shell config (Arch)
+#   become: true
+#   become_user: "{{ env_user }}"
+#   # ansible.builtin.shell: source "/home/{{ env_user }}/.bashrc"
+#   ansible.builtin.shell:
+#     cmd: |
+#       set -o pipefail
+#       if echo "${SHELL}" | grep -q 'bash'; then
+#         source "/home/{{ env_user }}/.bashrc"
+#       elif echo "${SHELL}" | grep -q 'zsh'; then
+#         source "/home/{{ env_user }}/.zshrc"
+#       fi
+#   ignore_errors: true
+#   register: ignore_errors_register # Stores errors and failures for evaluation
+#   when:
+#     - ansible_distribution in ["Archlinux"]
+# ### -----------------------------------------------------------------------------------------------------------------
+#
+# ### -----------------------------------------------------------------------------------------------------------------
+# ### intended to prevent: "error: externally-managed-environment\n\n\C3\97 This environment is externally managed..."
+# TODO: but does not help
+#
+# - name: Python - pip - make sure pyenv is in PATH and initialized (env_user, Debian)
+#   become: true
+#   become_user: "{{ env_user }}"
+#   ansible.builtin.shell: |
+#     export "PATH=/home/{{ env_user }}/.pyenv/bin:$PATH" && eval "$(pyenv init -)" && eval "$(pyenv virtualenv-init -)"
+#   args:
+#     creates: "/home/{{ env_user }}/.ansible_PythonPip"
+#   when:
+#     - ansible_distribution in ["Debian"]
+# ### -----------------------------------------------------------------------------------------------------------------
+
+- name: Python - pip (env_user, all)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.debug:

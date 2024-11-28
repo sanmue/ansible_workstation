@@ -28,10 +28,11 @@
 #   ansible.builtin.git:
 #     repo: 'https://github.com/nvm-sh/nvm.git'
 #     dest: "/home/{{ env_user }}/.nvm"
-#     ssh_opts: "-o IdentitiesOnly=yes"
-#     accept_hostkey: true
+#     clone: true
+#     update: true
+#     # ssh_opts: "-o IdentitiesOnly=yes"
+#     # accept_newhostkey: true
 # fatal: [localhost]: FAILED! => {"changed": false, "msg": "Failed to init/update submodules: Submodule 'test/fixtures/nvmrc' (git@github.com:nvm-sh/nvmrc.git) registered for path 'test/fixtures/nvmrc'\nCloning into '/home/{{ env_user }}/.nvm/test/fixtures/nvmrc'...\ngit@github.com: Permission denied (publickey).\r\nfatal: Could not read from remote repository.\n\nPlease make sure you have the correct access rights\nand the repository exists. ...
-# TODO: fix
 
 - name: NvmNodejs - Clone nvm github repo (all)
   become: true

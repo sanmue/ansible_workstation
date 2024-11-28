@@ -18,6 +18,38 @@
 # - https://peps.python.org/pep-0668/#mark-the-installation-as-externally-managed
 # !!!
 
+# ### intended to prevent errors:
+# ### error: "... pyenv: not found ..." (Debian, probably sind penv is installed the manual way (in ...localPackageInstall.yml))
+# ###   - error occurs first at: "Python Environment - pyenv install python 3 (env_user, all, not Arch)"
+# ### error: "error: externally-managed-environment\n\n\C3\97 This environment is externally managed..."
+# ###   - error occurs first at: "Python - pip - upgrade pip" (packages_workstation-pythonPip.yml)
+#
+# ### still does not help for: "error: externally-managed-environment
+#
+# Debian: without args: \ executable: /usr/bin/bash:
+# - set -o pipefail # error: Illegal option -o pipefail
+# - error: "... stderr": "/bin/sh: 1: pyenv: not found ..."
+#   - seems to use 'sh' by default, not bash (as in $SHELL)
+#
+# - name: Python Environment - Source shell config (Debian)
+#   become: true
+#   become_user: "{{ env_user }}"
+#   # ansible.builtin.shell: source "/home/{{ env_user }}/.bashrc"
+#   ansible.builtin.shell:
+#     cmd: |
+#       set -o pipefail
+#       if echo "${SHELL}" | grep -q 'bash'; then
+#         source "/home/{{ env_user }}/.bashrc"
+#       elif echo "${SHELL}" | grep -q 'zsh'; then
+#         source "/home/{{ env_user }}/.zshrc"
+#       fi
+#   args:
+#     executable: /usr/bin/bash
+#   ignore_errors: true
+#   register: ignore_errors_register # Stores errors and failures for evaluation
+#   when:
+#     - ansible_distribution in ["Debian"]
+
 - name: Python Environment - Get and register Python version (Arch)
   become: true
   become_user: "{{ env_user }}"
@@ -29,10 +61,11 @@
   when:
     - ansible_distribution in ["Archlinux"]
 
+# Error: ... Illegal option -o pipefail
 - name: Python Environment - Get and register Python 3 version (all, not Arch)
-  become: true
+  become: true # , skip_ansible_lint
   become_user: "{{ env_user }}"
-  ansible.builtin.shell: set -o pipefail && python3 --version | cut -d ' ' -f2
+  ansible.builtin.shell: python3 --version | cut -d ' ' -f2
   register: python3Version
   # ignore_errors: true
   args:

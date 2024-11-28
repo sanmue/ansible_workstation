@@ -104,7 +104,7 @@
   when:
     - ansible_pkg_mgr == "apt"
     - ansible_distribution == "Debian"
-    - usrbincode.stat.exists
+    - not usrbincode.stat.exists
 
 # ##############
 # ### Zed Editor

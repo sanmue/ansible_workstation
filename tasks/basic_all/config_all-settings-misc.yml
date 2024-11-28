@@ -16,8 +16,8 @@
     state: present
     backup: true
   when:
-    - ansible_distribution == "Archlinux"
-    - etcdefgrub.stat.exists
+  - ansible_distribution == "Archlinux"
+  - etcdefgrub.stat.exists
 
 # https://www.fosslinux.com/46741/things-to-do-after-installing-manjaro.htm
 # - aus Punkt 13: Install the Latest Kernel (or an Older LTS Kernel)
@@ -25,15 +25,15 @@
   ansible.builtin.shell:
     cmd: sudo sed -Ei '/GRUB_TIMEOUT_STYLE=hidden/s/hidden/menu/' /etc/default/grub
   when:
-    - ansible_distribution == "Archlinux"
-    - etcdefgrub.stat.exists
+  - ansible_distribution == "Archlinux"
+  - etcdefgrub.stat.exists
 
 - name: All settings misc - Update grub.cfg (Archlinux)
   ansible.builtin.shell:
     cmd: sudo grub-mkconfig -o /boot/grub/grub.cfg
   when:
-    - ansible_distribution == "Archlinux"
-    - etcdefgrub.stat.exists
+  - ansible_distribution == "Archlinux"
+  - etcdefgrub.stat.exists
 
 # ##########
 # ### Locale
@@ -148,7 +148,7 @@
     group: "{{ env_user }}"
     mode: u=rw,g=r,o=r
   when:
-    - not stat_bashrc_user.stat.exists
+  - not stat_bashrc_user.stat.exists
 
 - name: All settings misc - Bashrc - Insert/Update additional paths and config - starship shell prompt (User, all)
   tags: shellrc
@@ -234,9 +234,9 @@
 
       # cat -> bat # concatenate files and print on the standard output
       if [[ $(command -v bat) ]]; then
-          alias cat='bat --plain --force-colorization'
-          alias catn='bat --number --force-colorization'
-          alias catf='bat --style="full" --force-colorization'
+          alias cat='bat --plain' # --force-colorization
+          alias catn='bat --number' # --force-colorization
+          alias catf='bat --style="full"' # --force-colorization
       fi
 
       # lsblk - list block devices
@@ -321,7 +321,7 @@
       eval "$(pyenv init -)"
       eval "$(pyenv virtualenv-init -)"
   when:
-    - ansible_distribution in ["Debian"]
+  - ansible_distribution in ["Debian"]
 
 # - name: All settings misc - Bashrc - initial command 'pyenv init' - pyenv (User, Arch)
 #  tags: shellrc
@@ -350,7 +350,7 @@
       eval "$(pyenv init -)"
       eval "$(pyenv virtualenv-init -)"
   when:
-    - ansible_distribution in ["Archlinux"]
+  - ansible_distribution in ["Archlinux"]
 
 - name: All settings misc - Bashrc - Insert/Update additional paths and config - zoxide (User, all)
   tags: shellrc
@@ -405,7 +405,7 @@
     state: touch
     mode: "0644"
   when:
-    - not stat_bashrc_root.stat.exists
+  - not stat_bashrc_root.stat.exists
 
 - name: All settings misc - Bashrc - Insert/Update additional paths and config - starship shell prompt (root, all)
   tags: shellrc
@@ -456,7 +456,7 @@
     mode: u=rw,g=r,o=r
     backup: true
   when:
-    - statzshrcUser.stat.exists
+  - statzshrcUser.stat.exists
 
 - name: All settings misc - Zshrc - delete .zshrc (User, all)
   tags: shellrc
@@ -464,7 +464,7 @@
     path: "/home/{{ env_user }}/.zshrc"
     state: absent
   when:
-    - statzshrcUser.stat.exists
+  - statzshrcUser.stat.exists
 
 - name: All settings misc - Zshrc - touch (User, all)
   tags: shellrc
@@ -597,9 +597,9 @@
 
       # cat -> bat # concatenate files and print on the standard output
       if [[ $(command -v bat) ]]; then
-          alias cat='bat --plain --force-colorization'
-          alias catn='bat --number --force-colorization'
-          alias catf='bat --style="full" --force-colorization'
+          alias cat='bat --plain' # --force-colorization
+          alias catn='bat --number' # --force-colorization
+          alias catf='bat --style="full"' # --force-colorization
       fi
 
       # lsblk - list block devices
@@ -684,7 +684,7 @@
       eval "$(pyenv init -)"
       eval "$(pyenv virtualenv-init -)"
   when:
-    - ansible_distribution in ["Debian"]
+  - ansible_distribution in ["Debian"]
 
 # - name: All settings misc - Zshrc - initial command 'pyenv init' - pyenv (User, Arch)
 #  tags: shellrc
@@ -713,7 +713,7 @@
       eval "$(pyenv init -)"
       eval "$(pyenv virtualenv-init -)"
   when:
-    - ansible_distribution in ["Archlinux"]
+  - ansible_distribution in ["Archlinux"]
 
 - name: All settings misc - Zshrc - Insert/Update additional paths and config - zoxide (User, all)
   tags: shellrc
@@ -837,7 +837,7 @@
     state: touch
     mode: "0644"
   when:
-    - not stat_bashrc_root.stat.exists
+  - not stat_bashrc_root.stat.exists
 
 - name: All settings misc - Zshrc - Insert/Update additional paths and config - starship shell prompt (root, all)
   tags: shellrc
@@ -924,25 +924,45 @@
     backup: true
   when: ansible_distribution in ["Debian"]
 
-# fatal: detected dubious ownership in repository at '/usr/share/zsh/plugins/...; To add an exception:
+# fatal: detected dubious ownership in repository at '/usr/share/zsh/plugins/... # add an exception:
+#
+# git_config module instead of:
+# become: true # ansible.builtin.shell: /usr/bin/git config --global --add safe.directory /usr/share/zsh/plugins/zsh-autosuggestions
+# but: # add_mode: add # as of 11/2024 / ansible [core 2.14.16]: 'add_mode' not available
+#
+# - name: All settings misc - zsh plugin git repo - add safe.directory - autosuggestions (Debian)
+#   tags: shellrc
+#   become: true
+#   community.general.git_config:
+#     name: safe.directory
+#     scope: global
+#     value: "{{ item }}"
+#     add_mode: add # as of 11/2024 / ansible [core 2.14.16]: 'add_mode' not available yet
+#   loop:
+#     - /usr/share/zsh/plugins/zsh-autosuggestions
+#     - /usr/share/zsh/plugins/zsh-syntax-highlighting
+#     - /usr/share/zsh/plugins/zsh-history-substring-search
+#   when:
+#     - ansible_distribution in ["Debian"]
+
 - name: All settings misc - zsh plugin git repo - add safe.directory - autosuggestions (Debian)
-  tags: shellrc
+  tags: shellrc # , skip_ansible_lint
   become: true
   ansible.builtin.shell: /usr/bin/git config --global --add safe.directory /usr/share/zsh/plugins/zsh-autosuggestions
   when:
-    - ansible_distribution in ["Debian"]
+  - ansible_distribution in ["Debian"]
 
 - name: All settings misc - zsh plugin git repo - add safe.directory - syntax-highlighting (Debian)
-  tags: shellrc
+  tags: shellrc # , skip_ansible_lint
   ansible.builtin.shell: /usr/bin/git config --global --add safe.directory /usr/share/zsh/plugins/zsh-syntax-highlighting
   when:
-    - ansible_distribution in ["Debian"]
+  - ansible_distribution in ["Debian"]
 
 - name: All settings misc - zsh plugin git repo - add safe.directory - history-substring-search (Debian)
-  tags: shellrc
+  tags: shellrc # , skip_ansible_lint
   ansible.builtin.shell: /usr/bin/git config --global --add safe.directory /usr/share/zsh/plugins/zsh-history-substring-search
   when:
-    - ansible_distribution in ["Debian"]
+  - ansible_distribution in ["Debian"]
 
 # #######
 # ### vim
@@ -990,7 +1010,7 @@
       set undolevels=1000 " Number of undo levels
       " #
   when:
-    - ansible_distribution == "Debian"
+  - ansible_distribution == "Debian"
 
 - name: All settings misc - Set vim global config (Arch)
   tags: vimrc
@@ -1167,8 +1187,8 @@
     group: "{{ env_user }}"
     mode: "0755"
   loop:
-    - .clam/logs
-    - .clam/quarantine
+  - .clam/logs
+  - .clam/quarantine
 
 # #############################################
 # # reflector - retrieve the latest mirror list
@@ -1182,7 +1202,7 @@
     replace: "--country Germany,France,Austria,Switzerland,Netherlands,Belgium,Sweden"
     backup: true
   when:
-    - ansible_distribution in ["Archlinux"]
+  - ansible_distribution in ["Archlinux"]
 
 - name: All settings misc - reflector - how many mirrors to use (Arch)
   ansible.builtin.replace:
@@ -1192,7 +1212,7 @@
     replace: "--latest 8"
     backup: true
   when:
-    - ansible_distribution in ["Archlinux"]
+  - ansible_distribution in ["Archlinux"]
 
 # ######################
 # ### Visual Studio Code
@@ -1257,110 +1277,32 @@
     # single_branch: true
     # version: "HEAD"   # default: "HEAD"
   loop:
-    - {
-      path: "https://github.com/Rapha149/ulauncher-bluetooth.git",
-      name: "ulauncher-bluetooth",
-    }
-    - {
-      path: "https://github.com/tchar/ulauncher-albert-calculate-anything.git",
-      name: "ulauncher-albert-calculate-anything",
-    }
-    - {
-      path: "https://github.com/sergius02/ulauncher-colorconverter.git",
-      name: "ulauncher-colorconverter",
-    }
-    - {
-      path: "https://github.com/Rapha149/ulauncher-deepl.git",
-      name: "ulauncher-deepl",
-    }
-    - {
-      path: "https://github.com/Ulauncher/ulauncher-emoji.git",
-      name: "ulauncher-emoji",
-    }
-    - {
-      path: "https://github.com/brpaz/ulauncher-faker.git",
-      name: "ulauncher-faker",
-    }
-    - {
-      path: "https://github.com/KuenzelIT/ulauncher-firefox-bookmarks.git",
-      name: "ulauncher-firefox-bookmarks",
-    }
-    - {
-      path: "https://github.com/hillaryychan/ulauncher-fzf.git",
-      name: "ulauncher-fzf",
-    }
-    - {
-      path: "https://github.com/friday/ulauncher-gnome-settings.git",
-      name: "ulauncher-gnome-settings",
-    }
-    - {
-      path: "https://github.com/SeoFernando25/ulauncher-gpt.git",
-      name: "ulauncher-gnome-settings",
-    }
-    - {
-      path: "https://github.com/pwnyprod/ulauncher-ipcopy.git",
-      name: "ulauncher-ipcopy",
-    }
-    - {
-      path: "https://github.com/brpaz/ulauncher-lipsum.git",
-      name: "ulauncher-lipsum",
-    }
-    - {
-      path: "https://github.com/RNairn01/ulauncher-meme-my-text.git",
-      name: "ulauncher-meme-my-text",
-    }
-    - {
-      path: "https://github.com/melianmiko/ulauncher-nmcli.git",
-      name: "ulauncher-nmcli",
-    }
-    - {
-      path: "https://github.com/mastdiekin/ulauncher-pypi-search.git",
-      name: "ulauncher-pypi-search",
-    }
-    - {
-      path: "https://github.com/noam09/ulauncher-remmina.git",
-      name: "ulauncher-remmina",
-    }
-    - {
-      path: "https://github.com/lighttigerXIV/ulauncher-session-manager.git",
-      name: "ulauncher-session-manager",
-    }
-    - {
-      path: "https://github.com/xRealNeon/SpritpreiseUlauncher.git",
-      name: "SpritpreiseUlauncher",
-    }
-    - {
-      path: "https://github.com/jyvern/ulauncher-ssh.git",
-      name: "ulauncher-ssh",
-    }
-    - {
-      path: "https://github.com/rootwork/ulauncher-symbol.git",
-      name: "ulauncher-symbol",
-    }
-    - {
-      path: "https://github.com/lighttigerXIV/ulauncher-terminal-runner-extension.git",
-      name: "ulauncher-terminal-runner-extension",
-    }
-    - {
-      path: "https://github.com/Ulauncher/ulauncher-timer.git",
-      name: "ulauncher-timer",
-    }
-    - {
-      path: "https://github.com/brpaz/ulauncher-timestamp.git",
-      name: "ulauncher-timestamp",
-    }
-    - {
-      path: "https://github.com/dhelmr/ulauncher-tldr.git",
-      name: "ulauncher-tldr",
-    }
-    - {
-      path: "https://github.com/zensoup/ulauncher-unicode.git",
-      name: "ulauncher-unicode",
-    }
-    - {
-      path: "https://github.com/NastuzziSamy/ulauncher-youtube-search.git",
-      name: "ulauncher-youtube-search",
-    }
+  - { path: "https://github.com/Rapha149/ulauncher-bluetooth.git", name: "ulauncher-bluetooth" }
+  - { path: "https://github.com/tchar/ulauncher-albert-calculate-anything.git", name: "ulauncher-albert-calculate-anything" }
+  - { path: "https://github.com/sergius02/ulauncher-colorconverter.git", name: "ulauncher-colorconverter" }
+  - { path: "https://github.com/Rapha149/ulauncher-deepl.git", name: "ulauncher-deepl" }
+  - { path: "https://github.com/Ulauncher/ulauncher-emoji.git", name: "ulauncher-emoji" }
+  - { path: "https://github.com/brpaz/ulauncher-faker.git", name: "ulauncher-faker" }
+  - { path: "https://github.com/KuenzelIT/ulauncher-firefox-bookmarks.git", name: "ulauncher-firefox-bookmarks" }
+  - { path: "https://github.com/hillaryychan/ulauncher-fzf.git", name: "ulauncher-fzf" }
+  - { path: "https://github.com/friday/ulauncher-gnome-settings.git", name: "ulauncher-gnome-settings" }
+  - { path: "https://github.com/SeoFernando25/ulauncher-gpt.git", name: "ulauncher-gnome-settings" }
+  - { path: "https://github.com/pwnyprod/ulauncher-ipcopy.git", name: "ulauncher-ipcopy" }
+  - { path: "https://github.com/brpaz/ulauncher-lipsum.git", name: "ulauncher-lipsum" }
+  - { path: "https://github.com/RNairn01/ulauncher-meme-my-text.git", name: "ulauncher-meme-my-text" }
+  - { path: "https://github.com/melianmiko/ulauncher-nmcli.git", name: "ulauncher-nmcli" }
+  - { path: "https://github.com/mastdiekin/ulauncher-pypi-search.git", name: "ulauncher-pypi-search" }
+  - { path: "https://github.com/noam09/ulauncher-remmina.git", name: "ulauncher-remmina" }
+  - { path: "https://github.com/lighttigerXIV/ulauncher-session-manager.git", name: "ulauncher-session-manager" }
+  - { path: "https://github.com/xRealNeon/SpritpreiseUlauncher.git", name: "SpritpreiseUlauncher" }
+  - { path: "https://github.com/jyvern/ulauncher-ssh.git", name: "ulauncher-ssh" }
+  - { path: "https://github.com/rootwork/ulauncher-symbol.git", name: "ulauncher-symbol" }
+  - { path: "https://github.com/lighttigerXIV/ulauncher-terminal-runner-extension.git", name: "ulauncher-terminal-runner-extension" }
+  - { path: "https://github.com/Ulauncher/ulauncher-timer.git", name: "ulauncher-timer" }
+  - { path: "https://github.com/brpaz/ulauncher-timestamp.git", name: "ulauncher-timestamp" }
+  - { path: "https://github.com/dhelmr/ulauncher-tldr.git", name: "ulauncher-tldr" }
+  - { path: "https://github.com/zensoup/ulauncher-unicode.git", name: "ulauncher-unicode" }
+  - { path: "https://github.com/NastuzziSamy/ulauncher-youtube-search.git", name: "ulauncher-youtube-search" }
 
 # ##########
 # ### rclone
