@@ -1,5 +1,4 @@
 {
-  "ansible.python.interpreterPath": "/home/sandro/.pyenv/versions/3.12.5/bin/python",
   "yaml.schemas": {
     "https://raw.githubusercontent.com/ansible/ansible-lint/main/src/ansiblelint/schemas/ansible.json#/$defs/playbook": [
       "file:///home/sandro/dev/Ansible/Projects/ansible_workstation/tasks/Desktop_Gnome/config_workstation-Gnome-DesktopPreferences.yml",
@@ -34,7 +33,11 @@
       "file:///home/sandro/dev/Ansible/Projects/ansible_workstation/tasks/VM/config_all-VM-daemon.yml",
       "file:///home/sandro/dev/Ansible/Projects/ansible_workstation/tasks/basic_all/config_workstation-ansibleFacts.yml",
       "file:///home/sandro/dev/Ansible/Projects/ansible_workstation/tasks/basic_all/packages_workstation-pythonEnv.yml",
-      "file:///home/sandro/dev/Ansible/Projects/ansible_workstation/tasks/basic_all/config_workstation-firewall.yml"
+      "file:///home/sandro/dev/Ansible/Projects/ansible_workstation/tasks/basic_all/config_workstation-firewall.yml",
+      "file:///home/sandro/dev/Ansible/Projects/ansible_workstation/tasks/basic_all/config_all-users.yml"
     ]
+  },
+  "files.associations": {
+    "*.yml": "ansible"
   }
 }
