@@ -35,6 +35,7 @@
 # fatal: [localhost]: FAILED! => {"changed": false, "msg": "Failed to init/update submodules: Submodule 'test/fixtures/nvmrc' (git@github.com:nvm-sh/nvmrc.git) registered for path 'test/fixtures/nvmrc'\nCloning into '/home/{{ env_user }}/.nvm/test/fixtures/nvmrc'...\ngit@github.com: Permission denied (publickey).\r\nfatal: Could not read from remote repository.\n\nPlease make sure you have the correct access rights\nand the repository exists. ...
 
 - name: NvmNodejs - Clone nvm github repo (all)
+  tags: [upnvm]
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell:
@@ -42,21 +43,32 @@
   args:
     creates: "/home/{{ env_user }}/.nvm"
 
-- name: NvmNodejs - Register current nvm version of cloned git repo (all)
+- name: NvmNodejs - chckout branch master and pull (update nvm via tag 'upnvm' only, all)
+  tags: [never, upnvm]
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell:
-    cmd: git describe --abbrev=0 --tags --match "v[0-9]*" $(git rev-list --tags --max-count=1) # letztes Tag mit "v[Ziffern]"" -> Versions-Nr
+    cmd: git checkout master && git pull
+    chdir: "/home/{{ env_user }}/.nvm/"
+
+- name: NvmNodejs - Register current nvm version of cloned git repo (all)
+  tags: [upnvm]
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.shell:
+    cmd: git describe --abbrev=0 --tags --match "v[0-9]*" $(git rev-list --tags --max-count=1) # letztes Tag mit "v[Ziffern]" -> Versions-Nr; e.g.: v0.40.1
     chdir: "/home/{{ env_user }}/.nvm/"
   register: nvmversion
 
 - name: NvmNodejs - Print current nvm version from cloned git repo (all)
+  tags: [upnvm]
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.debug:
     msg: "{{ nvmversion.stdout }}"
 
 - name: NvmNodejs - Checkout current nvm version of cloned git repo (all)
+  tags: [upnvm]
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell:
@@ -76,6 +88,7 @@
 # Fehler # TODO
 
 - name: NvmNodejs - Loads nvm + nvm bash_completion + installs current nodejs version via nvm (all)
+  tags: [upnvm]
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: |
