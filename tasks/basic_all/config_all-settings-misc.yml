@@ -257,25 +257,23 @@
       # - 'nnnplugs': create / update 'nnn' plugins + xterm conf for nnn-peview-tui
       alias upnnnplugs='sudo true && ansible-playbook "${HOME}/dev/Ansible/Projects/ansible_workstation/local.yml" -v -k --tags "nnnplugs"'
 
-- name: All settings misc - Bashrc - custom alias definitions - 'zoxide' (User, Arch)
+- name: All settings misc - Bashrc - custom alias definitions - 'zoxide' (User, all)
   tags: shellrc
   ansible.builtin.blockinfile:
     path: "/home/{{ env_user }}/.bashrc"
     backup: false
-    marker: "### {mark} 'nvm' - ANSIBLE MANAGED BLOCK ###"
+    marker: "### {mark} 'zoxide' - ANSIBLE MANAGED BLOCK ###"
     block: |
       # -------------------------
       # zoxide ('cd' replacement)
       # -------------------------
-      # TODO does not work on debian
-      #
-      # zoxide - A smarter cd command for your terminal (siehe auch unten; z = function)
+      # - zoxide - A smarter cd command for your terminal (? siehe auch unten; z = function ?)
       if [[ $(command -v zoxide) ]]; then
         alias cd='z'
         alias cdi='zi' # cd with interactive selection (using fzf)
       fi
-  when:
-    - ansible_distribution in ["Archlinux"]
+  # when:
+  #   - ansible_distribution in ["Archlinux"]
 
 - name: All settings misc - Bashrc - Insert/Update additional paths and config - nvm (User, all)
   tags: shellrc
@@ -377,7 +375,10 @@
       # ------
       # zoxide
       # ------
+      # do AFTER init of 'starship'
       eval "$(zoxide init bash)"
+  # when:
+  #   - ansible_distribution in ["Archlinux"]
 
 # https://wiki.archlinux.org/title/Systemd/User#PATH
 - name: All settings misc - Bashrc - systemd user import-environment (User, all)
@@ -635,25 +636,23 @@
       # - 'nnnplugs': create / update 'nnn' plugins + xterm conf for nnn-peview-tui
       alias upnnnplugs='sudo true && ansible-playbook "${HOME}/dev/Ansible/Projects/ansible_workstation/local.yml" -v -k --tags "nnnplugs"'
 
-- name: All settings misc - Zshrc - custom alias definitions - 'zoxide' (User, Arch)
+- name: All settings misc - Zshrc - custom alias definitions - 'zoxide' (User, all)
   tags: shellrc
   ansible.builtin.blockinfile:
-    path: "/home/{{ env_user }}/.bashrc"
+    path: "/home/{{ env_user }}/.zshrc"
     backup: false
-    marker: "### {mark} 'nvm' - ANSIBLE MANAGED BLOCK ###"
+    marker: "### {mark} 'zoxide' - ANSIBLE MANAGED BLOCK ###"
     block: |
       # -------------------------
       # zoxide ('cd' replacement)
       # -------------------------
-      # TODO does not work on debian
-      #
-      # zoxide - A smarter cd command for your terminal (siehe auch unten; z = function)
+      # - zoxide - A smarter cd command for your terminal (? siehe auch unten; z = function ?)
       if [[ $(command -v zoxide) ]]; then
         alias cd='z'
         alias cdi='zi' # cd with interactive selection (using fzf)
       fi
-  when:
-    - ansible_distribution in ["Archlinux"]
+  # when:
+  #   - ansible_distribution in ["Archlinux"]
 
 - name: All settings misc - Zshrc - Insert/Update additional paths and config - nvm (User, all)
   tags: shellrc
@@ -755,7 +754,10 @@
       # ------
       # zoxide
       # ------
+      # do AFTER init of 'starship'
       eval "$(zoxide init zsh)"
+  # when:
+  #   - ansible_distribution in ["Archlinux"]
 
 - name: All settings misc - Zshrc - Insert/Update additional paths and conig - tilix - vte config (User, all)
   tags: shellrc
