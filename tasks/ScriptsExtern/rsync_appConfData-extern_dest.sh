@@ -2,54 +2,92 @@
 
 #set -x
 
-# ### Skript zur Sicherung/Update von $rescueAppConfDataPath nach extern ($dest = Übergabe-Parameter)
-# zuvor am besten noch Skript 'rsync_appConfData-intern.sh' ausführen
+# ### Skript zur Sicherung/Update von $rescueAppConfDataFolder nach extern
+# Parameter 1: $dest (Zielpfad)
 #
-# - Quellpfad: $rescueAppConfDataPath
-# - Zielpfad: $dest (Übergabe-Parameter)
+# - Quellpfad: $rescueAppConfDataFolder (s.u.)
 
-# ### rsync - zusätzliche Parameter:
-# paramRsync='--dry-run'
+echo -e "\n\e[0;35mSicherung AppConfData\e[39m"
+echo -e "\n\e[1;33mVariablen und Parameter (set + check)\e[39m"
 
-# ### Variablen - für backup home Verzeichnis aktueller User
-source="${HOME}"
-echo "Home-Pfad / Quell-Pfad ist: ${source}"
+# ### -----------------
+# ### Variablen - Start
+echo "Pfad home directory: '${HOME}'" # home directory
+borgConfFolder="${HOME}/.config/borg" # borg conf directory
+rescueAppConfDataFolder="${HOME}/RescueSystem/AppConfData" # AppConfData directory
+# ### Variablen - Ende
+# ### ----------------
 
-# Quell-Pfade für Backup von $source/RescueSystem/AppConfData
-rescueAppConfDataPath="${source}/RescueSystem/AppConfData"
-if [ "$(ls "${rescueAppConfDataPath}")" ]; then
-	echo "Quelle rescueAppConfDataPath ist: ${rescueAppConfDataPath}"
-else
-	echo "Quelle rescueAppConfDataPath '${rescueAppConfDataPath}' existiert nicht, Ende."
-	exit 1
-fi
-
-# Parameter (Zielpfad):
+# ### ---------------------------------
+# ### Check paths and parameter - Start
+# - Zielpfad (Parameter 1):
 if [ $# -gt 0 ]; then   # wenn (mehr als 0) Übergabeparameter vorhanden
-	dest="${1}"             # erster Parameter: Pfad Sicherungsziel
+	dest="${1}"         # erster Parameter: Pfad Sicherungsziel
 	dest=${dest%/}      # '/' am Ende entfernen, wenn vorhanden
 else
-	echo "Parameter 1 für Ziel-Pfad wurde nicht übergeben, Ende."
+	echo -e "\e[0;31mParameter 1 für Ziel-Pfad wurde nicht übergeben.\nSkript wird beendet.\e[39m"
 	exit 1
 	#dest='/run/media/sandro/WDGold8TB-crypt/home'
 fi
-
-# - Prüfung Zielpfad:
 if [ "$(ls "${dest}")" ]; then
-	echo "Zielpfad ist: ${dest}"
+	echo "Zielpfad ist: '${dest}'"
 else
-	echo "Parameter 1: Zielpfad '${dest}' existiert nicht, Ende."
+	echo -e "\e[0;31mParameter 1: Zielpfad '${dest}' existiert nicht.\nSkript wird beendet.\e[39m"
 	exit 1
 fi
 
+# - borgConfFolder:
+if [ "$(ls "${borgConfFolder}")" ]; then
+	echo "borgConfFolder: '${borgConfFolder}'"
+else
+	echo -e "\e[0;31mborgConfFolder '${borgConfFolder}' existiert nicht, bitte prüfen.\nSkript wird beendet.\e[39m"
+	exit 1
+fi
 
-# ### Backup
-read -rp "Start nach Drücken der Eingabe-Taste"
+# - rescueAppConfDataFolder:
+if [ "$(ls "${rescueAppConfDataFolder}")" ]; then
+	echo "rescueAppConfDataFolder (Quelle) ist: '${rescueAppConfDataFolder}'"
+else
+	echo -e "\e[0;31mrescueAppConfDataFolder (Quelle) '${rescueAppConfDataFolder}' existiert nicht, bitte prüfen.\nSkript wird beendet.\e[39m"
+	exit 1
+fi
+# ### Check paths and parameter - Ende
+# ### --------------------------------
 
+# ### --------------
+# ### Backup - Start
+echo -e "\nStart des Backups erfolgt nach Drücken der Eingabe-Taste."
+read -r
+
+logfolder="/var/log"
 logname="rsync_appConfData-extern_dest.sh_$(date +"%Y-%m-%d_%H%M%S").log"
+logfile="${logfolder}/${logname}"
 
-echo -e "\n========================================"
-echo "Starte Update von '${rescueAppConfDataPath}/' nach '${dest}/'"
-#rsync -aPhEv "${paramRsync}" "${rescueAppConfDataPath}/" "${dest}/" | tee -a "/tmp/${logname}"
-rsync -aPhEv "${rescueAppConfDataPath}/" "${dest}/" | tee -a "/tmp/${logname}"
-echo '========================================'
+# rsyncOption='--dry-run'
+rsyncOptionTxt="# ---------\n# ${rsyncOption}\n# ---------"
+
+echo -e "\n\e[1;33mStarte rsync von '${borgConfFolder}' nach '${rescueAppConfDataFolder}'...\e[39m"
+if [ -z "${rsyncOption}" ]; then # -z: True if the length of string is zero
+	echo -e "# '${borgConfFolder}' nach '${rescueAppConfDataFolder}'\n" | sudo tee -a "${logfile}"
+	rsync -aPhEv --stats --delete "${borgConfFolder}" "${rescueAppConfDataFolder}" | sudo tee -a "${logfile}"
+else
+	echo -e "${rsyncOptionTxt}\n# '${borgConfFolder}' nach '${rescueAppConfDataFolder}'\n" | sudo tee -a "${logfile}"
+	rsync -aPhEv --stats --delete "${rsyncOption}" "${borgConfFolder}" "${rescueAppConfDataFolder}" | sudo tee -a "${logfile}"
+fi
+
+echo -e "\n\e[1;33mStarte rsync von '${rescueAppConfDataFolder}' nach '${dest}/'...\e[39m"
+if [ -z "${rsyncOption}" ]; then # -z: True if the length of string is zero
+	echo -e "\n# '${rescueAppConfDataFolder}' nach '${dest}'\n" | sudo tee -a "${logfile}"
+	rsync -aPhEv --stats --delete "${rescueAppConfDataFolder}" "${dest}" | sudo tee -a "${logfile}"
+else
+	echo -e "\n${rsyncOptionTxt}\n# '${rescueAppConfDataFolder}' nach '${dest}'\n" | sudo tee -a "${logfile}"
+	rsync -aPhEv --stats --delete "${rsyncOption}" "${rescueAppConfDataFolder}" "${dest}" | sudo tee -a "${logfile}"
+	echo -e "${rsyncOptionTxt}" | sudo tee -a "${logfile}"
+fi
+
+echo -e "\n\e[1;33mÄndere Zugriffsrechte und Owner des logfile...\e[39m"
+sudo chmod 660 "${logfile}"
+sudo chown ":${USER}" "${logfile}"
+ls -la "${logfile}"
+# ### Backup - Ende
+# ### -------------
