@@ -901,6 +901,52 @@
       export EDITOR="${VISUAL}"
       export SUDO_EDITOR=rvim
 
+# ######################################################
+# ### PowerShell_profile - add additional Paths + Config
+# ######################################################
+
+- name: All settings misc - PowerShell_profile - Create folder (env_user, all)
+  tags: shellrc
+  ansible.builtin.file:
+    path: "/home/{{ env_user }}/.config/powershell"
+    state: directory
+    mode: '0755'
+
+- name: All settings misc - PowerShell_profile - Create folder (root, all)
+  tags: shellrc
+  ansible.builtin.file:
+    path: "/home/root/.config/powershell"
+    state: directory
+    mode: '0755'
+
+- name: All settings misc - PowerShell_profile - Starship init (env_user, all)
+  tags: shellrc
+  ansible.builtin.blockinfile:
+    path: "/home/{{ env_user }}/.config/powershell/Microsoft.PowerShell_profile.ps1"
+    create: true
+    backup: false
+    marker: "### {mark} 'starship shell prompt' ANSIBLE MANAGED BLOCK ###"
+    block: |
+      # -------------------------------------------
+      # starship shell prompt - Add the init script
+      # -------------------------------------------
+      Invoke-Expression (&starship init powershell)
+    mode: '0755'
+
+- name: All settings misc - PowerShell_profile - Starship init (root, all)
+  tags: shellrc
+  ansible.builtin.blockinfile:
+    path: "/home/root/.config/powershell/Microsoft.PowerShell_profile.ps1"
+    create: true
+    backup: false
+    marker: "### {mark} 'starship shell prompt' ANSIBLE MANAGED BLOCK ###"
+    block: |
+      # -------------------------------------------
+      # starship shell prompt - Add the init script
+      # -------------------------------------------
+      Invoke-Expression (&starship init powershell)
+    mode: '0755'
+
 # #################
 # ### nnn - plugins
 # #################
@@ -1191,8 +1237,8 @@
       # Additionally, two environment variables will be defined: $CLAM_VIRUSEVENT_FILENAME
       # and $CLAM_VIRUSEVENT_VIRUSNAME.
       # Default: no
-      #VirusEvent /usr/local/bin/send_sms 123456789 "VIRUS ALERT: %v in %f"
-      #VirusEvent /usr/bin/notify-send "VirusAlert: '${CLAM_VIRUSEVENT_VIRUSNAME}' in '${CLAM_VIRUSEVENT_FILENAME}'" "Virus found - notification." --icon=dialog-warning
+      # VirusEvent /usr/local/bin/send_sms 123456789 "VIRUS ALERT: %v in %f"
+      # VirusEvent /usr/bin/notify-send "VirusAlert: '${CLAM_VIRUSEVENT_VIRUSNAME}' in '${CLAM_VIRUSEVENT_FILENAME}'" "Virus found - notification." --icon=dialog-warning
       VirusEvent /etc/clamav/VirusEvent.sh
 
 # https://wiki.archlinux.org/title/ClamAV
