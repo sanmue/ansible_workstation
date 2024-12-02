@@ -325,7 +325,7 @@ config-mirrorlist() {
     # Backup current mirrorlists:
     sudo cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup
 
-    # Retrieve the latest mirror list from the Arch Linux Mirror Status page + listed countries:    
+    # Retrieve the latest mirror list from the Arch Linux Mirror Status page + listed countries:
     echo "reflector - aktualisiere archlinux mirrors..."
     sudo reflector --verbose --age 12 --protocol https --sort rate --country 'Germany,France,Austria,Switzerland' --save /etc/pacman.d/mirrorlist
     sudo systemctl enable --now reflector.service
@@ -385,19 +385,19 @@ install-furtherSw-Arch() {
         paru -S --needed --skipreview btrfs-assistant # && touch "${HOME}/.ansible_installScript_AUR-btrfsassistantInstalled"
     fi
 
-    echo -e "\nInstall Citrix Workspace App (icaclient) from chaotic-aur..."
-    sudo pacman -S --needed --noconfirm icaclient
-    # echo -e "\nInstall Citrix Workspace App (icaclient) from AUR..."
-    # paru -S --needed --skipreview icaclient && touch "${HOME}/.ansible_installScript_AUR-icaclientInstalled"
+    echo -e "\nInstall Citrix Workspace App (icaclient) from AUR..."
+    paru -S --needed --skipreview icaclient && touch "${HOME}/.ansible_installScript_AUR-icaclientInstalled"
+    # sudo pacman -S --needed --noconfirm icaclient
     mkdir -p "${HOME}/.ICAClient/cache" && \
     sudo rsync -aPhEv /opt/Citrix/ICAClient/config/{All_Regions,Trusted_Region,Unknown_Region,canonicalization,regions}.ini "${HOME}/.ICAClient/"
 
-    echo -e "\nInstall 'visual-studio-code-bin' from chaotic-aur..." # instead of flatpak
-    sudo pacman -S --needed --noconfirm visual-studio-code-bin       # from chaotic-aur
+    echo -e "\nInstall 'visual-studio-code-bin' from AUR..." # instead of flatpak
+    paru -S --needed --skipreview visual-studio-code-bin
+    # sudo pacman -S --needed --noconfirm visual-studio-code-bin
 
-    echo -e "\nInstall Powershell from chaotic-aur..."
-    sudo pacman -S --needed --noconfirm powershell-bin # from chaotic-aur
-    #paru -S --needed --skipreview powershell-bin
+    echo -e "\nInstall Powershell AUR..."
+    paru -S --needed --skipreview powershell-bin
+    # sudo pacman -S --needed --noconfirm powershell-bin
 
     echo -e "\nInstall espanso (wayland) from AUR (will takes some time)..."
     paru -S --needed --skipreview espanso-wayland   # espanso-gui

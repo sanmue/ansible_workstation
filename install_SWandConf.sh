@@ -132,14 +132,18 @@ fi
 ### ---
 ### Inst + config snapper
 ### ---
-# check filesystem type + aks if snapper should be installed:
-if [[ $(stat -f -c %T /) = 'btrfs' ]] && [[ ! -e "${HOME}/.ansible_installScript_snapperGrub" ]]; then # prüfe '/' auf btrfs filesystem;  -f, --file-system; -c, --format; %T - Type in human readable form (e.g. 'btrfs', 'ext4', ...)
-    echo -e "\n\e[0;35mSystem snapshots\e[39m"
-    read -r -p "Install + configure 'snapper'? ('y' = yes, other input = no): " doSnapper
 
-    if [ "${doSnapper}" = "y" ]; then
-        config-snapper
+echo -e "\n\e[0;35mSystem snapshots\e[39m"
+if [[ ! -e "/etc/archinstall_autoBash" ]]; then # if installed via 'archinstall_autoBash': snapper install + config already finished
+    # check filesystem type + aks if snapper should be installed:
+    if [[ $(stat -f -c %T /) = 'btrfs' ]] && [[ ! -e "${HOME}/.ansible_installScript_snapperGrub" ]]; then # prüfe '/' auf btrfs filesystem;  -f, --file-system; -c, --format; %T - Type in human readable form (e.g. 'btrfs', 'ext4', ...)
+        read -r -p "Install + configure 'snapper'? ('y' = yes, other input = no): " doSnapper
+        if [ "${doSnapper}" = "y" ]; then
+            config-snapper
+        fi
     fi
+else
+    echo "- Skipped install + conf since installed via archinstall_autoBash"
 fi
 
 ### ---

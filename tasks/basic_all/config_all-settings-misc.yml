@@ -127,6 +127,24 @@
     mode: u=rwx,g=rx,o=rx
 
 # ##########################################
+# ### stat:
+# ### - 'archinstall_autobash'
+# ### - 'rollback.sh'
+# ##########################################
+
+- name: All settings misc - check status 'archinstall_autobash' (User, all)
+  tags: shellrc
+  ansible.builtin.stat:
+    path: "/etc/archinstall_autoBash"
+  register: archinstall_autobash
+
+- name: All settings misc - check status 'rollback.sh' (User, all)
+  tags: shellrc
+  ansible.builtin.stat:
+    path: "/usr/local/bin/rollback.sh"
+  register: rollback_script
+
+# ##########################################
 # ### bashrc - add additional Paths + Config
 # ##########################################
 # - global wäre: /etc/bash_bashrc
@@ -212,6 +230,9 @@
       # KITTY - alias to be able to use kitty features when connecting to remote servers (e.g use tmux on remote server)
       alias kssh="kitty +kitten ssh"
 
+      # grep
+      alias grep='grep --color=auto'
+
       # ls -> eza oder exa - list directory contents
       if [[ $(command -v eza) ]]; then
           alias ls='eza --color=auto --icons --group --time-style=long-iso --group-directories-first'
@@ -220,7 +241,7 @@
           alias ls='exa --color=auto --icons --group --time-style=long-iso --group-directories-first'
           # '--group' und '--time-style' nur bei '-l'; dann schon dabei
       else
-          echo "Using standard ls, eza and exa not available" 1>/dev/null
+          alias ls='ls --color=auto'
       fi
 
       alias ll='ls -la --ignore-glob ..'            # show long listing of all except ".."
@@ -244,12 +265,46 @@
           alias catf='bat --style="full"' # --force-colorization
       fi
 
-      # snapper-rollback
+- name: All settings misc - Bashrc - custom alias definitions - alias rollback script (User, all)
+  tags: shellrc
+  ansible.builtin.blockinfile:
+    path: "/home/{{ env_user }}/.bashrc"
+    backup: false
+    marker: "### {mark} 'rollback' - ANSIBLE MANAGED BLOCK ###"
+    block: |
+      # ---------------------
+      # alias rollback script
+      # ---------------------
+      alias rollback='/usr/bin/rollback.sh'
+  when:
+    - archinstall_autobash.stat.exists # if installed via 'archinstall_autoBash'
+    - rollback_script.stat.exists # if rollback script exists (installed via 'archinstall_autoBash' + systemd-boot + snapper/snapper-rollback)
+
+- name: All settings misc - Bashrc - custom alias definitions - snapper snapshot after snapper-rollback (User, all)
+  tags: shellrc
+  ansible.builtin.blockinfile:
+    path: "/home/{{ env_user }}/.bashrc"
+    backup: false
+    marker: "### {mark} 'snapper snapshot' - ANSIBLE MANAGED BLOCK ###"
+    block: |
+      # -----------------------------------------------
+      # alias snapper snapshot after (snapper-)rollback
+      # -----------------------------------------------
+      # snapper-rollback - create snapshot
       if [[ $(command -v snapper-rollback) ]]; then
         alias snapshot='sudo snapper list && echo -e "\nsudo snapper -c root create -c number --description \"after snapper-rollback x\"\n"'
       fi
 
+- name: All settings misc - Bashrc - custom alias definitions - tasks of ansible playbook using 'tags' (User, all)
+  tags: shellrc
+  ansible.builtin.blockinfile:
+    path: "/home/{{ env_user }}/.bashrc"
+    backup: false
+    marker: "### {mark} 'ansible playbook tags' - ANSIBLE MANAGED BLOCK ###"
+    block: |
+      # -------------------------------------------------------
       # execute selected tasks of ansible playbook using 'tags'
+      # -------------------------------------------------------
       # - 'shellrc': create / update shell conf (e.g. .bashrc, .zshrc)
       alias upshellrc='sudo true && ansible-playbook "${HOME}/dev/Ansible/Projects/ansible_workstation/local.yml" -v -k --tags "shellrc"'
       # - 'vimrc': create / update vim conf + plugins
@@ -462,9 +517,9 @@
   tags: shellrc
   ansible.builtin.stat:
     path: "/home/{{ env_user }}/.zshrc"
-  register: statzshrcUser
+  register: zshrc_user
 
-- name: All settings misc - Zshrc - copy .zshrc - .zshrc.old (User, all)
+- name: All settings misc - Zshrc - backup existing .zshrc (User, all)
   tags: shellrc
   ansible.builtin.copy:
     src: "/home/{{ env_user }}/.zshrc"
@@ -474,30 +529,25 @@
     mode: u=rw,g=r,o=r
     backup: true
   when:
-    - statzshrcUser.stat.exists
+    - zshrc_user.stat.exists
 
-- name: All settings misc - Zshrc - delete .zshrc (User, all)
+- name: All settings misc - Zshrc - delete existing .zshrc (User, all)
   tags: shellrc
   ansible.builtin.file:
     path: "/home/{{ env_user }}/.zshrc"
     state: absent
   when:
-    - statzshrcUser.stat.exists
-
-- name: All settings misc - Zshrc - touch (User, all)
-  tags: shellrc
-  ansible.builtin.file:
-    path: "/home/{{ env_user }}/.zshrc"
-    state: touch
-    owner: "{{ env_user }}"
-    group: "{{ env_user }}"
-    mode: u=rw,g=r,o=r
+    - zshrc_user.stat.exists
 
 - name: All settings misc - Zshrc - Insert/Update additional paths and config - starship shell prompt (User,all)
   tags: shellrc
   ansible.builtin.blockinfile:
     path: "/home/{{ env_user }}/.zshrc"
     backup: true
+    create: true
+    owner: "{{ env_user }}"
+    group: "{{ env_user }}"
+    mode: u=rw,g=r,o=r
     marker: "### {mark} 'starship shell prompt' ANSIBLE MANAGED BLOCK ###"
     block: |
       # -------------------------------------------
@@ -505,36 +555,142 @@
       # -------------------------------------------
       eval "$(starship init zsh)"
 
-# Übernommen + anpgepasst aus manjaro-zsh-config (/usr/share/zsh/manjaro-zsh-config)
-# Anm.: zsh ist bei Manjaro die Standardshell und entsprechend vorkonfiguriert
-# https://unix.stackexchange.com/questions/33255/how-to-define-and-load-your-own-shell-function-in-zsh
-# https://zplugin.readthedocs.io/en/latest/zsh-plugin-standard/
-#
-# nicht mehr notwendig, da im nächsten task der INHALT von 'files/custom-zsh-config' in .zshrc reinkopiert wird
-- name: All settings misc - Zshrc - copy custom zsh config file (User, all)
-  tags: shellrc
-  ansible.builtin.copy:
-    src: files/custom-zsh-config
-    dest: /usr/share/zsh/custom-zsh-config
-    owner: root
-    group: root
-    mode: "0644"
-    backup: false
-
-# https://stackoverflow.com/questions/65020310/how-to-copy-file-content-to-another-file-in-ansible-without-overwriting-the-seco
-# https://cloudlinuxtech.com/zsh-syntax-highlighting-autosuggestions/#How_to_install_the_zsh-syntax-highlighting_package_in_Linux
-- name: All settings misc - Zshrc - Insert 'files/custom-zsh-config' in .zshrc (User, all)
+- name: All settings misc - Zshrc - Insert initial custom config in .zshrc (User, all)
   tags: shellrc
   ansible.builtin.blockinfile:
     path: "/home/{{ env_user }}/.zshrc"
     backup: false
     marker: "### {mark} 'custom zsh config' ANSIBLE MANAGED BLOCK ###"
     block: |
-      # -----------------
-      # custom zsh config
-      # -----------------
-      "{{ lookup('file', 'files/custom-zsh-config') }}"
+      # -------------------------
+      # custom initial zsh config
+      # -------------------------
+      # Options section
+      # setopt interactivecomments
+      setopt correct                                            # Auto correct mistakes
+      setopt extendedglob                                       # Extended globbing. Allows using regular expressions with *
+      setopt nocaseglob                                         # Case insensitive globbing
+      setopt rcexpandparam                                      # Array expension with parameters
+      setopt nocheckjobs                                        # Don't warn about running processes when exiting
+      setopt numericglobsort                                    # Sort filenames numerically when it makes sense
+      setopt nobeep                                             # No beep
+      setopt appendhistory                                      # Immediately append history instead of overwriting
+      setopt histignorealldups                                  # If a new command is a duplicate, remove #the older one
+      setopt autocd                                             # if only directory path is entered, cd #there.
+      setopt inc_append_history                                 # save commands are added to the history #immediately, otherwise only when shell exits.
+      setopt histignorespace                                    # Don't save commands that start with #space
 
+      zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' # Case insensitive tab completion
+      zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"   # Colored completion (different colors for dirs/files/etc)
+      zstyle ':completion:*' rehash true                        # automatically find new executables in path
+      # Speed up completions
+      zstyle ':completion:*' accept-exact '*(N)'
+      zstyle ':completion:*' use-cache on
+      zstyle ':completion:*' cache-path ~/.zsh/cache
+      HISTFILE=~/.zhistory
+      HISTSIZE=10000
+      SAVEHIST=10000
+      WORDCHARS=${WORDCHARS//\/[&.;]}                            # Don't consider certain characters part of the word
+
+      # Keybindings section
+      bindkey -e                                                 # use Emacs mode
+      bindkey '^[[7~' beginning-of-line                          # Home key
+      bindkey '^[[H' beginning-of-line                           # Home key
+      if [[ "${terminfo[khome]}" != "" ]]; then
+        bindkey "${terminfo[khome]}" beginning-of-line           # [Home] - Go to beginning of line
+      fi
+      bindkey '^[[8~' end-of-line                                # End key
+      bindkey '^[[F' end-of-line                                 # End key
+      if [[ "${terminfo[kend]}" != "" ]]; then
+        bindkey "${terminfo[kend]}" end-of-line                  # [End] - Go to end of line
+      fi
+      bindkey '^[[2~' overwrite-mode                             # Insert key
+      bindkey '^[[3~' delete-char                                # Delete key
+      bindkey '^[[C'  forward-char                               # Right key
+      bindkey '^[[D'  backward-char                              # Left key
+      bindkey '^[[5~' history-beginning-search-backward          # Page up key
+      bindkey '^[[6~' history-beginning-search-forward                # Page down key
+
+      # Navigate words with ctrl+arrow keys
+      bindkey '^[Oc' forward-word                                #
+      bindkey '^[Od' backward-word                               #
+      bindkey '^[[1;5D' backward-word                            #
+      bindkey '^[[1;5C' forward-word                             #
+      bindkey '^H' backward-kill-word                            # delete previous word with ctrl+backspace
+      bindkey '^[[Z' undo                                        # Shift+tab undo last action
+
+      # Theming section
+      autoload -Uz compinit promptinit colors zcalc
+      compinit -d
+      promptinit
+      colors
+
+      # Color man pages
+      export LESS_TERMCAP_mb=$'\E[01;32m'
+      export LESS_TERMCAP_md=$'\E[01;32m'
+      export LESS_TERMCAP_me=$'\E[0m'
+      export LESS_TERMCAP_se=$'\E[0m'
+      export LESS_TERMCAP_so=$'\E[01;47;34m'
+      export LESS_TERMCAP_ue=$'\E[0m'
+      export LESS_TERMCAP_us=$'\E[01;36m'
+      export LESS=-R
+
+      # Plugins section: Enable fish style features
+      # Use syntax highlighting
+      if [[ -r /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh ]]; then
+        source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+      fi
+      # Use autosuggestions
+      if [[ -r /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]]; then
+          source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+      fi
+      # Use history substring search
+      if [[ -r /usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh ]]; then
+          source /usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
+
+          # bind UP and DOWN arrow keys to history substring search
+          zmodload zsh/terminfo
+          bindkey "$terminfo[kcuu1]" history-substring-search-up
+          bindkey "$terminfo[kcud1]" history-substring-search-down
+          bindkey '^[[A' history-substring-search-up
+          bindkey '^[[B' history-substring-search-down
+      fi
+
+      # Offer to install missing package if command is not found
+      if [[ -r /usr/share/zsh/functions/command-not-found.zsh ]]; then
+          source /usr/share/zsh/functions/command-not-found.zsh
+          export PKGFILE_PROMPT_INSTALL_MISSING=1
+      fi
+
+      # File and Dir colors for ls and other outputs
+      export LS_OPTIONS='--color=auto'
+      eval "$(dircolors -b)"
+
+      # Alias section
+      alias ls='ls $LS_OPTIONS'
+      alias cp="cp -i"                                                # Confirm before overwriting something
+      alias df='df -h'                                                # Human-readable sizes
+      alias free='free -m'                                            # Show sizes in MB
+
+# Übernommen + anpgepasst aus manjaro-zsh-config (/usr/share/zsh/manjaro-zsh-config)
+# Anm.: zsh ist bei Manjaro die Standardshell und entsprechend vorkonfiguriert
+# https://unix.stackexchange.com/questions/33255/how-to-define-and-load-your-own-shell-function-in-zsh
+# https://zplugin.readthedocs.io/en/latest/zsh-plugin-standard/
+#
+# https://stackoverflow.com/questions/65020310/how-to-copy-file-content-to-another-file-in-ansible-without-overwriting-the-seco
+# https://cloudlinuxtech.com/zsh-syntax-highlighting-autosuggestions/#How_to_install_the_zsh-syntax-highlighting_package_in_Linux
+# - name: All settings misc - Zshrc - Insert 'files/custom-zsh-config' in .zshrc (User, all)
+#   tags: shellrc
+#   ansible.builtin.blockinfile:
+#     path: "/home/{{ env_user }}/.zshrc"
+#     backup: false
+#     marker: "### {mark} 'custom zsh config' ANSIBLE MANAGED BLOCK ###"
+#     block: |
+#       # -----------------
+#       # custom zsh config
+#       # -----------------
+#       "{{ lookup('file', 'files/custom-zsh-config') }}"
+#
 # Zeichenfolge '"<feff>' wurde vor Inhalt aus 'files/custom-zsh-config' eingefügt
 # U+FEFF was called a ZERO WIDTH NO-BREAK SPACE
 # Also, a quick trip to Wikipedia told us about the actual uses for U+FEFF, more commonly known as Byte order mark or BOM
@@ -543,26 +699,13 @@
 # https://www.fileformat.info/info/unicode/char/feff/index.htm
 #
 # danach wurde noch ein '"' vor den Inhalt aus der Datei gesetzt. entfernt:
-- name: All settings misc - Zshrc -  Delete '"' at beginnning of insterted text form 'custom-zsh-config' in .zshrc (User, all)
-  tags: shellrc
-  ansible.builtin.replace:
-    path: "/home/{{ env_user }}/.zshrc"
-    regexp: '^"##'
-    replace: "##"
+# - name: All settings misc - Zshrc -  Delete '"' at beginnning of insterted text form 'custom-zsh-config' in .zshrc (User, all)
+#   tags: shellrc
+#   ansible.builtin.replace:
+#     path: "/home/{{ env_user }}/.zshrc"
+#     regexp: '^"#'
+#     replace: "##"
 
-# - name: All settings misc - Zshrc - source cutom zsh config in .zshrc (User, all)
-#  tags: shellrc
-#  ansible.builtin.blockinfile:
-#    path: "/home/{{ env_user }}/.zshrc"
-#    backup: true
-#    marker: "### {mark} 'source cutom zsh config' ANSIBLE MANAGED BLOCK ###"
-#    block: |
-#      # ------------------------
-#      # source custom zsh config
-#      # ------------------------
-#      if [[ -e /usr/share/zsh/custom-zsh-config ]]; then
-#        source /usr/share/zsh/custom-zsh-config
-#      fi
 
 - name: All settings misc - Zshrc - additional EXPORTS - colored password prompt (User, all)
   tags: shellrc
@@ -593,6 +736,9 @@
       # KITTY - alias to be able to use kitty features when connecting to remote servers (e.g use tmux on remote server)
       alias kssh="kitty +kitten ssh"
 
+      # grep
+      alias grep='grep --color=auto'
+
       # ls -> eza oder exa - list directory contents
       if [[ $(command -v eza) ]]; then
           alias ls='eza --color=auto --icons --group --time-style=long-iso --group-directories-first'
@@ -601,7 +747,7 @@
           alias ls='exa --color=auto --icons --group --time-style=long-iso --group-directories-first'
           # '--group' und '--time-style' nur bei '-l'; dann schon dabei
       else
-          echo "Using standard ls, eza and exa not available" 1>/dev/null
+          alias ls='ls --color=auto --group-directories-first'
       fi
 
       alias ll='ls -la --ignore-glob ..'            # show long listing of all except ".."
@@ -625,12 +771,46 @@
           alias catf='bat --style="full"' # --force-colorization
       fi
 
-      # snapper-rollback
+- name: All settings misc - Zshrc - custom alias definitions - alias rollback script (User, all)
+  tags: shellrc
+  ansible.builtin.blockinfile:
+    path: "/home/{{ env_user }}/.zshrc"
+    backup: false
+    marker: "### {mark} 'rollback' - ANSIBLE MANAGED BLOCK ###"
+    block: |
+      # ---------------------
+      # alias rollback script
+      # ---------------------
+      alias rollback='/usr/bin/rollback.sh'
+  when:
+    - archinstall_autobash.stat.exists # if installed via 'archinstall_autoBash'
+    - rollback_script.stat.exists # if rollback script exists (installed via 'archinstall_autoBash' + systemd-boot + snapper/snapper-rollback)
+
+- name: All settings misc - Zshrc - custom alias definitions - snapper snapshot after snapper-rollback (User, all)
+  tags: shellrc
+  ansible.builtin.blockinfile:
+    path: "/home/{{ env_user }}/.zshrc"
+    backup: false
+    marker: "### {mark} 'snapper snapshot' - ANSIBLE MANAGED BLOCK ###"
+    block: |
+      # -----------------------------------------------
+      # alias snapper snapshot after (snapper-)rollback
+      # -----------------------------------------------
+      # snapper-rollback - create snapshot
       if [[ $(command -v snapper-rollback) ]]; then
         alias snapshot='sudo snapper list && echo -e "\nsudo snapper -c root create -c number --description \"after snapper-rollback x\"\n"'
       fi
 
+- name: All settings misc - Zshrc - custom alias definitions - tasks of ansible playbook using 'tags' (User, all)
+  tags: shellrc
+  ansible.builtin.blockinfile:
+    path: "/home/{{ env_user }}/.zshrc"
+    backup: false
+    marker: "### {mark} 'ansible playbook tags' - ANSIBLE MANAGED BLOCK ###"
+    block: |
+      # -------------------------------------------------------
       # execute selected tasks of ansible playbook using 'tags'
+      # -------------------------------------------------------
       # - 'shellrc': create / update shell conf (e.g. .bashrc, .zshrc)
       alias upshellrc='sudo true && ansible-playbook "${HOME}/dev/Ansible/Projects/ansible_workstation/local.yml" -v -k --tags "shellrc"'
       # - 'vimrc': create / update vim conf + plugins
