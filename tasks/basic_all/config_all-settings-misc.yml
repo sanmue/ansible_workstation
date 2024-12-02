@@ -62,6 +62,49 @@
     group: "{{ env_user }}"
     mode: "0710"
 
+# ##########
+# ### direnv
+# ##########
+# + s.u.: hook in .bahsrc + .zshrc
+- name: All settings misc - direnv - create config folder (User, all)
+  ansible.builtin.file:
+    path: "/home/{{ env_user }}/.config/direnv"
+    state: directory
+    owner: "{{ env_user }}"
+    group: "{{ env_user }}"
+    mode: "u=rwx,g=rx,o=rx"
+
+- name: All settings misc - direnv - config (User, all)
+  ansible.builtin.blockinfile:
+    path: "/home/{{ env_user }}/.config/direnv/direnv.toml"
+    create: true
+    marker: "### {mark} 'direnv config' ANSIBLE MANAGED BLOCK ###"
+    block: |
+      [global]
+      hide_env_diff = true
+    owner: "{{ env_user }}"
+    group: "{{ env_user }}"
+    mode: u=rwx,g=rx,o=rx
+
+# ##########
+# ### rclone
+# ##########
+- name: All settings misc - rclone - create folder .local/bin for pCloud-Mnt.sh (all, env_user)
+  ansible.builtin.file:
+    path: "/home/{{ env_user }}/.local/bin"
+    owner: "{{ env_user }}"
+    group: "{{ env_user }}"
+    mode: "0755"
+    state: directory
+
+- name: All settings misc - rclone - copy script to mount pcloud (all, env_user)
+  ansible.builtin.copy:
+    src: files/config_all-settings-misc-rclone_pCloud-Mnt.sh
+    dest: "/home/{{ env_user }}/.local/bin/rclone_pCloud-Mnt.sh"
+    owner: "{{ env_user }}"
+    group: "{{ env_user }}"
+    mode: "0755"
+
 # #################################
 # ### Starship - cross shell prompt
 # #################################
@@ -101,30 +144,6 @@
   ansible.builtin.file:
     path: "/home/{{ env_user }}/Downloads/starship"
     state: absent
-
-# ##########
-# ### direnv
-# ##########
-# + s.u.: hook in .bahsrc + .zshrc
-- name: All settings misc - direnv - create config folder (User, all)
-  ansible.builtin.file:
-    path: "/home/{{ env_user }}/.config/direnv"
-    state: directory
-    owner: "{{ env_user }}"
-    group: "{{ env_user }}"
-    mode: "u=rwx,g=rx,o=rx"
-
-- name: All settings misc - direnv - config (User, all)
-  ansible.builtin.blockinfile:
-    path: "/home/{{ env_user }}/.config/direnv/direnv.toml"
-    create: true
-    marker: "### {mark} 'direnv config' ANSIBLE MANAGED BLOCK ###"
-    block: |
-      [global]
-      hide_env_diff = true
-    owner: "{{ env_user }}"
-    group: "{{ env_user }}"
-    mode: u=rwx,g=rx,o=rx
 
 # ##########################################
 # ### stat:
@@ -294,6 +313,18 @@
       if [[ $(command -v snapper-rollback) ]]; then
         alias snapshot='sudo snapper list && echo -e "\nsudo snapper -c root create -c number --description \"after snapper-rollback x\"\n"'
       fi
+
+- name: All settings misc - Bashrc - custom alias definitions - mount pCloud (User, all)
+  tags: shellrc
+  ansible.builtin.blockinfile:
+    path: "/home/{{ env_user }}/.bashrc"
+    backup: false
+    marker: "### {mark} 'mount pCloud' - ANSIBLE MANAGED BLOCK ###"
+    block: |
+      # -----------------------
+      # mount pCloud via rclone
+      # -----------------------
+      alias mntpcloud='/home/{{ env_user }}/.local/bin/rclone_pCloud-Mnt.sh'
 
 - name: All settings misc - Bashrc - custom alias definitions - tasks of ansible playbook using 'tags' (User, all)
   tags: shellrc
@@ -800,6 +831,18 @@
       if [[ $(command -v snapper-rollback) ]]; then
         alias snapshot='sudo snapper list && echo -e "\nsudo snapper -c root create -c number --description \"after snapper-rollback x\"\n"'
       fi
+
+- name: All settings misc - Zshrc - custom alias definitions - mount pCloud (User, all)
+  tags: shellrc
+  ansible.builtin.blockinfile:
+    path: "/home/{{ env_user }}/.zshrc"
+    backup: false
+    marker: "### {mark} 'mount pCloud' - ANSIBLE MANAGED BLOCK ###"
+    block: |
+      # -----------------------
+      # mount pCloud via rclone
+      # -----------------------
+      alias mntpcloud='/home/{{ env_user }}/.local/bin/rclone_pCloud-Mnt.sh'
 
 - name: All settings misc - Zshrc - custom alias definitions - tasks of ansible playbook using 'tags' (User, all)
   tags: shellrc
@@ -1565,22 +1608,3 @@
     - { path: "https://github.com/dhelmr/ulauncher-tldr.git", name: "ulauncher-tldr" }
     - { path: "https://github.com/zensoup/ulauncher-unicode.git", name: "ulauncher-unicode" }
     - { path: "https://github.com/NastuzziSamy/ulauncher-youtube-search.git", name: "ulauncher-youtube-search" }
-
-# ##########
-# ### rclone
-# ##########
-- name: All settings misc - rclone - create folder .local/bin for pCloud-Mnt.sh (all, env_user)
-  ansible.builtin.file:
-    path: "/home/{{ env_user }}/.local/bin"
-    owner: "{{ env_user }}"
-    group: "{{ env_user }}"
-    mode: "0755"
-    state: directory
-
-- name: All settings misc - rclone - copy script to mount pcloud (all, env_user)
-  ansible.builtin.copy:
-    src: files/config_all-settings-misc-rclone_pCloud-Mnt.sh
-    dest: "/home/{{ env_user }}/.local/bin/rclone_pCloud-Mnt.sh"
-    owner: "{{ env_user }}"
-    group: "{{ env_user }}"
-    mode: "0755"
