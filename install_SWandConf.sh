@@ -86,7 +86,7 @@ snapshotFolder=$(gettext "${snapperSnapshotFolder}" | sed 's/^.//') # ohne führ
 ### ---
 ### Initial settings
 ### ---
-echo -e "\n\e[0;35mInitial settings\e[39m"
+echo -e "\n\e[0;35mInitial settings\e[0m"
 
 ### Check Operating System (OS)
 os=$(grep -e "^NAME=" /etc/os-release | cut -d '"' -f 2 | xargs)
@@ -99,7 +99,7 @@ for osname in "${oslist[@]}"; do
     fi
 done
 if [ "${supportedOS}" = "false" ]; then
-    echo -e "\e[0;31mSorry, your OS '${os}' is not supported. Script/Playbook won't work for you.\e[39m"
+    echo -e "\e[0;31mSorry, your OS '${os}' is not supported. Script/Playbook won't work for you.\e[0m"
     echo "Skript will exit here :-("
     exit 1
 fi
@@ -133,7 +133,7 @@ fi
 ### Inst + config snapper
 ### ---
 
-echo -e "\n\e[0;35mSystem snapshots\e[39m"
+echo -e "\n\e[0;35mSystem snapshots\e[0m"
 if [[ ! -e "/etc/archinstall_autoBash" ]]; then # if installed via 'archinstall_autoBash': snapper install + config already finished
     # check filesystem type + aks if snapper should be installed:
     if [[ $(stat -f -c %T /) = 'btrfs' ]] && [[ ! -e "${HOME}/.ansible_installScript_snapperGrub" ]]; then # prüfe '/' auf btrfs filesystem;  -f, --file-system; -c, --format; %T - Type in human readable form (e.g. 'btrfs', 'ext4', ...)
@@ -150,19 +150,19 @@ fi
 ### updatedb.conf anpassen: keine Indexierung des (Snapper) snapshotFolder
 ### ---
 if [ "$(sudo ls "${snapperSnapshotFolder}")" ] && [ -e "${updbconf}" ]; then
-    echo -e "\n\e[0;33mUpdatedb - '${snapshotFolder}' von Indexierung ausnehmen\e[39m"
+    echo -e "\n\e[0;33mUpdatedb - '${snapshotFolder}' von Indexierung ausnehmen\e[0m"
     config-updatedb
 fi
 
 ### ---
 ### Install / config initial benötigter Pakete, Services, Mirrorlists abhängig von Betriebssystem
 ### ---
-echo -e "\n\e[0;35mDistributionsspezifische initiale Installationen und Konfigurationen\e[39m"
+echo -e "\n\e[0;35mDistributionsspezifische initiale Installationen und Konfigurationen\e[0m"
 case "${os}" in
     Arch* | Endeavour*)
         # ### Repo Mirrors / reflector
         if [[ ! -f "${HOME}/.ansible_installScript_MirrorPool" ]]; then
-            echo -e "\e[0;33mMirrorlist (Arch)\e[39m"
+            echo -e "\e[0;33mMirrorlist (Arch)\e[0m"
             config-mirrorlist # Repo Mirrors / reflector
             touch "${HOME}/.ansible_installScript_MirrorPool" # create 'flag'-file (for if condition)
         else
@@ -171,7 +171,7 @@ case "${os}" in
 
         # ### Installs
         if [[ ! -f "${HOME}/.ansible_installScript_initalSofware" ]]; then
-            echo -e "\n\e[0;33mInitial installs (Arch)\e[39m"
+            echo -e "\n\e[0;33mInitial installs (Arch)\e[0m"
             install-initialSw-Arch
             touch "${HOME}/.ansible_installScript_initalSofware"
         else
@@ -182,7 +182,7 @@ case "${os}" in
     Debian*)
         # ### groups
         if [[ ! $(grep sudo /etc/group) = *"${userid}"* ]]; then
-            echo -e "\e[0;33mAnpassung Gruppenzugehörigkeit (Debian)\e[39m"
+            echo -e "\e[0;33mAnpassung Gruppenzugehörigkeit (Debian)\e[0m"
             echo "Füge User '${userid}' der sudo-Gruppe hinzu"
             su -l root --command "usermod -aG sudo ${userid}"
 
@@ -193,11 +193,11 @@ case "${os}" in
         fi
 
         # ### Installs
-        echo -e "\n\e[0;33mInitial installs (Debian)\e[39m"
+        echo -e "\n\e[0;33mInitial installs (Debian)\e[0m"
         install-initialSw-Debian
 
         # ### Repos - ppa
-        echo -e "\n\e[0;33mAdd repos/ppa (Debian)\e[39m"
+        echo -e "\n\e[0;33mAdd repos/ppa (Debian)\e[0m"
         if [ -e "${HOME}/.ansible_ppaAdded" ]; then
             echo "Repos (ppa) wurden bereits hinzugefügt, Schritt wird übersprungen"
         else
@@ -207,7 +207,7 @@ case "${os}" in
         ;;
 
     *)
-        echo -e "\e[0;33mUnbehandelter Fall: switch os - default case (distributionsspezifische Anpassungen)\e[39m"
+        echo -e "\e[0;33mUnbehandelter Fall: switch os - default case (distributionsspezifische Anpassungen)\e[0m"
         read -r -p "Eingabe-Taste drücken zum Beenden"
         exit 0
         ;;
@@ -241,15 +241,15 @@ esac
 ### ---
 ### Ansbile Playbook
 ### ---
-echo -e "\n\e[0;35mAnsible-Playbook\e[39m"
-echo -e "\e[0;33m### Info\e[39m"
-echo -e "\e[0;33m# If an error occurs in context with pip, pyenv, nvm, ... while executing the playbook:\e[39m"
-echo -e "\e[0;33m# Close and reopen terminal and start the script or just the playbook again\e[39m"
-# echo -e "\e[0;33m#   - If VS Code app opens you can simply close it again or leave it open until script is finished\e[39m"
+echo -e "\n\e[0;35mAnsible-Playbook\e[0m"
+echo -e "\e[0;33m### Info\e[0m"
+echo -e "\e[0;33m# If an error occurs in context with pip, pyenv, nvm, ... while executing the playbook:\e[0m"
+echo -e "\e[0;33m# Close and reopen terminal and start the script or just the playbook again\e[0m"
+# echo -e "\e[0;33m#   - If VS Code app opens you can simply close it again or leave it open until script is finished\e[0m"
 echo -e "\e[0;33m###\e[39m\n"
 
 # auskommenitert, da vorerst ansible wieder über Paketmanager installiert wird
-# echo -e "\e[0;33m'ansible' Befehl evtl. zunächst noch nicht verfügbar\e[39m"
+# echo -e "\e[0;33m'ansible' Befehl evtl. zunächst noch nicht verfügbar\e[0m"
 # echo -e "\e[0;33mShell neu starten (oder source der shell config) und dann Script erneut ausführen\e[39m\n"
 
 echo -e "Path to playbook: ${HOME}/${playbookdir}/${playbook}"
@@ -268,7 +268,7 @@ ansible-playbook "${HOME}/${playbookdir}/${playbook}" -v -K
 ### ---
 case ${os} in
 Arch* | Endeavour*)
-    echo -e "\n\e[0;35mSoftware from AUR (Ach)\e[39m"
+    echo -e "\n\e[0;35mSoftware from AUR (Ach)\e[0m"
     read -r -p "Install 'paru' AUR helper and some additonal software from AUR ? ('y'=yes, other input=no): " installAUR
     if [ "${installAUR}" == "y" ]; then
         install-furtherSw-Arch
@@ -280,4 +280,4 @@ Arch* | Endeavour*)
     ;;
 esac
 
-echo -e "\n\e[0;33mScript finished.\e[39m"
+echo -e "\n\e[0;33mScript finished.\e[0m"

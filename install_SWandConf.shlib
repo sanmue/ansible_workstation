@@ -23,8 +23,8 @@ config-snapper() {
         # --- ENDE aktuell nicht implementiert
         deleteOldRootInFstab="true" # marker, that this fstab entry has to be erased (or we will have 2 entries for '/' in fstab later)
 
-        echo -e "\e[0;31mEs muss schon ein btrfs subvolume layout vorhanden sein, damit dieses Script funkiontiert.\e[39m"
-        echo -e "\e[0;31mManuelle Durchführung erforderlich. Sorry, Ende.\e[39m"
+        echo -e "\e[0;31mEs muss schon ein btrfs subvolume layout vorhanden sein, damit dieses Script funkiontiert.\e[0m"
+        echo -e "\e[0;31mManuelle Durchführung erforderlich. Sorry, Ende.\e[0m"
         exit 1
     fi
 
@@ -41,15 +41,15 @@ config-snapper() {
 
         *)
             fstabFileSystem=$(echo "${fstabEntryBtrfsRootSubvol}" | cut -d ' ' -f 1 | xargs)
-            echo -e "\e[0;31mDefault case 'fstabEntryBtrfsRootSubvol': fstab file system name could not be defined clearly.\e[39m"
+            echo -e "\e[0;31mDefault case 'fstabEntryBtrfsRootSubvol': fstab file system name could not be defined clearly.\e[0m"
             ;;
     esac
 
-    echo -e "\e[0;33mSetting fstab file system name to\e[39m '${fstabFileSystem}' \e[0;33mfor now.\nYou can correct this later manually when prompted for confirmation.\e[39m"
+    echo -e "\e[0;33mSetting fstab file system name to\e[39m '${fstabFileSystem}' \e[0;33mfor now.\nYou can correct this later manually when prompted for confirmation.\e[0m"
     # --- END check fstab + set file system name ------------------------------
 
     if [ ! -e "${snapperSnapshotFolder}" ]; then # check if ${snapperSnapshotFolder} exists
-        echo -e "\e[0;33m- Verzeichnis '${snapperSnapshotFolder}' nicht vorhanden. Evlt. abweichendes Verzeichnis konfiguriert?!\n- Ggf. vorheriger manueller Eingriff erforderlich.\e[39m"
+        echo -e "\e[0;33m- Verzeichnis '${snapperSnapshotFolder}' nicht vorhanden. Evlt. abweichendes Verzeichnis konfiguriert?!\n- Ggf. vorheriger manueller Eingriff erforderlich.\e[0m"
         echo "Current btrfs subvolume list:"
         sudo btrfs subvolume list /
         read -r -p "Installation/Konfiguration fortsetzen? (beliebige Eingabe = ja, 'n' = nein): " continueScript
@@ -59,8 +59,8 @@ config-snapper() {
         fi
     fi
 
-    echo -e "\n\e[0;33m*** ********************************************\e[39m"
-    echo -e "\e[0;33m*** Start: Installation und config von 'snapper'\e[39m"
+    echo -e "\n\e[0;33m*** ********************************************\e[0m"
+    echo -e "\e[0;33m*** Start: Installation und config von 'snapper'\e[0m"
     case "${os}" in
         Arch* | Endeavour*) # aktuell für UEFI oder BIOS jeweils mit GRUB-Bootloader (TODO: sowie für UEFI + systemd boot -> not (re-)tested)
             # https://wiki.archlinux.org/title/Btrfs
@@ -117,7 +117,7 @@ config-snapper() {
                     echo "|__ Erstelle Subvolume '/mnt/${subvol}'..."
                     sudo btrfs subvolume create "/mnt/${subvol}"
                 else
-                    echo -e "\e[0;33m|__ Subvolume '/mnt/${subvol}' bereits vorhanden\e[39m"
+                    echo -e "\e[0;33m|__ Subvolume '/mnt/${subvol}' bereits vorhanden\e[0m"
                 fi
             done
 
@@ -132,17 +132,17 @@ config-snapper() {
                 echo "|__ erstelle Eintrag für Subvolume '${subvol}' mit mount point '${btrfsSubvolLayout[${subvol}]}'..."
 
                 if [ ! -e "${btrfsSubvolLayout[${subvol}]}" ]; then # wenn Mount-Ziel (Verzeichnis) noch nicht vorhanden
-                    echo -e "\e[0;33m    |__ Mount-Ziel '${btrfsSubvolLayout[${subvol}]}' nicht vorhanden, Verzeichnis wird erstellt...\e[39m"
+                    echo -e "\e[0;33m    |__ Mount-Ziel '${btrfsSubvolLayout[${subvol}]}' nicht vorhanden, Verzeichnis wird erstellt...\e[0m"
                     sudo mkdir -p "${btrfsSubvolLayout[${subvol}]}"
                 fi
 
                 if [[ $(grep "subvol=/${subvol}," /etc/fstab) ]]; then # wenn Eintrag für z.B. ...'subvol=/@,'... bereits vorhanden
-                    echo -e "\e[0;33m    |__ Eintrag für Subvolume '${subvol}' bereits vorhanden, ggf. prüfen/korrigieren\e[39m"
+                    echo -e "\e[0;33m    |__ Eintrag für Subvolume '${subvol}' bereits vorhanden, ggf. prüfen/korrigieren\e[0m"
                     subvolInFstab='true'
                 fi
 
                 if [[ $(grep -E " +${btrfsSubvolLayout[${subvol}]} +" /etc/fstab) ]]; then # wenn Mount Point (z.B. für '/') bereits vorhanden
-                    echo -e "\e[0;33m    |__ Mount-Ziel '${btrfsSubvolLayout[${subvol}]}' bereits vorhanden, '${subvol}' wird nicht (nochmal) hinterlegt, ggf. prüfen/korrigieren\e[39m"
+                    echo -e "\e[0;33m    |__ Mount-Ziel '${btrfsSubvolLayout[${subvol}]}' bereits vorhanden, '${subvol}' wird nicht (nochmal) hinterlegt, ggf. prüfen/korrigieren\e[0m"
                     mountPointInFstab='true'
                 fi
 
@@ -195,7 +195,7 @@ config-snapper() {
                 sudo grub-install --target=i386-pc "${devGrubInstallPath}" && sudo grub-mkconfig -o /boot/grub/grub.cfg &&
                     sudo grub-mkconfig
             elif [ -e "${efiDir}/loader/loader.conf" ]; then # UEFI + Systemd Boot
-                echo -e "\e[0;33m UEFI + systemD boot, kein TODO\e[39m"
+                echo -e "\e[0;33m UEFI + systemD boot, kein TODO\e[0m"
             else
                 echo "--- Bootloader nicht erkennbar ---"
                 # systemd boot: kein Eintrag, manueller Sprung in tty (bzw. dracut macht neues img?)
@@ -264,7 +264,7 @@ config-snapper() {
 
         *)
             echo -e "\e[0;33mFür verwendetes OS '${os}' wurde Installation/Konfiguration von 'snapper' noch nicht getestet."
-            echo -e "Manuelle Durchführung notwendig\e[39m"
+            echo -e "Manuelle Durchführung notwendig\e[0m"
             touch "${HOME}/.ansible_installScript_snapper_NOT-DONE"
             read -r -p "Eingabe-Taste drücken um fortzufahren"
             exit 0
@@ -273,8 +273,8 @@ config-snapper() {
 
     touch "${HOME}/.ansible_installScript_snapperGrub" # wird auch bei default-switch - Zweig erstellt, d.h. snapper nicht konfiguriert (-> Manuelle Durchführung notwendig)
 
-    echo -e "\e[0;33m*** Ende Snapper-Teil\e[39m"
-    echo -e "\e[0;33m*** ********************************************\e[39m"
+    echo -e "\e[0;33m*** Ende Snapper-Teil\e[0m"
+    echo -e "\e[0;33m*** ********************************************\e[0m"
 }
 
 config-updatedb() {
