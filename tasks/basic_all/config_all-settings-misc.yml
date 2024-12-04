@@ -279,7 +279,7 @@
       # cat -> bat # concatenate files and print on the standard output
       if [[ $(command -v bat) ]]; then
           alias cat='bat --plain' # --force-colorization
-          alias catp='cat ----paging=never' # --force-colorization
+          alias catp='cat --paging=never' # --force-colorization
           alias catn='bat --number' # --force-colorization
           alias catf='bat --style="full"' # --force-colorization
       fi
@@ -797,7 +797,7 @@
       # cat -> bat # concatenate files and print on the standard output
       if [[ $(command -v bat) ]]; then
           alias cat='bat --plain' # --force-colorization
-          alias catp='cat ----paging=never' # --force-colorization
+          alias catp='cat --paging=never' # --force-colorization
           alias catn='bat --number' # --force-colorization
           alias catf='bat --style="full"' # --force-colorization
       fi

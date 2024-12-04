@@ -31,22 +31,26 @@ oslist=("Arch Linux" "EndeavourOS" "Debian GNU/Linux") # currently supported dis
 # currentHostname=$(cat /etc/hostname)
 currentHostname=$(hostnamectl hostname) # only systemd
 bootloaderId='GRUB'                     # or 'endeavouros', ...
-# TODO: integration of 'systemd-boot'
 
+# if [ -d "/efi" ]; then # Uefi - EFI path
 if [ "$(sudo ls "/efi")" ]; then # Uefi - EFI path
     efiDir="/efi"
-elif [ "$(sduo ls "/boot/efi")" ]; then # Uefi - EFI path (deprecated location)
+elif [ "$(sudo ls "/boot/efi")" ]; then # Uefi - EFI path (deprecated location)
     efiDir="/boot/efi"
-else # Bios
-    # echo "Bios boot mode"
+else # Bios boot mode
     efiDir="/no/efi/dir/available"
 fi
 
+snapperRollbackFolderName=".btrfsroot"
+snapperRollbackConfig="/etc/snapper-rollback.conf"
+
 snapperConfigName_root="root"
 snapperSnapshotFolder="/.snapshots"
+snapperSnapshotsSubvolName='@snapshots'
+
 declare -A btrfsSubvolLayout=(
     ["@"]="/"
-    ["@snapshots"]="${snapperSnapshotFolder}"
+    ["${snapperSnapshotsSubvolName}"]="${snapperSnapshotFolder}"
     ["@home"]="/home"
     ["@opt"]="/opt"
     ["@srv"]="/srv"
@@ -136,9 +140,10 @@ fi
 echo -e "\n\e[0;35mSystem snapshots\e[0m"
 if [[ ! -e "/etc/archinstall_autoBash" ]]; then # if installed via 'archinstall_autoBash': snapper install + config already finished
     # check filesystem type + aks if snapper should be installed:
-    if [[ $(stat -f -c %T /) = 'btrfs' ]] && [[ ! -e "${HOME}/.ansible_installScript_snapperGrub" ]]; then # prüfe '/' auf btrfs filesystem;  -f, --file-system; -c, --format; %T - Type in human readable form (e.g. 'btrfs', 'ext4', ...)
+    if [[ $(stat -f -c %T /) = 'btrfs' ]] && [[ ! -e "${HOME}/.ansible_installScript_snapper" ]]; then # prüfe '/' auf btrfs filesystem;  -f, --file-system; -c, --format; %T - Type in human readable form (e.g. 'btrfs', 'ext4', ...)
         read -r -p "Install + configure 'snapper'? ('y' = yes, other input = no): " doSnapper
         if [ "${doSnapper}" = "y" ]; then
+            install-aur-helper # installs AUR helper, e.g. paru # needed for install of 'snapper-rollback' from AUR
             config-snapper
         fi
     fi
@@ -224,44 +229,57 @@ esac
 # pipx install --include-deps ansible
 # pipx inject --include-apps ansible argcomplete
 
-### ---
-### Test Ansbile Playbook
-### ---
-# echo ""
-# read -rp "Soll TEST des Ansible-Playbooks durchgeführt werden (j/n)?: " testplay
-# if [ "${testplay}" = 'j' ]; then
-#    echo "Starte TEST des Playbooks ..."
-#    ansible-playbook "${HOME}/${playbookdir}/${playbook}" -v --ask-become-pass --check
-#    # bei verschlüsselten Daten z.B.:
-#    #ansible-playbook "${HOME}/${playbookdir}/${playbook}" -v -K -C --vault-password-file "${HOME}/.ansibleVaultKey"
-# else
-#    echo "TEST des Playbooks wird NICHT durchgefürt"
-# fi
-
-### ---
+### ----------------
 ### Ansbile Playbook
-### ---
-echo -e "\n\e[0;35mAnsible-Playbook\e[0m"
-echo -e "\e[0;33m### Info\e[0m"
-echo -e "\e[0;33m# If an error occurs in context with pip, pyenv, nvm, ... while executing the playbook:\e[0m"
-echo -e "\e[0;33m# Close and reopen terminal and start the script or just the playbook again\e[0m"
-# echo -e "\e[0;33m#   - If VS Code app opens you can simply close it again or leave it open until script is finished\e[0m"
-echo -e "\e[0;33m###\e[39m\n"
+### ----------------
+echo -e "\n\e[0;35mAnsible Playbook\e[0m"
+executePlaybook="y"
+if [ -e "${HOME}/.ansible_playbookFinished" ]; then
+    read -rp "Playbook wurde bereits durchlaufen. Nochmal starten? (y=yes, sonstige Eingabe: nein): " executePlaybook
+fi
 
-# auskommenitert, da vorerst ansible wieder über Paketmanager installiert wird
-# echo -e "\e[0;33m'ansible' Befehl evtl. zunächst noch nicht verfügbar\e[0m"
-# echo -e "\e[0;33mShell neu starten (oder source der shell config) und dann Script erneut ausführen\e[39m\n"
+if [ "${executePlaybook}" = "y" ]; then
+    ### --- Test Ansbile Playbook
+    # echo ""
+    # read -rp "Soll TEST des Ansible-Playbooks durchgeführt werden (j/n)?: " testplay
+    # if [ "${testplay}" = 'j' ]; then
+    #    echo "Starte TEST des Playbooks ..."
+    #    ansible-playbook "${HOME}/${playbookdir}/${playbook}" -v --ask-become-pass --check
+    #    # bei verschlüsselten Daten z.B.:
+    #    #ansible-playbook "${HOME}/${playbookdir}/${playbook}" -v -K -C --vault-password-file "${HOME}/.ansibleVaultKey"
+    # else
+    #    echo "TEST des Playbooks wird NICHT durchgefürt"
+    # fi
 
-echo -e "Path to playbook: ${HOME}/${playbookdir}/${playbook}"
-ansible-playbook "${HOME}/${playbookdir}/${playbook}" -v -K
+    ### --- Ansbile Playbook
+    echo -e "\e[0;33m### Info\e[0m"
+    echo -e "\e[0;33m# If an error occurs in context with pip, pyenv, nvm, ... while executing the playbook:\e[0m"
+    echo -e "\e[0;33m# Close and reopen terminal and start the script or just the playbook again\e[0m"
+    # echo -e "\e[0;33m#   - If VS Code app opens you can simply close it again or leave it open until script is finished\e[0m"
+    echo -e "\e[0;33m###\e[39m\n"
 
-# ansible-playbook "${HOME}/${playbookdir}/${playbook}" -v -K -e 'ansible_python_interpreter=/usr/bin/python3'
-# https://docs.ansible.com/ansible/latest/collections/ansible/posix/firewalld_module.html#notes
-# - tasks/basic_all/config_workstation-firewall.yml: Firewalld - allow KDE Connect (Archlinux)
-# - tasks/basic_all/packages_workstation-pythonPip.yml: /home/userID/dev/Projects/Ansible/ansible_workstation/tasks/basic_all/packages_workstation-pythonPip.yml
+    # auskommenitert, da vorerst ansible wieder über Paketmanager installiert wird
+    # echo -e "\e[0;33m'ansible' Befehl evtl. zunächst noch nicht verfügbar\e[0m"
+    # echo -e "\e[0;33mShell neu starten (oder source der shell config) und dann Script erneut ausführen\e[39m\n"
 
-# bei verschlüsselten Daten z.B.:
-# ansible-playbook "${HOME}/${playbookdir}/${playbook}" -v -K --vault-password-file "${HOME}/.ansibleVaultKey"
+    echo -e "Path to playbook: ${HOME}/${playbookdir}/${playbook}"
+    # ansible-playbook "${HOME}/${playbookdir}/${playbook}" -v -K
+    # if [ $? -eq 0 ]; then
+    if ansible-playbook "${HOME}/${playbookdir}/${playbook}" -v -K; then
+        echo "No error when executing playbook, setting 'flag file'"
+        touch "${HOME}/.ansible_playbookFinished"
+    else
+        echo "Error when executing playbook."
+    fi
+
+    # ansible-playbook "${HOME}/${playbookdir}/${playbook}" -v -K -e 'ansible_python_interpreter=/usr/bin/python3'
+    # https://docs.ansible.com/ansible/latest/collections/ansible/posix/firewalld_module.html#notes
+    # - tasks/basic_all/config_workstation-firewall.yml: Firewalld - allow KDE Connect (Archlinux)
+    # - tasks/basic_all/packages_workstation-pythonPip.yml: /home/userID/dev/Projects/Ansible/ansible_workstation/tasks/basic_all/packages_workstation-pythonPip.yml
+
+    # bei verschlüsselten Daten z.B.:
+    # ansible-playbook "${HOME}/${playbookdir}/${playbook}" -v -K --vault-password-file "${HOME}/.ansibleVaultKey"
+fi
 
 ### ---
 ### Further Installations
@@ -270,7 +288,7 @@ case ${os} in
 Arch* | Endeavour*)
     echo -e "\n\e[0;35mSoftware from AUR (Ach)\e[0m"
     read -r -p "Install 'paru' AUR helper and some additonal software from AUR ? ('y'=yes, other input=no): " installAUR
-    if [ "${installAUR}" == "y" ]; then
+    if [ "${installAUR}" = "y" ]; then
         install-furtherSw-Arch
     fi
     ;;
