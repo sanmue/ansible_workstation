@@ -134,6 +134,12 @@ if [ "${changeHostname}" = 'y' ]; then
 fi
 
 ### ---
+### lts-kernel
+### ---
+echo -e "\n\e[0;35mInstalling lts-kernel\e[0m"
+sudo pacman -S --needed --noconfirm linux-lts linux-lts-headers
+
+### ---
 ### Inst + config snapper
 ### ---
 

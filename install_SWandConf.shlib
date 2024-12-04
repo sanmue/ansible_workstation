@@ -279,44 +279,70 @@ config-snapper() {
             sudo systemctl enable --now snapper-cleanup.timer
 
             # --- pacman hooks
+            # https://wiki.archlinux.org/title/Pacman#Hooks
+            # https://wiki.archlinux.org/title/System_backup#Snapshots_and_/boot_partition
+            # https://wiki.archlinux.org/title/Talk:System_backup#Snapshots_and_/boot_partition_hook_is_broken
+            # TOOD: verify:
+            # - zieht nur für bereits installierte kernel; für nachträglich installierte kernels werden die hooks erst bei nächstem kernel update gesatartet
+            # - -> installation lts kernel vor snapper config hinzugefügt
+
+            if grep -i '^#HookDir' /etc/pacman.conf; then
+                echo -e "\n*** Aktiviere zusätzliches hook directory '/etc/pacman.d/hooks/' in '/etc/pacman.conf'."
+                sudo sed -i 's|^#HookDir|HookDir|g' /etc/pacman.conf
+            else
+                echo -e "\n*** Zusätzliches hook directory '/etc/pacman.d/hooks/' in '/etc/pacman.conf' bereits aktiviert."
+            fi
+
             echo -e "\n*** Erstelle Pacman Hook für Backup von '/boot' bzw. '${efiDir}'"
             echo "Installiere rsync, falls nicht vorhanden..."
             sudo pacman -S --needed --noconfirm rsync
 
             if [ -d "/boot" ]; then
-                echo "Erstelle/kopiere Hook-Datei nach '/etc/pacman.d/hooks/95-bootbackup.hook'..."
+                echo "Erstelle Hook-Dateien in '/etc/pacman.d/hooks/' für '/boot/'..."
                 # SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)   # https://codefather.tech/blog/bash-get-script-directory/
                 # SCRIPT_DIR=$(dirname "${BASH_SOURCE[0]}")
-                sudo mkdir -pv /etc/pacman.d/hooks &&
-                    # sudo cp -fv "${SCRIPT_DIR}/files/95-bootbackup.hook" /etc/pacman.d/hooks/95-bootbackup.hook &&
-                    sudo cp -fv "files/95-bootbackup.hook" /etc/pacman.d/hooks/95-bootbackup.hook &&
-                    sudo chown root:root /etc/pacman.d/hooks/95-bootbackup.hook
+                sudo mkdir -pv /etc/pacman.d/hooks
+
+                # sudo cp -fv "${SCRIPT_DIR}/files/55-bootbackup_post.hook" /etc/pacman.d/hooks/55-bootbackup_post.hook &&
+                sudo cp -fv files/55-bootbackup_pre.hook /etc/pacman.d/hooks/55-bootbackup_pre.hook
+                sudo cp -fv files/55-bootbackup_post.hook /etc/pacman.d/hooks/55-bootbackup_post.hook
+
+                sudo chown root:root /etc/pacman.d/hooks/55-bootbackup_pre.hook
+                sudo chown root:root /etc/pacman.d/hooks/55-bootbackup_post.hook
 
                 echo "Erstelle backup folder '/.bootbackup' für boot backup..."
-                sudo mkdir -pv /.bootbackup
+                sudo mkdir -pv /.bootbackup/pre
+                sudo mkdir -pv /.bootbackup/post
 
-                echo "Erstelle initiales Backup von '/boot' nach '/.bootbackup'..." # somit bei zukünftigen snapshots enthalten
-                sudo cp -rfv /boot /.bootbackup
+                echo "Erstelle initiales Backup von '/boot' nach '/.bootbackup'..." # somit in zukünftigen snapshots von '/' enthalten
+                sudo rsync -av --mkpath --delete /boot/ /.bootbackup/pre/
+                sudo rsync -av --mkpath --delete /boot/ /.bootbackup/post/
             fi
 
             if [ -d "/efi" ]; then
-                echo "Erstelle/kopiere Hook-Datei nach '/etc/pacman.d/hooks/95-efibackup.hook'..."
+                echo "Erstelle Hook-Dateien in '/etc/pacman.d/hooks/' für '/efi/..."
                 # SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)   # absolute path # https://codefather.tech/blog/bash-get-script-directory/
                 # SCRIPT_DIR=$(dirname "${BASH_SOURCE[0]}") # relative path
-                sudo mkdir -pv /etc/pacman.d/hooks &&
-                    # sudo cp -fv "${SCRIPT_DIR}/files/95-efibackup.hook" /etc/pacman.d/hooks/95-efibackup.hook &&
-                    sudo cp -fv "files/95-efibackup.hook" /etc/pacman.d/hooks/95-efibackup.hook &&
-                    sudo chown root:root /etc/pacman.d/hooks/95-efibackup.hook
+                sudo mkdir -pv /etc/pacman.d/hooks
+
+                # sudo cp -fv "${SCRIPT_DIR}/files/55-efibackup_post.hook" /etc/pacman.d/hooks/55-efibackup_post.hook &&
+                sudo cp -fv files/55-efibackup_pre.hook /etc/pacman.d/hooks/55-efibackup_pre.hook
+                sudo cp -fv files/55-efibackup_post.hook /etc/pacman.d/hooks/55-efibackup_post.hook
+
+                sudo chown root:root /etc/pacman.d/hooks/55-efibackup_pre.hook
+                sudo chown root:root /etc/pacman.d/hooks/55-efibackup_post.hook
 
                 echo "Erstelle backup folder '/.efibackup' für efi backup..."
-                sudo mkdir -pv /.efibackup
+                sudo mkdir -pv /.efibackup/pre
+                sudo mkdir -pv /.efibackup/post
 
-                echo "Erstelle initiales Backup von '/efi' nach '/.efibackup'..." # somit bei zukünftigen snapshots enthalten
-                sudo cp -rfv /efi /.efibackup
+                echo "Erstelle initiales Backup von '/efi' nach '/.efibackup'..." # somit in zukünftigen snapshots von '/' enthalten
+                sudo rsync -av --mkpath --delete /efi/ /.efibackup/pre/
+                sudo rsync -av --mkpath --delete /efi/ /.efibackup/post/
             fi
 
             # --- initial snapshot
-            echo -e "\n*** Erstelle snapshot (single): '***Base System Install***'"
+            echo -e "\n*** Erstelle initial snapshot (single): '***Base System Install***'"
             sudo snapper -c "${snapperConfigName_root}" create -d "***Base System Install***" &&
                 echo "Aktuelle Liste der Snapshots:"
             sudo snapper ls

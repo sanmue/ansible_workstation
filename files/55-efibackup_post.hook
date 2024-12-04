@@ -1,0 +1,12 @@
+[Trigger]
+Operation = Upgrade
+Operation = Install
+Operation = Remove
+Type = Path
+Target = usr/lib/modules/*/vmlinuz
+
+[Action]
+Depends = rsync
+Description = Backing up post /efi...
+When = PostTransaction
+Exec = /usr/bin/bash -c 'rsync -a --mkpath --delete /efi/ /.efibackup/post/'
