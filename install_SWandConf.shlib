@@ -225,7 +225,8 @@ config-snapper() {
             echo -e "\n*** Re-Install grub + Update grub boot-Einträge"
             # https://wiki.archlinux.org/title/GRUB
             # if [ -e "/sys/firmware/efi/efivars" ]; then    # check if booted into UEFI mode and UEFI variables are accessible
-            if [ -e "${efiDir}/" ] && [ -e "/boot/grub/grub.cfg" ]; then # UEFI + Grub
+            # if [ -e "${efiDir}" ] && [ -e "/boot/grub/grub.cfg" ]; then # UEFI + Grub
+            if [ "$(sudo ls "${efiDir}")" ] && [ -e "/boot/grub/grub.cfg" ]; then # UEFI + Grub
                 sudo grub-install --target=x86_64-efi --efi-directory="${efiDir}" --bootloader-id="${bootloaderId}" &&
                     sudo grub-mkconfig -o /boot/grub/grub.cfg &&
                     sudo grub-mkconfig
@@ -240,7 +241,7 @@ config-snapper() {
                 # BIOS: grub-install --target=i386-pc /dev/sdX; where i386-pc is deliberately used regardless of your actual architecture, and /dev/sdX is the disk (not a partition) where GRUB is to be installed.
                 sudo grub-install --target=i386-pc "${devGrubInstallPath}" && sudo grub-mkconfig -o /boot/grub/grub.cfg &&
                     sudo grub-mkconfig
-            elif [ -e "${efiDir}/loader/loader.conf" ]; then # UEFI + Systemd Boot
+            elif [ "$(sudo ls "${efiDir}/loader")" ]; then # UEFI + Systemd Boot
                 echo -e "\e[0;33m UEFI + systemD boot, kein TODO\e[0m"
             else
                 echo "--- Bootloader nicht erkennbar ---"
@@ -298,17 +299,18 @@ config-snapper() {
             sudo pacman -S --needed --noconfirm rsync
 
             if [ -d "/boot" ]; then
+                # für UEFI + systemd-boot eigentlich nicht notwendig, da /boot nicht auf eigener Partition ist und somit in snapshots drin
+
                 echo "Erstelle Hook-Dateien in '/etc/pacman.d/hooks/' für '/boot/'..."
-                # SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)   # https://codefather.tech/blog/bash-get-script-directory/
-                # SCRIPT_DIR=$(dirname "${BASH_SOURCE[0]}")
                 sudo mkdir -pv /etc/pacman.d/hooks
 
-                # sudo cp -fv "${SCRIPT_DIR}/files/55-bootbackup_post.hook" /etc/pacman.d/hooks/55-bootbackup_post.hook &&
-                sudo cp -fv files/55-bootbackup_pre.hook /etc/pacman.d/hooks/55-bootbackup_pre.hook
-                sudo cp -fv files/55-bootbackup_post.hook /etc/pacman.d/hooks/55-bootbackup_post.hook
+                SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd) # absolute path # https://codefather.tech/blog/bash-get-script-directory/
+                # SCRIPT_DIR=$(dirname "${BASH_SOURCE[0]}")
+                sudo cp -fv "${SCRIPT_DIR}/files/55-bootbackup_pre.hook" /etc/pacman.d/hooks/55-bootbackup_pre.hook
+                sudo cp -fv "${SCRIPT_DIR}/files/95-bootbackup_post.hook" /etc/pacman.d/hooks/95-bootbackup_post.hook
 
                 sudo chown root:root /etc/pacman.d/hooks/55-bootbackup_pre.hook
-                sudo chown root:root /etc/pacman.d/hooks/55-bootbackup_post.hook
+                sudo chown root:root /etc/pacman.d/hooks/95-bootbackup_post.hook
 
                 echo "Erstelle backup folder '/.bootbackup' für boot backup..."
                 sudo mkdir -pv /.bootbackup/pre
@@ -319,18 +321,17 @@ config-snapper() {
                 sudo rsync -av --mkpath --delete /boot/ /.bootbackup/post/
             fi
 
-            if [ -d "/efi" ]; then
+            if [ "$(sudo ls "/efi")" ]; then # # if [ -d "/efi" ]; then
                 echo "Erstelle Hook-Dateien in '/etc/pacman.d/hooks/' für '/efi/..."
-                # SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)   # absolute path # https://codefather.tech/blog/bash-get-script-directory/
-                # SCRIPT_DIR=$(dirname "${BASH_SOURCE[0]}") # relative path
                 sudo mkdir -pv /etc/pacman.d/hooks
 
-                # sudo cp -fv "${SCRIPT_DIR}/files/55-efibackup_post.hook" /etc/pacman.d/hooks/55-efibackup_post.hook &&
-                sudo cp -fv files/55-efibackup_pre.hook /etc/pacman.d/hooks/55-efibackup_pre.hook
-                sudo cp -fv files/55-efibackup_post.hook /etc/pacman.d/hooks/55-efibackup_post.hook
+                SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd) # absolute path # https://codefather.tech/blog/bash-get-script-directory/
+                # SCRIPT_DIR=$(dirname "${BASH_SOURCE[0]}") # relative path
+                sudo cp -fv "${SCRIPT_DIR}/files/55-efibackup_pre.hook" /etc/pacman.d/hooks/55-efibackup_pre.hook
+                sudo cp -fv "${SCRIPT_DIR}/files/95-efibackup_post.hook" /etc/pacman.d/hooks/95-efibackup_post.hook
 
                 sudo chown root:root /etc/pacman.d/hooks/55-efibackup_pre.hook
-                sudo chown root:root /etc/pacman.d/hooks/55-efibackup_post.hook
+                sudo chown root:root /etc/pacman.d/hooks/95-efibackup_post.hook
 
                 echo "Erstelle backup folder '/.efibackup' für efi backup..."
                 sudo mkdir -pv /.efibackup/pre
@@ -343,15 +344,15 @@ config-snapper() {
 
             # --- initial snapshot
             echo -e "\n*** Erstelle initial snapshot (single): '***Base System Install***'"
-            sudo snapper -c "${snapperConfigName_root}" create -d "***Base System Install***" &&
-                echo "Aktuelle Liste der Snapshots:"
+            sudo snapper -c "${snapperConfigName_root}" create -d "***Base System Install***"
+            echo "Aktuelle Liste der Snapshots:"
             sudo snapper ls
 
             # --- update bootloader config
             if [ -e "${efiDir}/grub.cfg" ] || [ -e "/boot/grub" ]; then   # GRUB # e.g.: "/boot/efi/grub.cfg"
                 echo -e "\n*** Aktualisiere Grub (grub.cfg)"
-                sudo grub-mkconfig -o /boot/grub/grub.cfg &&
-                    echo "(Re)Generiere Snapshots-(Sub)Menüeinträge in grub"
+                sudo grub-mkconfig -o /boot/grub/grub.cfg
+                echo "(Re)Generiere Snapshots-(Sub)Menüeinträge in grub"
                 sudo grub-mkconfig
             fi
 
@@ -403,6 +404,11 @@ config-snapperRollback() { # called in a separate script after reboot
     echo -e "Modify snapperRollbackConfig: set configured snapperRollbackFolder to configured path '${srf}'..."
     # currently set in config: mountpoint = /btrfsroot
     sudo sed -i "s|/btrfsroot|${srf}|g" "${srcf}" # changing '/btrfsroot' to configured snapperRollbackFolder
+
+    # --- helper script for snapper rollback, which also copies corresponding kernel + initramfs from backups to /efi and/or /boot
+    # an alias will be created in shellconf file via ansible task which calls this script
+    echo -e "Copy 'helper script' (rollback_eos.sh) to  '/usr/local/bin'..."
+    sudo rsync files/rollback_eos.sh /usr/local/bin/rollback_eos.sh
 }
 
 config-updatedb() {
