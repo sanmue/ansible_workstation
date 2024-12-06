@@ -242,7 +242,7 @@ config-snapper() {
                 sudo grub-install --target=i386-pc "${devGrubInstallPath}" && sudo grub-mkconfig -o /boot/grub/grub.cfg &&
                     sudo grub-mkconfig
             elif [ "$(sudo ls "${efiDir}/loader")" ]; then # UEFI + Systemd Boot
-                echo -e "\e[0;33m UEFI + systemD boot, kein TODO\e[0m"
+                echo -e "\e[0;33mUEFI + systemD boot, kein TODO\e[0m"
             else
                 echo "--- Bootloader nicht erkennbar ---"
                 # systemd boot: kein Eintrag, manueller Sprung in tty (bzw. dracut macht neues img?)
@@ -298,16 +298,22 @@ config-snapper() {
             echo "Installiere rsync, falls nicht vorhanden..."
             sudo pacman -S --needed --noconfirm rsync
 
+            copysuccess="false"
             if [ -d "/boot" ]; then
                 # für UEFI + systemd-boot eigentlich nicht notwendig, da /boot nicht auf eigener Partition ist und somit in snapshots drin
 
                 echo "Erstelle Hook-Dateien in '/etc/pacman.d/hooks/' für '/boot/'..."
-                sudo mkdir -pv /etc/pacman.d/hooks
+                sudo mkdir -pv /etc/pacman.d/hooks &&
 
-                SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd) # absolute path # https://codefather.tech/blog/bash-get-script-directory/
+                # Ermittlung SCRIPT_DIR funktioniert nicht zuverlässig
+                # SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd) # absolute path # https://codefather.tech/blog/bash-get-script-directory/
                 # SCRIPT_DIR=$(dirname "${BASH_SOURCE[0]}")
-                sudo cp -fv "${SCRIPT_DIR}/files/55-bootbackup_pre.hook" /etc/pacman.d/hooks/55-bootbackup_pre.hook
-                sudo cp -fv "${SCRIPT_DIR}/files/95-bootbackup_post.hook" /etc/pacman.d/hooks/95-bootbackup_post.hook
+                # echo "SCRIPT_DIR: ${SCRIPT_DIR}"
+
+                # sudo cp -fv "${SCRIPT_DIR}/files/55-bootbackup_pre.hook" /etc/pacman.d/hooks/55-bootbackup_pre.hook
+                sudo cp -fv "${HOME}/ansible_workstation/files/55-bootbackup_pre.hook" /etc/pacman.d/hooks/55-bootbackup_pre.hook
+                # sudo cp -fv "${SCRIPT_DIR}/files/95-bootbackup_post.hook" /etc/pacman.d/hooks/95-bootbackup_post.hook
+                sudo cp -fv "${HOME}/ansible_workstation/files/95-bootbackup_post.hook" /etc/pacman.d/hooks/95-bootbackup_post.hook
 
                 sudo chown root:root /etc/pacman.d/hooks/55-bootbackup_pre.hook
                 sudo chown root:root /etc/pacman.d/hooks/95-bootbackup_post.hook
@@ -319,16 +325,28 @@ config-snapper() {
                 echo "Erstelle initiales Backup von '/boot' nach '/.bootbackup'..." # somit in zukünftigen snapshots von '/' enthalten
                 sudo rsync -av --mkpath --delete /boot/ /.bootbackup/pre/
                 sudo rsync -av --mkpath --delete /boot/ /.bootbackup/post/
+
+                # Check
+                if [ ! -e /etc/pacman.d/hooks/55-bootbackup_pre.hook ] || [ ! -e /etc/pacman.d/hooks/95-bootbackup_post.hook ]; then
+                    echo -e "\e[0;31mFehler beim kopieren der '/etc/pacman.d/hooks/' für '/boot/'\nSkript wird beendet.\e[0m"
+                    exit 1
+                fi
+
             fi
 
-            if [ "$(sudo ls "/efi")" ]; then # # if [ -d "/efi" ]; then
-                echo "Erstelle Hook-Dateien in '/etc/pacman.d/hooks/' für '/efi/..."
-                sudo mkdir -pv /etc/pacman.d/hooks
+            if [ "$(sudo ls /efi)" ]; then # if [ -d "/efi" ]; then
+                echo "Erstelle Hook-Dateien in '/etc/pacman.d/hooks/' für '/efi/'..."
+                    sudo mkdir -pv /etc/pacman.d/hooks
 
-                SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd) # absolute path # https://codefather.tech/blog/bash-get-script-directory/
+                # Ermittlung SCRIPT_DIR funktioniert nicht zuverlässig
+                # SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd) # absolute path # https://codefather.tech/blog/bash-get-script-directory/
                 # SCRIPT_DIR=$(dirname "${BASH_SOURCE[0]}") # relative path
-                sudo cp -fv "${SCRIPT_DIR}/files/55-efibackup_pre.hook" /etc/pacman.d/hooks/55-efibackup_pre.hook
-                sudo cp -fv "${SCRIPT_DIR}/files/95-efibackup_post.hook" /etc/pacman.d/hooks/95-efibackup_post.hook
+                # echo "SCRIPT_DIR: ${SCRIPT_DIR}
+
+                # sudo cp -fv "${SCRIPT_DIR}/files/55-efibackup_pre.hook" /etc/pacman.d/hooks/55-efibackup_pre.hook
+                sudo cp -fv "${HOME}/ansible_workstation/files/55-efibackup_pre.hook" /etc/pacman.d/hooks/55-efibackup_pre.hook
+                # sudo cp -fv "${SCRIPT_DIR}/files/95-efibackup_post.hook" /etc/pacman.d/hooks/95-efibackup_post.hook
+                sudo cp -fv "${HOME}/ansible_workstation/files/95-efibackup_post.hook" /etc/pacman.d/hooks/95-efibackup_post.hook
 
                 sudo chown root:root /etc/pacman.d/hooks/55-efibackup_pre.hook
                 sudo chown root:root /etc/pacman.d/hooks/95-efibackup_post.hook
@@ -340,6 +358,11 @@ config-snapper() {
                 echo "Erstelle initiales Backup von '/efi' nach '/.efibackup'..." # somit in zukünftigen snapshots von '/' enthalten
                 sudo rsync -av --mkpath --delete /efi/ /.efibackup/pre/
                 sudo rsync -av --mkpath --delete /efi/ /.efibackup/post/
+
+                if [ ! -e /etc/pacman.d/hooks/55-efibackup_pre.hook ] || [ ! -e /etc/pacman.d/hooks/95-efibackup_post.hook ]; then
+                    echo -e "\e[0;31mFehler beim kopieren der '/etc/pacman.d/hooks/' für '/efi/'\nSkript wird beendet.\e[0m"
+                    exit 1
+                fi
             fi
 
             # --- initial snapshot
@@ -385,7 +408,7 @@ config-snapperRollback() { # called in a separate script after reboot
 
     echo "Download and install snapper-rollback (AUR)..."
     if [[ $(command -v snapper-rollback) ]]; then
-        echo -e "\e[1;33m- 'snapper-rollback' is already installed \e[0m"
+        echo -e "\e[0;33m- 'snapper-rollback' is already installed \e[0m"
     else
         # echo "(Initial-)Password '${initialPassword}' can be used if asked"
         # su - USERID -c "curl -L -O https://aur.archlinux.org/cgit/aur.git/snapshot/snapper-rollback.tar.gz" # user not yet available in chroot

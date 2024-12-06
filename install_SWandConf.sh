@@ -136,6 +136,7 @@ fi
 ### ---
 ### lts-kernel
 ### ---
+# vorgelagert, damit bei snapper conf bei boot-/efibackup schon vorhanden
 echo -e "\n\e[0;35mInstalling lts-kernel\e[0m"
 sudo pacman -S --needed --noconfirm linux-lts linux-lts-headers
 
