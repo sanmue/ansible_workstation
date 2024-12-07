@@ -41,7 +41,9 @@ else # Bios boot mode
     efiDir="/no/efi/dir/available"
 fi
 
+zramGeneratorConfFilePath="/etc/systemd/zram-generator.conf"
 zramSize=2 # e.g.: 2 -> 1/2 = 50 % of RAM size # 1.25 -> 1/1.25 = 80% of RAM size
+zramParameterConfFilePath="/etc/sysctl.d/99-vm-zram-parameters.conf"
 
 snapperRollbackFolderName=".btrfsroot"
 snapperRollbackConfig="/etc/snapper-rollback.conf"
@@ -147,11 +149,11 @@ sudo pacman -S --needed --noconfirm linux-lts linux-lts-headers
 ### ---
 # - https://wiki.archlinux.org/title/Zram#Using_zram-generator
 echo -e "\n\e[0;35mZram\e[0m"
-
-if [[ ! -e "/etc/archinstall_autoBash" ]] && [[ $(cat /sys/module/zswap/parameters/enabled) = "N" ]]; then
+if [[ ! -e "/etc/archinstall_autoBash" ]] && [[ $(cat /sys/module/zswap/parameters/enabled) = "N" ]] && [[ ! $(swapon --noheadings --show=NAME) = *zram* ]]; then
     config-zram
 else
-    echo -e "\e[0;33m'/etc/archinstall_autoBash' vorhanden oder zswap enabled.\nZram wird nicht eingerichtet.\e[0m"
+    echo -e "\e[0;33m'/etc/archinstall_autoBash' vorhanden oder Zswap (noch) enabled oder Zram bereits eingerichtet.\nZram wird nicht (erneut) eingerichtet.\e[0m\n"
+    swapon
 fi
 
 ### ---

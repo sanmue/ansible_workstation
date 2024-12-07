@@ -7,7 +7,7 @@ config-zram() {
     echo "Installing 'zram-generator'..."
     sudo pacman -S --needed --noconfirm zram-generator
     echo "Creating zram-generator config..."
-    zramGeneratorConfFilePath="/etc/systemd/zram-generator.conf"
+    # zramGeneratorConfFilePath="/etc/systemd/zram-generator.conf" # wird gesetzt in 'install_SWandConf.sh'
     # zramSize=2 # e.g.: 2 -> 1/2 = 50 % of RAM size # wird gesetzt in 'install_SWandConf.sh'
     sudo touch "${zramGeneratorConfFilePath}"
     echo -e "[zram0]\nzram-size = ram / ${zramSize}\ncompression-algorithm = zstd" | sudo tee "${zramGeneratorConfFilePath}" >/dev/null
@@ -18,7 +18,7 @@ config-zram() {
     # sudo zramctl --output-all # Check # swapon -s # or: zramctl --output-all # or: cat /proc/swaps # or: systemctl status systemd-zram-setup@zram0.service
     sudo zramctl --output-all && echo "" && swapon --output-all
     echo -e "\nOptimization settings for swap on zram..."
-    zramParameterConfFilePath="/etc/sysctl.d/99-vm-zram-parameters.conf"
+    # zramParameterConfFilePath="/etc/sysctl.d/99-vm-zram-parameters.conf" # wird gesetzt in 'install_SWandConf.sh'
     sudo touch "${zramParameterConfFilePath}"
     echo -e "vm.swappiness = 180\nvm.watermark_boost_factor = 0" | sudo tee "${zramParameterConfFilePath}" >/dev/null
     echo -e "vm.watermark_scale_factor = 125\nvm.page-cluster = 0" | sudo tee --append "${zramParameterConfFilePath}" >/dev/null
