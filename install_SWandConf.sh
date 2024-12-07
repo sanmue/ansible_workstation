@@ -41,6 +41,8 @@ else # Bios boot mode
     efiDir="/no/efi/dir/available"
 fi
 
+zramSize=2 # e.g.: 2 -> 1/2 = 50 % of RAM size # 1.25 -> 1/1.25 = 80% of RAM size
+
 snapperRollbackFolderName=".btrfsroot"
 snapperRollbackConfig="/etc/snapper-rollback.conf"
 
@@ -141,9 +143,20 @@ echo -e "\n\e[0;35mInstalling lts-kernel\e[0m"
 sudo pacman -S --needed --noconfirm linux-lts linux-lts-headers
 
 ### ---
-### Inst + config snapper
+### zram
 ### ---
+# - https://wiki.archlinux.org/title/Zram#Using_zram-generator
+echo -e "\n\e[0;35mZram\e[0m"
 
+if [[ ! -e "/etc/archinstall_autoBash" ]] && [[ $(cat /sys/module/zswap/parameters/enabled) = "N" ]]; then
+    config-zram
+else
+    echo -e "\e[0;33m'/etc/archinstall_autoBash' vorhanden oder zswap enabled.\nZram wird nicht eingerichtet.\e[0m"
+fi
+
+### ---
+### Snapper + snapper-rollback
+### ---
 echo -e "\n\e[0;35mSystem snapshots\e[0m"
 if [[ ! -e "/etc/archinstall_autoBash" ]]; then # if installed via 'archinstall_autoBash': snapper install + config already finished
     # check filesystem type + aks if snapper should be installed:

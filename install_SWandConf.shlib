@@ -3,6 +3,27 @@
 
 # set -x   # enable debug mode
 
+config-zram() {
+    echo "Installing 'zram-generator'..."
+    sudo pacman -S --needed --noconfirm zram-generator
+    echo "Creating zram-generator config..."
+    zramGeneratorConfFilePath="/etc/systemd/zram-generator.conf"
+    # zramSize=2 # e.g.: 2 -> 1/2 = 50 % of RAM size # wird gesetzt in 'install_SWandConf.sh'
+    sudo touch "${zramGeneratorConfFilePath}"
+    echo -e "[zram0]\nzram-size = ram / ${zramSize}\ncompression-algorithm = zstd" | sudo tee "${zramGeneratorConfFilePath}" >/dev/null
+    echo "Reloading daemon and starting systemd-zram-setup service for zram..."
+    sudo systemctl daemon-reload
+    sudo systemctl start systemd-zram-setup@zram0.service # zram'0': -> assuming its the only / first zram
+    echo "Check:"
+    # sudo zramctl --output-all # Check # swapon -s # or: zramctl --output-all # or: cat /proc/swaps # or: systemctl status systemd-zram-setup@zram0.service
+    sudo zramctl --output-all && echo "" && swapon --output-all
+    echo -e "\nOptimization settings for swap on zram..."
+    zramParameterConfFilePath="/etc/sysctl.d/99-vm-zram-parameters.conf"
+    sudo touch "${zramParameterConfFilePath}"
+    echo -e "vm.swappiness = 180\nvm.watermark_boost_factor = 0" | sudo tee "${zramParameterConfFilePath}" >/dev/null
+    echo -e "vm.watermark_scale_factor = 125\nvm.page-cluster = 0" | sudo tee --append "${zramParameterConfFilePath}" >/dev/null
+}
+
 config-snapper() {
     # --- START check fstab + set file system name ----------------------------
     # Script only works if btrfs subvolumes are already created (e.g. recommended subvolume layout, with subvolumes: '@', '@home', ...)
