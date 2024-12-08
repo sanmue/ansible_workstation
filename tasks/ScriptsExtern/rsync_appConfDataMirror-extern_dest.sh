@@ -14,7 +14,8 @@ echo -e "\n\e[1;33mVariablen und Parameter (set + check)\e[0m"
 # ### Variablen - Start
 echo "Pfad home directory: '${HOME}'" # home directory
 borgConfFolder="${HOME}/.config/borg" # borg conf directory
-rescueAppConfDataFolder="${HOME}/RescueSystem/AppConfData" # AppConfData directory
+appConfDataFolderName="AppConfData"
+rescueAppConfDataFolder="${HOME}/RescueSystem/${appConfDataFolderName}" # AppConfData directory
 # ### Variablen - Ende
 # ### ----------------
 
@@ -56,8 +57,13 @@ fi
 
 # ### --------------
 # ### Backup - Start
-echo -e "\nStart des Backups erfolgt nach Drücken der Eingabe-Taste."
-read -r
+echo -e "\n"
+read -rp "Start des Backups? (Eingabe 'j'=ja, sonstige Eingabe=nein): " backup
+
+if [[ ! "${backup}" = "j" ]]; then
+	echo "Backup wird nicht gestartet, Script wird beendet."
+	exit 0
+fi
 
 logfolder="/var/log"
 logname="rsync_appConfData-extern_dest.sh_$(date +"%Y-%m-%d_%H%M%S").log"
@@ -68,20 +74,20 @@ rsyncOptionTxt="# ---------\n# ${rsyncOption}\n# ---------"
 
 echo -e "\n\e[1;33mStarte rsync von '${borgConfFolder}' nach '${rescueAppConfDataFolder}'...\e[0m"
 if [ -z "${rsyncOption}" ]; then # -z: True if the length of string is zero
-	echo -e "# '${borgConfFolder}' nach '${rescueAppConfDataFolder}'\n" | sudo tee -a "${logfile}"
+	echo -e "# '${borgConfFolder}' nach '${rescueAppConfDataFolder}'\n" | sudo tee -a "${logfile}" >/dev/null
 	rsync -aPhEv --stats --delete "${borgConfFolder}" "${rescueAppConfDataFolder}" | sudo tee -a "${logfile}"
 else
-	echo -e "${rsyncOptionTxt}\n# '${borgConfFolder}' nach '${rescueAppConfDataFolder}'\n" | sudo tee -a "${logfile}"
+	echo -e "${rsyncOptionTxt}\n# '${borgConfFolder}' nach '${rescueAppConfDataFolder}'\n" | sudo tee -a "${logfile}" >/dev/null
 	rsync -aPhEv --stats --delete "${rsyncOption}" "${borgConfFolder}" "${rescueAppConfDataFolder}" | sudo tee -a "${logfile}"
 fi
 
-echo -e "\n\e[1;33mStarte rsync von '${rescueAppConfDataFolder}' nach '${dest}/'...\e[0m"
+echo -e "\n\e[1;33mStarte rsync von '${rescueAppConfDataFolder}/' nach '${dest}/'...\e[0m"
 if [ -z "${rsyncOption}" ]; then # -z: True if the length of string is zero
-	echo -e "\n# '${rescueAppConfDataFolder}' nach '${dest}'\n" | sudo tee -a "${logfile}"
-	rsync -aPhEv --stats --delete "${rescueAppConfDataFolder}" "${dest}" | sudo tee -a "${logfile}"
+	echo -e "\n# '${rescueAppConfDataFolder}/' nach '${dest}/'\n" | sudo tee -a "${logfile}" >/dev/null
+	rsync -aPhEv --stats --delete "${rescueAppConfDataFolder}/" "${dest}/" | sudo tee -a "${logfile}"
 else
-	echo -e "\n${rsyncOptionTxt}\n# '${rescueAppConfDataFolder}' nach '${dest}'\n" | sudo tee -a "${logfile}"
-	rsync -aPhEv --stats --delete "${rsyncOption}" "${rescueAppConfDataFolder}" "${dest}" | sudo tee -a "${logfile}"
+	echo -e "\n${rsyncOptionTxt}\n# '${rescueAppConfDataFolder}/' nach '${dest}/'\n" | sudo tee -a "${logfile}" >/dev/null
+	rsync -aPhEv --stats --delete "${rsyncOption}" "${rescueAppConfDataFolder}/" "${dest}/" | sudo tee -a "${logfile}"
 	echo -e "${rsyncOptionTxt}" | sudo tee -a "${logfile}"
 fi
 
