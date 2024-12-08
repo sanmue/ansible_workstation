@@ -9,5 +9,20 @@
   "[shellscript]": {
     "editor.defaultFormatter": "foxundermoon.shell-format"
   },
-  "yaml.schemas": {}
+  "files.trimTrailingWhitespace": true,
+  "prettier.tabWidth": 4,
+  "[ansible]": {
+    "editor.defaultFormatter": "kennylong.kubernetes-yaml-formatter",
+    "editor.formatOnSave": false,
+    "editor.detectIndentation": true,
+    "editor.insertSpaces": true,
+    "editor.tabSize": 2,
+    "editor.quickSuggestions": {
+      "comments": true,
+      "other": true,
+      "strings": true
+    },
+    "editor.autoIndent": "advanced"
+  },
+  "ansible.python.interpreterPath": "/home/sandro/.pyenv/versions/3.12.5/bin/python"
 }
