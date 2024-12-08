@@ -57,7 +57,7 @@ fi
 
 # ### --------------
 # ### Backup - Start
-echo -e "\n"
+echo -e "\n\e[0;31m! MIRROR ! - Daten am Ziel werden ggf. gelöscht - ! MIRROR !\e[0m"
 read -rp "Start des Backups? (Eingabe 'j'=ja, sonstige Eingabe=nein): " backup
 
 if [[ ! "${backup}" = "j" ]]; then
