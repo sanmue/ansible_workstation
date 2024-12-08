@@ -319,7 +319,6 @@ config-snapper() {
             echo "Installiere rsync, falls nicht vorhanden..."
             sudo pacman -S --needed --noconfirm rsync
 
-            copysuccess="false"
             if [ -d "/boot" ]; then
                 # für UEFI + systemd-boot eigentlich nicht notwendig, da /boot nicht auf eigener Partition ist und somit in snapshots drin
 
