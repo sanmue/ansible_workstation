@@ -73,6 +73,7 @@ logfile="${logfolder}/${logname}"
 rsyncOptionTxt="# ---------\n# ${rsyncOption}\n# ---------"
 
 echo -e "\n\e[1;33mStarte rsync von '${borgConfFolder}' nach '${rescueAppConfDataFolder}'...\e[0m"
+echo "Ggf. erscheint Aufforderung zur Passworteingabe für sudo Berechtigung, damit logfile nach '${logfolder}' geschrieben und zum Schluss die Rechte gesetzt werden können."
 if [ -z "${rsyncOption}" ]; then # -z: True if the length of string is zero
 	echo -e "# '${borgConfFolder}' nach '${rescueAppConfDataFolder}'\n" | sudo tee -a "${logfile}" >/dev/null
 	rsync -aPhEv --stats --delete "${borgConfFolder}" "${rescueAppConfDataFolder}" | sudo tee -a "${logfile}"
