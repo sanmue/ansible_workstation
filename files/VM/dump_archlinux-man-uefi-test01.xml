@@ -1,6 +1,7 @@
 <domain type='kvm'>
   <name>archlinux-man-uefi-test01</name>
   <uuid>c44b54a3-a670-430a-bd81-556d951d5093</uuid>
+  <description>UEFI, GRUB, btrfs, encryption (no keyfile)</description>
   <metadata>
     <libosinfo:libosinfo xmlns:libosinfo="http://libosinfo.org/xmlns/libvirt/domain/1.0">
       <libosinfo:os id="http://archlinux.org/archlinux/rolling"/>
@@ -15,8 +16,8 @@
       <feature enabled='no' name='enrolled-keys'/>
       <feature enabled='yes' name='secure-boot'/>
     </firmware>
-    <loader readonly='yes' secure='yes' type='pflash'>/usr/share/edk2/x64/OVMF_CODE.secboot.4m.fd</loader>
-    <nvram template='/usr/share/edk2/x64/OVMF_VARS.4m.fd'>/var/lib/libvirt/qemu/nvram/archlinux-man-uefi-test01_VARS.fd</nvram>
+    <loader readonly='yes' secure='yes' type='pflash' format='raw'>/usr/share/edk2/x64/OVMF_CODE.secboot.4m.fd</loader>
+    <nvram template='/usr/share/edk2/x64/OVMF_VARS.4m.fd' templateFormat='raw' format='raw'>/var/lib/libvirt/qemu/nvram/archlinux-man-uefi-test01_VARS.fd</nvram>
     <boot dev='hd'/>
   </os>
   <features>

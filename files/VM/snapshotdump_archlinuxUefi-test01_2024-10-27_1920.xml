@@ -33,8 +33,8 @@ archinstall, luks encryption, Gnome</description>
         <feature enabled='no' name='enrolled-keys'/>
         <feature enabled='yes' name='secure-boot'/>
       </firmware>
-      <loader readonly='yes' secure='yes' type='pflash'>/usr/share/edk2/x64/OVMF_CODE.secboot.4m.fd</loader>
-      <nvram template='/usr/share/edk2/x64/OVMF_VARS.4m.fd'>/var/lib/libvirt/qemu/nvram/archlinuxUefi-test01_VARS.fd</nvram>
+      <loader readonly='yes' secure='yes' type='pflash' format='raw'>/usr/share/edk2/x64/OVMF_CODE.secboot.4m.fd</loader>
+      <nvram template='/usr/share/edk2/x64/OVMF_VARS.4m.fd' templateFormat='raw' format='raw'>/var/lib/libvirt/qemu/nvram/archlinuxUefi-test01_VARS.fd</nvram>
       <boot dev='hd'/>
     </os>
     <features>

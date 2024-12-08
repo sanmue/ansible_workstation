@@ -1,6 +1,7 @@
 <domain type='kvm'>
   <name>archlinux-man-bios-test01</name>
   <uuid>88ee85c2-eaa0-4e7d-b458-f82dcb57dc8a</uuid>
+  <description>BIOS, GRUB, btrfs, encryption (no keyfile)</description>
   <metadata>
     <libosinfo:libosinfo xmlns:libosinfo="http://libosinfo.org/xmlns/libvirt/domain/1.0">
       <libosinfo:os id="http://archlinux.org/archlinux/rolling"/>

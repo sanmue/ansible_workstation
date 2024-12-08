@@ -1,8 +1,8 @@
 <domain type='kvm'>
   <name>archlinuxUefi-test01</name>
   <uuid>1844b6e5-a3e8-4f05-ad18-94243b1963e8</uuid>
-  <description>cloned from archlinuxUefi
-archinstall, luks encryption, Gnome</description>
+  <description>archinstall; cloned from archlinuxUefi
+GRUB, btrfs, encryption, Gnome</description>
   <metadata>
     <libosinfo:libosinfo xmlns:libosinfo="http://libosinfo.org/xmlns/libvirt/domain/1.0">
       <libosinfo:os id="http://archlinux.org/archlinux/rolling"/>
@@ -17,8 +17,8 @@ archinstall, luks encryption, Gnome</description>
       <feature enabled='no' name='enrolled-keys'/>
       <feature enabled='yes' name='secure-boot'/>
     </firmware>
-    <loader readonly='yes' secure='yes' type='pflash'>/usr/share/edk2/x64/OVMF_CODE.secboot.4m.fd</loader>
-    <nvram template='/usr/share/edk2/x64/OVMF_VARS.4m.fd'>/var/lib/libvirt/qemu/nvram/archlinuxUefi-test01_VARS.fd</nvram>
+    <loader readonly='yes' secure='yes' type='pflash' format='raw'>/usr/share/edk2/x64/OVMF_CODE.secboot.4m.fd</loader>
+    <nvram template='/usr/share/edk2/x64/OVMF_VARS.4m.fd' templateFormat='raw' format='raw'>/var/lib/libvirt/qemu/nvram/archlinuxUefi-test01_VARS.fd</nvram>
     <boot dev='hd'/>
   </os>
   <features>
