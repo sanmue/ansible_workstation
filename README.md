@@ -8,7 +8,11 @@
   - optionally installs + configures 'snapper' for system snapshots and additional btrfs subvolumes if needed (only if filesystem is btrfs + OS is Arch Linux or Endeavour OS)
     - at least a basic btrfs subvolume layout must exist
   - starts the ansible playbook (local.yml)
-  - Arch Linux / Endeavour OS: installs some packages from AUR after completing ansible playbook
+  - Arch Linux / Endeavour OS: optionally installs some packages from AUR after completing ansible playbook
+  - Arch Linux / Endeavour OS (with 'systemd-boot' bootloader): optionally installs [(Rescue) System on ESP](https://wiki.archlinux.org/title/Systemd-boot#Archiso_on_ESP)
+    - needs min. available free disk space on EFI Partition (+ 300MB reserve disk space):
+      - ~3 GB for EndeavourOS live iso
+      - ~1 GB for live iso of Archlinux or grml (full)
 
 ## Usage
 
@@ -54,7 +58,7 @@
 - in VS Code:
   - `STRG + SHIFT + P`
   - `>Sync Settings: Download (repository -> user)`
-  
+
 #### Export config to git-repo
 
 - in VS Code:
