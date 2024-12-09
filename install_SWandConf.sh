@@ -91,6 +91,8 @@ pngrep="PRUNENAMES"
 snapshotFolder=$(gettext "${snapperSnapshotFolder}" | sed 's/^.//') # ohne führendes '/' in '/.snapshots' -> .snapshots
 #                gettext: damit nicht Pfad '/.snapshots' aufruft, sondern nur String nimmt
 
+downloadFolder="${HOME}/Downloads"
+
 ### ---
 ### Initial settings
 ### ---
@@ -311,7 +313,19 @@ Arch* | Endeavour*)
     echo -e "\n\e[0;35mSoftware from AUR (Ach)\e[0m"
     read -r -p "Install 'paru' AUR helper and some additonal software from AUR ? ('y'=yes, other input=no): " installAUR
     if [ "${installAUR}" = "y" ]; then
-        install-furtherSw-Arch
+        install-aur
+    fi
+
+    if [ "$(sudo ls ${efiDir}/loader)" ]; then # if systemd-boot
+        echo -e "\n\e[0;35mSystem on ESP (rescue system)\e[0m"
+        read -r -p "Install System on ESP (rescue system) ? ('y'=yes, other input=no): " installSysOnEsp
+        if [ "${installSysOnEsp}" = "y" ]; then
+            # (Rescue) System on ESP - you may have to increase the size of the efi partition
+            # - https://wiki.archlinux.org/title/Systemd-boot#Grml_on_ESP
+            # - https://wiki.archlinux.org/title/Systemd-boot#Archiso_on_ESP
+            echo -e "Please make sure you downloaded the installation iso to '${downloadFolder}'\n"
+            install-sysOnEsp
+        fi
     fi
     ;;
 

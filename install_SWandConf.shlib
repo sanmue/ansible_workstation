@@ -530,7 +530,7 @@ install-initialSw-Arch() {
 }
 
 install-aur-helper() {
-    echo -e "\nInstalling 'paru' - AUR helper..." # paru needed e.g. in "install-furtherSw-Arch()"
+    echo -e "\nInstalling 'paru' - AUR helper..." # paru needed e.g. in "install-aur()"
     if ! [ -x "$(command -v paru)" ]; then
         sudo git clone https://aur.archlinux.org/paru.git /tmp/paru
         sudo chown -R "${userid}":users /tmp/paru
@@ -542,7 +542,7 @@ install-aur-helper() {
     fi
 }
 
-install-furtherSw-Arch() {
+install-aur() {
     install-aur-helper # e.g. paru
 
     echo -e "\nInstall some Gnome Extensions (gsconnect) from AUR ..."
@@ -606,6 +606,162 @@ install-furtherSw-Arch() {
 
     # echo -e "\nCreating flag-file '.ansible_installScript_severalAurPkgInstalled'..."
     # touch "${HOME}/.ansible_installScript_severalAurPkgInstalled"
+}
+
+install-sysOnEsp() {
+    systemOnESP=("archiso" "endeavouriso" "grml" "sysresccd") # permitted values: "archiso" and/or "grml" and/or "sysresccd" # also folder name on ESP # Archiso on ESP (boot into rescue system) # only if bootloader is systemd-boot
+    reserveDiskspaceESP=300 # size in MB # reserve disk space which has to remain free after install of systemOnESP
+
+    for system in "${systemOnESP[@]}"; do
+        isoFileName=""
+        iso=""
+
+        case "${system}" in
+            archiso)
+                searchPattern="archlinux*.iso"
+            ;;
+            endeavouriso)
+                searchPattern="EndeavourOS*.iso"
+            ;;
+            grml)
+                searchPattern="grml64-full*.iso"
+            ;;
+            sysresccd)
+                searchPattern="systemrescue*.iso"
+            ;;
+            *)
+                continue
+            ;;
+        esac
+
+        # e.g.: archlinux-YYYY.MM.DD-x86_64.iso # grml64-FLAVOUR_YEAR.MONTH.iso
+        # e.g.: /home/userid/Downloads/archlinux-2024.11.01-x86_64.iso # /home/userid/Downloads/grml64-full_2024.02.iso
+        isoFileName=$(find "${downloadFolder}" -mindepth 1 -maxdepth 1 -prune -type f -name "${searchPattern}" | cut -d'/' -f5)
+        if [ -z "${isoFileName}" ]; then
+            echo -e "\e[1;33mSkipping 'System on ESP' for '${system}'. No installation iso found.\e[0m"
+            echo "- You can download the iso to '${downloadFolder}' and start this script again."
+        else
+            echo "- found iso-file: '${isoFileName}' in '${downloadFolder}'"
+            # isoFileName=$(ls "${downloadFolder}" | grep arch\.\*.iso\$)
+            # shopt -s extglob
+            # isoFileName=$(ls -- "${downloadFolder}/arch*.iso" | cut -d'/' -f5)
+
+            iso="${downloadFolder}/${isoFileName}"
+            config-systemOnEsp "${iso}" "${system}" "${isoFileName}"
+            fi
+    done
+}
+
+config-systemOnEsp() {
+    iso="${1}" # Parameter 1 # e.g.: /home/userid/Downloads/archlinux-2024.11.01-x86_64.iso
+    espSystemFolderName="${2}" # Parameter 2 # e.g.: "archiso"
+    isoFileName="${3}" # Parameter 3 # e.g.: "grml64-full_2024.02.iso"
+
+    espSystemFolder="${efiDir}/EFI/${espSystemFolderName}" # e.g. /efi/EFI/archiso
+    espLoaderEntriesConfFileName="${espSystemFolderName}.conf"
+    espLoaderEntriesConfFile="${efiDir}/loader/entries/${espLoaderEntriesConfFileName}"
+
+    content=""
+    freeDiskpace=0
+    availableDiskpace=0
+    # Archiso ~ 1000 MB # Grml (full) ~ 890 MB # Grml (small) ~ 500 MB ? # SystemRescue ~ 910 MB, SystemRescue iso ~1200MB
+    requiredDiskspaceSystemOnESP=1000 # size in MB # default value # may be changed when differentiating between the systems
+
+    # set values for loader entry
+    title="${espSystemFolderName} (live system)"
+    case "${system}" in
+        archiso | endeavouriso)
+            linux="/EFI/${espSystemFolderName}/boot/x86_64/vmlinuz-linux"
+            initrd="/EFI/${espSystemFolderName}/boot/x86_64/initramfs-linux.img"
+            options="options archisobasedir=/EFI/${espSystemFolderName} archisosearchfilename=/EFI/${espSystemFolderName}/boot/x86_64/vmlinuz-linux copytoram"
+
+            archEntry="${espLoaderEntriesConfFile}" # remember for sysresccd, to get 'linux' and 'initramfs' lines from the file
+        ;;
+        grml)
+            linux="/EFI/${espSystemFolderName}/vmlinuz"
+            initrd="/EFI/${espSystemFolderName}/initrd.img"
+            options="options apm=power-off boot=live live-media-path=/EFI/${espSystemFolderName}/ nomce net.ifnames=0 copytoram"
+        ;;
+        sysresccd)
+            efiPartition=$(lsblk -l -p -o NAME,MOUNTPOINTS | grep "${efiDir}" | xargs | cut -d' ' -f1) # e.g.: /dev/vda1
+
+            if [ "$(sudo ls "${efiDir}/EFI/archiso")" ]; then # we can us kernel and initramfs from archiso to start and then just load iso for sysresccd
+                linux=$(sudo grep '^linux' "${archEntry}" | cut -d' ' -f2) # e.g.: linux=$(sudo grep '^linux' /efi/loader/entries/archiso.conf | cut -d' ' -f2)
+                initrd=$(sudo grep '^initrd' "${archEntry}" | cut -d' ' -f2) # cut -> not prededed by 'linux'  oder 'initrd'
+                requiredDiskspaceSystemOnESP=1200
+                echo "- Can use kernel and initramfs from archiso"
+                canUseArchiso="true"
+            else
+                linux="/EFI/${espSystemFolderName}/boot/x86_64/vmlinuz"
+                initrd="/EFI/${espSystemFolderName}/boot/x86_64/sysresccd.img"
+                requiredDiskspaceSystemOnESP=2100
+                echo "- Can NOT use kernel and initramfs from archiso"
+                canUseArchiso="false"
+            fi
+            options="img_dev=${efiPartition} img_loop=EFI/${espSystemFolderName}/${isoFileName} archisobasedir=${espSystemFolderName} copytoram"
+        ;;
+        *)
+            echo -e "\e[1;33m'${espSystemFolderName}' - config-systemOnEsp - no config available yet.\e[0m"
+            return 0
+        ;;
+    esac
+
+    # check available disk space an create espSystemFolder:
+    if [[ -n $(sudo ls "${espSystemFolder}") ]]; then # if folder not exists thows error message, but continues with else (coud add 2>/dev/null)
+        echo -e "\e[1;33mFolder '${espSystemFolder}' already exists. Skipping 'config-systemOnEsp'\e[0m"
+        return 0
+    else
+        freeDiskpace=$(sudo df --output=avail "${efiDir}" | tail -n+2 | xargs)
+        freeDiskpace=$(("${freeDiskpace}" / 1024)) # size in MB
+        availableDiskpace=$(("${freeDiskpace}"-"${reserveDiskspaceESP}"))
+        if [ "${availableDiskpace}" -lt "${requiredDiskspaceSystemOnESP}" ]; then
+            echo -e "\e[0;31mNot enough disk space. Skipping 'config-systemOnEsp' !\e[0m"
+            echo -e "\e[0;31m- availableDiskpace (reduced by reserve): ${availableDiskpace}, requiredDiskspaceSystemOnESP: ${requiredDiskspaceSystemOnESP}\e[0m"
+            return 1
+        else
+            echo -e "- Creating folder '${espSystemFolder}'..."
+            sudo mkdir -p "${espSystemFolder}"
+        fi
+    fi
+
+    # copy files to espSystemFolder (kernel, initramfs, squashed image (grml)):
+    case "${system}" in
+        archiso | endeavouriso)
+            sudo bsdtar -v -x --no-same-permissions --strip-components 1 -f "${iso}" -C "${espSystemFolder}" arch
+        ;;
+        grml)
+            grmlFlavour=$(echo "${isoFileName}" | cut -d'_' -f1) # e.g.: grml64-full
+            # grmlFlavourBootFolder=$(echo "${grmlFlavour}" | sed 's/-//g') # e.g.: grml64full
+            grmlFlavourBootFolder="${grmlFlavour/-/}" # e.g.: grml64full
+            sudo mount "${iso}" /mnt
+            sudo cp -vf "/mnt/boot/${grmlFlavourBootFolder}/vmlinuz" "${espSystemFolder}"
+            sudo cp -vf "/mnt/boot/${grmlFlavourBootFolder}/initrd.img" "${espSystemFolder}"
+            sudo cp -vf "/mnt/live/${grmlFlavour}/${grmlFlavour}.squashfs" "${espSystemFolder}"
+        ;;
+        sysresccd)
+            if [ "${canUseArchiso}" = "false" ]; then
+                # e.g.: sudo bsdtar -v -x --no-same-permissions --strip-components 1 -f ~/Downloads/systemrescue-11.02-amd64.iso -C /efi/EFI/sysresccd sysresccd
+                sudo bsdtar -v -x --no-same-permissions --strip-components 1 -f "${iso}" -C "${espSystemFolder}" "${espSystemFolderName}"
+            fi
+            sudo cp -vf "${iso}" "${espSystemFolder}/"
+        ;;
+        *)
+            echo -e "\e[1;33m${system}' - config-systemOnEsp - no config available yet.\e[0m"
+            return
+        ;;
+    esac
+
+    # create loader entry:
+    sudo touch "${espLoaderEntriesConfFile}"
+    content+="title ${title}\n"
+    content+="linux ${linux}\n"
+    content+="initrd ${initrd}\n"
+    content+="options ${options}\n"
+    echo -e "${content}" | sudo tee "${espLoaderEntriesConfFile}"
+
+    # - Check config:
+    echo "- Check systemd-boot config via 'bootctl --no-pager':"
+    sudo bootctl --no-pager # TODO: error handling # On success, 0 is returned, a non-zero failure code otherwise.
 }
 
 install-initialSw-Debian() {
