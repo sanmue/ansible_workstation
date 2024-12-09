@@ -11,8 +11,8 @@
   - Arch Linux / Endeavour OS: optionally installs some packages from AUR after completing ansible playbook
   - Arch Linux / Endeavour OS (with 'systemd-boot' bootloader): optionally installs [(Rescue) System on ESP](https://wiki.archlinux.org/title/Systemd-boot#Archiso_on_ESP)
     - needs min. available free disk space on EFI Partition (+ 300MB reserve disk space):
-      - ~3 GB for EndeavourOS live iso
-      - ~1 GB for live iso of Archlinux or grml (full)
+      - ~3 GB for EndeavourOS
+      - ~1 GB for Archlinux or grml (full)
 
 ## Usage
 
