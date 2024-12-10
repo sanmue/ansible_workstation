@@ -77,55 +77,55 @@
 # fatal: [localhost]: FAILED! => {"changed": false, "msg": "key ID is not full-length: 3056513887B78AEB"}
 
 # * https://github.com/chaotic-aur/chaotic-aur-ansible/blob/main/roles/chaotic_aur/tasks/main.yml
-- name: Config Workstation addrepos - Check if Chaotic-AUR is installed already (Arch)
-  ansible.builtin.stat:
-    path: /etc/pacman.d/chaotic-mirrorlist
-  register: caurmirrorlist
-  when:
-    - ansible_distribution == "Archlinux"
+# - name: Config Workstation addrepos - Check if Chaotic-AUR is installed already (Arch)
+#   ansible.builtin.stat:
+#     path: /etc/pacman.d/chaotic-mirrorlist
+#   register: caurmirrorlist
+#   when:
+#     - ansible_distribution == "Archlinux"
 
-- name: Config Workstation addrepos - Retrieve Chaotic-AUR master key and sign it (Arch)
-  become: true
-  ansible.builtin.shell:
-    cmd: pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com && pacman-key --lsign-key 3056513887B78AEB
-  when:
-    - ansible_distribution == "Archlinux"
-    - not caurmirrorlist.stat.exists | default(true)
+# - name: Config Workstation addrepos - Retrieve Chaotic-AUR master key and sign it (Arch)
+#   become: true
+#   ansible.builtin.shell:
+#     cmd: pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com && pacman-key --lsign-key 3056513887B78AEB
+#   when:
+#     - ansible_distribution == "Archlinux"
+#     - not caurmirrorlist.stat.exists | default(true)
 
-- name: Config Workstation addrepos - Install Chaotic-AUR keyring and mirrorlist (Arch)
-  become: true
-  community.general.pacman:
-    name:
-      - https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst
-      - https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst
-    state: present
-  when:
-    - ansible_distribution == "Archlinux"
-    - not caurmirrorlist.stat.exists | default(true)
+# - name: Config Workstation addrepos - Install Chaotic-AUR keyring and mirrorlist (Arch)
+#   become: true
+#   community.general.pacman:
+#     name:
+#       - https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst
+#       - https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst
+#     state: present
+#   when:
+#     - ansible_distribution == "Archlinux"
+#     - not caurmirrorlist.stat.exists | default(true)
 
-- name: Config Workstation addrepos - Include chaotic-mirrorlist in pacman.conf (Arch)
-  become: true
-  ansible.builtin.blockinfile:
-    path: "/etc/pacman.conf"
-    backup: true
-    prepend_newline: true
-    append_newline: true
-    # insertafter: EOF
-    marker: "### {mark} 'chaotic-aur' ANSIBLE MANAGED BLOCK ###"
-    block: |
-      [chaotic-aur]
-      Include = /etc/pacman.d/chaotic-mirrorlist
-  when:
-    - ansible_distribution == "Archlinux"
-    - not caurmirrorlist.stat.exists | default(true)
+# - name: Config Workstation addrepos - Include chaotic-mirrorlist in pacman.conf (Arch)
+#   become: true
+#   ansible.builtin.blockinfile:
+#     path: "/etc/pacman.conf"
+#     backup: true
+#     prepend_newline: true
+#     append_newline: true
+#     # insertafter: EOF
+#     marker: "### {mark} 'chaotic-aur' ANSIBLE MANAGED BLOCK ###"
+#     block: |
+#       [chaotic-aur]
+#       Include = /etc/pacman.d/chaotic-mirrorlist
+#   when:
+#     - ansible_distribution == "Archlinux"
+#     - not caurmirrorlist.stat.exists | default(true)
 
-- name: Config Workstation addrepos - update_cache (pacman -Sy) (Arch)
-  become: true
-  community.general.pacman:
-    update_cache: true
-  when:
-    - ansible_distribution == "Archlinux"
-    - not caurmirrorlist.stat.exists | default(true)
+# - name: Config Workstation addrepos - update_cache (pacman -Sy) (Arch)
+#   become: true
+#   community.general.pacman:
+#     update_cache: true
+#   when:
+#     - ansible_distribution == "Archlinux"
+#     - not caurmirrorlist.stat.exists | default(true)
 #
 # #####################################
 # ### pamac.conf - Archlinux with Pamac
