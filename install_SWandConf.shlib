@@ -292,10 +292,10 @@ config-snapper() {
             # --- Services
             # UEFI oder BIOS + GRUB # systemd boot: kein Eintrag, 'snapper-rollback' oder manueller Sprung in tty, um auf best. snapshot zurückzusetzen
             # if [ -e "${efiDir}/grub.cfg" ] || [ -e "/boot/grub" ]; then    # Grub
-            if [ -e "/boot/grub" ]; then # Grub
-                echo -e "\n*** Enable 'grub-btrfsd.service'..."
-                sudo systemctl enable --now grub-btrfsd.service
-            fi
+            # if [ -e "/boot/grub" ]; then # Grub
+            #     echo -e "\n*** Enable 'grub-btrfsd.service'..." # grub-btrfs: Include btrfs snapshots in GRUB boot options
+            #     sudo systemctl enable --now grub-btrfsd.service
+            # fi
 
             echo -e "\n*** Enable 'snapper-cleanup.timer'..."
             sudo systemctl enable --now snapper-cleanup.timer

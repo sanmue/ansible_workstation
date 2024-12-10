@@ -2,10 +2,20 @@
 # ### grub2 bootloader
 # ####################
 
-- name: Get stats of etc-default-grub (all)
+- name: Get stats of etc default grub (all)
   ansible.builtin.stat:
     path: /etc/default/grub
   register: etcdefgrub
+
+- name: Get stats of efi loader conf (all)
+  ansible.builtin.stat:
+    path: /efi/loader/loader.conf
+  register: efiloaderconf
+
+- name: Get stats of boot efi loader conf (all)
+  ansible.builtin.stat:
+    path: /boot/efi/loader/loader.conf
+  register: bootefiloaderconf
 
 - name: All settings misc - Enable GRUB Menu at boot (Archlinux)
   ansible.builtin.lineinfile:
@@ -18,6 +28,8 @@
   when:
     - ansible_distribution == "Archlinux"
     - etcdefgrub.stat.exists
+    - not efiloaderconf.stat.exists
+    - not bootefiloaderconf.stat.exists
 
 # https://www.fosslinux.com/46741/things-to-do-after-installing-manjaro.htm
 # - aus Punkt 13: Install the Latest Kernel (or an Older LTS Kernel)
@@ -27,6 +39,8 @@
   when:
     - ansible_distribution == "Archlinux"
     - etcdefgrub.stat.exists
+    - not efiloaderconf.stat.exists
+    - not bootefiloaderconf.stat.exists
 
 - name: All settings misc - Update grub.cfg (Archlinux)
   ansible.builtin.shell:
@@ -34,6 +48,8 @@
   when:
     - ansible_distribution == "Archlinux"
     - etcdefgrub.stat.exists
+    - not efiloaderconf.stat.exists
+    - not bootefiloaderconf.stat.exists
 
 # ##########
 # ### Locale

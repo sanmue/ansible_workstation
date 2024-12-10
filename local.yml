@@ -32,18 +32,19 @@
     # - name: Pre Tasks - all update
     #   ansible.builtin.import_tasks: tasks/basic_all/all_update.yml
 
-- name: Install and config snapper+btrfs
-  hosts: localhost
-  connection: local
-  become: true
-  tasks:
-    # wird in init-install-Script erledigt, da vor Inst aller (init) Software schon eingerichtet sein soll
-    # + müsste hier entsprechend angepasst/aktualisert werden
-    #
-    # - name: Install packages - snapper+btrfs
-    #   ansible.builtin.import_tasks: tasks/basic_all/packages_workstation-snapperBtrfs.yml
-    - name: Config Services - snapper+btrfs
-      ansible.builtin.import_tasks: tasks/basic_all/config_all-services-snapperBtrfs.yml
+# Create / Include btrfs snapshots in GRUB boot options
+# - name: Install and config snapper+btrfs
+#   hosts: localhost
+#   connection: local
+#   become: true
+#   tasks:
+#     # wird in init-install-Script erledigt, da vor Inst aller (init) Software schon eingerichtet sein soll
+#     # + müsste hier entsprechend angepasst/aktualisert werden
+#     #
+#     # - name: Install packages - snapper+btrfs
+#     #   ansible.builtin.import_tasks: tasks/basic_all/packages_workstation-snapperBtrfs.yml
+#     - name: Config Services - snapper+btrfs
+#       ansible.builtin.import_tasks: tasks/basic_all/config_all-services-snapperBtrfs.yml
 
 - name: Software, Firewall, Servcices, VM, User, Settings
   hosts: localhost

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-#set -x
+# set -x
 
 # ### rsync - zusätzliche Parameter:
 #paramRsync='--dry-run'
@@ -17,14 +17,14 @@ else
 fi
 
 # Prüfung Quelle:
-if [ "$(ls "${source}")" ]; then			# Prüfung, ob Quelle existiert
+if [ "$(ls "${source}")" ]; then   # Prüfung, ob Quelle existiert
 	echo "Quellpfad ist: ${source}"
 else
 	echo "Parameter 1: Quellpfad '${source}' existiert nicht, Ende."
 	exit 1
 fi
 # Prüfung Zielpfad:
-if [ "$(ls "${dest}")" ]; then			# Prüfung, ob Sicherungsziel existiert
+if [ "$(ls "${dest}")" ]; then   # Prüfung, ob Sicherungsziel existiert
 	echo "Zielpfad ist: ${dest}"
 else
 	echo "Parameter 2: Zielpfad '${dest}' existiert nicht, Ende."
@@ -37,7 +37,7 @@ fi
 
 read -rp "Start MIRROR mit beliebiger Eingabe"
 
-logname="rsync_mirror_src-dest_$(date +"%Y-%m-%d_%H%M%S").log" 
+logname="rsync_mirror_src-dest_$(date +"%Y-%m-%d_%H%M%S").log"
 
 echo -e "\n========================================"
 echo "*** Starte rsync von '${source}/' nach '${dest}/' - MIRROR"
