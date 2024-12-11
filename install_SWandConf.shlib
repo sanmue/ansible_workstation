@@ -566,11 +566,8 @@ install-aur() {
         paru -S --needed --skipreview btrfs-assistant # && touch "${HOME}/.ansible_installScript_AUR-btrfsassistantInstalled"
     fi
 
-    echo -e "\nInstall Citrix Workspace App (icaclient) from AUR..."
-    paru -S --needed --skipreview icaclient && touch "${HOME}/.ansible_installScript_AUR-icaclientInstalled"
-    # sudo pacman -S --needed --noconfirm icaclient
-    mkdir -p "${HOME}/.ICAClient/cache" && \
-    sudo rsync -aPhEv /opt/Citrix/ICAClient/config/{All_Regions,Trusted_Region,Unknown_Region,canonicalization,regions}.ini "${HOME}/.ICAClient/"
+    echo -e "\nInstall Floorp browser from AUR..."
+    paru -S --needed --skipreview floorp-bin
 
     echo -e "\nInstall 'visual-studio-code-bin' from AUR..." # instead of flatpak
     paru -S --needed --skipreview visual-studio-code-bin
@@ -579,6 +576,12 @@ install-aur() {
     echo -e "\nInstall Powershell AUR..."
     paru -S --needed --skipreview powershell-bin
     # sudo pacman -S --needed --noconfirm powershell-bin
+
+    echo -e "\nInstall Citrix Workspace App (icaclient) from AUR..."
+    paru -S --needed --skipreview icaclient && touch "${HOME}/.ansible_installScript_AUR-icaclientInstalled"
+    # sudo pacman -S --needed --noconfirm icaclient
+    mkdir -p "${HOME}/.ICAClient/cache" && \
+    sudo rsync -aPhEv /opt/Citrix/ICAClient/config/{All_Regions,Trusted_Region,Unknown_Region,canonicalization,regions}.ini "${HOME}/.ICAClient/"
 
     echo -e "\nInstall espanso (wayland) from AUR (will takes some time)..."
     paru -S --needed --skipreview espanso-wayland   # espanso-gui
