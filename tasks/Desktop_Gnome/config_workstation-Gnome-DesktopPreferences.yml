@@ -1429,7 +1429,14 @@
 
 # ### Gnome Weather:
 # ------------------
-#
+
+- name: Gnome Desktop - Preferences - Weather - locations (Gnome)
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.shell: dconf write "/org/gnome/Weather/locations" "[<(uint32 2, <('Saarbrücken', 'EDDR', true, [(0.85899288600764001, 0.12420927091802728)], [(0.85928376258077743, 0.12217304763960307)])>)>]"
+  when:
+    - env_desktop in ["gnome"]
+
 # - name: Gnome Desktop - Preferences - Set gnome  - Weather automatic-location (Gnome)
 #  community.general.dconf:
 #    key: "/org/gnome/Weather/automatic-location"
@@ -1812,7 +1819,7 @@
   when:
     - env_desktop in ["gnome"]
 
-# # ### Dash to Dock:
+# # ### Dash to Dock: (ersetzt durch Dash to panel)
 # - name: Gnome Desktop - Preferences - Set gnome shell extensions - dash-to-dock - custom-theme-shrink (Gnome)
 #   community.general.dconf:
 #     key: "/org/gnome/shell/extensions/dash-to-dock/custom-theme-shrink"
@@ -1946,12 +1953,12 @@
 #   when:
 #     - env_desktop in ["gnome"]
 
-- name: Gnome Desktop - Preferences - Set gnome shell extensions - openweather - city (Gnome)
-  become: true
-  become_user: "{{ env_user }}"
-  ansible.builtin.shell: dconf write "/org/gnome/shell/extensions/openweather/city" "'49.4641816,7.2484007>Niederkirchen, Kuseler Straße, Saal, Niederkirchen, Sankt Wendel, Landkreis St. Wendel, Saarland, 66606, Deutschland >-1 && 49.49342345,6.828330133618561>Nunkirchen, Wadern, Landkreis Merzig-Wadern, Saarland, Deutschland >-1'"
-  when:
-    - env_desktop in ["gnome"]
+# - name: Gnome Desktop - Preferences - Set gnome shell extensions - openweather - city (Gnome)
+#   become: true
+#   become_user: "{{ env_user }}"
+#   ansible.builtin.shell: dconf write "/org/gnome/shell/extensions/openweather/city" "'49.4641816,7.2484007>Niederkirchen, Kuseler Straße, Saal, Niederkirchen, Sankt Wendel, Landkreis St. Wendel, Saarland, 66606, Deutschland >-1 && 49.49342345,6.828330133618561>Nunkirchen, Wadern, Landkreis Merzig-Wadern, Saarland, Deutschland >-1'"
+#   when:
+#     - env_desktop in ["gnome"]
 
 # - name: Gnome Desktop - Preferences - Set gnome shell extensions - openweather - actual-city" (Gnome)
 #   community.general.dconf:
@@ -1961,12 +1968,12 @@
 #   when:
 #     - env_desktop in ["gnome"]
 
-- name: Gnome Desktop - Preferences - Set gnome shell extensions - openweather - actual-city" (Gnome)
-  become: true
-  become_user: "{{ env_user }}"
-  ansible.builtin.shell: dconf write "/org/gnome/shell/extensions/openweather/actual-city" "0"
-  when:
-    - env_desktop in ["gnome"]
+# - name: Gnome Desktop - Preferences - Set gnome shell extensions - openweather - actual-city" (Gnome)
+#   become: true
+#   become_user: "{{ env_user }}"
+#   ansible.builtin.shell: dconf write "/org/gnome/shell/extensions/openweather/actual-city" "0"
+#   when:
+#     - env_desktop in ["gnome"]
 
 # - name: Gnome Desktop - Preferences - Set gnome shell extensions - openweather - days-forecast (Gnome)
 #   community.general.dconf:
@@ -1976,12 +1983,12 @@
 #   when:
 #     - env_desktop in ["gnome"]
 
-- name: Gnome Desktop - Preferences - Set gnome shell extensions - openweather - days-forecast (Gnome)
-  become: true
-  become_user: "{{ env_user }}"
-  ansible.builtin.shell: dconf write "/org/gnome/shell/extensions/openweather/days-forecast" "4"
-  when:
-    - env_desktop in ["gnome"]
+# - name: Gnome Desktop - Preferences - Set gnome shell extensions - openweather - days-forecast (Gnome)
+#   become: true
+#   become_user: "{{ env_user }}"
+#   ansible.builtin.shell: dconf write "/org/gnome/shell/extensions/openweather/days-forecast" "4"
+#   when:
+#     - env_desktop in ["gnome"]
 
 # - name: Gnome Desktop - Preferences - Set gnome shell extensions - openweather - menu-alignment (Gnome)
 #   community.general.dconf:
@@ -1991,12 +1998,12 @@
 #   when:
 #     - env_desktop in ["gnome"]
 
-- name: Gnome Desktop - Preferences - Set gnome shell extensions - openweather - menu-alignment (Gnome)
-  become: true
-  become_user: "{{ env_user }}"
-  ansible.builtin.shell: dconf write "/org/gnome/shell/extensions/openweather/menu-alignment" "80.099999999999994"
-  when:
-    - env_desktop in ["gnome"]
+# - name: Gnome Desktop - Preferences - Set gnome shell extensions - openweather - menu-alignment (Gnome)
+#   become: true
+#   become_user: "{{ env_user }}"
+#   ansible.builtin.shell: dconf write "/org/gnome/shell/extensions/openweather/menu-alignment" "80.099999999999994"
+#   when:
+#     - env_desktop in ["gnome"]
 
 # - name: Gnome Desktop - Preferences - Set gnome shell extensions - openweather - position-in-panel (Gnome)
 #   community.general.dconf:
@@ -2006,12 +2013,12 @@
 #   when:
 #     - env_desktop in ["gnome"]
 
-- name: Gnome Desktop - Preferences - Set gnome shell extensions - openweather - position-in-panel (Gnome)
-  become: true
-  become_user: "{{ env_user }}"
-  ansible.builtin.shell: dconf write "/org/gnome/shell/extensions/openweather/position-in-panel" "'center'"
-  when:
-    - env_desktop in ["gnome"]
+# - name: Gnome Desktop - Preferences - Set gnome shell extensions - openweather - position-in-panel (Gnome)
+#   become: true
+#   become_user: "{{ env_user }}"
+#   ansible.builtin.shell: dconf write "/org/gnome/shell/extensions/openweather/position-in-panel" "'center'"
+#   when:
+#     - env_desktop in ["gnome"]
 
 # - name: Gnome Desktop - Preferences - Set gnome shell extensions - openweather - pressure-unit (Gnome)
 #   community.general.dconf:
@@ -2021,12 +2028,12 @@
 #   when:
 #     - env_desktop in ["gnome"]
 
-- name: Gnome Desktop - Preferences - Set gnome shell extensions - openweather - pressure-unit (Gnome)
-  become: true
-  become_user: "{{ env_user }}"
-  ansible.builtin.shell: dconf write "/org/gnome/shell/extensions/openweather/pressure-unit" "'hPa'"
-  when:
-    - env_desktop in ["gnome"]
+# - name: Gnome Desktop - Preferences - Set gnome shell extensions - openweather - pressure-unit (Gnome)
+#   become: true
+#   become_user: "{{ env_user }}"
+#   ansible.builtin.shell: dconf write "/org/gnome/shell/extensions/openweather/pressure-unit" "'hPa'"
+#   when:
+#     - env_desktop in ["gnome"]
 
 # - name: Gnome Desktop - Preferences - Set gnome shell extensions - openweather - unit (Gnome)
 #   community.general.dconf:
@@ -2036,12 +2043,12 @@
 #   when:
 #     - env_desktop in ["gnome"]
 
-- name: Gnome Desktop - Preferences - Set gnome shell extensions - openweather - unit (Gnome)
-  become: true
-  become_user: "{{ env_user }}"
-  ansible.builtin.shell: dconf write "/org/gnome/shell/extensions/openweather/unit" "'celsius'"
-  when:
-    - env_desktop in ["gnome"]
+# - name: Gnome Desktop - Preferences - Set gnome shell extensions - openweather - unit (Gnome)
+#   become: true
+#   become_user: "{{ env_user }}"
+#   ansible.builtin.shell: dconf write "/org/gnome/shell/extensions/openweather/unit" "'celsius'"
+#   when:
+#     - env_desktop in ["gnome"]
 
 # - name: Gnome Desktop - Preferences - Set gnome shell extensions - openweather - wind-speed-unit (Gnome)
 #   community.general.dconf:
@@ -2051,12 +2058,12 @@
 #   when:
 #     - env_desktop in ["gnome"]
 
-- name: Gnome Desktop - Preferences - Set gnome shell extensions - openweather - wind-speed-unit (Gnome)
-  become: true
-  become_user: "{{ env_user }}"
-  ansible.builtin.shell: dconf write "/org/gnome/shell/extensions/openweather/wind-speed-unit" "'kph'"
-  when:
-    - env_desktop in ["gnome"]
+# - name: Gnome Desktop - Preferences - Set gnome shell extensions - openweather - wind-speed-unit (Gnome)
+#   become: true
+#   become_user: "{{ env_user }}"
+#   ansible.builtin.shell: dconf write "/org/gnome/shell/extensions/openweather/wind-speed-unit" "'kph'"
+#   when:
+#     - env_desktop in ["gnome"]
 
 # ###################################################
 # TODO: ggf. GNOME Shell Apps Dashboard - Categories
