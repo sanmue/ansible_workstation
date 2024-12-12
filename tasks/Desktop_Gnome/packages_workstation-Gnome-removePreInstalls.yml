@@ -6,7 +6,6 @@
     state: absent
     name:
       - aisleriot
-      # - cheese
       - five-or-more
       - four-in-a-row
       - gnome-2048
@@ -17,7 +16,6 @@
       - gnome-maps
       - gnome-klotski
       - gnome-todo
-      # - gnome-weather
       - hitori
   when:
     - env_desktop in ["gnome"]

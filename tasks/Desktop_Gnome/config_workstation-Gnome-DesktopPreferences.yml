@@ -265,106 +265,41 @@
     - env_desktop in ["gnome"]
 
 # ### gtk-theme ###
+
 # all
 
-# - name: Gnome Desktop - Preferences - create a directory for gtk-theme files in userdir (all + Gnome)
-#  ansible.builtin.file:
-#    path: "/home/{{ env_user }}/.themes"
-#    state: directory
-# #    mode: '0755'
-#  when:
-#    - env_desktop in ["gnome"]
-
-# - name: Gnome Desktop - Preferences - copy gtk-theme MateriaBreath-dark to userdir (all + Gnome)
-#  unarchive:
-#    src: "files/gnome/themes/MateriaBreath.zip"
-#    dest: "/home/{{ env_user }}/.themes/"
-#    creates: "/home/{{ env_user }}/.themes/MateriaBreath-dark" # creates unterstützt keine tilde
-#    remote_src: yes
-#    keep_newer: yes
-# #    owner: sandro
-# #    group: sandro # Debian
-# #    mode: u=rwx,g=rwx,o=rwx
-#  when:
-#    - env_desktop in ["gnome"]
-
-# - name: Gnome Desktop - Preferences - copy gtk-theme Ultimate-Dark-(Flat)-Green to userdir (all + Gnome)
-#  unarchive:
-#    src: "files/gnome/themes/Ultimate-Dark-(Flat)-Green.zip"
-#    dest: "/home/{{ env_user }}/.themes/"
-#    creates: /home/"{{ env_user }}"/.themes/Ultimate-Dark-(Flat)-Green # creates unterstützt keine tilde
-#    remote_src: yes
-#    keep_newer: yes
-# #    owner: sandro
-# #    group: sandro # debian
-# #    mode: u=rwx,g=rwx,o=rwx
-#  when:
-#    - env_desktop in ["gnome"]
-
-# #- name: Gnome Desktop - Preferences - Set desktop interface - gtk-theme MateriaBreath-dark (all + Gnome)
-# # bei theme "MateriaBreath-dark" sind die Optionskästchenen + Häkchen nicht zu sehen
-# - name: Set desktop interface - gtk-theme (Gnome, Debian)
-#   community.general.dconf:
-#     key: "/org/gnome/desktop/interface/gtk-theme"
-#     # value: "'Adwaita-dark'"
-#     value: "'Yaru-prussiangreen-dark'"
-#     state: present
-#   when:
+# - name: Gnome Desktop - Preferences - create a directory for gtk-theme user files in userdir (all + Gnome)
+#   ansible.builtin.file:
+#     path: "/home/{{ env_user }}/.themes"
+#     state: directory
+#     mode: '0755'
+#   hen:
 #     - env_desktop in ["gnome"]
-#     - ansible_distribution in ["Debian"]
 
-- name: Gnome Desktop - Preferences - Set desktop interface - gtk-theme (Gnome, Debian)
+- name: Gnome Desktop - Preferences - Set desktop interface - gtk-theme (Gnome)
   become: true
   become_user: "{{ env_user }}"
-  ansible.builtin.shell: dconf write /org/gnome/desktop/interface/gtk-theme "'Yaru-prussiangreen-dark'"
+  ansible.builtin.shell: dconf write /org/gnome/desktop/interface/gtk-theme "'Orchis-Dark'"
   when:
     - env_desktop in ["gnome"]
-    - ansible_distribution in ["Debian"]
 
 # ### icon-theme ###
 
 # all
 
-# - name: Gnome Desktop - Preferences - create a directory for icon-theme files in userdir (all + Gnome)
-#  ansible.builtin.file:
-#    path: "/home/{{ env_user }}/.icons"
-#    state: directory
-# #    mode: '0755'
-#  when:
-#    - env_desktop in ["gnome"]
-
-# - name: Gnome Desktop - Preferences - copy icon-theme Materia-Manjaro-Dark-2 to userdir (all + Gnome)
-#  unarchive:
-#    src: "files/gnome/icons/Materia-Manjaro-Dark-2.zip"
-#    dest: "/home/{{ env_user }}/.icons/"
-#    creates: /home/"{{ env_user }}"/.icons/Materia-Manjaro-Dark-2 # creates unterstützt keine tilde
-#    remote_src: yes
-#    keep_newer: yes
-# #    owner: sandro
-# #    group: sandro # debian
-# #    mode: u=rwx,g=rwx,o=rwx
-#  when:
-#    - env_desktop in ["gnome"]
-
-# - name: Gnome Desktop - Preferences - Set desktop interface - icon-theme Materia-Manjaro-Dark-2 (Gnome)
-# - name: Gnome Desktop - Preferences - Set desktop interface - icon-theme (Gnome, Debian)
-#   community.general.dconf:
-#     # key: "/org/gnome/desktop/interface/icon-theme"
-#     # value: "'Materia-Manjaro-Dark-2'"
-#     key: "/org/gnome/desktop/interface/icon-theme"
-#     value: "'Yaru-prussiangreen'"
-#     state: present
-#   when:
-#     - env_desktop in ["gnome"]
-#     - ansible_distribution in ["Debian"]
-
-- name: Gnome Desktop - Preferences - Set desktop interface - icon-theme (Gnome, Debian)
+- name: Gnome Desktop - Preferences - Set desktop interface - icon-theme (Gnome)
   become: true
   become_user: "{{ env_user }}"
-  ansible.builtin.shell: dconf write /org/gnome/desktop/interface/icon-theme "'Yaru-prussiangreen'"
+  ansible.builtin.shell: dconf write /org/gnome/desktop/interface/icon-theme "'Papirus-Dark'"
   when:
     - env_desktop in ["gnome"]
-    - ansible_distribution in ["Debian"]
+
+- name: Gnome Desktop - Preferences - Set desktop interface - Shell - user-theme (Gnome)
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.shell: dconf write /org/gnome/shell/extensions/user-theme/name "'Orchis-Dark'"
+  when:
+    - env_desktop in ["gnome"]
 
 # ### Desktop interface, calendar, sceensaver, ...:
 # - name: Gnome Desktop - Preferences - Set desktop interface - show-battery-percentage (Gnome)
@@ -1818,131 +1753,6 @@
   ansible.builtin.shell: dconf write "/org/gnome/shell/extensions/ding/start-corner" "'top-left'"
   when:
     - env_desktop in ["gnome"]
-
-# # ### Dash to Dock: (ersetzt durch Dash to panel)
-# - name: Gnome Desktop - Preferences - Set gnome shell extensions - dash-to-dock - custom-theme-shrink (Gnome)
-#   community.general.dconf:
-#     key: "/org/gnome/shell/extensions/dash-to-dock/custom-theme-shrink"
-#     value: "true"
-#     state: present
-#   when:
-#     - env_desktop in ["gnome"]
-
-# - name: Gnome Desktop - Preferences - Set gnome shell extensions - dash-to-dock - dash-max-icon-size (Gnome)
-#   # Appearence - Dock - Icon Size
-#   community.general.dconf:
-#     key: "/org/gnome/shell/extensions/dash-to-dock/dash-max-icon-size"
-#     value: "32"
-#     state: present
-#   when:
-#     - env_desktop in ["gnome"]
-
-# - name: Gnome Desktop - Preferences - Set gnome shell extensions - dash-to-dock - disable-overview-on-startup (Gnome)
-#   community.general.dconf:
-#     key: "/org/gnome/shell/extensions/dash-to-dock/disable-overview-on-startup"
-#     value: "true"
-#     state: present
-#   when:
-#     - env_desktop in ["gnome"]
-
-# - name: Gnome Desktop - Preferences - Set gnome shell extensions - dash-to-dock - dock-fixed (Gnome)
-#   # Appearence - Dock - Auot-hide the Dock: enable
-#   community.general.dconf:
-#     key: "/org/gnome/shell/extensions/dash-to-dock/dock-fixed"
-#     value: "false"
-#     state: present
-#   when:
-#     - env_desktop in ["gnome"]
-
-# - name: Gnome Desktop - Preferences - Set gnome shell extensions - dash-to-dock - dock-position (Gnome)
-#   # Appearence - Dock - Auot-hide the Dock: enable
-#   community.general.dconf:
-#     key: "/org/gnome/shell/extensions/dash-to-dock/dock-position"
-#     value: "'LEFT'"
-#     state: present
-#   when:
-#     - env_desktop in ["gnome"]
-
-# - name: Gnome Desktop - Preferences - Set gnome shell extensions - dash-to-dock - extend-height (Gnome)
-#   # Appearence - Dock - Panel mode: enable
-#   community.general.dconf:
-#     key: "/org/gnome/shell/extensions/dash-to-dock/extend-height"
-#     value: "false"
-#     state: present
-#   when:
-#     - env_desktop in ["gnome"]
-
-# - name: Gnome Desktop - Preferences - Set gnome shell extensions - dash-to-dock - height-fraction (Gnome)
-#   community.general.dconf:
-#     key: "/org/gnome/shell/extensions/dash-to-dock/height-fraction"
-#     value: "'0.94999999999999996'"
-#     state: present
-#   when:
-#     - env_desktop in ["gnome"]
-
-# - name: Gnome Desktop - Preferences - Set gnome shell extensions - dash-to-dock - isolate-workspaces (Gnome)
-#   community.general.dconf:
-#     key: "/org/gnome/shell/extensions/dash-to-dock/isolate-workspaces"
-#     value: "true"
-#     state: present
-#   when:
-#     - env_desktop in ["gnome"]
-
-# - name: Gnome Desktop - Preferences - Set gnome shell extensions - dash-to-dock - multi-monitor" (Gnome)
-#   community.general.dconf:
-#     key: "/org/gnome/shell/extensions/dash-to-dock/multi-monitor"
-#     value: "true"
-#     state: present
-#   when:
-#     - env_desktop in ["gnome"]
-
-# - name: Gnome Desktop - Preferences - Set gnome shell extensions - dash-to-dock - running-indicator-style" (Gnome)
-#   community.general.dconf:
-#     key: "/org/gnome/shell/extensions/dash-to-dock/running-indicator-style"
-#     value: "'DOTS'"
-#     state: present
-#   when:
-#     - env_desktop in ["gnome"]
-
-# - name: Gnome Desktop - Preferences - Set gnome shell extensions - dash-to-dock - scroll-action" (Gnome)
-#   community.general.dconf:
-#     key: "/org/gnome/shell/extensions/dash-to-dock/scroll-action"
-#     value: "'switch-workspace'"
-#     state: present
-#   when:
-#     - env_desktop in ["gnome"]
-
-# - name: Gnome Desktop - Preferences - Set gnome shell extensions - dash-to-dock - show-mounts (Gnome)
-#   community.general.dconf:
-#     key: "/org/gnome/shell/extensions/dash-to-dock/show-mounts"
-#     value: "false"
-#     state: present
-#   when:
-#     - env_desktop in ["gnome"]
-
-# - name: Gnome Desktop - Preferences - Set gnome shell extensions - dash-to-dock - show-mounts (Gnome)
-#   community.general.dconf:
-#     key: "/org/gnome/shell/extensions/dash-to-dock/show-mounts"
-#     value: "false"
-#     state: present
-#   when:
-#     - env_desktop in ["gnome"]
-
-# - name: Gnome Desktop - Preferences - Set gnome shell extensions - dash-to-dock - show-mounts-only-mounted (Gnome)
-#   community.general.dconf:
-#     key: "/org/gnome/shell/extensions/dash-to-dock/show-mounts-only-mounted"
-#     value: "false"
-#     state: present
-#   when:
-#     - env_desktop in ["gnome"]
-
-# - name: Gnome Desktop - Preferences - Set gnome shell extensions - dash-to-dock - show-trash (Gnome)
-#   community.general.dconf:
-#     key: "/org/gnome/shell/extensions/dash-to-dock/show-trash"
-#     value: "false"
-#     state: present
-#   when:
-#     - env_desktop in ["gnome"]
 
 # ### openweather:
 # - name: Gnome Desktop - Preferences - Set gnome shell extensions - openweather - city (Gnome)

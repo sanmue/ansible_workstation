@@ -105,6 +105,8 @@
 # ##########
 # ### rclone
 # ##########
+
+# ### pCloud
 - name: All settings misc - rclone - create folder .local/bin for pCloud-Mnt.sh (all, env_user)
   ansible.builtin.file:
     path: "/home/{{ env_user }}/.local/bin"
@@ -120,6 +122,14 @@
     owner: "{{ env_user }}"
     group: "{{ env_user }}"
     mode: "0755"
+
+- name: All settings misc - rclone - create folder pCloud-Mnt in homedir (all, env_user)
+  ansible.builtin.file:
+    path: "/home/{{ env_user }}/pCloud-Mnt"
+    owner: "{{ env_user }}"
+    group: "{{ env_user }}"
+    mode: "0755"
+    state: directory
 
 # #################################
 # ### Starship - cross shell prompt

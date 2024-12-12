@@ -25,6 +25,7 @@
       - gnome-weather # needed for extension "Weather O'Clock"
       - inkscape # Plasma: Krita
       # - kdeconnect # -> gnome-shell-extension-gsconnect
+      - papirus-icon-theme
       - rhythmbox
       - seahorse # bereits standardmäßig installiert
       - solaar # Linux device manager for a wide range of Logitech devices
@@ -50,6 +51,8 @@
       - nemo-seahorse
       - nemo-share
       # - nemo-terminal
+      - orchis-theme
+      - pycharm-community-edition
       - tilix # A tiling terminal emulator for Linux using GTK+ 3
       - transmission-cli
       - transmission-gtk # -> deluge
@@ -67,6 +70,7 @@
       - gnome-software-plugin-flatpak
       - gtkhash
       - nemo
+      - orchis-gtk-theme
       - transmission # torrent client # sollte schon installiert sein
       - ulauncher # ppa wurde hinzugefügt im install script
   when:
