@@ -36,6 +36,8 @@ enabled:
     uuid: a5c960d9-3d35-4b3f-9d53-bafe782ddf1a
   - id: jeff-hykin.better-shellscript-syntax
     uuid: f27ad139-0ff0-4fea-a7c3-d1af80eed6ae
+  - id: johnpapa.vscode-peacock
+    uuid: 5a7017bf-c571-4d77-b902-6e56b16f539a
   - id: kennylong.kubernetes-yaml-formatter
     uuid: ff7ddaea-da15-4049-972f-4408841beffa
   - id: KevinRose.vsc-python-indent
