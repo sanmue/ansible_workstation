@@ -7,6 +7,7 @@
     - "net.ankiweb.Anki"
     - "com.belmoussaoui.Authenticator"
     - "com.brave.Browser"
+    - "org.kde.kasts"
     - "org.cryptomator.Cryptomator"
     - "com.jgraph.drawio.desktop" # diagramming tool
     - "com.microsoft.Edge"
