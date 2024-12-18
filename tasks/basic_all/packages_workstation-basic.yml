@@ -72,6 +72,7 @@
       - tldr # Command line client for tldr, a collection of simplified man pages.
       - tmux
       - trash-cli # Command line trashcan (recycle bin) interface
+      - tree
       - unzip
       - vim # bereits installiert (bootstrap)
       - vim-ale # Lint Engine (plugin for vim)
