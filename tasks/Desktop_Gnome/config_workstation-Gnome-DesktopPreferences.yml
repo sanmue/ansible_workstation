@@ -260,6 +260,7 @@
     - env_desktop in ["gnome"]
 
 # ### Appearance
+
 # - name: Gnome Desktop - Preferences - Set desktop interface - color-sheme - dark (Gnome)
 #   community.general.dconf:
 #     key: "/org/gnome/desktop/interface/color-scheme"
@@ -375,12 +376,13 @@
   when:
     - env_desktop in ["gnome"]
 
-- name: Gnome Desktop - Preferences - Set desktop input-sources - sources (keyboard layouts and input methods) (Gnome)
-  become: true
-  become_user: "{{ env_user }}"
-  ansible.builtin.shell: /org/gnome/desktop/input-sources/sources "[('xkb', 'de')]"
-  when:
-    - env_desktop in ["gnome"]
+# stderr: ... /org/gnome/desktop/input-sources/sources: No such file or directory ...
+# - name: Gnome Desktop - Preferences - Set desktop input-sources - sources (keyboard layouts and input methods) (Gnome)
+#   become: true
+#   become_user: "{{ env_user }}"
+#   ansible.builtin.shell: /org/gnome/desktop/input-sources/sources "[('xkb', 'de')]"
+#   when:
+#     - env_desktop in ["gnome"]
 
 # ### System Region & Language
 
