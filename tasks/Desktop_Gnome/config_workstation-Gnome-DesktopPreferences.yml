@@ -386,12 +386,13 @@
 
 # ### System Region & Language
 
-- name: Gnome Desktop - Preferences - System - Region and Language - Formats (Gnome)
-  become: true
-  become_user: "{{ env_user }}"
-  ansible.builtin.shell: /system/locale/region "'de_DE.UTF-8'"
-  when:
-    - env_desktop in ["gnome"]
+# stderr: ... /system/locale/region: No such file or directory ...
+# - name: Gnome Desktop - Preferences - System - Region and Language - Formats (Gnome)
+#   become: true
+#   become_user: "{{ env_user }}"
+#   ansible.builtin.shell: /system/locale/region "'de_DE.UTF-8'"
+#   when:
+#     - env_desktop in ["gnome"]
 
 # ### Screensaver
 
