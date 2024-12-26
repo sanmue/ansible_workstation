@@ -12,14 +12,14 @@
 #
 # ### -----------
 
-- name: Gather Facts and Variables
+- name: Gather Facts and set Variables
   tags: always
   hosts: localhost
   connection: local
   become: false
   gather_facts: true
   pre_tasks:
-    - name: Pre Tasks - Gather Facts and Variables
+    - name: Pre Tasks - Gather Facts and set Variables
       ansible.builtin.import_tasks: tasks/basic_all/config_workstation-ansibleFacts.yml
 
 - name: Add repos + update
@@ -29,8 +29,8 @@
   pre_tasks:
     - name: Pre Tasks - addrepos
       ansible.builtin.import_tasks: tasks/basic_all/config_workstation-addrepos.yml
-    # - name: Pre Tasks - all update
-    #   ansible.builtin.import_tasks: tasks/basic_all/all_update.yml
+    - name: Pre Tasks - all update
+      ansible.builtin.import_tasks: tasks/basic_all/all_update.yml
 
 # Create / Include btrfs snapshots in GRUB boot options
 # - name: Install and config snapper+btrfs

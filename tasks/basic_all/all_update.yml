@@ -3,12 +3,12 @@
 # #############
 - name: Update repository index and update system (apt)
   ansible.builtin.apt:
-    upgrade: dist
+    upgrade: true
     update_cache: true
   #  when: ansible_os_family == "Debian"
   when:
     - ansible_pkg_mgr == "apt"
-  changed_when: false
+  # changed_when: false
 
 - name: Update repository index and update system (pacman)
   community.general.pacman:
@@ -27,16 +27,17 @@
     - env_datadirs is defined
     #    - env_datadirs.find("/var/lib/flatpak") != -1
     - env_datadirs.find("/var/lib/flatpak") == true
-  changed_when: false
+  # changed_when: false
 
 # #########
 # ### snaps
 # #########
 # Snaps come with a built-in automatic update mechanism, whereby snaps are refreshed to a new version whenever there’s a new release in the Snap Store.
 # Typically, the refresh occurs four times a day ...
-- name: Update snap packages
-  ansible.builtin.command: snap refresh
-  when:
-    - env_path is defined
-    - env_path.find("/snap/bin") == true
-  changed_when: false
+#
+# - name: Update snap packages
+#   ansible.builtin.command: snap refresh
+#   when:
+#     - env_path is defined
+#     - env_path.find("/snap/bin") == true
+#   changed_when: false

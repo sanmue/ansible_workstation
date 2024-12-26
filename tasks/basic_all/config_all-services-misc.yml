@@ -94,7 +94,16 @@
 # # ClamAV
 # --------
 
-# ### Allgemein
+# ### Clamav database
+
+# needed by clamav-freshclam.service - preparing logfile (touch)
+- name: All services misc - clamav - create freshclam log file (all)
+  ansible.builtin.file:
+    path: "/var/log/clamav/freshclam.log"
+    state: touch
+    owner: clamav
+    group: clamav
+    mode: u=rw,g=r,o=
 
 # Arch-Wiki/ManjaroWiki: https://wiki.archlinux.org/title/ClamAV bzw. https://wiki.manjaro.org/index.php/ClamAV
 # You will need to run freshclam before starting the service for the first time
@@ -102,7 +111,7 @@
 #
 # You may get a notification that clamd was not notified. This is normal because we haven't started the service yet.
 #
-- name: All services misc - Update clamav database (Arch)
+- name: All services misc - clamav - Update clamav database (Arch)
   ansible.builtin.shell:
     cmd: freshclam
   args:
@@ -116,7 +125,7 @@
 #    creates: /home/{{ env_user }}/.ansible_freshclamInitialStartExecuted
 #  when: ansible_distribution in ["Debian"]
 
-- name: All services misc - Set flag file freshclamInitialStartExecuted (all)
+- name: All services misc - clamav - Set flag file freshclamInitialStartExecuted (all)
   ansible.builtin.file:
     path: "/home/{{ env_user }}/.ansible_freshclamInitialStartExecuted"
     state: touch
@@ -124,13 +133,15 @@
     group: "{{ env_user }}"
     mode: u=rw,g=r,o=r
 
-- name: All services misc - Start+enable clamav-daemon.service (all)
+# ### Start and enable clamav services
+
+- name: All services misc - clamav - Start+enable clamav-daemon.service (all)
   ansible.builtin.service:
     name: clamav-daemon.service
     state: started
     enabled: true
 
-- name: All services misc - Start+enable clamav-freshclam.service (all)
+- name: All services misc - clamav - Start+enable clamav-freshclam.service (all)
   ansible.builtin.service:
     name: clamav-freshclam.service
     state: started
