@@ -67,17 +67,6 @@
   ansible.builtin.shell:
     cmd: locale-gen
 
-# #######################
-# ### /home/01_Videos-min
-# #######################
-- name: All settings misc - Create '/home/01_Videos-min' - env_user permission (all)
-  ansible.builtin.file:
-    path: "/home/01_Videos-min/"
-    state: directory
-    owner: "{{ env_user }}"
-    group: "{{ env_user }}"
-    mode: "0710"
-
 # ##########
 # ### direnv
 # ##########
