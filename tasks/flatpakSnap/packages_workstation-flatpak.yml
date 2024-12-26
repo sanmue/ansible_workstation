@@ -18,6 +18,7 @@
     - "de.willuhn.Jameica"
     - "net.cozic.joplin_desktop"
     - "de.mediathekview.MediathekView"
+    - "io.missioncenter.MissionCenter"
     - "de.haeckerfelix.Shortwave"
     # - "net.mkiol.SpeechNote"
     - "org.tenacityaudio.Tenacity" # Audacity fork / replacement
