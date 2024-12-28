@@ -117,7 +117,7 @@ fi
 ### Hostname
 # https://en.wikipedia.org/wiki/Hostname
 # TODO: error handling, validy check
-echo -e "\e[0;33mCurrent hostname (including domain of set):\e[39m '${currentHostname}'"
+echo -e "\e[0;33mCurrent hostname (including domain of set):\e[39m ${currentHostname}"
 read -r -p "  |_ Change hostname? ('y'=yes, other input=no): " changeHostname
 if [ "${changeHostname}" = 'y' ]; then
     read -r -p "     Enter new hostname (without domain): " newHostname
