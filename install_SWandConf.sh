@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# set -x # enable debug mode
+set -x # enable debug mode
 
 ### ---------------------------------------------------------------------------
 ### Installation initial benötigter Pakete / Config (e.g. firewall, git, ...)
@@ -27,9 +27,9 @@ playbookdir="ansible_workstation" # also repo name
 playbook="local.yml"
 userid=$(whoami)                                       # or: userid=${USER}
 oslist=("Arch Linux" "EndeavourOS" "Debian GNU/Linux") # currently supported distributions
-# currentHostname=$(hostname) # command not available in arch (anymore); net-tool (deprecated) or inetutils not installed by default
-# currentHostname=$(cat /etc/hostname)
-currentHostname=$(hostnamectl hostname) # only systemd
+# currentSystemHostname=$(hostname) # command not available in arch (anymore); net-tool (deprecated) or inetutils not installed by default
+# currentSystemHostname=$(cat /etc/hostname)
+currentSystemHostname=$(hostnamectl hostname) # only systemd # prints system hostname (if domain is set: DNS FQDN, e.g. archlinux.mydomain.com)
 bootloaderId='GRUB'                     # or 'endeavouros', ... # only relevant if grub bootloader is used
 
 # if [ -d "/efi" ]; then # Uefi - EFI path
@@ -117,26 +117,39 @@ fi
 ### Hostname
 # https://en.wikipedia.org/wiki/Hostname
 # TODO: error handling, validy check
-echo -e "\e[0;33mCurrent hostname (including domain of set):\e[39m ${currentHostname}"
-read -r -p "  |_ Change hostname? ('y'=yes, other input=no): " changeHostname
-if [ "${changeHostname}" = 'y' ]; then
-    read -r -p "     Enter new hostname (without domain): " newHostname
-    newHostname="${newHostname// /}"           # remove any spaces
-    newHostname="${newHostname,,}"             # change uppercase to lowercase letters
-    echo "     -> newHostname: ${newHostname}" # no validy check if starts or ends with '-' or contains any other invalid characters
+echo -e "\e[0;33mCurrent system hostname:\e[39m ${currentSystemHostname}"
+read -r -p "  |_ Change system hostname? ('y'=yes, other input=no): " changeSystemHostname
+if [ "${changeSystemHostname}" = 'y' ]; then
+    read -r -p "     Enter new system hostname: " newSystemHostname
+    newSystemHostname="${newSystemHostname// /}"           # remove any spaces
+    newSystemHostname="${newSystemHostname,,}"             # change uppercase to lowercase letters
+    echo "     -> newSystemHostname: ${newSystemHostname}" # no validy check if starts or ends with '-' or contains any other invalid characters
 
-    if [[ ! $(grep sudo /etc/group) = *"${userid}"* ]]; then # if user not in sudo group
-        echo "     Changing hostname (hostnamectl)..."
-        su -l root --command "hostnamectl hostname ${newHostname}"
-        echo "     Changing hostname (/etc/hosts)..."
-        su -l root --command "sed -i 's/${currentHostname}/${newHostname}/g' /etc/hosts"
+    # TODO: check if new hostname equals current hostname -> no change necessary + info message
+
+    # if user not in group 'sudo' (debian) or 'wheel' (arch)
+    if [[ ! $(grep sudo /etc/group) = *"${userid}"* ]] && [[ ! $(grep wheel /etc/group) = *"${userid}"* ]]; then
+        echo -e "\e[0;31mUser '${userid}' not in group 'sudo' (Debian) or 'wheel' (Arch).\e[39m"
+        echo -e "\e[0;31mHostname change not possible. Please add user to group 'sudo' (Debian) or 'wheel' (Arch) and restart script.\e[39m"
+        exit 1
+        # echo "     Changing hostname (via hostnamectl)..."
+        # su -l root --command "hostnamectl hostname ${newSystemHostname}"
+        # echo "     Adapting hostname in '/etc/hosts'..."
+        # su -l root --command "sed -i 's/${currentSystemHostname}/${newSystemHostname}/g' /etc/hosts"
     else
-        echo "     Changing hostname (hostnamectl)..."
-        sudo hostnamectl hostname "${newHostname}"
-        echo "     Changing hostname (/etc/hosts)..."
-        sudo sed -i "s/${currentHostname}/${newHostname}/g" /etc/hosts
+        echo "     Changing hostname (via hostnamectl)..."
+        sudo hostnamectl hostname "${newSystemHostname}"
+        echo "     Adapting hostname in '/etc/hosts'..."
+        sudo sed -i "s/${currentSystemHostname}/${newSystemHostname}/g" /etc/hosts
+        if [[ "${currentSystemHostname}" == *'.'* ]]; then # if hostname contains an '.' -> DNS FQDN
+            echo "contains ."
+            currentShortHostname=$(echo "${currentSystemHostname}" | cut -d '.' -f 1)
+            newShortHostname=$(echo "${newSystemHostname}" | cut -d '.' -f 1)
+            # e.g.: 127.0.1.1 archinstall-autobash.home.arpa archinstall-autobash -> 127.0.1.1 archinstall-autobash-01.home.arpa archinstall-autobash-01
+            sudo sed -i -E "s/${currentShortHostname}\$/${newShortHostname}/g" /etc/hosts
+        fi
     fi
-    echo "     Hostname set to '${newHostname}'"
+    echo "     Hostname set to '${newSystemHostname}'"
 fi
 
 ### ---
