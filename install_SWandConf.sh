@@ -30,7 +30,7 @@ oslist=("Arch Linux" "EndeavourOS" "Debian GNU/Linux") # currently supported dis
 # currentHostname=$(hostname) # command not available in arch (anymore); net-tool (deprecated) or inetutils not installed by default
 # currentHostname=$(cat /etc/hostname)
 currentHostname=$(hostnamectl hostname) # only systemd
-bootloaderId='GRUB'                     # or 'endeavouros', ...
+bootloaderId='GRUB'                     # or 'endeavouros', ... # only relevant if grub bootloader is used
 
 # if [ -d "/efi" ]; then # Uefi - EFI path
 if [ "$(sudo ls "/efi")" ]; then # Uefi - EFI path
@@ -120,7 +120,7 @@ fi
 echo -e "\e[0;33mCurrent hostname:\e[39m '${currentHostname}'"
 read -r -p "  |_ Change hostname? ('y'=yes, other input=no): " changeHostname
 if [ "${changeHostname}" = 'y' ]; then
-    read -r -p "     Enter new hostname: " newHostname
+    read -r -p "     Enter new hostname (without domain): " newHostname
     newHostname="${newHostname// /}"           # remove any spaces
     newHostname="${newHostname,,}"             # change uppercase to lowercase letters
     echo "     -> newHostname: ${newHostname}" # no validy check if starts or ends with '-' or contains any other invalid characters
