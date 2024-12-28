@@ -50,7 +50,7 @@
       - inxi
       - jq # Command-line JSON processor
       - keepassxc
-      - kitty # gpu beschleunigtes terminal
+      - # kitty # gpu beschleunigtes terminal -> replaced by Ghostty (Arch)
       - libfaketime # Report fake dates and times to programs without having to change the system-wide time.
       - lowdown # A simple Markdown translator (u.a. wg. nnn)
       - lsb-release
@@ -120,6 +120,7 @@
       - foliate # A simple and modern GTK eBook reader
       - freerdp # u.a. für Remmina
       - github-cli
+      - ghostty # Fast, native, feature-rich terminal emulator pushing modern features # gpu beschleunigtes terminal
       - glow # Command-line markdown renderer
       - gnupg
       - gpgme
@@ -227,6 +228,7 @@
       - hunspell-de-de
       - hunspell-en-us
       - kdeconnect
+      - kitty # gpu beschleunigtes terminal -> replaced by Ghostty (Arch)
       - libidn11-dev # benötigt für Citrix Workspace app (ica client)
       - libnotify-bin # sollte schon installiert sein
       - neofetch
