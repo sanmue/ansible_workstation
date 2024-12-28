@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -x # enable debug mode
+# set -x # enable debug mode
 
 ### ---------------------------------------------------------------------------
 ### Installation initial benötigter Pakete / Config (e.g. firewall, git, ...)
