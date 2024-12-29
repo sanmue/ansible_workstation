@@ -432,7 +432,7 @@
       # -----------------------------
       # - gpu beschleunigtes terminal # Fast, native, feature-rich terminal emulator pushing modern features
       if [[ $(command -v ghostty) ]]; then
-        alias setfs='set-ghosttyFontSize' # needs one integer value parameter for font size # e.g.: setfs 12
+        alias setfosi='set-ghosttyFontSize' # needs one integer value parameter for font size # e.g.: setfs 12
       fi
 
       set-ghosttyFontSize() {
@@ -1047,7 +1047,7 @@
       # -----------------------------
       # - gpu beschleunigtes terminal # Fast, native, feature-rich terminal emulator pushing modern features
       if [[ $(command -v ghostty) ]]; then
-        alias setfs='set-ghosttyFontSize' # needs one integer value parameter for font size # e.g.: setfs 12
+        alias setfosi='set-ghosttyFontSize' # needs one integer value parameter for font size # e.g.: setfs 12
       fi
 
       set-ghosttyFontSize() {
