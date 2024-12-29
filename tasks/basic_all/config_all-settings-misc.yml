@@ -403,6 +403,86 @@
   # when:
   #   - ansible_distribution in ["Archlinux"]
 
+- name: All settings misc - Bashrc - custom alias definitions - 'fastfetch' (User, all)
+  tags: shellrc
+  ansible.builtin.blockinfile:
+    path: "/home/{{ env_user }}/.bashrc"
+    backup: false
+    marker: "### {mark} 'fastfetch' - ANSIBLE MANAGED BLOCK ###"
+    block: |
+      # ----------------------------------
+      # fastfetch ('neofetch' replacement)
+      # ----------------------------------
+      # - use a small icon
+      if [[ $(command -v fastfetch) ]]; then
+        alias fastfetch='fastfetch --logo small'
+      fi
+  when:
+    - ansible_distribution in ["Archlinux"]
+
+- name: All settings misc - Bashrc - custom alias definitions - 'Ghostty' (User, all)
+  tags: shellrc
+  ansible.builtin.blockinfile:
+    path: "/home/{{ env_user }}/.bashrc"
+    backup: false
+    marker: "### {mark} 'Ghostty' - ANSIBLE MANAGED BLOCK ###"
+    block: |
+      # -----------------------------
+      # Ghostty ('kitty' replacement)
+      # -----------------------------
+      # - gpu beschleunigtes terminal # Fast, native, feature-rich terminal emulator pushing modern features
+      if [[ $(command -v ghostty) ]]; then
+        alias setfs='set-ghosttyFontSize' # needs one integer value parameter for font size # e.g.: setfs 12
+      fi
+
+      set-ghosttyFontSize() {
+        # Variables
+        local ghosttyConf="${HOME}/.config/ghostty/config"
+        local searchString="font-size ="
+        local fontSize="${1}"
+
+        # Check if 'Ghostty' is installed
+        if [[ ! $(command -v ghostty) ]]; then
+            echo "\e[0;31m'Ghostty' not installed. Can't change font-size.\e[0;39m"
+        fi
+
+        # Check parameter and set variable newFontSizeLine if valid:
+        if [[ "${fontSize}" -gt 0 ]]; then
+            local newFontSizeLine="font-size = ${1}"
+            #echo "newFontSizeLine: ${newFontSizeLine}"
+        else
+            echo -e "\e[0;31mNot changing font-size: parameter1 (for font size) not set or not an integer value > 0.\e[0;39m"
+            echo -e "\e[0;31mPlease provide one parameter with an integer value > 0.\e[0;39m"
+            return
+        fi
+
+        # Check if conf file exists, create it if not:
+        if [[ ! -e ${ghosttyConf} ]]; then
+            touch "${ghosttyConf}"
+            echo -e "\e[1;33mGhostty Conf '${ghosttyConf}' created.\e[0;39m"
+        #else
+        #    echo -e "\e[1;33mGhostty Conf '${ghosttyConf}' exists.\e[0;39m"
+        fi
+
+        # Get current font-size from conf file and set new font-size:
+        local currentFontSizeLine="$(grep -E "^${searchString}" ${ghosttyConf})"
+        if [[ ! "${currentFontSizeLine}" = "" ]]; then # if entry for font-size in conf
+            echo "Setting new font size for 'Ghostty':"
+            echo "currentFontSizeLine: ${currentFontSizeLine}"
+            echo "newFontSizeLine:     ${newFontSizeLine}"
+            sed -i "s/${currentFontSizeLine}/${newFontSizeLine}/g" "${ghosttyConf}"
+        else
+            echo "\e[1;33mNo (active) entry for font-size found in '${ghosttyConf}'. Adding new conf for font size line....\e[0;39m"
+            echo "${newFontSizeLine}" >> "${ghosttyConf}"
+        fi
+
+        # Print current user's new Ghostty conf:
+        # echo -e "\nNew 'Ghostty' user conf:"
+        # cat "${ghosttyConf}"
+      }
+  when:
+    - ansible_distribution in ["Archlinux"]
+
 - name: All settings misc - Bashrc - Insert/Update additional paths and config - nvm (User, all)
   tags: shellrc
   ansible.builtin.blockinfile:
@@ -937,6 +1017,79 @@
       fi
   # when:
   #   - ansible_distribution in ["Archlinux"]
+
+- name: All settings misc - Zshrc - custom alias definitions - 'fastfetch' (User, all)
+  tags: shellrc
+  ansible.builtin.blockinfile:
+    path: "/home/{{ env_user }}/.zshrc"
+    backup: false
+    marker: "### {mark} 'fastfetch' - ANSIBLE MANAGED BLOCK ###"
+    block: |
+      # ----------------------------------
+      # fastfetch ('neofetch' replacement)
+      # ----------------------------------
+      # - use a small icon
+      if [[ $(command -v fastfetch) ]]; then
+        alias fastfetch='fastfetch --logo small'
+      fi
+  when:
+    - ansible_distribution in ["Archlinux"]
+
+- name: All settings misc - Zshrc - custom alias definitions - 'Ghostty' (User, all)
+  tags: shellrc
+  ansible.builtin.blockinfile:
+    path: "/home/{{ env_user }}/.zshrc"
+    backup: false
+    marker: "### {mark} 'Ghostty' - ANSIBLE MANAGED BLOCK ###"
+    block: |
+      # -----------------------------
+      # Ghostty ('kitty' replacement)
+      # -----------------------------
+      # - gpu beschleunigtes terminal # Fast, native, feature-rich terminal emulator pushing modern features
+      if [[ $(command -v ghostty) ]]; then
+        alias setfs='set-ghosttyFontSize' # needs one integer value parameter for font size # e.g.: setfs 12
+      fi
+
+      set-ghosttyFontSize() {
+        # Variables
+        local ghosttyConf="${HOME}/.config/ghostty/config"
+        local searchString="font-size ="
+        local fontSize="${1}"
+
+        # Check if 'Ghostty' is installed
+        if [[ ! $(command -v ghostty) ]]; then
+            echo "\e[0;31m'Ghostty' not installed. Can't change font-size.\e[0;39m"
+        fi
+
+        # Check parameter and set variable newFontSizeLine if valid:
+        if [[ "${fontSize}" -gt 0 ]]; then
+            local newFontSizeLine="font-size = ${1}"
+        else
+            echo -e "\e[0;31mNot changing font-size: parameter1 (for font size) not set or not an integer value > 0.\e[0;39m"
+            echo -e "\e[0;31mPlease provide one parameter with an integer value > 0.\e[0;39m"
+            return
+        fi
+
+        # Check if conf file exists, create it if not:
+        if [[ ! -e ${ghosttyConf} ]]; then
+            touch "${ghosttyConf}"
+            echo -e "\e[1;33mGhostty Conf '${ghosttyConf}' created.\e[0;39m"
+        fi
+
+        # Get current font-size from conf file and set new font-size:
+        local currentFontSizeLine="$(grep -E "^${searchString}" ${ghosttyConf})"
+        if [[ ! "${currentFontSizeLine}" = "" ]]; then # if entry for font-size in conf
+            echo "Setting new font-size for 'Ghostty':"
+            echo "currentFontSizeLine: ${currentFontSizeLine}"
+            echo "newFontSizeLine:     ${newFontSizeLine}"
+            sed -i "s/${currentFontSizeLine}/${newFontSizeLine}/g" "${ghosttyConf}"
+        else
+            echo "\e[1;33mNo (active) entry for font-size found in '${ghosttyConf}'. Adding new conf for font-size ...\e[0;39m"
+            echo "${newFontSizeLine}" >> "${ghosttyConf}"
+        fi
+      }
+  when:
+    - ansible_distribution in ["Archlinux"]
 
 - name: All settings misc - Zshrc - Insert/Update additional paths and config - nvm (User, all)
   tags: shellrc

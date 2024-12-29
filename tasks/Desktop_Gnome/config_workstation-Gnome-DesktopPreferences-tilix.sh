@@ -25,7 +25,7 @@ create_new_profile() {
 
     dconf write ${dconfdir}/list "${profileList}"
     dconf write "${dconfdir}/${profile_id}"/visible-name "'${profile_name}'"
-    
+
     echo "${profile_id}"
 }
 
@@ -47,7 +47,7 @@ dconf write "${dconfdir}/${id}"/cursor-shape "'ibeam'"
 dconf write "${dconfdir}/${id}"/default-size-columns "100"
 dconf write "${dconfdir}/${id}"/default-size-rows "32"
 dconf write "${dconfdir}/${id}"/exit-action "'hold'"
-dconf write "${dconfdir}/${id}"/font "'MesloLGS NF 13'"
+dconf write "${dconfdir}/${id}"/font "'MesloLGS NF 12'"
 dconf write "${dconfdir}/${id}"/foreground-color "'#F8F8F2'"
 dconf write "${dconfdir}/${id}"/login-shell "true"
 dconf write "${dconfdir}/${id}"/palette "['#000000', '#CC0000', '#4D9A05', '#C3A000', '#3464A3', '#754F7B', '#05979A', '#D3D6CF', '#545652', '#EF2828', '#89E234', '#FBE84F', '#729ECF', '#AC7EA8', '#34E2E2', '#EDEDEB']"
