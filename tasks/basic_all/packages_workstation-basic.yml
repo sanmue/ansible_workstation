@@ -50,12 +50,10 @@
       - inxi
       - jq # Command-line JSON processor
       - keepassxc
-      - # kitty # gpu beschleunigtes terminal -> replaced by Ghostty (Arch)
       - libfaketime # Report fake dates and times to programs without having to change the system-wide time.
       - lowdown # A simple Markdown translator (u.a. wg. nnn)
       - lsb-release
       - make
-      # - man-pages-de
       - moreutils # additional Unix utilities - parallel command; enthält z.B. vidir (u.a. wg. nnn)
       - nnn # Free, fast, friendly terminal file manager
       - rclone # sync tool
@@ -63,11 +61,9 @@
       # - samba # z.B. für VM: File sharing between host and Windows guest; https://wiki.manjaro.org/index.php/Virt-manager/en
       - shellcheck # Shell script analysis tool (u.a. Verwendet in Extension/Plugin vim, (VS)Code, Zed)
       - shfmt # Format shell programs # also uses by VS Code / Code OSS Extension "shell-format", Zed bzw. bash-language-server
-      # - skanlite # bei KDE Plasma Desktop
       - speedtest-cli
       - sqlitebrowser # + s.u.: Arch: sqlite; debian: sqlite3
       - syncthing
-      # - terminator # Terminal emulator that supports tabs and grids
       - tk # Graphical User Interface Toolkit for Tcl   # z.B. pyenv install 3.11.3: requirement
       - tldr # Command line client for tldr, a collection of simplified man pages.
       - tmux
@@ -109,7 +105,6 @@
       - evolution-ews # MS Exchange integration through Exchange Web Services
       - evolution-spamassassin
       # - evolution-on # Tray plugin for the Evolution email client
-      # - exfat-utils # exfat-utils and exfatprogs are in conflict
       - eza
       - fd # Simple, fast and user-friendly alternative to find
       - fastfetch
@@ -137,7 +132,7 @@
       - malcontent # Parental control support for applications
       - nextcloud-client
       - obs-studio # 10/2023: for 'obs-studio' to work install 'qt6-wayland' (see further below)
-      - openssh # bereits installiert (bootstrap)
+      - openssh # bereits installiert (via install script)
       - packagekit
       - pacman-contrib # Contributed scripts and tools for pacman systems # e.g. for pacman-filesdb-refresh.timer, paccache.timer
       - pkgfile # sollte bereits installiert sein (mit 'pacman') # tool for searching files from packages in the official repositories
@@ -171,7 +166,7 @@
       # - python-virtualenvwrapper # Extensions to Ian Bicking's virtualenv tool
       - qt6-wayland # 10/2023: for 'obs-studio' to work install 'qt6-wayland'
       - reflector # A Python 3 module and script to retrieve and filter the latest Pacman mirror list.
-      - remmina
+      - remmina # remote desktop client written in GTK+
       - signal-desktop
       - sqlite # A C library that implements an SQL database engine
       - steam
