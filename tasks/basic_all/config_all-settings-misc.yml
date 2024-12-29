@@ -437,9 +437,9 @@
 
       set-ghosttyFontSize() {
         # Variables
+        local fontSize="${1}" # parameter1
         local ghosttyConf="${HOME}/.config/ghostty/config"
         local searchString="font-size ="
-        local fontSize="${1}"
 
         # Check if 'Ghostty' is installed
         if [[ ! $(command -v ghostty) ]]; then
@@ -448,8 +448,7 @@
 
         # Check parameter and set variable newFontSizeLine if valid:
         if [[ "${fontSize}" -gt 0 ]]; then
-            local newFontSizeLine="font-size = ${1}"
-            #echo "newFontSizeLine: ${newFontSizeLine}"
+            local newFontSizeLine="font-size = ${fontSize}"
         else
             echo -e "\e[0;31mNot changing font-size: parameter1 (for font size) not set or not an integer value > 0.\e[0;39m"
             echo -e "\e[0;31mPlease provide one parameter with an integer value > 0.\e[0;39m"
@@ -460,9 +459,7 @@
         if [[ ! -e ${ghosttyConf} ]]; then
             mkdir -p "$(dirname "${ghosttyConf}")"
             touch "${ghosttyConf}"
-            echo -e "\e[1;33mGhostty Conf '${ghosttyConf}' created.\e[0;39m"
-        #else
-        #    echo -e "\e[1;33mGhostty Conf '${ghosttyConf}' exists.\e[0;39m"
+            echo -e "\e[1;33mGhostty conf file '${ghosttyConf}' created.\e[0;39m"
         fi
 
         # Get current font-size from conf file and set new font-size:
