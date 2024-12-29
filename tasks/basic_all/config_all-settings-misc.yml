@@ -1050,9 +1050,9 @@
 
       set-ghosttyFontSize() {
         # Variables
+        local fontSize="${1}" # parameter1
         local ghosttyConf="${HOME}/.config/ghostty/config"
         local searchString="font-size ="
-        local fontSize="${1}"
 
         # Check if 'Ghostty' is installed
         if [[ ! $(command -v ghostty) ]]; then
@@ -1061,7 +1061,7 @@
 
         # Check parameter and set variable newFontSizeLine if valid:
         if [[ "${fontSize}" -gt 0 ]]; then
-            local newFontSizeLine="font-size = ${1}"
+            local newFontSizeLine="font-size = ${fontSize}"
         else
             echo -e "\e[0;31mNot changing font-size: parameter1 (for font size) not set or not an integer value > 0.\e[0;39m"
             echo -e "\e[0;31mPlease provide one parameter with an integer value > 0.\e[0;39m"
@@ -1070,21 +1070,26 @@
 
         # Check if conf file exists, create it if not:
         if [[ ! -e ${ghosttyConf} ]]; then
+            mkdir -p "$(dirname "${ghosttyConf}")"
             touch "${ghosttyConf}"
-            echo -e "\e[1;33mGhostty Conf '${ghosttyConf}' created.\e[0;39m"
+            echo -e "\e[1;33mGhostty conf file '${ghosttyConf}' created.\e[0;39m"
         fi
 
         # Get current font-size from conf file and set new font-size:
         local currentFontSizeLine="$(grep -E "^${searchString}" ${ghosttyConf})"
         if [[ ! "${currentFontSizeLine}" = "" ]]; then # if entry for font-size in conf
-            echo "Setting new font-size for 'Ghostty':"
+            echo "Setting new font size for 'Ghostty':"
             echo "currentFontSizeLine: ${currentFontSizeLine}"
             echo "newFontSizeLine:     ${newFontSizeLine}"
             sed -i "s/${currentFontSizeLine}/${newFontSizeLine}/g" "${ghosttyConf}"
         else
-            echo "\e[1;33mNo (active) entry for font-size found in '${ghosttyConf}'. Adding new conf for font-size ...\e[0;39m"
+            echo "\e[1;33mNo (active) entry for font-size found in '${ghosttyConf}'. Adding new conf for font size line....\e[0;39m"
             echo "${newFontSizeLine}" >> "${ghosttyConf}"
         fi
+
+        # Print current user's new Ghostty conf:
+        # echo -e "\nNew 'Ghostty' user conf:"
+        # cat "${ghosttyConf}"
       }
   when:
     - ansible_distribution in ["Archlinux"]
