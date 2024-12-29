@@ -139,17 +139,19 @@ if [ "${changeSystemHostname}" = 'y' ]; then
     else
         echo "     Changing hostname (via hostnamectl)..."
         sudo hostnamectl hostname "${newSystemHostname}"
+        echo "Hostname set to: $(hostnamectl hostname)"
+
         echo "     Adapting hostname in '/etc/hosts'..."
         sudo sed -i "s/${currentSystemHostname}/${newSystemHostname}/g" /etc/hosts
-        if [[ "${currentSystemHostname}" == *'.'* ]]; then # if hostname contains an '.' -> DNS FQDN
-            echo "contains ."
+        if [[ "${currentSystemHostname}" == *'.'* ]]; then # if hostname contains '.' -> DNS FQDN
             currentShortHostname=$(echo "${currentSystemHostname}" | cut -d '.' -f 1)
             newShortHostname=$(echo "${newSystemHostname}" | cut -d '.' -f 1)
             # e.g.: 127.0.1.1 archinstall-autobash.home.arpa archinstall-autobash -> 127.0.1.1 archinstall-autobash-01.home.arpa archinstall-autobash-01
             sudo sed -i -E "s/${currentShortHostname}\$/${newShortHostname}/g" /etc/hosts
         fi
+        echo "Content of '/etc/hosts':"
+        cat /etc/hosts
     fi
-    echo "     Hostname set to '${newSystemHostname}'"
 fi
 
 ### ---
