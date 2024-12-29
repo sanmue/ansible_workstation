@@ -458,6 +458,7 @@
 
         # Check if conf file exists, create it if not:
         if [[ ! -e ${ghosttyConf} ]]; then
+            mkdir -p "$(dirname "${ghosttyConf}")"
             touch "${ghosttyConf}"
             echo -e "\e[1;33mGhostty Conf '${ghosttyConf}' created.\e[0;39m"
         #else
