@@ -11,6 +11,7 @@
       - alacarte # Menu editor for gnome
       - baobab # A graphical directory tree analyzer
       - dconf-editor
+      - file-roller # Create and modify archives
       - gedit
       - gedit-plugins
       - gjs # Javascript Bindings for GNOME   # + Ubnuntu: fehlendes Paket, damit ab 22.04 der Monitor in Engergiesparmodus kann
