@@ -6,6 +6,7 @@
   ansible.builtin.package:
     state: present
     name:
+      - 7zip
       - ansible # Official assortment of Ansible collections # oder nur min-version 'ansible-core' # bereits installiert (bootstrap)
       # - ansible-core # Radically simple IT automation platform # wird bei 'ansible' mitinstalliert
       - ansible-lint # für z.B. ansible extension in VS Code # -> pip
@@ -13,6 +14,7 @@
       - bash-completion
       - bat # Cat clone with syntax highlighting and git integration (u.a. wg. nnn + alias (cat))
       - bleachbit
+      - bzip3
       - catimg # Print images in a terminal with 256 colors support (u.a. wg. nnn)
       - chafa # Image-to-text converter for terminal (u.a. wg. nnn)
       - clamav
@@ -42,6 +44,7 @@
       - git # bereits installiert (bootstrap)
       - gpick
       - grsync
+      - gzip
       - hplip # Drivers for HP DeskJet, OfficeJet, Photosmart, Business Inkjet and some LaserJet
       - htop
       - hunspell
@@ -81,6 +84,7 @@
       - xterm # (u.a. wg. nnn)
       - zoxide # A smarter cd command for your terminal (u.a. wg. nnn)
       - zsh
+      - zstd
       # ---------
       # firmware:
       - fwupd
