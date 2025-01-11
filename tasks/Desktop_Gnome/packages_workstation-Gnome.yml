@@ -27,6 +27,7 @@
       - inkscape # Plasma: Krita
       # - kdeconnect # -> gnome-shell-extension-gsconnect
       - papirus-icon-theme
+      - pdfarranger # Merge, split, rotate, and crop PDF files
       - rhythmbox
       - seahorse # bereits standardmäßig installiert
       - solaar # Linux device manager for a wide range of Logitech devices
