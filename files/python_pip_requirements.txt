@@ -49,3 +49,8 @@ parsedatetime
 pydbus
 pytz
 simpleeval
+
+# ### --------
+# ### ShellGPT
+# - https://github.com/TheR1D/shell_gpt
+shell-gpt
