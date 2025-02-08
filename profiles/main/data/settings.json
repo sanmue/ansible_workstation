@@ -23,7 +23,8 @@
     },
     "editor.autoIndent": "advanced"
   },
-  "ansible.python.interpreterPath": "/home/sandro/.pyenv/versions/3.12.5/bin/python",
+  "ansible.python.interpreterPath": "/home/sandro/.pyenv/versions/3.12.7/bin/python",
   "files.autoSave": "onFocusChange",
-  "terminal.integrated.scrollback": 10000
+  "terminal.integrated.scrollback": 10000,
+  "git.statusLimit": 16384
 }
