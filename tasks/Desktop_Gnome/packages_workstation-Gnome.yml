@@ -31,7 +31,7 @@
       - rhythmbox
       - seahorse # bereits standardmäßig installiert
       - solaar # Linux device manager for a wide range of Logitech devices
-      - totem # -> vlc
+      # - totem # -> vlc
       # ---------
       # firmware:
       - gnome-firmware

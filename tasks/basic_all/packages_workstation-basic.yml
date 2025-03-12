@@ -59,6 +59,7 @@
       - make
       - moreutils # additional Unix utilities - parallel command; enthält z.B. vidir (u.a. wg. nnn)
       - nnn # Free, fast, friendly terminal file manager
+      - pavucontrol # PulseAudio Volume Control (and pipewire; pipewire-pulse replaces pulseaudio)
       - rclone # sync tool
       - rsync # bereits installiert (bootstrap)
       # - samba # z.B. für VM: File sharing between host and Windows guest; https://wiki.manjaro.org/index.php/Virt-manager/en
