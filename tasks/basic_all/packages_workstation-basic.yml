@@ -68,6 +68,7 @@
       - speedtest-cli
       - sqlitebrowser # + s.u.: Arch: sqlite; debian: sqlite3
       - syncthing
+      - thunderbird
       - tk # Graphical User Interface Toolkit for Tcl   # z.B. pyenv install 3.11.3: requirement
       - tldr # Command line client for tldr, a collection of simplified man pages.
       - tmux
