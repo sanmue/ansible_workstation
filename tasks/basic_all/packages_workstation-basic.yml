@@ -33,7 +33,7 @@
       - dmidecode
       - duf # Disk Usage/Free Utility
       - efivar
-      - evolution
+      # - evolution -> thunderbird
       # - eza # A modern replacement for ls (community fork of exa) nicht in Debian, dort: eza
       - flatpak
       - font-manager
@@ -107,9 +107,9 @@
       - discord
       - enchant # A wrapper library for generic spell checking
       - eslint # An AST-based pattern checker for JavaScript (für VS Code / Code - OSS Extension)
-      - evolution-bogofilter
-      - evolution-ews # MS Exchange integration through Exchange Web Services
-      - evolution-spamassassin
+      # - evolution-bogofilter
+      # - evolution-ews # MS Exchange integration through Exchange Web Services
+      # - evolution-spamassassin
       # - evolution-on # Tray plugin for the Evolution email client
       - eza
       - fd # Simple, fast and user-friendly alternative to find
@@ -214,10 +214,10 @@
       - clamav-daemon
       # - cockpit-networkmanager # Cockpit user interface for networking
       - eslint # An AST-based pattern checker for JavaScript (für VS Code / Code - OSS Extension)
-      - evolution-plugin-bogofilter
-      - evolution-plugin-pstimport
-      - evolution-plugin-spamassassin
-      - evolution-plugins
+      # - evolution-plugin-bogofilter
+      # - evolution-plugin-pstimport
+      # - evolution-plugin-spamassassin
+      # - evolution-plugins
       - exa
       - exfat-fuse
       - fd-find # Simple, fast and user-friendly alternative to find
