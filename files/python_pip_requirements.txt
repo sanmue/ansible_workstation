@@ -30,7 +30,7 @@ html5lib
 isort
 jedi
 lxml
-pandas[excel, html, sql-other, mysql, output-formatting, performance, plot, xml]
+pandas[excel,html,sql-other,mysql,output-formatting,performance,plot,xml]
 pipenv
 psutil
 pyarrow
