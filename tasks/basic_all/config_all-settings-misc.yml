@@ -258,7 +258,7 @@
     dest: "/home/{{ env_user }}/.local/bin/ansible_update-by-tag.sh"
     owner: "{{ env_user }}"
     group: "{{ env_user }}"
-    mode: '0644'
+    mode: '0755'
     backup: false
 
 # ##########################################
@@ -452,13 +452,13 @@
       # execute selected tasks of ansible playbook using 'tags'
       # -------------------------------------------------------
       # - 'shellrc': create / update shell conf (e.g. .bashrc, .zshrc)
-      alias upshellrc='sudo true && ansible-playbook "${HOME}/dev/Ansible/Projects/ansible_workstation/local.yml" -v -k --tags "shellrc"'
+      alias upshellrc='${HOME}/.local/bin/ansible_update-by-tag.sh shellrc'
       # - 'vimrc': create / update vim conf + plugins
-      alias upvimrc='sudo true && ansible-playbook "${HOME}/dev/Ansible/Projects/ansible_workstation/local.yml" -v -k --tags "vimrc"'
+      alias upvimrc='${HOME}/.local/bin/ansible_update-by-tag.sh vimrc'
       # - 'nnnplugs': create / update 'nnn' plugins + xterm conf for nnn-peview-tui
-      alias upnnnplugs='sudo true && ansible-playbook "${HOME}/dev/Ansible/Projects/ansible_workstation/local.yml" -v -k --tags "nnnplugs"'
+      alias upnnnplugs='${HOME}/.local/bin/ansible_update-by-tag.sh nnnplugs'
       # - 'nvm' (node version manager): create / update + install current node version
-      alias upnvm='sudo true && ansible-playbook "${HOME}/dev/Ansible/Projects/ansible_workstation/local.yml" -v -k --tags "upnvm"'
+      alias upnvm='${HOME}/.local/bin/ansible_update-by-tag.sh upnvm'
 
 - name: All settings misc - Bashrc - custom alias definitions - 'zoxide' (User, all)
   tags: shellrc
@@ -1004,13 +1004,13 @@
       # execute selected tasks of ansible playbook using 'tags'
       # -------------------------------------------------------
       # - 'shellrc': create / update shell conf (e.g. .bashrc, .zshrc)
-      alias upshellrc='sudo true && ansible-playbook "${HOME}/dev/Ansible/Projects/ansible_workstation/local.yml" -v -k --tags "shellrc"'
+      alias upshellrc='${HOME}/.local/bin/ansible_update-by-tag.sh shellrc'
       # - 'vimrc': create / update vim conf + plugins
-      alias upvimrc='sudo true && ansible-playbook "${HOME}/dev/Ansible/Projects/ansible_workstation/local.yml" -v -k --tags "vimrc"'
+      alias upvimrc='${HOME}/.local/bin/ansible_update-by-tag.sh vimrc'
       # - 'nnnplugs': create / update 'nnn' plugins + xterm conf for nnn-peview-tui
-      alias upnnnplugs='sudo true && ansible-playbook "${HOME}/dev/Ansible/Projects/ansible_workstation/local.yml" -v -k --tags "nnnplugs"'
+      alias upnnnplugs='${HOME}/.local/bin/ansible_update-by-tag.sh nnnplugs'
       # - 'nvm' (node version manager): create / update + install current node version
-      alias upnvm='sudo true && ansible-playbook "${HOME}/dev/Ansible/Projects/ansible_workstation/local.yml" -v -k --tags "upnvm"'
+      alias upnvm='${HOME}/.local/bin/ansible_update-by-tag.sh upnvm'
 
 - name: All settings misc - Zshrc - custom alias definitions - 'zoxide' (User, all)
   tags: shellrc
