@@ -422,7 +422,7 @@
       # -----------------------
       # mount pCloud via rclone
       # -----------------------
-      alias mntpcloud='/home/{{ env_user }}/.local/bin/rclone_pCloud-Mnt.sh'
+      alias pcloudmnt='/home/{{ env_user }}/.local/bin/rclone_pCloud-Mnt.sh'
 
 - name: All settings misc - Bashrc - custom alias definitions - tasks of ansible playbook using 'tags' (User, all)
   tags: shellrc
@@ -974,7 +974,7 @@
       # -----------------------
       # mount pCloud via rclone
       # -----------------------
-      alias mntpcloud='/home/{{ env_user }}/.local/bin/rclone_pCloud-Mnt.sh'
+      alias pcloudmnt='/home/{{ env_user }}/.local/bin/rclone_pCloud-Mnt.sh'
 
 - name: All settings misc - Zshrc - custom alias definitions - tasks of ansible playbook using 'tags' (User, all)
   tags: shellrc
