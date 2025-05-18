@@ -244,6 +244,23 @@
     path: "/usr/local/bin/rollback_eos.sh"
   register: rollback_eos_script
 
+# ##########################################################################
+# ### Script "ansible_update-by-tag.sh"
+# ### executing ansible playbook with "tags" via aliases in .bashrc / .zshrc
+# ##########################################################################
+
+- name: All settings misc - ansible_update-by-tag.sh - copy script to env_users .local/bin (User, all)
+  tags: shellrc
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.copy:
+    src: "files/config_all-settings-misc-ansible_update-by-tag.sh"
+    dest: "/home/{{ env_user }}/.local/bin/ansible_update-by-tag.sh"
+    owner: "{{ env_user }}"
+    group: "{{ env_user }}"
+    mode: '0644'
+    backup: false
+
 # ##########################################
 # ### bashrc - add additional Paths + Config
 # ##########################################
