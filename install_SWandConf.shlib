@@ -551,9 +551,6 @@ install-aur() {
     echo -e "\nInstall various required software packages (bashdb, gtkhash, units) from AUR..."
     paru -S --needed --skipreview bashdb gtkhash units
 
-    echo -e "\nInstall linux steam integration from AUR..."
-    paru -S --needed --skipreview linux-steam-integration
-
     echo -e "\nInstall ulauncher from AUR..."
     paru -S --needed --skipreview ulauncher
     echo -e "\nStart + enable ulauncher.service for '${userid}'..."
