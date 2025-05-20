@@ -411,7 +411,7 @@
       # -----------------------------------
       alias rollback='/usr/bin/rollback_eos.sh'
   when:
-    - not archinstall_autobash.stat.exists # if EndeavourOS
+    - not archinstall_autobash.stat.exists # if not installed via 'archinstall_autoBash'
     - rollback_eos_script.stat.exists # if rollback script exists (EndeavourOS + systemd-boot + snapper/snapper-rollback)
 
 - name: All settings misc - Bashrc - custom alias definitions - snapper snapshot after snapper-rollback (User, all)
@@ -439,7 +439,7 @@
       # -----------------------
       # mount pCloud via rclone
       # -----------------------
-      alias pcloudmnt='/home/{{ env_user }}/.local/bin/rclone_pCloud-Mnt.sh'
+      alias pcloudmnt='${HOME}/.local/bin/rclone_pCloud-Mnt.sh'
 
 - name: All settings misc - Bashrc - custom alias definitions - tasks of ansible playbook using 'tags' (User, all)
   tags: shellrc
@@ -991,7 +991,7 @@
       # -----------------------
       # mount pCloud via rclone
       # -----------------------
-      alias pcloudmnt='/home/{{ env_user }}/.local/bin/rclone_pCloud-Mnt.sh'
+      alias pcloudmnt='${HOME}/.local/bin/rclone_pCloud-Mnt.sh'
 
 - name: All settings misc - Zshrc - custom alias definitions - tasks of ansible playbook using 'tags' (User, all)
   tags: shellrc
