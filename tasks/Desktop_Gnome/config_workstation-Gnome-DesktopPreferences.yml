@@ -109,7 +109,7 @@
 - name: Gnome Desktop - Preferences - Adding favorite apps to dock (Gnome, all)
   # gedit ('org.gnome.gedit.desktop') replaced with Gnome TextEditor
   # nicht installierte Apps werden einfach nicht angezeigt (nach Install schon), d.h. dass hier drin ist kein Problem
-  ansible.builtin.shell: gsettings set org.gnome.shell favorite-apps "['com.belmoussaoui.Authenticator.desktop', 'org.keepassxc.KeePassXC.desktop', 'firefox.desktop', 'firefox-esr.desktop', 'org.mozilla.firefox.desktop', 'one.ablaze.floorp.desktop', 'floorp.desktop', 'org.gnome.Epiphany.desktop', 'brave-browser.desktop', 'com.brave.Browser.desktop', 'chromium.desktop', 'org.chromium.Chromium.desktop', 'com.microsoft.Edge.desktop', 'org.gnome.Evolution.desktop', 'com.gexperts.Tilix.desktop', 'com.mitchellh.ghostty.desktop', 'nemo.desktop', 'org.gnome.TextEditor.desktop', 'libreoffice-startcenter.desktop', 'net.cozic.joplin_desktop.desktop', 'code_code.desktop', 'com.visualstudio.code.desktop', 'dev.zed.Zed.desktop', 'com.vscodium.codium.desktop', 'code-oss.desktop', 'code.desktop', 'pycharm.desktop', 'anki.desktop', 'net.ankiweb.Anki.desktop', 'de.willuhn.Jameica.desktop', 'rhythmbox.desktop', 'org.gnome.Rhythmbox3.desktop', 'de.haeckerfelix.Shortwave.desktop',  'org.kde.kasts.desktop', 'org.signal.Signal.desktop', 'signal-desktop.desktop', 'org.remmina.Remmina.desktop', 'virt-manager.desktop']"
+  ansible.builtin.shell: gsettings set org.gnome.shell favorite-apps "['com.belmoussaoui.Authenticator.desktop', 'org.keepassxc.KeePassXC.desktop', 'firefox.desktop', 'firefox-esr.desktop', 'org.mozilla.firefox.desktop', 'one.ablaze.floorp.desktop', 'floorp.desktop', 'org.gnome.Epiphany.desktop', 'brave-browser.desktop', 'com.brave.Browser.desktop', 'chromium.desktop', 'org.chromium.Chromium.desktop', 'com.microsoft.Edge.desktop', 'org.gnome.Evolution.desktop', 'com.mitchellh.ghostty.desktop', 'nemo.desktop', 'org.gnome.TextEditor.desktop', 'libreoffice-startcenter.desktop', 'net.cozic.joplin_desktop.desktop', 'code_code.desktop', 'com.visualstudio.code.desktop', 'dev.zed.Zed.desktop', 'com.vscodium.codium.desktop', 'code-oss.desktop', 'code.desktop', 'pycharm.desktop', 'anki.desktop', 'net.ankiweb.Anki.desktop', 'de.willuhn.Jameica.desktop', 'rhythmbox.desktop', 'org.gnome.Rhythmbox3.desktop', 'de.haeckerfelix.Shortwave.desktop',  'org.kde.kasts.desktop', 'org.signal.Signal.desktop', 'signal-desktop.desktop', 'org.remmina.Remmina.desktop', 'virt-manager.desktop']"
   when:
     - env_desktop in ["gnome"]
 
@@ -1632,109 +1632,6 @@
     - env_desktop in ["gnome"]
   # - ansible_distribution in ["Debian"]
 
-  # ### tilix (tiling terminal emulator) - profiles and preferences:
-  # ----------------------------------------------------------------
-  # bei EndeavourOS: Solange manche Einstellungen auf default stehen, funktionieren Änderungen nicht
-  # Workaround: manuell Werte in der GUI ändern oder zumindest den "Schieber" bei default deaktivieren und dann ansible playbook nochmal starten
-
-  # - name: Gnome Desktop - Preferences - Gnome Desktop Prefs - tilix terminal - close-with-last-session (Gnome)
-  #   community.general.dconf:
-  #     key: "/com/gexperts/Tilix/close-with-last-session"
-  #     value: "false"
-  #     state: present
-  #   when:
-  #     - env_desktop in ["gnome"]
-
-- name: Gnome Desktop - Preferences - Gnome Desktop Prefs - tilix terminal - close-with-last-session (Gnome)
-  become: true
-  become_user: "{{ env_user }}"
-  ansible.builtin.shell: dconf write "/com/gexperts/Tilix/close-with-last-session" "false"
-  when:
-    - env_desktop in ["gnome"]
-
-# - name: Gnome Desktop - Preferences - Gnome Desktop Prefs - tilix terminal - control-scroll-zoom (Gnome)
-#   community.general.dconf:
-#     key: "/com/gexperts/Tilix/control-scroll-zoom"
-#     value: "true"
-#     state: present
-#   when:
-#     - env_desktop in ["gnome"]
-
-- name: Gnome Desktop - Preferences - Gnome Desktop Prefs - tilix terminal - control-scroll-zoom (Gnome)
-  become: true
-  become_user: "{{ env_user }}"
-  ansible.builtin.shell: dconf write "/com/gexperts/Tilix/control-scroll-zoom" "true"
-  when:
-    - env_desktop in ["gnome"]
-
-- name: Gnome Desktop - Preferences - Gnome Desktop Prefs - tilix terminal - paste-strip-trailing-whitespace (Gnome)
-  become: true
-  become_user: "{{ env_user }}"
-  ansible.builtin.shell: dconf write "/com/gexperts/Tilix/paste-strip-trailing-whitespace" "true"
-  when:
-    - env_desktop in ["gnome"]
-
-# - name: Gnome Desktop - Preferences - Gnome Desktop Prefs - tilix terminal - terminal-title-style (Gnome)
-#   community.general.dconf:
-#     key: "/com/gexperts/Tilix/terminal-title-style"
-#     value: "'small'"
-#     state: present
-#   when:
-#     - env_desktop in ["gnome"]
-
-- name: Gnome Desktop - Preferences - Gnome Desktop Prefs - tilix terminal - terminal-title-style (Gnome)
-  become: true
-  become_user: "{{ env_user }}"
-  ansible.builtin.shell: dconf write "/com/gexperts/Tilix/terminal-title-style" "'small'"
-  when:
-    - env_desktop in ["gnome"]
-
-# - name: Gnome Desktop - Preferences - Gnome Desktop Prefs - tilix terminal - use-overlay-scrollbar (Gnome)
-#   community.general.dconf:
-#     key: "/com/gexperts/Tilix/use-overlay-scrollbar"
-#     value: "true"
-#     state: present
-#   when:
-#     - env_desktop in ["gnome"]
-
-- name: Gnome Desktop - Preferences - Gnome Desktop Prefs - tilix terminal - use-overlay-scrollbar (Gnome)
-  become: true
-  become_user: "{{ env_user }}"
-  ansible.builtin.shell: dconf write "/com/gexperts/Tilix/use-overlay-scrollbar" "true"
-  when:
-    - env_desktop in ["gnome"]
-
-# - name: Gnome Desktop - Preferences - Gnome Desktop Prefs - tilix terminal - use-tabs (Gnome)
-#   community.general.dconf:
-#     key: "/com/gexperts/Tilix/use-tabs"
-#     value: "true"
-#     state: present
-#   when:
-#     - env_desktop in ["gnome"]
-
-- name: Gnome Desktop - Preferences - Gnome Desktop Prefs - tilix terminal - use-tabs (Gnome)
-  become: true
-  become_user: "{{ env_user }}"
-  ansible.builtin.shell: dconf write "/com/gexperts/Tilix/use-tabs" "true"
-  when:
-    - env_desktop in ["gnome"]
-
-- name: Gnome Desktop - Preferences - Gnome Desktop Prefs - Set tilix terminal - profiles and preferences (Gnome)
-  ansible.builtin.script: "tasks/Desktop_Gnome/config_workstation-Gnome-DesktopPreferences-tilix.sh"
-  args:
-    creates: "/home/{{ env_user }}/.ansible_tilixTerminalProfileSet"
-  when:
-    - env_desktop in ["gnome"]
-
-- name: Gnome Desktop - Preferences - Gnome Desktop Prefs - tilix terminal - ProfileSet - create flag - file (Gnome)
-  ansible.builtin.file:
-    path: "/home/{{ env_user }}/.ansible_tilixTerminalProfileSet"
-    state: touch
-    mode: u=rw,g=r,o=r
-    modification_time: preserve
-    access_time: preserve
-  when:
-    - env_desktop in ["gnome"]
 
 # ### gnome shell extensions -  preferences:
 

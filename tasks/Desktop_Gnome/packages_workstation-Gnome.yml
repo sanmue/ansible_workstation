@@ -55,7 +55,6 @@
       # - nemo-terminal
       - orchis-theme
       - pycharm-community-edition
-      - tilix # A tiling terminal emulator for Linux using GTK+ 3
       - transmission-cli
       - transmission-gtk # -> deluge
   when:
