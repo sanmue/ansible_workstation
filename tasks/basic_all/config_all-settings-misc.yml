@@ -441,6 +441,21 @@
       # -----------------------
       alias pcloudmnt='${HOME}/.local/bin/rclone_pCloud-Mnt.sh'
 
+- name: All settings misc - Bashrc - custom alias definitions - pip install requirements.txt (User, all)
+  tags: shellrc
+  ansible.builtin.blockinfile:
+    path: "/home/{{ env_user }}/.bashrc"
+    backup: false
+    marker: "### {mark} 'pip - requirements.txt' - ANSIBLE MANAGED BLOCK ###"
+    block: |
+      # -------------------------------------
+      # pip install requirements.txt (--user)
+      # -------------------------------------
+      # find all python_pip_requirements.txt files in ansible_workstation folders and install them
+      if [[ $(command -v pip) ]]; then
+        alias inpipr='find $HOME -path "$HOME/*/ansible_workstation/*" -type f -name "python_pip_requirements.txt" -exec pip install --user -r {} \;'
+      fi
+
 - name: All settings misc - Bashrc - custom alias definitions - tasks of ansible playbook using 'tags' (User, all)
   tags: shellrc
   ansible.builtin.blockinfile:
@@ -992,6 +1007,21 @@
       # mount pCloud via rclone
       # -----------------------
       alias pcloudmnt='${HOME}/.local/bin/rclone_pCloud-Mnt.sh'
+
+- name: All settings misc - Zshrc - custom alias definitions - pip install requirements.txt (User, all)
+  tags: shellrc
+  ansible.builtin.blockinfile:
+    path: "/home/{{ env_user }}/.zshrc"
+    backup: false
+    marker: "### {mark} 'pip - requirements.txt' - ANSIBLE MANAGED BLOCK ###"
+    block: |
+      # -------------------------------------
+      # pip install requirements.txt (--user)
+      # -------------------------------------
+      # find all python_pip_requirements.txt files in ansible_workstation folders and install them
+      if [[ $(command -v pip) ]]; then
+        alias inpipr='find $HOME -path "$HOME/*/ansible_workstation/*" -type f -name "python_pip_requirements.txt" -exec pip install --user -r {} \;'
+      fi
 
 - name: All settings misc - Zshrc - custom alias definitions - tasks of ansible playbook using 'tags' (User, all)
   tags: shellrc
