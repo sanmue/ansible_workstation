@@ -121,6 +121,34 @@
     group: "{{ env_user }}"
     mode: u=rwx,g=rx,o=rx
 
+# ######
+# ### uv
+# ######
+# + s.u.: hook in .bahsrc + .zshrc
+- name: All settings misc - uv - create config folder (User, all)
+  tags: shellrc
+  ansible.builtin.file:
+    path: "/home/{{ env_user }}/.config/uv"
+    state: directory
+    owner: "{{ env_user }}"
+    group: "{{ env_user }}"
+    mode: "u=rwx,g=rx,o=rx"
+
+# https://docs.astral.sh/uv/reference/settings/#python-downloads
+# - "manual": Do not automatically download managed Python installations; require explicit installation
+# - since still want to use 'pyenv' for python versions
+- name: All settings misc - uv - config (User, all)
+  tags: shellrc
+  ansible.builtin.blockinfile:
+    path: "/home/{{ env_user }}/.config/uv/uv.toml"
+    create: true
+    marker: "### {mark} 'uv config' ANSIBLE MANAGED BLOCK ###"
+    block: |
+      python-downloads = "manual"
+    owner: "{{ env_user }}"
+    group: "{{ env_user }}"
+    mode: u=rwx,g=rx,o=rx
+
 # ##########
 # ### rclone
 # ##########
@@ -486,6 +514,21 @@
         alias inpipr='find $HOME -path "$HOME/*/ansible_workstation/*" -type f -name "python_pip_requirements.txt" -exec pip install --user -r {} \;'
       fi
 
+- name: All settings misc - Bashrc - custom alias definitions - direnv for uv init (User, all)
+  tags: shellrc
+  ansible.builtin.blockinfile:
+    path: "/home/{{ env_user }}/.bashrc"
+    backup: false
+    marker: "### {mark} 'direnv for uv init' - ANSIBLE MANAGED BLOCK ###"
+    block: |
+      # ------------------
+      # direnv for uv init
+      # ------------------
+      # if 'uv' is installed, create a .envrc file containing/adding 'layout uv'
+      if [[ $(command -v uv) ]]; then
+        alias direnvuv='if [[ ! -f .envrc ]]; then touch .envrc; fi && if [[ ! $(grep 'layout uv' .envrc) ]]; then echo "layout uv" >> .envrc; fi'
+      fi
+
 - name: All settings misc - Bashrc - custom alias definitions - tasks of ansible playbook using 'tags' (User, all)
   tags: shellrc
   ansible.builtin.blockinfile:
@@ -629,6 +672,19 @@
       eval "$(pyenv virtualenv-init -)"
   when:
     - ansible_distribution in ["Archlinux"]
+
+- name: All settings misc - Bashrc - Insert/Update additional paths and config - uv (User, all)
+  tags: shellrc
+  ansible.builtin.blockinfile:
+    path: "/home/{{ env_user }}/.bashrc"
+    backup: false
+    marker: "### {mark} 'uv' ANSIBLE MANAGED BLOCK ###"
+    block: |
+      # -------------------------
+      # uv - shell autocompletion
+      # -------------------------
+      eval "$(uv generate-shell-completion bash)"
+      eval "$(uvx --generate-shell-completion bash)"
 
 - name: All settings misc - Bashrc - Insert/Update additional paths and config - zoxide (User, all)
   tags: shellrc
@@ -1053,6 +1109,21 @@
         alias inpipr='find $HOME -path "$HOME/*/ansible_workstation/*" -type f -name "python_pip_requirements.txt" -exec pip install --user -r {} \;'
       fi
 
+- name: All settings misc - Zshrc - custom alias definitions - direnv for uv init (User, all)
+  tags: shellrc
+  ansible.builtin.blockinfile:
+    path: "/home/{{ env_user }}/.zshrc"
+    backup: false
+    marker: "### {mark} 'direnv for uv init' - ANSIBLE MANAGED BLOCK ###"
+    block: |
+      # ------------------
+      # direnv for uv init
+      # ------------------
+      # if 'uv' is installed, create a .envrc file containing/adding 'layout uv'
+      if [[ $(command -v uv) ]]; then
+        alias direnvuv='if [[ ! -f .envrc ]]; then touch .envrc; fi && if [[ ! $(grep 'layout uv' .envrc) ]]; then echo "layout uv" >> .envrc; fi'
+      fi
+
 - name: All settings misc - Zshrc - custom alias definitions - tasks of ansible playbook using 'tags' (User, all)
   tags: shellrc
   ansible.builtin.blockinfile:
@@ -1196,6 +1267,19 @@
       eval "$(pyenv virtualenv-init -)"
   when:
     - ansible_distribution in ["Archlinux"]
+
+- name: All settings misc - Zshrc - Insert/Update additional paths and config - uv (User, all)
+  tags: shellrc
+  ansible.builtin.blockinfile:
+    path: "/home/{{ env_user }}/.zshrc"
+    backup: false
+    marker: "### {mark} 'uv' ANSIBLE MANAGED BLOCK ###"
+    block: |
+      # -------------------------
+      # uv - shell autocompletion
+      # -------------------------
+      eval "$(uv generate-shell-completion zsh)"
+      eval "$(uvx --generate-shell-completion zsh)"
 
 - name: All settings misc - Zshrc - Insert/Update additional paths and config - zoxide (User, all)
   tags: shellrc
