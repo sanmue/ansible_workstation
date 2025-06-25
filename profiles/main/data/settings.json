@@ -23,8 +23,14 @@
     },
     "editor.autoIndent": "advanced"
   },
-  "ansible.python.interpreterPath": "/home/sandro/.pyenv/versions/3.12.7/bin/python",
+  "ansible.python.interpreterPath": "/home/sandro/.pyenv/versions/3.13.4/bin/python",
   "files.autoSave": "onFocusChange",
   "terminal.integrated.scrollback": 10000,
-  "git.statusLimit": 16384
+  "git.statusLimit": 16384,
+  "idf.hasWalkthroughBeenShown": true,
+  "idf.espIdfPath": "/home/sandro/esp/v5.4/esp-idf",
+  "idf.toolsPath": "/home/sandro/.espressif",
+  "idf.gitPath": "git",
+  "idf.pythonInstallPath": "/usr/bin/python",
+  "python.analysis.typeCheckingMode": "standard"
 }
