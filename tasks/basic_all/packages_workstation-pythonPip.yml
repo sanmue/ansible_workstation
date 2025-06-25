@@ -145,18 +145,6 @@
   args:
     creates: "/home/{{ env_user }}/.ansible_PythonPip"
 
-# # WORKAROUND: pipx reinstall_all
-# # installs über pip, die schon als deps bei pipx installiert wurden -> pipx list: (symlink missing or pointing to unexpected location)
-# # TODO: pipx + pip deps checken
-# - name: Python - pipx - WORKAROUND reinstall_all (all)
-#   become: true
-#   become_user: "{{ env_user }}"
-#   community.general.pipx:
-#     state: reinstall_all
-# # Fehlermeldung:
-# # erst nach reboot nach Inst python pip, ...
-# # fatal: [localhost]: FAILED! => {"changed": false, "cmd": "/home/userID/.pyenv/versions/3.12.5/bin/python3.12 -m pipx list --include-injected --json", "msg": "/home/userID/.pyenv/versions/3.12.5/bin/python3.12: No module named pipx", "rc": 1, "stderr": "/home/userID/.pyenv/versions/3.12.5/bin/python3.12: No module named pipx\n", "stderr_lines": ["/home/userID/.pyenv/versions/3.12.5/bin/python3.12: No module named pipx"], "stdout": "", "stdout_lines": []}
-
 - name: Python - pip - set flag file for pip installs (env_user, all)
   become: true
   become_user: "{{ env_user }}"
