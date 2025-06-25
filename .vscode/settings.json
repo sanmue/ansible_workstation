@@ -39,6 +39,9 @@
   },
   "files.associations": {
     "*.yml": "ansible"
-  }
+  },
+  "python-envs.defaultEnvManager": "ms-python.python:pyenv",
+  "python-envs.pythonProjects": [],
+  "ansible.python.interpreterPath": "/bin/python"
 
 }
