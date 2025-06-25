@@ -1,54 +1,59 @@
-# ### vorerst Umstellung pipx -> pip
-# mit deps:
-faker # Ulauncher Extension Requirement faker
-jedi-language-server # autocompletion for python (Anmerkung: 'jedi' installed via pip)
-jupyter # Jupyter metapackage: notebook jupyterlab ipython ipykernel jupyter-console nbconvert ipywidgets
-Pint # Ulauncher Extension Requirement Calculate Anything
-virtualenv-pyenv # A virtualenv Python discovery plugin for pyenv–installed interpreters # installiert 'virtualenv' als dependency
-wrapt_timeout_decorator # Ulauncher Extension Requirement Bluetooth
-# ohne deps:
-deepl
+# ### pip install ... --user
 
-# ### Zugabe
-ansible
+# ### ---
+# ### pip
+pip3-autoremove
 
 # ### --------
 # ### ansible
-ansible-dev-tools
-ansible-compat
+# ansible
+ansible-core
+# ansible-compat # Ansible compatibility library for testing and development / contains functions that facilitate working with various versions of Ansible.
+# ansible-dev-tools # Ansible Developtment Tools kit bundles all tools needed for content creation and testing.
+ansible-navigator # prerquisite: container engine (podman, docker) for execution environment support
+ansible-vault
 
-# ### ----------
-# ### python dev
-autopep8
-beautifulsoup4
-black
-build
-cst-lsp
-debugpy
-flake8
+# ### ------
+# ### python
+# autopep8
+# black # Python formatter # -> ruff
+# build # -> uv
+# cst-lsp
+# debugpy # für VS Code: Python Debugger - Extension ?
+# flake8 #  Python linter # -> ruff
 html5lib
-isort
-jedi
+# isort # -> ruff
+# jedi
+# jedi-language-server # autocompletion for python
+jupyter # Jupyter metapackage: notebook jupyterlab ipython ipykernel jupyter-console nbconvert ipywidgets
 lxml
 pandas[excel,html,sql-other,mysql,output-formatting,performance,plot,xml]
-pipenv
+# pipenv
 psutil
 pyarrow
-pylint
-pylint-venv
-pyright
-pytest
+# pylintq
+# pylint-venv
+# pyright # für VS Code: Pylance - Extension ?
+# pytest # via uv tool ...
 python-lsp-server[all]
-# virtualenvwrapper
+# ruff # Python linter and code formatter # via uv tool ...
+virtualenv-pyenv # A virtualenv Python discovery plugin for pyenv–installed interpreters # installiert 'virtualenv' als dependency
 
 # ### ----------------------
 # ### Ulauncher requirements
 bs4 # This is a dummy package designed to prevent namesquatting on PyPI. You should install beautifulsoup4 instead.
+beautifulsoup4
+deepl # ohne deps
+emoji
+faker # Ulauncher Extension Requirement faker
 lorem
 parsedatetime
+Pint # Ulauncher Extension Requirement Calculate Anything
+pyasyncore
 pydbus
 pytz
 simpleeval
+wrapt_timeout_decorator # Ulauncher Extension Requirement Bluetooth
 
 # ### --------
 # ### ShellGPT
