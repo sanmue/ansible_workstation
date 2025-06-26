@@ -20,7 +20,7 @@ ansible-vault
 # build # -> uv
 # cst-lsp
 # debugpy # für VS Code: Python Debugger - Extension ?
-# flake8 #  Python linter # -> ruff
+flake8 # vim-ale optionally requires flake8: for python support # Python linter # -> ruff
 html5lib
 # isort # -> ruff
 # jedi
