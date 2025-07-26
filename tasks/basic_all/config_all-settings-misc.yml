@@ -114,7 +114,7 @@
           log_status "Updating the project's environment. Executing \`uv sync\`."
           uv sync # also creates/updates .venv + uv.lock, ...
 
-          log_status "Activating virtual environment. Executing \`source .venv/bin/activate\`."
+          log_status "Activating virtual environment by executing \`source .venv/bin/activate\`."
           source .venv/bin/activate
       }
     owner: "{{ env_user }}"
