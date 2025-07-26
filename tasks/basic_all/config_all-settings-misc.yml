@@ -526,7 +526,7 @@
       # ------------------
       # if 'uv' is installed, create a .envrc file containing/adding 'layout uv'
       if [[ $(command -v uv) ]]; then
-        alias direnvuv='if [[ ! -f .envrc ]]; then touch .envrc; fi && if [[ ! $(grep 'layout uv' .envrc) ]]; then echo "layout uv" >> .envrc; fi'
+        alias direnvuv='if [[ ! -f .envrc ]]; then touch .envrc; fi && if [[ ! $(grep '"'"'layout uv'"'"' .envrc) ]]; then echo "layout uv" >> .envrc; fi'
       fi
 
 - name: All settings misc - Bashrc - custom alias definitions - tasks of ansible playbook using 'tags' (User, all)
