@@ -42,6 +42,9 @@
   },
   "python-envs.defaultEnvManager": "ms-python.python:pyenv",
   "python-envs.pythonProjects": [],
-  "ansible.python.interpreterPath": "/home/sandro/.pyenv/versions/3.13.5/bin/python"
+  "ansible.python.interpreterPath": "",
+  "ansible.ansible.path": "/home/sandro/.pyenv/shims/ansible-lint",
+  "ansible.ansibleNavigator.path": "/home/sandro/.local/bin/ansible-navigator",
+  "ansible.validation.lint.path": "/home/sandro/.local/bin/ansible-lint"
 
 }

@@ -107,9 +107,9 @@
 # #################
 
 - name: Gnome Desktop - Preferences - Adding favorite apps to dock (Gnome, all)
+  # nicht installierte Apps werden einfach nicht angezeigt (nach Installation schon), d.h. dass hier drin ist kein Problem
   # gedit ('org.gnome.gedit.desktop') replaced with Gnome TextEditor
-  # nicht installierte Apps werden einfach nicht angezeigt (nach Install schon), d.h. dass hier drin ist kein Problem
-  ansible.builtin.shell: gsettings set org.gnome.shell favorite-apps "['com.belmoussaoui.Authenticator.desktop', 'org.keepassxc.KeePassXC.desktop', 'firefox.desktop', 'firefox-esr.desktop', 'org.mozilla.firefox.desktop', 'one.ablaze.floorp.desktop', 'floorp.desktop', 'org.gnome.Epiphany.desktop', 'brave-browser.desktop', 'com.brave.Browser.desktop', 'chromium.desktop', 'org.chromium.Chromium.desktop', 'com.microsoft.Edge.desktop', 'org.gnome.Evolution.desktop', 'com.mitchellh.ghostty.desktop', 'nemo.desktop', 'org.gnome.TextEditor.desktop', 'libreoffice-startcenter.desktop', 'net.cozic.joplin_desktop.desktop', 'code_code.desktop', 'com.visualstudio.code.desktop', 'dev.zed.Zed.desktop', 'com.vscodium.codium.desktop', 'code-oss.desktop', 'code.desktop', 'pycharm.desktop', 'anki.desktop', 'net.ankiweb.Anki.desktop', 'de.willuhn.Jameica.desktop', 'rhythmbox.desktop', 'org.gnome.Rhythmbox3.desktop', 'de.haeckerfelix.Shortwave.desktop',  'org.kde.kasts.desktop', 'org.signal.Signal.desktop', 'signal-desktop.desktop', 'org.remmina.Remmina.desktop', 'virt-manager.desktop']"
+  ansible.builtin.shell: gsettings set org.gnome.shell favorite-apps "['com.belmoussaoui.Authenticator.desktop', 'org.keepassxc.KeePassXC.desktop', 'firefox.desktop', 'firefox-esr.desktop', 'org.mozilla.firefox.desktop', 'one.ablaze.floorp.desktop', 'floorp.desktop', 'org.gnome.Epiphany.desktop', 'brave-browser.desktop', 'com.brave.Browser.desktop', 'chromium.desktop', 'org.chromium.Chromium.desktop', 'com.microsoft.Edge.desktop', 'org.gnome.Evolution.desktop', 'org.gnome.Ptyxis.desktop', 'com.mitchellh.ghostty.desktop', 'nemo.desktop', 'org.gnome.TextEditor.desktop', 'libreoffice-startcenter.desktop', 'net.cozic.joplin_desktop.desktop', 'com.visualstudio.code.desktop', 'dev.zed.Zed.desktop', 'pycharm.desktop', 'anki.desktop', 'net.ankiweb.Anki.desktop', 'de.willuhn.Jameica.desktop', 'rhythmbox.desktop', 'org.gnome.Rhythmbox3.desktop', 'de.haeckerfelix.Shortwave.desktop',  'org.kde.kasts.desktop', 'org.signal.Signal.desktop', 'signal-desktop.desktop', 'org.remmina.Remmina.desktop', 'virt-manager.desktop']"
   when:
     - env_desktop in ["gnome"]
 
@@ -1616,10 +1616,10 @@
     creates: "/home/{{ env_user }}/.ansible_TerminalProfileSet"
   when:
     - env_desktop in ["gnome"]
+    - ansible_distribution in ["Debian"] # ansible_distribution == "Debian"
   # #    - "ansible_version.major is version('2', '=')"
   # #    - "ansible_version.minor is version('9', '<=')"
   # - "ansible_version.full is version('2.10.0', '>=')"
-  # - ansible_distribution in ["Debian"]
 
 - name: Gnome Desktop - Preferences - Create flag - file .ansible_TerminalProfileSet (Gnome)
   ansible.builtin.file:
@@ -1630,8 +1630,58 @@
     access_time: preserve
   when:
     - env_desktop in ["gnome"]
-  # - ansible_distribution in ["Debian"]
+    - ansible_distribution in ["Debian"]
 
+# ### gnome - Ptyxis terminal - profiles and preferences:
+
+- name: Gnome Desktop - Preferences - Set Ptyxis terminal preferences - use-system-font (Gnome)
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.shell: dconf write "/org/gnome/Ptyxis/use-system-font" "false"
+  when:
+    - env_desktop in ["gnome"]
+    - ansible_distribution in ["Archlinux"]
+
+- name: Gnome Desktop - Preferences - Set Ptyxis terminal preferences - font-name (Gnome)
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.shell: dconf write "/org/gnome/Ptyxis/font-name" "'JetBrainsMonoNL Nerd Font 13'"
+  when:
+    - env_desktop in ["gnome"]
+    - ansible_distribution in ["Archlinux"]
+
+- name: Gnome Desktop - Preferences - Set Ptyxis terminal preferences - restore-window-size (Gnome)
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.shell: dconf write "/org/gnome/Ptyxis/restore-window-size" "false"
+  when:
+    - env_desktop in ["gnome"]
+    - ansible_distribution in ["Archlinux"]
+
+- name: Gnome Desktop - Preferences - Set Ptyxis terminal preferences - default-columns (Gnome)
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.shell: dconf write "/org/gnome/Ptyxis/default-columns" "110"
+  when:
+    - env_desktop in ["gnome"]
+    - ansible_distribution in ["Archlinux"]
+
+- name: Gnome Desktop - Preferences - Set Ptyxis terminal preferences - default-rows (Gnome)
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.shell: dconf write "/org/gnome/Ptyxis/default-rows" "32"
+  when:
+    - env_desktop in ["gnome"]
+    - ansible_distribution in ["Archlinux"]
+
+- name: Gnome Desktop - Preferences - Set Ptyxis terminal preferences - primary-menu (Gnome)
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.shell: dconf write "/org/gnome/Ptyxis/Shortcuts/primary-menu" "''"
+  # deactivatet (F10) because of conflict with keybinding of 'htop' (F10 = quit htop)
+  when:
+    - env_desktop in ["gnome"]
+    - ansible_distribution in ["Archlinux"]
 
 # ### gnome shell extensions -  preferences:
 
