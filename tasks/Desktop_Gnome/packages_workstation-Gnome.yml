@@ -10,6 +10,7 @@
     name:
       - alacarte # Menu editor for gnome
       - baobab # A graphical directory tree analyzer
+      - celluloid # Simple GTK+ frontend for mpv # iptv
       - dconf-editor
       - file-roller # Create and modify archives
       - gedit
