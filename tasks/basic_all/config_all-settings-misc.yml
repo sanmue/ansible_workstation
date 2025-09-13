@@ -252,17 +252,19 @@
       scrollback-limit = 8192
 
       # ### Font ###
-      font-family = FiraCode Nerd Font Ret
+      font-family = JetBrainsMonoNL Nerd Font
+      #font-family = FiraCode Nerd Font Ret
       #font-family = JetBrainsMonoNL NFP Medium
       font-size = 13
 
       # ### Theme, colors ###
-      theme = MaterialOcean
-      #theme = flexoki-dark
-      #theme = GitHub Dark
-      background = #191919
+      theme = Adwaita Dark
+      #theme = midnight-in-mojave
+      #theme = PaulMillr
+      #theme = Seti
+      #background = #191919
       #background = #202020
-      cursor-color = #c2c2c2
+      #cursor-color = #c2c2c2
       #cursor-color = #87c7ff
       selection-invert-fg-bg = true
       #selection-background = #87c7ff
