@@ -1960,7 +1960,6 @@
     - { path: "https://github.com/noam09/ulauncher-remmina.git", name: "ulauncher-remmina" }
     - { path: "https://github.com/lighttigerXIV/ulauncher-session-manager.git", name: "ulauncher-session-manager" }
     - { path: "https://github.com/xRealNeon/SpritpreiseUlauncher.git", name: "SpritpreiseUlauncher" }
-    - { path: "https://github.com/jyvern/ulauncher-ssh.git", name: "ulauncher-ssh" }
     - { path: "https://github.com/rootwork/ulauncher-symbol.git", name: "ulauncher-symbol" }
     - { path: "https://github.com/lighttigerXIV/ulauncher-terminal-runner-extension.git", name: "ulauncher-terminal-runner-extension" }
     - { path: "https://github.com/Ulauncher/ulauncher-timer.git", name: "ulauncher-timer" }
