@@ -639,9 +639,11 @@
       # pyenv
       # -----
       # https://ostechnix.com/pyenv-python-version-management-made-easier/
+      # https://github.com/pyenv/pyenv?tab=readme-ov-file#b-set-up-your-shell-environment-for-pyenv
       #
-      export PATH="$HOME/.pyenv/bin:$PATH"
-      eval "$(pyenv init -)"
+      export PYENV_ROOT="$HOME/.pyenv"
+      [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+      eval "$(pyenv init - bash)"
       eval "$(pyenv virtualenv-init -)"
   when:
     - ansible_distribution in ["Debian"]
@@ -669,8 +671,8 @@
       # pyenv
       # -----
       export PYENV_ROOT="$HOME/.pyenv"
-      command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
-      eval "$(pyenv init -)"
+      [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+      eval "$(pyenv init - bash)"
       eval "$(pyenv virtualenv-init -)"
   when:
     - ansible_distribution in ["Archlinux"]
@@ -1235,9 +1237,11 @@
       # pyenv
       # -----
       # https://ostechnix.com/pyenv-python-version-management-made-easier/
+      # https://github.com/pyenv/pyenv?tab=readme-ov-file#b-set-up-your-shell-environment-for-pyenv
       #
-      export PATH="$HOME/.pyenv/bin:$PATH"
-      eval "$(pyenv init -)"
+      export PYENV_ROOT="$HOME/.pyenv"
+      [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+      eval "$(pyenv init - zsh)"
       eval "$(pyenv virtualenv-init -)"
   when:
     - ansible_distribution in ["Debian"]
@@ -1265,8 +1269,8 @@
       # pyenv
       # -----
       export PYENV_ROOT="$HOME/.pyenv"
-      command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
-      eval "$(pyenv init -)"
+      [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+      eval "$(pyenv init - zsh)"
       eval "$(pyenv virtualenv-init -)"
   when:
     - ansible_distribution in ["Archlinux"]
