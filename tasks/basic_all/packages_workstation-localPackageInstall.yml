@@ -195,7 +195,7 @@
     group: "{{ env_user }}"
     mode: "0755"
 
-- name: Local packages install - starship shell prompt (env_user) - check installation status (all)
+- name: Local packages install - starship shell prompt - check installation status (all)
   ansible.builtin.stat:
     path: /usr/local/bin/starship
   register: starshipbin
@@ -206,9 +206,9 @@
     state: directory
     mode: "0755"
 
-- name: Local packages install - starship shell prompt (env_user) - execute install script (all)
+- name: Local packages install - starship shell prompt - execute install script (all)
   become: true
-  become_user: "{{ env_user }}"
+  # become_user: "{{ env_user }}" # install nach /usr/local/bin, daher nicht als env_user ausführen
   ansible.builtin.shell: "/home/{{ env_user }}/starship_install.sh --yes"
   when:
     - not starshipbin.stat.exists
