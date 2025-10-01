@@ -18,7 +18,7 @@ ansible-vault
 # autopep8
 # black # Python formatter # -> ruff
 # build # -> uv
-# cst-lsp
+cst-lsp # für zed-python-refactoring
 # debugpy # für VS Code: Python Debugger - Extension ?
 flake8 # vim-ale optionally requires flake8: for python support # Python linter # -> ruff
 html5lib
@@ -37,6 +37,8 @@ pyarrow
 # pytest # via uv tool ...
 python-lsp-server[all]
 # ruff # Python linter and code formatter # via uv tool ...
+tree-sitter-bash # Bash for Zed
+tree-sitter-dockerfile # Dockerfile Zed Extension
 virtualenv-pyenv # A virtualenv Python discovery plugin for pyenv–installed interpreters # installiert 'virtualenv' als dependency
 
 # ### ----------------------

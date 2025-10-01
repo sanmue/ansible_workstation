@@ -583,6 +583,9 @@ install-aur() {
     echo -e "\nInstall espanso (wayland) from AUR (will takes some time)..."
     paru -S --needed --skipreview espanso-wayland   # espanso-gui
 
+    echo -e "\nInstall espanso (wayland) from AUR (will takes some time)..."
+    paru -S --needed --skipreview helm-ls # helm.zed # Syntax highlighting for Helm templates using tree-sitter and integration of helm-ls
+
     # echo -e "\nInstall several Applications (Vorta) from AUR..."
     # paru -S --needed --skipreview vorta joplin-desktop # -> change: flatpak
 
