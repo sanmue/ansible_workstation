@@ -23,7 +23,6 @@
     },
     "editor.autoIndent": "advanced"
   },
-  "ansible.python.interpreterPath": "/home/sandro/.pyenv/versions/3.13.4/bin/python",
   "files.autoSave": "onFocusChange",
   "terminal.integrated.scrollback": 10000,
   "git.statusLimit": 16384,
@@ -32,5 +31,11 @@
   "idf.toolsPath": "/home/sandro/.espressif",
   "idf.gitPath": "git",
   "idf.pythonInstallPath": "/usr/bin/python",
-  "python.analysis.typeCheckingMode": "standard"
+  "python.analysis.typeCheckingMode": "standard",
+  "ruff.format.preview": false,
+  "ruff.lineLength": 120,
+  "ruff.path": [
+    "/home/sandro/.local/share/uv/tools/ruff/bin"
+  ],
+  "syncSettings.additionalFiles": []
 }

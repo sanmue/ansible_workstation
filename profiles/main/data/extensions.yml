@@ -26,6 +26,8 @@ enabled:
     uuid: 4b41a5a8-170e-4156-b2c0-10efb270abbc
   - id: buianhthang.xml2json
     uuid: b7e84ad6-5e59-4743-ba0d-a3b27322b648
+  - id: charliermarsh.ruff
+    uuid: c2ca9b43-fa38-44fc-928e-5125970b9c00
   - id: DavidAnson.vscode-markdownlint
     uuid: daf8b44d-8aae-4da2-80c5-1f770219f643
   - id: deerawan.vscode-faker
@@ -54,6 +56,8 @@ enabled:
     uuid: 4a23294b-fd16-4c51-9759-da9936474cf8
   - id: hilleer.yaml-plus-json
     uuid: a5c960d9-3d35-4b3f-9d53-bafe782ddf1a
+  - id: jannchie.ruff-ignore-explainer
+    uuid: 5e865118-a78a-4968-bae4-2433b1190e7d
   - id: jeff-hykin.better-shellscript-syntax
     uuid: f27ad139-0ff0-4fea-a7c3-d1af80eed6ae
   - id: johnpapa.vscode-peacock
@@ -78,6 +82,8 @@ enabled:
     uuid: 4837e4f3-1b01-4732-b1a6-daa57ef64cab
   - id: ms-python.debugpy
     uuid: 4bd5d2c9-9d65-401a-b0b2-7498d9f17615
+  - id: ms-python.isort
+    uuid: 4ad0ce32-ff3f-49f0-83b5-93e5dc00cfff
   - id: ms-python.python
     uuid: f1f59ae4-9318-4f3c-a9b5-81b2eaa5f8a5
   - id: ms-python.vscode-pylance
@@ -132,6 +138,8 @@ enabled:
     uuid: 3b1db1fc-c7f7-4bd6-9fa4-b499dfa99a8a
   - id: tamasfe.even-better-toml
     uuid: b2215d5f-675e-4a2b-b6ac-1ca737518b78
+  - id: the0807.uv-toolkit
+    uuid: 7b7098a4-0ab4-4a5e-8c6e-b34ad92867e0
   - id: timonwong.shellcheck
     uuid: f95d8fff-f70a-4ae5-bb06-5c47ddbc8fc6
   - id: TylerLeonhardt.vscode-inline-values-powershell
