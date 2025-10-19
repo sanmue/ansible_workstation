@@ -34,8 +34,5 @@
   "python.analysis.typeCheckingMode": "standard",
   "ruff.format.preview": false,
   "ruff.lineLength": 120,
-  "ruff.path": [
-    "/home/sandro/.local/share/uv/tools/ruff/bin"
-  ],
   "syncSettings.additionalFiles": []
 }
