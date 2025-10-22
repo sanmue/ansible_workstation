@@ -33,4 +33,4 @@ else
 fi
 
 # sudo in advance, only if systemwide conf/cmd required
-sudo true && ansible-playbook "${repo_path}/local.yml" -v -k --tags "${tag}"
+sudo true && ansible-playbook "${repo_path}/local.yml" -v -K --tags "${tag}"
