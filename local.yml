@@ -1,16 +1,4 @@
 ---
-# run first: tasks/basic_all/ScriptsExtern/install_SWandConf.sh
-
-# ### -----------
-# TAGS - Overview
-#
-# - 'always' (Special tag / reserved name): Gather Facts and Variables
-# - 'nnnplugs' create / update 'nnn' plugins + xterm conf for nnn-peview-tui
-# - 'shellrc': create / update shell conf (e.g. .bashrc, .zshrc) + 'Starship' cross shell prompt + direnv
-# - 'upnvm' create / update 'nvm' + 'node'
-# - 'vimrc': create / update vim conf + plugins
-#
-# ### -----------
 
 - name: Gather Facts and set Variables
   tags: always
