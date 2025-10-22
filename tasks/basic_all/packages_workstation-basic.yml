@@ -42,7 +42,6 @@
       - gimp
       # - gimp-help-en
       - git # bereits installiert (bootstrap)
-      - gpick
       - grsync
       - gzip
       - hplip # Drivers for HP DeskJet, OfficeJet, Photosmart, Business Inkjet and some LaserJet

@@ -16,7 +16,6 @@
       - gnome-maps
       - gnome-klotski
       - gnome-todo
-      - gpick
       - hitori
   when:
     - env_desktop in ["gnome"]
