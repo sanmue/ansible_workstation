@@ -501,19 +501,20 @@
       # -----------------------
       alias pcloudmnt='${HOME}/.local/bin/rclone_pCloud-Mnt.sh'
 
-- name: All settings misc - Bashrc - custom alias definitions - pip install requirements.txt (User, all)
+- name: All settings misc - Bashrc - custom alias definitions - pip install or upgrade modules in requirements.txt (User, all)
   tags: shellrc
   ansible.builtin.blockinfile:
     path: "/home/{{ env_user }}/.bashrc"
     backup: false
     marker: "### {mark} 'pip - requirements.txt' - ANSIBLE MANAGED BLOCK ###"
     block: |
-      # -------------------------------------
-      # pip install requirements.txt (--user)
-      # -------------------------------------
-      # find all python_pip_requirements.txt files in ansible_workstation folders and install them
+      # -------------------------------------------------------------------------
+      # pip install/upgrade modules in requirements.txt requirements.txt (--user)
+      # -------------------------------------------------------------------------
+      # find all python_pip_requirements.txt files in ansible_workstation folders and install or upgrade them
       if [[ $(command -v pip) ]]; then
         alias inpipr='find $HOME -path "$HOME/*/ansible_workstation/*" -type f -name "python_pip_requirements.txt" -exec pip install --user -r {} \;'
+        alias uppipr='find $HOME -path "$HOME/*/ansible_workstation/*" -type f -name "python_pip_requirements.txt" -exec pip install --upgrade --user -r {} \;'
       fi
 
 - name: All settings misc - Bashrc - custom alias definitions - direnv for uv init (User, all)
@@ -1098,19 +1099,20 @@
       # -----------------------
       alias pcloudmnt='${HOME}/.local/bin/rclone_pCloud-Mnt.sh'
 
-- name: All settings misc - Zshrc - custom alias definitions - pip install requirements.txt (User, all)
+- name: All settings misc - Zshrc - custom alias definitions - pip install or upgrade modules in requirements.txt (User, all)
   tags: shellrc
   ansible.builtin.blockinfile:
     path: "/home/{{ env_user }}/.zshrc"
     backup: false
     marker: "### {mark} 'pip - requirements.txt' - ANSIBLE MANAGED BLOCK ###"
     block: |
-      # -------------------------------------
-      # pip install requirements.txt (--user)
-      # -------------------------------------
-      # find all python_pip_requirements.txt files in ansible_workstation folders and install them
+      # -------------------------------------------------------------------------
+      # pip install/upgrade modules in requirements.txt requirements.txt (--user)
+      # -------------------------------------------------------------------------
+      # find all python_pip_requirements.txt files in ansible_workstation folders and install or upgrade them
       if [[ $(command -v pip) ]]; then
         alias inpipr='find $HOME -path "$HOME/*/ansible_workstation/*" -type f -name "python_pip_requirements.txt" -exec pip install --user -r {} \;'
+        alias uppipr='find $HOME -path "$HOME/*/ansible_workstation/*" -type f -name "python_pip_requirements.txt" -exec pip install --upgrade --user -r {} \;'
       fi
 
 - name: All settings misc - Zshrc - custom alias definitions - direnv for uv init (User, all)
