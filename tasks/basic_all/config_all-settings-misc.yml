@@ -1738,6 +1738,29 @@
       " nmap <Leader>p :normal [c<CR>
       " #
 
+- name: All settings misc - Set vim config - root (all)
+  tags: vimrc
+  become: true
+  ansible.builtin.blockinfile:
+    # path: "/root/.vimrc"
+    path: "{{ ansible_env.HOME }}/.vimrc"
+    backup: true
+    create: true
+    mode: "0644"
+    marker: '" ### {mark} ANSIBLE MANAGED BLOCK ###'
+    block: |
+      " #
+      " shortcuts for vimdiff navigation
+      " next diff:
+      nmap <F2> ]c
+      " previous diff:
+      nmap <F3> [c
+      " alternative ('n' already used for 'nnn'):
+      " let mapleader = ","
+      " nmap <Leader>c :normal ]c<CR>
+      " nmap <Leader>p :normal [c<CR>
+      " #
+
 # ---------------
 # ### VIM plugins
 #
