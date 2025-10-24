@@ -4,7 +4,7 @@
   <description>BIOS, no encryption, with ssh</description>
   <metadata>
     <libosinfo:libosinfo xmlns:libosinfo="http://libosinfo.org/xmlns/libvirt/domain/1.0">
-      <libosinfo:os id="http://debian.org/debian/12"/>
+      <libosinfo:os id="http://debian.org/debian/13"/>
     </libosinfo:libosinfo>
   </metadata>
   <memory unit='KiB'>8388608</memory>

@@ -1,7 +1,7 @@
 <domain type='kvm'>
   <name>ubuntuSvr</name>
   <uuid>97443205-810f-46bb-abfa-9df9e74ff2d1</uuid>
-  <description>24.04 min</description>
+  <description>24.04 minimized</description>
   <metadata>
     <libosinfo:libosinfo xmlns:libosinfo="http://libosinfo.org/xmlns/libvirt/domain/1.0">
       <libosinfo:os id="http://ubuntu.com/ubuntu/24.04"/>

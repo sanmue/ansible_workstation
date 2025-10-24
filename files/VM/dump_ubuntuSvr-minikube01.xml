@@ -1,6 +1,10 @@
 <domain type='kvm'>
   <name>ubuntuSvr-minikube01</name>
   <uuid>1ee75a71-5b98-427e-9d64-b5e8021110fa</uuid>
+  <description>docker, minicube + kubectl, helm
+vim, rsync
+shell config: alias kubectl=&quot;minikube kubectl --
+minikube start --kubernetes-version=latest --nodes 3</description>
   <metadata>
     <libosinfo:libosinfo xmlns:libosinfo="http://libosinfo.org/xmlns/libvirt/domain/1.0">
       <libosinfo:os id="http://ubuntu.com/ubuntu/24.04"/>
@@ -35,7 +39,7 @@
     <emulator>/usr/bin/qemu-system-x86_64</emulator>
     <disk type='file' device='disk'>
       <driver name='qemu' type='qcow2' discard='unmap'/>
-      <source file='/run/media/sandro/1TB-M2NVME/01_VM/images/ubuntuSvr-minikube01.qcow2'/>
+      <source file='/run/media/sandro/1TB-M2NVME/01_VM/images/ubuntuSvr-minikube01.20251021_0859'/>
       <target dev='vda' bus='virtio'/>
       <address type='pci' domain='0x0000' bus='0x04' slot='0x00' function='0x0'/>
     </disk>

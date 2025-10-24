@@ -4,7 +4,7 @@
   <description>192.168.100.10, LAMP, Nextcloud</description>
   <metadata>
     <libosinfo:libosinfo xmlns:libosinfo="http://libosinfo.org/xmlns/libvirt/domain/1.0">
-      <libosinfo:os id="http://debian.org/debian/12"/>
+      <libosinfo:os id="http://debian.org/debian/13"/>
     </libosinfo:libosinfo>
   </metadata>
   <memory unit='KiB'>2097152</memory>
@@ -36,7 +36,7 @@
     <emulator>/usr/bin/qemu-system-x86_64</emulator>
     <disk type='file' device='disk'>
       <driver name='qemu' type='qcow2' discard='unmap'/>
-      <source file='/run/media/sandro/1TB-M2NVME/01_VM/images/debianSvr-01.qcow2'/>
+      <source file='/run/media/sandro/1TB-M2NVME/01_VM/images/debianSvr-01.20251021_0834'/>
       <target dev='vda' bus='virtio'/>
       <address type='pci' domain='0x0000' bus='0x05' slot='0x00' function='0x0'/>
     </disk>
@@ -130,6 +130,7 @@
       <mac address='52:54:00:1b:02:c9'/>
       <source network='Lab-Linux-isolated'/>
       <model type='virtio'/>
+      <link state='up'/>
       <address type='pci' domain='0x0000' bus='0x01' slot='0x00' function='0x0'/>
     </interface>
     <serial type='pty'>

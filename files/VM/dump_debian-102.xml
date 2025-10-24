@@ -4,7 +4,7 @@
   <description>Network &quot;Lab-Linux-isolated&quot;: 192.168.100.21</description>
   <metadata>
     <libosinfo:libosinfo xmlns:libosinfo="http://libosinfo.org/xmlns/libvirt/domain/1.0">
-      <libosinfo:os id="http://debian.org/debian/12"/>
+      <libosinfo:os id="http://debian.org/debian/13"/>
     </libosinfo:libosinfo>
   </metadata>
   <memory unit='KiB'>2097152</memory>
@@ -36,7 +36,7 @@
     <emulator>/usr/bin/qemu-system-x86_64</emulator>
     <disk type='file' device='disk'>
       <driver name='qemu' type='qcow2' discard='unmap'/>
-      <source file='/run/media/sandro/1TB-M2NVME/01_VM/images/debian-102.qcow2'/>
+      <source file='/run/media/sandro/1TB-M2NVME/01_VM/images/debian-102.20250913_2037'/>
       <target dev='vda' bus='virtio'/>
       <address type='pci' domain='0x0000' bus='0x05' slot='0x00' function='0x0'/>
     </disk>

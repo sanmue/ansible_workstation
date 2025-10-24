@@ -35,7 +35,7 @@
     <emulator>/usr/bin/qemu-system-x86_64</emulator>
     <disk type='file' device='disk'>
       <driver name='qemu' type='qcow2'/>
-      <source file='/run/media/sandro/1TB-M2NVME/01_VM/images/rocky-110.qcow2'/>
+      <source file='/run/media/sandro/1TB-M2NVME/01_VM/images/rocky-110.20251021_0844'/>
       <target dev='vda' bus='virtio'/>
       <boot order='1'/>
       <address type='pci' domain='0x0000' bus='0x04' slot='0x00' function='0x0'/>
@@ -95,6 +95,7 @@
       <mac address='52:54:00:8e:c1:57'/>
       <source network='Lab-Linux-isolated'/>
       <model type='virtio'/>
+      <link state='up'/>
       <address type='pci' domain='0x0000' bus='0x01' slot='0x00' function='0x0'/>
     </interface>
     <interface type='network'>

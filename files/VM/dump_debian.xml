@@ -1,9 +1,10 @@
 <domain type='kvm'>
   <name>debian</name>
   <uuid>cbd59820-29ed-46b1-b375-25b1dd55bf89</uuid>
+  <description>incl. cockpit</description>
   <metadata>
     <libosinfo:libosinfo xmlns:libosinfo="http://libosinfo.org/xmlns/libvirt/domain/1.0">
-      <libosinfo:os id="http://debian.org/debian/12"/>
+      <libosinfo:os id="http://debian.org/debian/13"/>
     </libosinfo:libosinfo>
   </metadata>
   <memory unit='KiB'>2097152</memory>
@@ -129,12 +130,14 @@
       <mac address='52:54:00:6b:06:a0'/>
       <source network='default'/>
       <model type='virtio'/>
+      <link state='up'/>
       <address type='pci' domain='0x0000' bus='0x01' slot='0x00' function='0x0'/>
     </interface>
     <interface type='network'>
       <mac address='52:54:00:83:fd:b8'/>
       <source network='Lab-Linux-isolated'/>
       <model type='virtio'/>
+      <link state='down'/>
       <address type='pci' domain='0x0000' bus='0x02' slot='0x00' function='0x0'/>
     </interface>
     <serial type='pty'>

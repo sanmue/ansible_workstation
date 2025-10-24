@@ -1,0 +1,8 @@
+<network>
+  <name>Lab-DDI-01-isolated</name>
+  <uuid>9018d737-0987-47d3-abff-9d109df499bd</uuid>
+  <bridge name='virbr4' stp='on' delay='0'/>
+  <mac address='52:54:00:50:30:af'/>
+  <domain name='LAB-DDI-isolated'/>
+</network>
+

@@ -1,9 +1,11 @@
 <domain type='kvm'>
   <name>debianGUI-01</name>
   <uuid>b22277d0-e609-47bd-9558-dd65589a9025</uuid>
+  <description>cockpit
+firewall config</description>
   <metadata>
     <libosinfo:libosinfo xmlns:libosinfo="http://libosinfo.org/xmlns/libvirt/domain/1.0">
-      <libosinfo:os id="http://debian.org/debian/12"/>
+      <libosinfo:os id="http://debian.org/debian/13"/>
     </libosinfo:libosinfo>
   </metadata>
   <memory unit='KiB'>8388608</memory>
@@ -35,7 +37,7 @@
     <emulator>/usr/bin/qemu-system-x86_64</emulator>
     <disk type='file' device='disk'>
       <driver name='qemu' type='qcow2' discard='unmap'/>
-      <source file='/run/media/sandro/1TB-M2NVME/01_VM/images/debianGUI-01.qcow2'/>
+      <source file='/run/media/sandro/1TB-M2NVME/01_VM/images/debianGUI-01.20251021_0827'/>
       <target dev='vda' bus='virtio'/>
       <address type='pci' domain='0x0000' bus='0x05' slot='0x00' function='0x0'/>
     </disk>
@@ -136,6 +138,7 @@
       <mac address='52:54:00:20:03:27'/>
       <source network='default'/>
       <model type='virtio'/>
+      <link state='up'/>
       <address type='pci' domain='0x0000' bus='0x02' slot='0x00' function='0x0'/>
     </interface>
     <serial type='pty'>

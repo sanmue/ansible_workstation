@@ -1,6 +1,13 @@
 <domain type='kvm'>
   <name>ubuntuSvr-ansible01</name>
   <uuid>cb1e60af-3786-4e9f-90d9-73027ce8110e</uuid>
+  <description>inkl. Workshop environment
+
+python3-pip, ansible-core (pip --user), 
+ssh_config (/etc/ssh/ssh_config)
+ssh-key cc-gitlab + ssh-copy-id LinuxLab
+ansible_basics_ccie.git
+vim config + Plugin ALE</description>
   <metadata>
     <libosinfo:libosinfo xmlns:libosinfo="http://libosinfo.org/xmlns/libvirt/domain/1.0">
       <libosinfo:os id="http://ubuntu.com/ubuntu/22.04"/>
@@ -35,7 +42,7 @@
     <emulator>/usr/bin/qemu-system-x86_64</emulator>
     <disk type='file' device='disk'>
       <driver name='qemu' type='qcow2' discard='unmap'/>
-      <source file='/run/media/sandro/1TB-M2NVME/01_VM/images/ubuntuSvr-ansible01.qcow2'/>
+      <source file='/run/media/sandro/1TB-M2NVME/01_VM/images/ubuntuSvr-ansible01.20251021_0854'/>
       <target dev='vda' bus='virtio'/>
       <address type='pci' domain='0x0000' bus='0x04' slot='0x00' function='0x0'/>
     </disk>

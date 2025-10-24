@@ -6,8 +6,8 @@
       <libosinfo:os id="http://freebsd.org/freebsd/13.1"/>
     </libosinfo:libosinfo>
   </metadata>
-  <memory unit='KiB'>4194304</memory>
-  <currentMemory unit='KiB'>4194304</currentMemory>
+  <memory unit='KiB'>6270976</memory>
+  <currentMemory unit='KiB'>6270976</currentMemory>
   <vcpu placement='static'>2</vcpu>
   <os>
     <type arch='x86_64' machine='pc-i440fx-8.0'>hvm</type>
@@ -34,7 +34,7 @@
     <emulator>/usr/bin/qemu-system-x86_64</emulator>
     <disk type='file' device='disk'>
       <driver name='qemu' type='qcow2' discard='unmap'/>
-      <source file='/run/media/sandro/1TB-M2NVME/01_VM/images/OPNsense-01.qcow2'/>
+      <source file='/run/media/sandro/1TB-M2NVME/01_VM/images/OPNsense-01.20250919_2244'/>
       <target dev='vda' bus='virtio'/>
       <boot order='1'/>
       <address type='pci' domain='0x0000' bus='0x00' slot='0x07' function='0x0'/>

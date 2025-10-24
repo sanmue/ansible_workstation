@@ -3,10 +3,10 @@
   <uuid>c08e9917-f09e-4f96-89b8-1362fa6d0d43</uuid>
   <description>Anaconda
 $ anaconda-navigator
-$ conda xxx</description>
+$ conda init</description>
   <metadata>
     <libosinfo:libosinfo xmlns:libosinfo="http://libosinfo.org/xmlns/libvirt/domain/1.0">
-      <libosinfo:os id="http://debian.org/debian/12"/>
+      <libosinfo:os id="http://debian.org/debian/13"/>
     </libosinfo:libosinfo>
   </metadata>
   <memory unit='KiB'>8388608</memory>
@@ -38,7 +38,7 @@ $ conda xxx</description>
     <emulator>/usr/bin/qemu-system-x86_64</emulator>
     <disk type='file' device='disk'>
       <driver name='qemu' type='qcow2' discard='unmap'/>
-      <source file='/run/media/sandro/1TB-M2NVME/01_VM/images/debianGUI-02.qcow2'/>
+      <source file='/run/media/sandro/1TB-M2NVME/01_VM/images/debianGUI-02.20251021_0824'/>
       <target dev='vda' bus='virtio'/>
       <address type='pci' domain='0x0000' bus='0x05' slot='0x00' function='0x0'/>
     </disk>
