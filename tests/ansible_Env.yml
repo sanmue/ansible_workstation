@@ -2,9 +2,15 @@
 
 - name: Display available ansible facts
   ansible.builtin.debug:
-#    msg: "{{ ansible_env }}"
-#    oder:
     var: ansible_facts
-#    msg: "{{ ansible_env.XDG_CURRENT_DESKTOP }}"
-#    oder:
-#    msg: "{{ ansible_facts['env']['XDG_CURRENT_DESKTOP']|lower }}"
+
+- name: Display available ansible facts
+  ansible.builtin.debug:
+    msg: "Current Distribution: {{ ansible_facts['distribution'] }}"
+
+- name: Conditional display of desktop environbment based on Distribution
+  ansible.builtin.debug:
+    msg: "The current desktop environment is: {{ ansible_facts['env']['XDG_CURRENT_DESKTOP'] | lower }}"
+  when: ansible_facts['distribution'] == "Archlinux"
+  # when: ansible_facts['distribution'] in ["Archlinux", "Debian"]
+  # when: ansible_facts['distribution'] == "Archlinux" or ansible_facts['distribution'] == "Debian"
