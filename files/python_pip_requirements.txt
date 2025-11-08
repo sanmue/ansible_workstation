@@ -34,7 +34,7 @@ pyarrow
 # pylintq
 # pylint-venv
 # pyright # für VS Code: Pylance - Extension ?
-# pytest # via uv tool ...
+pytest # wg. Abhöngigkeit von pytest-embedded (# via uv tool ...)
 python-lsp-server[all]
 # ruff # Python linter and code formatter # via uv tool ...
 tree-sitter-bash # Bash for Zed
