@@ -1,9 +1,3 @@
-# - name: Config_all-mail - postfix - local mail - sending initial test mail to root (all)
-#   ansible.builtin.shell: echo 'Sending local mail to root-user seems to work.' | mail -s 'config_all-mail - postfix - local mail - sending initial mail to root' root
-
-# - name: Config_all-mail - postfix - local mail - sending initial test mail to env_user (all)
-#   ansible.builtin.shell: "echo 'Sending local mail to user seems to work.' | mail -s 'config_all-mail - postfix - local mail - sending initial mail to user' {{ env_user }}"
-
 - name: Config_all-mail - postfix - local mail - sending initial test mail to root (all)
   community.general.mail:
     subject: Config_all-mail - postfix - local mail - sending initial mail to root

@@ -1,6 +1,13 @@
-- name: Config postfix service (all)
+- name: Config all mail service - postfix service - start and enable (all)
   ansible.builtin.service:
     name: postfix.service
+    state: started
+    enabled: true
+#  when: ansible_distribution in ["Archlinux", "Debian"]
+
+- name: Config all mail service - dovecot service - start and enable (all)
+  ansible.builtin.service:
+    name: dovecot.service
     state: started
     enabled: true
 #  when: ansible_distribution in ["Archlinux", "Debian"]

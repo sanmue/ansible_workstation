@@ -37,7 +37,7 @@ errMsg="${errMsgSubj}, path '${scanPath}' does not exist.\nScript: '$0'"
 ##############
 ### Funktionen
 ##############
-function notify_allGuiUser { 
+function notify_allGuiUser {
 	# Param1: Notify Subject
     # Param2: Notify Message
 
@@ -45,10 +45,10 @@ function notify_allGuiUser {
         USERID=${ADDRESS#/run/user/}
         /usr/bin/sudo -u "#$USERID" DBUS_SESSION_BUS_ADDRESS="unix:path=$ADDRESS/bus" PATH=${PATH} \
         /usr/bin/notify-send -i dialog-warning "${1}" "${2}"
-    done 
+    done
 }
 
-function mail_allLogonUser { 
+function mail_allLogonUser {
 	# Param1: Mail Subject
     # Param2: Mail Message
 
@@ -62,7 +62,8 @@ function mail_allLogonUser {
     # declare -p arrUser
 
     for user in "${arrUser[@]}"; do
-        echo -e "${2}" | /usr/bin/mail -s "${1}" "${user}"
+        # echo -e "${2}" | /usr/bin/mail -s "${1}" "${user}"
+        echo -e "Subject: ${1}\n\n${2}" | sendmail "${user}"
     done
 }
 

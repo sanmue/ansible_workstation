@@ -1,14 +1,27 @@
-- name: Install packages for (local) mail - postfix (all)
-  ansible.builtin.package:
-    state: present
-    name:
-      - postfix # Fast, easy to administer, secure mail server   # Mail Tranfer Agent (MTA)
-
 - name: Install packages for (local) mail (all)
   ansible.builtin.package:
     state: present
     name:
-      - s-nail # Environment for sending and receiving mail  (Ubuntu: /usr/bin/s-nail; Arch: /usr/bin/mail)
-        # - Ubuntu: symlink --> /usr/bin/mail, damit mail-command verwendet werden kann (siehe config_all-mail.yml)
+      - postfix # Fast, easy to administer, secure mail server   # Mail Tranfer Agent (MTA)
+      - mutt # text-based mail client
   # when:
   #   - ansible_distribution in ["Archlinux", "Debian"]
+
+- name: Install packages for (local) mail - dovecot (archlinux)
+  ansible.builtin.package:
+    state: present
+    name:
+      - dovecot # IMAP and POP3 server
+  when:
+    - ansible_distribution in ["Archlinux"]
+
+- name: Install packages for (local) mail - dovecot (debian)
+  ansible.builtin.package:
+    state: present
+    name:
+      - dovecot-core # IMAP and POP3 server
+      - dovecot-imapd # IMAP server
+      - dovecot-pop3d # POP3 server
+      - dovecot-lmtpd # Local Mail Transfer Protocol server
+  when:
+    - ansible_distribution in ["Debian"]

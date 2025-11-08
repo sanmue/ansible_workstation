@@ -1,24 +1,4 @@
-# ### ######
-# ### s-nail
-# ### ######
-# - cmdPfad:
-#   - Ubuntu: /usr/bin/s-nail
-#   - Arch: /usr/bin/mail
-# - Symlink für Ubuntu, da z.B. an anderen Stellen (clamav) cmd /usr/bin/mail verwendet wird
-#   - "sudo ln -s /usr/bin/s-nail /usr/bin/mail"
-
-- name: Config_all-mail - s-nail - create symlink 'mail' (Debian)
-  ansible.builtin.file:
-    src: /usr/bin/s-nail
-    dest: /usr/bin/mail
-    state: link
-    owner: root
-    group: root
-    mode: "0755"
-  when:
-    - ansible_distribution in ["Debian"]
-
-# ### ########
+# ### #######
 # ### postfix
 # ### #######
 # https://wiki.archlinux.org/title/Postfix
@@ -80,31 +60,33 @@
     group: mail
   when: ansible_distribution in ["Archlinux"]
 
-- name: Config_all-mail - postfix - local mail - create local mailbox file for root-user if not exists (Archlinux)
-  ansible.builtin.file:
-    path: "/var/spool/mail/root"
-    state: touch
-    owner: root
-    # group: root
-    group: mail
-    mode: "0600"
-    # mode: '0660'
-    modification_time: preserve
-    access_time: preserve
-  when: ansible_distribution in ["Archlinux"]
+# Umstellung auf Maildir - daher nicht mehr benötigt / file darf nicht vorhanden sein):
+# - name: Config_all-mail - postfix - local mail - create local mailbox file for root-user if not exists (Archlinux)
+#   ansible.builtin.file:
+#     path: "/var/spool/mail/root"
+#     state: touch
+#     owner: root
+#     # group: root
+#     group: mail
+#     mode: "0600"
+#     # mode: '0660'
+#     modification_time: preserve
+#     access_time: preserve
+#   when: ansible_distribution in ["Archlinux"]
 
-- name: Config_all-mail - postfix - local mail - create local mailbox file for env_user if not exists (Archlinux)
-  ansible.builtin.file:
-    path: "/var/spool/mail/{{ env_user }}"
-    state: touch
-    owner: "{{ env_user }}"
-    # group: "{{ env_user }}"
-    group: mail
-    mode: "0600"
-    # mode: '0660'
-    modification_time: preserve
-    access_time: preserve
-  when: ansible_distribution in ["Archlinux"]
+# Umstellung auf Maildir - daher nicht mehr benötigt / file darf nicht vorhanden sein):
+# - name: Config_all-mail - postfix - local mail - create local mailbox file for env_user if not exists (Archlinux)
+#   ansible.builtin.file:
+#     path: "/var/spool/mail/{{ env_user }}"
+#     state: touch
+#     owner: "{{ env_user }}"
+#     # group: "{{ env_user }}"
+#     group: mail
+#     mode: "0600"
+#     # mode: '0660'
+#     modification_time: preserve
+#     access_time: preserve
+#   when: ansible_distribution in ["Archlinux"]
 
 - name: Config_all-mail - postfix - local mail - main.cf - myhostname (Archlinux)
   ansible.builtin.lineinfile:
@@ -164,3 +146,344 @@
     state: present
   when:
     - ansible_distribution in ["Debian"]
+
+# statt mailbox_command wird mailbox_transport verwendet, s.u.
+# TODO: gleiches für debian
+# anpassung wg. Umstellung auf Maildir + dovecot-lda
+# - name: Config_all-mail - postfix - local mail - main.cf - mailbox_command (Archlinux)
+#   ansible.builtin.lineinfile:
+#     path: /etc/postfix/main.cf
+#     insertafter: "^#mailbox_command = /some/where/procmail -a.*"
+#     line: 'mailbox_command = /usr/lib/dovecot/dovecot-lda -f "$SENDER" -a "$RECIPIENT"'
+#     state: present
+#   when: ansible_distribution in ["Archlinux"]
+
+# TODO: gleiches für debian
+# anpassung wg. Umstellung auf Maildir + dovecot-lda
+- name: Config_all-mail - postfix - local mail - main.cf - mailbox_transport  (Archlinux)
+  ansible.builtin.lineinfile:
+    path: /etc/postfix/main.cf
+    insertafter: "^#mailbox_transport = lmtp:unix:/var/imap/socket/lmtp.*"
+    line: "mailbox_transport = lmtp:unix:private/dovecot-lmtp"
+    state: present
+  when: ansible_distribution in ["Archlinux"]
+
+# TODO: gleiches für debian
+# anpassung wg. Umstellung auf Maildir + dovecot-lda
+- name: Config_all-mail - postfix - local mail - main.cf - lmtp_data_destination_recipient_limit  (Archlinux)
+  ansible.builtin.lineinfile:
+    path: /etc/postfix/main.cf
+    insertafter: "^mailbox_transport = lmtp:unix:private/dovecot-lmtp"
+    line: "lmtp_data_destination_recipient_limit = 1"
+    state: present
+  when: ansible_distribution in ["Archlinux"]
+
+# ### #####################################
+# ### dovecot - create vmail group and user
+# ### #####################################
+
+- name: Config_all-mail - dovecot - create system group 'vmail'  (all)
+  ansible.builtin.group:
+    name: vmail
+    system: true
+    state: present
+
+- name: Config_all-mail - dovecot - create system user 'vmail' (all)
+  ansible.builtin.user:
+    name: vmail
+    group: vmail
+    uid_min: 1000
+    system: true
+    shell: /usr/sbin/nologin
+    state: present
+
+# ### ##########################################
+# ### dovecot - create config and config folders
+# ### ##########################################
+
+- name: Config_all-mail - dovecot - create /etc/dovecot and set permissions (all)
+  ansible.builtin.file:
+    path: /etc/dovecot
+    state: directory
+    mode: '0750'
+    owner: root
+    group: vmail
+
+- name: Config_all-mail - dovecot - create /etc/dovecot/conf.d and set permissions (all)
+  ansible.builtin.file:
+    path: /etc/dovecot/conf.d
+    state: directory
+    mode: '0750'
+    owner: root
+    group: vmail
+
+- name: Config_all-mail - dovecot - create dovecot.conf (all)
+  ansible.builtin.copy:
+    dest: /etc/dovecot/dovecot.conf
+    backup: true
+    content: |
+      ## Dovecot configuration file
+
+      # Dovecot configuration version. This must be the first setting in the
+      # configuration file. It specifies the configuration syntax, the used setting
+      # names and the expected default values.
+      dovecot_config_version = 2.4.2
+
+      # Dovecot storage file format version. It specifies the oldest Dovecot version
+      # that must be able to read files written by this Dovecot instance. The
+      # intention is that when upgrading Dovecot cluster, this setting is first kept
+      # as the old Dovecot version. Once the cluster is fully upgraded to a new
+      # version and there is no intention to rollback to the old version anymore,
+      # this version number can be increased.
+      dovecot_storage_version = 2.4.2
+
+      # The configuration below is a minimal configuration file using system user authentication.
+      # See https://doc.dovecot.org/latest/core/config/quick.html
+
+      !include_try conf.d/*.conf
+      !include_try local.conf
+
+    mode: '0640'
+    owner: root
+    group: vmail
+
+- name: Config_all-mail - dovecot - create config files in conf.d directory - 10-auth.conf (all)
+  ansible.builtin.blockinfile:
+    path: /etc/dovecot/conf.d/10-auth.conf
+    create: true
+    backup: true
+    marker: "### {mark} '10-auth.conf' ANSIBLE MANAGED BLOCK ###"
+    block: |
+      # authentification
+
+      auth_mechanisms = plain login
+      passdb pam {
+      }
+      userdb passwd {
+      }
+
+    mode: '0640'
+    owner: root
+    group: vmail
+
+- name: Config_all-mail - dovecot - create config files in conf.d directory - 10-auth-format.conf (all)
+  ansible.builtin.blockinfile:
+    path: /etc/dovecot/conf.d/10-auth-format.conf
+    create: true
+    backup: true
+    marker: "### {mark} '10-auth-format.conf' ANSIBLE MANAGED BLOCK ###"
+    block: |
+      # username format
+
+      # Dovecot so konfigurieren, dass es lokale Benutzer ohne Domain akzeptiert
+      # %{user | username } (alt: %n) entfernt die Domain aus dem Benutzernamen
+      # z.B.: userid@localhost -> userid
+      #
+      # echo -e "Subject: Test\n\nTestmail" | sendmail userid
+      # Dovecot findet Benutzer userid@localhost nicht, weil es nach vollständigem
+      # E-Mail-Namen sucht, aber der Benutzer nur userid (ohne Domain) heißt
+      # Dovecot so konfigurieren, dass es lokale Benutzer ohne Domain akzeptiert:
+
+      auth_username_format = %{user | username }
+
+      # Anmerkung: Postfix muss so konfiguriert werden,
+      # dass es nur userid (ohne Domain) an Dovecot übergibt
+
+    mode: '0640'
+    owner: root
+    group: vmail
+
+- name: Config_all-mail - dovecot - create config files in conf.d directory - 10-auth-servicelistener.conf (all)
+  ansible.builtin.blockinfile:
+    path: /etc/dovecot/conf.d/10-auth-servicelistener.conf
+    create: true
+    backup: true
+    marker: "### {mark} '10-auth-servicelistener.conf' ANSIBLE MANAGED BLOCK ###"
+    block: |
+      # service listener for auth
+
+      service auth {
+        unix_listener auth-userdb {
+          mode = 0600
+          user = vmail
+          group = vmail
+        }
+        unix_listener /var/spool/postfix/private/auth {
+          mode = 0660
+          user = postfix
+          group = postfix
+        }
+        inet_listener auth {
+          port = 12345
+        }
+      }
+
+    mode: '0640'
+    owner: root
+    group: vmail
+
+- name: Config_all-mail - dovecot - create config files in conf.d directory - 10-logging.conf (all)
+  ansible.builtin.blockinfile:
+    path: /etc/dovecot/conf.d/10-logging.conf
+    create: true
+    backup: true
+    marker: "### {mark} '10-logging.conf' ANSIBLE MANAGED BLOCK ###"
+    block: |
+      # debug config
+
+      #mail_debug = yes
+      #auth_debug = yes
+      #auth_verbose = yes
+
+    mode: '0640'
+    owner: root
+    group: vmail
+
+- name: Config_all-mail - dovecot - create config files in conf.d directory - 10-mail.conf (all)
+  ansible.builtin.blockinfile:
+    path: /etc/dovecot/conf.d/10-mail.conf
+    create: true
+    backup: true
+    marker: "### {mark} '10-mail.conf' ANSIBLE MANAGED BLOCK ###"
+    block: |
+      # mail storage config
+
+      mail_driver = maildir
+      mail_home = /var/spool/mail/%{user}
+      mail_path = /var/spool/mail/%{user}/Maildir
+      mail_uid = vmail
+      mail_gid = vmail
+      mail_privileged_group = vmail
+      mail_access_groups = vmail
+      namespace inbox {
+        inbox = yes
+        separator = /
+      }
+
+    mode: '0640'
+    owner: root
+    group: vmail
+
+- name: Config_all-mail - dovecot - create config files in conf.d directory - 10-protocols.conf (all)
+  ansible.builtin.blockinfile:
+    path: /etc/dovecot/conf.d/10-protocols.conf
+    create: true
+    backup: true
+    marker: "### {mark} '10-protocols.conf' ANSIBLE MANAGED BLOCK ###"
+    block: |
+      # protocols / protocoll listener
+
+      protocols {
+        imap = yes
+        lmtp = yes
+      }
+
+      service imap-login {
+        inet_listener imap {
+          port = 143
+        }
+        # Deaktiviere IMAPS (SSL), da nur lokal, ssl nicht ben\C3\B6tigt
+        # inet_listener imaps {
+        #   port = 993
+        #   ssl = yes
+        # }
+      }
+
+      service lmtp {
+        unix_listener /var/spool/postfix/private/dovecot-lmtp {
+          mode = 0600
+          user = postfix
+          group = postfix
+        }
+      }
+
+    mode: '0640'
+    owner: root
+    group: vmail
+
+- name: Config_all-mail - dovecot - create config files in conf.d directory - 10-ssl.conf (all)
+  ansible.builtin.blockinfile:
+    path: /etc/dovecot/conf.d/10-ssl.conf
+    create: true
+    backup: true
+    marker: "### {mark} '10-ssl.conf' ANSIBLE MANAGED BLOCK ###"
+    block: |
+      # ssl config
+
+      ssl = no
+      #ssl_server {
+      #  cert_file = /etc/dovecot/ssl-cert.pem
+      #  key_file = /etc/dovecot/ssl-key.pem
+      #}
+
+    mode: '0640'
+    owner: root
+    group: vmail
+
+# ### ####################################
+# ### Maildir - create directory structure
+# ### ####################################
+
+- name: Config_all-mail - create directory structure for maildir - env_user (all)
+  ansible.builtin.file:
+    path: "/var/spool/mail/{{ env_user }}/Maildir/{{ item }}"
+    state: directory
+    mode: '0770'
+    owner: "{{ env_user }}"
+    group: vmail
+    recurse: true
+  loop:
+    - cur
+    - new
+    - tmp
+
+- name: Config_all-mail - create directory structure for maildir - root (all)
+  ansible.builtin.file:
+    path: "/var/spool/mail/root/Maildir/{{ item }}"
+    state: directory
+    mode: '0770'
+    owner: root
+    group: vmail
+    recurse: true
+  loop:
+    - cur
+    - new
+    - tmp
+
+# ### #############
+# ### mutt - config
+# ### #############
+
+- name: Config_all-mail - mutt - env_user (all)
+  ansible.builtin.blockinfile:
+    path: "/home/{{ env_user }}/.muttrc"
+    create: true
+    marker: "### {mark} 'mutt config' ANSIBLE MANAGED BLOCK ###"
+    block: |
+      set mbox_type=Maildir
+      set folder=/var/spool/mail/{{ env_user }}/Maildir
+      set spoolfile=+/
+      set header_cache=~/.cache/mutt
+      set editor=vim
+      set date_format="%Y-%m-%d %T"
+      set index_format="%2C | %Z [%d] %-30.30F (%-4.4c) %s"
+    owner: "{{ env_user }}"
+    group: "{{ env_user }}"
+    mode: u=rw,g=r,o=r
+
+- name: Config_all-mail - mutt - root (all)
+  ansible.builtin.blockinfile:
+    path: "/home/root/.muttrc"
+    create: true
+    marker: "### {mark} 'mutt config' ANSIBLE MANAGED BLOCK ###"
+    block: |
+      set mbox_type=Maildir
+      set folder=/var/spool/mail/root/Maildir
+      set spoolfile=+/
+      set header_cache=~/.cache/mutt
+      set editor=vim
+      set date_format="%Y-%m-%d %T"
+      set index_format="%2C | %Z [%d] %-30.30F (%-4.4c) %s"
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
