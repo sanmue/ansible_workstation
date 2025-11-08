@@ -514,7 +514,7 @@
       # find all python_pip_requirements.txt files in ansible_workstation folders and install or upgrade them
       if [[ $(command -v pip) ]]; then
         alias inpipr='find $HOME -path "$HOME/*/ansible_workstation/*" -type f -name "python_pip_requirements.txt" -exec pip install --user -r {} \;'
-        alias uppipr='find $HOME -path "$HOME/*/ansible_workstation/*" -type f -name "python_pip_requirements.txt" -exec pip install --upgrade --user -r {} \;'
+        alias uppipr='find $HOME -path "$HOME/*/ansible_workstation/*" -type f -name "python_pip_requirements.txt" -exec pip install --upgrade --force-reinstall --user -r {} \;'
       fi
 
 - name: All settings misc - Bashrc - custom alias definitions - direnv for uv init (User, all)
@@ -1112,7 +1112,7 @@
       # find all python_pip_requirements.txt files in ansible_workstation folders and install or upgrade them
       if [[ $(command -v pip) ]]; then
         alias inpipr='find $HOME -path "$HOME/*/ansible_workstation/*" -type f -name "python_pip_requirements.txt" -exec pip install --user -r {} \;'
-        alias uppipr='find $HOME -path "$HOME/*/ansible_workstation/*" -type f -name "python_pip_requirements.txt" -exec pip install --upgrade --user -r {} \;'
+        alias uppipr='find $HOME -path "$HOME/*/ansible_workstation/*" -type f -name "python_pip_requirements.txt" -exec pip install --upgrade --force-reinstall --user -r {} \;'
       fi
 
 - name: All settings misc - Zshrc - custom alias definitions - direnv for uv init (User, all)
