@@ -174,7 +174,6 @@
       - signal-desktop
       - sqlite # A C library that implements an SQL database engine
       - steam
-      - steam-native-runtime # Native replacement for the Steam runtime using system libraries (installiert benötigte 32bit libs)
       - torbrowser-launcher
       - tree-sitter # Incremental parsing library
       - tree-sitter-bash # Bash grammar for tree-sitter # benötigt von Zed editor Extension (Bash for Zed)
