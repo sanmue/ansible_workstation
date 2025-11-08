@@ -16,7 +16,7 @@ ansible-vault
 # ### ------
 # ### python
 # ansible optional dependency; for shell completion of the Ansible command line utilities:
-argcomplete # provides easy, extensible command line tab completion of arguments for your Python application.
+# argcomplete # bereits installierte (optionale) Abhöngigkeit # provides easy, extensible command line tab completion of arguments for your Python application.
 # autopep8
 # black # Python formatter # -> ruff
 # build # -> uv
