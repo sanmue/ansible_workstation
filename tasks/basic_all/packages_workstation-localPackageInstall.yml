@@ -55,7 +55,8 @@
   ansible.builtin.shell:
     # chdir: tasks/basic_all/
     # cmd: ./config_workstation-localPackageInstall-CitrixWorkspaceApp.sh
-    cmd: chmod +x ./tasks/basic_all/config_workstation-localPackageInstall-CitrixWorkspaceApp.sh && ./tasks/basic_all/config_workstation-localPackageInstall-CitrixWorkspaceApp.sh
+    # cmd: chmod +x ./tasks/basic_all/config_workstation-localPackageInstall-CitrixWorkspaceApp.sh && ./tasks/basic_all/config_workstation-localPackageInstall-CitrixWorkspaceApp.sh
+    cmd: chmod +x files/config_workstation-localPackageInstall-CitrixWorkspaceApp.sh && files/basic_all/config_workstation-localPackageInstall-CitrixWorkspaceApp.sh
   when:
     - ansible_distribution == "Debian"
 

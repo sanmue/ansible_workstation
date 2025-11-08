@@ -1598,7 +1598,9 @@
 # https://askubuntu.com/questions/941770/how-do-i-create-gnome-terminal-profiles-at-a-global-level-for-all-users
 # #
 - name: Gnome Desktop - Preferences - Set gnome terminal - profiles and preferences (Gnome, Debian)
-  ansible.builtin.script: "{{ env_PWD }}/tasks/Desktop_Gnome/config_workstation-Gnome-DesktopPreferences-terminal.sh" # funktioniert; ansible version 2.9
+  # ansible.builtin.script: "{{ env_PWD }}/tasks/Desktop_Gnome/config_workstation-Gnome-DesktopPreferences-terminal.sh" # funktioniert; ansible version 2.9
+  # moved file to files/gnome/:
+  ansible.builtin.script: "files/gnome/config_workstation-Gnome-DesktopPreferences-terminal.sh" # funktioniert; ansible version 2.9
   # #  ansible.builtin.script: "{{ env_PWD }}/tasks/Desktop_Gnome/config_workstation-Gnome-DesktopPreferences-terminal.sh" # ab ansible version 2.10
   # #  ansible.builtin.script:  # ab ansible version 2.10
   # #    cmd: "{{ env_PWD }}/tasks/Desktop_Gnome/config_workstation-Gnome-DesktopPreferences-terminal.sh"
