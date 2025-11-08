@@ -5,4 +5,4 @@
     flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo # old: https://flathub.org/repo/flathub.flatpakrepo
     method: system # oder method: user
   when:
-    - ansible_distribution == "Debian"
+    - ansible_facts['distribution'] == "Debian"

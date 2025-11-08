@@ -58,4 +58,4 @@
     - "org.signal.Signal"
     - "com.github.micahflee.torbrowser-launcher"
   when:
-    - ansible_distribution in ["Debian"]
+    - ansible_facts['distribution'] in ["Debian"]

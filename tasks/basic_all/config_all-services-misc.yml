@@ -11,7 +11,7 @@
     name: cups.service
     state: started
     enabled: true
-  when: ansible_distribution in ["Archlinux"]
+  when: ansible_facts['distribution'] in ["Archlinux"]
 
 # -------------
 # Cron / Cronie
@@ -24,7 +24,7 @@
     name: cronie.service
     state: started
     enabled: true
-  when: ansible_distribution in ["Archlinux"]
+  when: ansible_facts['distribution'] in ["Archlinux"]
 
 # ---------------------------------
 # # retrieve the latest mirror list
@@ -38,7 +38,7 @@
     # state: started
     enabled: true
   when:
-    - ansible_distribution in ["Archlinux"]
+    - ansible_facts['distribution'] in ["Archlinux"]
 
 # ------------------------------------------------
 # # update pacman files database (default: weekly)
@@ -50,7 +50,7 @@
     name: pacman-filesdb-refresh.timer
     state: started
     enabled: true
-  when: ansible_distribution in ["Archlinux"]
+  when: ansible_facts['distribution'] in ["Archlinux"]
 
 # -------------------------------------------
 # # update pkgfile database (default: daily)
@@ -61,7 +61,7 @@
     name: pkgfile-update.timer
     state: started
     enabled: true
-  when: ansible_distribution in ["Archlinux"]
+  when: ansible_facts['distribution'] in ["Archlinux"]
 
 # ----------------------------------------------
 # # cleaning the package cache (default: weekly)
@@ -71,7 +71,7 @@
   ansible.builtin.service:
     name: paccache.timer
     enabled: true
-  when: ansible_distribution in ["Archlinux"]
+  when: ansible_facts['distribution'] in ["Archlinux"]
 
 # ------------
 # # SSH / SSHD
@@ -81,14 +81,14 @@
     name: ssh
     # state: started
     enabled: false
-  when: ansible_distribution in ["Debian"]
+  when: ansible_facts['distribution'] in ["Debian"]
 
 - name: All services misc - disable sshd (Archlinux)
   ansible.builtin.service:
     name: sshd
     # state: started
     enabled: false
-  when: ansible_distribution in ["Archlinux"]
+  when: ansible_facts['distribution'] in ["Archlinux"]
 
 # --------
 # # ClamAV
@@ -116,14 +116,14 @@
     cmd: freshclam
   args:
     creates: /home/{{ env_user }}/.ansible_freshclamInitialStartExecuted
-  when: ansible_distribution in ["Archlinux"]
+  when: ansible_facts['distribution'] in ["Archlinux"]
 
 # - name: All services misc - Update clamav database (Debian)
 #  # ansible.builtin.shell: freshclam
 #  ansible.builtin.shell: freshclam --daemon --user=clamav   # Fehlermeldung
 #  args:
 #    creates: /home/{{ env_user }}/.ansible_freshclamInitialStartExecuted
-#  when: ansible_distribution in ["Debian"]
+#  when: ansible_facts['distribution'] in ["Debian"]
 
 - name: All services misc - clamav - Set flag file freshclamInitialStartExecuted (all)
   ansible.builtin.file:
@@ -226,7 +226,7 @@
     group: root
     owner: root
     mode: "0644"
-  when: ansible_distribution in ["Archlinux"]
+  when: ansible_facts['distribution'] in ["Archlinux"]
 
 # monatlich (am 1. um 11:05 Uhr); alternativ: 'OnCalendar=monthly' (= monatlich am 01. umd 00:00 Uhr)
 - name: All services misc - zsh plugins update - Create timer unit file (Arch)
@@ -252,7 +252,7 @@
     group: root
     owner: root
     mode: "0644"
-  when: ansible_distribution in ["Archlinux"]
+  when: ansible_facts['distribution'] in ["Archlinux"]
 
 - name: All services misc - zsh plugins update - start+enable timer (Arch)
   ansible.builtin.systemd:
@@ -260,7 +260,7 @@
     state: started
     enabled: true
     daemon_reload: true
-  when: ansible_distribution in ["Archlinux"]
+  when: ansible_facts['distribution'] in ["Archlinux"]
 
 # ------------------
 # ### cockpit.socket

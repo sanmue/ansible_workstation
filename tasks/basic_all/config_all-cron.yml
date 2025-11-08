@@ -9,7 +9,7 @@
     state: directory
     mode: "0777"
   when:
-    - ansible_distribution in ["Archlinux"]
+    - ansible_facts['distribution'] in ["Archlinux"]
 
 # ### ###
 # ### ansible-pull für automatisches Update bei Änderungen in git-repo
@@ -37,4 +37,4 @@
 #    # job: /usr/bin/clamdscan --fdpass --multiscan --move="${HOME}/.clam/quarantine" --log="${HOME}/.clam/logs/$(date +\%Y\%m\%d)-weekly.log" "${HOME}" 2>/dev/null 1>&2
 #    job: '/etc/clamav/ScanHOME.sh "${HOME}" 2>/dev/null'
 #  when:
-#    - ansible_distribution in ["Debian", "Archlinux"]
+#    - ansible_facts['distribution'] in ["Debian", "Archlinux"]

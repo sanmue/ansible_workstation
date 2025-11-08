@@ -4,4 +4,4 @@
     groups: kvm,libvirt
     append: true
   when:
-    - ansible_virtualization_role != "guest"
+    - ansible_facts['virtualization_role'] != "guest"

@@ -31,7 +31,7 @@
 #   args:
 #     creates: "/home/{{ env_user }}/.ansible_PythonPip"
 #   when:
-#     - ansible_distribution in ["Archlinux"]
+#     - ansible_facts['distribution'] in ["Archlinux"]
 #
 # - name: Python Environment - Source shell config (Arch)
 #   become: true
@@ -48,7 +48,7 @@
 #   ignore_errors: true
 #   register: ignore_errors_register # Stores errors and failures for evaluation
 #   when:
-#     - ansible_distribution in ["Archlinux"]
+#     - ansible_facts['distribution'] in ["Archlinux"]
 # ### -----------------------------------------------------------------------------------------------------------------
 #
 # ### -----------------------------------------------------------------------------------------------------------------
@@ -63,7 +63,7 @@
 #   args:
 #     creates: "/home/{{ env_user }}/.ansible_PythonPip"
 #   when:
-#     - ansible_distribution in ["Debian"]
+#     - ansible_facts['distribution'] in ["Debian"]
 # ### -----------------------------------------------------------------------------------------------------------------
 
 - name: Python - pip (env_user, all)

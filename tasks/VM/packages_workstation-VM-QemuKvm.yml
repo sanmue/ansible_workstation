@@ -17,8 +17,8 @@
       - swtpm # wg. Win11 TPM 2.0
       - swtpm-tools
   when:
-    - ansible_distribution == "Debian"
-    - ansible_virtualization_role != "guest"
+    - ansible_facts['distribution'] == "Debian"
+    - ansible_facts['virtualization_role'] != "guest"
 
 - name: VM - install VM QEMU/KVM (Archlinux, not VM guest)
   ansible.builtin.package:
@@ -40,8 +40,8 @@
       - vde2 # Virtual Distributed Ethernet for emulators like qemu
       - virt-install # Command line tool for creating new KVM , Xen, or Linux container guests using the libvirt hypervisor
   when:
-    - ansible_distribution == "Archlinux"
-    - ansible_virtualization_role != "guest"
+    - ansible_facts['distribution'] == "Archlinux"
+    - ansible_facts['virtualization_role'] != "guest"
 
 - name: VM - install VM QEMU/KVM - virt-manager/viewer (all, not VM guest)
   ansible.builtin.package:
@@ -50,7 +50,7 @@
       - virt-manager
       - virt-viewer
   when:
-    - ansible_virtualization_role != "guest"
+    - ansible_facts['virtualization_role'] != "guest"
 
 - name: VM - install VM QEMU/KVM - Guest (all, VM guest)
   ansible.builtin.package:
@@ -58,5 +58,5 @@
     name:
       - spice-vdagent # spice agent for Linux guests (z.B. für clipboard sharing host+guest)
   when:
-    - ansible_virtualization_role == "guest"
+    - ansible_facts['virtualization_role'] == "guest"
 

@@ -36,7 +36,7 @@
     # - rootFsIsBtrfs != ''     # Variable aus packages_workstation-basic.yml; neu: s.o.
     - rootFsIsBtrfs == "btrfs" # Variable aus packages_workstation-basic.yml; neu: s.o.
     - etcdefgrub.stat.exists # Status aus packages_workstation-basic.yml; neu: s.o.
-    - ansible_distribution in ["Archlinux"]
+    - ansible_facts['distribution'] in ["Archlinux"]
 
 - name: Config all services snapperBtrfs - start+enable snapper-cleanup.timer (Archlinux)
   ansible.builtin.systemd:
@@ -48,4 +48,4 @@
     # - rootFsIsBtrfs != ''     # Variable aus packages_workstation-basic.yml; neu: s.o.
     - rootFsIsBtrfs == "btrfs" # Variable aus packages_workstation-basic.yml; neu: s.o.
     - etcdefgrub.stat.exists # Status aus packages_workstation-basic.yml; neu: s.o.
-    - ansible_distribution in ["Archlinux"]
+    - ansible_facts['distribution'] in ["Archlinux"]

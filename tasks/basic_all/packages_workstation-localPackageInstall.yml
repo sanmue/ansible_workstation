@@ -19,7 +19,7 @@
     force: false
     mode: "0755"
   when:
-    - ansible_distribution == "Debian"
+    - ansible_facts['distribution'] == "Debian"
 
 - name: Install basic packages - Get stat of .pyenv (all)
   ansible.builtin.stat:
@@ -39,7 +39,7 @@
   args:
     creates: "/home/{{ env_user }}/.pyenv" # Run only if '.pyenv'-directory does NOT exist (from previous run)
   when:
-    - ansible_distribution == "Debian"
+    - ansible_facts['distribution'] == "Debian"
     - pyenvskript.stat.exists
 
 # #####################################
@@ -58,14 +58,14 @@
     # cmd: chmod +x ./tasks/basic_all/config_workstation-localPackageInstall-CitrixWorkspaceApp.sh && ./tasks/basic_all/config_workstation-localPackageInstall-CitrixWorkspaceApp.sh
     cmd: chmod +x files/config_workstation-localPackageInstall-CitrixWorkspaceApp.sh && files/basic_all/config_workstation-localPackageInstall-CitrixWorkspaceApp.sh
   when:
-    - ansible_distribution == "Debian"
+    - ansible_facts['distribution'] == "Debian"
 
 # ggf. TODO
 - name: TODO - Download and install Citrix Workspace App + USB Support Package (Debian)
   ansible.builtin.debug:
     msg: "TODO: download from 'https://www.citrix.com/downloads/workspace-app/linux/'"
   when:
-    - ansible_distribution == "Debian"
+    - ansible_facts['distribution'] == "Debian"
 
 # ######################
 # ### Visual Studio Code
@@ -95,7 +95,7 @@
     force: false
     mode: "0755"
   when:
-    - ansible_distribution == "Debian"
+    - ansible_facts['distribution'] == "Debian"
     - not tmpcodedeb.stat.exists
 
 - name: Local packages install - install Visual Studio Code deb-package (Debian, apt)
@@ -103,8 +103,8 @@
     deb: "/home/{{ env_user }}/Downloads/code.deb"
     only_upgrade: true
   when:
-    - ansible_pkg_mgr == "apt"
-    - ansible_distribution == "Debian"
+    - ansible_facts['pkg_mgr'] == "apt"
+    - ansible_facts['distribution'] == "Debian"
     - not usrbincode.stat.exists
 
 # ##############
@@ -120,7 +120,7 @@
     force: false
     mode: "0755"
   when:
-    - ansible_distribution == "Debian"
+    - ansible_facts['distribution'] == "Debian"
 
 - name: Local packages install - create '~/.local/bin' directory if not exists (env_user, Debian)
   ansible.builtin.file:
@@ -138,7 +138,7 @@
   args:
     creates: "/home/{{ env_user }}/.local/bin/zed"
   when:
-    - ansible_distribution == "Debian"
+    - ansible_facts['distribution'] == "Debian"
 
 # #########
 # ### Fonts
@@ -225,7 +225,7 @@
     dest: /usr/share/zsh/plugins/zsh-autosuggestions
     clone: true
     update: true
-  when: ansible_distribution in ["Debian"]
+  when: ansible_facts['distribution'] in ["Debian"]
 
 - name: Local packages install - install zsh plugin - zsh-syntax-highlighting (Debian)
   ansible.builtin.git:
@@ -233,7 +233,7 @@
     dest: /usr/share/zsh/plugins/zsh-syntax-highlighting
     clone: true
     update: true
-  when: ansible_distribution in ["Debian"]
+  when: ansible_facts['distribution'] in ["Debian"]
 
 - name: Local packages install - install zsh plugin - zsh-history-substring-search (Debian)
   ansible.builtin.git:
@@ -241,4 +241,4 @@
     dest: /usr/share/zsh/plugins/zsh-history-substring-search
     clone: true
     update: true
-  when: ansible_distribution in ["Debian"]
+  when: ansible_facts['distribution'] in ["Debian"]

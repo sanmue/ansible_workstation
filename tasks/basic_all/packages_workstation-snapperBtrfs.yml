@@ -27,7 +27,7 @@
   when:
     # - rootFsIsBtrfs != ''
     - rootFsIsBtrfs = 'btrfs'   # Variable aus packages_workstation-basic.yml; neu: s.o.
-    - ansible_distribution in ["Archlinux"]
+    - ansible_facts['distribution'] in ["Archlinux"]
 
 - name: Install basic packages for snapper on btrfs filesystem + grub - grub-btrfs (Arch)
   ansible.builtin.package:
@@ -42,7 +42,7 @@
     # - rootFsIsBtrfs != ''
     - rootFsIsBtrfs = 'btrfs'   # Variable aus packages_workstation-basic.yml; neu: s.o.
     - etcdefgrub.stat.exists
-    - ansible_distribution in ["Archlinux"]
+    - ansible_facts['distribution'] in ["Archlinux"]
 
 - name: Check if default snapper config 'root' for '/' already exists (Arch)
   ansible.builtin.shell: snapper list-configs | grep root
@@ -51,7 +51,7 @@
   when:
     # - rootFsIsBtrfs != ''
     - rootFsIsBtrfs = 'btrfs'   # Variable aus packages_workstation-basic.yml; neu: s.o.
-    - ansible_distribution in ["Archlinux"]
+    - ansible_facts['distribution'] in ["Archlinux"]
 
 # https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/storage_administration_guide/ch-snapper
 - name: Create a default config for '/' with snapper cli named 'root' (Arch, NOT Manjaro)
@@ -64,7 +64,7 @@
     - rootFsIsBtrfs = 'btrfs'   # Variable aus packages_workstation-basic.yml; neu: s.o.
     # - snapperDefaultConfigExists == ''
     # - snapperDefaultConfigExists is not defined or snapperDefaultConfigExists == ''
-    - ansible_distribution in ["Archlinux"]
+    - ansible_facts['distribution'] in ["Archlinux"]
     - env_lsb_id != "ManjaroLinux"   # 09.04.28: verursacht aktuell Problem bei Manjaro --> ggf. manuell nachholen, wenn wieder funktioniert
 
 - name: Install additional packages for snapper on btrfs filesystem (Manjaro)
@@ -76,7 +76,7 @@
   when:
     # - rootFsIsBtrfs != ''
     - rootFsIsBtrfs = 'btrfs'   # Variable aus packages_workstation-basic.yml; neu: s.o.
-    - ansible_distribution in ["Archlinux"]
+    - ansible_facts['distribution'] in ["Archlinux"]
     - env_lsb_id == "ManjaroLinux"
 
 #  verlagert an Schluss bootstrap.sh, da wg. Auswahlmöglichkeit ähnliches Paket nicht installiert wird
@@ -90,7 +90,7 @@
 #   when:
     # - rootFsIsBtrfs != ''
     # - rootFsIsBtrfs = 'btrfs'   # Variable aus packages_workstation-basic.yml; neu: s.o.
-#     - ansible_distribution in ["Archlinux"]
+#     - ansible_facts['distribution'] in ["Archlinux"]
 #     - env_lsb_id != "ManjaroLinux"
 
 # in bootstrap.sh verschoben
@@ -100,5 +100,5 @@
 #  args:
 #    creates: "/home/{{ env_user }}/.ansible_pamacArchBasicPackages"
 #  when:
-#    - ansible_distribution in ["Archlinux"]
+#    - ansible_facts['distribution'] in ["Archlinux"]
 #    - env_lsb_id != "ManjaroLinux"

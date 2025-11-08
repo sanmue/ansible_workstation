@@ -3,14 +3,14 @@
 #     name: snapd.socket
 #     state: started
 #     enabled: true
-#   when: ansible_distribution == "Archlinux"
+#   when: ansible_facts['distribution'] == "Archlinux"
 
 # - name: Start and enable snapd apparmor (Archlinux)
 #   ansible.builtin.service:
 #     name: snapd.apparmor
 #     state: started
 #     enabled: true
-#   when: ansible_distribution == "Archlinux"
+#   when: ansible_facts['distribution'] == "Archlinux"
 
 # - name: Enable classic snap support (Archlinux)
 #   become: true
@@ -18,7 +18,7 @@
 #   ansible.builtin.shell:
 #     cmd: if [ ! -e '/snap' ]; then ln -s /var/lib/snapd/snap /snap; fi
 #   when:
-#     - ansible_distribution == "Archlinux"
+#     - ansible_facts['distribution'] == "Archlinux"
 
 # - name: Enable snap for pamac (Archlinux Manjaro)
 #   become: true
@@ -26,7 +26,7 @@
 #   ansible.builtin.shell:
 #     cmd: sed -Ei '/EnableSnap/s/^#//' /etc/pamac.conf
 #   when:
-#     - ansible_distribution == "Archlinux"
+#     - ansible_facts['distribution'] == "Archlinux"
 #     - pamac_conf.stat.exists   # stat "pamac_conf": siehe "config_workstation-addrepos.yml"
 
 # # https://stackoverflow.com/questions/56560173/ansible-how-to-add-modify-path-variable-in-centos

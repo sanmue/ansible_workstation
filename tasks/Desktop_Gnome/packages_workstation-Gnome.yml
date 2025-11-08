@@ -59,7 +59,7 @@
       - transmission-cli
       - transmission-gtk # -> deluge
   when:
-    - ansible_distribution == "Archlinux"
+    - ansible_facts['distribution'] == "Archlinux"
     - env_desktop == "gnome"
 
 - name: Gnome - Install packages for workstations (Debian + Gnome)
@@ -76,5 +76,5 @@
       - transmission # torrent client # sollte schon installiert sein
       - ulauncher # ppa wurde hinzugefügt im install script
   when:
-    - ansible_distribution == "Debian"
+    - ansible_facts['distribution'] == "Debian"
     - env_desktop == "gnome"

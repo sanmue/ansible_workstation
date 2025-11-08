@@ -14,7 +14,7 @@
   ansible.builtin.set_fact:
     env_datadirs: "{{ ansible_facts['env']['XDG_DATA_DIRS'] }}" # z.B.: "/usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop"
   when:
-    - ansible_distribution != "Archlinux"
+    - ansible_facts['distribution'] != "Archlinux"
 
 - name: AnsibleFacts - Get path (PATH) (all)
   ansible.builtin.set_fact:
@@ -38,13 +38,13 @@
   ansible.builtin.set_fact:
     env_lsb: "{{ ansible_facts['lsb']['release'] }}" # z.B. bei Ubuntu 20.04: "20.04"
   when:
-    - ansible_distribution in ["Debian"]
+    - ansible_facts['distribution'] in ["Debian"]
 
 - name: AnsibleFacts - Get lsb lsb-id (Arch)
   ansible.builtin.set_fact:
     env_lsb_id: "{{ ansible_facts['lsb']['id'] }}" # z.B.: "ManjaroLinux" oder "EndeavourOS"; bei Archlinux selbst nicht vorhanden
   when:
-    - ansible_distribution not in ["Archlinux"]
+    - ansible_facts['distribution'] not in ["Archlinux"]
 
 - name: AnsibleFacts - Get distribution version (all)
   ansible.builtin.set_fact:

@@ -30,7 +30,7 @@
     mode: u=rw,g=r,o=r # mode: '0644'
   when:
     - env_desktop == "gnome"
-    - ansible_distribution == "Archlinux"
+    - ansible_facts['distribution'] == "Archlinux"
 
 # ### Changed to: Autostart Syncthing via systemd service 'syncthing'
 #     - https://docs.syncthing.net/users/autostart.html#linux
@@ -44,7 +44,7 @@
 #    mode: u=rw,g=r,o=r   # mode: '0644'
 #  when:
 #    - env_desktop == "gnome"
-#    - ansible_distribution == "Archlinux"
+#    - ansible_facts['distribution'] == "Archlinux"
 
 # #######################################
 # ### Gnome Autostart Apps - Current User
@@ -76,7 +76,7 @@
     mode: u=rw,g=rw,o=r # mode: '0664'
   when:
     - env_desktop == "gnome"
-    - ansible_distribution == "Debian"
+    - ansible_facts['distribution'] == "Debian"
 
 - name: Gnome Desktop - Preferences - Copy autostart file for 'Nextcloud Client' to local user-folder (Arch + Gnome)
   ansible.builtin.copy:
@@ -88,7 +88,7 @@
     mode: u=rw,g=rw,o=r # mode: '0664'
   when:
     - env_desktop == "gnome"
-    - ansible_distribution == "Archlinux"
+    - ansible_facts['distribution'] == "Archlinux"
 
 - name: Gnome Desktop - Preferences - Copy autostart file for 'Syncthing Start' to local user-folder (Arch + Gnome)
   ansible.builtin.copy:
@@ -100,7 +100,7 @@
     mode: u=rw,g=rw,o=r # mode: '0664'
   when:
     - env_desktop == "gnome"
-    - ansible_distribution == "Archlinux"
+    - ansible_facts['distribution'] == "Archlinux"
 
 # #################
 # ### favorite apps
@@ -651,7 +651,7 @@
 #     state: present
 #   when:
 #     - env_desktop in ["gnome"]
-#     - ansible_distribution == "Debian"
+#     - ansible_facts['distribution'] == "Debian"
 
 - name: Gnome Desktop - Preferences - Set settings-daemon - plugin - media-keys - KeepassXC,command (Gnome, Debian, flatpak)
   become: true
@@ -659,7 +659,7 @@
   ansible.builtin.shell: dconf write "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/command" "'flatpak run org.keepassxc.KeePassXC'"
   when:
     - env_desktop in ["gnome"]
-    - ansible_distribution == "Debian"
+    - ansible_facts['distribution'] == "Debian"
 
 # - name: Gnome Desktop - Preferences - Set settings-daemon - plugin - media-keys - KeepassXC,command (Gnome, Arch)
 #   community.general.dconf:
@@ -668,7 +668,7 @@
 #     state: present
 #   when:
 #     - env_desktop in ["gnome"]
-#     - ansible_distribution == "Archlinux"
+#     - ansible_facts['distribution'] == "Archlinux"
 
 - name: Gnome Desktop - Preferences - Set settings-daemon - plugin - media-keys - KeepassXC,command (Gnome, Arch)
   become: true
@@ -676,7 +676,7 @@
   ansible.builtin.shell: dconf write "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/command" "'KeePassXC'"
   when:
     - env_desktop in ["gnome"]
-    - ansible_distribution == "Archlinux"
+    - ansible_facts['distribution'] == "Archlinux"
 
 # - name: Gnome Desktop - Preferences - Set settings-daemon - plugin - media-keys - KeepassXC,binding (Gnome)
 #   community.general.dconf:
@@ -789,7 +789,7 @@
 #     state: present
 #   when:
 #     - env_desktop in ["gnome"]
-#     - ansible_distribution == "Debian"
+#     - ansible_facts['distribution'] == "Debian"
 
 - name: Gnome Desktop - Preferences - Set settings-daemon - plugin - media-keys - chromium,command (Gnome, Debian, flatpak)
   become: true
@@ -797,7 +797,7 @@
   ansible.builtin.shell: dconf write "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/command" "'flatpak run org.chromium.Chromium'"
   when:
     - env_desktop in ["gnome"]
-    - ansible_distribution == "Debian"
+    - ansible_facts['distribution'] == "Debian"
 
 # - name: Gnome Desktop - Preferences - Set settings-daemon - plugin - media-keys - chromium,command (Gnome, Arch)
 #   community.general.dconf:
@@ -806,7 +806,7 @@
 #     state: present
 #   when:
 #     - env_desktop in ["gnome"]
-#     - ansible_distribution == "Archlinux"
+#     - ansible_facts['distribution'] == "Archlinux"
 
 - name: Gnome Desktop - Preferences - Set settings-daemon - plugin - media-keys - chromium,command (Gnome, Arch)
   become: true
@@ -814,7 +814,7 @@
   ansible.builtin.shell: dconf write "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/command" "'chromium'"
   when:
     - env_desktop in ["gnome"]
-    - ansible_distribution == "Archlinux"
+    - ansible_facts['distribution'] == "Archlinux"
 
 # - name: Gnome Desktop - Preferences - Set settings-daemon - plugin - media-keys - chromium,binding (Gnome)
 #   community.general.dconf:
@@ -854,7 +854,7 @@
 #     state: present
 #   when:
 #     - env_desktop in ["gnome"]
-#     - ansible_distribution == "Debian"
+#     - ansible_facts['distribution'] == "Debian"
 
 - name: Gnome Desktop - Preferences - Set settings-daemon - plugin - media-keys - Brave Browser,command (Gnome, Debian)
   become: true
@@ -862,7 +862,7 @@
   ansible.builtin.shell: dconf write "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/command" "'brave-browser'"
   when:
     - env_desktop in ["gnome"]
-    - ansible_distribution == "Debian"
+    - ansible_facts['distribution'] == "Debian"
 
 # - name: Gnome Desktop - Preferences - Set settings-daemon - plugin - media-keys - Brave Browser,command (Gnome, Arch)
 #   community.general.dconf:
@@ -871,7 +871,7 @@
 #     state: present
 #   when:
 #     - env_desktop in ["gnome"]
-#     - ansible_distribution == "Archlinux"
+#     - ansible_facts['distribution'] == "Archlinux"
 
 - name: Gnome Desktop - Preferences - Set settings-daemon - plugin - media-keys - Brave Browser,command (Gnome, Arch)
   become: true
@@ -879,7 +879,7 @@
   ansible.builtin.shell: dconf write "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/command" "'brave'"
   when:
     - env_desktop in ["gnome"]
-    - ansible_distribution == "Archlinux"
+    - ansible_facts['distribution'] == "Archlinux"
 
 # - name: Gnome Desktop - Preferences - Set settings-daemon - plugin - media-keys - Brave Browser,binding (Gnome)
 #   community.general.dconf:
@@ -1011,7 +1011,7 @@
 #     state: present
 #   when:
 #     - env_desktop in ["gnome"]
-#     - ansible_distribution == "Debian"
+#     - ansible_facts['distribution'] == "Debian"
 
 - name: Gnome Desktop - Preferences - Set settings-daemon - plugin - media-keys - Libre Office,command (Gnome, Debian, flatpak)
   become: true
@@ -1019,7 +1019,7 @@
   ansible.builtin.shell: dconf write "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom7/command" "'flatpak run org.libreoffice.LibreOffice'"
   when:
     - env_desktop in ["gnome"]
-    - ansible_distribution == "Debian"
+    - ansible_facts['distribution'] == "Debian"
 
 # - name: Gnome Desktop - Preferences - Set settings-daemon - plugin - media-keys - Libre Office,command (Gnome, Arch)
 #   community.general.dconf:
@@ -1028,7 +1028,7 @@
 #     state: present
 #   when:
 #     - env_desktop in ["gnome"]
-#     - ansible_distribution == "Archlinux"
+#     - ansible_facts['distribution'] == "Archlinux"
 
 - name: Gnome Desktop - Preferences - Set settings-daemon - plugin - media-keys - Libre Office,command (Gnome, Arch)
   become: true
@@ -1036,7 +1036,7 @@
   ansible.builtin.shell: dconf write "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom7/command" "'libreoffice'"
   when:
     - env_desktop in ["gnome"]
-    - ansible_distribution == "Archlinux"
+    - ansible_facts['distribution'] == "Archlinux"
 
 # - name: Gnome Desktop - Preferences - Set settings-daemon - plugin - media-keys - Libre Office,binding (Gnome)
 #   community.general.dconf:
@@ -1237,7 +1237,7 @@
 #     state: present
 #   when:
 #     - env_desktop in ["gnome"]
-#     - ansible_distribution == "Debian"
+#     - ansible_facts['distribution'] == "Debian"
 
 - name: Gnome Desktop - Preferences - Set settings-daemon - plugin - media-keys - Gnome Software,name (Gnome, Debian)
   become: true
@@ -1245,7 +1245,7 @@
   ansible.builtin.shell: dconf write "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom12/name" "'Gnome Software'"
   when:
     - env_desktop in ["gnome"]
-    - ansible_distribution == "Debian"
+    - ansible_facts['distribution'] == "Debian"
 
 # - name: Gnome Desktop - Preferences - Set settings-daemon - plugin - media-keys - Gnome Software,command (Gnome, Debian)
 #   community.general.dconf:
@@ -1254,7 +1254,7 @@
 #     state: present
 #   when:
 #     - env_desktop in ["gnome"]
-#     - ansible_distribution == "Debian"
+#     - ansible_facts['distribution'] == "Debian"
 
 - name: Gnome Desktop - Preferences - Set settings-daemon - plugin - media-keys - Gnome Software,command (Gnome, Debian)
   become: true
@@ -1262,7 +1262,7 @@
   ansible.builtin.shell: dconf write "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom12/command" "'gnome-software'"
   when:
     - env_desktop in ["gnome"]
-    - ansible_distribution == "Debian"
+    - ansible_facts['distribution'] == "Debian"
 
 # - name: Gnome Desktop - Preferences - Set settings-daemon - plugin - media-keys - Gnome Software,binding (Gnome, Debian)
 #   community.general.dconf:
@@ -1271,7 +1271,7 @@
 #     state: present
 #   when:
 #     - env_desktop in ["gnome"]
-#     - ansible_distribution == "Debian"
+#     - ansible_facts['distribution'] == "Debian"
 
 - name: Gnome Desktop - Preferences - Set settings-daemon - plugin - media-keys - Gnome Software,binding (Gnome, Debian)
   become: true
@@ -1279,7 +1279,7 @@
   ansible.builtin.shell: dconf write "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom12/binding" "'<Primary><Alt>s'"
   when:
     - env_desktop in ["gnome"]
-    - ansible_distribution == "Debian"
+    - ansible_facts['distribution'] == "Debian"
 
 # - Software Center 'Pamac-Manager' (Arch) (custom12) - s
 # - name: Gnome Desktop - Preferences - Set settings-daemon - plugin - media-keys - Pamac Manager,name (Gnome, Arch)
@@ -1289,7 +1289,7 @@
 #     state: present
 #   when:
 #     - env_desktop in ["gnome"]
-#     - ansible_distribution == "Archlinux"
+#     - ansible_facts['distribution'] == "Archlinux"
 
 # - name: Gnome Desktop - Preferences - Set settings-daemon - plugin - media-keys - Pamac Manager,name (Gnome, Arch)
 #   become: true
@@ -1297,7 +1297,7 @@
 #   ansible.builtin.shell: dconf write "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom12/name" "'Pamac-Manager'"
 #   when:
 #     - env_desktop in ["gnome"]
-#     - ansible_distribution == "Archlinux"
+#     - ansible_facts['distribution'] == "Archlinux"
 
 # - name: Gnome Desktop - Preferences - Set settings-daemon - plugin - media-keys - Pamac Managercommand (Gnome, Arch)
 #   community.general.dconf:
@@ -1306,7 +1306,7 @@
 #     state: present
 #   when:
 #     - env_desktop in ["gnome"]
-#     - ansible_distribution == "Archlinux"
+#     - ansible_facts['distribution'] == "Archlinux"
 
 # - name: Gnome Desktop - Preferences - Set settings-daemon - plugin - media-keys - Pamac Managercommand (Gnome, Arch)
 #   become: true
@@ -1314,7 +1314,7 @@
 #   ansible.builtin.shell: dconf write "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom12/command" "'pamac-manager'"
 #   when:
 #     - env_desktop in ["gnome"]
-#     - ansible_distribution == "Archlinux"
+#     - ansible_facts['distribution'] == "Archlinux"
 
 # - name: Gnome Desktop - Preferences - Set settings-daemon - plugin - media-keys - Pamac Manager,binding (Gnome, Arch)
 #   community.general.dconf:
@@ -1323,7 +1323,7 @@
 #     state: present
 #   when:
 #     - env_desktop in ["gnome"]
-#     - ansible_distribution == "Archlinux"
+#     - ansible_facts['distribution'] == "Archlinux"
 
 # - name: Gnome Desktop - Preferences - Set settings-daemon - plugin - media-keys - Pamac Manager,binding (Gnome, Arch)
 #   become: true
@@ -1331,7 +1331,7 @@
 #   ansible.builtin.shell: dconf write "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom12/binding" "'<Primary><Alt>s'"
 #   when:
 #     - env_desktop in ["gnome"]
-#     - ansible_distribution == "Archlinux"
+#     - ansible_facts['distribution'] == "Archlinux"
 
 # - ulauncher (custom13) - ctrl+space
 # https://github.com/Ulauncher/Ulauncher/discussions/991
@@ -1618,7 +1618,7 @@
     creates: "/home/{{ env_user }}/.ansible_TerminalProfileSet"
   when:
     - env_desktop in ["gnome"]
-    - ansible_distribution in ["Debian"] # ansible_distribution == "Debian"
+    - ansible_facts['distribution'] in ["Debian"] # ansible_facts['distribution'] == "Debian"
   # #    - "ansible_version.major is version('2', '=')"
   # #    - "ansible_version.minor is version('9', '<=')"
   # - "ansible_version.full is version('2.10.0', '>=')"
@@ -1632,7 +1632,7 @@
     access_time: preserve
   when:
     - env_desktop in ["gnome"]
-    - ansible_distribution in ["Debian"]
+    - ansible_facts['distribution'] in ["Debian"]
 
 # ### gnome - Ptyxis terminal - profiles and preferences:
 
@@ -1642,7 +1642,7 @@
   ansible.builtin.shell: dconf write "/org/gnome/Ptyxis/use-system-font" "false"
   when:
     - env_desktop in ["gnome"]
-    - ansible_distribution in ["Archlinux"]
+    - ansible_facts['distribution'] in ["Archlinux"]
 
 - name: Gnome Desktop - Preferences - Set Ptyxis terminal preferences - font-name (Gnome)
   become: true
@@ -1650,7 +1650,7 @@
   ansible.builtin.shell: dconf write "/org/gnome/Ptyxis/font-name" "'JetBrainsMonoNL Nerd Font 13'"
   when:
     - env_desktop in ["gnome"]
-    - ansible_distribution in ["Archlinux"]
+    - ansible_facts['distribution'] in ["Archlinux"]
 
 - name: Gnome Desktop - Preferences - Set Ptyxis terminal preferences - restore-window-size (Gnome)
   become: true
@@ -1658,7 +1658,7 @@
   ansible.builtin.shell: dconf write "/org/gnome/Ptyxis/restore-window-size" "false"
   when:
     - env_desktop in ["gnome"]
-    - ansible_distribution in ["Archlinux"]
+    - ansible_facts['distribution'] in ["Archlinux"]
 
 - name: Gnome Desktop - Preferences - Set Ptyxis terminal preferences - default-columns (Gnome)
   become: true
@@ -1666,7 +1666,7 @@
   ansible.builtin.shell: dconf write "/org/gnome/Ptyxis/default-columns" "110"
   when:
     - env_desktop in ["gnome"]
-    - ansible_distribution in ["Archlinux"]
+    - ansible_facts['distribution'] in ["Archlinux"]
 
 - name: Gnome Desktop - Preferences - Set Ptyxis terminal preferences - default-rows (Gnome)
   become: true
@@ -1674,7 +1674,7 @@
   ansible.builtin.shell: dconf write "/org/gnome/Ptyxis/default-rows" "32"
   when:
     - env_desktop in ["gnome"]
-    - ansible_distribution in ["Archlinux"]
+    - ansible_facts['distribution'] in ["Archlinux"]
 
 - name: Gnome Desktop - Preferences - Set Ptyxis terminal preferences - primary-menu (Gnome)
   become: true
@@ -1683,7 +1683,7 @@
   # deactivatet (F10) because of conflict with keybinding of 'htop' (F10 = quit htop)
   when:
     - env_desktop in ["gnome"]
-    - ansible_distribution in ["Archlinux"]
+    - ansible_facts['distribution'] in ["Archlinux"]
 
 # ### gnome shell extensions -  preferences:
 

@@ -14,7 +14,7 @@
     line: "root: {{ env_user }}"
     backup: true
   when:
-    - ansible_distribution in ["Debian"]
+    - ansible_facts['distribution'] in ["Debian"]
 
 - name: Config_all-mail -  postfix - aliases (Archlinux)
   ansible.builtin.replace:
@@ -22,18 +22,18 @@
     regexp: "^#root.*you"
     replace: "root: {{ env_user }}"
     backup: true
-  when: ansible_distribution in ["Archlinux"]
+  when: ansible_facts['distribution'] in ["Archlinux"]
 
 - name: Config_all-mail - postfix - run postalias command (Debian)
   ansible.builtin.shell:
     cmd: "sudo postalias /etc/aliases"
   when:
-    - ansible_distribution in ["Debian"]
+    - ansible_facts['distribution'] in ["Debian"]
 
 - name: Config_all-mail - postfix - run postalias command (Archlinux)
   ansible.builtin.shell:
     cmd: "sudo postalias /etc/postfix/aliases"
-  when: ansible_distribution in ["Archlinux"]
+  when: ansible_facts['distribution'] in ["Archlinux"]
 
 - name: Config_all-mail - postfix - initialize alias database (all)
   ansible.builtin.shell:
@@ -58,7 +58,7 @@
     mode: "0775"
     owner: root
     group: mail
-  when: ansible_distribution in ["Archlinux"]
+  when: ansible_facts['distribution'] in ["Archlinux"]
 
 # Umstellung auf Maildir - daher nicht mehr benötigt / file darf nicht vorhanden sein):
 # - name: Config_all-mail - postfix - local mail - create local mailbox file for root-user if not exists (Archlinux)
@@ -72,7 +72,7 @@
 #     # mode: '0660'
 #     modification_time: preserve
 #     access_time: preserve
-#   when: ansible_distribution in ["Archlinux"]
+#   when: ansible_facts['distribution'] in ["Archlinux"]
 
 # Umstellung auf Maildir - daher nicht mehr benötigt / file darf nicht vorhanden sein):
 # - name: Config_all-mail - postfix - local mail - create local mailbox file for env_user if not exists (Archlinux)
@@ -86,7 +86,7 @@
 #     # mode: '0660'
 #     modification_time: preserve
 #     access_time: preserve
-#   when: ansible_distribution in ["Archlinux"]
+#   when: ansible_facts['distribution'] in ["Archlinux"]
 
 - name: Config_all-mail - postfix - local mail - main.cf - myhostname (Archlinux)
   ansible.builtin.lineinfile:
@@ -94,7 +94,7 @@
     insertafter: "^#myhostname.=.virtual.domain.tld"
     line: myhostname = localhost
     state: present
-  when: ansible_distribution in ["Archlinux"]
+  when: ansible_facts['distribution'] in ["Archlinux"]
 
 - name: Config_all-mail - postfix - local mail - main.cf - mydomain (Archlinux)
   ansible.builtin.lineinfile:
@@ -102,7 +102,7 @@
     insertafter: "^#mydomain.=.domain.tld"
     line: mydomain = localdomain
     state: present
-  when: ansible_distribution in ["Archlinux"]
+  when: ansible_facts['distribution'] in ["Archlinux"]
 
 - name: Config_all-mail - postfix - local mail - main.cf - mydestination (Archlinux)
   ansible.builtin.lineinfile:
@@ -111,7 +111,7 @@
     line: mydestination = $myhostname, localhost.$mydomain, localhost
     firstmatch: true
     state: present
-  when: ansible_distribution in ["Archlinux"]
+  when: ansible_facts['distribution'] in ["Archlinux"]
 
 - name: Config_all-mail - postfix - local mail - main.cf - inet_interfaces (Archlinux)
   ansible.builtin.lineinfile:
@@ -119,7 +119,7 @@
     insertafter: '^#inet_interfaces.=.\$myhostname'
     line: inet_interfaces = $myhostname, localhost
     state: present
-  when: ansible_distribution in ["Archlinux"]
+  when: ansible_facts['distribution'] in ["Archlinux"]
 
 - name: Config_all-mail - postfix - local mail - main.cf - mynetworks_style (Archlinux)
   ansible.builtin.lineinfile:
@@ -127,7 +127,7 @@
     insertafter: "^#mynetworks_style.=.subnet"
     line: mynetworks_style = host
     state: present
-  when: ansible_distribution in ["Archlinux"]
+  when: ansible_facts['distribution'] in ["Archlinux"]
 
 - name: Config_all-mail - postfix - local mail - main.cf - default_transport (Archlinux)
   ansible.builtin.lineinfile:
@@ -136,7 +136,7 @@
     insertafter: "^#relayhost.=.*"
     line: "default_transport = error: outside mail is not deliverable"
     state: present
-  when: ansible_distribution in ["Archlinux"]
+  when: ansible_facts['distribution'] in ["Archlinux"]
 
 - name: Config_all-mail - postfix - local mail - main.cf - default_transport (Debian)
   ansible.builtin.lineinfile:
@@ -145,7 +145,7 @@
     line: "default_transport = error: outside mail is not deliverable"
     state: present
   when:
-    - ansible_distribution in ["Debian"]
+    - ansible_facts['distribution'] in ["Debian"]
 
 # statt mailbox_command wird mailbox_transport verwendet, s.u.
 # TODO: gleiches für debian
@@ -156,7 +156,7 @@
 #     insertafter: "^#mailbox_command = /some/where/procmail -a.*"
 #     line: 'mailbox_command = /usr/lib/dovecot/dovecot-lda -f "$SENDER" -a "$RECIPIENT"'
 #     state: present
-#   when: ansible_distribution in ["Archlinux"]
+#   when: ansible_facts['distribution'] in ["Archlinux"]
 
 # TODO: gleiches für debian
 # anpassung wg. Umstellung auf Maildir + dovecot-lda
@@ -166,7 +166,7 @@
     insertafter: "^#mailbox_transport = lmtp:unix:/var/imap/socket/lmtp.*"
     line: "mailbox_transport = lmtp:unix:private/dovecot-lmtp"
     state: present
-  when: ansible_distribution in ["Archlinux"]
+  when: ansible_facts['distribution'] in ["Archlinux"]
 
 # TODO: gleiches für debian
 # anpassung wg. Umstellung auf Maildir + dovecot-lda
@@ -176,7 +176,7 @@
     insertafter: "^mailbox_transport = lmtp:unix:private/dovecot-lmtp"
     line: "lmtp_data_destination_recipient_limit = 1"
     state: present
-  when: ansible_distribution in ["Archlinux"]
+  when: ansible_facts['distribution'] in ["Archlinux"]
 
 # ### #####################################
 # ### dovecot - create vmail group and user

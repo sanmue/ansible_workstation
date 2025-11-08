@@ -201,7 +201,7 @@
       # firmware:
       - linux-firmware
       - sof-firmware
-  when: ansible_distribution in ["Archlinux"]
+  when: ansible_facts['distribution'] in ["Archlinux"]
 
 - name: Install basic packages (Debian)
   ansible.builtin.package:
@@ -273,7 +273,7 @@
       #
       # firmware:
       - firmware-linux # firmware-linux
-  when: ansible_distribution == "Debian"
+  when: ansible_facts['distribution'] == "Debian"
 
 - name: Install basic packages - xclip (all + x11 display server)
   ansible.builtin.package:
@@ -306,7 +306,7 @@
       - wget
       - xz-utils
       - zlib1g-dev
-  when: ansible_distribution == "Debian"
+  when: ansible_facts['distribution'] == "Debian"
 
 # - Steam ppa wurde hinzugefügt in config_workstation-addrepos.yml
 # - https://linuxcapable.com/how-to-install-steam-on-debian-linux/
@@ -329,4 +329,4 @@
       - libglx-mesa0
       - libgl1-mesa-dri
   when:
-    - ansible_distribution == "Debian"
+    - ansible_facts['distribution'] == "Debian"

@@ -12,7 +12,7 @@
 #   community.libvirt.virt_net:
 #     state: active # ansonsten läuft nächster Schritt "destroy/undefine default virtual network" auf Fehler
 #     name: default
-#   # - ansible_virtualization_role != "guest"
+#   # - ansible_facts['virtualization_role'] != "guest"
 #
 # # fatal: [localhost]: FAILED! => {"changed": false, "msg": "The `libvirt` module is not importable. Check the requirements."}
 
@@ -24,7 +24,7 @@
 #     creates: /home/{{ env_user }}/.ansible_vm_qemuKvmCreated
 #   ignore_errors: true
 #   when:
-#   # - ansible_virtualization_role != "guest"
+#   # - ansible_facts['virtualization_role'] != "guest"
 #
 #   # error: internal error: Network is already in use by interface enp1s0
 #   # -> wenn Rechner/VM und 'default' virtuel Network (i.d.R.) 192.168.122.0/24 -> z.B. 'default' subnet ändern
@@ -40,7 +40,7 @@
     creates: /home/{{ env_user }}/.ansible_vm_qemuKvmCreated
   # ignore_errors: true # Rminder to delete default net manually
   when:
-    - ansible_virtualization_role != "guest"
+    - ansible_facts['virtualization_role'] != "guest"
 
 - name: VM - create virtual networks (Qemu-Kvm)
   tags: VM
@@ -54,7 +54,7 @@
     creates: /home/{{ env_user }}/.ansible_vm_qemuKvmCreated
   # ignore_errors: true # da 'default' schon/noch da
   when:
-    - ansible_virtualization_role != "guest"
+    - ansible_facts['virtualization_role'] != "guest"
 
 # da alle virt. Netw. auf autostart + rechner sowiese neugestartet werden muss: auskommentiert
 # - name: VM - start all virtual networks (Qemu-Kvm)
@@ -68,7 +68,7 @@
 #   ignore_errors: true # u.a.: Failed to start network default\nerror: internal error: Network is already in use by interface enp1s0
 #   #                   # +: Fehler bei den anderen in zusammenhang mit Firewall
 #   when:
-#     - ansible_virtualization_role != "guest"
+#     - ansible_facts['virtualization_role'] != "guest"
 #
 - name: VM - autostart all virtual networks (Qemu-Kvm)
   tags: VM
@@ -79,7 +79,7 @@
     creates: /home/{{ env_user }}/.ansible_vm_qemuKvmCreated
   # ignore_errors: true
   when:
-    - ansible_virtualization_role != "guest"
+    - ansible_facts['virtualization_role'] != "guest"
 
 - name: VM - create virtual machines (Qemu-Kvm)
   tags: VM
@@ -91,7 +91,7 @@
     creates: /home/{{ env_user }}/.ansible_vm_qemuKvmCreated
   # ignore_errors: true
   when:
-    - ansible_virtualization_role != "guest"
+    - ansible_facts['virtualization_role'] != "guest"
 
 - name: VM - redefine + set current virtual machine snapshots (Qemu-Kvm)
   tags: VM
@@ -102,7 +102,7 @@
     creates: /home/{{ env_user }}/.ansible_vm_qemuKvmCreated
   # ignore_errors: true
   when:
-    - ansible_virtualization_role != "guest"
+    - ansible_facts['virtualization_role'] != "guest"
 
 # TODO: anpassen / festlegen System-Device; aktuell nur für 1 nvme-SSD passend
 #
@@ -114,7 +114,7 @@
 #  args:
 #    creates: /home/{{ env_user }}/.ansible_vm_qemuKvmCreated
 #  when:
-#    - ansible_virtualization_role != "guest"
+#    - ansible_facts['virtualization_role'] != "guest"
 #
 - name: VM - define user for QEMU processes run by system instance (Qemu-Kvm)
   tags: VM
@@ -124,7 +124,7 @@
     line: 'user = "root"'
     backup: true
   when:
-    - ansible_virtualization_role != "guest"
+    - ansible_facts['virtualization_role'] != "guest"
 
 - name: VM - define group for QEMU processes run by system instance (Qemu-Kvm)
   tags: VM
@@ -133,7 +133,7 @@
     insertafter: '#group = "libvirt-qemu"'
     line: 'group = "root"'
   when:
-    - ansible_virtualization_role != "guest"
+    - ansible_facts['virtualization_role'] != "guest"
 
 - name: VM - libvirt should dynamically change file ownership to match the configured user/group above (Qemu-Kvm)
   tags: VM
@@ -142,7 +142,7 @@
     insertafter: "#dynamic_ownership = 1"
     line: "dynamic_ownership = 1"
   when:
-    - ansible_virtualization_role != "guest"
+    - ansible_facts['virtualization_role'] != "guest"
 
 - name: VM - libvirt should remember and restore the original ownership over files it is relabeling (Qemu-Kvm)
   tags: VM
@@ -152,7 +152,7 @@
     line: "remember_owner = 1"
     state: "present"
   when:
-    - ansible_virtualization_role != "guest"
+    - ansible_facts['virtualization_role'] != "guest"
 
 - name: VM - create 'flag-file' indicating VM-stuff was created (Qemu-Kvm)
   tags: VM
@@ -164,4 +164,4 @@
     mode: "0644"
     modification_time: preserve
   when:
-    - ansible_virtualization_role != "guest"
+    - ansible_facts['virtualization_role'] != "guest"

@@ -3,23 +3,23 @@
   ansible.builtin.apt:
     autoclean: true
   changed_when: false
-  when: ansible_pkg_mgr == "apt"
+  when: ansible_facts['pkg_mgr'] == "apt"
 
 # - name: autoremove orphan packages (apt)
 #  tags: always,cleanup
 #  apt:
 #    autoremove: yes
 #    purge: yes
-#  when: ansible_pkg_mgr == "apt"
+#  when: ansible_facts['pkg_mgr'] == "apt"
 
 - name: Clean package cache and orphaned packages (pacman)
   ansible.builtin.command: paccache -rk2 -ruk1
-  when: ansible_pkg_mgr == "pacman"
+  when: ansible_facts['pkg_mgr'] == "pacman"
 
 ### flatpak
 - name: Remove unused flatpak packages
   ansible.builtin.command: flatpak uninstall --unused -y
   when:
-  - env_datadirs is defined
-  - env_datadirs.find("/var/lib/flatpak")
+    - env_datadirs is defined
+    - env_datadirs.find("/var/lib/flatpak")
   changed_when: false

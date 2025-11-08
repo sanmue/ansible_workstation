@@ -32,7 +32,7 @@
     block: |
       clamav ALL = (ALL) NOPASSWD: SETENV: /usr/bin/notify-send, /usr/bin/mail
   # when:
-  #   - ansible_distribution in ["Archlinux", "Debian"]
+  #   - ansible_facts['distribution'] in ["Archlinux", "Debian"]
 
   # ############################
   # ### set zsh as default shell
@@ -41,4 +41,4 @@
 - name: Config all users - env_user - set zsh as standard shell (all)
   ansible.builtin.shell: "usermod --shell $(which zsh) {{ env_user }}"
   # when:
-  #   - ansible_distribution in ["Archlinux", "Debian"]
+  #   - ansible_facts['distribution'] in ["Archlinux", "Debian"]

@@ -26,7 +26,7 @@
     state: present
     backup: true
   when:
-    - ansible_distribution == "Archlinux"
+    - ansible_facts['distribution'] == "Archlinux"
     - etcdefgrub.stat.exists
     - not efiloaderconf.stat.exists
     - not bootefiloaderconf.stat.exists
@@ -37,7 +37,7 @@
   ansible.builtin.shell:
     cmd: sudo sed -Ei '/GRUB_TIMEOUT_STYLE=hidden/s/hidden/menu/' /etc/default/grub
   when:
-    - ansible_distribution == "Archlinux"
+    - ansible_facts['distribution'] == "Archlinux"
     - etcdefgrub.stat.exists
     - not efiloaderconf.stat.exists
     - not bootefiloaderconf.stat.exists
@@ -46,7 +46,7 @@
   ansible.builtin.shell:
     cmd: sudo grub-mkconfig -o /boot/grub/grub.cfg
   when:
-    - ansible_distribution == "Archlinux"
+    - ansible_facts['distribution'] == "Archlinux"
     - etcdefgrub.stat.exists
     - not efiloaderconf.stat.exists
     - not bootefiloaderconf.stat.exists
@@ -567,7 +567,7 @@
         alias cdi='zi' # cd with interactive selection (using fzf)
       fi
   # when:
-  #   - ansible_distribution in ["Archlinux"]
+  #   - ansible_facts['distribution'] in ["Archlinux"]
 
 - name: All settings misc - Bashrc - custom alias definitions - 'fastfetch' (User, all)
   tags: shellrc
@@ -584,7 +584,7 @@
         alias fastfetch='fastfetch --logo small'
       fi
   when:
-    - ansible_distribution in ["Archlinux"]
+    - ansible_facts['distribution'] in ["Archlinux"]
 
 - name: All settings misc - Bashrc - Insert/Update additional paths and config - nvm (User, all)
   tags: shellrc
@@ -647,7 +647,7 @@
       eval "$(pyenv init - bash)"
       eval "$(pyenv virtualenv-init -)"
   when:
-    - ansible_distribution in ["Debian"]
+    - ansible_facts['distribution'] in ["Debian"]
 
 # - name: All settings misc - Bashrc - initial command 'pyenv init' - pyenv (User, Arch)
 #  tags: shellrc
@@ -659,7 +659,7 @@
 #    creates: /home/{{ env_user }}/.pyenvinitExecuted
 #  ignore_errors: true
 #  when:
-#    - ansible_distribution in ["Archlinux"]
+#    - ansible_facts['distribution'] in ["Archlinux"]
 
 - name: All settings misc - Bashrc - Insert/Update additional paths and config - pyenv (User, Arch)
   tags: shellrc
@@ -676,7 +676,7 @@
       eval "$(pyenv init - bash)"
       eval "$(pyenv virtualenv-init -)"
   when:
-    - ansible_distribution in ["Archlinux"]
+    - ansible_facts['distribution'] in ["Archlinux"]
 
 - name: All settings misc - Bashrc - Insert/Update additional paths and config - uv (User, all)
   tags: shellrc
@@ -704,7 +704,7 @@
       # do AFTER init of 'starship'
       eval "$(zoxide init bash)"
   # when:
-  #   - ansible_distribution in ["Archlinux"]
+  #   - ansible_facts['distribution'] in ["Archlinux"]
 
 # https://wiki.archlinux.org/title/Systemd/User#PATH
 - name: All settings misc - Bashrc - systemd user import-environment (User, all)
@@ -1166,7 +1166,7 @@
         alias cdi='zi' # cd with interactive selection (using fzf)
       fi
   # when:
-  #   - ansible_distribution in ["Archlinux"]
+  #   - ansible_facts['distribution'] in ["Archlinux"]
 
 - name: All settings misc - Zshrc - custom alias definitions - 'fastfetch' (User, all)
   tags: shellrc
@@ -1183,7 +1183,7 @@
         alias fastfetch='fastfetch --logo small'
       fi
   when:
-    - ansible_distribution in ["Archlinux"]
+    - ansible_facts['distribution'] in ["Archlinux"]
 
 - name: All settings misc - Zshrc - Insert/Update additional paths and config - nvm (User, all)
   tags: shellrc
@@ -1246,7 +1246,7 @@
       eval "$(pyenv init - zsh)"
       eval "$(pyenv virtualenv-init -)"
   when:
-    - ansible_distribution in ["Debian"]
+    - ansible_facts['distribution'] in ["Debian"]
 
 # - name: All settings misc - Zshrc - initial command 'pyenv init' - pyenv (User, Arch)
 #  tags: shellrc
@@ -1258,7 +1258,7 @@
 #    creates: /home/{{ env_user }}/.pyenvinitExecuted
 #  ignore_errors: true
 #  when:
-#    - ansible_distribution in ["Archlinux"]
+#    - ansible_facts['distribution'] in ["Archlinux"]
 
 - name: All settings misc - Zshrc - Insert/Update additional paths and config - pyenv (User, Arch)
   tags: shellrc
@@ -1275,7 +1275,7 @@
       eval "$(pyenv init - zsh)"
       eval "$(pyenv virtualenv-init -)"
   when:
-    - ansible_distribution in ["Archlinux"]
+    - ansible_facts['distribution'] in ["Archlinux"]
 
 - name: All settings misc - Zshrc - Insert/Update additional paths and config - uv (User, all)
   tags: shellrc
@@ -1303,7 +1303,7 @@
       # do AFTER init of 'starship'
       eval "$(zoxide init zsh)"
   # when:
-  #   - ansible_distribution in ["Archlinux"]
+  #   - ansible_facts['distribution'] in ["Archlinux"]
 
 - name: All settings misc - Zshrc - Insert/Update additional paths and conig - tilix - vte config (User, all)
   tags: shellrc
@@ -1589,7 +1589,7 @@
     group: root
     mode: "0755"
     backup: true
-  when: ansible_distribution in ["Debian"]
+  when: ansible_facts['distribution'] in ["Debian"]
 
 # fatal: detected dubious ownership in repository at '/usr/share/zsh/plugins/... # add an exception:
 #
@@ -1610,26 +1610,26 @@
 #     - /usr/share/zsh/plugins/zsh-syntax-highlighting
 #     - /usr/share/zsh/plugins/zsh-history-substring-search
 #   when:
-#     - ansible_distribution in ["Debian"]
+#     - ansible_facts['distribution'] in ["Debian"]
 
 - name: All settings misc - zsh plugin git repo - add safe.directory - autosuggestions (Debian)
   tags: shellrc # , skip_ansible_lint
   become: true
   ansible.builtin.shell: /usr/bin/git config --global --add safe.directory /usr/share/zsh/plugins/zsh-autosuggestions
   when:
-    - ansible_distribution in ["Debian"]
+    - ansible_facts['distribution'] in ["Debian"]
 
 - name: All settings misc - zsh plugin git repo - add safe.directory - syntax-highlighting (Debian)
   tags: shellrc # , skip_ansible_lint
   ansible.builtin.shell: /usr/bin/git config --global --add safe.directory /usr/share/zsh/plugins/zsh-syntax-highlighting
   when:
-    - ansible_distribution in ["Debian"]
+    - ansible_facts['distribution'] in ["Debian"]
 
 - name: All settings misc - zsh plugin git repo - add safe.directory - history-substring-search (Debian)
   tags: shellrc # , skip_ansible_lint
   ansible.builtin.shell: /usr/bin/git config --global --add safe.directory /usr/share/zsh/plugins/zsh-history-substring-search
   when:
-    - ansible_distribution in ["Debian"]
+    - ansible_facts['distribution'] in ["Debian"]
 
 # #######
 # ### vim
@@ -1677,7 +1677,7 @@
       set undolevels=1000 " Number of undo levels
       " #
   when:
-    - ansible_distribution == "Debian"
+    - ansible_facts['distribution'] == "Debian"
 
 - name: All settings misc - Set vim global config (Arch)
   tags: vimrc
@@ -1715,7 +1715,7 @@
       set hlsearch    " Highlight all search results
       set undolevels=1000 " Number of undo levels
       " #
-  when: ansible_distribution == "Archlinux"
+  when: ansible_facts['distribution'] == "Archlinux"
 
 - name: All settings misc - Set vim config - user (all)
   tags: vimrc
@@ -1915,7 +1915,7 @@
     replace: "--country Germany,France,Austria,Switzerland,Netherlands,Belgium,Sweden"
     backup: true
   when:
-    - ansible_distribution in ["Archlinux"]
+    - ansible_facts['distribution'] in ["Archlinux"]
 
 - name: All settings misc - reflector - how many mirrors to use (Arch)
   ansible.builtin.replace:
@@ -1925,7 +1925,7 @@
     replace: "--latest 8"
     backup: true
   when:
-    - ansible_distribution in ["Archlinux"]
+    - ansible_facts['distribution'] in ["Archlinux"]
 
 # ######################
 # ### Visual Studio Code

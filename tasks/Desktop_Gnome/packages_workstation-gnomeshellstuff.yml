@@ -16,4 +16,4 @@
       - gnome-shell-extension-gsconnect-browsers
   when:
     - env_desktop == "gnome"
-    - ansible_distribution == "Debian"
+    - ansible_facts['distribution'] == "Debian"
