@@ -13,9 +13,11 @@
     - name: AnsibleFacts - set fact - env_user
       ansible.builtin.set_fact:
         env_user: "{{ ansible_facts['env']['USER'] }}" # userid
-    - name: Test ansible_Env
-      ansible.builtin.import_tasks: ansible_Env.yml
+    # - name: Test ansible_Env
+    #   ansible.builtin.import_tasks: ansible_Env.yml
     # - name: Test firewalld
-    #   ansible.builtin.import_tasks: tests_firewalld.yml
+    #   ansible.builtin.import_tasks: firewalld.yml
     # - name: Test starshiptoml_geturl
     #  ansible.builtin.import_tasks: git-starshiptoml.yml
+    - name: Test nvmNodejs
+      ansible.builtin.import_tasks: nvmNodejs.yml

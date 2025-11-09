@@ -1,0 +1,97 @@
+# #################
+# ### NVM / Node.js
+# #################
+# siehe auch ...all-settings-misc.yml (shell config)
+
+- name: NvmNodejs - Clone nvm github repo (all)
+  tags: [upnvm]
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.git:
+    repo: https://github.com/nvm-sh/nvm.git
+    dest: "/tmp/.nvm"
+    version: master
+    update: false
+    clone: true
+    recursive: false  # Submodule ignorieren
+
+- name: NvmNodejs - Update nvm repo (checkout master and pull)
+  tags: [never, upnvm]
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.git:
+    repo: https://github.com/nvm-sh/nvm.git
+    dest: "/tmp/.nvm"
+    version: master
+    update: true
+    recursive: false
+
+- name: NvmNodejs - Get latest tag commit
+  tags: [upnvm]
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.command: git rev-list --tags --max-count=1
+  args:
+    chdir: "/tmp/.nvm"
+  register: latest_tag_commit
+  changed_when: false
+
+- name: NvmNodejs - Register current nvm version of cloned git repo (all)
+  tags: [upnvm]
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.command: >
+    git describe --abbrev=0 --tags --match "v[0-9]*"
+    {{ latest_tag_commit.stdout }}
+  args:
+    chdir: "/tmp/.nvm"
+  register: nvmversion
+  changed_when: false
+
+- name: NvmNodejs - Print current nvm version from cloned git repo (all)
+  tags: [upnvm]
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.debug:
+    msg: "{{ nvmversion.stdout }}"
+
+- name: NvmNodejs - Checkout current nvm version of cloned git repo (all)
+  tags: [upnvm]
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.git:
+    repo: https://github.com/nvm-sh/nvm.git
+    dest: "/tmp/.nvm"
+    version: "{{ nvmversion.stdout }}"
+    force: true
+    recursive: false
+
+- name: NvmNodejs - Loads nvm + nvm bash_completion + installs current nodejs version via nvm (all)
+  tags: [upnvm]
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.shell: |
+    NVM_DIR="/tmp/.nvm"
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # load nvm
+    nvm install node
+    exit 0
+  args:
+    executable: /bin/bash
+
+- name: NvmNodejs - Install packages via npm (all)
+  tags: [upnvm]
+  become: true
+  become_user: "{{ env_user }}"
+  community.general.npm:
+    name: yaml-language-server
+    global: false
+    path: "/tmp/.nvm"
+    state: present
+
+# - name: NvmNodejs - Install packages via npm (all)
+#   become: true
+#   become_user: "{{ env_user }}"
+#   ansible.builtin.shell:
+#     cmd: npm install --save-dev yaml-language-server
+#   args:
+#     chdir: "/tmp/.nvm/"
