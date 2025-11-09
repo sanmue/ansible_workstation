@@ -15,43 +15,64 @@
 # - https://packaging.python.org/en/latest/specifications/externally-managed-environments/#writing-to-only-the-target-sysconfig-scheme
 # !!!
 
+# - name: Python Environment - Get and register Python version (Arch)
+#   become: true
+#   become_user: "{{ env_user }}"
+#   ansible.builtin.shell: set -o pipefail && python --version | cut -d ' ' -f2
+#   register: python_version
+#   # ignore_errors: true
+#   args:
+#     creates: "/home/{{ env_user }}/.ansible_PythonEnv"
+#   when:
+#     - ansible_facts['distribution'] in ["Archlinux"]
 
-- name: Python Environment - Get and register Python version (Arch)
+# # Error: ... Illegal option -o pipefail
+# - name: Python Environment - Get and register Python 3 version (all, not Arch)
+#   become: true
+#   become_user: "{{ env_user }}"
+#   ansible.builtin.shell: python3 --version | cut -d ' ' -f2
+#   register: python_version
+#   # ignore_errors: true
+#   args:
+#     creates: "/home/{{ env_user }}/.ansible_PythonEnv"
+#   when:
+#     - ansible_facts['distribution'] not in ["Archlinux"]
+
+# Zusammenfassung der ermittelten Python Version:
+- name: Python Environment - Get and register Python version (all)
   become: true
   become_user: "{{ env_user }}"
-  ansible.builtin.shell: set -o pipefail && python --version | cut -d ' ' -f2
-  register: pythonVersion
-  # ignore_errors: true
+  ansible.builtin.shell: |
+    set -o pipefail
+    {{ python_cmd }} --version 2>&1 | cut -d ' ' -f2
+    # 2>&1: Leitet stderr nach stdout um, falls python --version auf stderr schreibt
+  register: python_version
   args:
+    executable: /bin/bash # Erzwingt die Verwendung von Bash, die pipefail unterstützt
     creates: "/home/{{ env_user }}/.ansible_PythonEnv"
-  when:
-    - ansible_facts['distribution'] in ["Archlinux"]
-
-# Error: ... Illegal option -o pipefail
-- name: Python Environment - Get and register Python 3 version (all, not Arch)
-  become: true # , skip_ansible_lint
-  become_user: "{{ env_user }}"
-  ansible.builtin.shell: python3 --version | cut -d ' ' -f2
-  register: python3Version
+  vars:
+    python_cmd: "{% if ansible_facts['distribution'] == 'Archlinux' %}python{% else %}python3{% endif %}"
   # ignore_errors: true
-  args:
-    creates: "/home/{{ env_user }}/.ansible_PythonEnv"
-  when:
-    - ansible_facts['distribution'] not in ["Archlinux"]
+  failed_when:
+    - python_version.rc != 0
+    - python_version.stdout == ""
+    # verhindert, dass Task bei "normalen" Fehlern (z. B. Python nicht installiert) sofort abbricht,
+    # aber trotzdem als fehlgeschlagen markiert wird, wenn wirklich etwas schiefgeht (z. B. Kommando nicht ausführbar)
+  changed_when: false # Da der Task nur Informationen abfragt, sollte er nicht als "changed" markiert werden.
 
-# - name: Python Environment - msg pythonVersion (env_user, all)
+# - name: Python Environment - msg python_version (env_user, all)
 #   become: true
 #   become_user: "{{ env_user }}"
 #   ansible.builtin.debug:
-#     var: pythonVersion
-#     # var: pythonVersion.stdout
+#     var: python_version
+#     # var: python_version.stdout
 
 - name: Python Environment - pyenv install python (env_user, Arch)
   become: true
   become_user: "{{ env_user }}"
-  ansible.builtin.shell: "pyenv install {{ pythonVersion.stdout }}"
+  ansible.builtin.shell: "pyenv install {{ python_version.stdout }}"
   args:
-    creates: "/home/{{ env_user }}/.pyenv/versions/{{ pythonVersion.stdout }}"
+    creates: "/home/{{ env_user }}/.pyenv/versions/{{ python_version.stdout }}"
   register: pyenv_install_result
   changed_when: pyenv_install_result.rc == 0 # Markiert den Task nur als "changed", wenn der Befehl erfolgreich war (Return Code 0)
   failed_when: # Definiert, wann der Task als fehlgeschlagen gilt
@@ -64,9 +85,9 @@
 - name: Python Environment - pyenv install python 3 (env_user, all, not Arch)
   become: true
   become_user: "{{ env_user }}"
-  ansible.builtin.shell: "pyenv install {{ python3Version.stdout }}"
+  ansible.builtin.shell: "pyenv install {{ python_version.stdout }}"
   args:
-    creates: "/home/{{ env_user }}/.pyenv/versions/{{ python3Version.stdout }}"
+    creates: "/home/{{ env_user }}/.pyenv/versions/{{ python_version.stdout }}"
   register: pyenv_install_result
   changed_when: pyenv_install_result.rc == 0
   failed_when:
@@ -79,7 +100,7 @@
 - name: Python Environment - pyenv set global python version (env_user, Arch)
   become: true
   become_user: "{{ env_user }}"
-  ansible.builtin.shell: "pyenv global {{ pythonVersion.stdout }}"
+  ansible.builtin.shell: "pyenv global {{ python_version.stdout }}"
   args:
     creates: "/home/{{ env_user }}/.ansible_PythonEnv"
   when:
@@ -88,7 +109,7 @@
 - name: Python Environment - pyenv set global python 3 version (env_user, all, not Arch)
   become: true
   become_user: "{{ env_user }}"
-  ansible.builtin.shell: "pyenv global {{ python3Version.stdout }}"
+  ansible.builtin.shell: "pyenv global {{ python_version.stdout }}"
   args:
     creates: "/home/{{ env_user }}/.ansible_PythonEnv"
   when:
