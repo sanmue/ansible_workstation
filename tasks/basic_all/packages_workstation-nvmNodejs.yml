@@ -3,62 +3,39 @@
 # #################
 # siehe auch ...all-settings-misc.yml (shell config)
 
-- name: Nvm / Nodejs - Info zu möglicher Fehlermeldung (env_user, all)
-  become: true
-  become_user: "{{ env_user }}"
-  ansible.builtin.debug:
-    msg: "Wenn es in einem Folgeschritt zu Fehlermelung kommt: Terminal schließen + wieder neu öffnen + nochmal Script/Playbook starten"
-
-# https://github.com/nvm-sh/nvm?tab=readme-ov-file#ansible
-# mit fester Versionsangabe
-# - name: Install nvm
-#   ansible.builtin.shell: >
-#     curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
-#   args:
-#     creates: "{{ ansible_env.HOME }}/.nvm/nvm.sh"
-
-# Variable Variante im Folgenden, nimmt aktuelle nvm Version
-# Kombi aus:
-# - https://github.com/nvm-sh/nvm?tab=readme-ov-file#git-install
-# - https://github.com/nvm-sh/nvm?tab=readme-ov-file#manual-install
-
-# - name: NvmNodejs - Clone nvm github repo (all)
-#   become: true
-#   become_user: "{{ env_user }}"
-#   ansible.builtin.git:
-#     repo: 'https://github.com/nvm-sh/nvm.git'
-#     dest: "/home/{{ env_user }}/.nvm"
-#     clone: true
-#     update: true
-#     # ssh_opts: "-o IdentitiesOnly=yes"
-#     # accept_newhostkey: true
-# fatal: [localhost]: FAILED! => {"changed": false, "msg": "Failed to init/update submodules: Submodule 'test/fixtures/nvmrc' (git@github.com:nvm-sh/nvmrc.git) registered for path 'test/fixtures/nvmrc'\nCloning into '/home/{{ env_user }}/.nvm/test/fixtures/nvmrc'...\ngit@github.com: Permission denied (publickey).\r\nfatal: Could not read from remote repository.\n\nPlease make sure you have the correct access rights\nand the repository exists. ...
-
 - name: NvmNodejs - Clone nvm github repo (all)
   tags: [upnvm]
   become: true
   become_user: "{{ env_user }}"
-  ansible.builtin.shell:
-    cmd: "git clone https://github.com/nvm-sh/nvm.git /home/{{ env_user }}/.nvm"
-  args:
-    creates: "/home/{{ env_user }}/.nvm"
+  ansible.builtin.git:
+    repo: https://github.com/nvm-sh/nvm.git
+    dest: "/home/{{ env_user }}/.nvm"
+    version: master
+    update: false
+    clone: true
+    recursive: false
 
-- name: NvmNodejs - chckout branch master and pull (update nvm via tag 'upnvm' only, all)
-  tags: [never, upnvm]
+- name: NvmNodejs - Get latest tag commit
+  tags: [upnvm]
   become: true
   become_user: "{{ env_user }}"
-  ansible.builtin.shell:
-    cmd: git checkout master && git pull
+  ansible.builtin.command: git rev-list --tags --max-count=1
+  args:
     chdir: "/home/{{ env_user }}/.nvm/"
+  register: latest_tag_commit
+  changed_when: false
 
 - name: NvmNodejs - Register current nvm version of cloned git repo (all)
   tags: [upnvm]
   become: true
   become_user: "{{ env_user }}"
-  ansible.builtin.shell:
-    cmd: git describe --abbrev=0 --tags --match "v[0-9]*" $(git rev-list --tags --max-count=1) # letztes Tag mit "v[Ziffern]" -> Versions-Nr; e.g.: v0.40.1
+  ansible.builtin.command: >
+    git describe --abbrev=0 --tags --match "v[0-9]*"
+    {{ latest_tag_commit.stdout }}
+  args:
     chdir: "/home/{{ env_user }}/.nvm/"
   register: nvmversion
+  changed_when: false
 
 - name: NvmNodejs - Print current nvm version from cloned git repo (all)
   tags: [upnvm]
@@ -71,42 +48,30 @@
   tags: [upnvm]
   become: true
   become_user: "{{ env_user }}"
-  ansible.builtin.shell:
-    cmd: "git checkout {{ nvmversion.stdout }}"
-    chdir: /home/{{ env_user }}/.nvm/
+  ansible.builtin.git:
+    repo: https://github.com/nvm-sh/nvm.git
+    dest: "/home/{{ env_user }}/.nvm"
+    version: "{{ nvmversion.stdout }}"
+    force: true
+    recursive: false
 
-#    - name: NvmNodejs - Checkout latest nvm version of cloned git repo (all)
-#      become: true
-#      become_user: "{{ env_user }}"
-#      ansible.builtin.git:
-#        repo: 'https://github.com/nvm-sh/nvm.git'
-#        dest: /home/{{ env_user }}/.nvm
-#        accept_hostkey: true
-#        force: true
-#        update: true
-#        version: "{{ nvmversion.stdout }}"
-# Fehler # TODO
-
-- name: NvmNodejs - Loads nvm + nvm bash_completion + installs current nodejs version via nvm (all)
+- name: NvmNodejs - Loads nvm + installs current nodejs version via nvm (all)
   tags: [upnvm]
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: |
     NVM_DIR="$HOME/.nvm"
-    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # load nvm
-
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
     nvm install node
-
-    exit 0
-
-# - name: NvmNodejs - Loads nvm + installs current nodejs version via nvm (all)
-#   become: true
-#   become_user: "{{ env_user }}"
-#   ansible.builtin.shell:
-#     cmd: "source /home/{{ env_user }}/.nvm/nvm.sh && nvm install node"
+  args:
+    executable: /bin/bash
 
 - name: NvmNodejs - Install packages via npm (all)
+  tags: [upnvm]
   become: true
   become_user: "{{ env_user }}"
-  ansible.builtin.shell:
-    cmd: npm install --save-dev yaml-language-server
+  community.general.npm:
+    name: yaml-language-server
+    global: false
+    path: "/home/{{ env_user }}/.nvm"
+    state: present
