@@ -43,9 +43,7 @@
 #   become: true
 #   become_user: "{{ env_user }}"
 #   ansible.builtin.debug:
-#     # msg: "pythonVersion: {{ pythonVersion }}"
 #     var: pythonVersion
-#     # msg: "pythonVersion.stdout: '{{ pythonVersion.stdout }}'"
 #     # var: pythonVersion.stdout
 
 - name: Python Environment - pyenv install python (env_user, Arch)
@@ -53,10 +51,13 @@
   become_user: "{{ env_user }}"
   ansible.builtin.shell: "pyenv install {{ pythonVersion.stdout }}"
   args:
-    # creates: "/home/{{ env_user }}/.ansible_PythonEnv"
-    # falls shon ausgeführt, aber kein FlagFile gesetzt z.B. wg. Fehler in Folge-Task:
     creates: "/home/{{ env_user }}/.pyenv/versions/{{ pythonVersion.stdout }}"
-  ignore_errors: true
+  register: pyenv_install_result
+  changed_when: pyenv_install_result.rc == 0 # Markiert den Task nur als "changed", wenn der Befehl erfolgreich war (Return Code 0)
+  failed_when: # Definiert, wann der Task als fehlgeschlagen gilt
+    - pyenv_install_result.rc != 0
+    - "'already installed' not in pyenv_install_result.stderr"
+    # d.h.: Wenn Python bereits installiert ist, wird der Task nicht als fehlgeschlagen markiert.
   when:
     - ansible_facts['distribution'] in ["Archlinux"]
 
@@ -65,12 +66,15 @@
   become_user: "{{ env_user }}"
   ansible.builtin.shell: "pyenv install {{ python3Version.stdout }}"
   args:
-    # creates: "/home/{{ env_user }}/.ansible_PythonEnv"
-    # # falls shon ausgeführt, aber kein FlagFile gesetzt z.B. wg. Fehler in Folge-Task:
     creates: "/home/{{ env_user }}/.pyenv/versions/{{ python3Version.stdout }}"
-  ignore_errors: true
+  register: pyenv_install_result
+  changed_when: pyenv_install_result.rc == 0
+  failed_when:
+    - pyenv_install_result.rc != 0
+    - "'already installed' not in pyenv_install_result.stderr"
   when:
     - ansible_facts['distribution'] not in ["Archlinux"]
+
 
 - name: Python Environment - pyenv set global python version (env_user, Arch)
   become: true
