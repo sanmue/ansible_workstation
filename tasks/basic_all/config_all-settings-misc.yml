@@ -1591,45 +1591,37 @@
     backup: true
   when: ansible_facts['distribution'] in ["Debian"]
 
-# fatal: detected dubious ownership in repository at '/usr/share/zsh/plugins/... # add an exception:
-#
-# git_config module instead of:
-# become: true # ansible.builtin.shell: /usr/bin/git config --global --add safe.directory /usr/share/zsh/plugins/zsh-autosuggestions
-# but: # add_mode: add # as of 11/2024 / ansible [core 2.14.16]: 'add_mode' not available
-#
+- name: All settings misc - zsh plugin git repo - add safe.directory (Debian)
+  tags: shellrc
+  community.general.git_config:
+    name: safe.directory
+    scope: global
+    value: "{{ item }}"
+    state: present
+  loop:
+    - /usr/share/zsh/plugins/zsh-autosuggestions
+    - /usr/share/zsh/plugins/zsh-syntax-highlighting
+    - /usr/share/zsh/plugins/zsh-history-substring-search
+  when: ansible_facts['distribution'] in ["Debian"]
+
 # - name: All settings misc - zsh plugin git repo - add safe.directory - autosuggestions (Debian)
-#   tags: shellrc
+#   tags: shellrc # , skip_ansible_lint
 #   become: true
-#   community.general.git_config:
-#     name: safe.directory
-#     scope: global
-#     value: "{{ item }}"
-#     add_mode: add # as of 11/2024 / ansible [core 2.14.16]: 'add_mode' not available yet
-#   loop:
-#     - /usr/share/zsh/plugins/zsh-autosuggestions
-#     - /usr/share/zsh/plugins/zsh-syntax-highlighting
-#     - /usr/share/zsh/plugins/zsh-history-substring-search
+#   ansible.builtin.shell: /usr/bin/git config --global --add safe.directory /usr/share/zsh/plugins/zsh-autosuggestions
 #   when:
 #     - ansible_facts['distribution'] in ["Debian"]
 
-- name: All settings misc - zsh plugin git repo - add safe.directory - autosuggestions (Debian)
-  tags: shellrc # , skip_ansible_lint
-  become: true
-  ansible.builtin.shell: /usr/bin/git config --global --add safe.directory /usr/share/zsh/plugins/zsh-autosuggestions
-  when:
-    - ansible_facts['distribution'] in ["Debian"]
+# - name: All settings misc - zsh plugin git repo - add safe.directory - syntax-highlighting (Debian)
+#   tags: shellrc # , skip_ansible_lint
+#   ansible.builtin.shell: /usr/bin/git config --global --add safe.directory /usr/share/zsh/plugins/zsh-syntax-highlighting
+#   when:
+#     - ansible_facts['distribution'] in ["Debian"]
 
-- name: All settings misc - zsh plugin git repo - add safe.directory - syntax-highlighting (Debian)
-  tags: shellrc # , skip_ansible_lint
-  ansible.builtin.shell: /usr/bin/git config --global --add safe.directory /usr/share/zsh/plugins/zsh-syntax-highlighting
-  when:
-    - ansible_facts['distribution'] in ["Debian"]
-
-- name: All settings misc - zsh plugin git repo - add safe.directory - history-substring-search (Debian)
-  tags: shellrc # , skip_ansible_lint
-  ansible.builtin.shell: /usr/bin/git config --global --add safe.directory /usr/share/zsh/plugins/zsh-history-substring-search
-  when:
-    - ansible_facts['distribution'] in ["Debian"]
+# - name: All settings misc - zsh plugin git repo - add safe.directory - history-substring-search (Debian)
+#   tags: shellrc # , skip_ansible_lint
+#   ansible.builtin.shell: /usr/bin/git config --global --add safe.directory /usr/share/zsh/plugins/zsh-history-substring-search
+#   when:
+#     - ansible_facts['distribution'] in ["Debian"]
 
 # #######
 # ### vim
