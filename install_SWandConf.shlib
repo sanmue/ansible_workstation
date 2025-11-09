@@ -194,12 +194,14 @@ config-snapper() {
                     sudo mkdir -p "${btrfsSubvolLayout[${subvol}]}"
                 fi
 
-                if [[ $(grep "subvol=/${subvol}," /etc/fstab) ]]; then # wenn Eintrag für z.B. ...'subvol=/@,'... bereits vorhanden
+                #if [[ $(grep "subvol=/${subvol}," /etc/fstab) ]]; then
+                if grep -q "subvol=/${subvol}," /etc/fstab; then # wenn Eintrag für z.B. ...'subvol=/@,'... bereits vorhanden
                     echo -e "\e[0;33m    |__ Eintrag für Subvolume '${subvol}' bereits vorhanden, ggf. prüfen/korrigieren\e[0m"
                     subvolInFstab='true'
                 fi
 
-                if [[ $(grep -E " +${btrfsSubvolLayout[${subvol}]} +" /etc/fstab) ]]; then # wenn Mount Point (z.B. für '/') bereits vorhanden
+                #if [[ $(grep -E " +${btrfsSubvolLayout[${subvol}]} +" /etc/fstab) ]]; then
+                if grep -q -E " +${btrfsSubvolLayout[${subvol}]} +" /etc/fstab; then # wenn Mount Point (z.B. für '/') bereits vorhanden
                     echo -e "\e[0;33m    |__ Mount-Ziel '${btrfsSubvolLayout[${subvol}]}' bereits vorhanden, '${subvol}' wird nicht (nochmal) hinterlegt, ggf. prüfen/korrigieren\e[0m"
                     mountPointInFstab='true'
                 fi
@@ -214,7 +216,8 @@ config-snapper() {
             fi
 
             # --- snapperRollbackFolder (.btrfsroot)
-            if [[ ! $(grep "/${snapperRollbackFolderName}" /etc/fstab) ]]; then
+            # if [[ ! $(grep "/${snapperRollbackFolderName}" /etc/fstab) ]]; then
+            if ! grep -q "/${snapperRollbackFolderName}" /etc/fstab; then
                 echo "${fstabFileSystem} /${snapperRollbackFolderName} btrfs subvol=/,${btrfsFstabMountOptions_standard}" | sudo tee -a /etc/fstab
             fi
 
