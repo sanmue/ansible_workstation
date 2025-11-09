@@ -321,6 +321,37 @@ if [ "${executePlaybook}" = "y" ]; then
 fi
 
 ### ---
+### Removing initial software not needed anymore
+### ---
+echo -e "\n\e[0;35mRemoving initial software not needed anymore\e[0m"
+case "${os}" in
+    Arch* | Endeavour*)
+        # ### Uninstall
+        if [[ ! -f "${HOME}/.ansible_installScript_removeInitalSofware" ]]; then
+            sudo pacman -R --noconfirm --recursive --unneeded ansible # remove ansible and unneeded dependencies
+            touch "${HOME}/.ansible_installScript_removeInitalSofware"
+        else
+            echo "Initial software not needed anymore already uninstalled."
+        fi
+        ;;
+
+    Debian*)
+        # ### Uninstall
+        if [[ ! -f "${HOME}/.ansible_installScript_removeInitalSofware" ]]; then
+            sudo apt remove -y ansible
+            sudo apt autoremove -y # remove unneeded dependencies
+            touch "${HOME}/.ansible_installScript_removeInitalSofware"
+        else
+            echo "Initial software not needed anymore already uninstalled."
+        fi
+        ;;
+
+    *)
+        echo -e "\e[0;33mUnbehandelter Fall: switch os - default case (Removing initial software not needed anymore)\e[0m"
+        ;;
+esac
+
+### ---
 ### Further Installations
 ### ---
 case ${os} in
