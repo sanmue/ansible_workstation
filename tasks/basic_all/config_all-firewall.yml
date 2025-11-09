@@ -45,11 +45,18 @@
 # #################
 # unsing 'ansible.builtin.shell' since problems with 'ansible.posix.firewalld' module
 
-- name: Config all firewall - firewalld - enable (via shell) (Arch)
-  ansible.builtin.shell:
-    cmd: systemctl enable --now firewalld.service
-  args:
-    creates: /home/{{ env_user }}/.ansible_firewalldConfigDone
+# - name: Config all firewall - firewalld - enable (via shell) (Arch)
+#   ansible.builtin.shell:
+#     cmd: systemctl enable --now firewalld.service
+#   args:
+#     creates: /home/{{ env_user }}/.ansible_firewalldConfigDone
+#   when: ansible_facts['distribution'] in ["Archlinux"]
+
+- name: Config all firewall - firewalld - start and enable service (Arch)
+  ansible.builtin.service:
+    name: firewalld.service
+    state: started
+    enabled: true
   when: ansible_facts['distribution'] in ["Archlinux"]
 
 - name: Config all firewall - firewalld - allow ssh (via shell) (Arch)

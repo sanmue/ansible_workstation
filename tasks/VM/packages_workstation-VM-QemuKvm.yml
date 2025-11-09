@@ -59,4 +59,3 @@
       - spice-vdagent # spice agent for Linux guests (z.B. für clipboard sharing host+guest)
   when:
     - ansible_facts['virtualization_role'] == "guest"
-
