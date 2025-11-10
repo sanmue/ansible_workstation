@@ -5,12 +5,11 @@
   changed_when: false
   when: ansible_facts['pkg_mgr'] == "apt"
 
-# - name: autoremove orphan packages (apt)
-#  tags: always,cleanup
-#  apt:
-#    autoremove: yes
-#    purge: yes
-#  when: ansible_facts['pkg_mgr'] == "apt"
+- name: Autoremove orphaned packages (apt)
+  tags: always,cleanup
+  ansible.builtin.apt:
+    autoremove: true
+  when: ansible_facts['pkg_mgr'] == "apt"
 
 - name: Clean package cache and orphaned packages (pacman)
   ansible.builtin.command: paccache -rk2 -ruk1
