@@ -1,0 +1,14 @@
+
+- name: Install ansible collections from requirements file (all)
+  ansible.builtin.command: >
+    ansible-galaxy collection install -r {{ playbook_dir }}/files/ansible_galaxyCollections-requirements.yml
+  register: install_result
+  changed_when: "'All requirements were met' not in install_result.stdout"
+
+# Alternativ:
+# - name: Install ansible collections (all)
+#   ansible.builtin.command: >
+#         ansible-galaxy collection install {{ item.name }}{% if item.version is defined %}:{{ item.version }}{% endif %}
+#   loop:
+#     - { name: 'community.general' }
+#     # - { name: "community.docker", version: "28.5.2" }

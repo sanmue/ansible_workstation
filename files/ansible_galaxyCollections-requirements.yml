@@ -1,0 +1,5 @@
+collections:
+  - name: community.general
+  # - name: community.docker
+  #   version: "28.5.2"
+  #   source: https://galaxy.ansible.com # default source, can be omitted
