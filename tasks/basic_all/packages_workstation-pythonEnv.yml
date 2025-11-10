@@ -15,29 +15,6 @@
 # - https://packaging.python.org/en/latest/specifications/externally-managed-environments/#writing-to-only-the-target-sysconfig-scheme
 # !!!
 
-# - name: Python Environment - Get and register Python version (Arch)
-#   become: true
-#   become_user: "{{ env_user }}"
-#   ansible.builtin.shell: set -o pipefail && python --version | cut -d ' ' -f2
-#   register: python_version
-#   # ignore_errors: true
-#   args:
-#     creates: "/home/{{ env_user }}/.ansible_PythonEnv"
-#   when:
-#     - ansible_facts['distribution'] in ["Archlinux"]
-
-# # Error: ... Illegal option -o pipefail
-# - name: Python Environment - Get and register Python 3 version (all, not Arch)
-#   become: true
-#   become_user: "{{ env_user }}"
-#   ansible.builtin.shell: python3 --version | cut -d ' ' -f2
-#   register: python_version
-#   # ignore_errors: true
-#   args:
-#     creates: "/home/{{ env_user }}/.ansible_PythonEnv"
-#   when:
-#     - ansible_facts['distribution'] not in ["Archlinux"]
-
 # Zusammenfassung der ermittelten Python Version:
 - name: Python Environment - Get and register Python version (all)
   become: true
@@ -48,7 +25,7 @@
     # 2>&1: Leitet stderr nach stdout um, falls python --version auf stderr schreibt
   register: python_version
   args:
-    executable: /bin/bash # Erzwingt die Verwendung von Bash, die pipefail unterstützt
+    executable: /bin/bash # Erzwingt die Verwendung von Bash (Sicherstellung einer Shell mit Unterstütztung von pipefail)
     creates: "/home/{{ env_user }}/.ansible_PythonEnv"
   vars:
     python_cmd: "{% if ansible_facts['distribution'] == 'Archlinux' %}python{% else %}python3{% endif %}"
@@ -67,7 +44,7 @@
 #     var: python_version
 #     # var: python_version.stdout
 
-- name: Python Environment - pyenv install python (env_user, Arch)
+- name: Python Environment - pyenv install python (env_user, all)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: "pyenv install {{ python_version.stdout }}"
@@ -78,49 +55,25 @@
   failed_when: # Definiert, wann der Task als fehlgeschlagen gilt
     - pyenv_install_result.rc != 0
     - "'already installed' not in pyenv_install_result.stderr"
-    # d.h.: Wenn Python bereits installiert ist, wird der Task nicht als fehlgeschlagen markiert.
-  when:
-    - ansible_facts['distribution'] in ["Archlinux"]
+    - "'definition not found' not in pyenv_install_result.stderr"
+    # d.h.: Ignoriere den Fehler, wenn die Version bereits installiert ist oder wenn die Version nicht gefunden wird
 
-- name: Python Environment - pyenv install python 3 (env_user, all, not Arch)
-  become: true
-  become_user: "{{ env_user }}"
-  ansible.builtin.shell: "pyenv install {{ python_version.stdout }}"
-  args:
-    creates: "/home/{{ env_user }}/.pyenv/versions/{{ python_version.stdout }}"
-  register: pyenv_install_result
-  changed_when: pyenv_install_result.rc == 0
-  failed_when:
-    - pyenv_install_result.rc != 0
-    - "'already installed' not in pyenv_install_result.stderr"
-  when:
-    - ansible_facts['distribution'] not in ["Archlinux"]
-
-
-- name: Python Environment - pyenv set global python version (env_user, Arch)
+- name: Python Environment - pyenv set global python version (env_user, all)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: "pyenv global {{ python_version.stdout }}"
   args:
     creates: "/home/{{ env_user }}/.ansible_PythonEnv"
-  when:
-    - ansible_facts['distribution'] in ["Archlinux"]
-
-- name: Python Environment - pyenv set global python 3 version (env_user, all, not Arch)
-  become: true
-  become_user: "{{ env_user }}"
-  ansible.builtin.shell: "pyenv global {{ python_version.stdout }}"
-  args:
-    creates: "/home/{{ env_user }}/.ansible_PythonEnv"
-  when:
-    - ansible_facts['distribution'] not in ["Archlinux"]
 
 - name: Python Environment - set flag file for Python Environment (env_user, all)
   become: true
   become_user: "{{ env_user }}"
-  ansible.builtin.shell: "touch /home/{{ env_user }}/.ansible_PythonEnv"
-  args:
-    creates: "/home/{{ env_user }}/.ansible_PythonEnv"
+  ansible.builtin.file:
+    path: "/home/{{ env_user }}/.ansible_PythonEnv"
+    state: touch
+    mode: u=rw,g=r,o=r
+    modification_time: preserve
+    access_time: preserve
 
 # https://github.com/pyenv/pyenv-virtualenv?tab=readme-ov-file#installing-as-a-pyenv-plugin
 - name: Python Environment - pyenv - install pyenv-virtualenv as pyenv plugin
