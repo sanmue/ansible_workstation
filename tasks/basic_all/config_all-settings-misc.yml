@@ -1736,8 +1736,7 @@
   tags: vimrc
   become: true
   ansible.builtin.blockinfile:
-    # path: "/root/.vimrc"
-    path: "{{ ansible_env.HOME }}/.vimrc"
+    path: "/root/.vimrc"
     backup: true
     create: true
     mode: "0644"
