@@ -34,7 +34,7 @@
 #     - name: Config Services - snapper+btrfs
 #       ansible.builtin.import_tasks: tasks/basic_all/config_all-services-snapperBtrfs.yml
 
-- name: Software, Firewall, Servcices, VM, User, Settings
+- name: Software, Firewall, Servcices, VM, User, Settings, etc
   hosts: localhost
   connection: local
   become: true
@@ -47,7 +47,7 @@
     # - name: Entfernen nicht benötigter vorinstallierter Pakete (Plasma)
     #   ansible.builtin.import_tasks: tasks/Desktop_Plasma/packages_workstation-Plasma-removePreInstalls.yml
     # ----------------------------------------------------------
-    # ### Installation Software-Packages inkl. Flatpak (Snap: derzeit keine)
+    # ### Install software packages, including Flatpak, Snap
     # - repo:
     - name: Basic packages
       ansible.builtin.import_tasks: tasks/basic_all/packages_workstation-basic.yml
@@ -64,14 +64,13 @@
     - name: Packages Flatpak
       ansible.builtin.import_tasks: tasks/flatpakSnap/packages_workstation-flatpak.yml
     #
-    # currently no snaps
     # - snap:
     # - name: Config Snap
     #   ansible.builtin.import_tasks: tasks/flatpakSnap/config_workstation-snap.yml
     # - name: Packages Snap
     #   ansible.builtin.import_tasks: tasks/flatpakSnap/packages_workstation-snap.yml
     #
-    # - lokal heruntergeladene Pakete:
+    # - locally downloaded packages:
     - name: Install local packages
       ansible.builtin.import_tasks: tasks/basic_all/packages_workstation-localPackageInstall.yml
     - name: Install local packages - fix for CitrixIcaclient on Gnome
@@ -125,9 +124,10 @@
     - name: NVM Node.js
       ansible.builtin.import_tasks: tasks/basic_all/packages_workstation-nvmNodejs.yml
     # ----------------------------------------------------------
-    # ### cleanup:
-    - name: Cleanup
-      ansible.builtin.import_tasks: tasks/basic_all/all_cleanup.yml
+    # ### Ansible galaxy collections
+    - name: Install ansbile collections via ansible-galaxy
+      ansible.builtin.import_tasks: tasks/basic_all/packages_workstation-ansibleGalaxyCollections.yml
+    # ----------------------------------------------------------
 
 - name: Genome Shell Extension + Desktop Settings
   hosts: localhost
@@ -138,6 +138,14 @@
     - name: Config Gnome Desktop Preferences
       ansible.builtin.import_tasks: tasks/Desktop_Gnome/config_workstation-Gnome-DesktopPreferences.yml
 
+- name: Cleanup
+  hosts: localhost
+  connection: local
+  become: true
+  tasks:
+    - name: Cleanup package cache + orphaned packages (incl. flatpak)
+      ansible.builtin.import_tasks: tasks/basic_all/all_cleanup.yml
+
 - name: Write Final Message
   hosts: localhost
   connection: local
@@ -147,7 +155,7 @@
     - name: Write Final Message
       ansible.builtin.debug:
         msg: "Please restart the system for the changes to take effect!"
-#
+
 # - name: Reboot system
 #   hosts: localhost
 #   connection: local
