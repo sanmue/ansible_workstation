@@ -15,6 +15,7 @@
       - gnome-games
       - gnome-maps
       - gnome-klotski
+      - gnome-software
       - gnome-todo
       - hitori
   when:
