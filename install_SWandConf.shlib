@@ -566,6 +566,9 @@ install-aur() {
         paru -S --needed --skipreview btrfs-assistant # && touch "${HOME}/.ansible_installScript_AUR-btrfsassistantInstalled"
     fi
 
+    echo -e "\nInstall localsend from AUR..."
+    paru -S --needed --skipreview localsend-bin
+
     echo -e "\nInstall Floorp browser from AUR..."
     paru -S --needed --skipreview floorp-bin
 
@@ -577,17 +580,17 @@ install-aur() {
     paru -S --needed --skipreview powershell-bin
     # sudo pacman -S --needed --noconfirm powershell-bin
 
-    # echo -e "\nInstall Citrix Workspace App (icaclient) from AUR..."
-    # paru -S --needed --skipreview icaclient && touch "${HOME}/.ansible_installScript_AUR-icaclientInstalled"
-    # # sudo pacman -S --needed --noconfirm icaclient
-    # mkdir -p "${HOME}/.ICAClient/cache" && \
-    # sudo rsync -aPhEv /opt/Citrix/ICAClient/config/{All_Regions,Trusted_Region,Unknown_Region,canonicalization,regions}.ini "${HOME}/.ICAClient/"
-
     echo -e "\nInstall espanso (wayland) from AUR (will takes some time)..."
     paru -S --needed --skipreview espanso-wayland   # espanso-gui
 
     echo -e "\nInstall espanso (wayland) from AUR (will takes some time)..."
     paru -S --needed --skipreview helm-ls # helm.zed # Syntax highlighting for Helm templates using tree-sitter and integration of helm-ls
+
+    # echo -e "\nInstall Citrix Workspace App (icaclient) from AUR..."
+    # paru -S --needed --skipreview icaclient && touch "${HOME}/.ansible_installScript_AUR-icaclientInstalled"
+    # # sudo pacman -S --needed --noconfirm icaclient
+    # mkdir -p "${HOME}/.ICAClient/cache" && \
+    # sudo rsync -aPhEv /opt/Citrix/ICAClient/config/{All_Regions,Trusted_Region,Unknown_Region,canonicalization,regions}.ini "${HOME}/.ICAClient/"
 
     # echo -e "\nInstall several Applications (Vorta) from AUR..."
     # paru -S --needed --skipreview vorta joplin-desktop # -> change: flatpak
