@@ -59,6 +59,11 @@ pytz
 simpleeval
 wrapt_timeout_decorator # Ulauncher Extension Requirement Bluetooth
 
+# ### ------------------------
+# ### SSH Click Config manager
+# - https://github.com/karlot/sshclick#installation-procedure
+sshclick
+
 # ### --------
 # ### ShellGPT
 # - https://github.com/TheR1D/shell_gpt

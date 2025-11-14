@@ -23,6 +23,7 @@
     - "io.missioncenter.MissionCenter"
     - "de.haeckerfelix.Shortwave"
     # - "net.mkiol.SpeechNote"
+    - io.github.mfat.sshpilot
     - "org.tenacityaudio.Tenacity" # Audacity fork / replacement
     # - "com.visualstudio.code" # 'visual-studio-code-bin' from chaotic-aur, after playbook
     - "com.borgbase.Vorta"
