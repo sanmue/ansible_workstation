@@ -706,6 +706,18 @@
   # when:
   #   - ansible_facts['distribution'] in ["Archlinux"]
 
+- name: All settings misc - Bashrc - Insert/Update additional paths and config - SSHClick (User, all)
+  tags: shellrc
+  ansible.builtin.blockinfile:
+    path: "/home/{{ env_user }}/.bashrc"
+    backup: false
+    marker: "### {mark} 'uv' ANSIBLE MANAGED BLOCK ###"
+    block: |
+      # -------------------------------
+      # SSHClick - shell autocompletion
+      # -------------------------------
+      eval "$(_SSHC_COMPLETE=bash_source sshc)"
+
 # https://wiki.archlinux.org/title/Systemd/User#PATH
 - name: All settings misc - Bashrc - systemd user import-environment (User, all)
   tags: shellrc
@@ -1304,6 +1316,18 @@
       eval "$(zoxide init zsh)"
   # when:
   #   - ansible_facts['distribution'] in ["Archlinux"]
+
+- name: All settings misc - Zshrc - Insert/Update additional paths and config - SSHClick (User, all)
+  tags: shellrc
+  ansible.builtin.blockinfile:
+    path: "/home/{{ env_user }}/.zshrc"
+    backup: false
+    marker: "### {mark} 'uv' ANSIBLE MANAGED BLOCK ###"
+    block: |
+      # -------------------------------
+      # SSHClick - shell autocompletion
+      # -------------------------------
+      eval "$(_SSHC_COMPLETE=zsh_source sshc)"
 
 - name: All settings misc - Zshrc - Insert/Update additional paths and conig - tilix - vte config (User, all)
   tags: shellrc
