@@ -1806,13 +1806,13 @@
     dest: "/home/{{ env_user }}/.vim/pack/git-plugins/start/nnn.vim"
     depth: 1
 
-- name: All settings misc - vim plugin install from git repo - Powerline (all)
-  tags: vimrc
-  become: true
-  become_user: "{{ env_user }}"
-  ansible.builtin.git:
-    repo: "https://github.com/powerline/powerline.git"
-    dest: "/home/{{ env_user }}/.vim/pack/git-plugins/start/powerline"
+# - name: All settings misc - vim plugin install from git repo - Powerline (all)
+#   tags: vimrc
+#   become: true
+#   become_user: "{{ env_user }}"
+#   ansible.builtin.git:
+#     repo: "https://github.com/powerline/powerline.git"
+#     dest: "/home/{{ env_user }}/.vim/pack/git-plugins/start/powerline"
 
 - name: All settings misc - vim plugin install from git repo - vim-airline (all)
   tags: vimrc
