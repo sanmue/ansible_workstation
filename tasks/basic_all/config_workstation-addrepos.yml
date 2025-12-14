@@ -155,40 +155,43 @@
 # ### Debian
 # ##########
 
+# update: installing steam via flatpak
+# - also commented out in packages_workstation-basic.yml
+#
 # --- Steam on Debian with Steam ppa
 # - https://linuxcapable.com/how-to-install-steam-on-debian-linux/
 # - https://wiki.debian.org/Steam
 # - https://www.jeffgeerling.com/blog/2022/aptkey-deprecated-debianubuntu-how-fix-ansible
 
 # 32-bit support: helpful for gamers who want to ensure compatibility with 32-bit and 64-bit games in Steams extensive library
-- name: Config Workstation addrepos - Enable 32-bit support (Debian)
-  ansible.builtin.command:
-    cmd: sudo dpkg --add-architecture i386
-  when:
-    - ansible_facts['distribution'] == "Debian"
+# - name: Config Workstation addrepos - Enable 32-bit support (Debian)
+#   ansible.builtin.command:
+#     cmd: sudo dpkg --add-architecture i386
+#   when:
+#     - ansible_facts['distribution'] == "Debian"
 
-- name: Config Workstation addrepos - Steam block - Import Steam key and add Steam repo (Debian)
-  become: true # inhereted by tasks in the block
-  block:
-    - name: Config Workstation addrepos - Steam - Import Steam key (Debian)
-      ansible.builtin.get_url:
-        url: http://repo.steampowered.com/steam/archive/stable/steam.gpg
-        dest: /usr/share/keyrings/steam.gpg
+# - name: Config Workstation addrepos - Steam block - Import Steam key and add Steam repo (Debian)
+#   become: true # inhereted by tasks in the block
+#   block:
+#     - name: Config Workstation addrepos - Steam - Import Steam key (Debian)
+#       ansible.builtin.get_url:
+#         url: http://repo.steampowered.com/steam/archive/stable/steam.gpg
+#         dest: /usr/share/keyrings/steam.gpg
 
-    - name: Config Workstation addrepos - Steam - Add Steam repo (Debian)
-      ansible.builtin.apt_repository:
-        repo: "deb [arch=amd64,i386 signed-by=/usr/share/keyrings/steam.gpg] http://repo.steampowered.com/steam/ stable steam"
-        state: present
+#     - name: Config Workstation addrepos - Steam - Add Steam repo (Debian)
+#       ansible.builtin.apt_repository:
+#         repo: "deb [arch=amd64,i386 signed-by=/usr/share/keyrings/steam.gpg] http://repo.steampowered.com/steam/ stable steam"
+#         state: present
 
-    - name: Config Workstation addrepos - Steam - remove unnecessary Steam sources lists (Debian)
-      ansible.builtin.file:
-        path: "{{ item }}"
-        state: absent
-      loop:
-        - /etc/apt/sources.list.d/steam-beta.list
-        - /etc/apt/sources.list.d/steam-stable.list
-  when: # applied to the tasks within a block, not to the block itself
-    - ansible_facts['distribution'] == "Debian"
+#     - name: Config Workstation addrepos - Steam - remove unnecessary Steam sources lists (Debian)
+#       ansible.builtin.file:
+#         path: "{{ item }}"
+#         state: absent
+#       loop:
+#         - /etc/apt/sources.list.d/steam-beta.list
+#         - /etc/apt/sources.list.d/steam-stable.list
+#   when: # applied to the tasks within a block, not to the block itself
+#     - ansible_facts['distribution'] == "Debian"
 
 # --- PowerShell
 # https://learn.microsoft.com/en-us/powershell/scripting/install/install-debian?view=powershell-7.4
