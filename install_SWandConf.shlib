@@ -580,11 +580,14 @@ install-aur() {
     paru -S --needed --skipreview powershell-bin
     # sudo pacman -S --needed --noconfirm powershell-bin
 
-    echo -e "\nInstall espanso (wayland) from AUR (will takes some time)..."
+    echo -e "\nInstall espanso (wayland) from AUR (will take some time)..."
     paru -S --needed --skipreview espanso-wayland   # espanso-gui
 
-    echo -e "\nInstall espanso (wayland) from AUR (will takes some time)..."
+    echo -e "\nInstall helm-ls from AUR..."
     paru -S --needed --skipreview helm-ls # helm.zed # Syntax highlighting for Helm templates using tree-sitter and integration of helm-ls
+
+    echo -e "\nInstall pacman-log-orphans-hook from AUR..."
+    paru -S --needed --skipreview pacman-log-orphans-hook
 
     # echo -e "\nInstall Citrix Workspace App (icaclient) from AUR..."
     # paru -S --needed --skipreview icaclient && touch "${HOME}/.ansible_installScript_AUR-icaclientInstalled"
