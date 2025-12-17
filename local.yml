@@ -120,10 +120,14 @@
     - name: Pip and Pipx install
       ansible.builtin.import_tasks: tasks/basic_all/packages_workstation-pythonPip.yml
     # ----------------------------------------------------------
+    # ### C/C++
+    - name: C/C++
+      ansible.builtin.import_tasks: tasks/basic_all/packages_workstation-cpp.yml
+    # ----------------------------------------------------------
     # ### NVM / Node.js
     - name: NVM Node.js
       ansible.builtin.import_tasks: tasks/basic_all/packages_workstation-nvmNodejs.yml
-    # ----------------------------------------------------------
+
     # ### Ansible galaxy collections
     - name: Install ansbile collections via ansible-galaxy
       ansible.builtin.import_tasks: tasks/basic_all/packages_workstation-ansibleGalaxyCollections.yml

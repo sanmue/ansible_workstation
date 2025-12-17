@@ -1,0 +1,61 @@
+# ###########
+# ### C / C++
+# ###########
+
+- name: C/C++ Development (all)
+  ansible.builtin.package:
+    state: present
+    name:
+      # ### Compilers
+      - clang # contains clang-analyzer, clang-tools-extra # clangd (LSP), clang-format, clang-tidy (C++ linter and static analyzer)
+      # ### Build System
+      - cmake
+      - meson
+      # ### Development Tools
+      # --- Code Quality & Analysis
+      - cppcheck
+      # --- Documentation
+      - doxygen # Documentation Generator
+      - graphviz # for doxygen diagrams
+      # --- Performance & Optimization
+      - ccache
+      # --- Debugging & Profiling
+      - gdb # GNU Debugger
+      - lldb # LLVM Debugger # standard debugger for Clang/Clang++
+      - valgrind # Memory Debugger and Profiler
+      - heaptrack # Memory Profiler
+
+- name: C/C++ Development (Arch)
+  ansible.builtin.package:
+    state: present
+    name:
+      # ### Compilers
+      - base-devel # group contains make, gcc, gdb, binutils, etc.
+      # ### Build System
+      - ninja # build tool
+      # ### Development Tools
+      # --- Performance & Optimization
+      - openmp # Parallel Processing
+      # --- Debugging & Profiling
+      # - hotspot # from AUR
+  when: ansible_facts['distribution'] in ["Archlinux"]
+
+- name: C/C++ Development (Debian)
+  ansible.builtin.package:
+    state: present
+    name:
+      # ### Compilers
+      - gcc
+      - g++
+      - clang-tidy
+      - clang-format
+      # ### Build System
+      - cmake-curses-gui
+      - cmake-format
+      - ninja-build # build tool
+      # ### Development Tools
+      # --- Performance & Optimization
+      - libomp-dev # Parallel Processing
+      # --- Debugging & Profiling
+      # - hotspot # AppImage from https://github.com/KDAB/hotspot/releases/latest
+  when: ansible_facts['distribution'] == "Debian"

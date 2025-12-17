@@ -589,6 +589,10 @@ install-aur() {
     echo -e "\nInstall pacman-log-orphans-hook from AUR..."
     paru -S --needed --skipreview pacman-log-orphans-hook
 
+    # C/C++ Performance Profiler (Linux perf GUI for performance analysis)
+    echo -e "\nInstall hotspot from AUR..."
+    paru -S --needed --skipreview hotspot
+
     # echo -e "\nInstall Citrix Workspace App (icaclient) from AUR..."
     # paru -S --needed --skipreview icaclient && touch "${HOME}/.ansible_installScript_AUR-icaclientInstalled"
     # # sudo pacman -S --needed --noconfirm icaclient
