@@ -34,7 +34,7 @@
       - duf # Disk Usage/Free Utility
       - efivar
       # - evolution -> thunderbird
-      # - eza # A modern replacement for ls (community fork of exa) nicht in Debian, dort: eza
+      - eza # A modern replacement for ls (community fork of exa)
       - flatpak
       - font-manager
       - fzf # Command-line fuzzy finder (u.a. wg. nnn)
@@ -110,7 +110,6 @@
       # - evolution-ews # MS Exchange integration through Exchange Web Services
       # - evolution-spamassassin
       # - evolution-on # Tray plugin for the Evolution email client
-      - eza
       - fd # Simple, fast and user-friendly alternative to find
       - fastfetch
       - firefox
@@ -216,7 +215,6 @@
       # - evolution-plugin-pstimport
       # - evolution-plugin-spamassassin
       # - evolution-plugins
-      - exa
       - exfat-fuse
       - fd-find # Simple, fast and user-friendly alternative to find
       - firefox-esr # bereits installiert
