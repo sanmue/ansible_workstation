@@ -55,6 +55,7 @@
     - "org.ksnip.ksnip" # es können direkt Ergänzungen (Markieren, Rahmen, Pfeile, Text, ... gemacht werden; im ggs. zu Screenshot Tool unter Gnome)
     - "org.libreoffice.LibreOffice"
     - "com.nextcloud.desktopclient.nextcloud"
+    - "org.gnome.Solanum"
     - "com.obsproject.Studio"
     - "org.remmina.Remmina"
     - "org.signal.Signal"
