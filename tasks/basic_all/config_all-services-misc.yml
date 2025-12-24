@@ -73,6 +73,17 @@
     enabled: true
   when: ansible_facts['distribution'] in ["Archlinux"]
 
+# ----------------------------------------------
+# # Fwupd - Firmware updates
+# - download the latest metadata from the Linux Vendor firmware Service (LVFS)
+# ----------------------------------------------
+# - https://wiki.archlinux.org/title/Fwupd#Usage
+- name: All services misc - fwupd-refresh.timer (all)
+  ansible.builtin.service:
+    name: fwupd-refresh.timer
+    state: started
+    enabled: true
+
 # ------------
 # # SSH / SSHD
 # ------------
