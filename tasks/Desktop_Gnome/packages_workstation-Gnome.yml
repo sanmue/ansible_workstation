@@ -10,7 +10,7 @@
     name:
       - alacarte # Menu editor for gnome
       - baobab # A graphical directory tree analyzer
-      - celluloid # Simple GTK+ frontend for mpv # iptv
+      - celluloid # Simple GTK+ frontend for mpv # using it for iptv streaming
       - dconf-editor
       - file-roller # Create and modify archives
       - gedit
@@ -27,10 +27,12 @@
       - gnome-weather # needed for extension "Weather O'Clock"
       - inkscape # Plasma: Krita
       # - kdeconnect # -> gnome-shell-extension-gsconnect
+      - papers
       - papirus-icon-theme
       - pdfarranger # Merge, split, rotate, and crop PDF files
       - rhythmbox
       - seahorse # bereits standardmäßig installiert
+      - showtime # Video player for GNOME ("distraction-free")
       - solaar # Linux device manager for a wide range of Logitech devices
       # - totem # -> vlc
       # ---------
@@ -44,9 +46,10 @@
     state: present
     name:
       - dconf
+      - decibel # Simple audio player for GNOME
       # - deluge # -> transmission-gtk
       - epiphany # A GNOME web browser based on the WebKit rendering engin
-      - evince # Document viewer (PDF, PostScript, XPS, djvu, dvi, tiff, cbr, cbz, cb7, cbt)
+      # - evince # Document viewer (PDF, PostScript, XPS, djvu, dvi, tiff, cbr, cbz, cb7, cbt) # -> papers
       - gnome-shell-extension-dash-to-panel
       # - guake # Drop-down terminal for GNOME
       - gtk-vnc # VNC viewer widget for GTK
@@ -56,6 +59,7 @@
       # - nemo-terminal
       - orchis-theme
       - pycharm-community-edition
+      - solanum # Pomodoro timer for the GNOME desktop
       - transmission-cli
       - transmission-gtk # -> deluge
   when:

@@ -69,7 +69,7 @@
       - syncthing
       - tealdeer # A fast tldr client in Rust # replaced "tldr"
       - thunderbird
-      - tk # Graphical User Interface Toolkit for Tcl   # z.B. pyenv install 3.11.3: requirement
+      - tk # Graphical User Interface Toolkit for Tcl   # z.B. pyenv install <version>: requirement
       - tmux
       - trash-cli # Command line trashcan (recycle bin) interface
       - tree
@@ -86,6 +86,23 @@
       - zoxide # A smarter cd command for your terminal (u.a. wg. nnn)
       - zsh
       - zstd
+      # ------------
+      # Multimedia
+      # ------------
+      # Audio Codecs
+      - ffmpeg
+      - flac
+      - lame
+      - twolame
+      - wavpack
+      - speex
+      # ------------
+      # Video Codecs
+      - dav1d
+      - rav1e
+      - svt-av1
+      - x264
+      - x265
       # ---------
       # firmware:
       - fwupd
@@ -196,6 +213,54 @@
       - zsh-syntax-highlighting # besser: install from git?
       - zsh-history-substring-search # besser: install from git?
       # - zshdb # A debugger for zsh scripts
+      # ----------
+      # Multimedia
+      # ----------
+      # gstreamer and plugins
+      - gstreamer # https://wiki.archlinux.org/title/GStreamer
+      - gst-libav # plugin containing many decoders and encoders
+      - gst-plugins-bad # Plugins that need more quality, testing or documentation.
+      - gst-plugins-base # Essential exemplary set of elements.
+      - gst-plugins-good # Good-quality plugins under LGPL license.
+      - gst-plugins-ugly # Good-quality plugins that might pose distribution problems.
+      # Audio Codecs
+      - faac
+      - faad2
+      - libmad
+      - libfdk-aac
+      - libmpcdec
+      - libvorbis
+      - opus
+      - opencore-amr
+      # ------------
+      # Image Codecs
+      - jasper
+      - openjpeg2
+      - libwebp
+      - libavif
+      - libheif
+      - libjxl
+      # ------------
+      # Video Codecs
+      - aom
+      - libde265
+      - libmpeg2
+      - libvpx
+      - libtheora
+      # - vlc-plugins-all
+      - vlc-plugins-base
+      - vlc-plugins-extra
+      # - vlc-plugin-bluray     # dependency von vlc-plugins-extra
+      # - vlc-plugin-dvd        # dependency von vlc-plugins-extra
+      - vlc-plugin-ffmpeg
+      # - vlc-plugin-freetype   # dependency von vlc-plugins-extra
+      - vlc-plugin-gstreamer
+      # - vlc-plugin-matroska   # dependency von vlc-plugins-extra
+      # - vlc-plugin-srt        # dependency von vlc-plugins-extra
+      # - vlc-plugin-vpx        # dependency von vlc-plugins-base
+      - vlc-plugin-x264
+      - vlc-plugin-x265
+      - xvidcore
       # ---------
       # firmware:
       - linux-firmware
@@ -257,13 +322,46 @@
       # - wmctrl # autokey dependancy # sollte bereits installiert sein
       # Command line tool to interact with an EWMH/NetWM compatible X Window Manager
       - wireguard
-      # Multimedia; entspechend libs sollten bereits installiert sein (wenn im Installer ausgewählt wurde)
-      # - ffmpeg
-      # - x264
-      # - x265
-      # #- gstreamer - kram
-      # - ...
-      # - youtube-dl
+      # ----------
+      # Multimedia
+      # - entspechende libs sollten bereits installiert sein (wenn im Installer ausgewählt wurde)
+      # ----------
+      # gstreamer and plugins
+      # - gstreamer1.0-x
+      # - gstreamer1.0-plugins-bad
+      # - gstreamer1.0-plugins-base
+      # - gstreamer1.0-plugins-good
+      # - gstreamer1.0-plugins-ugly
+      # ------------
+      # Audio Codecs
+      # - libfaad2
+      # - libmad0
+      # - libmpcdec6
+      # - libopus0
+      # - libvorbis0a
+      # - libvorbisenc2
+      # - libvorbisfile3
+      # - libopencore-amrnb0
+      # - libopencore-amrwb0
+      # - libvo-amrwbenc0
+      # ------------
+      # Image Codecs
+      # - libopenjp2-7
+      # - libwebp7
+      # - libavif16
+      # - libjxl0.11
+      # - libjxl0.7
+      # ------------
+      # Video Codecs
+      # - libaom3
+      # - libde265-0
+      # - libmpeg2-4
+      # - libxvidcore4
+      # - libvpx7
+      # - libvpx9
+      # - libtheora0
+      # - libtheoradec1
+      # - libtheoraenc1
       # zsh-plugins: siehe "packages_workstation-localPackageInstall.yml"
       # - zsh-autosuggestions           # über git: https://github.com/zsh-users/zsh-autosuggestions
       # - zsh-syntax-highlighting       # über git: https://github.com/zsh-users/zsh-syntax-highlighting
