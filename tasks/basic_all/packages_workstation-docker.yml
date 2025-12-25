@@ -1,0 +1,37 @@
+# #####################
+# ### Docker - packages
+# #####################
+
+- name: Docker - packages (Arch)
+  become: true
+  ansible.builtin.package:
+    state: present
+    name:
+      - docker
+      - docker-buildx
+      - docker-compose
+  when: ansible_facts['distribution'] == "Archlinux"
+
+- name: Docker - uninstall conflicting packages (Debian)
+  become: true
+  ansible.builtin.package:
+    state: absent
+    name:
+      - docker.io
+      - docker-compose
+      - docker-doc
+      - podman-docker
+  when: ansible_facts['distribution'] == "Debian"
+
+# needs repo setup first
+- name: Docker - packages (Debian)
+  become: true
+  ansible.builtin.package:
+    state: present
+    name:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      - docker-buildx-plugin
+      - docker-compose-plugin
+  when: ansible_facts['distribution'] == "Debian"

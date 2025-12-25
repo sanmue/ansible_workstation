@@ -1,0 +1,13 @@
+# ###################
+# ### Docker - config
+# ###################
+
+- name: Docker - config - add env_user to docker group (all)
+  become: true
+  ansible.builtin.user:
+    name: "{{ env_user }}"
+    groups: docker
+    append: true
+
+# TODO: Rootless mode
+# - https://docs.docker.com/engine/security/rootless/

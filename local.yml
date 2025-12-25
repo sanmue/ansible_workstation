@@ -127,7 +127,17 @@
     # ### NVM / Node.js
     - name: NVM Node.js
       ansible.builtin.import_tasks: tasks/basic_all/packages_workstation-nvmNodejs.yml
-
+    # ----------------------------------------------------------
+    # ### Docker
+    - name: Docker repo
+      ansible.builtin.import_tasks: tasks/basic_all/config_workstation-docker-repo.yml
+    - name: Docker packages
+      ansible.builtin.import_tasks: tasks/basic_all/packages_workstation-docker.yml
+    - name: Docker config
+      ansible.builtin.import_tasks: tasks/basic_all/config_workstation-docker.yml
+    - name: Docker service
+      ansible.builtin.import_tasks: tasks/basic_all/config_workstation-docker-services.yml
+    # ----------------------------------------------------------
     # ### Ansible galaxy collections
     - name: Install ansbile collections via ansible-galaxy
       ansible.builtin.import_tasks: tasks/basic_all/packages_workstation-ansibleGalaxyCollections.yml

@@ -1,0 +1,18 @@
+# #####################
+# ### Docker - services
+# #####################
+
+- name: Docker - service - disable and stop docker.service (all)
+  become: true
+  ansible.builtin.service:
+    name: docker.service
+    enabled: false
+    state: stopped
+
+# wenn nicht dauernd benötigt, docker.serivce nur bei Bedarf starten via docker.socket:
+- name: Docker - socket - enable and start docker.socket (all)
+  become: true
+  ansible.builtin.service:
+    name: docker.socket
+    enabled: true
+    state: started

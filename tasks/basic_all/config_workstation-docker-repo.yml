@@ -1,0 +1,48 @@
+# ##################
+# ### Docker - repos
+# ##################
+
+- name: Docker - repo - required packages (Debian)
+  become: true
+  ansible.builtin.package:
+    state: present
+    name:
+      - ca-certificates
+      - curl
+      - python3-apt # for ansible apt module
+      - gpg # for ansible apt module
+  when: ansible_facts['distribution'] == "Debian"
+
+- name: Docker - repo - gpg key (Debian)
+  become: true
+  ansible.builtin.get_url:
+    url: https://download.docker.com/linux/debian/gpg
+    dest: /etc/apt/keyrings/docker.asc
+    mode: '0644'
+  when: ansible_facts['distribution'] == "Debian"
+
+# - name: Docker - repo - apt source (Debian)
+#   ansible.builtin.apt_repository:
+#     repo: "deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian {{ ansible_distribution_release }} stable"
+#     state: present
+#     update_cache: true
+#   when: ansible_facts['distribution'] == "Debian"
+
+- name: Docker - repo - apt source - modern (Debian)
+  become: true
+  ansible.builtin.copy:
+    dest: /etc/apt/sources.list.d/docker.sources
+    content: |
+      Types: deb
+      URIs: https://download.docker.com/linux/debian
+      Suites: {{ ansible_distribution_release }}
+      Components: stable
+      Signed-By: /etc/apt/keyrings/docker.asc
+    mode: '0644'
+  when: ansible_facts['distribution'] == "Debian"
+
+- name: Docker - repo - Update apt cache (Debian)
+  become: true
+  ansible.builtin.apt:
+    update_cache: true
+  when: ansible_facts['distribution'] == "Debian"
