@@ -1,0 +1,24 @@
+# #############################################
+# # reflector - retrieve the latest mirror list
+# #############################################
+# Service: siehe "config_all-services-misc.yml"
+
+- name: All settings misc - reflector - insert countries (Arch)
+  ansible.builtin.replace:
+    path: /etc/xdg/reflector/reflector.conf
+    # search_string: '# --country France,Germany'
+    regexp: "^# --country France,Germany"
+    replace: "--country Germany,France,Austria,Switzerland,Netherlands,Belgium,Sweden"
+    backup: true
+  when:
+    - ansible_facts['distribution'] in ["Archlinux"]
+
+- name: All settings misc - reflector - how many mirrors to use (Arch)
+  ansible.builtin.replace:
+    path: /etc/xdg/reflector/reflector.conf
+    # search_string: '--latest 5'
+    regexp: "^--latest 5"
+    replace: "--latest 8"
+    backup: true
+  when:
+    - ansible_facts['distribution'] in ["Archlinux"]

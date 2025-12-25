@@ -1,0 +1,28 @@
+# ###############
+# ### python - uv
+# ###############
+# + s.u.: hook in .bahsrc + .zshrc
+
+- name: All settings misc - uv - create config folder (User, all)
+  tags: shellrc
+  ansible.builtin.file:
+    path: "/home/{{ env_user }}/.config/uv"
+    state: directory
+    owner: "{{ env_user }}"
+    group: "{{ env_user }}"
+    mode: "u=rwx,g=rx,o=rx"
+
+# https://docs.astral.sh/uv/reference/settings/#python-downloads
+# - "manual": Do not automatically download managed Python installations; require explicit installation
+# - since still want to use 'pyenv' for python versions
+- name: All settings misc - uv - config (User, all)
+  tags: shellrc
+  ansible.builtin.blockinfile:
+    path: "/home/{{ env_user }}/.config/uv/uv.toml"
+    create: true
+    marker: "### {mark} 'uv config' ANSIBLE MANAGED BLOCK ###"
+    block: |
+      python-downloads = "manual"
+    owner: "{{ env_user }}"
+    group: "{{ env_user }}"
+    mode: u=rwx,g=rx,o=rx

@@ -1,0 +1,24 @@
+# ###############################
+# ### xterm (wg. nnn preview-tui)
+# ###############################
+- name: All settings misc - xterm - touch (User, all)
+  tags: nnnplugs
+  ansible.builtin.file:
+    path: "/home/{{ env_user }}/.Xresources"
+    state: touch
+    owner: "{{ env_user }}"
+    group: "{{ env_user }}"
+    mode: u=rw,g=r,o=r
+
+- name: All settings misc - xterm - Insert/Update additional paths and config (User,all)
+  tags: nnnplugs
+  ansible.builtin.blockinfile:
+    path: "/home/{{ env_user }}/.Xresources"
+    backup: true
+    marker: "### {mark} 'xterm' ANSIBLE MANAGED BLOCK ###"
+    block: |
+      XTerm*background:   black
+      XTerm*foreground:   white
+      XTerm*renderFont:   true
+      XTerm*faceName:     DejaVuSansMono
+      XTerm*faceSize:     13

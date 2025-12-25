@@ -1,0 +1,54 @@
+# ##########
+# ### direnv
+# ##########
+# + s.u.: hook in .bahsrc + .zshrc
+
+- name: All settings misc - direnv - create config folder (User, all)
+  tags: shellrc
+  ansible.builtin.file:
+    path: "/home/{{ env_user }}/.config/direnv"
+    state: directory
+    owner: "{{ env_user }}"
+    group: "{{ env_user }}"
+    mode: "u=rwx,g=rx,o=rx"
+
+- name: All settings misc - direnv - config (User, all)
+  tags: shellrc
+  ansible.builtin.blockinfile:
+    path: "/home/{{ env_user }}/.config/direnv/direnv.toml"
+    create: true
+    marker: "### {mark} 'direnv config' ANSIBLE MANAGED BLOCK ###"
+    block: |
+      [global]
+      hide_env_diff = true
+    owner: "{{ env_user }}"
+    group: "{{ env_user }}"
+    mode: u=rwx,g=rx,o=rx
+
+- name: All settings misc - direnv - project layouts - python - uv (User, all)
+  tags: shellrc
+  ansible.builtin.blockinfile:
+    path: "/home/{{ env_user }}/.config/direnv/direnvrc"
+    create: true
+    marker: "### {mark} 'direnv project layouts - python - uv' ANSIBLE MANAGED BLOCK ###"
+    block: |
+      layout_uv() {
+          # for a (new) Python project-folder to be managed with uv
+          # Alternativa solution: https://github.com/direnv/direnv/wiki/Python#uv
+
+          if [[ ! -f "pyproject.toml" ]]; then
+              # if file 'pyproject.toml' does NOT! exist in current folder
+
+              log_status "File 'pyproject.toml' does NOT exist. Executing \`uv init\`."
+              uv init
+          fi
+
+          log_status "Updating the project's environment. Executing \`uv sync\`."
+          uv sync # also creates/updates .venv + uv.lock, ...
+
+          log_status "Activating virtual environment. Executing \`source .venv/bin/activate\`."
+          source .venv/bin/activate
+      }
+    owner: "{{ env_user }}"
+    group: "{{ env_user }}"
+    mode: u=rwx,g=rx,o=rx

@@ -1,0 +1,39 @@
+# ######################
+# ### Visual Studio Code
+# ######################
+# - Arch: will be installed later via chaotic-aur
+
+# - name: All settings misc - Start 'Visual Studio Code' (all)
+#   become: true
+#   become_user: "{{ env_user }}"
+#   ansible.builtin.shell:
+#     cmd: code >/dev/null 2>&1 & # damit im Home-Verzeichnis der Config-Pfad von VS Code erstellt wird + später die settings.yml dorthin kopiert werden kann
+#   args:
+#     creates: "/home/{{ env_user }}/.config/Code/User/globalStorage/zokugun.sync-settings/settings.yml"
+#     # nur ausführen, wenn nicht bereits z.B. in vorhergehendem Lauf gestartet/erstellt wurde
+
+- name: All settings misc - Erstelle hilfsweise manuell 'Sync Settings' Extension Ordner für 'VS Code' (all)
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.file:
+    path: "/home/{{ env_user }}/.config/Code/User/globalStorage/zokugun.sync-settings"
+    state: directory
+    mode: "0775"
+
+# Pfad bei Install des VS Code deb-Pakets (nicht bei flatpak oder snap)
+- name: All settings misc - Set/Copy 'Visual Studio Code' settings-file for Extension 'Sync Settings' (all)
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.copy:
+    src: ./files/VSCode_Extension_Sync-Settings_settings.yml
+    dest: "/home/{{ env_user }}/.config/Code/User/globalStorage/zokugun.sync-settings/settings.yml"
+    owner: "{{ env_user }}"
+    group: "{{ env_user }}"
+    mode: u=rw
+
+# - name: All settings misc - Close Visual Studio Code (all)
+#   become: true
+#   become_user: "{{ env_user }}"
+#   ansible.builtin.shell:
+#     cmd: pkill -15 code # Signal: "-15" entspricht "SIGTERM" : Abschließen und beenden des Programms
+#     # cmd: killall code

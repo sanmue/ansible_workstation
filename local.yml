@@ -79,15 +79,55 @@
       ansible.builtin.import_tasks: tasks/fix/config_workstation-Gnome-citrixIcaclient.yml
     # ----------------------------------------------------------
     # ### Config Firewall, Cron, Services, sonstige Settings:
-    - name: Config Firewall all
+    - name: Config - stats all
+      ansible.builtin.import_tasks: tasks/basic_all/config_all-stats.yml
+    - name: Config - Firewall all
       ansible.builtin.import_tasks: tasks/basic_all/config_all-firewall.yml
-    - name: Config Firewall workstation
+    - name: Config - Firewall workstation
       ansible.builtin.import_tasks: tasks/basic_all/config_workstation-firewall.yml
-    - name: Config Settings all misc
-      ansible.builtin.import_tasks: tasks/basic_all/config_all-settings-misc.yml
+    - name: Config Settings all - GRUB
+      ansible.builtin.import_tasks: tasks/basic_all/config_all-settings-grub.yml
+    - name: Config Settings all - locale
+      ansible.builtin.import_tasks: tasks/basic_all/config_all-settings-locale.yml
+    - name: Config Settings all - direnv
+      ansible.builtin.import_tasks: tasks/basic_all/config_all-settings-direnv.yml
+    - name: Config Settings all - python - uv
+      ansible.builtin.import_tasks: tasks/basic_all/config_all-settings-python-uv.yml
+    - name: Config Settings all - rclone
+      ansible.builtin.import_tasks: tasks/basic_all/config_all-settings-rclone.yml
+    - name: Config Settings all - starship
+      ansible.builtin.import_tasks: tasks/basic_all/config_all-settings-starship.yml
+    - name: Config Settings all - ghostty
+      ansible.builtin.import_tasks: tasks/basic_all/config_all-settings-ghostty.yml
+    - name: Config Settings all - ansible update-by-tag
+      ansible.builtin.import_tasks: tasks/basic_all/config_all-settings-ansible-updateByTag.yml
+    - name: Config Settings all - bashrc
+      ansible.builtin.import_tasks: tasks/basic_all/config_all-settings-bashrc.yml
+    - name: Config Settings all - zshrc
+      ansible.builtin.import_tasks: tasks/basic_all/config_all-settings-zshrc.yml
+    - name: Config Settings all - zshrc - plugins
+      ansible.builtin.import_tasks: tasks/basic_all/config_all-settings-zsh-plugins.yml
+    - name: Config Settings all - PowerShell profile
+      ansible.builtin.import_tasks: tasks/basic_all/config_all-settings-PowerShellProfile.yml
+    - name: Config Settings all - nnn plugins
+      ansible.builtin.import_tasks: tasks/basic_all/config_all-settings-nnnPlugins.yml
+    - name: Config Settings all - xterm - Xresources
+      ansible.builtin.import_tasks: tasks/basic_all/config_all-settings-xterm.yml
+    - name: Config Settings all - vimrc
+      ansible.builtin.import_tasks: tasks/basic_all/config_all-settings-vimrc.yml
+    - name: Config Settings all - Vim plugins
+      ansible.builtin.import_tasks: tasks/basic_all/config_all-settings-vim-plugins.yml
+    - name: Config Settings all - ClamAV
+      ansible.builtin.import_tasks: tasks/basic_all/config_all-settings-ClamAV.yml
+    - name: Config Settings all - reflector
+      ansible.builtin.import_tasks: tasks/basic_all/config_all-settings-reflector.yml
+    - name: Config Settings all - Visual Studio Code
+      ansible.builtin.import_tasks: tasks/basic_all/config_all-settings-VSCode.yml
+    - name: Config Settings all - Ulauncher extensions
+      ansible.builtin.import_tasks: tasks/basic_all/config_all-settings-ulauncher-extensions.yml
+    # - Services:
     - name: Config Services all - systemweit
       ansible.builtin.import_tasks: tasks/basic_all/config_all-services-misc.yml
-      # user-spezifische Servcies: siehe unten "User Services": tasks/basic_all/config_all-services-misc-user.yml
     - name: Config Cron
       ansible.builtin.import_tasks: tasks/basic_all/config_all-cron.yml
     # ----------------------------------------------------------

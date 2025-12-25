@@ -1,0 +1,39 @@
+# #################################
+# ### Starship - cross shell prompt
+# #################################
+# + s.u.: hook in .bahsrc + .zshrc
+
+# starship update skript
+- name: All settings misc - starship shell prompt - copy update-script to usr-local-bin (all)
+  tags: shellrc
+  ansible.builtin.copy:
+    src: "files/config_all-settings-misc-starship_update.sh"
+    dest: "/usr/local/bin/starship_update.sh"
+    owner: root
+    group: root
+    mode: "0755"
+    backup: true
+
+# starship config
+- name: All settings misc - starship - clone repo with starship.toml file (User, all)
+  tags: shellrc
+  ansible.builtin.git:
+    repo: https://gist.github.com/71eb35991107cf691336bfbf60c96b9f.git # "owo" (modified)
+    # repo: https://gist.github.com/f0ed97bed95c7bc7926cc3a88949bd39.git # "Power10"
+    dest: "/home/{{ env_user }}/Downloads/starship"
+
+- name: All settings misc - starship - copy starship.toml to .config dir (User, all)
+  tags: shellrc
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.copy:
+    src: "/home/{{ env_user }}/Downloads/starship/starship.toml"
+    dest: "/home/{{ env_user }}/.config/starship.toml"
+    mode: "0644"
+    backup: true
+
+- name: All settings misc - starship - remove local repo folder (User, all)
+  tags: shellrc
+  ansible.builtin.file:
+    path: "/home/{{ env_user }}/Downloads/starship"
+    state: absent

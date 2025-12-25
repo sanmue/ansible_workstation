@@ -1,0 +1,87 @@
+# ##########
+# ### ClamAV
+# ##########
+
+# ### clamd
+
+- name: All settings misc - Set ClamAV - clamd global config - ExcludePath (all)
+  ansible.builtin.blockinfile:
+    path: "/etc/clamav/clamd.conf"
+    backup: true
+    create: true
+    marker: "# ### {mark} ANSIBLE MANAGED BLOCK - ExcludePath ###"
+    block: |
+      # Don't scan files and directories matching regex
+      # This directive can be used multiple times
+      # Default: scan all
+      #ExcludePath ^/proc/
+      #ExcludePath ^/sys/
+      ExcludePath ^/home/.*/\.clam/quarantine
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
+
+- name: All settings misc - Set ClamAV - clamd global config - Limits (all)
+  ansible.builtin.blockinfile:
+    path: "/etc/clamav/clamd.conf"
+    backup: true
+    marker: "# ### {mark} ANSIBLE MANAGED BLOCK - Limits ###"
+    block: |
+      # Files larger than this limit won't be scanned. Affects the input file itself
+      # as well as files contained inside it (when the input file is an archive, a
+      # document or some other kind of container).
+      # Value of 0 disables the limit.
+      # Note: disabling this limit or setting it too high may result in severe damage
+      # to the system.
+      # Technical design limitations prevent ClamAV from scanning files greater than
+      # 2 GB at this time.
+      # Default: 100M
+      MaxFileSize 400M
+
+# https://wiki.archlinux.org/title/Desktop_notifications#Bash
+# https://wiki.archlinux.org/title/ClamAV
+- name: All settings misc - Set ClamAV - clamd global config - VirusEvent - Desktop Notification (all)
+  ansible.builtin.blockinfile:
+    path: "/etc/clamav/clamd.conf"
+    backup: true
+    marker: "# ### {mark} ANSIBLE MANAGED BLOCK - VirusEvent ###"
+    block: |
+      # Execute a command when virus is found. In the command string %v will
+      # be replaced with the virus name and %f will be replaced with the file name.
+      # Additionally, two environment variables will be defined: $CLAM_VIRUSEVENT_FILENAME
+      # and $CLAM_VIRUSEVENT_VIRUSNAME.
+      # Default: no
+      # VirusEvent /usr/local/bin/send_sms 123456789 "VIRUS ALERT: %v in %f"
+      # VirusEvent /usr/bin/notify-send "VirusAlert: '${CLAM_VIRUSEVENT_VIRUSNAME}' in '${CLAM_VIRUSEVENT_FILENAME}'" "Virus found - notification." --icon=dialog-warning
+      VirusEvent /etc/clamav/VirusEvent.sh
+
+# https://wiki.archlinux.org/title/ClamAV
+- name: All settings misc - Users - clamav - bash-skript VirusEvent - notify-send on signature found (all)
+  ansible.builtin.copy:
+    src: "files/config_all-settings-misc-clamavVirusEvent.sh"
+    dest: "/etc/clamav/VirusEvent.sh"
+    owner: root
+    group: root
+    mode: "0755"
+    backup: true
+
+- name: All settings misc - Users - clamav - services - bashScript to scan HOME folder (all)
+  ansible.builtin.copy:
+    src: "files/config_all-services-misc-clamav-scanHome.sh"
+    dest: "/usr/local/bin/scanHome.sh"
+    owner: root
+    group: root
+    mode: "0755"
+    backup: true
+
+# ### custom folders (quarantine, logs)
+- name: All settings misc - Create 'quarantine' and 'logs' folder for ClamAV for env_user (all)
+  ansible.builtin.file:
+    path: "/home/{{ env_user }}/{{ item }}"
+    state: directory
+    owner: "{{ env_user }}"
+    group: "{{ env_user }}"
+    mode: "0755"
+  loop:
+    - .clam/logs
+    - .clam/quarantine

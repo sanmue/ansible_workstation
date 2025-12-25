@@ -1,0 +1,52 @@
+# ####################
+# ### grub2 bootloader
+# ####################
+
+- name: Get stats of etc default grub (all)
+  ansible.builtin.stat:
+    path: /etc/default/grub
+  register: etcdefgrub
+
+- name: Get stats of efi loader conf (all)
+  ansible.builtin.stat:
+    path: /efi/loader/loader.conf
+  register: efiloaderconf
+
+- name: Get stats of boot efi loader conf (all)
+  ansible.builtin.stat:
+    path: /boot/efi/loader/loader.conf
+  register: bootefiloaderconf
+
+- name: All settings misc - Enable GRUB Menu at boot (Archlinux)
+  ansible.builtin.lineinfile:
+    path: /etc/default/grub
+    # regexp: '^#GRUB_ENABLE_CRYPTODISK.*'
+    insertafter: "^#GRUB_ENABLE_CRYPTODISK.*"
+    line: "GRUB_ENABLE_CRYPTODISK=y"
+    state: present
+    backup: true
+  when:
+    - ansible_facts['distribution'] == "Archlinux"
+    - etcdefgrub.stat.exists
+    - not efiloaderconf.stat.exists
+    - not bootefiloaderconf.stat.exists
+
+# https://www.fosslinux.com/46741/things-to-do-after-installing-manjaro.htm
+# - aus Punkt 13: Install the Latest Kernel (or an Older LTS Kernel)
+- name: All settings misc - Enable GRUB Menu at boot (Archlinux)
+  ansible.builtin.shell:
+    cmd: sudo sed -Ei '/GRUB_TIMEOUT_STYLE=hidden/s/hidden/menu/' /etc/default/grub
+  when:
+    - ansible_facts['distribution'] == "Archlinux"
+    - etcdefgrub.stat.exists
+    - not efiloaderconf.stat.exists
+    - not bootefiloaderconf.stat.exists
+
+- name: All settings misc - Update grub.cfg (Archlinux)
+  ansible.builtin.shell:
+    cmd: sudo grub-mkconfig -o /boot/grub/grub.cfg
+  when:
+    - ansible_facts['distribution'] == "Archlinux"
+    - etcdefgrub.stat.exists
+    - not efiloaderconf.stat.exists
+    - not bootefiloaderconf.stat.exists

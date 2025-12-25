@@ -1,0 +1,127 @@
+# #########
+# ### vimrc
+# #########
+
+- name: All settings misc - Set vim global config (Debian)
+  tags: vimrc
+  ansible.builtin.blockinfile:
+    path: "/etc/vim/vimrc.local"
+    backup: true
+    create: true
+    mode: "0644"
+    marker: '" ### {mark} ANSIBLE MANAGED BLOCK ###'
+    block: |
+      " #
+      syntax on           " Vim5 and later versions support syntax highlighting
+      set background=dark " If dark background + syntax highlighting, turn on this option as well
+
+      " The following cause vim to behave a lot differently from regular Vi.
+      " They are highly recommended though.
+      set showcmd     " Show (partial) command in status line.
+      set showmatch   " Show matching brackets.
+      set ignorecase  " Do case insensitive matching
+      set smartcase   " Do smart case matching
+      set incsearch   " Incremental search
+      set autowrite   " Automatically save before commands like :next and :make
+      set hidden      " Hide buffers when they are abandoned
+      set mouse=a     " Enable mouse usage (all modes)
+
+      colorscheme koehler
+      set number      " Show line numbers
+      set ruler       " Show row and column ruler information
+      set listchars=eol:¬,tab:>·,trail:~,extends:>,precedes:<,space:·,nbsp:×
+      " set list      " show white space characters " set manual in cmd mode: ':set list'
+      " set nolist    " ':set nolist' in cmd mode to disable 'set list'
+      set nocompatible
+      set tabstop=4   " show existing tab with 4 spaces width
+      set shiftwidth=4 " Number of auto-indent spaces; when indentig with '>', use 4 spaces
+      set expandtab   " On pressing tab, insert spaces
+      set smarttab    " <Tab> in front of a line inserts blanks
+      set hlsearch    " Highlight all search results
+      set undolevels=1000 " Number of undo levels
+      " #
+  when:
+    - ansible_facts['distribution'] == "Debian"
+
+- name: All settings misc - Set vim global config (Arch)
+  tags: vimrc
+  ansible.builtin.blockinfile:
+    path: "/etc/vimrc"
+    backup: true
+    marker: '" ### {mark} ANSIBLE MANAGED BLOCK ###'
+    block: |
+      " #
+      syntax on           " Vim5 and later versions support syntax highlighting
+      set background=dark " If dark background + syntax highlighting, turn on this option as well
+
+      " The following cause vim to behave a lot differently from regular Vi.
+      " They are highly recommended though.
+      set showcmd     " Show (partial) command in status line.
+      set showmatch   " Show matching brackets.
+      set ignorecase  " Do case insensitive matching
+      set smartcase   " Do smart case matching
+      set incsearch   " Incremental search
+      set autowrite   " Automatically save before commands like :next and :make
+      set hidden      " Hide buffers when they are abandoned
+      set mouse=a     " Enable mouse usage (all modes)
+
+      colorscheme koehler
+      set number      " Show line numbers
+      set ruler       " Show row and column ruler information
+      set listchars=eol:¬,tab:>·,trail:~,extends:>,precedes:<,space:·,nbsp:×
+      " set list      " show white space characters " set manual in cmd mode: ':set list'
+      " set nolist    " ':set nolist' in cmd mode to disable 'set list'
+      set nocompatible
+      set tabstop=4   " show existing tab with 4 spaces width
+      set shiftwidth=4 " Number of auto-indent spaces; when indentig with '>', use 4 spaces
+      set expandtab   " On pressing tab, insert spaces
+      set smarttab    " <Tab> in front of a line inserts blanks
+      set hlsearch    " Highlight all search results
+      set undolevels=1000 " Number of undo levels
+      " #
+  when: ansible_facts['distribution'] == "Archlinux"
+
+- name: All settings misc - Set vim config - user (all)
+  tags: vimrc
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.blockinfile:
+    path: "/home/{{ env_user }}/.vimrc"
+    backup: true
+    create: true
+    mode: "0644"
+    marker: '" ### {mark} ANSIBLE MANAGED BLOCK ###'
+    block: |
+      " #
+      " shortcuts for vimdiff navigation
+      " next diff:
+      nmap <F2> ]c
+      " previous diff:
+      nmap <F3> [c
+      " alternative ('n' already used for 'nnn'):
+      " let mapleader = ","
+      " nmap <Leader>c :normal ]c<CR>
+      " nmap <Leader>p :normal [c<CR>
+      " #
+
+- name: All settings misc - Set vim config - root (all)
+  tags: vimrc
+  become: true
+  ansible.builtin.blockinfile:
+    path: "/root/.vimrc"
+    backup: true
+    create: true
+    mode: "0644"
+    marker: '" ### {mark} ANSIBLE MANAGED BLOCK ###'
+    block: |
+      " #
+      " shortcuts for vimdiff navigation
+      " next diff:
+      nmap <F2> ]c
+      " previous diff:
+      nmap <F3> [c
+      " alternative ('n' already used for 'nnn'):
+      " let mapleader = ","
+      " nmap <Leader>c :normal ]c<CR>
+      " nmap <Leader>p :normal [c<CR>
+      " #

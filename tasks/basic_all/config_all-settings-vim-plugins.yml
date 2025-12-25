@@ -1,0 +1,52 @@
+# ###############
+# ### VIM plugins
+# ###############
+#
+# Anmerkung: package "vim-ale" ist installiert über paketmanager
+#
+# - manuelle Installation für env_user
+# -
+# - https://opensource.com/article/20/2/how-install-vim-plugins
+# - https://github.com/vim/vim/blob/03c3bd9fd094c1aede2e8fe3ad8fd25b9f033053/runtime/doc/repeat.txt#L515
+
+- name: All settings misc - Create folder for vim git-plugins (all)
+  tags: vimrc
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.shell:
+    cmd: "mkdir -p /home/{{ env_user }}/.vim/pack/git-plugins/start"
+  args:
+    creates: /home/{{ env_user }}/.vim/pack/git-plugins/start
+
+- name: All settings misc - vim plugin install from git repo - nnn.vim (all)
+  tags: vimrc
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.git:
+    repo: "https://github.com/mcchrish/nnn.vim"
+    dest: "/home/{{ env_user }}/.vim/pack/git-plugins/start/nnn.vim"
+    depth: 1
+
+# - name: All settings misc - vim plugin install from git repo - Powerline (all)
+#   tags: vimrc
+#   become: true
+#   become_user: "{{ env_user }}"
+#   ansible.builtin.git:
+#     repo: "https://github.com/powerline/powerline.git"
+#     dest: "/home/{{ env_user }}/.vim/pack/git-plugins/start/powerline"
+
+- name: All settings misc - vim plugin install from git repo - vim-airline (all)
+  tags: vimrc
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.git:
+    repo: "https://github.com/vim-airline/vim-airline.git"
+    dest: "/home/{{ env_user }}/.vim/pack/git-plugins/start/vim-airline"
+
+- name: All settings misc - vim plugin install from git repo - vim-fugitive (git) (all)
+  tags: vimrc
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.git:
+    repo: "https://github.com/tpope/vim-fugitive.git"
+    dest: "/home/{{ env_user }}/.vim/pack/git-plugins/start/vim-fugitive"

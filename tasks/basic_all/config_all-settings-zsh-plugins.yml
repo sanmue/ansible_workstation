@@ -1,0 +1,46 @@
+# #################
+# ### zsh - plugins
+# #################
+
+- name: All settings misc - zsh plugin git update - bash-skript (Debian)
+  tags: shellrc
+  ansible.builtin.copy:
+    src: "files/config_all-services-misc-zshpluginsgit_update.sh"
+    dest: "/usr/local/bin/zshpluginsgit_update.sh"
+    owner: root
+    group: root
+    mode: "0755"
+    backup: true
+  when: ansible_facts['distribution'] in ["Debian"]
+
+- name: All settings misc - zsh plugin git repo - add safe.directory (Debian)
+  tags: shellrc
+  community.general.git_config:
+    name: safe.directory
+    scope: global
+    value: "{{ item }}"
+    state: present
+  loop:
+    - /usr/share/zsh/plugins/zsh-autosuggestions
+    - /usr/share/zsh/plugins/zsh-syntax-highlighting
+    - /usr/share/zsh/plugins/zsh-history-substring-search
+  when: ansible_facts['distribution'] in ["Debian"]
+
+# - name: All settings misc - zsh plugin git repo - add safe.directory - autosuggestions (Debian)
+#   tags: shellrc # , skip_ansible_lint
+#   become: true
+#   ansible.builtin.shell: /usr/bin/git config --global --add safe.directory /usr/share/zsh/plugins/zsh-autosuggestions
+#   when:
+#     - ansible_facts['distribution'] in ["Debian"]
+
+# - name: All settings misc - zsh plugin git repo - add safe.directory - syntax-highlighting (Debian)
+#   tags: shellrc # , skip_ansible_lint
+#   ansible.builtin.shell: /usr/bin/git config --global --add safe.directory /usr/share/zsh/plugins/zsh-syntax-highlighting
+#   when:
+#     - ansible_facts['distribution'] in ["Debian"]
+
+# - name: All settings misc - zsh plugin git repo - add safe.directory - history-substring-search (Debian)
+#   tags: shellrc # , skip_ansible_lint
+#   ansible.builtin.shell: /usr/bin/git config --global --add safe.directory /usr/share/zsh/plugins/zsh-history-substring-search
+#   when:
+#     - ansible_facts['distribution'] in ["Debian"]

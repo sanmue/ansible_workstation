@@ -1,0 +1,59 @@
+# ###########
+# ### Ghostty
+# ###########
+# - gpu accelerated terminal
+
+- name: All settings misc - Ghostty - create config folder (user, all)
+  tags: shellrc
+  ansible.builtin.file:
+    path: "/home/{{ env_user }}/.config/ghostty"
+    state: directory
+    owner: "{{ env_user }}"
+    group: "{{ env_user }}"
+    mode: '0755'
+
+- name: All settings misc - Ghostty - create config file (user, all)
+  tags: shellrc
+  ansible.builtin.blockinfile:
+    path: "/home/{{ env_user }}/.config/ghostty/config"
+    create: true
+    # backup: true
+    owner: "{{ env_user }}"
+    group: "{{ env_user }}"
+    mode: '0755'
+    marker: "### {mark} 'Ghostty' ANSIBLE MANAGED BLOCK ###"
+    block: |
+      # ### Clipboard ###
+      #trims trailing spaces only when copied FROM terminal, NOT when pasting INTO the terminal:
+      clipboard-trim-trailing-spaces = true
+      clipboard-paste-protection = true
+
+      # ### Scrollback ###
+      scrollback-limit = 8192
+
+      # ### Font ###
+      font-family = JetBrainsMonoNL Nerd Font
+      #font-family = FiraCode Nerd Font Ret
+      #font-family = JetBrainsMonoNL NFP Medium
+      font-size = 13
+
+      # ### Theme, colors ###
+      theme = Adwaita Dark
+      #theme = midnight-in-mojave
+      #theme = PaulMillr
+      #theme = Seti
+      #background = #191919
+      #background = #202020
+      #cursor-color = #c2c2c2
+      #cursor-color = #87c7ff
+      selection-invert-fg-bg = true
+      #selection-background = #87c7ff
+      #selection-foreground = #191919
+
+      # ### Contrast ###
+      minimum-contrast = 1.5
+
+      # ### Window ###
+      window-theme = auto
+      window-height = 36
+      window-width = 100

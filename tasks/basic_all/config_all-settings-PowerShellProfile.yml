@@ -1,0 +1,88 @@
+# ######################################################
+# ### PowerShell_profile - add additional Paths + Config
+# ######################################################
+
+- name: All settings misc - PowerShell_profile - Create folder (env_user, all)
+  tags: shellrc
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.file:
+    path: "/home/{{ env_user }}/.config/powershell"
+    state: directory
+    mode: '0755'
+
+- name: All settings misc - PowerShell_profile - Create folder (root, all)
+  tags: shellrc
+  ansible.builtin.file:
+    path: "/root/.config/powershell"
+    state: directory
+    mode: '0755'
+
+- name: All settings misc - PowerShell_profile - Starship init (env_user, all)
+  tags: shellrc
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.blockinfile:
+    path: "/home/{{ env_user }}/.config/powershell/Microsoft.PowerShell_profile.ps1"
+    create: true
+    backup: false
+    marker: "### {mark} 'starship shell prompt' ANSIBLE MANAGED BLOCK ###"
+    block: |
+      # -------------------------------------------
+      # starship shell prompt - Add the init script
+      # -------------------------------------------
+      Invoke-Expression (&starship init powershell)
+    mode: '0755'
+
+# https://learn.microsoft.com/en-us/dotnet/api/system.globalization.cultureinfo.currentculture?view=dotnet-plat-ext-7.0
+# globaler und betrifft die gesamte Anwendung oder den Prozess.
+# [System.Globalization.CultureInfo]::CurrentCulture = [System.Globalization.CultureInfo]::CreateSpecificCulture('de-DE')
+#
+# Einstellung gilt nur für den aktuellen Thread.
+# In PowerShell betrifft dies normalerweise nur die aktuelle Sitzung oder den aktuellen Thread, in dem der Befehl ausgeführt wird.
+# Möglichkeit 1: [System.Threading.Thread]::CurrentThread.CurrentCulture = [System.Globalization.CultureInfo]::CreateSpecificCulture('de-DE')
+# Möglichkeit 2 (s.u.): [System.Threading.Thread]::CurrentThread.CurrentCulture = 'de-DE'
+
+- name: All settings misc - PowerShell_profile - Set CurrentCulture (env_user, all)
+  tags: shellrc
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.blockinfile:
+    path: "/home/{{ env_user }}/.config/powershell/Microsoft.PowerShell_profile.ps1"
+    create: true
+    backup: false
+    marker: "### {mark} 'CurrentCulture' ANSIBLE MANAGED BLOCK ###"
+    block: |
+      # -------------------------------
+      # CurrentCulture - Set to 'de-DE'
+      # -------------------------------
+      [System.Threading.Thread]::CurrentThread.CurrentCulture = 'de-DE'
+    mode: '0755'
+
+- name: All settings misc - PowerShell_profile - Starship init (root, all)
+  tags: shellrc
+  ansible.builtin.blockinfile:
+    path: "/root/.config/powershell/Microsoft.PowerShell_profile.ps1"
+    create: true
+    backup: false
+    marker: "### {mark} 'starship shell prompt' ANSIBLE MANAGED BLOCK ###"
+    block: |
+      # -------------------------------------------
+      # starship shell prompt - Add the init script
+      # -------------------------------------------
+      Invoke-Expression (&starship init powershell)
+    mode: '0755'
+
+- name: All settings misc - PowerShell_profile - Starship init (root, all)
+  tags: shellrc
+  ansible.builtin.blockinfile:
+    path: "/root/.config/powershell/Microsoft.PowerShell_profile.ps1"
+    create: true
+    backup: false
+    marker: "### {mark} 'CurrentCulture' ANSIBLE MANAGED BLOCK ###"
+    block: |
+      # -------------------------------------------
+      # CurrentCulture - Set to 'de-DE'
+      # -------------------------------------------
+      [System.Threading.Thread]::CurrentThread.CurrentCulture = 'de-DE'
+    mode: '0755'
