@@ -1,16 +1,3 @@
-# ####################
-# ### Cronie / Anacron
-# ####################
-# war zumindest bei letzter Inst von Manjaro erforderlich
-
-- name: Config_all-cron - cronie, anacron - create local folder for anacron if not exists (Archlinux)
-  ansible.builtin.file:
-    path: /var/spool/anacron
-    state: directory
-    mode: "0777"
-  when:
-    - ansible_facts['distribution'] in ["Archlinux"]
-
 # ##########
 # ### ClamAV
 # ##########

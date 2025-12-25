@@ -48,6 +48,7 @@
     # TODO: Update + Test:
     # - name: Entfernen nicht benötigter vorinstallierter Pakete (Plasma)
     #   ansible.builtin.import_tasks: tasks/Desktop_Plasma/packages_workstation-Plasma-removePreInstalls.yml
+    #
     # ----------------------------------------------------------
     # ### Install software packages, including Flatpak, Snap
     # - repo:
@@ -77,6 +78,7 @@
       ansible.builtin.import_tasks: tasks/basic_all/packages_workstation-localPackageInstall.yml
     - name: Install local packages - fix for CitrixIcaclient on Gnome
       ansible.builtin.import_tasks: tasks/fix/config_workstation-Gnome-citrixIcaclient.yml
+    #
     # ----------------------------------------------------------
     # ### Config Firewall, Cron, Services, sonstige Settings:
     - name: Config - stats all
@@ -125,12 +127,32 @@
       ansible.builtin.import_tasks: tasks/basic_all/config_all-settings-VSCode.yml
     - name: Config Settings all - Ulauncher extensions
       ansible.builtin.import_tasks: tasks/basic_all/config_all-settings-ulauncher-extensions.yml
+    - name: Config Settings all - Cron
+      ansible.builtin.import_tasks: tasks/basic_all/config_all-settings-cron.yml
     #
-    # - Services and cronjobs:
-    - name: Config Services all - systemweit
+    # # Services and cronjobs:
+    # - name: Config cronjobs all - cronjobs - ClamAV
+    #   ansible.builtin.import_tasks: tasks/basic_all/config_all-cronjobs-ClamAV.yml
+    #   - replaced by systemd timer
+    - name: Config Services all - ArchPacStuff
+      ansible.builtin.import_tasks: tasks/basic_all/config_all-services-ArchPacStuff.yml
+    - name: Config Services all - cron
+      ansible.builtin.import_tasks: tasks/basic_all/config_all-services-cron.yml
+    - name: Config Services all - ClamAV
+      ansible.builtin.import_tasks: tasks/basic_all/config_all-services-ClamAV.yml
+    - name: Config Services all - Printing CUPS
+      ansible.builtin.import_tasks: tasks/basic_all/config_all-services-pintingCups.yml
+    - name: Config Services all - SSH
+      ansible.builtin.import_tasks: tasks/basic_all/config_all-services-ssh.yml
+    - name: Config Services all - Starship shell prompt
+      ansible.builtin.import_tasks: tasks/basic_all/config_all-services-starship.yml
+    - name: Config Services all - zsh plugins
+      ansible.builtin.import_tasks: tasks/basic_all/config_all-services-zshPlugins.yml
+    - name: Config Services all - Syncthing
+      ansible.builtin.import_tasks: tasks/basic_all/config_all-services-syncthing.yml
+    - name: Config Services all - misc (system + user)
       ansible.builtin.import_tasks: tasks/basic_all/config_all-services-misc.yml
-    - name: Config Cron
-      ansible.builtin.import_tasks: tasks/basic_all/config_all-cron.yml
+    #
     # ----------------------------------------------------------
     # ### Virtualisierung:
     - name: VM - Qemu KVM
@@ -141,10 +163,12 @@
       ansible.builtin.import_tasks: tasks/VM/config_all-VM-users.yml
     - name: VM - create
       ansible.builtin.import_tasks: tasks/VM/config_all-VM-QemuKvm-create.yml
+    #
     # ----------------------------------------------------------
     # ### Create Users / Config User privileges:
     - name: Config users
       ansible.builtin.import_tasks: tasks/basic_all/config_all-users.yml
+    #
     # ----------------------------------------------------------
     # ### Mail:
     # Nur lokaler Mailversand bei Start/Ende Scan + VirusEvent von ClamAV
@@ -156,20 +180,24 @@
       ansible.builtin.import_tasks: tasks/basic_all/config_all-mail-service.yml
     - name: Initial test mail
       ansible.builtin.import_tasks: tasks/basic_all/config_all-mail-testmail.yml
+    #
     # ----------------------------------------------------------
     # ### Python
     - name: Python Env
       ansible.builtin.import_tasks: tasks/basic_all/packages_workstation-pythonEnv.yml
     - name: Pip and Pipx install
       ansible.builtin.import_tasks: tasks/basic_all/packages_workstation-pythonPip.yml
+    #
     # ----------------------------------------------------------
     # ### C/C++
     - name: C/C++
       ansible.builtin.import_tasks: tasks/basic_all/packages_workstation-cpp.yml
+    #
     # ----------------------------------------------------------
     # ### NVM / Node.js
     - name: NVM Node.js
       ansible.builtin.import_tasks: tasks/basic_all/packages_workstation-nvmNodejs.yml
+    #
     # ----------------------------------------------------------
     # ### Docker
     - name: Docker repo
@@ -180,6 +208,7 @@
       ansible.builtin.import_tasks: tasks/basic_all/config_workstation-docker.yml
     - name: Docker service
       ansible.builtin.import_tasks: tasks/basic_all/config_workstation-docker-services.yml
+    #
     # ----------------------------------------------------------
     # ### Ansible galaxy collections
     - name: Install ansbile collections via ansible-galaxy

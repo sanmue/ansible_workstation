@@ -1,0 +1,120 @@
+# ### ----------------------------------------
+# ### ClamAV
+# ### ----------------------------------------
+# - system-wide and user services
+
+# --- system-wide ----------------------------------------
+
+# ### Clamav database
+# needed by clamav-freshclam.service - preparing logfile (touch)
+- name: All services - clamav - create freshclam log file (all)
+  ansible.builtin.file:
+    path: "/var/log/clamav/freshclam.log"
+    state: touch
+    owner: clamav
+    group: clamav
+    mode: u=rw,g=r,o=
+
+# Arch-Wiki/ManjaroWiki: https://wiki.archlinux.org/title/ClamAV bzw. https://wiki.manjaro.org/index.php/ClamAV
+# You will need to run freshclam before starting the service for the first time
+# or you will run into trouble/errors which will prevent ClamAV from starting correctly.
+#
+# You may get a notification that clamd was not notified. This is normal because we haven't started the service yet.
+
+- name: All services - clamav - Update clamav database (Arch)
+  ansible.builtin.shell:
+    cmd: freshclam
+  args:
+    creates: /home/{{ env_user }}/.ansible_freshclamInitialStartExecuted
+  when: ansible_facts['distribution'] in ["Archlinux"]
+
+# - name: All services misc - Update clamav database (Debian)
+#  # ansible.builtin.shell: freshclam
+#  ansible.builtin.shell: freshclam --daemon --user=clamav   # Fehlermeldung
+#  args:
+#    creates: /home/{{ env_user }}/.ansible_freshclamInitialStartExecuted
+#  when: ansible_facts['distribution'] in ["Debian"]
+
+- name: All services - clamav - Set flag file freshclamInitialStartExecuted (all)
+  ansible.builtin.file:
+    path: "/home/{{ env_user }}/.ansible_freshclamInitialStartExecuted"
+    state: touch
+    owner: "{{ env_user }}"
+    group: "{{ env_user }}"
+    mode: u=rw,g=r,o=r
+
+# ### Start and enable clamav services
+
+- name: All services - clamav - Start+enable clamav-daemon.service (all)
+  ansible.builtin.service:
+    name: clamav-daemon.service
+    state: started
+    enabled: true
+
+- name: All services - clamav - Start+enable clamav-freshclam.service (all)
+  ansible.builtin.service:
+    name: clamav-freshclam.service
+    state: started
+    enabled: true
+
+# --- user ----------------------------------------
+
+# https://stackoverflow.com/questions/45776003/fixing-a-systemd-service-203-exec-failure-no-such-file-or-directory
+# Check: systemctl --user status clamav_scanHome.service
+- name: All services - ClamAV - Create service unit file - user - scanHome (all)
+  ansible.builtin.blockinfile:
+    path: "/etc/systemd/user/clamav_scanHome.service"
+    create: true
+    backup: true
+    marker: "# ### {mark} ANSIBLE MANAGED BLOCK - ClamAV scanHOME ###"
+    block: |
+      [Unit]
+      Description=Scan home directory
+
+      [Service]
+      Type=oneshot
+      #RemainAfterExit=yes
+      #-> wenn status aktiv behält lässt sich der Service (auch manuell / nur in diesem Fall?) nicht erneut starten
+      ExecStart=/bin/bash /usr/local/bin/scanHome.sh $HOME 2>/dev/null
+      #User={{ env_user }}
+    state: present
+    group: root
+    owner: root
+    mode: "0644"
+
+# Check: systemctl --user status clamav_scanHome.timer
+- name: All services - ClamAV - Create timer unit file - user - scanHome (all)
+  ansible.builtin.blockinfile:
+    path: "/etc/systemd/user/clamav_scanHome.timer"
+    create: true
+    backup: true
+    marker: "# ### {mark} ANSIBLE MANAGED BLOCK - ClamAV scanHOME ###"
+    block: |
+      [Unit]
+      Description=Scan home directory
+
+      [Timer]
+      Unit=clamav_scanHome.service
+      OnCalendar=Sat *-*-* 11:30:00
+      AccuracySec=2h
+      #RandomizedDelaySec=24h
+      Persistent=true
+
+      [Install]
+      WantedBy=timers.target
+    state: present
+    group: root
+    owner: root
+    mode: "0644"
+
+- name: All services - ClamAV - start+enable timer - env_user - scanHome (all)
+  ansible.builtin.systemd:
+    name: clamav_scanHome.timer
+    state: started
+    enabled: true
+    daemon_reload: true
+    scope: user
+  become: true
+  become_user: "{{ env_user }}"
+  environment:
+    XDG_RUNTIME_DIR: "{{ env_user_XDG_RUNTIME_DIR }}"

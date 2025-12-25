@@ -1,0 +1,12 @@
+# -------------
+# Cron / Cronie
+# -------------
+# cron wird verwendet z.B. von von ClamTK und timeshift
+#
+# https://wiki.archlinux.org/title/Cron
+- name: All services misc - cronie.service (Arch)
+  ansible.builtin.service:
+    name: cronie.service
+    state: started
+    enabled: true
+  when: ansible_facts['distribution'] in ["Archlinux"]

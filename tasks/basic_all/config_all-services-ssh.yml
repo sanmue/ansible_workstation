@@ -1,0 +1,17 @@
+# -----
+# # SSH
+# -----
+
+- name: All services - ssh - disable ssh (Debian)
+  ansible.builtin.service:
+    name: ssh
+    # state: started
+    enabled: false
+  when: ansible_facts['distribution'] in ["Debian"]
+
+- name: All services - ssh - disable sshd (Archlinux)
+  ansible.builtin.service:
+    name: sshd
+    # state: started
+    enabled: false
+  when: ansible_facts['distribution'] in ["Archlinux"]

@@ -1,0 +1,57 @@
+# ---------------
+# ### zsh plugins
+# ---------------
+# zugehöriges, auszuführendes Script wird in 'config_all-services-misc.yml' in '/usr/local/bin' erstellt
+
+- name: All services - zsh plugins update - Create service unit file (Arch)
+  ansible.builtin.blockinfile:
+    path: "/etc/systemd/system/zshpluginsgit_update.service"
+    create: true
+    backup: true
+    marker: "# ### {mark} ANSIBLE MANAGED BLOCK - zshpluginsgit_update ###"
+    block: |
+      [Unit]
+      Description=zsh plugins git update
+
+      [Service]
+      Type=oneshot
+      ExecStart=/usr/bin/bash /usr/local/bin/zshpluginsgit_update.sh
+    state: present
+    group: root
+    owner: root
+    mode: "0644"
+  when: ansible_facts['distribution'] in ["Archlinux"]
+
+# monatlich (am 1. um 11:05 Uhr); alternativ: 'OnCalendar=monthly' (= monatlich am 01. um 00:00 Uhr)
+- name: All services - zsh plugins update - Create timer unit file (Arch)
+  ansible.builtin.blockinfile:
+    path: "/etc/systemd/system/zshpluginsgit_update.timer"
+    create: true
+    backup: true
+    marker: "# ### {mark} ANSIBLE MANAGED BLOCK - zshpluginsgit_update ###"
+    block: |
+      [Unit]
+      Description=zsh plugins git update
+
+      [Timer]
+      Unit=zshpluginsgit_update.service
+      OnCalendar=*-*-01 11:05:00
+      AccuracySec=12h
+      #RandomizedDelaySec=24h
+      Persistent=true
+
+      [Install]
+      WantedBy=timers.target
+    state: present
+    group: root
+    owner: root
+    mode: "0644"
+  when: ansible_facts['distribution'] in ["Archlinux"]
+
+- name: All services - zsh plugins update - start+enable timer (Arch)
+  ansible.builtin.systemd:
+    name: zshpluginsgit_update.timer
+    state: started
+    enabled: true
+    daemon_reload: true
+  when: ansible_facts['distribution'] in ["Archlinux"]

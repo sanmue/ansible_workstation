@@ -1,0 +1,10 @@
+# ---------------------
+# ### cups OpenPrinting
+# ---------------------
+
+- name: All services - printing - cups.service (Arch)
+  ansible.builtin.service:
+    name: cups.service
+    state: started
+    enabled: true
+  when: ansible_facts['distribution'] in ["Archlinux"]

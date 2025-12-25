@@ -1,0 +1,55 @@
+# ---------------------------------
+# ### Archlinux specific services and timers
+# ---------------------------------
+
+# Reflector
+# - retrieve the latest mirror list
+# ---------------------------------
+#
+# https://man.archlinux.org/man/reflector.1#EXAMPLES
+# https://wiki.archlinux.org/title/Reflector#top-page
+# - conf: /etc/xdg/reflector/reflector.conf   -->   siehe config_all-settings-misc.yml
+
+- name: All services - ArchPacStuff - reflector.service - retrieve the latest mirror list (Arch)
+  ansible.builtin.service:
+    name: reflector.service
+    # state: started
+    enabled: true
+  when:
+    - ansible_facts['distribution'] in ["Archlinux"]
+
+# ------------------------------------------------
+# # update pacman files database (default: weekly)
+# ------------------------------------------------
+# - https://wiki.archlinux.org/title/Pacman#Search_for_a_package_that_contains_a_specific_file
+# - https://wiki.archlinux.org/title/Pacman#Querying_package_databases
+
+- name: All services - ArchPacStuff - pacman-filesdb-refresh.timer - update pacman files database (Arch)
+  ansible.builtin.service:
+    name: pacman-filesdb-refresh.timer
+    state: started
+    enabled: true
+  when: ansible_facts['distribution'] in ["Archlinux"]
+
+# -------------------------------------------
+# # update pkgfile database (default: daily)
+# -------------------------------------------
+# - https://wiki.archlinux.org/title/Pkgfile#Automatic_updates
+
+- name: All services - ArchPacStuff - pkgfile-update.timer - update pkgfile database (Arch)
+  ansible.builtin.service:
+    name: pkgfile-update.timer
+    state: started
+    enabled: true
+  when: ansible_facts['distribution'] in ["Archlinux"]
+
+# ----------------------------------------------
+# # cleaning the package cache (default: weekly)
+# ----------------------------------------------
+# - https://wiki.archlinux.org/title/Pkgfile#Automatic_updates
+
+- name: All services - ArchPacStuff - paccache.timer - cleaning package cache (Arch)
+  ansible.builtin.service:
+    name: paccache.timer
+    enabled: true
+  when: ansible_facts['distribution'] in ["Archlinux"]
