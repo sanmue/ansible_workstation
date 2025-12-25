@@ -1,0 +1,23 @@
+# ###########################
+# ### Archlinux - pacman.conf
+# ###########################
+
+- name: Config Workstation - pacman.conf - activate Color (Archlinux)
+  become: true
+  ansible.builtin.lineinfile:
+    path: "/etc/pacman.conf"
+    regexp: "^#Color"
+    line: "Color"
+    backup: true
+  when:
+    - ansible_facts['distribution'] == "Archlinux"
+
+- name: Config Workstation - pacman.conf - activate ParallelDownloads (Archlinux)
+  become: true
+  ansible.builtin.lineinfile:
+    path: "/etc/pacman.conf"
+    regexp: "^#ParallelDownloads.*"
+    line: "ParallelDownloads = 5"
+    backup: true
+  when:
+    - ansible_facts['distribution'] == "Archlinux"

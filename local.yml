@@ -10,11 +10,13 @@
     - name: Pre Tasks - Gather Facts and set Variables
       ansible.builtin.import_tasks: tasks/basic_all/config_workstation-ansibleFacts.yml
 
-- name: Add repos + update
+- name: Add repos + update + config package manager
   hosts: localhost
   connection: local
   become: true
   pre_tasks:
+    - name: Pre Tasks - config pacman
+      ansible.builtin.import_tasks: tasks/basic_all/config_workstation-pacman.yml
     - name: Pre Tasks - addrepos
       ansible.builtin.import_tasks: tasks/basic_all/config_workstation-addrepos.yml
     - name: Pre Tasks - all update

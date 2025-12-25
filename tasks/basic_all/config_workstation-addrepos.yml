@@ -1,25 +1,6 @@
-# ###########################
-# ### pacman.conf - Archlinux
-# ###########################
-- name: Config Workstation addrepos - pacman.conf - activate Color (Archlinux)
-  become: true
-  ansible.builtin.lineinfile:
-    path: "/etc/pacman.conf"
-    regexp: "^#Color"
-    line: "Color"
-    backup: true
-  when:
-    - ansible_facts['distribution'] == "Archlinux"
-
-- name: Config Workstation addrepos - pacman.conf - activate ParallelDownloads (Archlinux)
-  become: true
-  ansible.builtin.lineinfile:
-    path: "/etc/pacman.conf"
-    regexp: "^#ParallelDownloads.*"
-    line: "ParallelDownloads = 5"
-    backup: true
-  when:
-    - ansible_facts['distribution'] == "Archlinux"
+# #############
+# ### Archlinux
+# #############
 
 # multilib: If you want to run 32 bit applications on your x86_64 system... # e.g. for 'steam'
 - name: Config Workstation addrepos - pacman.conf - activate multilib repo - check status flagfile (Archlinux)
@@ -201,6 +182,7 @@
     url: "https://packages.microsoft.com/config/debian/{{ env_lsb }}/packages-microsoft-prod.deb"
     dest: /tmp/packages-microsoft-prod.deb
     force_basic_auth: true
+    mode: '0755'
   when:
     - ansible_facts['distribution'] == "Debian"
 
