@@ -66,12 +66,20 @@
   args:
     executable: /bin/bash
 
-- name: NvmNodejs - Install packages via npm (all)
+- name: NvmNodejs - Install packages via npm - benutzerweit (env_user) (all)
   tags: [upnvm]
   become: true
   become_user: "{{ env_user }}"
   community.general.npm:
     name: yaml-language-server
-    global: false
-    path: "/home/{{ env_user }}/.nvm"
+    global: true
+    # path: "/home/{{ env_user }}"
     state: present
+# global: true heißt benutzerweit für den o.g. env_user (jedoch nicht systemweit)
+# - Installation in Verzeichnis: /home/{{ env_user }}/.nvm/versions/node/<node-version>/lib/node_modules
+# - npm ls -g; npm uninstall -g <paket>
+# global: false
+# - angabe path-parameter erforderlich, wenn nicht global installiert werden soll
+# - inst lokal in einem Projekt oder Verzeichnis (lt. path Angabe)
+# - installation in Verzeichnis: /home/{{ env_user }}/node_modules (node_modules wird autom. erstellt)
+# - npm ls -l; npm uninstall <paket>
