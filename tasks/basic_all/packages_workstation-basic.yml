@@ -80,9 +80,10 @@
       - w3m # Text-based Web browser as well as pager (u.a. wg. nnn)
       - wget
       - xdg-utils
-      # - yaml-language-server # anscheinend nicht in debian 12
-      - yq # Command-line YAML, XML, TOML processor - jq wrapper for YAML/XML/TOML documents
       - xterm # (u.a. wg. nnn)
+      - yamllint
+      # - yaml-language-server # anscheinend nicht mehr in debian repos # via npm (siehe packages_workstation-nvmNodejs.yml)
+      - yq # Command-line YAML, XML, TOML processor - jq wrapper for YAML/XML/TOML documents
       - zoxide # A smarter cd command for your terminal (u.a. wg. nnn)
       - zsh
       - zstd
@@ -181,7 +182,6 @@
       - vim-jedi # Vim plugin for jedi, an awesome Python autocompletion
       - viu # Simple terminal image viewer (u.a. wg. nnn)
       - wireguard-tools
-      - yaml-language-server
       - zed # A high-performance, multiplayer code editor from the creators of Atom and Tree-sitter
       - zsh-autosuggestions # besser: install from git?
       # - zsh-completions # besser: install from git?
