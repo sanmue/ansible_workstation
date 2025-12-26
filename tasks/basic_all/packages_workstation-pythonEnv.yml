@@ -2,10 +2,6 @@
 # ### Python Environment
 # ######################
 
-# pyenv ist bereits installiert über Paketmanager (Arch: ...workstation-basic.yml) bzw. InstalScript+localPackageIntstall.yml (Debian)
-# + siehe ...localPackageInstall.yml # + ...all-settings-misc.yml (shell config)
-
-# !!!
 # - pyenv:
 #   - https://technicalnavigator.in/how-to-fix-error-externally-managed-environment-in-python-kali-linux/
 #
@@ -13,10 +9,79 @@
 # - https://stackoverflow.com/questions/75608323/how-do-i-solve-error-externally-managed-environment-everytime-i-use-pip3
 # - https://stackoverflow.com/questions/75602063/pip-install-r-requirements-txt-is-failing-this-environment-is-externally-manag/75696359#75696359
 # - https://packaging.python.org/en/latest/specifications/externally-managed-environments/#writing-to-only-the-target-sysconfig-scheme
-# !!!
+
+# + siehe auch settings / shell config (bashrc + zshrc)
+
+- name: Install packages - workstation - python environment - pyenv (Archlinux)
+  ansible.builtin.package:
+    state: present
+    name:
+      - pyenv # Easily switch between multiple versions of Python
+  when: ansible_facts['distribution'] in ["Archlinux"]
+
+# prereqesites for Pyenv (Debian)
+- name: Install packages - workstation - python environment - prereqesites for pyenv (Debian)
+  ansible.builtin.package:
+    state: present
+    name:
+      # Pyenv
+      # https://ostechnix.com/pyenv-python-version-management-made-easier/
+      # https://github.com/pyenv/pyenv-installer
+      # Pyenv Install: siehe ...localPackageInstall.yml
+      # manche Pakete sind schon installiert (s.o.)
+      - build-essential
+      - curl
+      - libbz2-dev
+      - libncurses5-dev
+      - libncursesw5-dev
+      - libreadline-dev
+      - libsqlite3-dev
+      - libssl-dev
+      - llvm
+      - make
+      - tk-dev
+      - wget
+      - xz-utils
+      - zlib1g-dev
+  when: ansible_facts['distribution'] == "Debian"
+
+# wenn timeout-problem: timeout erhöhen oder manueller download
+# # -> manuell / install script: download via curl:
+# curl -L --create-file-mode 0755 -o "/home/${userid}/Downloads/pyenv-installer.sh" "https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer"
+# chmod +x "/home/${userid}/Downloads/pyenv-installer.sh" # --create-file-mode hat nicht funktioniert
+- name: Install packages - workstation - python environment - download installer-script for Pyenv (Debian)
+  ansible.builtin.get_url:
+    url: "https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer"
+    dest: "/home/{{ env_user }}/Downloads/pyenv-installer.sh"
+    timeout: 300
+    force: false
+    mode: "0755"
+  when:
+    - ansible_facts['distribution'] == "Debian"
+
+- name: Install packages - workstation - python environment - Get stat of .pyenv (all)
+  ansible.builtin.stat:
+    path: "/home/{{ env_user }}/.pyenv"
+  register: pyenvfolder
+
+- name: Install packages - workstation - python environment - Get stat of pyenv-installer skript (all)
+  ansible.builtin.stat:
+    path: "/home/{{ env_user }}/Downloads/pyenv-installer.sh"
+  register: pyenvskript
+
+- name: Install packages - workstation - python environment - Execute Installer-Skript for Pyenv (Debian)
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.script:
+    cmd: "/home/{{ env_user }}/Downloads/pyenv-installer.sh"
+  args:
+    creates: "/home/{{ env_user }}/.pyenv" # Run only if '.pyenv'-directory does NOT exist (from previous run)
+  when:
+    - ansible_facts['distribution'] == "Debian"
+    - pyenvskript.stat.exists
 
 # Zusammenfassung der ermittelten Python Version:
-- name: Python Environment - Get and register Python version (all)
+- name: Install packages - workstation - python environment - Get and register Python version (all)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: |
@@ -44,7 +109,7 @@
 #     var: python_version
 #     # var: python_version.stdout
 
-- name: Python Environment - pyenv install python (env_user, all)
+- name: Install packages - workstation - python environment - pyenv install python (env_user, all)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: "pyenv install {{ python_version.stdout }}"
@@ -58,7 +123,7 @@
     - "'definition not found' not in pyenv_install_result.stderr"
     # d.h.: Ignoriere den Fehler, wenn die Version bereits installiert ist oder wenn die Version nicht gefunden wird
 
-- name: Python Environment - pyenv set global python version (env_user, all)
+- name: Install packages - workstation - python environment - pyenv set global python version (env_user, all)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: "pyenv global {{ python_version.stdout }}"
@@ -76,7 +141,7 @@
     access_time: preserve
 
 # https://github.com/pyenv/pyenv-virtualenv?tab=readme-ov-file#installing-as-a-pyenv-plugin
-- name: Python Environment - pyenv - install pyenv-virtualenv as pyenv plugin
+- name: Install packages - workstation - python environment - pyenv - install pyenv-virtualenv as pyenv plugin
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.git:

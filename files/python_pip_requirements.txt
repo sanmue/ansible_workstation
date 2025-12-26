@@ -29,13 +29,14 @@ html5lib
 # jedi-language-server # autocompletion for python
 jupyter # Jupyter metapackage: notebook jupyterlab ipython ipykernel jupyter-console nbconvert ipywidgets
 lxml
+packaging # Requirement for ansible community.general.pipx module
 pandas[excel,html,sql-other,mysql,output-formatting,performance,plot,xml]
 # pipenv
 psutil
 pyarrow
 # pylintq
 # pylint-venv
-# pyright # für VS Code: Pylance - Extension ?
+# pyright # für VS Code: Pylance - Extension ? # Zed Editor mit Ext zed-python-refactoring (+ cst-lsp)
 pytest # wg. Abhöngigkeit von pytest-embedded (# via uv tool ...)
 python-lsp-server[all]
 # ruff # Python linter and code formatter # via uv tool ...
@@ -67,4 +68,4 @@ sshclick
 # ### --------
 # ### ShellGPT
 # - https://github.com/TheR1D/shell_gpt
-shell-gpt
+# shell-gpt

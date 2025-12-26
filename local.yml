@@ -93,8 +93,6 @@
       ansible.builtin.import_tasks: tasks/basic_all/config_all-settings-locale.yml
     - name: Config Settings all - direnv
       ansible.builtin.import_tasks: tasks/basic_all/config_all-settings-direnv.yml
-    - name: Config Settings all - python - uv
-      ansible.builtin.import_tasks: tasks/basic_all/config_all-settings-python-uv.yml
     - name: Config Settings all - rclone
       ansible.builtin.import_tasks: tasks/basic_all/config_all-settings-rclone.yml
     - name: Config Settings all - starship
@@ -183,6 +181,10 @@
     #
     # ----------------------------------------------------------
     # ### Python
+    - name: Python Packages
+      ansible.builtin.import_tasks: tasks/basic_all/packages_workstation-python.yml
+    - name: Config Settings all - python - uv
+      ansible.builtin.import_tasks: tasks/basic_all/config_all-settings-python-uv.yml
     - name: Python Env
       ansible.builtin.import_tasks: tasks/basic_all/packages_workstation-pythonEnv.yml
     - name: Pip and Pipx install

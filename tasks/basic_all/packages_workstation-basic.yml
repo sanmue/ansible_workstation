@@ -160,36 +160,12 @@
       - poppler # PDF rendering library based on xpdf 3.0 (u.a. wg. nnn)
       - psutils # A set of postscript utilities
       - ptyxis # A container oriented terminal # gpu beschleunigtes terminal
-      - pyenv # Easily switch between multiple versions of Python
-      # - pyright # Type checker for the Python language # Zed Editor mit Ext zed-python-refactoring (+ pip install cst-lsp)
-      - python
-      # - python-pyasyncore # wg. ulauncher # pyasyncore via pip
-      # - python-black # Uncompromising Python code formatter
-      # - python-debugpy # An implementation of the Debug Adapter Protocol for Python
-      # - python-flake8-black # Flake8 plugin to call black as a code style validator
-      # - python-flake8-docstrings # Plugin to flake8 to include checks provided by pydocstyle
-      # - python-flake8-isort # Flake8 plugin to validate annotations complexity
-      # - python-isort # A Python utility / library to sort Python imports
-      # - python-jedi # Awesome autocompletion for python
-      # - python-lsp-server # Fork of the python-language-server project, maintained by the Spyder IDE team and the community
-      # - python-lsp-black # python-lsp-server plugin that adds support to black autoformatter, forked from pyls-black
-      - python-pip # The PyPA recommended tool for installing Python packages
-      # - python-pipx # Install and Run Python Applications in Isolated Environments
-      # - python-poetry # Python dependency management and packaging made easy
-      # - python-psutil # A cross-platform process and system utilities module for Python
-      # - python-pyarrow # will become necessary dependency for Pandas
-      # - python-pylint # Analyzes Python code looking for bugs and signs of poor quality
-      # - python-pylint-venv # Make pylint respect virtualenvs
-      # - python-pytest # Simple powerful testing with Python
-      # - python-setuptools # Easily download, build, install, upgrade, and uninstall Python packages
-      # - python-virtualenv # Virtual Python Environment builder
-      # - python-virtualenvwrapper # Extensions to Ian Bicking's virtualenv tool
       - qt6-wayland # 10/2023: for 'obs-studio' to work install 'qt6-wayland'
       - reflector # A Python 3 module and script to retrieve and filter the latest Pacman mirror list.
       - remmina # remote desktop client written in GTK+
       - signal-desktop
       - sqlite # A C library that implements an SQL database engine
-      # - steam
+      - steam
       - torbrowser-launcher
       - tree-sitter # Incremental parsing library
       - tree-sitter-bash # Bash grammar for tree-sitter # benötigt von Zed editor Extension (Bash for Zed)
@@ -201,7 +177,6 @@
       - ttf-sourcecodepro-nerd # ~ 85 MB Install Size
       # - ttf-zed-mono-nerd # ~680 MB Install Size
       - ueberzug # command line utility which draws images on terminals (in combi with X11?) (u.a. wg. nnn)
-      - uv # fast Python package and project manager
       - vim-ansible
       - vim-jedi # Vim plugin for jedi, an awesome Python autocompletion
       - viu # Simple terminal image viewer (u.a. wg. nnn)
@@ -298,17 +273,6 @@
       - packagekit # sollte bereits installiert sein # notwendig u.a. für cockpit
       - poppler-utils # PDF utilities (based on Poppler) (u.a. wg. nnn)
       - printer-driver-cups-pdf
-      # - pipx # execute binaries from Python packages in isolated environments
-      - python3
-      # - python3-debugpy
-      # - python3-jedi # autocompletion tool for Python 3
-      - python3-pip
-      # - python3-psutil
-      # - python3-pyinotify
-      # - python3-pylint-common
-      # - python3-pylint-venv
-      # - python3-pytest-pylint
-      # - python3-setuptools
       - sqlite3
       - ssh # bereits installiert (install script)
       # - timeshift
@@ -378,31 +342,6 @@
       - xclip # Command line interface to the X11 clipboard # Voraussetzung für snap-package "espanso"
   when:
     - env_displayserver == "x11"
-
-- name: Install basic packages - prereqesites for Pyenv (Debian)
-  ansible.builtin.package:
-    state: present
-    name:
-      # Pyenv
-      # https://ostechnix.com/pyenv-python-version-management-made-easier/
-      # https://github.com/pyenv/pyenv-installer
-      # Pyenv Install: siehe ...localPackageInstall.yml
-      # manche Pakete sind schon installiert (s.o.)
-      - build-essential
-      - curl
-      - libbz2-dev
-      - libncurses5-dev
-      - libncursesw5-dev
-      - libreadline-dev
-      - libsqlite3-dev
-      - libssl-dev
-      - llvm
-      - make
-      - tk-dev
-      - wget
-      - xz-utils
-      - zlib1g-dev
-  when: ansible_facts['distribution'] == "Debian"
 
 # - Steam ppa wurde hinzugefügt in config_workstation-addrepos.yml
 # - https://linuxcapable.com/how-to-install-steam-on-debian-linux/

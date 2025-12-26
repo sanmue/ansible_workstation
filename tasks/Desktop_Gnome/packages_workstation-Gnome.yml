@@ -58,7 +58,7 @@
       - nemo-share
       # - nemo-terminal
       - orchis-theme
-      - pycharm-community-edition
+      - pycharm-community-edition # Python IDE
       - solanum # Pomodoro timer for the GNOME desktop
       - transmission-cli
       - transmission-gtk # -> deluge

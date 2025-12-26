@@ -66,13 +66,13 @@
 #     - ansible_facts['distribution'] in ["Debian"]
 # ### -----------------------------------------------------------------------------------------------------------------
 
-- name: Python - pip (env_user, all)
+- name: Install packages - workstation - Python - pip (env_user, all)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.debug:
     msg: "Wenn es in einem Folgeschritt zu Fehlermelung kommt: Terminal schließen + wieder neu öffnen + nochmal Script/Playbook starten"
 
-- name: Python - pip - upgrade pip (env_user, all)
+- name: Install packages - workstation - Python - pip - upgrade pip (env_user, all)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: pip install --upgrade pip
@@ -117,7 +117,7 @@
 #   ansible.builtin.shell:
 #     cmd: pipx ensurepath
 
-- name: Python - pip - shell install libs - setuptools (all)
+- name: Install packages - workstation - Python - pip - shell install libs - setuptools (all)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell:
@@ -137,7 +137,7 @@
 #   # Debian, Fehler:
 #   # fatal: [localhost]: FAILED! => {"changed": false, "msg": "Unable to find pip in the virtualenv, /versions/3.11.2, under any of these names: pip3, pip. Make sure pip is present in the virtualenv."}
 
-- name: Python - pip - install libs via builtin shell - python_pip_requirements.txt (all)
+- name: Install packages - workstation - Python - pip - install libs via builtin shell - python_pip_requirements.txt (all)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell:
@@ -145,7 +145,7 @@
   args:
     creates: "/home/{{ env_user }}/.ansible_PythonPip"
 
-- name: Python - pip - set flag file for pip installs (env_user, all)
+- name: Install packages - workstation - Python - pip - set flag file for pip installs (env_user, all)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.file:

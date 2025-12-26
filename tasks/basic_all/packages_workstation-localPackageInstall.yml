@@ -6,41 +6,7 @@
 # ### Pyenv
 # ### #####
 # - Arch: via paketmanager (...workstation-basic.yml)
-
-# wenn timeout-problem: timeout erhöhen oder manueller download
-# # -> manuell / install script: download via curl:
-# curl -L --create-file-mode 0755 -o "/home/${userid}/Downloads/pyenv-installer.sh" "https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer"
-# chmod +x "/home/${userid}/Downloads/pyenv-installer.sh" # --create-file-mode hat nicht funktioniert
-- name: Local packages install - download installer-script for Pyenv (Debian)
-  ansible.builtin.get_url:
-    url: "https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer"
-    dest: "/home/{{ env_user }}/Downloads/pyenv-installer.sh"
-    timeout: 300
-    force: false
-    mode: "0755"
-  when:
-    - ansible_facts['distribution'] == "Debian"
-
-- name: Install basic packages - Get stat of .pyenv (all)
-  ansible.builtin.stat:
-    path: "/home/{{ env_user }}/.pyenv"
-  register: pyenvfolder
-
-- name: Install basic packages - Get stat of pyenv-installer skript (all)
-  ansible.builtin.stat:
-    path: "/home/{{ env_user }}/Downloads/pyenv-installer.sh"
-  register: pyenvskript
-
-- name: Install basic packages - Execute Installer-Skript for Pyenv (Debian)
-  become: true
-  become_user: "{{ env_user }}"
-  ansible.builtin.script:
-    cmd: "/home/{{ env_user }}/Downloads/pyenv-installer.sh"
-  args:
-    creates: "/home/{{ env_user }}/.pyenv" # Run only if '.pyenv'-directory does NOT exist (from previous run)
-  when:
-    - ansible_facts['distribution'] == "Debian"
-    - pyenvskript.stat.exists
+# - Debian: verschoben nach: packages_workstation-pyhtonEnv.yml
 
 # #####################################
 # ### Citrix Workspace App (ICA-Client)
