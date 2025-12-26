@@ -10,6 +10,9 @@
     - name: Pre Tasks - Gather Facts and set Variables
       ansible.builtin.import_tasks: tasks/basic_all/config_workstation-ansibleFacts.yml
 
+# become: true # auskommentiert, wg Fehler bei alias-aufruf "upnvm":
+# [ERROR]: Task failed: Duplicate become password prompt encountered waiting for become success.
+# bei jedem der subtasks ist become:true gesetzt
 - name: Add repos + update + config package manager
   hosts: localhost
   connection: local
