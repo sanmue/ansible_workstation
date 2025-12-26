@@ -46,7 +46,7 @@
     state: present
     name:
       - dconf
-      - decibel # Simple audio player for GNOME
+      - decibels # Simple audio player for GNOME
       # - deluge # -> transmission-gtk
       - epiphany # A GNOME web browser based on the WebKit rendering engin
       # - evince # Document viewer (PDF, PostScript, XPS, djvu, dvi, tiff, cbr, cbz, cb7, cbt) # -> papers
