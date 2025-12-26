@@ -40,9 +40,20 @@ pyarrow
 pytest # wg. Abhöngigkeit von pytest-embedded (# via uv tool ...)
 python-lsp-server[all]
 # ruff # Python linter and code formatter # via uv tool ...
-tree-sitter-bash # Bash for Zed
-tree-sitter-dockerfile # Dockerfile Zed Extension
 virtualenv-pyenv # A virtualenv Python discovery plugin for pyenv–installed interpreters # installiert 'virtualenv' als dependency
+
+# ### ----------------------
+# ### bash
+tree-sitter-bash # Bash for Zed
+
+# ### ----------------------
+# ### docker
+tree-sitter-dockerfile # Dockerfile Zed Extension
+
+# ### ----------------------
+# ### YAML
+# tree-sitter-yaml
+# yamllint # installed via distribution package
 
 # ### ----------------------
 # ### Ulauncher requirements
