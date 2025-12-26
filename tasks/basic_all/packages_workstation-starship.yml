@@ -1,0 +1,36 @@
+# #########################
+# ### starship shell prompt
+# #########################
+# https://starship.rs/
+#
+# config: in 'config_all-settings-starship.yml'
+# update: via systemd timer
+
+# curl -sS "https://starship.rs/install.sh" >"/home/${userid}/starship_install.sh" && chmod +x "/home/${userid}/starship_install.sh"
+- name: Starship Shell Prompt - Download install script (all)
+  ansible.builtin.get_url:
+    url: "https://starship.rs/install.sh"
+    dest: "/home/{{ env_user }}/starship_install.sh"
+    timeout: 300
+    force: false
+    owner: "{{ env_user }}"
+    group: "{{ env_user }}"
+    mode: "0755"
+
+- name: Starship Shell Prompt - check installation status (all)
+  ansible.builtin.stat:
+    path: /usr/local/bin/starship
+  register: starshipbin
+
+- name: Starship Shell Prompt - create directory '/usr/local/bin' if not exists  (all)
+  ansible.builtin.file:
+    path: /usr/local/bin
+    state: directory
+    mode: "0755"
+
+- name: Starship Shell Prompt - execute install script (all)
+  become: true
+  # become_user: "{{ env_user }}" # install nach /usr/local/bin, daher nicht als env_user ausführen
+  ansible.builtin.shell: "/home/{{ env_user }}/starship_install.sh --yes"
+  when:
+    - not starshipbin.stat.exists

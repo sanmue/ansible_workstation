@@ -53,8 +53,7 @@
     #   ansible.builtin.import_tasks: tasks/Desktop_Plasma/packages_workstation-Plasma-removePreInstalls.yml
     #
     # ----------------------------------------------------------
-    # ### Install software packages, including Flatpak, Snap
-    # - repo:
+    # ### Install software packages, including Flatpak, Snap:
     - name: Basic packages
       ansible.builtin.import_tasks: tasks/basic_all/packages_workstation-basic.yml
     # - name: Packages Plasma
@@ -63,6 +62,22 @@
       ansible.builtin.import_tasks: tasks/Desktop_Gnome/packages_workstation-Gnome.yml
     - name: Packages Gnomeshell
       ansible.builtin.import_tasks: tasks/Desktop_Gnome/packages_workstation-gnomeshellstuff.yml
+    #
+    # ex 'local packages install':
+    - name: Citrix Workspace App (ICA-Client) packages
+      ansible.builtin.import_tasks: tasks/basic_all/packages_workstation-citrixWorkspaceApp-icaclient.yml
+    - name: Config - fix for CitrixIcaclient on Gnome
+      ansible.builtin.import_tasks: tasks/fix/config_workstation-Gnome-citrixIcaclient.yml
+    - name: Visual Studio Code packages
+      ansible.builtin.import_tasks: tasks/basic_all/packages_workstation-vscode.yml
+    - name: Zed Editor packages
+      ansible.builtin.import_tasks: tasks/basic_all/packages_workstation-zed.yml
+    - name: Fonts
+      ansible.builtin.import_tasks: tasks/basic_all/packages_workstation-fonts.yml
+    - name: Starship Shell Prompt
+      ansible.builtin.import_tasks: tasks/basic_all/packages_workstation-starship.yml
+    - name: Zsh plugins
+      ansible.builtin.import_tasks: tasks/basic_all/packages_workstation-zsh-plugins.yml
     #
     # - flatpak:
     - name: Config Flatpak
@@ -75,12 +90,6 @@
     #   ansible.builtin.import_tasks: tasks/flatpakSnap/config_workstation-snap.yml
     # - name: Packages Snap
     #   ansible.builtin.import_tasks: tasks/flatpakSnap/packages_workstation-snap.yml
-    #
-    # - locally downloaded packages:
-    - name: Install local packages
-      ansible.builtin.import_tasks: tasks/basic_all/packages_workstation-localPackageInstall.yml
-    - name: Install local packages - fix for CitrixIcaclient on Gnome
-      ansible.builtin.import_tasks: tasks/fix/config_workstation-Gnome-citrixIcaclient.yml
     #
     # ----------------------------------------------------------
     # ### Config Firewall, Cron, Services, sonstige Settings:
@@ -183,7 +192,7 @@
       ansible.builtin.import_tasks: tasks/basic_all/config_all-mail-testmail.yml
     #
     # ----------------------------------------------------------
-    # ### Python
+    # ### Python:
     - name: Python Packages
       ansible.builtin.import_tasks: tasks/basic_all/packages_workstation-python.yml
     - name: Config Settings all - python - uv
@@ -194,17 +203,17 @@
       ansible.builtin.import_tasks: tasks/basic_all/packages_workstation-pythonPip.yml
     #
     # ----------------------------------------------------------
-    # ### C/C++
-    - name: C/C++
+    # ### C/C++:
+    - name: C/C++ packages
       ansible.builtin.import_tasks: tasks/basic_all/packages_workstation-cpp.yml
     #
     # ----------------------------------------------------------
-    # ### NVM / Node.js
-    - name: NVM Node.js
+    # ### NVM / Node.js:
+    - name: NVM Node.js packages
       ansible.builtin.import_tasks: tasks/basic_all/packages_workstation-nvmNodejs.yml
     #
     # ----------------------------------------------------------
-    # ### Docker
+    # ### Docker:
     - name: Docker repo
       ansible.builtin.import_tasks: tasks/basic_all/config_workstation-docker-repo.yml
     - name: Docker packages
@@ -215,7 +224,7 @@
       ansible.builtin.import_tasks: tasks/basic_all/config_workstation-docker-services.yml
     #
     # ----------------------------------------------------------
-    # ### Ansible galaxy collections
+    # ### Ansible galaxy collections:
     - name: Install ansbile collections via ansible-galaxy
       ansible.builtin.import_tasks: tasks/basic_all/packages_workstation-ansibleGalaxyCollections.yml
     # ----------------------------------------------------------

@@ -1,0 +1,23 @@
+# #####################################
+# ### Citrix Workspace App (ICA-Client)
+# #####################################
+#
+# - Archlinux: aus AUR installiert (im install script)
+# - Info: siehe ggf. Fix für Gnome 44+
+
+- name: Citrix Workspace App (ICA-Client) - install Certificates from Mozilla cert-folder + pem-convert (Debian)
+  # requires installed Mozilla Firefox (was installed via a previous task)
+  ansible.builtin.shell:
+    # chdir: tasks/basic_all/
+    # cmd: ./config_workstation-localPackageInstall-CitrixWorkspaceApp.sh
+    # cmd: chmod +x ./tasks/basic_all/config_workstation-localPackageInstall-CitrixWorkspaceApp.sh && ./tasks/basic_all/config_workstation-localPackageInstall-CitrixWorkspaceApp.sh
+    cmd: chmod +x files/config_workstation-localPackageInstall-CitrixWorkspaceApp.sh && files/basic_all/config_workstation-localPackageInstall-CitrixWorkspaceApp.sh
+  when:
+    - ansible_facts['distribution'] == "Debian"
+
+# TODO: ggf.
+- name: TODO Citrix Workspace App (ICA-Client) - Download and install + USB Support Package (Debian)
+  ansible.builtin.debug:
+    msg: "TODO: download from 'https://www.citrix.com/downloads/workspace-app/linux/'"
+  when:
+    - ansible_facts['distribution'] == "Debian"

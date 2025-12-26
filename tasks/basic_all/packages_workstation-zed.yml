@@ -1,0 +1,34 @@
+# ##############
+# ### Zed Editor
+# ##############
+# - https://zed.dev/download
+#
+# - Archlinux: via package manager (extra/zed)
+
+- name: Zed Editor - Download install script (env_user, Debian)
+  ansible.builtin.get_url:
+    url: "https://zed.dev/install.sh"
+    dest: "/home/{{ env_user }}/Downloads/zed-install.sh"
+    timeout: 300
+    force: false
+    mode: "0755"
+  when:
+    - ansible_facts['distribution'] == "Debian"
+
+- name: Zed Editor - create '~/.local/bin' directory if not exists (env_user, Debian)
+  ansible.builtin.file:
+    path: "/home/{{ env_user }}/.local/bin"
+    state: directory
+    owner: "{{ env_user }}"
+    group: "{{ env_user }}"
+    mode: "0755"
+
+- name: Zed Editor - Install via install script (env_user, Debian)
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.script:
+    cmd: "/home/{{ env_user }}/Downloads/zed-install.sh"
+  args:
+    creates: "/home/{{ env_user }}/.local/bin/zed"
+  when:
+    - ansible_facts['distribution'] == "Debian"

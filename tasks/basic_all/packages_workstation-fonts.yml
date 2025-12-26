@@ -1,0 +1,36 @@
+# #########
+# ### Fonts
+# #########
+# - https://askubuntu.com/questions/1384501/installing-custom-fonts-on-ubuntu-server
+# - https://wiki.archlinux.org/title/Fonts#Manual_installation
+# - https://ostechnix.com/install-nerd-fonts-to-add-glyphs-in-your-code-on-linux/
+# Meslo Nerd Font patched for Powerlevel10k:
+# - https://github.com/romkatv/powerlevel10k?tab=readme-ov-file#meslo-nerd-font-patched-for-powerlevel10k
+# (Nerd Fonts:)
+# - https://github.com/ryanoasis/nerd-fonts/raw/HEAD/patched-fonts
+#
+# - systemwide:    /usr/share/fonts/   # is under the purview of the package manager, and should not be modified manually
+# -         or:    /usr/local/share/fonts/
+# - user:          ~/.local/share/fonts/
+
+- name: Fonts - create local font directory - systemwide (all)
+  ansible.builtin.file:
+    path: /usr/local/share/fonts
+    mode: "0755"
+    state: directory
+
+- name: Fonts - Nerd Fonts - powerlevel10k - MesloLGS NF - systemwide (all)
+  ansible.builtin.uri:
+    url: "{{ item }}"
+    method: GET
+    follow_redirects: safe
+    dest: /usr/local/share/fonts/
+    mode: "0644"
+  loop:
+    - https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Regular.ttf
+    - https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold.ttf
+    - https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Italic.ttf
+    - https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold%20Italic.ttf
+
+- name: Fonts - Build font information cache files for apps using fontconfig (all)
+  ansible.builtin.shell: fc-cache -f

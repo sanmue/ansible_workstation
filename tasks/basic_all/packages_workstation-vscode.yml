@@ -1,0 +1,40 @@
+# ######################
+# ### Visual Studio Code
+# ######################
+#
+# - Archlinux: aur/visual-studio-code-bin, via install script
+# - installer deb-file: download: siehe installer script
+
+- name: Visual Studio Code - get stat /usr/bin/code (all)
+  ansible.builtin.stat:
+    path: /usr/bin/code
+  register: usrbincode
+
+- name: Visual Studio Code - get stat /tmp/code.deb (all)
+  ansible.builtin.stat:
+    # path: /tmp/code.deb
+    path: "/home/{{ env_user }}/Downloads/code.deb"
+  register: tmpcodedeb
+
+# wenn timeout-problem: timeout erhöhen oder manueller download
+# -> manuell / install script: download via curl:
+# curl -L --create-file-mode 0755 -o "/home/${userid}/Downloads/code.deb" "https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64"
+- name: Visual Studio Code - download deb-package (Debian)
+  ansible.builtin.get_url:
+    url: "https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64"
+    dest: "/home/{{ env_user }}/Downloads/code.deb"
+    timeout: 300
+    force: false
+    mode: "0755"
+  when:
+    - ansible_facts['distribution'] == "Debian"
+    - not tmpcodedeb.stat.exists
+
+- name: Visual Studio Code - install deb-package (Debian, apt)
+  ansible.builtin.apt:
+    deb: "/home/{{ env_user }}/Downloads/code.deb"
+    only_upgrade: true
+  when:
+    - ansible_facts['pkg_mgr'] == "apt"
+    - ansible_facts['distribution'] == "Debian"
+    - not usrbincode.stat.exists
