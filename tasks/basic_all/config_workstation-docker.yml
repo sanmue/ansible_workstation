@@ -37,7 +37,7 @@
           # export DOCKER_HOST=unix://$XDG_RUNTIME_DIR/docker.sock
           # export DOCKER_HOST=unix:///run/user/$(id -u)/docker.sock
           docker context create rootless --docker "host=unix://$XDG_RUNTIME_DIR/docker.sock" 2> /dev/null || true
-          docker context use rootless 2> /dev/null || true
+          docker context use rootless > /dev/null 2>&1 || true
           # sonst steht bei 'docker info' unter docker context: default (was normalerweise auf root modus hindeutet)
       fi
     owner: "{{ env_user }}"
@@ -64,7 +64,7 @@
           # export DOCKER_HOST=unix://$XDG_RUNTIME_DIR/docker.sock
           # export DOCKER_HOST=unix:///run/user/$(id -u)/docker.sock
           docker context create rootless --docker "host=unix://$XDG_RUNTIME_DIR/docker.sock" 2> /dev/null || true
-          docker context use rootless 2> /dev/null || true
+          docker context use rootless > /dev/null 2>&1 || true
           # sonst steht bei 'docker info' unter docker context: default (was normalerweise auf root modus hindeutet)
       fi
     owner: "{{ env_user }}"
