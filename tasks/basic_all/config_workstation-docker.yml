@@ -16,9 +16,6 @@
 # - https://wiki.archlinux.org/title/Docker#Rootless_Docker_daemon
 # - https://docs.docker.com/engine/security/rootless/
 #
-- name: Docker - config - env_user (all)
-  ansible.builtin.debug:
-    msg: "XXX"
 
 - name: Docker - config - bashrc - docker context create rootless (User, all)
   tags: shellrc
