@@ -12,9 +12,10 @@
   - starts the ansible playbook (local.yml)
   - Arch Linux / Endeavour OS: optionally installs some packages from AUR after completing ansible playbook
   - Arch Linux / Endeavour OS (with 'systemd-boot' bootloader): optionally installs [(Rescue) System on ESP](https://wiki.archlinux.org/title/Systemd-boot#Archiso_on_ESP)
-    - needs min. available free disk space on EFI Partition (+ 300MB reserve disk space):
+    - minimum free disk space on EFI Partition needed:
       - ~3 GB for EndeavourOS
       - ~1 GB for Archlinux or grml (full)
+      - and add 300MB reserve disk space
 
 ## Usage
 
@@ -40,7 +41,7 @@ Tags Overview:
 
 - 'always' (Special tag / reserved name): Gather Facts and Variables
 - 'nnnplugs': create / update 'nnn' plugins + xterm conf for nnn-preview-tui
-- 'shellrc': create / update shell conf (~/.bashrc, ~/.zshrc) + 'Starship' cross shell prompt + direnv
+- 'shellrc': create / update shell conf (~/.bashrc, ~/.zshrc) + 'Starship' cross shell prompt + direnv etc
 - 'upnvm': create / update 'nvm' + 'node'
 - 'vimrc': create / update vim conf + plugins
 
