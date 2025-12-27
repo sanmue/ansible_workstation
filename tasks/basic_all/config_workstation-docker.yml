@@ -2,12 +2,62 @@
 # ### Docker - config
 # ###################
 
-- name: Docker - config - add env_user to docker group (all)
-  become: true
-  ansible.builtin.user:
-    name: "{{ env_user }}"
-    groups: docker
-    append: true
+# ### Switched to rootless mode, not neccessary anymore:
+# - name: Docker - config - add env_user to docker group (all)
+#   become: true
+#   ansible.builtin.user:
+#     name: "{{ env_user }}"
+#     groups: docker
+#     append: true
+#
 
-# TODO: Rootless mode
+# --- Rootless Docker daemon
+#
+# - https://wiki.archlinux.org/title/Docker#Rootless_Docker_daemon
 # - https://docs.docker.com/engine/security/rootless/
+#
+- name: Docker - config - env_user (all)
+  ansible.builtin.debug:
+    msg: "XXX"
+
+- name: Docker - config - bashrc - docker context create rootless (User, all)
+  tags: shellrc
+  ansible.builtin.blockinfile:
+    path: "/home/{{ env_user }}/.bashrc"
+    backup: true
+    marker: "### {mark} 'docker context rootless' ANSIBLE MANAGED BLOCK ###"
+    block: |
+      # -----------------------------------------------------------
+      # docker context rootless - via config_workstation-docker.yml
+      # -----------------------------------------------------------
+      if command -v docker &> /dev/null; then
+          # export DOCKER_HOST=unix://$XDG_RUNTIME_DIR/docker.sock
+          # export DOCKER_HOST=unix:///run/user/$(id -u)/docker.sock
+          docker context create rootless --docker "host=unix://$XDG_RUNTIME_DIR/docker.sock" 2> /dev/null || true
+          docker context use rootless 2> /dev/null || true
+          # sonst steht bei 'docker info' unter docker context: default (was normalerweise auf root modus hindeutet)
+      fi
+    owner: "{{ env_user }}"
+    group: "{{ env_user }}"
+    mode: '0644'
+
+- name: Docker - config - zshrc - docker context create rootless (User, all)
+  tags: shellrc
+  ansible.builtin.blockinfile:
+    path: "/home/{{ env_user }}/.zshrc"
+    backup: true
+    marker: "### {mark} 'docker context rootless' ANSIBLE MANAGED BLOCK ###"
+    block: |
+      # -----------------------------------------------------------
+      # docker context rootless - via config_workstation-docker.yml
+      # -----------------------------------------------------------
+      if command -v docker &> /dev/null; then
+          # export DOCKER_HOST=unix://$XDG_RUNTIME_DIR/docker.sock
+          # export DOCKER_HOST=unix:///run/user/$(id -u)/docker.sock
+          docker context create rootless --docker "host=unix://$XDG_RUNTIME_DIR/docker.sock" 2> /dev/null || true
+          docker context use rootless 2> /dev/null || true
+          # sonst steht bei 'docker info' unter docker context: default (was normalerweise auf root modus hindeutet)
+      fi
+    owner: "{{ env_user }}"
+    group: "{{ env_user }}"
+    mode: '0644'

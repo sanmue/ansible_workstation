@@ -1,0 +1,67 @@
+# ---
+# ### Debian
+# ---
+
+- name: Docker - packages - rootless - install prerequisites (Debian)
+  ansible.builtin.package:
+    state: present
+    name:
+      - uidmap # newuidmap and newgidmap are needed to allow multiple UIDs/GIDs to be used in the user namespace
+      - docker-ce-rootless-extras # e.g.: /usr/bin/dockerd-rootless-setuptool.sh
+  when: ansible_facts['distribution'] == "Debian"
+
+# ---
+# ### Archlinux
+# ---
+# - env_user muss in wheel gruppe sein für sudo ohne passwort (verwendet wg. paru ohne interaktive passwortabfrage)
+
+- name: Docker - packages - rootless - vars - tmp wheel-rule (Arch)
+  ansible.builtin.set_fact:
+    sudoers_wheel_file: "{{ sudoers_wheel_file | default('/etc/sudoers.d/wheel') }}"
+    temp_wheel_rule: "{{ temp_wheel_rule | default('%wheel ALL=(ALL:ALL) NOPASSWD: ALL') }}"
+  when: ansible_facts['distribution'] == "Archlinux"
+
+- name: Docker - packages - rootless - backup etc sudoers.d wheel (Arch)
+  ansible.builtin.copy:
+    remote_src: true
+    src: "{{ sudoers_wheel_file }}"
+    dest: "/tmp/wheel.bak"
+    mode: "0440"
+  when: ansible_facts['distribution'] == "Archlinux"
+
+- name: Docker - packages - rootless - tmp config NOPASSWD for wheel group (Arch)
+  ansible.builtin.copy:
+    dest: "{{ sudoers_wheel_file }}"
+    content: "{{ temp_wheel_rule }}"
+    mode: "0440"
+    validate: "visudo -cf %s"
+  when: ansible_facts['distribution'] == "Archlinux"
+
+- name: Docker - packages - rootless - install docker-rootless-extras from AUR (Arch)
+  ansible.builtin.command: >
+    paru -S --needed --skipreview --noconfirm docker-rootless-extras
+  become: true
+  become_user: "sandro"
+  register: paru_output
+  changed_when: "'nothing to do' not in paru_output.stdout"
+  when: ansible_facts['distribution'] == "Archlinux"
+
+- name: Docker - packages - rootless - print output of paru cmd (Arch)
+  ansible.builtin.debug:
+    var: paru_output.stdout_lines
+  when: ansible_facts['distribution'] == "Archlinux"
+
+- name: Docker - packages - rootless - restore wheel-rule (Arch)
+  ansible.builtin.copy:
+    remote_src: true
+    src: "/tmp/wheel.bak"
+    dest: "{{ sudoers_wheel_file }}"
+    mode: "0440"
+    validate: "visudo -cf %s"
+  when: ansible_facts['distribution'] == "Archlinux"
+
+- name: Docker - packages - rootless - delete wheel.bak (Arch)
+  ansible.builtin.file:
+    path: "/tmp/wheel.bak"
+    state: absent
+  when: ansible_facts['distribution'] == "Archlinux"

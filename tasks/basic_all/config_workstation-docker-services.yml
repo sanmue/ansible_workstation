@@ -2,17 +2,56 @@
 # ### Docker - services
 # #####################
 
-- name: Docker - service - disable and stop docker.service (all)
-  become: true
-  ansible.builtin.service:
-    name: docker.service
-    enabled: false
-    state: stopped
+# activate docker.service only when using very frequently, on server, ...
+# - name: Docker - services - disable and stop docker.service (all)
+#   become: true
+#   ansible.builtin.service:
+#     name: docker.service
+#     enabled: true
+#     state: started
 
-# wenn nicht dauernd benötigt, docker.serivce nur bei Bedarf starten via docker.socket:
-- name: Docker - socket - enable and start docker.socket (all)
+# - name: Docker - services - disable and stop docker.socket (all)
+#   become: true
+#   ansible.builtin.service:
+#     name: docker.socket
+#     enabled: true
+#     state: started
+#
+
+# ---
+# --- Rootless mode
+# ---
+
+# - Debian:
+#
+- name: Docker - services - dockerd-rootless-setuptool.sh (env_user) (Debian)
   become: true
-  ansible.builtin.service:
+  become_user: "{{ env_user }}"
+  ansible.builtin.command: /usr/bin/dockerd-rootless-setuptool.sh install
+  when: ansible_facts['distribution'] == "Debian"
+
+# - Archlinux:
+#
+- name: Docker - services - make sure systemd User-folder exists (env_user) (Arch)
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.file:
+    path: "/home/{{ env_user }}/.config/systemd/user"
+    state: directory
+    owner: "{{ env_user }}"
+    group: "{{ env_user }}"
+    mode: '0755'
+  when: ansible_facts['distribution'] == "Archlinux"
+
+- name: Docker - services - aktivate and start docker.socket - scope user (env_user) (Arch)
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.systemd_service:
     name: docker.socket
-    enabled: true
+    scope: user
     state: started
+    enabled: true
+  # environment:
+  #   XDG_RUNTIME_DIR: "/run/user/{{ ansible_facts.getent_passwd[env_user][1] }}"
+  #   DBUS_SESSION_BUS_ADDRESS: "unix:path=/run/user/{{ ansible_facts.getent_passwd[env_user][1] }}/bus"
+  when: ansible_facts['distribution'] == "Archlinux"

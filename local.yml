@@ -192,6 +192,26 @@
       ansible.builtin.import_tasks: tasks/basic_all/config_all-mail-testmail.yml
     #
     # ----------------------------------------------------------
+    # ### Docker:
+    - name: Docker repo
+      ansible.builtin.import_tasks: tasks/basic_all/config_workstation-docker-repo.yml
+    - name: Docker packages
+      ansible.builtin.import_tasks: tasks/basic_all/packages_workstation-docker.yml
+    - name: Docker services - stop and disable before rootless config
+      ansible.builtin.import_tasks: tasks/basic_all/config_workstation-docker-services-stop.yml
+    - name: Docker packages - prerequisites for rootless
+      ansible.builtin.import_tasks: tasks/basic_all/packages_workstation-docker-rootless.yml
+    - name: Docker services (including rootless)
+      ansible.builtin.import_tasks: tasks/basic_all/config_workstation-docker-services.yml
+    - name: Docker config (including rootless - entries in shellrc files)
+      ansible.builtin.import_tasks: tasks/basic_all/config_workstation-docker.yml
+    #
+    # ----------------------------------------------------------
+    # ### NVM / Node.js:
+    - name: NVM Node.js packages
+      ansible.builtin.import_tasks: tasks/basic_all/packages_workstation-nvmNodejs.yml
+    #
+    # ----------------------------------------------------------
     # ### Python:
     - name: Python Packages
       ansible.builtin.import_tasks: tasks/basic_all/packages_workstation-python.yml
@@ -206,22 +226,6 @@
     # ### C/C++:
     - name: C/C++ packages
       ansible.builtin.import_tasks: tasks/basic_all/packages_workstation-cpp.yml
-    #
-    # ----------------------------------------------------------
-    # ### NVM / Node.js:
-    - name: NVM Node.js packages
-      ansible.builtin.import_tasks: tasks/basic_all/packages_workstation-nvmNodejs.yml
-    #
-    # ----------------------------------------------------------
-    # ### Docker:
-    - name: Docker repo
-      ansible.builtin.import_tasks: tasks/basic_all/config_workstation-docker-repo.yml
-    - name: Docker packages
-      ansible.builtin.import_tasks: tasks/basic_all/packages_workstation-docker.yml
-    - name: Docker config
-      ansible.builtin.import_tasks: tasks/basic_all/config_workstation-docker.yml
-    - name: Docker service
-      ansible.builtin.import_tasks: tasks/basic_all/config_workstation-docker-services.yml
     #
     # ----------------------------------------------------------
     # ### Ansible galaxy collections:

@@ -1,0 +1,19 @@
+- name: Docker - services - disable and stop docker.service (all)
+  become: true
+  ansible.builtin.service:
+    name: docker.service
+    enabled: false
+    state: stopped
+
+- name: Docker - services - disable and stop docker.socket (all)
+  become: true
+  ansible.builtin.service:
+    name: docker.socket
+    enabled: false
+    state: stopped
+
+- name: Docker - services - delete /var/run/docker.sock (all)
+  become: true
+  ansible.builtin.file:
+    path: /var/run/docker.sock
+    state: absent
