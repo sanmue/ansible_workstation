@@ -36,6 +36,7 @@
     state: present
     method: system
   with_items:
+    - "io.github.kolunmi.Bazaar" # Flatpak App Store for GNOME
     - "org.gnome.Extensions"
     - "com.mattjakeman.ExtensionManager"
   when:
