@@ -2,6 +2,7 @@
 # ### DistRepos
 # #############
 - name: Update repository index and update system (apt)
+  become: true
   ansible.builtin.apt:
     upgrade: true
     update_cache: true
@@ -11,6 +12,7 @@
   # changed_when: false
 
 - name: Update repository index and update system (pacman)
+  become: true
   community.general.pacman:
     update_cache: true
     upgrade: true
