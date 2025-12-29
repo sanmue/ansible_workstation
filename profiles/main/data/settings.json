@@ -1,38 +1,60 @@
 {
-  "editor.minimap.enabled": false,
-  "editor.fontFamily": "'MesloLGS NF','Droid Sans Mono', 'monospace', monospace",
-  "editor.fontSize": 18,
-  "telemetry.telemetryLevel": "crash",
-  "terminal.integrated.shellIntegration.history": 200,
-  "terminal.integrated.defaultProfile.linux": "zsh",
-  "[shellscript]": {
-    "editor.defaultFormatter": "foxundermoon.shell-format"
-  },
-  "files.trimTrailingWhitespace": true,
-  "prettier.tabWidth": 4,
-  "[ansible]": {
-    "editor.defaultFormatter": "kennylong.kubernetes-yaml-formatter",
-    "editor.formatOnSave": false,
-    "editor.detectIndentation": true,
-    "editor.insertSpaces": true,
-    "editor.tabSize": 2,
-    "editor.quickSuggestions": {
-      "comments": true,
-      "other": true,
-      "strings": true
+    "C_Cpp.formatting": "clangFormat",
+    "C_Cpp.intelliSenseEngine": "disabled",
+    "[cpp]": {
+        "editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd"
     },
-    "editor.autoIndent": "advanced"
-  },
-  "files.autoSave": "onFocusChange",
-  "terminal.integrated.scrollback": 10000,
-  "git.statusLimit": 16384,
-  "idf.hasWalkthroughBeenShown": true,
-  "idf.espIdfPath": "/home/sandro/esp/v5.4/esp-idf",
-  "idf.toolsPath": "/home/sandro/.espressif",
-  "idf.gitPath": "git",
-  "idf.pythonInstallPath": "/usr/bin/python",
-  "python.analysis.typeCheckingMode": "standard",
-  "ruff.format.preview": false,
-  "ruff.lineLength": 120,
-  "syncSettings.additionalFiles": []
+    "[c]": {
+        "editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd"
+    },
+    //"editor.detectIndentation": false,
+    "editor.fontFamily": "'JetBrainsMonoNL Nerd Font','MesloLGS NF','FiraCode Nerd Font Ret','Droid Sans Mono', 'monospace', monospace",
+    "editor.fontSize": 18,
+    "editor.insertSpaces": true,
+    "editor.minimap.enabled": false,
+    "editor.tabSize": 4,
+    "git.statusLimit": 16384,
+    "idf.hasWalkthroughBeenShown": true,
+    "idf.espIdfPath": "/home/sandro/esp/v5.5.1/esp-idf",
+    "idf.toolsPath": "/home/sandro/.espressif",
+    "idf.gitPath": "git",
+    "idf.pythonInstallPath": "/usr/bin/python",
+    "[jsonc]": {
+        "editor.defaultFormatter": "vscode.json-language-features"
+    },
+    "vs-kubernetes": {
+        "vscode-kubernetes.kubectl-path-linux": "/home/sandro/.local/state/vs-kubernetes/tools/kubectl/kubectl",
+        "vscode-kubernetes.minikube-path-linux": "/home/sandro/.local/state/vs-kubernetes/tools/minikube/linux-amd64/minikube"
+    },
+    "prettier.tabWidth": 4,
+    "python.analysis.typeCheckingMode": "standard",
+    "ruff.lineLength": 120,
+    "[shellscript]": {
+        "editor.defaultFormatter": "foxundermoon.shell-format"
+    },
+    "telemetry.telemetryLevel": "crash",
+    "terminal.integrated.shellIntegration.history": 200,
+    "terminal.integrated.scrollback": 10000,
+    "C_Cpp.debugShortcut": true,
+    "[json]": {
+        "editor.defaultFormatter": "vscode.json-language-features"
+    },
+    "makefile.configureOnOpen": true,
+    "C_Cpp_Runner.cppStandard": "c++20",
+    "C_Cpp_Runner.cStandard": "c17",
+    "C_Cpp_Runner.includePaths": [
+        "${workspaceFolder}/utils"
+    ],
+    "C_Cpp_Runner.linkerArgs": [
+        "-lm"
+    ],
+    "C_Cpp_Runner.excludeSearch": [
+        "**/build",
+        "**/build/**",
+        "**/.*",
+        "**/.*/**",
+        "**/.vscode",
+        "**/.vscode/**",
+        "**/scripts/"
+    ]
 }
