@@ -9,7 +9,7 @@
     backup: true
     create: true
     mode: "0644"
-    marker: '" ### {mark} ANSIBLE MANAGED BLOCK ###'
+    marker: '" ### {mark} - vim global config - ANSIBLE MANAGED BLOCK ###'
     block: |
       " #
       syntax on           " Vim5 and later versions support syntax highlighting
@@ -39,7 +39,6 @@
       set smarttab    " <Tab> in front of a line inserts blanks
       set hlsearch    " Highlight all search results
       set undolevels=1000 " Number of undo levels
-      " #
   when:
     - ansible_facts['distribution'] == "Debian"
 
@@ -48,7 +47,7 @@
   ansible.builtin.blockinfile:
     path: "/etc/vimrc"
     backup: true
-    marker: '" ### {mark} ANSIBLE MANAGED BLOCK ###'
+    marker: '" ### {mark} - vim global config - ANSIBLE MANAGED BLOCK ###'
     block: |
       " #
       syntax on           " Vim5 and later versions support syntax highlighting
@@ -78,10 +77,9 @@
       set smarttab    " <Tab> in front of a line inserts blanks
       set hlsearch    " Highlight all search results
       set undolevels=1000 " Number of undo levels
-      " #
   when: ansible_facts['distribution'] == "Archlinux"
 
-- name: All settings misc - Set vim config - user (all)
+- name: All settings misc - Set vim config - vimdiff - user (all)
   tags: vimrc
   become: true
   become_user: "{{ env_user }}"
@@ -90,7 +88,7 @@
     backup: true
     create: true
     mode: "0644"
-    marker: '" ### {mark} ANSIBLE MANAGED BLOCK ###'
+    marker: '" ### {mark} - vimdiff - ANSIBLE MANAGED BLOCK ###'
     block: |
       " #
       " shortcuts for vimdiff navigation
@@ -102,9 +100,36 @@
       " let mapleader = ","
       " nmap <Leader>c :normal ]c<CR>
       " nmap <Leader>p :normal [c<CR>
-      " #
 
-- name: All settings misc - Set vim config - root (all)
+- name: All settings misc - Set vim config - undotree - user (all)
+  tags: vimrc
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.blockinfile:
+    path: "/home/{{ env_user }}/.vimrc"
+    backup: true
+    create: true
+    mode: "0644"
+    marker: '" ### {mark} - undotree - ANSIBLE MANAGED BLOCK ###'
+    block: |
+      " #
+      nnoremap <F5> :UndotreeToggle<CR>
+
+      if has("persistent_undo")
+        let target_path = expand('~/.vimundodir')
+
+          " create the directory and any parent directories
+          " if the location does not exist.
+          if !isdirectory(target_path)
+              call mkdir(target_path, "p", 0700)
+          endif
+
+          let &undodir=target_path
+          " not activating undo generally, so commentet out next line:
+          " set undofile
+      endif
+
+- name: All settings misc - Set vim config - vimdiff - root (all)
   tags: vimrc
   become: true
   ansible.builtin.blockinfile:
@@ -112,7 +137,7 @@
     backup: true
     create: true
     mode: "0644"
-    marker: '" ### {mark} ANSIBLE MANAGED BLOCK ###'
+    marker: '" ### {mark} - vimdiff - ANSIBLE MANAGED BLOCK ###'
     block: |
       " #
       " shortcuts for vimdiff navigation
@@ -124,4 +149,3 @@
       " let mapleader = ","
       " nmap <Leader>c :normal ]c<CR>
       " nmap <Leader>p :normal [c<CR>
-      " #

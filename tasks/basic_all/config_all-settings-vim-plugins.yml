@@ -50,3 +50,11 @@
   ansible.builtin.git:
     repo: "https://github.com/tpope/vim-fugitive.git"
     dest: "/home/{{ env_user }}/.vim/pack/git-plugins/start/vim-fugitive"
+
+- name: All settings misc - vim plugin install from git repo - undotree (git) (all)
+  tags: vimrc
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.git:
+    repo: "https://github.com/mbbill/undotree.git"
+    dest: "/home/{{ env_user }}/.vim/pack/git-plugins/start/undotree"
