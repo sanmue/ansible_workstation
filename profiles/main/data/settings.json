@@ -56,5 +56,6 @@
         "**/.vscode",
         "**/.vscode/**",
         "**/scripts/"
-    ]
+    ],
+    "terminal.external.linuxExec": "ptyxis"
 }

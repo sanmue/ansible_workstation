@@ -8,6 +8,8 @@ disabled:
   - id: GitHub.copilot-chat
     uuid: 00000000-0000-0000-0000-000000000000
 enabled:
+  - id: 13xforever.language-x86-64-assembly
+    uuid: 7c8fcf53-a602-48d2-afdf-9c1318472604
   - id: aaron-bond.better-comments
     uuid: 7a0110bb-231a-4598-aa1b-0769ea46d28b
   - id: adpyke.codesnap
@@ -20,16 +22,26 @@ enabled:
     uuid: 87c9998f-5c0f-49ee-b89f-51340cdc449a
   - id: batisteo.vscode-django
     uuid: 4b41a5a8-170e-4156-b2c0-10efb270abbc
+  - id: bbenoist.Doxygen
+    uuid: aab644b7-f446-4774-87fc-2cce8f0d5a4f
+  - id: benjamin-simmonds.pythoncpp-debug
+    uuid: 60077ed4-0d26-44d2-a174-9852a8729193
   - id: buianhthang.xml2json
     uuid: b7e84ad6-5e59-4743-ba0d-a3b27322b648
   - id: charliermarsh.ruff
     uuid: c2ca9b43-fa38-44fc-928e-5125970b9c00
+  - id: cheshirekow.cmake-format
+    uuid: 5338f4d8-048c-433f-bce4-44aa922cedc2
   - id: christian-kohler.path-intellisense
     uuid: a41c1549-4053-44d4-bf30-60fc809b4a86
+  - id: cschlosser.doxdocgen
+    uuid: da7e26d5-d57c-4742-ab47-d77fb189e195
   - id: DavidAnson.vscode-markdownlint
     uuid: daf8b44d-8aae-4da2-80c5-1f770219f643
   - id: deerawan.vscode-faker
     uuid: 0808d236-6faf-4f68-9f17-28f51a572ee4
+  - id: DiogoNolasco.pyinit
+    uuid: b44f910d-5704-44f8-b529-e6975af036be
   - id: docker.docker
     uuid: aa98a064-0f79-4961-a4b7-78df16d547ee
   - id: donjayamanne.githistory
@@ -48,8 +60,18 @@ enabled:
     uuid: 5fb19573-2183-4cf2-b53d-0fb869dae7ae
   - id: franneck94.c-cpp-runner
     uuid: 0f4eac03-b4ec-4a55-bce1-deb41fde32ab
+  - id: franneck94.vscode-c-cpp-config
+    uuid: 903d2817-890f-4412-ac1d-a23ea84d76e1
+  - id: franneck94.vscode-c-cpp-dev-extension-pack
+    uuid: a5d8fcbb-073c-49c3-8272-30f78502b5b8
   - id: franneck94.vscode-coding-tools-extension-pack
     uuid: a8783589-e2ef-4c8b-8d01-71209a555706
+  - id: franneck94.vscode-cpython-extension-pack
+    uuid: ad25ec84-90ed-436c-936d-6b1fcc4d2010
+  - id: franneck94.vscode-python-config
+    uuid: d168b6ab-071b-460a-a0d9-5e267012a2c8
+  - id: franneck94.vscode-python-dev-extension-pack
+    uuid: e94cc864-af77-4e96-b400-e89e2fdfc355
   - id: franneck94.workspace-formatter
     uuid: ae91264b-09f6-48f4-b295-9280be2f4125
   - id: Gruntfuggly.todo-tree
@@ -60,6 +82,8 @@ enabled:
     uuid: a5c960d9-3d35-4b3f-9d53-bafe782ddf1a
   - id: jannchie.ruff-ignore-explainer
     uuid: 5e865118-a78a-4968-bae4-2433b1190e7d
+  - id: jeff-hykin.better-cpp-syntax
+    uuid: 73767f91-7dcb-43cb-90b3-596d073eea1f
   - id: jeff-hykin.better-shellscript-syntax
     uuid: f27ad139-0ff0-4fea-a7c3-d1af80eed6ae
   - id: johnpapa.vscode-peacock
@@ -84,10 +108,14 @@ enabled:
     uuid: 0479fc1c-3d67-49f9-b087-fb9069afe48f
   - id: ms-kubernetes-tools.vscode-kubernetes-tools
     uuid: 4837e4f3-1b01-4732-b1a6-daa57ef64cab
+  - id: ms-python.black-formatter
+    uuid: 859e640c-c157-47da-8699-9080b81c8371
   - id: ms-python.debugpy
     uuid: 4bd5d2c9-9d65-401a-b0b2-7498d9f17615
   - id: ms-python.isort
     uuid: 4ad0ce32-ff3f-49f0-83b5-93e5dc00cfff
+  - id: ms-python.mypy-type-checker
+    uuid: 2203dd65-f4f9-40ea-a900-d0878231c22d
   - id: ms-python.python
     uuid: f1f59ae4-9318-4f3c-a9b5-81b2eaa5f8a5
   - id: ms-python.vscode-pylance
@@ -134,6 +162,8 @@ enabled:
     uuid: 105c0b3c-07a9-4156-a4fc-4141040eb07e
   - id: njpwerner.autodocstring
     uuid: 2d6fea35-f68e-461d-9b7b-5cd05be99451
+  - id: njqdev.vscode-python-typehint
+    uuid: a7b7591e-f2b8-48f7-b8ea-6d62a0dd38c8
   - id: oderwat.indent-rainbow
     uuid: eaa2127d-cb69-4ab9-8505-a60c9ee5f28b
   - id: peakchen90.open-html-in-browser
@@ -160,6 +190,8 @@ enabled:
     uuid: 3b1db1fc-c7f7-4bd6-9fa4-b499dfa99a8a
   - id: tamasfe.even-better-toml
     uuid: b2215d5f-675e-4a2b-b6ac-1ca737518b78
+  - id: tcwalther.cython
+    uuid: 2145d811-2c3c-4b14-bd14-e32ff10bfa58
   - id: the0807.uv-toolkit
     uuid: 7b7098a4-0ab4-4a5e-8c6e-b34ad92867e0
   - id: timonwong.shellcheck
