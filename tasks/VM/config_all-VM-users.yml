@@ -1,4 +1,4 @@
-- name: VM - add current user to group 'kvm' (all)
+- name: VM - add current user to groups 'kvm' and 'libvirt' (all)
   ansible.builtin.user:
     name: "{{ env_user }}"
     groups: kvm,libvirt
