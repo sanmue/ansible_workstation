@@ -12,6 +12,7 @@
       - bridge-utils
       - libguestfs-tools # additional tool
       - libosinfo-bin # additional tool
+      - python3-virt-firmware # Tools for manipulating edk2 (ovmf/qemu-efi) firmware images # Arch: 'virt-firmware' package
       - virtinst
       # - virt-top # nicht in debian repo
       - swtpm # wg. Win11 TPM 2.0
@@ -39,6 +40,7 @@
       - qemu-full # A Full QEMU setup # http://archlinux.org/packages/extra/x86_64/qemu-full/
       - swtpm # Libtpms-based TPM emulator with socket, character device, and Linux CUSE interface
       - vde2 # Virtual Distributed Ethernet for emulators like qemu
+      - virt-firmware # Collection of tools for edk2 firmware images # Debian: python3-virt-firmware
       - virt-install # Command line tool for creating new KVM , Xen, or Linux container guests using the libvirt hypervisor
   when:
     - ansible_facts['distribution'] == "Archlinux"
