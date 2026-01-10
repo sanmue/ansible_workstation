@@ -31,11 +31,12 @@
       - edk2-ovmf # UEFI Support # Firmware for Virtual Machines
       - libguestfs # Access and modify virtual machine disk images
       - libvirt # # API for controlling virtualization engines (openvz,kvm,qemu,virtualbox,xen,etc)
+      # QEMU - https://wiki.archlinux.org/title/QEMU
       - openbsd-netcat # TCP/IP swiss army knife. OpenBSD variant. # network piping application
-      # - qemu              # hier muss aus 3 Optionen ausgewählt werden (base, desktop, full), daher bleibt da hängen
+      # - qemu              # hier muss aus 3 Optionen ausgewählt werden (base, desktop, full), daher bliebe da hängen
       # - qemu-base         # A basic QEMU setup for headless environments
       # - qemu-desktop      # A QEMU setup for desktop environments
-      - qemu-full # A Full QEMU setup
+      - qemu-full # A Full QEMU setup # http://archlinux.org/packages/extra/x86_64/qemu-full/
       - swtpm # Libtpms-based TPM emulator with socket, character device, and Linux CUSE interface
       - vde2 # Virtual Distributed Ethernet for emulators like qemu
       - virt-install # Command line tool for creating new KVM , Xen, or Linux container guests using the libvirt hypervisor
@@ -57,5 +58,6 @@
     state: present
     name:
       - spice-vdagent # spice agent for Linux guests (z.B. für clipboard sharing host+guest)
+      - qemu-guest-agent # allows the hypervisor host to perform various operations in the guest... # https://www.qemu.org/docs/master/interop/qemu-ga.html
   when:
     - ansible_facts['virtualization_role'] == "guest"
