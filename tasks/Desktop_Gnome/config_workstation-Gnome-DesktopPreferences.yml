@@ -109,7 +109,7 @@
 - name: Gnome Desktop - Preferences - Adding favorite apps to dock (Gnome, all)
   # nicht installierte Apps werden einfach nicht angezeigt (nach Installation schon), d.h. dass hier drin ist kein Problem
   # gedit ('org.gnome.gedit.desktop') replaced with Gnome TextEditor
-  ansible.builtin.shell: gsettings set org.gnome.shell favorite-apps "['com.belmoussaoui.Authenticator.desktop', 'org.keepassxc.KeePassXC.desktop', 'firefox.desktop', 'firefox-esr.desktop', 'org.mozilla.firefox.desktop', 'one.ablaze.floorp.desktop', 'floorp.desktop', 'org.gnome.Epiphany.desktop', 'brave-browser.desktop', 'com.brave.Browser.desktop', 'chromium.desktop', 'org.chromium.Chromium.desktop', 'com.microsoft.Edge.desktop', 'org.gnome.Evolution.desktop', 'org.gnome.Ptyxis.desktop', 'com.mitchellh.ghostty.desktop', 'nemo.desktop', 'org.gnome.TextEditor.desktop', 'libreoffice-startcenter.desktop', 'net.cozic.joplin_desktop.desktop', 'com.visualstudio.code.desktop', 'dev.zed.Zed.desktop', 'pycharm.desktop', 'anki.desktop', 'net.ankiweb.Anki.desktop', 'de.willuhn.Jameica.desktop', 'rhythmbox.desktop', 'org.gnome.Rhythmbox3.desktop', 'de.haeckerfelix.Shortwave.desktop', 'io.github.celluloid_player.Celluloid.desktop', 'org.kde.kasts.desktop', 'org.signal.Signal.desktop', 'signal-desktop.desktop', 'org.ferdium.Ferdium.desktop', 'org.remmina.Remmina.desktop', 'virt-manager.desktop']"
+  ansible.builtin.shell: gsettings set org.gnome.shell favorite-apps "['com.belmoussaoui.Authenticator.desktop', 'org.keepassxc.KeePassXC.desktop', 'one.ablaze.floorp.desktop', 'floorp.desktop', 'firefox.desktop', 'firefox-esr.desktop', 'org.mozilla.firefox.desktop', 'brave-browser.desktop', 'com.brave.Browser.desktop', 'org.gnome.Epiphany.desktop', 'chromium.desktop', 'org.chromium.Chromium.desktop', 'com.microsoft.Edge.desktop', 'org.gnome.Solanum.desktop', 'org.gnome.Ptyxis.desktop', 'com.mitchellh.ghostty.desktop', 'io.github.mfat.sshpilot.desktop', 'nemo.desktop', 'org.gnome.TextEditor.desktop', 'libreoffice-startcenter.desktop', 'com.github.johnfactotum.Foliate.desktop', 'net.cozic.joplin_desktop.desktop', 'code.desktop', 'com.visualstudio.code.desktop', 'dev.zed.Zed.desktop', 'pycharm.desktop', 'anki.desktop', 'net.ankiweb.Anki.desktop', 'de.willuhn.Jameica.desktop', 'rhythmbox.desktop', 'org.gnome.Rhythmbox3.desktop', 'de.haeckerfelix.Shortwave.desktop', 'io.github.celluloid_player.Celluloid.desktop', 'org.kde.kasts.desktop', 'org.signal.Signal.desktop', 'signal-desktop.desktop', 'org.ferdium.Ferdium.desktop', 'virt-manager.desktop']"
   when:
     - env_desktop in ["gnome"]
 
@@ -1949,12 +1949,12 @@
 #   when:
 #     - env_desktop in ["gnome"]
 
-- name: Gnome Desktop - Preferences - Set gnome - evolution - calendar - classify-private (Gnome)
-  become: true
-  become_user: "{{ env_user }}"
-  ansible.builtin.shell: dconf write "/org/gnome/evolution/calendar/classify-private" "true"
-  when:
-    - env_desktop in ["gnome"]
+# - name: Gnome Desktop - Preferences - Set gnome - evolution - calendar - classify-private (Gnome)
+#   become: true
+#   become_user: "{{ env_user }}"
+#   ansible.builtin.shell: dconf write "/org/gnome/evolution/calendar/classify-private" "true"
+#   when:
+#     - env_desktop in ["gnome"]
 
 # - name: Gnome Desktop - Preferences - Set gnome - evolution - calendar - compress-weekend (Gnome)
 #   community.general.dconf:
@@ -1964,12 +1964,12 @@
 #   when:
 #     - env_desktop in ["gnome"]
 
-- name: Gnome Desktop - Preferences - Set gnome - evolution - calendar - compress-weekend (Gnome)
-  become: true
-  become_user: "{{ env_user }}"
-  ansible.builtin.shell: dconf write "/org/gnome/evolution/calendar/compress-weekend" "false"
-  when:
-    - env_desktop in ["gnome"]
+# - name: Gnome Desktop - Preferences - Set gnome - evolution - calendar - compress-weekend (Gnome)
+#   become: true
+#   become_user: "{{ env_user }}"
+#   ansible.builtin.shell: dconf write "/org/gnome/evolution/calendar/compress-weekend" "false"
+#   when:
+#     - env_desktop in ["gnome"]
 
 # - name: Gnome Desktop - Preferences - Set gnome - evolution - calendar - day-end-hour (Gnome)
 #   community.general.dconf:
@@ -1979,12 +1979,12 @@
 #   when:
 #     - env_desktop in ["gnome"]
 
-- name: Gnome Desktop - Preferences - Set gnome - evolution - calendar - day-end-hour (Gnome)
-  become: true
-  become_user: "{{ env_user }}"
-  ansible.builtin.shell: dconf write "/org/gnome/evolution/calendar/day-end-hour" "16"
-  when:
-    - env_desktop in ["gnome"]
+# - name: Gnome Desktop - Preferences - Set gnome - evolution - calendar - day-end-hour (Gnome)
+#   become: true
+#   become_user: "{{ env_user }}"
+#   ansible.builtin.shell: dconf write "/org/gnome/evolution/calendar/day-end-hour" "16"
+#   when:
+#     - env_desktop in ["gnome"]
 
 # - name: Gnome Desktop - Preferences - Set gnome - evolution - calendar - day-start-hour (Gnome)
 #   community.general.dconf:
@@ -1994,12 +1994,12 @@
 #   when:
 #     - env_desktop in ["gnome"]
 
-- name: Gnome Desktop - Preferences - Set gnome - evolution - calendar - day-start-hour (Gnome)
-  become: true
-  become_user: "{{ env_user }}"
-  ansible.builtin.shell: dconf write "/org/gnome/evolution/calendar/day-start-hour" "7"
-  when:
-    - env_desktop in ["gnome"]
+# - name: Gnome Desktop - Preferences - Set gnome - evolution - calendar - day-start-hour (Gnome)
+#   become: true
+#   become_user: "{{ env_user }}"
+#   ansible.builtin.shell: dconf write "/org/gnome/evolution/calendar/day-start-hour" "7"
+#   when:
+#     - env_desktop in ["gnome"]
 
 # - name: Gnome Desktop - Preferences - Set gnome - evolution - calendar - editor-show-timezone (Gnome)
 #   community.general.dconf:
@@ -2009,12 +2009,12 @@
 #   when:
 #     - env_desktop in ["gnome"]
 
-- name: Gnome Desktop - Preferences - Set gnome - evolution - calendar - editor-show-timezone (Gnome)
-  become: true
-  become_user: "{{ env_user }}"
-  ansible.builtin.shell: dconf write "/org/gnome/evolution/calendar/editor-show-timezone" "true"
-  when:
-    - env_desktop in ["gnome"]
+# - name: Gnome Desktop - Preferences - Set gnome - evolution - calendar - editor-show-timezone (Gnome)
+#   become: true
+#   become_user: "{{ env_user }}"
+#   ansible.builtin.shell: dconf write "/org/gnome/evolution/calendar/editor-show-timezone" "true"
+#   when:
+#     - env_desktop in ["gnome"]
 
 # - name: Gnome Desktop - Preferences - Set gnome - evolution - calendar - prefer-new-item (Gnome)
 #   community.general.dconf:
@@ -2024,12 +2024,12 @@
 #   when:
 #     - env_desktop in ["gnome"]
 
-- name: Gnome Desktop - Preferences - Set gnome - evolution - calendar - prefer-new-item (Gnome)
-  become: true
-  become_user: "{{ env_user }}"
-  ansible.builtin.shell: dconf write "/org/gnome/evolution/calendar/prefer-new-item" "'event-new'"
-  when:
-    - env_desktop in ["gnome"]
+# - name: Gnome Desktop - Preferences - Set gnome - evolution - calendar - prefer-new-item (Gnome)
+#   become: true
+#   become_user: "{{ env_user }}"
+#   ansible.builtin.shell: dconf write "/org/gnome/evolution/calendar/prefer-new-item" "'event-new'"
+#   when:
+#     - env_desktop in ["gnome"]
 
 # - name: Gnome Desktop - Preferences - Set gnome - evolution - calendar - primary-memos (Gnome)
 #   community.general.dconf:
@@ -2039,12 +2039,12 @@
 #   when:
 #     - env_desktop in ["gnome"]
 
-- name: Gnome Desktop - Preferences - Set gnome - evolution - calendar - primary-memos (Gnome)
-  become: true
-  become_user: "{{ env_user }}"
-  ansible.builtin.shell: dconf write "/org/gnome/evolution/calendar/primary-memos" "'system-memo-list'"
-  when:
-    - env_desktop in ["gnome"]
+# - name: Gnome Desktop - Preferences - Set gnome - evolution - calendar - primary-memos (Gnome)
+#   become: true
+#   become_user: "{{ env_user }}"
+#   ansible.builtin.shell: dconf write "/org/gnome/evolution/calendar/primary-memos" "'system-memo-list'"
+#   when:
+#     - env_desktop in ["gnome"]
 
 # - name: Gnome Desktop - Preferences - Set gnome - evolution - calendar - show-icons-month-view (Gnome)
 #   community.general.dconf:
@@ -2054,12 +2054,12 @@
 #   when:
 #     - env_desktop in ["gnome"]
 
-- name: Gnome Desktop - Preferences - Set gnome - evolution - calendar - show-icons-month-view (Gnome)
-  become: true
-  become_user: "{{ env_user }}"
-  ansible.builtin.shell: dconf write "/org/gnome/evolution/calendar/show-icons-month-view" "true"
-  when:
-    - env_desktop in ["gnome"]
+# - name: Gnome Desktop - Preferences - Set gnome - evolution - calendar - show-icons-month-view (Gnome)
+#   become: true
+#   become_user: "{{ env_user }}"
+#   ansible.builtin.shell: dconf write "/org/gnome/evolution/calendar/show-icons-month-view" "true"
+#   when:
+#     - env_desktop in ["gnome"]
 
 # - name: Gnome Desktop - Preferences - Set gnome - evolution - calendar - show-week-numbers (Gnome)
 #   community.general.dconf:
@@ -2069,12 +2069,12 @@
 #   when:
 #     - env_desktop in ["gnome"]
 
-- name: Gnome Desktop - Preferences - Set gnome - evolution - calendar - show-week-numbers (Gnome)
-  become: true
-  become_user: "{{ env_user }}"
-  ansible.builtin.shell: dconf write "/org/gnome/evolution/calendar/show-week-numbers" "true"
-  when:
-    - env_desktop in ["gnome"]
+# - name: Gnome Desktop - Preferences - Set gnome - evolution - calendar - show-week-numbers (Gnome)
+#   become: true
+#   become_user: "{{ env_user }}"
+#   ansible.builtin.shell: dconf write "/org/gnome/evolution/calendar/show-week-numbers" "true"
+#   when:
+#     - env_desktop in ["gnome"]
 
 # - name: Gnome Desktop - Preferences - Set gnome - evolution - calendar - use-24hour-format (Gnome)
 #   community.general.dconf:
@@ -2084,12 +2084,12 @@
 #   when:
 #     - env_desktop in ["gnome"]
 
-- name: Gnome Desktop - Preferences - Set gnome - evolution - calendar - use-24hour-format (Gnome)
-  become: true
-  become_user: "{{ env_user }}"
-  ansible.builtin.shell: dconf write "/org/gnome/evolution/calendar/use-24hour-format" "true"
-  when:
-    - env_desktop in ["gnome"]
+# - name: Gnome Desktop - Preferences - Set gnome - evolution - calendar - use-24hour-format (Gnome)
+#   become: true
+#   become_user: "{{ env_user }}"
+#   ansible.builtin.shell: dconf write "/org/gnome/evolution/calendar/use-24hour-format" "true"
+#   when:
+#     - env_desktop in ["gnome"]
 
 # - name: Gnome Desktop - Preferences - Set gnome - evolution - mail - browser-close-on-reply-policy (Gnome)
 #   community.general.dconf:
@@ -2099,12 +2099,12 @@
 #   when:
 #     - env_desktop in ["gnome"]
 
-- name: Gnome Desktop - Preferences - Set gnome - evolution - mail - browser-close-on-reply-policy (Gnome)
-  become: true
-  become_user: "{{ env_user }}"
-  ansible.builtin.shell: dconf write "/org/gnome/evolution/mail/browser-close-on-reply-policy" "'never'"
-  when:
-    - env_desktop in ["gnome"]
+# - name: Gnome Desktop - Preferences - Set gnome - evolution - mail - browser-close-on-reply-policy (Gnome)
+#   become: true
+#   become_user: "{{ env_user }}"
+#   ansible.builtin.shell: dconf write "/org/gnome/evolution/mail/browser-close-on-reply-policy" "'never'"
+#   when:
+#     - env_desktop in ["gnome"]
 
 # - name: Gnome Desktop - Preferences - Set gnome - evolution - mail - composer-delay-outbox-flush (Gnome)
 #   community.general.dconf:
@@ -2114,12 +2114,12 @@
 #   when:
 #     - env_desktop in ["gnome"]
 
-- name: Gnome Desktop - Preferences - Set gnome - evolution - mail - composer-delay-outbox-flush (Gnome)
-  become: true
-  become_user: "{{ env_user }}"
-  ansible.builtin.shell: dconf write "/org/gnome/evolution/mail/composer-delay-outbox-flush" "0"
-  when:
-    - env_desktop in ["gnome"]
+# - name: Gnome Desktop - Preferences - Set gnome - evolution - mail - composer-delay-outbox-flush (Gnome)
+#   become: true
+#   become_user: "{{ env_user }}"
+#   ansible.builtin.shell: dconf write "/org/gnome/evolution/mail/composer-delay-outbox-flush" "0"
+#   when:
+#     - env_desktop in ["gnome"]
 
 # - name: Gnome Desktop - Preferences - Set gnome - evolution - mail - composer-show-bcc (Gnome)
 #   community.general.dconf:
@@ -2129,12 +2129,12 @@
 #   when:
 #     - env_desktop in ["gnome"]
 
-- name: Gnome Desktop - Preferences - Set gnome - evolution - mail - composer-show-bcc (Gnome)
-  become: true
-  become_user: "{{ env_user }}"
-  ansible.builtin.shell: dconf write "/org/gnome/evolution/mail/composer-show-bcc" "true"
-  when:
-    - env_desktop in ["gnome"]
+# - name: Gnome Desktop - Preferences - Set gnome - evolution - mail - composer-show-bcc (Gnome)
+#   become: true
+#   become_user: "{{ env_user }}"
+#   ansible.builtin.shell: dconf write "/org/gnome/evolution/mail/composer-show-bcc" "true"
+#   when:
+#     - env_desktop in ["gnome"]
 
 # - name: Gnome Desktop - Preferences - Set gnome - evolution - mail - composer-spell-languages (Gnome)
 #   community.general.dconf:
@@ -2144,12 +2144,12 @@
 #   when:
 #     - env_desktop in ["gnome"]
 
-- name: Gnome Desktop - Preferences - Set gnome - evolution - mail - composer-spell-languages (Gnome)
-  become: true
-  become_user: "{{ env_user }}"
-  ansible.builtin.shell: dconf write "/org/gnome/evolution/mail/composer-spell-languages" "['de_DE']"
-  when:
-    - env_desktop in ["gnome"]
+# - name: Gnome Desktop - Preferences - Set gnome - evolution - mail - composer-spell-languages (Gnome)
+#   become: true
+#   become_user: "{{ env_user }}"
+#   ansible.builtin.shell: dconf write "/org/gnome/evolution/mail/composer-spell-languages" "['de_DE']"
+#   when:
+#     - env_desktop in ["gnome"]
 
 # - name: Gnome Desktop - Preferences - Set gnome - evolution - mail - composer-top-signature (Gnome)
 #   community.general.dconf:
@@ -2159,12 +2159,12 @@
 #   when:
 #     - env_desktop in ["gnome"]
 
-- name: Gnome Desktop - Preferences - Set gnome - evolution - mail - composer-top-signature (Gnome)
-  become: true
-  become_user: "{{ env_user }}"
-  ansible.builtin.shell: dconf write "/org/gnome/evolution/mail/composer-top-signature" "true"
-  when:
-    - env_desktop in ["gnome"]
+# - name: Gnome Desktop - Preferences - Set gnome - evolution - mail - composer-top-signature (Gnome)
+#   become: true
+#   become_user: "{{ env_user }}"
+#   ansible.builtin.shell: dconf write "/org/gnome/evolution/mail/composer-top-signature" "true"
+#   when:
+#     - env_desktop in ["gnome"]
 
 # - name: Gnome Desktop - Preferences - Set gnome - evolution - mail - forward-style-name (Gnome)
 #   community.general.dconf:
@@ -2174,12 +2174,12 @@
 #   when:
 #     - env_desktop in ["gnome"]
 
-- name: Gnome Desktop - Preferences - Set gnome - evolution - mail - forward-style-name (Gnome)
-  become: true
-  become_user: "{{ env_user }}"
-  ansible.builtin.shell: dconf write "/org/gnome/evolution/mail/forward-style-name" "'inline'"
-  when:
-    - env_desktop in ["gnome"]
+# - name: Gnome Desktop - Preferences - Set gnome - evolution - mail - forward-style-name (Gnome)
+#   become: true
+#   become_user: "{{ env_user }}"
+#   ansible.builtin.shell: dconf write "/org/gnome/evolution/mail/forward-style-name" "'inline'"
+#   when:
+#     - env_desktop in ["gnome"]
 
 # - name: Gnome Desktop - Preferences - Set gnome - evolution - mail - layout (Gnome)
 #   community.general.dconf:
@@ -2189,12 +2189,12 @@
 #   when:
 #     - env_desktop in ["gnome"]
 
-- name: Gnome Desktop - Preferences - Set gnome - evolution - mail - layout (Gnome)
-  become: true
-  become_user: "{{ env_user }}"
-  ansible.builtin.shell: dconf write "/org/gnome/evolution/mail/layout" "1"
-  when:
-    - env_desktop in ["gnome"]
+# - name: Gnome Desktop - Preferences - Set gnome - evolution - mail - layout (Gnome)
+#   become: true
+#   become_user: "{{ env_user }}"
+#   ansible.builtin.shell: dconf write "/org/gnome/evolution/mail/layout" "1"
+#   when:
+#     - env_desktop in ["gnome"]
 
 # - name: Gnome Desktop - Preferences - Set gnome - evolution - mail - mark-seen (Gnome)
 #   community.general.dconf:
@@ -2204,12 +2204,12 @@
 #   when:
 #     - env_desktop in ["gnome"]
 
-- name: Gnome Desktop - Preferences - Set gnome - evolution - mail - mark-seen (Gnome)
-  become: true
-  become_user: "{{ env_user }}"
-  ansible.builtin.shell: dconf write "/org/gnome/evolution/mail/mark-seen" "false"
-  when:
-    - env_desktop in ["gnome"]
+# - name: Gnome Desktop - Preferences - Set gnome - evolution - mail - mark-seen (Gnome)
+#   become: true
+#   become_user: "{{ env_user }}"
+#   ansible.builtin.shell: dconf write "/org/gnome/evolution/mail/mark-seen" "false"
+#   when:
+#     - env_desktop in ["gnome"]
 
 # - name: Gnome Desktop - Preferences - Set gnome - evolution - mail - show-sender-photo (Gnome)
 #   community.general.dconf:
@@ -2219,12 +2219,12 @@
 #   when:
 #     - env_desktop in ["gnome"]
 
-- name: Gnome Desktop - Preferences - Set gnome - evolution - mail - show-sender-photo (Gnome)
-  become: true
-  become_user: "{{ env_user }}"
-  ansible.builtin.shell: dconf write "/org/gnome/evolution/mail/show-sender-photo" "true"
-  when:
-    - env_desktop in ["gnome"]
+# - name: Gnome Desktop - Preferences - Set gnome - evolution - mail - show-sender-photo (Gnome)
+#   become: true
+#   become_user: "{{ env_user }}"
+#   ansible.builtin.shell: dconf write "/org/gnome/evolution/mail/show-sender-photo" "true"
+#   when:
+#     - env_desktop in ["gnome"]
 
 # - name: Gnome Desktop - Preferences - Set gnome - evolution - mail - show-to-do-bar (Gnome)
 #   community.general.dconf:
@@ -2234,12 +2234,12 @@
 #   when:
 #     - env_desktop in ["gnome"]
 
-- name: Gnome Desktop - Preferences - Set gnome - evolution - mail - show-to-do-bar (Gnome)
-  become: true
-  become_user: "{{ env_user }}"
-  ansible.builtin.shell: dconf write "/org/gnome/evolution/mail/show-to-do-bar" "false"
-  when:
-    - env_desktop in ["gnome"]
+# - name: Gnome Desktop - Preferences - Set gnome - evolution - mail - show-to-do-bar (Gnome)
+#   become: true
+#   become_user: "{{ env_user }}"
+#   ansible.builtin.shell: dconf write "/org/gnome/evolution/mail/show-to-do-bar" "false"
+#   when:
+#     - env_desktop in ["gnome"]
 
 # - name: Gnome Desktop - Preferences - Set gnome - evolution - mail - show-to-do-bar-sub (Gnome)
 #   community.general.dconf:
@@ -2249,12 +2249,12 @@
 #   when:
 #     - env_desktop in ["gnome"]
 
-- name: Gnome Desktop - Preferences - Set gnome - evolution - mail - show-to-do-bar-sub (Gnome)
-  become: true
-  become_user: "{{ env_user }}"
-  ansible.builtin.shell: dconf write "/org/gnome/evolution/mail/show-to-do-bar-sub" "false"
-  when:
-    - env_desktop in ["gnome"]
+# - name: Gnome Desktop - Preferences - Set gnome - evolution - mail - show-to-do-bar-sub (Gnome)
+#   become: true
+#   become_user: "{{ env_user }}"
+#   ansible.builtin.shell: dconf write "/org/gnome/evolution/mail/show-to-do-bar-sub" "false"
+#   when:
+#     - env_desktop in ["gnome"]
 
 # - name: Gnome Desktop - Preferences - Set gnome - evolution - mail - to-do-bar-show-no-duedate-tasks (Gnome)
 #   community.general.dconf:
@@ -2264,9 +2264,9 @@
 #   when:
 #     - env_desktop in ["gnome"]
 
-- name: Gnome Desktop - Preferences - Set gnome - evolution - mail - to-do-bar-show-no-duedate-tasks (Gnome)
-  become: true
-  become_user: "{{ env_user }}"
-  ansible.builtin.shell: dconf write "/org/gnome/evolution/mail/to-do-bar-show-no-duedate-tasks" "true"
-  when:
-    - env_desktop in ["gnome"]
+# - name: Gnome Desktop - Preferences - Set gnome - evolution - mail - to-do-bar-show-no-duedate-tasks (Gnome)
+#   become: true
+#   become_user: "{{ env_user }}"
+#   ansible.builtin.shell: dconf write "/org/gnome/evolution/mail/to-do-bar-show-no-duedate-tasks" "true"
+#   when:
+#     - env_desktop in ["gnome"]

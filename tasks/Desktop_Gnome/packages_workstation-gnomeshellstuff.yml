@@ -1,19 +1,21 @@
-- name: Install gnomeshell extension stuff (Gnome, all)
-  ansible.builtin.package:
-    state: present
-    name:
-      - gnome-tweaks
-  when:
-    - env_desktop in ["gnome"]
-
-- name: Install gnomeshell extension stuff (Debian + Gnome)
+- name: Gnome - shell stuff - install gnomeshell extension stuff (Gnome, all)
   ansible.builtin.package:
     state: present
     name:
       - gnome-shell-extensions # sollte schon installiert sein
-      - gnome-shell-extension-appindicator
-      - gnome-shell-extension-gsconnect
-      - gnome-shell-extension-gsconnect-browsers
+      - gnome-shell-extension-dash-to-panel # systemweit # User: Installation via "Extension Manager"
+      - gnome-tweaks
+      - kdeconnect
   when:
-    - env_desktop == "gnome"
-    - ansible_facts['distribution'] == "Debian"
+    - env_desktop in ["gnome"]
+
+# Gnome shell extensions - Nachinstallation via "Extension Manager":
+# - AppIndicator and KStatusNotifierItem Support
+# - Copyous
+# - (Clipboard Indicator) # ggf. statt Copyous
+# - Tiling Shell
+# - Vitals
+# - (Internet Speed Meter) # Transferdaten auch über Vitals
+# - Weather O'Clock
+# - (Dash to Panel) # systemweit via paket (s.o.)
+# - GSConnect

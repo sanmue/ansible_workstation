@@ -144,7 +144,6 @@
       - hunspell-de
       - hunspell-en_us
       # - ipset
-      - kdeconnect
       - ksnip
       - libnotify # Library for sending desktop notifications
       - libreoffice-still
@@ -265,7 +264,6 @@
       - gufw # gui for ufw
       - hunspell-de-de
       - hunspell-en-us
-      - kdeconnect
       - kitty # gpu beschleunigtes terminal -> replaced by Ghostty (Arch)
       - libidn11-dev # benötigt für Citrix Workspace app (ica client)
       - libnotify-bin # sollte schon installiert sein
