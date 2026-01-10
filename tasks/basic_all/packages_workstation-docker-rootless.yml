@@ -21,13 +21,21 @@
     temp_wheel_rule: "{{ temp_wheel_rule | default('%wheel ALL=(ALL:ALL) NOPASSWD: ALL') }}"
   when: ansible_facts['distribution'] == "Archlinux"
 
+- name: Docker - packages - rootless - check if sudoers wheel file exists (Arch)
+  ansible.builtin.stat:
+    path: "{{ sudoers_wheel_file }}"
+  register: wheel_file_stat
+  when: ansible_facts['distribution'] == "Archlinux"
+
 - name: Docker - packages - rootless - backup etc sudoers.d wheel (Arch)
   ansible.builtin.copy:
     remote_src: true
     src: "{{ sudoers_wheel_file }}"
     dest: "/tmp/wheel.bak"
     mode: "0440"
-  when: ansible_facts['distribution'] == "Archlinux"
+  when:
+    - ansible_facts['distribution'] == "Archlinux"
+    - wheel_file_stat.stat.exists
 
 - name: Docker - packages - rootless - tmp config NOPASSWD for wheel group (Arch)
   ansible.builtin.copy:
@@ -51,6 +59,12 @@
     var: paru_output.stdout_lines
   when: ansible_facts['distribution'] == "Archlinux"
 
+- name: Docker - packages - rootless - check if sudoers wheel bak file exists (Arch)
+  ansible.builtin.stat:
+    path: /tmp/wheel.bak
+  register: wheel_file_bak_stat
+  when: ansible_facts['distribution'] == "Archlinux"
+
 - name: Docker - packages - rootless - restore wheel-rule (Arch)
   ansible.builtin.copy:
     remote_src: true
@@ -58,10 +72,14 @@
     dest: "{{ sudoers_wheel_file }}"
     mode: "0440"
     validate: "visudo -cf %s"
-  when: ansible_facts['distribution'] == "Archlinux"
+  when:
+    - ansible_facts['distribution'] == "Archlinux"
+    - wheel_file_bak_stat.stat.exists
 
 - name: Docker - packages - rootless - delete wheel.bak (Arch)
   ansible.builtin.file:
     path: "/tmp/wheel.bak"
     state: absent
-  when: ansible_facts['distribution'] == "Archlinux"
+  when:
+    - ansible_facts['distribution'] == "Archlinux"
+    - wheel_file_bak_stat.stat.exists
