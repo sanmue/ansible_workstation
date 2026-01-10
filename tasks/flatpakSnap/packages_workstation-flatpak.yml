@@ -6,7 +6,7 @@
   with_items:
     - "net.ankiweb.Anki"
     - "com.belmoussaoui.Authenticator"
-    - "com.brave.Browser"
+    # - "com.brave.Browser" # ArchPacStuff
     - "com.github.finefindus.eyedropper" # Pick and format colors from screen
     - "org.kde.kasts"
     - "org.cryptomator.Cryptomator"
@@ -49,6 +49,7 @@
     state: present
     method: system
   with_items:
+    - "com.brave.Browser"
     - "org.chromium.Chromium"
     - "com.discordapp.Discord"
     - "com.github.johnfactotum.Foliate"

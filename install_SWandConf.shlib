@@ -566,32 +566,34 @@ install-aur() {
         paru -S --needed --skipreview btrfs-assistant # && touch "${HOME}/.ansible_installScript_AUR-btrfsassistantInstalled"
     fi
 
-    echo -e "\nInstall localsend from AUR..."
-    paru -S --needed --skipreview localsend-bin
+    echo -e "\nInstall Brave Browser from AUR..."
+    paru -S --needed --skipreview brave-bin
+
+    echo -e "\nInstall espanso (wayland) from AUR (will take some time)..."
+    paru -S --needed --skipreview espanso-wayland
+    # paru -S --needed --skipreview espanso-gui
 
     echo -e "\nInstall Floorp browser from AUR..."
     paru -S --needed --skipreview floorp-bin
 
-    echo -e "\nInstall 'visual-studio-code-bin' from AUR..." # instead of flatpak
-    paru -S --needed --skipreview visual-studio-code-bin
-    # sudo pacman -S --needed --noconfirm visual-studio-code-bin
-
-    echo -e "\nInstall Powershell AUR..."
-    paru -S --needed --skipreview powershell-bin
-    # sudo pacman -S --needed --noconfirm powershell-bin
-
-    echo -e "\nInstall espanso (wayland) from AUR (will take some time)..."
-    paru -S --needed --skipreview espanso-wayland   # espanso-gui
-
     echo -e "\nInstall helm-ls from AUR..."
     paru -S --needed --skipreview helm-ls # helm.zed # Syntax highlighting for Helm templates using tree-sitter and integration of helm-ls
-
-    echo -e "\nInstall pacman-log-orphans-hook from AUR..."
-    paru -S --needed --skipreview pacman-log-orphans-hook
 
     # C/C++ Performance Profiler (Linux perf GUI for performance analysis)
     echo -e "\nInstall hotspot from AUR..."
     paru -S --needed --skipreview hotspot
+
+    echo -e "\nInstall localsend from AUR..."
+    paru -S --needed --skipreview localsend-bin
+
+    echo -e "\nInstall pacman-log-orphans-hook from AUR..."
+    paru -S --needed --skipreview pacman-log-orphans-hook
+
+    echo -e "\nInstall Powershell AUR..."
+    paru -S --needed --skipreview powershell-bin
+
+    echo -e "\nInstall 'visual-studio-code-bin' from AUR..." # instead of flatpak
+    paru -S --needed --skipreview visual-studio-code-bin
 
     # echo -e "\nInstall Citrix Workspace App (icaclient) from AUR..."
     # paru -S --needed --skipreview icaclient && touch "${HOME}/.ansible_installScript_AUR-icaclientInstalled"
@@ -601,9 +603,6 @@ install-aur() {
 
     # echo -e "\nInstall several Applications (Vorta) from AUR..."
     # paru -S --needed --skipreview vorta joplin-desktop # -> change: flatpak
-
-    # echo -e "\nInstall Brave Browser from AUR..."
-    # paru -S --needed --skipreview brave-bin # -> change: flatpak
 
     # echo -e "\nInstall Microsoft TTF Fonts from AUR..." # takes quite some time
     # paru -S --needed --skipreview ttf-ms-fonts && touch "${HOME}/.ansible_installScript_AUR-ttfmsfontsInstalled"
