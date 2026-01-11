@@ -16,6 +16,7 @@
     - "org.ferdium.Ferdium" # Messenger for the desktop - based on Franz
     - "com.github.tchx84.Flatseal"
     # - "com.meetfranz.Franz" # Messenger for the desktop -> siehe Ferdium
+    - "it.mijorus.gearlever" # Manage AppImages
     - "de.willuhn.Jameica"
     - "net.cozic.joplin_desktop"
     - "nl.hjdskes.gcolor3" # Color Picker
