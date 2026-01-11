@@ -221,6 +221,9 @@ case "${os}" in
         else
             echo "Initial installs (Arch) bereits abgearbeitet."
         fi
+
+        echo -e "\n\e[0;33mAUR helper (Ach)\e[0m"
+        install-aur-helper # needed in ansible playbook for docker rootless (package 'docker-rootless-extras')
         ;;
 
     Debian*)
