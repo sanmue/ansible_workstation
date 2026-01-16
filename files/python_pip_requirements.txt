@@ -57,19 +57,20 @@ tree-sitter-dockerfile # Dockerfile Zed Extension
 
 # ### ----------------------
 # ### Ulauncher requirements
-bs4 # This is a dummy package designed to prevent namesquatting on PyPI. You should install beautifulsoup4 instead.
-beautifulsoup4
-deepl # ohne deps
-emoji
-faker # Ulauncher Extension Requirement faker
-lorem
-parsedatetime
-Pint # Ulauncher Extension Requirement Calculate Anything
-pyasyncore
-pydbus
-pytz
-simpleeval
-wrapt_timeout_decorator # Ulauncher Extension Requirement Bluetooth
+# ### - Ulauncher replaced by "Vicinae"
+# bs4 # This is a dummy package designed to prevent namesquatting on PyPI. You should install beautifulsoup4 instead.
+# beautifulsoup4
+# deepl # ohne deps
+# emoji
+# faker # Ulauncher Extension Requirement faker
+# lorem
+# parsedatetime
+# Pint # Ulauncher Extension Requirement Calculate Anything
+# pyasyncore
+# pydbus
+# pytz
+# simpleeval
+# wrapt_timeout_decorator # Ulauncher Extension Requirement Bluetooth
 
 # ### ------------------------
 # ### SSH Click Config manager
