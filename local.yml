@@ -135,8 +135,8 @@
       ansible.builtin.import_tasks: tasks/basic_all/config_all-settings-reflector.yml
     - name: Config Settings all - Visual Studio Code
       ansible.builtin.import_tasks: tasks/basic_all/config_all-settings-VSCode.yml
-    - name: Config Settings all - Ulauncher extensions
-      ansible.builtin.import_tasks: tasks/basic_all/config_all-settings-ulauncher-extensions.yml
+    # - name: Config Settings all - Ulauncher extensions # replaced by "Vicinae"
+    #   ansible.builtin.import_tasks: tasks/basic_all/config_all-settings-ulauncher-extensions.yml
     - name: Config Settings all - Cron
       ansible.builtin.import_tasks: tasks/basic_all/config_all-settings-cron.yml
     #

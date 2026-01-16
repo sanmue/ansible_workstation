@@ -2,6 +2,9 @@
 # ### Ulauncher extensions
 # ########################
 
+# replaced by "Vicinae"
+# Install: via paru (AUR) in Install Script
+
 - name: All settings misc - ulauncher - create extension folder (all, env_user)
   become: true
   become_user: "{{ env_user }}"
