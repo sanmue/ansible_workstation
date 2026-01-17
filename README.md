@@ -40,10 +40,11 @@ The corresponding bash script is also provided via an Ansible task and called vi
 Tags Overview:
 
 - 'always' (Special tag / reserved name): Gather Facts and Variables
-- 'nnnplugs': create / update 'nnn' plugins + xterm conf for nnn-preview-tui
-- 'shellrc': create / update shell conf (~/.bashrc, ~/.zshrc) + 'Starship' cross shell prompt + direnv etc
+- 'upnnnplugs': create / update 'nnn' plugins + xterm conf for nnn-preview-tui
 - 'upnvm': create / update 'nvm' + 'node'
-- 'vimrc': create / update vim conf + plugins
+- 'upshellrc': create / update shell conf (~/.bashrc, ~/.zshrc) + 'Starship' cross shell prompt + direnv etc
+- 'upvic': install / update vicinae desktop launcher + conf + extensions
+- 'upvimrc': create / update vim conf + plugins
 
 Example alias: alias upshellrc='${HOME}/.local/bin/ansible_update-by-tag.sh shellrc'
 Just write "upshellrc" in terminal to start the tagged tasks of the Ansible playpook.

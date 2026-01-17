@@ -17,6 +17,7 @@
     state: present
     name:
       - pyenv # Easily switch between multiple versions of Python
+      - python-pipx # Install and Run Python Applications in Isolated Environments (not a requirement for pyenv)
   when: ansible_facts['distribution'] in ["Archlinux"]
 
 # prereqesites for Pyenv (Debian)
@@ -39,6 +40,7 @@
       - libssl-dev
       - llvm
       - make
+      - pipx # execute binaries from Python packages in isolated environments (not a requirement for pyenv)
       - tk-dev
       - wget
       - xz-utils

@@ -1,0 +1,16 @@
+# ###############################
+# ### Vicinae - service
+# ### - launcher for your desktop
+# ###############################
+# - https://github.com/vicinaehq/vicinae
+
+- name: Services workstation - Vicinae - start and enable in user scope (Arch)
+  tags: upvic
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.systemd_service:
+    name: vicinae
+    state: started
+    enabled: true
+    scope: user
+  when: ansible_facts['distribution'] in ["Archlinux"]

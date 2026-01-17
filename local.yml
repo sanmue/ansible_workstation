@@ -192,6 +192,11 @@
       ansible.builtin.import_tasks: tasks/basic_all/config_all-mail-testmail.yml
     #
     # ----------------------------------------------------------
+    # ### Ansible galaxy collections:
+    - name: Install ansbile collections via ansible-galaxy
+      ansible.builtin.import_tasks: tasks/basic_all/packages_workstation-ansibleGalaxyCollections.yml
+    #
+    # ----------------------------------------------------------
     # ### Docker:
     - name: Docker repo
       ansible.builtin.import_tasks: tasks/basic_all/config_workstation-docker-repo.yml
@@ -228,9 +233,14 @@
       ansible.builtin.import_tasks: tasks/basic_all/packages_workstation-cpp.yml
     #
     # ----------------------------------------------------------
-    # ### Ansible galaxy collections:
-    - name: Install ansbile collections via ansible-galaxy
-      ansible.builtin.import_tasks: tasks/basic_all/packages_workstation-ansibleGalaxyCollections.yml
+    # ### Vicinae - desktop launcher:
+    # - 'npm' required to build and install extensions (s.o.: name: NVM Node.js packages)
+    - name: Install Vicinae desktop launcher - including requirements
+      ansible.builtin.import_tasks: tasks/basic_all/packages_workstation-vicinae.yml
+    - name: Service Vicinae (user scope)
+      ansible.builtin.import_tasks: tasks/basic_all/config_workstation-services-vicinae.yml
+    - name: Config Vicinae (including install of extensions from git repo)
+      ansible.builtin.import_tasks: tasks/basic_all/config_workstation-vicinae.yml
     # ----------------------------------------------------------
 
 - name: Genome Shell Extension + Desktop Settings

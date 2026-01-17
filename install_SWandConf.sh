@@ -223,7 +223,10 @@ case "${os}" in
         fi
 
         echo -e "\n\e[0;33mAUR helper (Ach)\e[0m"
-        install-aur-helper # needed in ansible playbook for docker rootless (package 'docker-rootless-extras')
+        install-aur-helper 
+        # needed in ansible playbook:
+        # - docker rootless (package 'docker-rootless-extras')
+        # - Vicinae - desktop launcher (package 'vicinae-bin' )
         ;;
 
     Debian*)

@@ -219,14 +219,16 @@
       # -------------------------------------------------------
       # execute selected tasks of ansible playbook using 'tags'
       # -------------------------------------------------------
-      # - 'shellrc': create / update shell conf (e.g. .bashrc, .zshrc)
-      alias upshellrc='${HOME}/.local/bin/ansible_update-by-tag.sh shellrc'
-      # - 'vimrc': create / update vim conf + plugins
-      alias upvimrc='${HOME}/.local/bin/ansible_update-by-tag.sh vimrc'
       # - 'nnnplugs': create / update 'nnn' plugins + xterm conf for nnn-peview-tui
       alias upnnnplugs='${HOME}/.local/bin/ansible_update-by-tag.sh nnnplugs'
       # - 'nvm' (node version manager): create / update + install current node version
       alias upnvm='${HOME}/.local/bin/ansible_update-by-tag.sh upnvm'
+      # - 'shellrc': create / update shell conf (e.g. .bashrc, .zshrc)
+      alias upshellrc='${HOME}/.local/bin/ansible_update-by-tag.sh shellrc'
+      # - 'vicinae' (desktop launcher): extensions update + conf
+      alias upvic='${HOME}/.local/bin/ansible_update-by-tag.sh upvic'
+      # - 'vimrc': create / update vim conf + plugins
+      alias upvimrc='${HOME}/.local/bin/ansible_update-by-tag.sh vimrc'
 
 - name: All settings misc - Bashrc - custom alias definitions - 'zoxide' (User, all)
   tags: shellrc

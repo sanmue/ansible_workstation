@@ -12,7 +12,7 @@
   ansible.builtin.package:
     state: present
     name:
-      - pipx # execute binaries from Python packages in isolated environments
+      # - pipx # moved to 'packages_workstation-pythonEnv.yml' # execute binaries from Python packages in isolated environments
       - python3
       - python3-pip
   when: ansible_facts['distribution'] == "Debian"

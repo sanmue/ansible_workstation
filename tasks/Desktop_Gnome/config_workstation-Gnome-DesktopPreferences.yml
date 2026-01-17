@@ -1333,6 +1333,34 @@
 #     - env_desktop in ["gnome"]
 #     - ansible_facts['distribution'] == "Archlinux"
 
+- name: Gnome Desktop - Preferences - Set settings-daemon - plugin - media-keys - vicinae, name (Gnome)
+  tags: upvic
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.shell: dconf write "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom13/name" "'Vicinae'"
+  when:
+    - env_desktop in ["gnome"]
+
+- name: Gnome Desktop - Preferences - Set settings-daemon - plugin - media-keys - vicinae, command (Gnome)
+  tags: upvic
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.shell: dconf write "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom13/command" "'vicinae toggle'"
+  when:
+    - env_desktop in ["gnome"]
+
+- name: Gnome Desktop - Preferences - Set settings-daemon - plugin - media-keys - vicinae, binding (Gnome)
+  tags: upvic
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.shell: dconf write "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom13/binding" "'<Control>space'"
+  when:
+    - env_desktop in ["gnome"]
+
+# ------------------------------------
+# ulauncher replaced by Vicinae (s.o.)
+# ------------------------------------
+#
 # - ulauncher (custom13) - ctrl+space
 # https://github.com/Ulauncher/Ulauncher/discussions/991
 # - name: Gnome Desktop - Preferences - Set settings-daemon - plugin - media-keys - ulauncher,name (Gnome)
@@ -1343,12 +1371,12 @@
 #   when:
 #     - env_desktop in ["gnome"]
 
-- name: Gnome Desktop - Preferences - Set settings-daemon - plugin - media-keys - ulauncher,name (Gnome)
-  become: true
-  become_user: "{{ env_user }}"
-  ansible.builtin.shell: dconf write "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom13/name" "'ulauncher'"
-  when:
-    - env_desktop in ["gnome"]
+# - name: Gnome Desktop - Preferences - Set settings-daemon - plugin - media-keys - ulauncher,name (Gnome)
+#   become: true
+#   become_user: "{{ env_user }}"
+#   ansible.builtin.shell: dconf write "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom13/name" "'ulauncher'"
+#   when:
+#     - env_desktop in ["gnome"]
 
 # - name: Gnome Desktop - Preferences - Set settings-daemon - plugin - media-keys - ulauncher,command (Gnome)
 #   community.general.dconf:
@@ -1358,12 +1386,12 @@
 #   when:
 #     - env_desktop in ["gnome"]
 
-- name: Gnome Desktop - Preferences - Set settings-daemon - plugin - media-keys - ulauncher,command (Gnome)
-  become: true
-  become_user: "{{ env_user }}"
-  ansible.builtin.shell: dconf write "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom13/command" "'ulauncher-toggle'"
-  when:
-    - env_desktop in ["gnome"]
+# - name: Gnome Desktop - Preferences - Set settings-daemon - plugin - media-keys - ulauncher,command (Gnome)
+#   become: true
+#   become_user: "{{ env_user }}"
+#   ansible.builtin.shell: dconf write "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom13/command" "'ulauncher-toggle'"
+#   when:
+#     - env_desktop in ["gnome"]
 
 # - name: Gnome Desktop - Preferences - Set settings-daemon - plugin - media-keys - ulauncher,binding (Gnome)
 #   community.general.dconf:
@@ -1373,12 +1401,12 @@
 #   when:
 #     - env_desktop in ["gnome"]
 
-- name: Gnome Desktop - Preferences - Set settings-daemon - plugin - media-keys - ulauncher,binding (Gnome)
-  become: true
-  become_user: "{{ env_user }}"
-  ansible.builtin.shell: dconf write "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom13/binding" "'<Control>space'"
-  when:
-    - env_desktop in ["gnome"]
+# - name: Gnome Desktop - Preferences - Set settings-daemon - plugin - media-keys - ulauncher,binding (Gnome)
+#   become: true
+#   become_user: "{{ env_user }}"
+#   ansible.builtin.shell: dconf write "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom13/binding" "'<Control>space'"
+#   when:
+#     - env_desktop in ["gnome"]
 
 # ### ---------------------------------------------------
 # ### - set/create list for configured custom-keybindings

@@ -1,0 +1,126 @@
+# ###############################
+# ### Vicinae - config (including install of extensions)
+# ### - launcher for your desktop
+# ###############################
+# - https://github.com/vicinaehq/vicinae
+#
+# Gnome:
+# - Gnome custom-keybindings config in: config_workstation-Gnome-DesktopPreferences.yml
+#
+# Vicinae (service) muss gestaretet sein, sodass "~/.config/vicinae"
+# und "~/.local/share/vicinae" (mit "vicinae.db") angelegt werden
+
+- name: Config workstation - Vicinae - shortcut - websearch - Check if already exists in Vicinae DB (Arch)
+  tags: upvic
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.command: >
+    sqlite3 ~/.local/share/vicinae/vicinae.db "
+    SELECT COUNT(*) FROM shortcut WHERE name = 'websearch';"
+  register: shortcut_exists
+  changed_when: false  # nur eine Abfrage, keine Änderung
+  when: ansible_facts['distribution'] in ["Archlinux"]
+
+- name: Config workstation - Vicinae - shortcut - websearch (with ecosia and firefox) (Arch)
+  tags: upvic
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.shell: >
+    sqlite3 ~/.local/share/vicinae/vicinae.db "
+    INSERT INTO shortcut
+    (id, name, icon, url, app, open_count, created_at, updated_at, last_used_at)
+    VALUES
+    ('$(uuidgen)', 'websearch', 'icon://system/firefox', 'https://www.ecosia.org/search?method=index&q={argument}', 'firefox.desktop', 0, $(date +%s), $(date +%s), $(date +%s));
+    "
+  when:
+    - ansible_facts['distribution'] in ["Archlinux"]
+    - shortcut_exists.stdout | int == 0  # Nur ausführen, wenn der Shortcut noch nicht existiert
+
+- name: Config workstation - Vicinae - extensions - set vars (Arch)
+  tags: upvic
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.set_fact:
+    repo_url: "https://github.com/vicinaehq/extensions.git"
+    repo_dest_dir: "/tmp/extensions"
+    extensions:
+      - arch-packages
+      - brotab
+      - case-converter
+      - dashboard-icons
+      - dbus
+      - firefox
+      - fuzzy-files
+      - gnome-dnd
+      - gnome-settings
+      - html-symbol-finder
+      - it-tools
+      - nix
+      - pacman-updates
+      - port-killer
+      - process-manager
+      - ssh
+      - systemd
+      - vscode-recents
+      - wifi-commander
+  when: ansible_facts['distribution'] in ["Archlinux"]
+
+- name: Config workstation - Vicinae - extensions - clone extension git repo (Arch)
+  tags: upvic
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.git:
+    repo: "{{ repo_url }}"
+    dest: "{{ repo_dest_dir }}"
+    force: true
+  when: ansible_facts['distribution'] in ["Archlinux"]
+
+- name: Config workstation - Vicinae - extensions - npm install (Arch)
+  tags: upvic
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.command: npm install
+  args:
+    chdir: "{{ repo_dest_dir }}/extensions/{{ item }}"
+  loop: "{{ extensions }}"
+  register: install_result
+  ignore_errors: true
+  when: ansible_facts['distribution'] in ["Archlinux"]
+
+- name: Config workstation - Vicinae - extensions - show install results (Arch)
+  tags: upvic
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.debug:
+    var: install_result.results
+  when: ansible_facts['distribution'] in ["Archlinux"]
+
+- name: Config workstation - Vicinae - extensions - npm build (Arch)
+  tags: upvic
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.command: npm run build
+  args:
+    chdir: "{{ repo_dest_dir }}/extensions/{{ item }}"
+  loop: "{{ extensions }}"
+  register: build_result
+  ignore_errors: true
+  when: ansible_facts['distribution'] in ["Archlinux"]
+
+- name: Config workstation - Vicinae - extensions - show build results (Arch)
+  tags: upvic
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.debug:
+    var: build_result.results
+  when: ansible_facts['distribution'] in ["Archlinux"]
+
+- name: Config workstation - Vicinae - restart service for env_user (Arch)
+  tags: upvic
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.systemd_service:
+    name: vicinae
+    state: restarted
+    scope: user
+  when: ansible_facts['distribution'] in ["Archlinux"]

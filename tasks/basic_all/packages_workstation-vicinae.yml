@@ -1,0 +1,134 @@
+# ###############################
+# ### Vicinae - packages
+# ### - launcher for your desktop
+# ###############################
+# - https://github.com/vicinaehq/vicinae
+
+# um via paru zu installieren wird sudo tmp. do konfiguriert, dass die Gruppe wheel kein passwort braucht
+# Anmkerung: env_user ist in der Gruppe wheel drin
+
+- name: Install - packages workstation - vicinae - Backup existing wheel sudoers file
+  tags: upvic
+  become: true
+  ansible.builtin.copy:
+    src: /etc/sudoers.d/wheel
+    dest: /etc/sudoers.d/wheel.bak
+    remote_src: true
+    force: false
+  when: ansible_facts['distribution'] in ["Archlinux"]
+
+- name: Install - packages workstation - vicinae - Configure passwordless sudo for wheel group
+  tags: upvic
+  become: true
+  ansible.builtin.copy:
+    dest: /etc/sudoers.d/wheel
+    content: |
+      %wheel ALL=(ALL) NOPASSWD: ALL
+    mode: '0440'
+    owner: root
+    group: root
+  when: ansible_facts['distribution'] in ["Archlinux"]
+
+- name: Install - packages workstation - vicinae-bin (AUR) via paru (Archlinux)
+  tags: upvic
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.command: paru -S --needed --skipreview --noconfirm vicinae-bin
+  register: paru_output
+  changed_when: "'nothing to do' not in paru_output.stdout"  # Nur als "changed" markieren, wenn etwas installiert wurde
+  when: ansible_facts['distribution'] in ["Archlinux"]
+
+- name: Install - packages workstation - vicinae - Restore original wheel sudoers file
+  tags: upvic
+  become: true
+  ansible.builtin.copy:
+    src: /etc/sudoers.d/wheel.bak
+    dest: /etc/sudoers.d/wheel
+    remote_src: true
+    force: true
+    mode: '0440'
+    owner: root
+    group: root
+  when: ansible_facts['distribution'] in ["Archlinux"]
+
+- name: Install - packages workstation - vicinae - Remove backup wheel sudoers file
+  tags: upvic
+  become: true
+  ansible.builtin.file:
+    path: /etc/sudoers.d/wheel.bak
+    state: absent
+  when: ansible_facts['distribution'] in ["Archlinux"]
+
+- name: Install - packages workstation - vicinae - show paru output (Archlinux)
+  tags: upvic
+  ansible.builtin.debug:
+    var: paru_output.stdout_lines
+  when: ansible_facts['distribution'] in ["Archlinux"]
+
+- name: Install - packages workstation - vicinae - requirements (Archlinux)
+  tags: upvic
+  ansible.builtin.package:
+    state: present
+    name:
+      # muss hier bereits vorhanden sein: paru, npm
+      - rust # for 'Fuzzy Files': goldfish install
+      - file # for 'Fuzzy Files': goldfish
+      - python-pipx # for inst 'brotab' module
+      - sqlite # shortcut conf: via sqlite cmd
+      - git # clone extension repo
+  when: ansible_facts['distribution'] in ["Archlinux"]
+
+# für Extension 'brotab'
+# - name: Install - packages workstation - vicinae - brotab via pipx (Archlinux)
+#   tags: upvic
+#   become: true
+#   become_user: "{{ env_user }}"
+#   # ansible.builtin.command: pipx install brotab
+#   community.general.pipx:
+#     name: brotab
+#   when: ansible_facts['distribution'] in ["Archlinux"]
+#
+# fatal: [localhost]: FAILED! => {"changed": false, "cmd": "/home/USERID/.pyenv/versions/3.13.9/bin/python3.13 -m pipx list --include-injected --json", 
+# "msg": "/home/USERID/.pyenv/versions/3.13.9/bin/python3.13: No module named pipx",...
+
+- name: Install - packages workstation - vicinae - brotab via pipx (Archlinux)
+  tags: upvic
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.command: pipx install brotab
+  when: ansible_facts['distribution'] in ["Archlinux"]
+
+# für Extension 'Fuzzy Files' # goldfish: IPC file finder
+- name: Install - packages workstation - vicinae - clone goldfish git repo (Archlinux)
+  tags: upvic
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.git:
+    repo: https://github.com/sameoldlab/goldfish
+    dest: /tmp/goldfish
+    clone: true
+    update: true
+  when: ansible_facts['distribution'] in ["Archlinux"]
+
+- name: Install - packages workstation - vicinae - build goldfish (Archlinux)
+  tags: upvic
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.command: cargo build --release
+  args:
+    chdir: /tmp/goldfish
+    creates: /tmp/goldfish/target/release/gf
+  when: ansible_facts['distribution'] in ["Archlinux"]
+
+- name: Install - packages workstation - vicinae - copy goldfish executable to usr local bin (Archlinux)
+  tags: upvic
+  become: true
+  ansible.builtin.copy:
+    src: /tmp/goldfish/target/release/gf
+    dest: /usr/local/bin/gf
+    force: true
+    # owner: root
+    # group: root
+    mode: '0755'
+    remote_src: true # Quelldatei bereits auf Zielsystem, ansible soll/kann sie von dort kopieren
+  when: ansible_facts['distribution'] in ["Archlinux"]
