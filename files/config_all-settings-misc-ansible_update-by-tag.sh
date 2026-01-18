@@ -3,6 +3,7 @@
 #set -x   # enable debug mode
 
 REPO_NAME="ansible_workstation"
+PLAYBOOK="local.yml"
 repo_path=$(find "${HOME}" -type d -name "${REPO_NAME}" -not -path '*/.*')
 
 # Check if repo_path empty (path to folder 'REPO_NAME' not found)
@@ -32,4 +33,4 @@ else
     echo "- Parameter passed to the script: '${tag}'"
 fi
 
-ansible-playbook "${repo_path}/local.yml" -v -K --tags "${tag}"
+ansible-playbook "${repo_path}/${PLAYBOOK}" -v -K --tags "${tag}"
