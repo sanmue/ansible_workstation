@@ -3,7 +3,7 @@
 #set -x   # enable debug mode
 
 REPO_NAME="ansible_workstation"
-repo_path=$(find "${HOME}" -type d -name "${REPO_NAME}")
+repo_path=$(find "${HOME}" -type d -name "${REPO_NAME}" -not -path '*/.*')
 
 # Check if repo_path empty (path to folder 'REPO_NAME' not found)
 if [ -z "${repo_path}" ]; then
