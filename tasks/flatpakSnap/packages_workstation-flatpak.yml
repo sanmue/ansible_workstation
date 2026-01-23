@@ -55,7 +55,7 @@
     - "com.discordapp.Discord"
     - "com.github.johnfactotum.Foliate"
     - "org.keepassxc.KeePassXC"
-    - "org.ksnip.ksnip" # es können direkt Ergänzungen (Markieren, Rahmen, Pfeile, Text, ... gemacht werden; im ggs. zu Screenshot Tool unter Gnome)
+    # - "org.ksnip.ksnip" # es können direkt Ergänzungen (Markieren, Rahmen, Pfeile, Text, ... gemacht werden; im ggs. zu Screenshot Tool unter Gnome)
     - "org.libreoffice.LibreOffice"
     - "com.nextcloud.desktopclient.nextcloud"
     - "org.gnome.Solanum"

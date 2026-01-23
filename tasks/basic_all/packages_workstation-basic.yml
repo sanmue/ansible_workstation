@@ -144,7 +144,6 @@
       - hunspell-de
       - hunspell-en_us
       # - ipset
-      - ksnip
       - libnotify # Library for sending desktop notifications
       - libreoffice-still
       # - libreoffice-still-de
