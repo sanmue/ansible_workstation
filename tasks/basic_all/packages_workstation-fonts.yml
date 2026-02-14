@@ -13,6 +13,18 @@
 # -         or:    /usr/local/share/fonts/
 # - user:          ~/.local/share/fonts/
 
+- name: Fonts - Install additional fonts (Archlinux)
+  ansible.builtin.package:
+    state: present
+    name:
+      - ttf-dejavu
+      - ttf-dejavu-nerd
+      - ttf-firacode-nerd # ~ 40 MB Install Size
+      - ttf-jetbrains-mono-nerd # ~200 MB Install Size
+      - ttf-sourcecodepro-nerd # ~ 85 MB Install Size
+      # - ttf-zed-mono-nerd # ~680 MB Install Size
+  when: ansible_facts['distribution'] in ["Archlinux"]
+
 - name: Fonts - create local font directory - systemwide (all)
   ansible.builtin.file:
     path: /usr/local/share/fonts
