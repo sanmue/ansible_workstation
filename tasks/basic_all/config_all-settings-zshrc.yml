@@ -210,7 +210,7 @@
       # additional EXPORTS
       # ------------------
 
-      # Colored password prompt
+      # Colored sudo password prompt
       # https://wiki.archlinux.org/title/Sudo#Colored_password_prompt
       export SUDO_PROMPT="$(tput setaf 1 bold)[sudo]$(tput sgr0) password for $(tput setaf 6)%p$(tput sgr0): "
 

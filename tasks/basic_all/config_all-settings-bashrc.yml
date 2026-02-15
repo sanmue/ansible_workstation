@@ -64,10 +64,12 @@
       shopt -s histappend
       #PROMPT_COMMAND='history -a'
 
-      # Show auto-completion list automatically, without double tab (einfacher tab genügt)
-      if [[ $iatest -gt 0 ]]; then bind "set show-all-if-ambiguous On"; fi
+      # Show full auto-completion list automatically on 1x tab, without double tab
+      if [[ $- == *i* ]]; then
+        bind "set show-all-if-ambiguous On"
+      fi
 
-      # Colored password prompt
+      # Colored sudo password prompt
       export SUDO_PROMPT="$(tput setaf 1 bold)[sudo]$(tput sgr0) password for $(tput setaf 6)%p$(tput sgr0): "
 
 - name: All settings misc - Bashrc - custom alias definitions (User, all)
