@@ -548,6 +548,9 @@ install-aur-helper() {
 install-aur() {
     install-aur-helper # e.g. paru
 
+    echo -e "\nInstall traur from AUR..." # paru-integrated trust scoring for AUR packages
+    paru -S --needed --skipreview traur
+
     echo -e "\nInstall various required software packages (bashdb, gtkhash, units) from AUR..."
     paru -S --needed --skipreview bashdb gtkhash units
 
