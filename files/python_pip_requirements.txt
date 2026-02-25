@@ -51,6 +51,10 @@ tree-sitter-bash # Bash for Zed
 tree-sitter-dockerfile # Dockerfile Zed Extension
 
 # ### ----------------------
+# ### Hugo - static site generator
+docutils # required for reStructuredText support
+
+# ### ----------------------
 # ### YAML
 # tree-sitter-yaml
 # yamllint # installed via distribution package

@@ -1,0 +1,25 @@
+# #####################################
+# ### Hugo - static site generator
+# ### - framework for building websites
+# #####################################
+# - https://gohugo.io/
+
+- name: Install - packages workstation - hugo (Archlinux)
+  ansible.builtin.package:
+    state: present
+    name:
+      - hugo
+      - git        # required to use the Hugo modules feature
+      - go         # required to use the Hugo modules feature
+      - dart-sass  # required to transpile Sass to CSS
+  when: ansible_facts['distribution'] in ["Archlinux"]
+
+# - installed via python_pip_requirements.txt
+# - name: Install - packages workstation - hugo - docutils via pip (Archlinux, user)
+#   become: true
+#   become_user: "{{ env_user }}"
+#   ansible.builtin.shell:
+#     cmd: pip install --user docutils # required for reStructuredText support
+#   args:
+#     creates: "/home/{{ env_user }}/.ansible_PythonPip"
+#   when: ansible_facts['distribution'] in ["Archlinux"]

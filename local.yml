@@ -228,6 +228,12 @@
       ansible.builtin.import_tasks: tasks/basic_all/packages_workstation-pythonPip.yml
     #
     # ----------------------------------------------------------
+    # ### Hugo - static site generator:
+    # - docutils via pip requrirements.txt (see "Pip and Pipx install" above)
+    - name: Hugo packages
+      ansible.builtin.import_tasks: tasks/basic_all/packages_workstation-hugo.yml
+    #
+    # ----------------------------------------------------------
     # ### C/C++:
     - name: C/C++ packages
       ansible.builtin.import_tasks: tasks/basic_all/packages_workstation-cpp.yml
