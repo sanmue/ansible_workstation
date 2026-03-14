@@ -57,3 +57,11 @@
       window-theme = auto
       window-height = 36
       window-width = 100
+
+      # ### Terminfo - SSH
+      # - Fix Warning / Error Message when SSH connect to other machines that do not have Ghostty's terminfo entry
+      # - https://ghostty.org/docs/help/terminfo#ssh
+      # - https://ghostty.org/docs/config/reference#shell-integration-features
+      shell-integration-features = ssh-terminfo
+      shell-integration-features = ssh-env
+      # Ghostty will try to install the terminfo entry first and use the fallback if installation failed
