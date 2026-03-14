@@ -47,6 +47,7 @@
       - hplip # Drivers for HP DeskJet, OfficeJet, Photosmart, Business Inkjet and some LaserJet
       - htop
       - hunspell
+      - img2pdf # Losslessly convert raster images to PDF
       - imv # Image viewer for Wayland and X11 (u.a. wg. nnn)
       - inotify-tools # benötigt von 'grub-btrfsd.service' # command-line programs providing a simple interface to inotify
       - inxi
