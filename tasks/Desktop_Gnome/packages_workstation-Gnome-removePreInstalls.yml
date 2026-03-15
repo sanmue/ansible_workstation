@@ -15,8 +15,16 @@
       - gnome-games
       - gnome-maps
       - gnome-klotski
-      - gnome-software
       - gnome-todo
       - hitori
   when:
     - env_desktop in ["gnome"]
+
+- name: Uninstall packages for workstations (Gnome, Arch)
+  ansible.builtin.package:
+    state: absent
+    name:
+      - gnome-software
+  when:
+    - ansible_facts['distribution'] == "Archlinux"
+    - env_desktop == "gnome"
