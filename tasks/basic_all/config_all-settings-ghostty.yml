@@ -15,7 +15,7 @@
 - name: All settings misc - Ghostty - create config file (user, all)
   tags: shellrc
   ansible.builtin.blockinfile:
-    path: "/home/{{ env_user }}/.config/ghostty/config"
+    path: "/home/{{ env_user }}/.config/ghostty/config.ghostty"
     create: true
     # backup: true
     owner: "{{ env_user }}"
