@@ -1137,60 +1137,28 @@
   when:
     - env_desktop in ["gnome"]
 
-# - Remmina (custom10) - r
-# - name: Gnome Desktop - Preferences - Set settings-daemon - plugin - media-keys - Remmina,name (Gnome)
-#   community.general.dconf:
-#     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom10/name"
-#     value: "'Remmina'"
-#     state: present
-#   when:
-#     - env_desktop in ["gnome"]
-
-- name: Gnome Desktop - Preferences - Set settings-daemon - plugin - media-keys - Remmina,name (Gnome)
+# - Terminal (custom10) - t
+- name: Gnome Desktop - Preferences - Set settings-daemon - plugin - media-keys - Terminal,name (Gnome)
   become: true
   become_user: "{{ env_user }}"
-  ansible.builtin.shell: dconf write "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom10/name" "'Remmina'"
+  ansible.builtin.shell: dconf write "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom10/name" "'Terminal'"
   when:
     - env_desktop in ["gnome"]
 
-# - name: Gnome Desktop - Preferences - Set settings-daemon - plugin - media-keys - Remmina,command(Gnome)
-#   community.general.dconf:
-#     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom10/command"
-#     value: "'remmina'"
-#     state: present
-#   when:
-#     - env_desktop in ["gnome"]
-
-- name: Gnome Desktop - Preferences - Set settings-daemon - plugin - media-keys - Remmina,command (Gnome)
+- name: Gnome Desktop - Preferences - Set settings-daemon - plugin - media-keys - Terminal,command (Gnome)
   become: true
   become_user: "{{ env_user }}"
-  ansible.builtin.shell: dconf write "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom10/command" "'remmina'"
+  ansible.builtin.shell: dconf write "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom10/command" "'ghostty'"
   when:
     - env_desktop in ["gnome"]
 
-# - name: Gnome Desktop - Preferences - Set settings-daemon - plugin - media-keys - Remmina,binding (Gnome)
-#   community.general.dconf:
-#     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom10/binding"
-#     value: "'<Primary><Alt>r'"
-#     state: present
-#   when:
-#     - env_desktop in ["gnome"]
-
-- name: Gnome Desktop - Preferences - Set settings-daemon - plugin - media-keys - Remmina,binding (Gnome)
+- name: Gnome Desktop - Preferences - Set settings-daemon - plugin - media-keys - Terminal,binding (Gnome)
   become: true
   become_user: "{{ env_user }}"
-  ansible.builtin.shell: dconf write "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom10/binding" "'<Primary><Alt>r'"
+  ansible.builtin.shell: dconf write "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom10/binding" "'<Primary><Alt>t'"
   when:
     - env_desktop in ["gnome"]
 
-# - Virtual Machine Manager (custom11) - v
-# - name: Gnome Desktop - Preferences - Set settings-daemon - plugin - media-keys - Virtual Machine Manager,name (Gnome)
-#   community.general.dconf:
-#     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom11/name"
-#     value: "'Virtual Machine Manager'"
-#     state: present
-#   when:
-#     - env_desktop in ["gnome"]
 
 - name: Gnome Desktop - Preferences - Set settings-daemon - plugin - media-keys - Virtual Machine Manager,name (Gnome)
   become: true
