@@ -46,7 +46,6 @@
       #background = #202020
       #cursor-color = #c2c2c2
       #cursor-color = #87c7ff
-      selection-invert-fg-bg = true
       #selection-background = #87c7ff
       #selection-foreground = #191919
 
