@@ -131,7 +131,7 @@
   ansible.builtin.lineinfile:
     path: /etc/libvirt/qemu.conf
     insertafter: '#group = "libvirt-qemu"'
-    line: 'group = "root"'
+    line: 'group = "libvirt"'
   when:
     - ansible_facts['virtualization_role'] != "guest"
 
