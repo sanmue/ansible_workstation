@@ -45,24 +45,9 @@
   become: true
   tasks:
     # ----------------------------------------------------------
-    # ### Entfernen nicht benötigter vorinstallierter Pakete
-    - name: Entfernen nicht benötigter vorinstallierter Pakete (Gnome)
-      ansible.builtin.import_tasks: tasks/Desktop_Gnome/packages_workstation-Gnome-removePreInstalls.yml
-    # TODO: Update + Test:
-    # - name: Entfernen nicht benötigter vorinstallierter Pakete (Plasma)
-    #   ansible.builtin.import_tasks: tasks/Desktop_Plasma/packages_workstation-Plasma-removePreInstalls.yml
-    #
-    # ----------------------------------------------------------
-    # ### Install software packages, including Flatpak, Snap:
+    # ### Install software packages, including Flatpak and Snap:
     - name: Basic packages
       ansible.builtin.import_tasks: tasks/basic_all/packages_workstation-basic.yml
-    # - name: Packages Plasma
-    #   ansible.builtin.import_tasks: tasks/Desktop_Plasma/packages_workstation-Plasma.yml
-    - name: Packages Gnome
-      ansible.builtin.import_tasks: tasks/Desktop_Gnome/packages_workstation-Gnome.yml
-    - name: Packages Gnomeshell
-      ansible.builtin.import_tasks: tasks/Desktop_Gnome/packages_workstation-gnomeshellstuff.yml
-    #
     # ex 'local packages install':
     - name: Citrix Workspace App (ICA-Client) packages
       ansible.builtin.import_tasks: tasks/basic_all/packages_workstation-citrixWorkspaceApp-icaclient.yml
@@ -78,13 +63,11 @@
       ansible.builtin.import_tasks: tasks/basic_all/packages_workstation-starship.yml
     - name: Zsh plugins
       ansible.builtin.import_tasks: tasks/basic_all/packages_workstation-zsh-plugins.yml
-    #
     # - flatpak:
     - name: Config Flatpak
       ansible.builtin.import_tasks: tasks/flatpakSnap/config_workstation-flatpak.yml
     - name: Packages Flatpak
       ansible.builtin.import_tasks: tasks/flatpakSnap/packages_workstation-flatpak.yml
-    #
     # - snap:
     # - name: Config Snap
     #   ansible.builtin.import_tasks: tasks/flatpakSnap/config_workstation-snap.yml
@@ -92,6 +75,23 @@
     #   ansible.builtin.import_tasks: tasks/flatpakSnap/packages_workstation-snap.yml
     #
     # ----------------------------------------------------------
+    # Desktop Environment specific packages:
+    - name: Gnome - Removing unused pre-installed packages
+      ansible.builtin.import_tasks: tasks/Desktop_Gnome/packages_workstation-Gnome-removePreInstalls.yml
+    - name: Gnome - Packages
+      ansible.builtin.import_tasks: tasks/Desktop_Gnome/packages_workstation-Gnome.yml
+    - name: Gnome - Packages Gnomeshell
+      ansible.builtin.import_tasks: tasks/Desktop_Gnome/packages_workstation-gnomeshellstuff.yml
+    #
+    # + siehe weiter unten "name: Gnome - Shell Extension + Desktop Settings"
+    #
+    # TODO: Update + Test:
+    # - name: Plasma - Removing unused pre-installed packages
+    #   ansible.builtin.import_tasks: tasks/Desktop_Plasma/packages_workstation-Plasma-removePreInstalls.yml
+    # - name: Plasma - Packages
+    #   ansible.builtin.import_tasks: tasks/Desktop_Plasma/packages_workstation-Plasma.yml
+    # ----------------------------------------------------------
+    #
     # ### Config Firewall, Cron, Services, sonstige Settings:
     - name: Config - stats all
       ansible.builtin.import_tasks: tasks/basic_all/config_all-stats.yml
@@ -141,9 +141,8 @@
       ansible.builtin.import_tasks: tasks/basic_all/config_all-settings-cron.yml
     #
     # # Services and cronjobs:
-    # - name: Config cronjobs all - cronjobs - ClamAV
+    # - name: Config cronjobs all - cronjobs - ClamAV *** replaced by systemd timer ***
     #   ansible.builtin.import_tasks: tasks/basic_all/config_all-cronjobs-ClamAV.yml
-    #   - replaced by systemd timer
     - name: Config Services all - ArchPacStuff
       ansible.builtin.import_tasks: tasks/basic_all/config_all-services-ArchPacStuff.yml
     - name: Config Services all - cron
@@ -249,7 +248,7 @@
       ansible.builtin.import_tasks: tasks/basic_all/config_workstation-vicinae.yml
     # ----------------------------------------------------------
 
-- name: Genome Shell Extension + Desktop Settings
+- name: Gnome - Shell Extension + Desktop Settings
   hosts: localhost
   connection: local
   become: true
