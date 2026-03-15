@@ -3,13 +3,13 @@
     state: present
     name:
       - gnome-shell-extensions # sollte schon installiert sein
-      - gnome-shell-extension-dash-to-panel # systemweit # User: Installation via "Extension Manager"
+      - gnome-shell-extension-dash-to-panel # systemweit # für User: Installation via "Extension Manager" (flatpak app)
       - gnome-tweaks
       - kdeconnect
   when:
     - env_desktop in ["gnome"]
 
-# Gnome shell extensions - Nachinstallation via "Extension Manager":
+# Gnome shell extensions - Nachinstallation via "Extension Manager" (flatpak app):
 # - AppIndicator and KStatusNotifierItem Support
 # - Copyous
 # - (Clipboard Indicator) # ggf. statt Copyous
@@ -19,3 +19,4 @@
 # - Weather O'Clock
 # - (Dash to Panel) # systemweit via paket (s.o.)
 # - GSConnect
+# - User Themes
