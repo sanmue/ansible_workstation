@@ -1,8 +1,8 @@
 ---
 
-# ### ****
+# ### ####
 # ### TEST
-# ### ****
+# ### ####
 
 - name: Test
   hosts: localhost
@@ -19,5 +19,9 @@
     #   ansible.builtin.import_tasks: firewalld.yml
     # - name: Test starshiptoml_geturl
     #  ansible.builtin.import_tasks: git-starshiptoml.yml
-    - name: Test nvmNodejs
-      ansible.builtin.import_tasks: nvmNodejs.yml
+    # - name: Test nvmNodejs
+    #   ansible.builtin.import_tasks: nvmNodejs.yml
+    - name: Test mise - install and config
+      ansible.builtin.import_tasks: mise.yml
+    - name: Test mise - pythonEnv
+      ansible.builtin.import_tasks: mise_pythonEnv.yml
