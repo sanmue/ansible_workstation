@@ -3,9 +3,6 @@
 # ######################
 # python3-pip, python3-psutil, (python3-pyinotify), ...: Installiert in packages_workstation-basic.yml
 
-# - pyenv:
-#   - https://technicalnavigator.in/how-to-fix-error-externally-managed-environment-in-python-kali-linux/
-#
 # - allgemein:
 # - https://pythonspeed.com/articles/externally-managed-environment-pep-668/
 # - https://stackoverflow.com/questions/75616371/sudo-pip-install-cryptography-error-externally-managed-environment
@@ -17,55 +14,6 @@
 # pipx: jupyter
 # - # jupyter: https://samedwardes.com/blog/2022-10-23-best-jupyter-lab-install/
 
-# ### -----------------------------------------------------------------------------------------------------------------
-# ### intended to prevent: "error: externally-managed-environment\n\n\C3\97 This environment is externally managed..."
-# TODO: but does not help
-#
-# - name: Python - pip - make sure pyenv is in PATH and initialized (env_user, Arch)
-#   become: true
-#   become_user: "{{ env_user }}"
-#   ansible.builtin.shell: |
-#     export "PYENV_ROOT=/home/{{ env_user }}/.pyenv"
-#     command -v pyenv >/dev/null || export "PATH=$PYENV_ROOT/bin:$PATH"
-#     export "PATH=/home/{{ env_user }}/.pyenv/bin:$PATH" && eval "$(pyenv init -)" && eval "$(pyenv virtualenv-init -)"
-#   args:
-#     creates: "/home/{{ env_user }}/.ansible_PythonPip"
-#   when:
-#     - ansible_facts['distribution'] in ["Archlinux"]
-#
-# - name: Python Environment - Source shell config (Arch)
-#   become: true
-#   become_user: "{{ env_user }}"
-#   # ansible.builtin.shell: source "/home/{{ env_user }}/.bashrc"
-#   ansible.builtin.shell:
-#     cmd: |
-#       set -o pipefail
-#       if echo "${SHELL}" | grep -q 'bash'; then
-#         source "/home/{{ env_user }}/.bashrc"
-#       elif echo "${SHELL}" | grep -q 'zsh'; then
-#         source "/home/{{ env_user }}/.zshrc"
-#       fi
-#   ignore_errors: true
-#   register: ignore_errors_register # Stores errors and failures for evaluation
-#   when:
-#     - ansible_facts['distribution'] in ["Archlinux"]
-# ### -----------------------------------------------------------------------------------------------------------------
-#
-# ### -----------------------------------------------------------------------------------------------------------------
-# ### intended to prevent: "error: externally-managed-environment\n\n\C3\97 This environment is externally managed..."
-# TODO: but does not help
-#
-# - name: Python - pip - make sure pyenv is in PATH and initialized (env_user, Debian)
-#   become: true
-#   become_user: "{{ env_user }}"
-#   ansible.builtin.shell: |
-#     export "PATH=/home/{{ env_user }}/.pyenv/bin:$PATH" && eval "$(pyenv init -)" && eval "$(pyenv virtualenv-init -)"
-#   args:
-#     creates: "/home/{{ env_user }}/.ansible_PythonPip"
-#   when:
-#     - ansible_facts['distribution'] in ["Debian"]
-# ### -----------------------------------------------------------------------------------------------------------------
-
 - name: Install packages - workstation - Python - pip (env_user, all)
   become: true
   become_user: "{{ env_user }}"
@@ -75,7 +23,7 @@
 - name: Install packages - workstation - Python - pip - upgrade pip (env_user, all)
   become: true
   become_user: "{{ env_user }}"
-  ansible.builtin.shell: pip install --upgrade pip
+  ansible.builtin.command: pip install --upgrade pip
   args:
     creates: "/home/{{ env_user }}/.ansible_PythonPip"
 
@@ -94,9 +42,7 @@
 #     - jupyter # Jupyter metapackage: notebook jupyterlab ipython ipykernel jupyter-console nbconvert ipywidgets
 #     - Pint # Ulauncher Extension Requirement Calculate Anything
 #     # - python-lsp-server[all] # -> pip # Zed editor Extension 'Python LSP' # Zed editor Extension 'zed-python-refactoring')
-#     # - virtualenv # A tool for creating isolated virtual python environments. # wird schon als dep von virtuelenv-pyenv installiert
 #     #   -> sonst: (symlink missing or pointing to unexpected location)
-#     - virtualenv-pyenv # A virtualenv Python discovery plugin for pyenv–installed interpreters # installiert 'virtualenv' als dependency
 #     - wrapt_timeout_decorator # Ulauncher Extension Requirement Bluetooth
 
 # - name: Python - pipx - install apps - without dependencies (all)
@@ -120,27 +66,15 @@
 - name: Install packages - workstation - Python - pip - shell install libs - setuptools (all)
   become: true
   become_user: "{{ env_user }}"
-  ansible.builtin.shell:
+  ansible.builtin.command:
     cmd: pip install --user setuptools
   args:
     creates: "/home/{{ env_user }}/.ansible_PythonPip"
 
-# Voraussetzung für 'ansible.builtin.pip' Modul: pip, virtualenv, setuptools or packaging
-# - name: Python - pip - install libs via ansible builtin pip - python_pip_requirements.txt (all)
-#   become: true
-#   become_user: "{{ env_user }}"
-#   ansible.builtin.pip:
-#     requirements: "{{ playbook_dir }}/files/python_pip_requirements.txt"
-#     extra_args: --user
-#     virtualenv_command: "pyenv virtualenv"
-#     virtualenv: "{{ lookup('ansible.builtin.env', 'PYENV_ROOT') }}/versions/{{ ansible_python_version }}"
-#   # Debian, Fehler:
-#   # fatal: [localhost]: FAILED! => {"changed": false, "msg": "Unable to find pip in the virtualenv, /versions/3.11.2, under any of these names: pip3, pip. Make sure pip is present in the virtualenv."}
-
 - name: Install packages - workstation - Python - pip - install libs via builtin shell - python_pip_requirements.txt (all)
   become: true
   become_user: "{{ env_user }}"
-  ansible.builtin.shell:
+  ansible.builtin.command:
     cmd: "pip install --user -r {{ playbook_dir }}/files/python_pip_requirements.txt"
   args:
     creates: "/home/{{ env_user }}/.ansible_PythonPip"

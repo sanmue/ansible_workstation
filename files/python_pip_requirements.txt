@@ -40,7 +40,6 @@ pyarrow
 pytest # wg. Abhöngigkeit von pytest-embedded (# via uv tool ...)
 python-lsp-server[all]
 # ruff # Python linter and code formatter # via uv tool ...
-virtualenv-pyenv # A virtualenv Python discovery plugin for pyenv–installed interpreters # installiert 'virtualenv' als dependency
 
 # ### ----------------------
 # ### bash

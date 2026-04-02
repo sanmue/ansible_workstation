@@ -14,7 +14,7 @@
 
 # https://docs.astral.sh/uv/reference/settings/#python-downloads
 # - "manual": Do not automatically download managed Python installations; require explicit installation
-# - since still want to use 'pyenv' for python versions
+# - since still want to use 'mise' for python versions
 - name: All settings misc - uv - config (User, all)
   tags: shellrc
   ansible.builtin.blockinfile:

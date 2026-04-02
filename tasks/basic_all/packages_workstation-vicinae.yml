@@ -78,19 +78,6 @@
       - git # clone extension repo
   when: ansible_facts['distribution'] in ["Archlinux"]
 
-# für Extension 'brotab'
-# - name: Install - packages workstation - vicinae - brotab via pipx (Archlinux)
-#   tags: upvic
-#   become: true
-#   become_user: "{{ env_user }}"
-#   # ansible.builtin.command: pipx install brotab
-#   community.general.pipx:
-#     name: brotab
-#   when: ansible_facts['distribution'] in ["Archlinux"]
-#
-# fatal: [localhost]: FAILED! => {"changed": false, "cmd": "/home/USERID/.pyenv/versions/3.13.9/bin/python3.13 -m pipx list --include-injected --json", 
-# "msg": "/home/USERID/.pyenv/versions/3.13.9/bin/python3.13: No module named pipx",...
-
 - name: Install - packages workstation - vicinae - brotab via pipx (Archlinux)
   tags: upvic
   become: true

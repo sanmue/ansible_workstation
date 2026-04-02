@@ -71,7 +71,7 @@
       - syncthing
       - tealdeer # A fast tldr client in Rust # replaced "tldr"
       - thunderbird
-      - tk # Graphical User Interface Toolkit for Tcl   # z.B. pyenv install <version>: requirement
+      # - tk # Graphical User Interface Toolkit for Tcl
       - tmux
       - trash-cli # Command line trashcan (recycle bin) interface
       - tree

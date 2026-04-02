@@ -298,7 +298,7 @@ if [ "${executePlaybook}" = "y" ]; then
 
     ### --- Ansbile Playbook
     echo -e "\e[0;33m### Info\e[0m"
-    echo -e "\e[0;33m# If an error occurs in context with pip, pyenv, nvm, ... while executing the playbook:\e[0m"
+    echo -e "\e[0;33m# If an error occurs in context with pip, mise, ... while executing the playbook:\e[0m"
     echo -e "\e[0;33m# Close and reopen terminal and start the script or just the playbook again\e[0m"
     # echo -e "\e[0;33m#   - If VS Code app opens you can simply close it again or leave it open until script is finished\e[0m"
     echo -e "\e[0;33m###\e[39m\n"

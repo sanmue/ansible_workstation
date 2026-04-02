@@ -2,9 +2,9 @@
   ansible.builtin.package:
     state: present
     name:
-      # - pyenv # Installation verschoben nach packages_workstation-pythonEnv.yml # Easily switch between multiple versions of Python
       - python
       - python-pip # The PyPA recommended tool for installing Python packages
+      - python-pipx # Install and Run Python Applications in Isolated Environments
       - uv # fast Python package and project manager
   when: ansible_facts['distribution'] in ["Archlinux"]
 
@@ -15,4 +15,5 @@
       # - pipx # moved to 'packages_workstation-pythonEnv.yml' # execute binaries from Python packages in isolated environments
       - python3
       - python3-pip
+      - pipx # execute binaries from Python packages in isolated environments
   when: ansible_facts['distribution'] == "Debian"
