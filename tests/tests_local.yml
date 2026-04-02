@@ -25,3 +25,5 @@
       ansible.builtin.import_tasks: mise.yml
     - name: Test mise - pythonEnv
       ansible.builtin.import_tasks: mise_pythonEnv.yml
+    - name: Test mise - node
+      ansible.builtin.import_tasks: mise_node.yml
