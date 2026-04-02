@@ -84,7 +84,7 @@
       - xdg-utils
       - xterm # (u.a. wg. nnn)
       - yamllint
-      # - yaml-language-server # anscheinend nicht mehr in debian repos # via npm (siehe packages_workstation-nvmNodejs.yml)
+      # - yaml-language-server # anscheinend nicht mehr in debian repos # via npm
       - yq # Command-line YAML, XML, TOML processor - jq wrapper for YAML/XML/TOML documents
       - zoxide # A smarter cd command for your terminal (u.a. wg. nnn)
       - zsh

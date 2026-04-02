@@ -10,7 +10,6 @@
     - name: Pre Tasks - Gather Facts and set Variables
       ansible.builtin.import_tasks: tasks/basic_all/config_workstation-ansibleFacts.yml
 
-# become: true # auskommentiert, wg Fehler bei alias-aufruf "upnvm":
 # [ERROR]: Task failed: Duplicate become password prompt encountered waiting for become success.
 # bei jedem der subtasks ist become:true gesetzt
 - name: Add repos + update + config package manager
@@ -215,6 +214,9 @@
     #   ansible.builtin.import_tasks: tasks/basic_all/config_workstation-mise.yml
     - name: Mise - python
       ansible.builtin.import_tasks: tasks/basic_all/config_workstation-mise-python.yml
+    # TODO: mise - node
+    # - name: Mise - node
+    #   ansible.builtin.import_tasks: tasks/basic_all/config_workstation-mise-node.yml
     # ----------------------------------------------------------
     #
     # ### Python:
@@ -238,7 +240,7 @@
     #
     # ----------------------------------------------------------
     # ### Vicinae - desktop launcher:
-    # - 'npm' required to build and install extensions (s.o.: name: NVM Node.js packages)
+    # - 'npm' required to build and install extensions
     - name: Install Vicinae desktop launcher - including requirements
       ansible.builtin.import_tasks: tasks/basic_all/packages_workstation-vicinae.yml
     - name: Service Vicinae (user scope)
