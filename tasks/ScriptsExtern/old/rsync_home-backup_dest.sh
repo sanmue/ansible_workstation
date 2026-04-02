@@ -21,7 +21,7 @@ echo "Quellpfad (Home) ist: ${source}"
 
 #sourceInclude="--include={'.ssh/***','.bashrc','.zshrc'}"
 #sourceExclude="--exclude={'snap','Pictures/Screenshots/*','Downloads','.*','./*'}"
-#sourceConfigInclude="--include={'starship.toml','autokey/***','ulauncher/***'}"
+#sourceConfigInclude="--include={'starship.toml','autokey/***'}"
 #sourceConfigExclude="--exclude='*'"
 
 if [ $# -gt 0 ]; then   # wenn (mehr als 0) Übergabeparameter vorhanden
@@ -58,7 +58,7 @@ arrConfPath=('.bashrc' '.ssh' '.zshrc' \
 '.config/autokey' '.config/autostart' '.config/borg' '.config/BraveSoftware/Brave-Browser/Default/Bookmarks' \
 '.config/chromium/Default/Bookmarks' '.config/Cryptomator' '.config/evolution' '.config/gtk-3.0/bookmarks' \
 '.config/joplin-desktop' '.config/keepassxc' '.config/rclone' '.config/remmina' \
-'.config/starship.toml' '.config/syncthing' '.config/ulauncher' '.config/user-dirs.dirs' \
+'.config/starship.toml' '.config/syncthing' '.config/user-dirs.dirs' \
 '.local/bin/rclone_pCloud-Mnt.sh' '.local/share/evolution' '.local/share/keyrings' \
 '.local/share/remmina' '.local/share/Vorta' \
 '.var/app/de.haeckerfelix.Shortwave/data' '.var/app/net.ankiweb.Anki/data')

@@ -593,12 +593,6 @@ install-aur() {
     echo -e "\nInstall 'visual-studio-code-bin' from AUR..." # instead of flatpak
     paru -S --needed --skipreview visual-studio-code-bin
 
-    # echo -e "\nInstall ulauncher from AUR..." # replaced by "Vicinae"
-    # paru -S --needed --skipreview ulauncher
-    # echo -e "\nStart + enable ulauncher.service for '${userid}'..."
-    # systemctl --user enable --now ulauncher.service # su -u "${userid}" -c "systemctl --user enable --now ulauncher.service"
-    # Extensions: Install in "config_all-settings-ulauncher-extensions.yml"
-
     # echo -e "\nInstall Citrix Workspace App (icaclient) from AUR..."
     # paru -S --needed --skipreview icaclient && touch "${HOME}/.ansible_installScript_AUR-icaclientInstalled"
     # # sudo pacman -S --needed --noconfirm icaclient
@@ -807,12 +801,5 @@ install-initialSw-Debian() {
 }
 
 add-repo-Debian() {
-    # ### Ulauncher
-    # - https://ulauncher.io/#Download
-    sudo apt install -y gnupg
-    gpg --keyserver keyserver.ubuntu.com --recv 0xfaf1020699503176
-    gpg --export 0xfaf1020699503176 | sudo tee /usr/share/keyrings/ulauncher-archive-keyring.gpg >/dev/null
-    echo "deb [signed-by=/usr/share/keyrings/ulauncher-archive-keyring.gpg] \
-        http://ppa.launchpad.net/agornostal/ulauncher/ubuntu jammy main" | sudo tee /etc/apt/sources.list.d/ulauncher-jammy.list
-    # sudo apt update && sudo apt install -y ulauncher # installation in "packages_workstation-Gnome.yml"
+    echo "Currently no repos for debian will be added"
 }

@@ -37,24 +37,10 @@
 #   loop:
 #     # - cst-lsp # -> pip # Zed editor Extension 'zed-python-refactoring'
 #     # - ansible # https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html # zurück umgestellt auf inst via paketmanager
-#     - faker # Ulauncher Extension Requirement faker
 #     - jedi-language-server # autocompletion for python (Anmerkung: 'jedi' installed via pip)
 #     - jupyter # Jupyter metapackage: notebook jupyterlab ipython ipykernel jupyter-console nbconvert ipywidgets
-#     - Pint # Ulauncher Extension Requirement Calculate Anything
 #     # - python-lsp-server[all] # -> pip # Zed editor Extension 'Python LSP' # Zed editor Extension 'zed-python-refactoring')
 #     #   -> sonst: (symlink missing or pointing to unexpected location)
-#     - wrapt_timeout_decorator # Ulauncher Extension Requirement Bluetooth
-
-# - name: Python - pipx - install apps - without dependencies (all)
-#   become: true
-#   become_user: "{{ env_user }}"
-#   community.general.pipx:
-#     state: present
-#     name: "{{ item }}"
-#     install_deps: false
-#   loop:
-#     - deepl # Ulauncher Extension Requirement DeepL Translator # einzige dependency 'normalizer' wird (auch) bei 'jupyter'  (s.o.) installiert;
-#     # (symlink missing or pointing to unexpected location) daher bei 'jupyter' bei Ausführung pipx list
 
 # # https://pipx.pypa.io/stable/installation/#on-linux
 # - name: Python - pipx - config - ensurepath (all)

@@ -251,7 +251,7 @@ case "${os}" in
         if [ -e "${HOME}/.ansible_ppaAdded" ]; then
             echo "Repos (ppa) wurden bereits hinzugefügt, Schritt wird übersprungen"
         else
-            add-repo-Debian # currently only for ulauncher # TODO: check move to config_workstations-addrepos
+            add-repo-Debian
             touch "${HOME}/.ansible_ppaAdded"
         fi
         ;;
