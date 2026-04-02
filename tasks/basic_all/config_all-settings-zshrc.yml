@@ -457,6 +457,19 @@
       # ------------------------------------------
       export PATH=~/.local/bin:$PATH
 
+# ### - activate mise for zsh
+- name: All settings misc - Bashrc - Insert/Update additional paths and config - mise (User,all)
+  tags: shellrc
+  ansible.builtin.blockinfile:
+    path: "{{ ansible_facts['env']['HOME'] }}/.zshrc"
+    backup: false
+    marker: "### {mark} 'mise' ANSIBLE MANAGED BLOCK ###"
+    block: |
+      # ----
+      # mise
+      # ----
+      eval "$(mise activate zsh)"
+
 - name: All settings misc - Zshrc - Insert/Update additional paths and config - uv (User, all)
   tags: shellrc
   ansible.builtin.blockinfile:

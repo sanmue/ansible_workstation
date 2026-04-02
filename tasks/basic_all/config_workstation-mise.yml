@@ -1,0 +1,16 @@
+# ### ############################################################
+# ### Autocompletion
+# ### - <https://mise.jdx.dev/installing-mise.html#autocompletion>
+# TODO: for zsh maybe plugin "zsh-autocomplete" is sufficient
+# ### ############################################################
+# - `mise use -g usage`
+# - Bash:
+#   - `sudo pacman -S --needed bash-completion`
+#   - `mkdir -p ~/.local/share/bash-completion/completions/`
+#   - `mise completion bash --include-bash-completion-lib > ~/.local/share/bash-completion/completions/mise`
+# - Zsh:
+#   - `mkdir -p ~/.local/share/zsh/site-functions`
+#   - `mise completion zsh > ~/.local/share/zsh/site-functions/_mise`
+#   - `~/.zshrc`: `fpath=(~/.local/share/zsh/site-functions $fpath)`
+# - Check / Troubleshooting:
+#   - ´mise doctor´

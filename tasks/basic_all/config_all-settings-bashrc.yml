@@ -310,6 +310,19 @@
       # ------------------------------------------
       export PATH=~/.local/bin:$PATH
 
+# ### - activate mise for bash
+- name: All settings misc - Bashrc - Insert/Update additional paths and config - mise (User,all)
+  tags: shellrc
+  ansible.builtin.blockinfile:
+    path: "{{ ansible_facts['env']['HOME'] }}/.bashrc"
+    backup: false
+    marker: "### {mark} 'mise' ANSIBLE MANAGED BLOCK ###"
+    block: |
+      # ----
+      # mise
+      # ----
+      eval "$(mise activate bash)"
+
 - name: All settings misc - Bashrc - Insert/Update additional paths and config - uv (User, all)
   tags: shellrc
   ansible.builtin.blockinfile:

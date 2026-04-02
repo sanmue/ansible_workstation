@@ -1,0 +1,81 @@
+# ### mise - The front-end to your dev env
+# - <https://mise.jdx.dev/>
+
+# activate mise for bash and zsh: see config_all-settings-bahsrc.yml and ... zshrc.yml
+
+# wegen Problemen Installation jeweils aktuellste Python Version:
+# Installation via script statt über Paketmanager (s.u.)
+#
+# - name: Install packages - workstation - mise (Archlinux)
+#   ansible.builtin.package:
+#     state: present
+#     name:
+#       - mise
+#   when: ansible_facts['distribution'] in ["Archlinux"]
+
+- name: Install packages - workstation - mise - required packages for inst via script (all)
+  ansible.builtin.package:
+    state: present
+    name:
+      - curl
+      # - wget # curl ausreichend
+      - coreutils # wg. shasum bzw. sha256sum
+      - tar
+      - zstd # nicht zwingend erforderlich
+      - bash
+      - zsh
+
+- name: Install packages - workstation - mise - required packages for inst via script (Arch)
+  ansible.builtin.package:
+    state: present
+    name:
+      - gnupg
+      # - libarchive # wg. bsdtar # ("tar" ausreichend, s.o.)
+  when: ansible_facts['distribution'] in ["Archlinux"]
+
+- name: Install packages - workstation - mise - required packages for inst via script (Debian)
+  ansible.builtin.package:
+    state: present
+    name:
+      - gpg
+      # - libarchive-tools # wg. bsdtar # ("tar" ausreichend, s.o.)
+  when: ansible_facts['distribution'] in ["Debian"]
+
+# - name: Install packages - workstation - mise - import gpg key if not already exists
+#   ansible.builtin.shell: >
+#     gpg --list-keys 24853EC9F655CE80B48E6C3A8B81C9D17413A06D >/dev/null 2>&1 ||
+#     gpg --keyserver hkps://keys.openpgp.org --recv-keys 24853EC9F655CE80B48E6C3A8B81C9D17413A06D
+
+- name: Install packages - workstation - mise - check if GPG key for mise already exists (all)
+  ansible.builtin.command: >
+    gpg --list-keys 24853EC9F655CE80B48E6C3A8B81C9D17413A06D
+  register: gpg_key_check
+  ignore_errors: true
+  changed_when: false
+
+- name: Install packages - workstation - mise - Import GPG key for mise if not already exists (all)
+  ansible.builtin.command: >
+    gpg --keyserver hkps://keys.openpgp.org --recv-keys 24853EC9F655CE80B48E6C3A8B81C9D17413A06D
+  when: gpg_key_check.rc != 0
+  register: import_result
+  changed_when: import_result.rc == 0
+
+- name: Install packages - workstation - mise - decrypt signature and verify and create install script file (all)
+  ansible.builtin.shell: >
+    set -o pipefail && curl https://mise.jdx.dev/install.sh.sig | gpg --decrypt > "{{ ansible_facts['env']['HOME'] }}/mise-install.sh"
+  args:
+    executable: /bin/bash # bash erzwingen: sicherstellen, dass pipefail unterstützt wird
+    creates: "{{ ansible_facts['env']['HOME'] }}/mise-install.sh"
+
+- name: Install packages - workstation - mise - make install script executable (all)
+  ansible.builtin.file:
+    path: "{{ ansible_facts['env']['HOME'] }}/mise-install.sh"
+    mode: "0755"
+
+- name: Install packages - workstation - mise - execute install script (all)
+  ansible.builtin.shell: >
+    sh "{{ ansible_facts['env']['HOME'] }}/mise-install.sh"
+  environment:
+    MISE_QUIET: "1"
+  args:
+    creates: "{{ ansible_facts['env']['HOME'] }}/.local/bin/mise"
