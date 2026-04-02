@@ -40,4 +40,3 @@
 # daher wird z.B. angezeigt:
 # "Loaded: loaded (/etc/xdg/systemd/user/clamav_scanHome.timer; enabled; preset: enabled)"
 # ----------------------------------------------------------------------------------------------------
-

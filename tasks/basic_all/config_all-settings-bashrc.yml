@@ -223,8 +223,6 @@
       # -------------------------------------------------------
       # - 'nnnplugs': create / update 'nnn' plugins + xterm conf for nnn-peview-tui
       alias upnnnplugs='${HOME}/.local/bin/ansible_update-by-tag.sh nnnplugs'
-      # - 'nvm' (node version manager): create / update + install current node version
-      alias upnvm='${HOME}/.local/bin/ansible_update-by-tag.sh upnvm'
       # - 'shellrc': create / update shell conf (e.g. .bashrc, .zshrc)
       alias upshellrc='${HOME}/.local/bin/ansible_update-by-tag.sh shellrc'
       # - 'vicinae' (desktop launcher): extensions update + conf
@@ -266,23 +264,6 @@
       fi
   when:
     - ansible_facts['distribution'] in ["Archlinux"]
-
-- name: All settings misc - Bashrc - Insert/Update additional paths and config - nvm (User, all)
-  tags: shellrc
-  ansible.builtin.blockinfile:
-    path: "/home/{{ env_user }}/.bashrc"
-    backup: false
-    marker: "### {mark} 'nvm' - ANSIBLE MANAGED BLOCK ###"
-    block: |
-      # --------------------------
-      # nvm (Node Version Manager)
-      # --------------------------
-      # https://github.com/nvm-sh/nvm
-      # https://linuxize.com/post/how-to-install-node-js-on-ubuntu-22-04/
-      #
-      export NVM_DIR="$HOME/.nvm"
-      [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-      [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 - name: All settings misc - Bashrc - Insert/Update additional paths and config - vim (User, all)
   tags: shellrc

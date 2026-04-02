@@ -216,11 +216,7 @@
     - name: Mise - python
       ansible.builtin.import_tasks: tasks/basic_all/config_workstation-mise-python.yml
     # ----------------------------------------------------------
-    # ### NVM / Node.js:
-    - name: NVM Node.js packages
-      ansible.builtin.import_tasks: tasks/basic_all/packages_workstation-nvmNodejs.yml
     #
-    # ----------------------------------------------------------
     # ### Python:
     - name: Python Packages
       ansible.builtin.import_tasks: tasks/basic_all/packages_workstation-python.yml

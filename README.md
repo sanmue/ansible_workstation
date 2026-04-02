@@ -41,7 +41,6 @@ Tags Overview:
 
 - 'always' (Special tag / reserved name): Gather Facts and Variables
 - 'upnnnplugs': create / update 'nnn' plugins + xterm conf for nnn-preview-tui
-- 'upnvm': create / update 'nvm' + 'node'
 - 'upshellrc': create / update shell conf (~/.bashrc, ~/.zshrc) + 'Starship' cross shell prompt + direnv etc
 - 'upvic': install / update vicinae desktop launcher + conf + extensions
 - 'upvimrc': create / update vim conf + plugins
