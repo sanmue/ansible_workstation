@@ -50,9 +50,9 @@ Just write "upshellrc" in terminal to start the tagged tasks of the Ansible play
 
 ## Known Issues
 
-### Error Message in ansible playbook regarding Python/pip
+### Error Message in ansible playbook regarding python/pip, mise, npm
 
-- when ansible playbook stops because of an error referring to python/pip, ...:
+- when ansible playbook stops because of an error referring to python/pip, mise, npm:
   - close + reopen terminal and start install script or just the ansible playbook again
 
 ## Further notes for myself

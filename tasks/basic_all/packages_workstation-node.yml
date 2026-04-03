@@ -1,6 +1,9 @@
 - name: Node - Install packages via npm - benutzerweit (env_user, all)
   community.general.npm:
     name: yaml-language-server
-    global: true
-    # path: "/home/{{ env_user }}"
+    # global: true # requires root privileges
+    #
+    global: false
+    path: "/home/{{ env_user }}"
+    #
     state: present

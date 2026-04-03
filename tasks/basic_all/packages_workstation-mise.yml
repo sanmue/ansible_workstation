@@ -70,24 +70,29 @@
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: >
-    set -o pipefail && curl https://mise.jdx.dev/install.sh.sig | gpg --decrypt > "{{ ansible_facts['env']['HOME'] }}/mise-install.sh"
+    set -o pipefail && curl https://mise.jdx.dev/install.sh.sig | gpg --decrypt > "/home/{{ env_user }}/mise-install.sh"
+    # set -o pipefail && curl https://mise.jdx.dev/install.sh.sig | gpg --decrypt > "{{ ansible_facts['env']['HOME'] }}/mise-install.sh"
   args:
     executable: /bin/bash # bash erzwingen: sicherstellen, dass pipefail unterstützt wird
-    creates: "{{ ansible_facts['env']['HOME'] }}/mise-install.sh"
+    # creates: "{{ ansible_facts['env']['HOME'] }}/mise-install.sh"
+    creates: "/home/{{ env_user }}/mise-install.sh"
 
 - name: Install packages - workstation - mise - make install script executable (all)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.file:
-    path: "{{ ansible_facts['env']['HOME'] }}/mise-install.sh"
+    path: "/home/{{ env_user }}/mise-install.sh"
+    # path: "{{ ansible_facts['env']['HOME'] }}/mise-install.sh"
     mode: "0755"
 
 - name: Install packages - workstation - mise - execute install script (all)
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.shell: >
-    sh "{{ ansible_facts['env']['HOME'] }}/mise-install.sh"
+    "/home/{{ env_user }}/mise-install.sh"
+    # sh "{{ ansible_facts['env']['HOME'] }}/mise-install.sh"
   environment:
     MISE_QUIET: "1"
   args:
-    creates: "{{ ansible_facts['env']['HOME'] }}/.local/bin/mise"
+    creates: "/home/{{ env_user }}/.local/bin/mise"
+    # creates: "{{ ansible_facts['env']['HOME'] }}/.local/bin/mise"
