@@ -491,22 +491,6 @@
       # -------------------------------
       eval "$(_SSHC_COMPLETE=zsh_source sshc)"
 
-- name: All settings misc - Zshrc - Insert/Update additional paths and conig - tilix - vte config (User, all)
-  tags: shellrc
-  ansible.builtin.blockinfile:
-    path: "/home/{{ env_user }}/.zshrc"
-    backup: false
-    marker: "### {mark} 'tilix' ANSIBLE MANAGED BLOCK ###"
-    block: |
-      # ------------------
-      # tilix - vte config
-      # ------------------
-      # * https://gnunn1.github.io/tilix-web/manual/vteconfig/
-
-      if ([ $TILIX_ID ] || [ $VTE_VERSION ]) && [[ -e /etc/profile.d/vte.sh ]]; then
-        source /etc/profile.d/vte.sh
-      fi
-
 - name: All settings misc - Zshrc - Insert/Update additional paths and config - nnn (User, all)
   tags: shellrc
   ansible.builtin.blockinfile:
