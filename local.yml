@@ -145,7 +145,7 @@
     - name: Config Services all - ClamAV
       ansible.builtin.import_tasks: tasks/basic_all/config_all-services-ClamAV.yml
     - name: Config Services all - Printing (CUPS)
-      ansible.builtin.import_tasks: tasks/basic_all/config_all-services-pintingCups.yml
+      ansible.builtin.import_tasks: tasks/basic_all/config_all-services-printingCups.yml
     - name: Config Services all - SSH
       ansible.builtin.import_tasks: tasks/basic_all/config_all-services-ssh.yml
     - name: Config Services all - Starship shell prompt
@@ -236,7 +236,6 @@
     #
     # ----------------------------------------------------------
     # ### Hugo - static site generator:
-    # - docutils via pip requrirements.txt (see "Pip and Pipx install" above)
     - name: Hugo packages
       ansible.builtin.import_tasks: tasks/basic_all/packages_workstation-hugo.yml
     #
