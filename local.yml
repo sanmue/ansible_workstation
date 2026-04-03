@@ -207,24 +207,31 @@
     #
     # ----------------------------------------------------------
     # ### mise:
-    #
     - name: Mise
       ansible.builtin.import_tasks: tasks/basic_all/packages_workstation-mise.yml
     # - name: Mise config
     #   ansible.builtin.import_tasks: tasks/basic_all/config_workstation-mise.yml
+    - name: Mise - node
+      become: false  # no need for "become:true" & "become: {{ env_user }}" in each sub-task
+      ansible.builtin.import_tasks: tasks/basic_all/config_workstation-mise-node.yml
     - name: Mise - python
+      become: false
       ansible.builtin.import_tasks: tasks/basic_all/config_workstation-mise-python.yml
-    # TODO: mise - node
-    # - name: Mise - node
-    #   ansible.builtin.import_tasks: tasks/basic_all/config_workstation-mise-node.yml
-    # ----------------------------------------------------------
     #
+    # ----------------------------------------------------------
+    # ### Node / mpm:
+    - name: Node / npm
+      become: false
+      ansible.builtin.import_tasks: tasks/basic_all/packages_workstation-node.yml
+    #
+    # ----------------------------------------------------------
     # ### Python:
     - name: Python Packages
       ansible.builtin.import_tasks: tasks/basic_all/packages_workstation-python.yml
     - name: Config Settings all - python - uv
       ansible.builtin.import_tasks: tasks/basic_all/config_all-settings-python-uv.yml
     - name: Pip and Pipx install
+      become: false
       ansible.builtin.import_tasks: tasks/basic_all/packages_workstation-pythonPip.yml
     #
     # ----------------------------------------------------------

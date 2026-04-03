@@ -42,11 +42,15 @@
   when: ansible_facts['distribution'] in ["Debian"]
 
 # - name: Install packages - workstation - mise - import gpg key if not already exists
+#   become: true
+#   become_user: "{{ env_user }}"
 #   ansible.builtin.shell: >
 #     gpg --list-keys 24853EC9F655CE80B48E6C3A8B81C9D17413A06D >/dev/null 2>&1 ||
 #     gpg --keyserver hkps://keys.openpgp.org --recv-keys 24853EC9F655CE80B48E6C3A8B81C9D17413A06D
 
 - name: Install packages - workstation - mise - check if GPG key for mise already exists (all)
+  become: true
+  become_user: "{{ env_user }}"
   ansible.builtin.command: >
     gpg --list-keys 24853EC9F655CE80B48E6C3A8B81C9D17413A06D
   register: gpg_key_check
@@ -54,6 +58,8 @@
   changed_when: false
 
 - name: Install packages - workstation - mise - Import GPG key for mise if not already exists (all)
+  become: true
+  become_user: "{{ env_user }}"
   ansible.builtin.command: >
     gpg --keyserver hkps://keys.openpgp.org --recv-keys 24853EC9F655CE80B48E6C3A8B81C9D17413A06D
   when: gpg_key_check.rc != 0
@@ -61,6 +67,8 @@
   changed_when: import_result.rc == 0
 
 - name: Install packages - workstation - mise - decrypt signature and verify and create install script file (all)
+  become: true
+  become_user: "{{ env_user }}"
   ansible.builtin.shell: >
     set -o pipefail && curl https://mise.jdx.dev/install.sh.sig | gpg --decrypt > "{{ ansible_facts['env']['HOME'] }}/mise-install.sh"
   args:
@@ -68,11 +76,15 @@
     creates: "{{ ansible_facts['env']['HOME'] }}/mise-install.sh"
 
 - name: Install packages - workstation - mise - make install script executable (all)
+  become: true
+  become_user: "{{ env_user }}"
   ansible.builtin.file:
     path: "{{ ansible_facts['env']['HOME'] }}/mise-install.sh"
     mode: "0755"
 
 - name: Install packages - workstation - mise - execute install script (all)
+  become: true
+  become_user: "{{ env_user }}"
   ansible.builtin.shell: >
     sh "{{ ansible_facts['env']['HOME'] }}/mise-install.sh"
   environment:

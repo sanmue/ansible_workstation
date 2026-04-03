@@ -1,0 +1,12 @@
+- name: Config workstation - mise - node (env_user, all)
+  ansible.builtin.shell: >
+    eval "$(mise activate zsh)" && mise use --global node@latest
+  args:
+    executable: /bin/zsh
+    # creates: "{{ ansible_facts['env']['HOME'] }}/.local/share/mise/installs/node/{{ node_version.stdout }}"
+  register: mise_install_result
+  changed_when: mise_install_result.rc == 0
+  failed_when:
+    - mise_install_result.rc != 0
+    - "'already installed' not in mise_install_result.stderr"
+    - "'definition not found' not in mise_install_result.stderr"

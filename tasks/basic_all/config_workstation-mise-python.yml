@@ -1,12 +1,10 @@
 - name: Config workstation - mise - Get and register Python version (all)
-  # become: true
-  # become_user: "{{ env_user }}"
   ansible.builtin.shell: |
     set -o pipefail
     {{ python_cmd }} --version 2>&1 | cut -d ' ' -f2
   register: python_version
   args:
-    executable: /bin/bash # Erzwingt die Verwendung von Bash (Sicherstellung einer Shell mit Unterstütztung von pipefail)
+    executable: /bin/bash # Erzwingt Verwendung von Bash (Sicherstellung einer Shell mit Unterstütztung von pipefail)
   vars:
     python_cmd: "{% if ansible_facts['distribution'] == 'Archlinux' %}python{% else %}python3{% endif %}"
   # ignore_errors: true
@@ -18,15 +16,11 @@
   changed_when: false # Task fragt nur Informationen ab -> nicht als "changed" markieren
 
 - name: Config workstation - mise - msg python_version (env_user, all)
-  # become: true
-  # become_user: "{{ env_user }}"
   ansible.builtin.debug:
     var: python_version
     # var: python_version.stdout
 
 - name: Config workstation - mise - mise use python (env_user, all)
-  # become: true
-  # become_user: "{{ env_user }}"
   ansible.builtin.shell: >
     eval "$(mise activate zsh)" && mise use --global "python@{{ python_version.stdout }}"
   args:
@@ -34,7 +28,7 @@
     creates: "{{ ansible_facts['env']['HOME'] }}/.local/share/mise/installs/python/{{ python_version.stdout }}"
   register: mise_install_result
   changed_when: mise_install_result.rc == 0 # Markiert den Task nur als "changed", wenn der Befehl erfolgreich war (Return Code 0)
-  failed_when: # Definieren, wann der Task als fehlgeschlagen gilt
+  failed_when: # Definieren, wann Task als fehlgeschlagen gilt
     - mise_install_result.rc != 0
     - "'already installed' not in mise_install_result.stderr"
     - "'definition not found' not in mise_install_result.stderr"

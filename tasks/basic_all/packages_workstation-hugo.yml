@@ -14,7 +14,8 @@
       - dart-sass  # required to transpile Sass to CSS
   when: ansible_facts['distribution'] in ["Archlinux"]
 
-# - installed via python_pip_requirements.txt
+# - requirement "docutils": installed via python_pip_requirements.txt for env_user
+#
 # - name: Install - packages workstation - hugo - docutils via pip (Archlinux, user)
 #   become: true
 #   become_user: "{{ env_user }}"
