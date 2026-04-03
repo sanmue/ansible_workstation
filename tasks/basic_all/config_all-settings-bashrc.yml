@@ -295,7 +295,7 @@
 - name: All settings misc - Bashrc - Insert/Update additional paths and config - mise (User,all)
   tags: shellrc
   ansible.builtin.blockinfile:
-    path: "{{ ansible_facts['env']['HOME'] }}/.bashrc"
+    path: "/home/{{ env_user }}/.zshrc"
     backup: false
     marker: "### {mark} 'mise' ANSIBLE MANAGED BLOCK ###"
     block: |
