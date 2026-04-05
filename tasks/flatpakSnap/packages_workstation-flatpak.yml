@@ -9,19 +9,27 @@
     # - "com.brave.Browser" # ArchPacStuff
     - "com.github.finefindus.eyedropper" # Pick and format colors from screen
     - "org.kde.kasts"
+    - "de.leopoldluley.Clapgrep" # One app to search through all your files (incl. PDF, Office, ...)
     - "org.cryptomator.Cryptomator"
+    - "com.ranfdev.DistroShelf" # graphical interface for managing Distrobox containers on Linux
     - "com.jgraph.drawio.desktop" # diagramming tool
+    - "me.iepure.devtoolbox"
     - "com.microsoft.Edge"
-    # - "im.riot.Riot" # "Element": Matrix Client -> siehe Ferdium
+    - "io.github.getnf.embellish"  # managing Nerd Fonts
     - "org.ferdium.Ferdium" # Messenger for the desktop - based on Franz
     - "com.github.tchx84.Flatseal"
-    # - "com.meetfranz.Franz" # Messenger for the desktop -> siehe Ferdium
+    - "nl.hjdskes.gcolor3" # Color Picker
     - "it.mijorus.gearlever" # Manage AppImages
+    - "io.github.flattool.Ignition" # add, remove, and modify startup entries
+    - "io.gitlab.adhami3310.Impression" # create bootable disk drives
     - "de.willuhn.Jameica"
     - "net.cozic.joplin_desktop"
-    - "nl.hjdskes.gcolor3" # Color Picker
+    # - "org.gnome.Logs" # Logs shows events from the systemd journal, and sorts them into categories
     - "de.mediathekview.MediathekView"
     - "io.missioncenter.MissionCenter"
+    - "com.github.PintaProject.Pinta" # image editing, drawing and painting application with a simple yet powerful interface
+    # - "io.podman_desktop.PodmanDesktop"
+    - "io.github.vikdevelop.SaveDesktop"
     - "de.haeckerfelix.Shortwave"
     # - "net.mkiol.SpeechNote"
     - "io.github.mfat.sshpilot"
@@ -29,7 +37,7 @@
     - "org.tenacityaudio.Tenacity" # Audacity fork / replacement
     # - "com.visualstudio.code" # 'visual-studio-code-bin' from chaotic-aur, after playbook
     - "com.borgbase.Vorta"
-    # - "com.vscodium.codium"
+    - "io.github.flattool.Warehouse" # control complex Flatpak options
 
 - name: Install flatpak packages (Extension Manager) for Gnome (Gnome, all)
   community.general.flatpak:
