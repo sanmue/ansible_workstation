@@ -2,7 +2,7 @@
 # ### NOT Desktop Environmet specific
 # ###################################
 
-- name: Install basic packages for workstations (all)
+- name: Install basic packages for workstations (Arch)
   ansible.builtin.package:
     state: present
     name:
@@ -110,6 +110,8 @@
       # ---------
       # firmware:
       - fwupd
+  when:
+    - ansible_facts['distribution'] == "Archlinux"
 
 - name: Install basic packages (Archlinux)
   ansible.builtin.package:
@@ -238,98 +240,6 @@
       - sof-firmware
   when: ansible_facts['distribution'] in ["Archlinux"]
 
-- name: Install basic packages (Debian)
-  ansible.builtin.package:
-    state: present
-    name:
-      - borgbackup # Deduplicating backup program with compression and authenticated encryption
-      # - btrfs-compsize
-      - clamav-daemon
-      # - cockpit-networkmanager # Cockpit user interface for networking
-      - eslint # An AST-based pattern checker for JavaScript (für VS Code / Code - OSS Extension)
-      # - evolution-plugin-bogofilter
-      # - evolution-plugin-pstimport
-      # - evolution-plugin-spamassassin
-      # - evolution-plugins
-      - exfat-fuse
-      - fd-find # Simple, fast and user-friendly alternative to find
-      - firefox-esr # bereits installiert
-      - gh # GitHub CLI, GitHub\u2019s official command line tool
-      - gitk
-      - gpg
-      - gufw # gui for ufw
-      - hunspell-de-de
-      - hunspell-en-us
-      - kitty # gpu beschleunigtes terminal -> replaced by Ghostty (Arch)
-      - libidn11-dev # benötigt für Citrix Workspace app (ica client)
-      - libnotify-bin # sollte schon installiert sein
-      - neofetch
-      - openssh-client # bereits installiert (install script: via metapackage ssh)
-      - packagekit # sollte bereits installiert sein # notwendig u.a. für cockpit
-      - poppler-utils # PDF utilities (based on Poppler) (u.a. wg. nnn)
-      - printer-driver-cups-pdf
-      - sqlite3
-      - ssh # bereits installiert (install script)
-      # - timeshift
-      # - fonts-firacode
-      # - fonts-jetbrains-mono
-      - ueberzug # command line utility which draws images on terminals (in combi with X11?) (u.a. wg. nnn)
-      - ufw # Uncomplicated and easy to use CLI tool for managing a netfilter firewall
-      - units # converts between different systems of units
-      - vorta # Desktop Client for Borg Backup
-      - vim-python-jedi # autocompletion tool for Python - VIM addon files
-      # - wmctrl # autokey dependancy # sollte bereits installiert sein
-      # Command line tool to interact with an EWMH/NetWM compatible X Window Manager
-      - wireguard
-      # ----------
-      # Multimedia
-      # - entspechende libs sollten bereits installiert sein (wenn im Installer ausgewählt wurde)
-      # ----------
-      # gstreamer and plugins
-      # - gstreamer1.0-x
-      # - gstreamer1.0-plugins-bad
-      # - gstreamer1.0-plugins-base
-      # - gstreamer1.0-plugins-good
-      # - gstreamer1.0-plugins-ugly
-      # ------------
-      # Audio Codecs
-      # - libfaad2
-      # - libmad0
-      # - libmpcdec6
-      # - libopus0
-      # - libvorbis0a
-      # - libvorbisenc2
-      # - libvorbisfile3
-      # - libopencore-amrnb0
-      # - libopencore-amrwb0
-      # - libvo-amrwbenc0
-      # ------------
-      # Image Codecs
-      # - libopenjp2-7
-      # - libwebp7
-      # - libavif16
-      # - libjxl0.11
-      # - libjxl0.7
-      # ------------
-      # Video Codecs
-      # - libaom3
-      # - libde265-0
-      # - libmpeg2-4
-      # - libxvidcore4
-      # - libvpx7
-      # - libvpx9
-      # - libtheora0
-      # - libtheoradec1
-      # - libtheoraenc1
-      # zsh-plugins: siehe "packages_workstation-localPackageInstall.yml"
-      # - zsh-autosuggestions           # über git: https://github.com/zsh-users/zsh-autosuggestions
-      # - zsh-syntax-highlighting       # über git: https://github.com/zsh-users/zsh-syntax-highlighting
-      # - zsh-history-substring-search  # über git: https://github.com/zsh-users/zsh-history-substring-search
-      #
-      # firmware:
-      - firmware-linux # firmware-linux
-  when: ansible_facts['distribution'] == "Debian"
-
 - name: Install basic packages - xclip (all + x11 display server)
   ansible.builtin.package:
     state: present
@@ -337,26 +247,4 @@
       - xclip # Command line interface to the X11 clipboard # Voraussetzung für snap-package "espanso"
   when:
     - env_displayserver == "x11"
-
-# - Steam ppa wurde hinzugefügt in config_workstation-addrepos.yml
-# - https://linuxcapable.com/how-to-install-steam-on-debian-linux/
-# - https://wiki.debian.org/Steam
-# - name: Install basic packages - Steam (Debian)
-#   ansible.builtin.package:
-#     state: present
-#     name:
-#       # Vorbereitung (sollten schon vorhanden sein):
-#       - software-properties-common
-#       - apt-transport-https
-#       - dirmngr
-#       - ca-certificates
-#       - curl
-#       # für Steam selbst:
-#       - steam-libs
-#       - steam-libs-amd64
-#       - steam-launcher
-#       - mesa-vulkan-drivers
-#       - libglx-mesa0
-#       - libgl1-mesa-dri
-#   when:
-#     - ansible_facts['distribution'] == "Debian"
+    - ansible_facts['distribution'] in ["Archlinux"]
