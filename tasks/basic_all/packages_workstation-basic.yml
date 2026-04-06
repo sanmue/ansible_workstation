@@ -120,6 +120,7 @@
       - archlinux-keyring
       - base-devel # insbes. wg. AUR Paketen   # bereits installiert (bootstrap)
       - bash-language-server # benötigt von Zed editor Extension (Bash for Zed)
+      - btrfs-assistant
       - borg # Deduplicating backup program with compression and authenticated encryption # GUI: vorta -> via yay in bootstrap.sh
       - chromium
       - cronie # z.B. für clamtk + timeshift # Daemon that runs specified programs at scheduled times and related tools

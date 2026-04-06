@@ -6,7 +6,8 @@
   with_items:
     - "net.ankiweb.Anki"
     - "com.belmoussaoui.Authenticator"
-    # - "com.brave.Browser" # ArchPacStuff
+    - "io.github.kolunmi.Bazaar" # Flatpak App Store
+    - "com.brave.Browser" # ArchPacStuff
     - "com.github.finefindus.eyedropper" # Pick and format colors from screen
     - "org.kde.kasts"
     - "de.leopoldluley.Clapgrep" # One app to search through all your files (incl. PDF, Office, ...)
@@ -14,6 +15,7 @@
     - "com.ranfdev.DistroShelf" # graphical interface for managing Distrobox containers on Linux
     - "com.jgraph.drawio.desktop" # diagramming tool
     - "me.iepure.devtoolbox"
+    - "one.ablaze.floorp"
     - "com.microsoft.Edge"
     - "io.github.getnf.embellish"  # managing Nerd Fonts
     - "org.ferdium.Ferdium" # Messenger for the desktop - based on Franz
@@ -24,18 +26,17 @@
     - "io.gitlab.adhami3310.Impression" # create bootable disk drives
     - "de.willuhn.Jameica"
     - "net.cozic.joplin_desktop"
-    # - "org.gnome.Logs" # Logs shows events from the systemd journal, and sorts them into categories
     - "de.mediathekview.MediathekView"
     - "io.missioncenter.MissionCenter"
     - "com.github.PintaProject.Pinta" # image editing, drawing and painting application with a simple yet powerful interface
-    # - "io.podman_desktop.PodmanDesktop"
+    - "io.podman_desktop.PodmanDesktop"
     - "io.github.vikdevelop.SaveDesktop"
     - "de.haeckerfelix.Shortwave"
     # - "net.mkiol.SpeechNote"
     - "io.github.mfat.sshpilot"
     - "com.valvesoftware.Steam"
     - "org.tenacityaudio.Tenacity" # Audacity fork / replacement
-    # - "com.visualstudio.code" # 'visual-studio-code-bin' from chaotic-aur, after playbook
+    - "com.visualstudio.code"
     - "com.borgbase.Vorta"
     - "io.github.flattool.Warehouse" # control complex Flatpak options
 
@@ -45,31 +46,7 @@
     state: present
     method: system
   with_items:
-    - "io.github.kolunmi.Bazaar" # Flatpak App Store for GNOME
     - "org.gnome.Extensions"
     - "com.mattjakeman.ExtensionManager"
   when:
     - env_desktop in ["gnome"]
-
-- name: Install flatpak packages for workstations (Debian)
-  tags: workstation,ubuntu,flatpak
-  community.general.flatpak:
-    name: "{{ item }}"
-    state: present
-    method: system
-  with_items:
-    - "com.brave.Browser"
-    - "org.chromium.Chromium"
-    - "com.discordapp.Discord"
-    - "com.github.johnfactotum.Foliate"
-    - "org.keepassxc.KeePassXC"
-    # - "org.ksnip.ksnip" # es können direkt Ergänzungen (Markieren, Rahmen, Pfeile, Text, ... gemacht werden; im ggs. zu Screenshot Tool unter Gnome)
-    - "org.libreoffice.LibreOffice"
-    - "com.nextcloud.desktopclient.nextcloud"
-    - "org.gnome.Solanum"
-    - "com.obsproject.Studio"
-    - "org.remmina.Remmina"
-    - "org.signal.Signal"
-    - "com.github.micahflee.torbrowser-launcher"
-  when:
-    - ansible_facts['distribution'] in ["Debian"]

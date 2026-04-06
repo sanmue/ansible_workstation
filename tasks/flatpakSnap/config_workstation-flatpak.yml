@@ -1,8 +1,0 @@
-- name: Add the flathub flatpak repository remote, system (Debian)
-  community.general.flatpak_remote:
-    name: flathub
-    state: present
-    flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo # old: https://flathub.org/repo/flathub.flatpakrepo
-    method: system # oder method: user
-  when:
-    - ansible_facts['distribution'] == "Debian"
