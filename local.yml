@@ -96,8 +96,6 @@
       ansible.builtin.import_tasks: tasks/basic_all/config_all-settings-bashrc.yml
     - name: Config Settings all - zshrc
       ansible.builtin.import_tasks: tasks/basic_all/config_all-settings-zshrc.yml
-    - name: Config Settings all - zshrc - plugins
-      ansible.builtin.import_tasks: tasks/basic_all/config_all-settings-zsh-plugins.yml
     - name: Config Settings all - PowerShell profile
       ansible.builtin.import_tasks: tasks/basic_all/config_all-settings-PowerShellProfile.yml
     - name: Config Settings all - nnn plugins
