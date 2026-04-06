@@ -116,8 +116,6 @@
       ansible.builtin.import_tasks: tasks/basic_all/config_all-settings-cron.yml
     #
     # # Services and cronjobs:
-    # - name: Config cronjobs all - cronjobs - ClamAV *** replaced by systemd timer ***
-    #   ansible.builtin.import_tasks: tasks/basic_all/config_all-cronjobs-ClamAV.yml
     - name: Config Services all - ArchPacStuff
       ansible.builtin.import_tasks: tasks/basic_all/config_all-services-ArchPacStuff.yml
     - name: Config Services all - cron
