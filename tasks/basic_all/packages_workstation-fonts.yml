@@ -25,24 +25,30 @@
       # - ttf-zed-mono-nerd # ~680 MB Install Size
   when: ansible_facts['distribution'] in ["Archlinux"]
 
-- name: Fonts - create local font directory - systemwide (all)
+- name: Fonts - create local font directory - systemwide (Arch)
   ansible.builtin.file:
     path: /usr/local/share/fonts
     mode: "0755"
     state: directory
+  when: ansible_facts['distribution'] in ["Archlinux"]
 
-- name: Fonts - Nerd Fonts - powerlevel10k - MesloLGS NF - systemwide (all)
-  ansible.builtin.uri:
-    url: "{{ item }}"
-    method: GET
-    follow_redirects: safe
-    dest: /usr/local/share/fonts/
-    mode: "0644"
-  loop:
-    - https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Regular.ttf
-    - https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold.ttf
-    - https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Italic.ttf
-    - https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold%20Italic.ttf
+# - name: Fonts - Nerd Fonts - powerlevel10k - MesloLGS NF - systemwide (Arch)
+#   ansible.builtin.uri:
+#     url: "{{ item }}"
+#     method: GET
+#     follow_redirects: safe
+#     dest: /usr/local/share/fonts/
+#     mode: "0644"
+#   loop:
+#     - https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Regular.ttf
+#     - https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold.ttf
+#     - https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Italic.ttf
+#     - https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold%20Italic.ttf
+#   when: ansible_facts['distribution'] in ["Archlinux"]
 
 - name: Fonts - Build font information cache files for apps using fontconfig (all)
-  ansible.builtin.shell: fc-cache -f
+  ansible.builtin.command: fc-cache -fv
+  register: fc_cache_result
+  failed_when: "'fc-cache: succeeded' not in fc_cache_result.stdout"
+  changed_when: "'caching, new cache contents:' in fc_cache_result.stdout"
+  when: ansible_facts['distribution'] in ["Archlinux"]
