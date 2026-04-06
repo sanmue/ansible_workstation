@@ -5,12 +5,6 @@
 
 # -------------
 # ### env_user:
-- name: All settings misc - Bashrc - check status .bashrc (User, all)
-  tags: shellrc
-  ansible.builtin.stat:
-    path: "/home/{{ env_user }}/.bashrc"
-  register: stat_bashrc_user
-
 - name: All settings misc - Bashrc - create (User, all)
   tags: shellrc
   ansible.builtin.file:
@@ -19,8 +13,7 @@
     owner: "{{ env_user }}"
     group: "{{ env_user }}"
     mode: u=rw,g=r,o=r
-  when:
-    - not stat_bashrc_user.stat.exists
+    access_time: preserve
 
 - name: All settings misc - Bashrc - Insert/Update additional paths and config - starship shell prompt (User, all)
   tags: shellrc
@@ -132,26 +125,26 @@
       # --------------------------------------------
       # alias rollback script - archinstall_autoBash
       # --------------------------------------------
-      alias rollback='/usr/bin/rollback.sh'
+      alias rollback='/usr/local/bin/rollback.sh'
   when:
     - archinstall_autobash.stat.exists # if installed via 'archinstall_autoBash'
     - rollback_script.stat.exists # if rollback script exists (installed via 'archinstall_autoBash' + systemd-boot + snapper/snapper-rollback)
 
 # for EndeavourOS installation
-- name: All settings misc - Bashrc - custom alias definitions - alias rollback script - EndeavourOS (User, all)
-  tags: shellrc
-  ansible.builtin.blockinfile:
-    path: "/home/{{ env_user }}/.bashrc"
-    backup: false
-    marker: "### {mark} 'rollback eos' - ANSIBLE MANAGED BLOCK ###"
-    block: |
-      # -----------------------------------
-      # alias rollback script - EndeavourOS
-      # -----------------------------------
-      alias rollback='/usr/bin/rollback_eos.sh'
-  when:
-    - not archinstall_autobash.stat.exists # if not installed via 'archinstall_autoBash'
-    - rollback_eos_script.stat.exists # if rollback script exists (EndeavourOS + systemd-boot + snapper/snapper-rollback)
+# - name: All settings misc - Bashrc - custom alias definitions - alias rollback script - EndeavourOS (User, all)
+#   tags: shellrc
+#   ansible.builtin.blockinfile:
+#     path: "/home/{{ env_user }}/.bashrc"
+#     backup: false
+#     marker: "### {mark} 'rollback eos' - ANSIBLE MANAGED BLOCK ###"
+#     block: |
+#       # -----------------------------------
+#       # alias rollback script - EndeavourOS
+#       # -----------------------------------
+#       alias rollback='/usr/local/bin/rollback_eos.sh'
+#   when:
+#     - not archinstall_autobash.stat.exists # if not installed via 'archinstall_autoBash'
+#     - rollback_eos_script.stat.exists # if rollback script exists (EndeavourOS + systemd-boot + snapper/snapper-rollback)
 
 - name: All settings misc - Bashrc - custom alias definitions - snapper snapshot after snapper-rollback (User, all)
   tags: shellrc
@@ -192,8 +185,10 @@
       # -------------------------------------------------------------------------
       # find all python_pip_requirements.txt files in ansible_workstation folders and install or upgrade them
       if [[ $(command -v pip) ]]; then
-        alias inpipr='find $HOME -path "$HOME/*/ansible_workstation/*" -type f -name "python_pip_requirements.txt" -exec pip install --user -r {} \;'
-        alias uppipr='find $HOME -path "$HOME/*/ansible_workstation/*" -type f -name "python_pip_requirements.txt" -exec pip install --upgrade --force-reinstall --user -r {} \;'
+        alias inpipr='find $HOME -path "$HOME/*/ansible_workstation/*" -type f -name "python_pip_requirements.txt" \
+                      -exec pip install --user -r {} \;'
+        alias uppipr='find $HOME -path "$HOME/*/ansible_workstation/*" -type f -name "python_pip_requirements.txt" \
+                      -exec pip install --upgrade --force-reinstall --user -r {} \;'
       fi
 
 - name: All settings misc - Bashrc - custom alias definitions - direnv for uv init (User, all)

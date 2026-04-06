@@ -21,11 +21,11 @@
   when:
     - ansible_facts['distribution'] in ["Archlinux"]
 
-# for EndeavourOS installation
-- name: All settings misc - check status 'rollback_eos.sh' (User, Arch)
-  tags: shellrc
-  ansible.builtin.stat:
-    path: "/usr/local/bin/rollback_eos.sh"
-  register: rollback_eos_script
-  when:
-    - ansible_facts['distribution'] in ["Archlinux"]
+# # for EndeavourOS installation
+# - name: All settings misc - check status 'rollback_eos.sh' (User, Arch)
+#   tags: shellrc
+#   ansible.builtin.stat:
+#     path: "/usr/local/bin/rollback_eos.sh"
+#   register: rollback_eos_script
+#   when:
+#     - ansible_facts['distribution'] in ["Archlinux"]
