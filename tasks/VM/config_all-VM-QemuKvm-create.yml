@@ -32,7 +32,7 @@
 # da alle virtuellen Netzwerke aus den dump-files erstellt werden und 'default' dann schon da wäre (-> Fehlermeldung)
 - name: VM - undefine 'default' virtual network (Qemu-Kvm)
   tags: VM
-  ansible.builtin.shell:
+  ansible.builtin.command:
     cmd: virsh net-undefine default
     # cmd: set -o pipefail && virsh net-destroy default --force && virsh net-undefine default
     #      # 'default' initial nicht gestartet, daher auch nicht stoppen mit net-destroy
@@ -61,7 +61,8 @@
 #   tags: VM
 #   ansible.builtin.shell:
 #     chdir: files/VM/
-#     cmd: set -o pipefail && ls netdump_*.xml | xargs -I % sh -c "echo % | cut -d _ -f 2" | xargs -I % sh -c "echo % | cut -d . -f 1" | xargs -I % sh -c "virsh net-start %"
+#     cmd: set -o pipefail && ls netdump_*.xml | xargs -I % sh -c "echo % | cut -d _ -f 2" | xargs -I % sh -c "echo % | \
+#              cut -d . -f 1" | xargs -I % sh -c "virsh net-start %"
 #     # z.B.: netdump_default.xml                        default.xml                                 default                            virsh net-start default
 #   args:
 #     creates: /home/{{ env_user }}/.ansible_vm_qemuKvmCreated
@@ -74,7 +75,12 @@
   tags: VM
   ansible.builtin.shell:
     chdir: files/VM/
-    cmd: set -o pipefail && ls netdump_*.xml | xargs -I % sh -c "echo % | cut -d _ -f 2" | xargs -I % sh -c "echo % | cut -d . -f 1" | xargs -I % sh -c "virsh net-autostart %"
+    cmd: >
+      set -o pipefail &&
+      ls netdump_*.xml |
+      xargs -I % sh -c "echo % | cut -d _ -f 2" |
+      xargs -I % sh -c "echo % | cut -d . -f 1" |
+      xargs -I % sh -c "virsh net-autostart %"
   args:
     creates: /home/{{ env_user }}/.ansible_vm_qemuKvmCreated
   # ignore_errors: true
@@ -95,7 +101,7 @@
 
 - name: VM - redefine + set current virtual machine snapshots (Qemu-Kvm)
   tags: VM
-  ansible.builtin.shell:
+  ansible.builtin.command:
     chdir: files/VM/
     cmd: ./vm_snapshotcreate-redefine.sh
   args:
