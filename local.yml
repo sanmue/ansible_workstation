@@ -52,8 +52,6 @@
       ansible.builtin.import_tasks: tasks/basic_all/packages_workstation-fonts.yml
     - name: Starship Shell Prompt
       ansible.builtin.import_tasks: tasks/basic_all/packages_workstation-starship.yml
-    - name: Zsh plugins
-      ansible.builtin.import_tasks: tasks/basic_all/packages_workstation-zsh-plugins.yml
     # - flatpak:
     - name: Config Flatpak
       ansible.builtin.import_tasks: tasks/flatpakSnap/config_workstation-flatpak.yml
