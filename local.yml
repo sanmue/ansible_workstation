@@ -77,8 +77,9 @@
       ansible.builtin.import_tasks: tasks/basic_all/config_all-stats.yml
     - name: Config - Firewall all
       ansible.builtin.import_tasks: tasks/basic_all/config_all-firewall.yml
-    - name: Config - Firewall workstation
-      ansible.builtin.import_tasks: tasks/basic_all/config_workstation-firewall.yml
+    # - name: Config - Firewall workstation
+    # currently contains only ufw / debian specific config
+    #   ansible.builtin.import_tasks: tasks/basic_all/config_workstation-firewall.yml
     - name: Config Settings all - locale
       ansible.builtin.import_tasks: tasks/basic_all/config_all-settings-locale.yml
     - name: Config Settings all - direnv

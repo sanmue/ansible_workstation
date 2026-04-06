@@ -3,13 +3,25 @@
 # ##########
 
 # insbes. wg. Debian (auf englisch installiert) und Formate auf Deutsch umstellen will
-- name: All settings misc - Locale - modify /etc/locale.gen (de_DE.UTF-8 UTF-8) (all)
+- name: All settings misc - Locale - modify /etc/locale.gen (de_DE.UTF-8 UTF-8) (Arch)
   ansible.builtin.replace:
     path: /etc/locale.gen
     regexp: "^# de_DE.UTF-8 UTF-8"
     replace: "de_DE.UTF-8 UTF-8"
     backup: true
+  when:
+    - ansible_facts['distribution'] in ["Archlinux"]
 
-- name: All settings misc - Locale - locale-gen (all)
-  ansible.builtin.shell:
-    cmd: locale-gen
+- name: All settings misc - Locale - check if de_DE.UTF-8 already generated (Arch)
+  ansible.builtin.shell: locale -a | grep -q "de_DE.utf8"
+  register: locale_de_de_utf8_exists
+  ignore_errors: true
+  changed_when: false
+  when: ansible_facts['distribution'] in ["Archlinux"]
+
+- name: All settings misc - Locale - locale-gen (Arch)
+  ansible.builtin.command: locale-gen
+  when:
+    - ansible_facts['distribution'] in ["Archlinux"]
+    - locale_de_de_utf8_exists.rc != 0
+  changed_when: false  # Task wird nie "changed", Idempotenz durch Bedingung sichergestellt (locale_de_de_utf8_exists.rc != 0)
