@@ -19,11 +19,10 @@ done
 # - IFS (Internal Field Separator)
 
 #arrUser=()
-#IFS=" " read -r -A arrUser <<< "$(users)"  # funktioniert bei zsh (Archlinux)
-#IFS=" " read -r -a arrUser <<< "$(users)"  # funktioniert bei bash (Ubuntu)
-arrUser=($(users))                          # funktioniert bei zsh (Archlinux) und bash (Ubuntu)
+#IFS=" " read -r -A arrUser <<< "$(users)"  # funktioniert bei zsh
+IFS=" " read -r -a arrUser <<< "$(users)"  # funktioniert bei bash
+#arrUser=($(users))                          # funktioniert bei zsh und bash; aber shellcheck möchte mapfile oder read -a
 
-for user in ${arrUser}; do
+for user in "${arrUser[@]}"; do
     echo "${ALERT}" | /usr/bin/mail -s "Signature detected in '${CLAM_VIRUSEVENT_FILENAME}'" "${user}"
 done
-

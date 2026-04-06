@@ -22,7 +22,7 @@ if [ $# -gt 0 ]; then
 fi
 qurantineFolder="${scanPath}/.clam/quarantine"
 logFolder="${scanPath}/.clam/logs"
-logName="$(date +\%Y\%m\%d)-weekly.log"
+logName="$(date +%Y%m%d)-weekly.log"
 
 PATH=/usr/bin
 
