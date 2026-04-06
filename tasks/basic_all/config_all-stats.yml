@@ -4,22 +4,28 @@
 # ### - 'rollback.sh'
 # ##########################################
 
-- name: All settings misc - check status 'archinstall_autobash' (User, all)
+- name: All settings misc - check status 'archinstall_autobash' (User, Arch)
   tags: shellrc
   ansible.builtin.stat:
     path: "/etc/archinstall_autoBash"
   register: archinstall_autobash
+  when:
+    - ansible_facts['distribution'] in ["Archlinux"]
 
 # for installs via 'archinstall_autobash'
-- name: All settings misc - check status 'rollback.sh' (User, all)
+- name: All settings misc - check status 'rollback.sh' (User, Arch)
   tags: shellrc
   ansible.builtin.stat:
     path: "/usr/local/bin/rollback.sh"
   register: rollback_script
+  when:
+    - ansible_facts['distribution'] in ["Archlinux"]
 
 # for EndeavourOS installation
-- name: All settings misc - check status 'rollback_eos.sh' (User, all)
+- name: All settings misc - check status 'rollback_eos.sh' (User, Arch)
   tags: shellrc
   ansible.builtin.stat:
     path: "/usr/local/bin/rollback_eos.sh"
   register: rollback_eos_script
+  when:
+    - ansible_facts['distribution'] in ["Archlinux"]
