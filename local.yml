@@ -48,8 +48,6 @@
     - name: Basic packages
       ansible.builtin.import_tasks: tasks/basic_all/packages_workstation-basic.yml
     # former 'local packages install':
-    - name: Zed Editor packages
-      ansible.builtin.import_tasks: tasks/basic_all/packages_workstation-zed.yml
     - name: Fonts
       ansible.builtin.import_tasks: tasks/basic_all/packages_workstation-fonts.yml
     - name: Starship Shell Prompt
