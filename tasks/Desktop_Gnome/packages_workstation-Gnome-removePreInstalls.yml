@@ -1,7 +1,7 @@
 # #########
 # ### Gnome
 # #########
-- name: Uninstall packages for workstations (Gnome, all)
+- name: Uninstall packages for workstations - 1 (Gnome, Arch)
   ansible.builtin.package:
     state: absent
     name:
@@ -18,9 +18,10 @@
       - gnome-todo
       - hitori
   when:
+    - ansible_facts['distribution'] == "Archlinux"
     - env_desktop in ["gnome"]
 
-- name: Uninstall packages for workstations (Gnome, Arch)
+- name: Uninstall packages for workstations - 2 (Gnome, Arch)
   ansible.builtin.package:
     state: absent
     name:
