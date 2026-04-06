@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# plugins werden nun via package manager installiert
+
 #set -x   # enable debug mode
 
 # ### ################################################################################################

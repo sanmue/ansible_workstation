@@ -3,6 +3,8 @@
 # ---------------
 # zugehöriges, auszuführendes Script wird in 'config_all-services-misc.yml' in '/usr/local/bin' erstellt
 
+# plugins werden nun via package manager installiert
+
 - name: All services - zsh plugins update - Create service unit file (Arch)
   ansible.builtin.blockinfile:
     path: "/etc/systemd/system/zshpluginsgit_update.service"

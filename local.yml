@@ -129,8 +129,6 @@
     # - name: Config Services all - Starship shell prompt
         # installed from package repo, no seperate manual update process necessary anymore
     #   ansible.builtin.import_tasks: tasks/basic_all/bak/config_all-services-starship.yml
-    - name: Config Services all - zsh plugins
-      ansible.builtin.import_tasks: tasks/basic_all/config_all-services-zshPlugins.yml
     - name: Config Services all - Syncthing
       ansible.builtin.import_tasks: tasks/basic_all/config_all-services-syncthing.yml
     - name: Config Services all - misc (system + user)
