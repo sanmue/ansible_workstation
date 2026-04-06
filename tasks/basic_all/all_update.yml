@@ -1,39 +1,38 @@
 # #############
 # ### DistRepos
 # #############
-- name: Update repository index and update system (apt)
-  become: true
-  ansible.builtin.apt:
-    upgrade: true
-    update_cache: true
-  #  when: ansible_facts['os_family'] == "Debian"
-  when:
-    - ansible_facts['pkg_mgr'] == "apt"
-  # changed_when: false
 
-- name: Update repository index and update system (pacman)
+- name: Update repository index and update system (pacman, Arch)
   become: true
   community.general.pacman:
     update_cache: true
     upgrade: true
   when:
     - ansible_facts['pkg_mgr'] == "pacman"
-#  changed_when: false
+    - ansible_facts['distribution'] == "Archlinux"
 
 # ###########
 # ### flatpak
 # ###########
-- name: Update flatpak packages
-  ansible.builtin.command: flatpak update
+
+- name: Update flatpak packages - check available updates
+  ansible.builtin.command: flatpak remote-ls --updates
+  register: flatpak_updates
+  when: env_datadirs is defined and "/var/lib/flatpak" in env_datadirs
+  changed_when: false
+
+- name: Update flatpak packages - update
+  ansible.builtin.command: flatpak update -y
+  register: flatpak_update_result
   when:
-    - env_datadirs is defined
-    #    - env_datadirs.find("/var/lib/flatpak") != -1
-    - env_datadirs.find("/var/lib/flatpak") == true
-  # changed_when: false
+    - env_datadirs is defined and "/var/lib/flatpak" in env_datadirs
+    - flatpak_updates.stdout != ""
+  changed_when: "'Nothing to do' not in flatpak_update_result.stdout"
 
 # #########
 # ### snaps
 # #########
+
 # Snaps come with a built-in automatic update mechanism, whereby snaps are refreshed to a new version whenever there’s a new release in the Snap Store.
 # Typically, the refresh occurs four times a day ...
 #
