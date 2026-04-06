@@ -47,11 +47,7 @@
     # ### Install software packages, including Flatpak and Snap:
     - name: Basic packages
       ansible.builtin.import_tasks: tasks/basic_all/packages_workstation-basic.yml
-    # ex 'local packages install':
-    - name: Citrix Workspace App (ICA-Client) packages
-      ansible.builtin.import_tasks: tasks/basic_all/packages_workstation-citrixWorkspaceApp-icaclient.yml
-    # - name: Citrix Workspace App (ICA-Client) - Config - fix for CitrixIcaclient on Gnome
-    #   ansible.builtin.import_tasks: tasks/fix/config_workstation-Gnome-citrixIcaclient.yml
+    # former 'local packages install':
     - name: Visual Studio Code packages
       ansible.builtin.import_tasks: tasks/basic_all/packages_workstation-vscode.yml
     - name: Zed Editor packages
