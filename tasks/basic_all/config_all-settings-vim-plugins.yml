@@ -13,7 +13,7 @@
   tags: vimrc
   become: true
   become_user: "{{ env_user }}"
-  ansible.builtin.shell:
+  ansible.builtin.command:
     cmd: "mkdir -p /home/{{ env_user }}/.vim/pack/git-plugins/start"
   args:
     creates: /home/{{ env_user }}/.vim/pack/git-plugins/start
@@ -25,8 +25,11 @@
   ansible.builtin.git:
     repo: "https://github.com/mcchrish/nnn.vim"
     dest: "/home/{{ env_user }}/.vim/pack/git-plugins/start/nnn.vim"
+    version: "master"
+    update: true
     depth: 1
 
+# using vim-airline (see below)
 # - name: All settings misc - vim plugin install from git repo - Powerline (all)
 #   tags: vimrc
 #   become: true
@@ -34,6 +37,8 @@
 #   ansible.builtin.git:
 #     repo: "https://github.com/powerline/powerline.git"
 #     dest: "/home/{{ env_user }}/.vim/pack/git-plugins/start/powerline"
+#     version: "develop"
+#     update: true
 
 - name: All settings misc - vim plugin install from git repo - vim-airline (all)
   tags: vimrc
@@ -42,6 +47,8 @@
   ansible.builtin.git:
     repo: "https://github.com/vim-airline/vim-airline.git"
     dest: "/home/{{ env_user }}/.vim/pack/git-plugins/start/vim-airline"
+    version: "master"
+    update: true
 
 - name: All settings misc - vim plugin install from git repo - vim-fugitive (git) (all)
   tags: vimrc
@@ -50,6 +57,8 @@
   ansible.builtin.git:
     repo: "https://github.com/tpope/vim-fugitive.git"
     dest: "/home/{{ env_user }}/.vim/pack/git-plugins/start/vim-fugitive"
+    version: "master"
+    update: true
 
 - name: All settings misc - vim plugin install from git repo - undotree (git) (all)
   tags: vimrc
@@ -58,3 +67,5 @@
   ansible.builtin.git:
     repo: "https://github.com/mbbill/undotree.git"
     dest: "/home/{{ env_user }}/.vim/pack/git-plugins/start/undotree"
+    version: "master"
+    update: true
