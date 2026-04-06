@@ -3,6 +3,8 @@
 # -------------------------
 # https://starship.rs/
 
+# update: install starship from arch repo
+
 - name: All services - starship - starship shell prompt update - Create service unit file (all)
   ansible.builtin.blockinfile:
     path: "/etc/systemd/system/starship_update.service"
