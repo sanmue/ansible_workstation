@@ -13,4 +13,4 @@
   become: true
   become_user: "{{ env_user }}"
   environment:
-    XDG_RUNTIME_DIR: "{{ env_user_XDG_RUNTIME_DIR }}"
+    XDG_RUNTIME_DIR: "{{ env_user_xdg_runtime_dir }}"

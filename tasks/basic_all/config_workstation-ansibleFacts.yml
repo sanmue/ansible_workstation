@@ -22,7 +22,7 @@
 
 - name: AnsibleFacts - Get PWD (PATH) (all)
   ansible.builtin.set_fact:
-    env_PWD: "{{ ansible_facts['env']['PWD'] }}" # z.B.: "/home/userid/dev"
+    env_pwd: "{{ ansible_facts['env']['PWD'] }}" # z.B.: "/home/userid/dev"
 
 - name: AnsibleFacts - Get user (USER) (all)
   ansible.builtin.set_fact:
@@ -30,7 +30,7 @@
 
 - name: AnsibleFacts - Get XDG_RUNTIME_DIR (USER) (all)
   ansible.builtin.set_fact:
-    env_user_XDG_RUNTIME_DIR: "{{ ansible_facts['env']['XDG_RUNTIME_DIR'] }}" # z.B.: "/run/user/1000"
+    env_user_xdg_runtime_dir: "{{ ansible_facts['env']['XDG_RUNTIME_DIR'] }}" # z.B.: "/run/user/1000"
   # when:
   #   - not "'shellrc' in ansible_run_tags"
 
@@ -61,7 +61,7 @@
     #    msg: "env_displayserver: {{ env_displayserver }}"
     #    msg: "env_datadirs: {{ env_datadirs }}"
     #    msg: "env_path: {{ env_path }}"
-    #    msg: "env_PWD: {{ env_PWD }}"
+    #    msg: "env_pwd: {{ env_pwd }}"
     msg: "env_user: {{ env_user }}"
 #    msg: "env_lsb: {{ env_lsb }}"
 #    msg: "env_lsbmajor: {{ env_lsbmajor }}"
