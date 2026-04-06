@@ -180,11 +180,11 @@
       - viu # Simple terminal image viewer (u.a. wg. nnn)
       - wireguard-tools
       - zed # A high-performance, multiplayer code editor from the creators of Atom and Tree-sitter
-      - zsh-autocomplete # besser: install from git?
-      - zsh-autosuggestions # besser: install from git?
-      - zsh-completions # besser: install from git?
-      - zsh-syntax-highlighting # besser: install from git?
-      - zsh-history-substring-search # besser: install from git?
+      - zsh-autocomplete # alternative: install from git
+      - zsh-autosuggestions # alternative: install from git
+      - zsh-completions # alternative: install from git
+      - zsh-syntax-highlighting # alternative: install from git
+      - zsh-history-substring-search # alternative: install from git
       # - zshdb # A debugger for zsh scripts
       # ----------
       # Multimedia
