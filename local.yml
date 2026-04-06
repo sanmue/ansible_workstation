@@ -71,13 +71,7 @@
     #
     # + siehe weiter unten "name: Gnome - Shell Extension + Desktop Settings"
     #
-    # TODO: Update + Test:
-    # - name: Plasma - Removing unused pre-installed packages
-    #   ansible.builtin.import_tasks: tasks/Desktop_Plasma/packages_workstation-Plasma-removePreInstalls.yml
-    # - name: Plasma - Packages
-    #   ansible.builtin.import_tasks: tasks/Desktop_Plasma/packages_workstation-Plasma.yml
     # ----------------------------------------------------------
-    #
     # ### Config Firewall, Cron, Services, sonstige Settings:
     - name: Config - stats all
       ansible.builtin.import_tasks: tasks/basic_all/config_all-stats.yml
