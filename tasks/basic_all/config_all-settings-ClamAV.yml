@@ -52,7 +52,8 @@
       # and $CLAM_VIRUSEVENT_VIRUSNAME.
       # Default: no
       # VirusEvent /usr/local/bin/send_sms 123456789 "VIRUS ALERT: %v in %f"
-      # VirusEvent /usr/bin/notify-send "VirusAlert: '${CLAM_VIRUSEVENT_VIRUSNAME}' in '${CLAM_VIRUSEVENT_FILENAME}'" "Virus found - notification." --icon=dialog-warning
+      # VirusEvent /usr/bin/notify-send "VirusAlert: '${CLAM_VIRUSEVENT_VIRUSNAME}' in '${CLAM_VIRUSEVENT_FILENAME}'" \
+      #   "Virus found - notification." --icon=dialog-warning
       VirusEvent /etc/clamav/VirusEvent.sh
 
 # https://wiki.archlinux.org/title/ClamAV
