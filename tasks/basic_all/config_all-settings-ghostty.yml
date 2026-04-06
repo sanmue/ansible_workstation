@@ -3,7 +3,7 @@
 # ###########
 # - gpu accelerated terminal
 
-- name: All settings misc - Ghostty - create config folder (user, all)
+- name: All settings misc - Ghostty - create config folder (user, Arch)
   tags: shellrc
   ansible.builtin.file:
     path: "/home/{{ env_user }}/.config/ghostty"
@@ -11,8 +11,10 @@
     owner: "{{ env_user }}"
     group: "{{ env_user }}"
     mode: '0755'
+  when:
+    - ansible_facts['distribution'] in ["Archlinux"]
 
-- name: All settings misc - Ghostty - create config file (user, all)
+- name: All settings misc - Ghostty - create config file (user, Arch)
   tags: shellrc
   ansible.builtin.blockinfile:
     path: "/home/{{ env_user }}/.config/ghostty/config.ghostty"
@@ -64,3 +66,5 @@
       shell-integration-features = ssh-terminfo
       shell-integration-features = ssh-env
       # Ghostty will try to install the terminfo entry first and use the fallback if installation failed
+  when:
+    - ansible_facts['distribution'] in ["Archlinux"]
