@@ -1,26 +1,5 @@
 # TODO: config/test nested virtualization (Win + Linux Guests)
 
-- name: VM - install VM QEMU/KVM (Debian, not VM guest)
-  ansible.builtin.package:
-    state: present
-    name:
-      # - qemu-kvm
-      - qemu-system # additional tool
-      - libvirt-daemon
-      - libvirt-daemon-system
-      - libvirt-clients
-      - bridge-utils
-      - libguestfs-tools # additional tool
-      - libosinfo-bin # additional tool
-      - python3-virt-firmware # Tools for manipulating edk2 (ovmf/qemu-efi) firmware images # Arch: 'virt-firmware' package
-      - virtinst
-      # - virt-top # nicht in debian repo
-      - swtpm # wg. Win11 TPM 2.0
-      - swtpm-tools
-  when:
-    - ansible_facts['distribution'] == "Debian"
-    - ansible_facts['virtualization_role'] != "guest"
-
 - name: VM - install VM QEMU/KVM (Archlinux, not VM guest)
   ansible.builtin.package:
     state: present
