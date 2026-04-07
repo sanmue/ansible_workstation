@@ -1,16 +1,4 @@
 # ---
-# ### Debian
-# ---
-
-- name: Docker - packages - rootless - install prerequisites (Debian)
-  ansible.builtin.package:
-    state: present
-    name:
-      - uidmap # newuidmap and newgidmap are needed to allow multiple UIDs/GIDs to be used in the user namespace
-      - docker-ce-rootless-extras # e.g.: /usr/bin/dockerd-rootless-setuptool.sh
-  when: ansible_facts['distribution'] == "Debian"
-
-# ---
 # ### Archlinux
 # ---
 # - env_user muss in wheel gruppe sein für sudo ohne passwort (verwendet wg. paru ohne interaktive passwortabfrage)
