@@ -1,11 +1,11 @@
-- name: Install packages for (local) mail (all)
+- name: Install packages for (local) mail (Arch)
   ansible.builtin.package:
     state: present
     name:
       - postfix # Fast, easy to administer, secure mail server   # Mail Tranfer Agent (MTA)
       - mutt # text-based mail client
-  # when:
-  #   - ansible_facts['distribution'] in ["Archlinux", "Debian"]
+  when:
+    - ansible_facts['distribution'] in ["Archlinux"]
 
 - name: Install packages for (local) mail - dovecot (archlinux)
   ansible.builtin.package:
@@ -14,14 +14,3 @@
       - dovecot # IMAP and POP3 server
   when:
     - ansible_facts['distribution'] in ["Archlinux"]
-
-- name: Install packages for (local) mail - dovecot (debian)
-  ansible.builtin.package:
-    state: present
-    name:
-      - dovecot-core # IMAP and POP3 server
-      - dovecot-imapd # IMAP server
-      - dovecot-pop3d # POP3 server
-      - dovecot-lmtpd # Local Mail Transfer Protocol server
-  when:
-    - ansible_facts['distribution'] in ["Debian"]
