@@ -39,23 +39,3 @@
       # --- Debugging & Profiling
       # - hotspot # from AUR
   when: ansible_facts['distribution'] in ["Archlinux"]
-
-- name: C/C++ Development (Debian)
-  ansible.builtin.package:
-    state: present
-    name:
-      # ### Compilers
-      - gcc
-      - g++
-      - clang-tidy
-      - clang-format
-      # ### Build System
-      - cmake-curses-gui
-      - cmake-format
-      - ninja-build # build tool
-      # ### Development Tools
-      # --- Performance & Optimization
-      - libomp-dev # Parallel Processing
-      # --- Debugging & Profiling
-      # - hotspot # AppImage from https://github.com/KDAB/hotspot/releases/latest
-  when: ansible_facts['distribution'] == "Debian"
