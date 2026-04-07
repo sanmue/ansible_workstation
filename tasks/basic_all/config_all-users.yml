@@ -32,13 +32,37 @@
     block: |
       clamav ALL = (ALL) NOPASSWD: SETENV: /usr/bin/notify-send, /usr/bin/mail
   # when:
-  #   - ansible_facts['distribution'] in ["Archlinux", "Debian"]
+  #   - ansible_facts['distribution'] in ["Archlinux"]
 
-  # ############################
-  # ### set zsh as default shell
-  # ############################
-  # https://stackoverflow.com/questions/43560657/edit-current-users-shell-with-ansible
-- name: Config all users - env_user - set zsh as standard shell (all)
-  ansible.builtin.shell: "usermod --shell $(which zsh) {{ env_user }}"
-  # when:
-  #   - ansible_facts['distribution'] in ["Archlinux", "Debian"]
+# ############################
+# ### set zsh as default shell
+# ############################
+# https://stackoverflow.com/questions/43560657/edit-current-users-shell-with-ansible
+# - name: Config all users - env_user - set zsh as standard shell (all)
+#   ansible.builtin.shell: "usermod --shell $(which zsh) {{ env_user }}"
+#   when:
+#     - ansible_facts['distribution'] in ["Archlinux"]
+
+- name: Config all users - env_user - check if zsh is installed (Arch)
+  ansible.builtin.command: command -v zsh
+  register: zsh_installed
+  ignore_errors: true
+  changed_when: false
+  when:
+    - ansible_facts['distribution'] in ["Archlinux"]
+
+- name: Config all users - env_user - get zsh path (Arch)
+  ansible.builtin.command: which zsh
+  register: which_zsh
+  changed_when: false
+  when:
+    - ansible_facts['distribution'] in ["Archlinux"]
+    - zsh_installed.rc == 0
+
+- name: Config all users - env_user - set zsh as standard shell (Arch)
+  ansible.builtin.user:
+    name: "{{ env_user }}"
+    shell: "{{ which_zsh.stdout }}"
+  when:
+    - ansible_facts['distribution'] in ["Archlinux"]
+    - zsh_installed.rc == 0
