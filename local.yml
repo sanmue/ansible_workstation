@@ -169,8 +169,6 @@
     #
     # ----------------------------------------------------------
     # ### Docker:
-    - name: Docker repo
-      ansible.builtin.import_tasks: tasks/basic_all/config_workstation-docker-repo.yml
     - name: Docker packages
       ansible.builtin.import_tasks: tasks/basic_all/packages_workstation-docker.yml
     - name: Docker services - stop and disable before rootless config
