@@ -3,96 +3,96 @@
 
 # activate mise for bash and zsh: see config_all-settings-bahsrc.yml and ... zshrc.yml
 
-# wegen Problemen Installation jeweils aktuellste Python Version:
+# wegen Problemen mit Installation der jeweils aktuellsten Python Version:
 # Installation via script statt über Paketmanager (s.u.)
-#
-# - name: Install packages - workstation - mise (Archlinux)
+
+- name: Install packages - workstation - mise (Archlinux)
+  ansible.builtin.package:
+    state: present
+    name:
+      - mise
+  when: ansible_facts['distribution'] in ["Archlinux"]
+
+# - name: Install packages - workstation - mise - required packages for inst via script (all)
 #   ansible.builtin.package:
 #     state: present
 #     name:
-#       - mise
+#       - curl
+#       # - wget # curl ausreichend
+#       - coreutils # wg. shasum bzw. sha256sum
+#       - tar
+#       - zstd # nicht zwingend erforderlich
+#       - bash
+#       - zsh
+
+# - name: Install packages - workstation - mise - required packages for inst via script (Arch)
+#   ansible.builtin.package:
+#     state: present
+#     name:
+#       - gnupg
+#       # - libarchive # wg. bsdtar # ("tar" ausreichend, s.o.)
 #   when: ansible_facts['distribution'] in ["Archlinux"]
 
-- name: Install packages - workstation - mise - required packages for inst via script (all)
-  ansible.builtin.package:
-    state: present
-    name:
-      - curl
-      # - wget # curl ausreichend
-      - coreutils # wg. shasum bzw. sha256sum
-      - tar
-      - zstd # nicht zwingend erforderlich
-      - bash
-      - zsh
+# - name: Install packages - workstation - mise - required packages for inst via script (Debian)
+#   ansible.builtin.package:
+#     state: present
+#     name:
+#       - gpg
+#       # - libarchive-tools # wg. bsdtar # ("tar" ausreichend, s.o.)
+#   when: ansible_facts['distribution'] in ["Debian"]
 
-- name: Install packages - workstation - mise - required packages for inst via script (Arch)
-  ansible.builtin.package:
-    state: present
-    name:
-      - gnupg
-      # - libarchive # wg. bsdtar # ("tar" ausreichend, s.o.)
-  when: ansible_facts['distribution'] in ["Archlinux"]
+# # - name: Install packages - workstation - mise - import gpg key if not already exists
+# #   become: true
+# #   become_user: "{{ env_user }}"
+# #   ansible.builtin.shell: >
+# #     gpg --list-keys 24853EC9F655CE80B48E6C3A8B81C9D17413A06D >/dev/null 2>&1 ||
+# #     gpg --keyserver hkps://keys.openpgp.org --recv-keys 24853EC9F655CE80B48E6C3A8B81C9D17413A06D
 
-- name: Install packages - workstation - mise - required packages for inst via script (Debian)
-  ansible.builtin.package:
-    state: present
-    name:
-      - gpg
-      # - libarchive-tools # wg. bsdtar # ("tar" ausreichend, s.o.)
-  when: ansible_facts['distribution'] in ["Debian"]
+# - name: Install packages - workstation - mise - check if GPG key for mise already exists (all)
+#   become: true
+#   become_user: "{{ env_user }}"
+#   ansible.builtin.command: >
+#     gpg --list-keys 24853EC9F655CE80B48E6C3A8B81C9D17413A06D
+#   register: gpg_key_check
+#   ignore_errors: true
+#   changed_when: false
 
-# - name: Install packages - workstation - mise - import gpg key if not already exists
+# - name: Install packages - workstation - mise - Import GPG key for mise if not already exists (all)
+#   become: true
+#   become_user: "{{ env_user }}"
+#   ansible.builtin.command: >
+#     gpg --keyserver hkps://keys.openpgp.org --recv-keys 24853EC9F655CE80B48E6C3A8B81C9D17413A06D
+#   when: gpg_key_check.rc != 0
+#   register: import_result
+#   changed_when: import_result.rc == 0
+
+# - name: Install packages - workstation - mise - decrypt signature and verify and create install script file (all)
 #   become: true
 #   become_user: "{{ env_user }}"
 #   ansible.builtin.shell: >
-#     gpg --list-keys 24853EC9F655CE80B48E6C3A8B81C9D17413A06D >/dev/null 2>&1 ||
-#     gpg --keyserver hkps://keys.openpgp.org --recv-keys 24853EC9F655CE80B48E6C3A8B81C9D17413A06D
+#     set -o pipefail && curl https://mise.jdx.dev/install.sh.sig | gpg --decrypt > "/home/{{ env_user }}/mise-install.sh"
+#     # set -o pipefail && curl https://mise.jdx.dev/install.sh.sig | gpg --decrypt > "{{ ansible_facts['env']['HOME'] }}/mise-install.sh"
+#   args:
+#     executable: /bin/bash # bash erzwingen: sicherstellen, dass pipefail unterstützt wird
+#     # creates: "{{ ansible_facts['env']['HOME'] }}/mise-install.sh"
+#     creates: "/home/{{ env_user }}/mise-install.sh"
 
-- name: Install packages - workstation - mise - check if GPG key for mise already exists (all)
-  become: true
-  become_user: "{{ env_user }}"
-  ansible.builtin.command: >
-    gpg --list-keys 24853EC9F655CE80B48E6C3A8B81C9D17413A06D
-  register: gpg_key_check
-  ignore_errors: true
-  changed_when: false
+# - name: Install packages - workstation - mise - make install script executable (all)
+#   become: true
+#   become_user: "{{ env_user }}"
+#   ansible.builtin.file:
+#     path: "/home/{{ env_user }}/mise-install.sh"
+#     # path: "{{ ansible_facts['env']['HOME'] }}/mise-install.sh"
+#     mode: "0755"
 
-- name: Install packages - workstation - mise - Import GPG key for mise if not already exists (all)
-  become: true
-  become_user: "{{ env_user }}"
-  ansible.builtin.command: >
-    gpg --keyserver hkps://keys.openpgp.org --recv-keys 24853EC9F655CE80B48E6C3A8B81C9D17413A06D
-  when: gpg_key_check.rc != 0
-  register: import_result
-  changed_when: import_result.rc == 0
-
-- name: Install packages - workstation - mise - decrypt signature and verify and create install script file (all)
-  become: true
-  become_user: "{{ env_user }}"
-  ansible.builtin.shell: >
-    set -o pipefail && curl https://mise.jdx.dev/install.sh.sig | gpg --decrypt > "/home/{{ env_user }}/mise-install.sh"
-    # set -o pipefail && curl https://mise.jdx.dev/install.sh.sig | gpg --decrypt > "{{ ansible_facts['env']['HOME'] }}/mise-install.sh"
-  args:
-    executable: /bin/bash # bash erzwingen: sicherstellen, dass pipefail unterstützt wird
-    # creates: "{{ ansible_facts['env']['HOME'] }}/mise-install.sh"
-    creates: "/home/{{ env_user }}/mise-install.sh"
-
-- name: Install packages - workstation - mise - make install script executable (all)
-  become: true
-  become_user: "{{ env_user }}"
-  ansible.builtin.file:
-    path: "/home/{{ env_user }}/mise-install.sh"
-    # path: "{{ ansible_facts['env']['HOME'] }}/mise-install.sh"
-    mode: "0755"
-
-- name: Install packages - workstation - mise - execute install script (all)
-  become: true
-  become_user: "{{ env_user }}"
-  ansible.builtin.shell: >
-    "/home/{{ env_user }}/mise-install.sh"
-    # sh "{{ ansible_facts['env']['HOME'] }}/mise-install.sh"
-  environment:
-    MISE_QUIET: "1"
-  args:
-    creates: "/home/{{ env_user }}/.local/bin/mise"
-    # creates: "{{ ansible_facts['env']['HOME'] }}/.local/bin/mise"
+# - name: Install packages - workstation - mise - execute install script (all)
+#   become: true
+#   become_user: "{{ env_user }}"
+#   ansible.builtin.shell: >
+#     "/home/{{ env_user }}/mise-install.sh"
+#     # sh "{{ ansible_facts['env']['HOME'] }}/mise-install.sh"
+#   environment:
+#     MISE_QUIET: "1"
+#   args:
+#     creates: "/home/{{ env_user }}/.local/bin/mise"
+#     # creates: "{{ ansible_facts['env']['HOME'] }}/.local/bin/mise"
