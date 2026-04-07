@@ -7,7 +7,7 @@
 # um via paru zu installieren wird sudo tmp. do konfiguriert, dass die Gruppe wheel kein passwort braucht
 # Anmkerung: env_user ist in der Gruppe wheel drin
 
-- name: Install - packages workstation - vicinae - Backup existing wheel sudoers file
+- name: Install - packages workstation - vicinae - Backup existing wheel sudoers file (Arch)
   tags: upvic
   become: true
   ansible.builtin.copy:
@@ -15,9 +15,12 @@
     dest: /etc/sudoers.d/wheel.bak
     remote_src: true
     force: false
+    mode: '0640'
+    owner: root
+    group: root
   when: ansible_facts['distribution'] in ["Archlinux"]
 
-- name: Install - packages workstation - vicinae - Configure passwordless sudo for wheel group
+- name: Install - packages workstation - vicinae - Configure passwordless sudo for wheel group (Arch)
   tags: upvic
   become: true
   ansible.builtin.copy:
@@ -29,7 +32,7 @@
     group: root
   when: ansible_facts['distribution'] in ["Archlinux"]
 
-- name: Install - packages workstation - vicinae-bin (AUR) via paru (Archlinux)
+- name: Install - packages workstation - vicinae-bin (AUR) via paru (Arch)
   tags: upvic
   become: true
   become_user: "{{ env_user }}"
@@ -38,7 +41,7 @@
   changed_when: "'nothing to do' not in paru_output.stdout"  # Nur als "changed" markieren, wenn etwas installiert wurde
   when: ansible_facts['distribution'] in ["Archlinux"]
 
-- name: Install - packages workstation - vicinae - Restore original wheel sudoers file
+- name: Install - packages workstation - vicinae - Restore original wheel sudoers file (Arch)
   tags: upvic
   become: true
   ansible.builtin.copy:
@@ -51,7 +54,7 @@
     group: root
   when: ansible_facts['distribution'] in ["Archlinux"]
 
-- name: Install - packages workstation - vicinae - Remove backup wheel sudoers file
+- name: Install - packages workstation - vicinae - Remove backup wheel sudoers file (Arch)
   tags: upvic
   become: true
   ansible.builtin.file:
@@ -59,13 +62,13 @@
     state: absent
   when: ansible_facts['distribution'] in ["Archlinux"]
 
-- name: Install - packages workstation - vicinae - show paru output (Archlinux)
+- name: Install - packages workstation - vicinae - show paru output (Arch)
   tags: upvic
   ansible.builtin.debug:
     var: paru_output.stdout_lines
   when: ansible_facts['distribution'] in ["Archlinux"]
 
-- name: Install - packages workstation - vicinae - requirements (Archlinux)
+- name: Install - packages workstation - vicinae - requirements (Arch)
   tags: upvic
   ansible.builtin.package:
     state: present
@@ -78,15 +81,33 @@
       - git # clone extension repo
   when: ansible_facts['distribution'] in ["Archlinux"]
 
-- name: Install - packages workstation - vicinae - brotab via pipx (Archlinux)
+- name: Install - packages workstation - vicinae - check if brotab via pipx already installed (Arch)
+  tags: upvic
+  become: true
+  become_user: "{{ env_user }}"
+  ansible.builtin.command: pipx list
+  register: pipx_list
+  changed_when: false
+  failed_when: pipx_list.rc != 0
+  when:
+    - ansible_facts['distribution'] in ["Archlinux"]
+
+- name: Install - packages workstation - vicinae - brotab via pipx (Arch)
   tags: upvic
   become: true
   become_user: "{{ env_user }}"
   ansible.builtin.command: pipx install brotab
-  when: ansible_facts['distribution'] in ["Archlinux"]
+  register: pipx_inst_brotab
+  changed_when:
+    - "'installed package brotab' in pipx_inst_brotab.stdout"
+    - pipx_inst_brotab.rc == 0
+  failed_when: pipx_inst_brotab.rc != 0
+  when:
+    - ansible_facts['distribution'] in ["Archlinux"]
+    - "'brotab' not in pipx_list.stdout"
 
 # für Extension 'Fuzzy Files' # goldfish: IPC file finder
-- name: Install - packages workstation - vicinae - clone goldfish git repo (Archlinux)
+- name: Install - packages workstation - vicinae - clone goldfish git repo (Arch)
   tags: upvic
   become: true
   become_user: "{{ env_user }}"
@@ -95,9 +116,10 @@
     dest: /tmp/goldfish
     clone: true
     update: true
+    version: main
   when: ansible_facts['distribution'] in ["Archlinux"]
 
-- name: Install - packages workstation - vicinae - build goldfish (Archlinux)
+- name: Install - packages workstation - vicinae - build goldfish (Arch)
   tags: upvic
   become: true
   become_user: "{{ env_user }}"
@@ -107,7 +129,7 @@
     creates: /tmp/goldfish/target/release/gf
   when: ansible_facts['distribution'] in ["Archlinux"]
 
-- name: Install - packages workstation - vicinae - copy goldfish executable to usr local bin (Archlinux)
+- name: Install - packages workstation - vicinae - copy goldfish executable to usr local bin (Arch)
   tags: upvic
   become: true
   ansible.builtin.copy:
