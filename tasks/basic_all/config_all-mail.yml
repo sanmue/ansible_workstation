@@ -6,16 +6,6 @@
 # https://help.ubuntu.com/community/PostfixBasicSetupHowto
 # https://ubuntu.com/server/docs/mail-postfix
 
-- name: Config_all-mail - postfix - aliases (Debian)
-  ansible.builtin.lineinfile:
-    path: /etc/aliases
-    # regexp: '^postmaster:'
-    insertbefore: "^postmaster:"
-    line: "root: {{ env_user }}"
-    backup: true
-  when:
-    - ansible_facts['distribution'] in ["Debian"]
-
 - name: Config_all-mail -  postfix - aliases (Archlinux)
   ansible.builtin.replace:
     path: /etc/postfix/aliases
@@ -24,30 +14,56 @@
     backup: true
   when: ansible_facts['distribution'] in ["Archlinux"]
 
-- name: Config_all-mail - postfix - run postalias command (Debian)
-  ansible.builtin.shell:
-    cmd: "sudo postalias /etc/aliases"
-  when:
-    - ansible_facts['distribution'] in ["Debian"]
-
-- name: Config_all-mail - postfix - run postalias command (Archlinux)
-  ansible.builtin.shell:
-    cmd: "sudo postalias /etc/postfix/aliases"
+- name: Config_all-mail - postfix - check if /etc/postfix/aliases.lmdb exists (Archlinux)
+  ansible.builtin.stat:
+    path: /etc/postfix/aliases.lmdb
+  register: aliases_lmdb_stat
   when: ansible_facts['distribution'] in ["Archlinux"]
 
-- name: Config_all-mail - postfix - initialize alias database (all)
-  ansible.builtin.shell:
+- name: Config_all-mail - postfix - backup aliases.lmdb
+  ansible.builtin.copy:
+    src: /etc/postfix/aliases.lmdb
+    dest: /etc/postfix/aliases.lmdb.bak
+    remote_src: true
+    owner: root
+    group: root
+    mode: '0644'
+  when:
+    - ansible_facts['distribution'] in ["Archlinux"]
+    - aliases_lmdb_stat.stat.exists
+
+- name: Config_all-mail - postfix - delete aliases.lmdb (Archlinux)
+  ansible.builtin.file:
+    path: /etc/postfix/aliases.lmdb
+    state: absent
+  when:
+    - ansible_facts['distribution'] in ["Archlinux"]
+    - aliases_lmdb_stat.stat.exists
+
+- name: Config_all-mail - postfix - update / recreate aliases.lmdb (Archlinux)
+  ansible.builtin.command:
+    cmd: "postalias /etc/postfix/aliases"
+  register: postalias_result
+  changed_when: postalias_result.rc == 0
+  when:
+    - ansible_facts['distribution'] in ["Archlinux"]
+    - not aliases_lmdb_stat.stat.exists
+
+- name: Config_all-mail - postfix - initialize alias database (Archlinux)
+  ansible.builtin.command:
     cmd: "sudo newaliases"
   args:
     creates: "/home/{{ env_user }}/.ansible_postfixNewaliases"
+  when: ansible_facts['distribution'] in ["Archlinux"]
 
-- name: Config_all-mail - postfix - set flag file postfixNewaliases (all)
+- name: Config_all-mail - postfix - set flag file postfixNewaliases  (Archlinux)
   ansible.builtin.file:
     path: "/home/{{ env_user }}/.ansible_postfixNewaliases"
     owner: "{{ env_user }}"
     group: "{{ env_user }}"
     state: touch
     mode: u=rw,g=r,o=r
+  when: ansible_facts['distribution'] in ["Archlinux"]
 
 # ### ##############################
 # ### config postfix for local mail:
@@ -138,17 +154,7 @@
     state: present
   when: ansible_facts['distribution'] in ["Archlinux"]
 
-- name: Config_all-mail - postfix - local mail - main.cf - default_transport (Debian)
-  ansible.builtin.lineinfile:
-    path: /etc/postfix/main.cf
-    insertafter: "^relayhost"
-    line: "default_transport = error: outside mail is not deliverable"
-    state: present
-  when:
-    - ansible_facts['distribution'] in ["Debian"]
-
 # statt mailbox_command wird mailbox_transport verwendet, s.u.
-# TODO: gleiches für debian
 # anpassung wg. Umstellung auf Maildir + dovecot-lda
 # - name: Config_all-mail - postfix - local mail - main.cf - mailbox_command (Archlinux)
 #   ansible.builtin.lineinfile:
@@ -158,7 +164,6 @@
 #     state: present
 #   when: ansible_facts['distribution'] in ["Archlinux"]
 
-# TODO: gleiches für debian
 # anpassung wg. Umstellung auf Maildir + dovecot-lda
 - name: Config_all-mail - postfix - local mail - main.cf - mailbox_transport  (Archlinux)
   ansible.builtin.lineinfile:
@@ -168,7 +173,6 @@
     state: present
   when: ansible_facts['distribution'] in ["Archlinux"]
 
-# TODO: gleiches für debian
 # anpassung wg. Umstellung auf Maildir + dovecot-lda
 - name: Config_all-mail - postfix - local mail - main.cf - lmtp_data_destination_recipient_limit  (Archlinux)
   ansible.builtin.lineinfile:
@@ -182,13 +186,14 @@
 # ### dovecot - create vmail group and user
 # ### #####################################
 
-- name: Config_all-mail - dovecot - create system group 'vmail'  (all)
+- name: Config_all-mail - dovecot - create system group 'vmail'  (Arch)
   ansible.builtin.group:
     name: vmail
     system: true
     state: present
+  when: ansible_facts['distribution'] in ["Archlinux"]
 
-- name: Config_all-mail - dovecot - create system user 'vmail' (all)
+- name: Config_all-mail - dovecot - create system user 'vmail' (Arch)
   ansible.builtin.user:
     name: vmail
     group: vmail
@@ -196,28 +201,31 @@
     system: true
     shell: /usr/sbin/nologin
     state: present
+  when: ansible_facts['distribution'] in ["Archlinux"]
 
 # ### ##########################################
 # ### dovecot - create config and config folders
 # ### ##########################################
 
-- name: Config_all-mail - dovecot - create /etc/dovecot and set permissions (all)
+- name: Config_all-mail - dovecot - create /etc/dovecot and set permissions (Arch)
   ansible.builtin.file:
     path: /etc/dovecot
     state: directory
     mode: '0750'
     owner: root
     group: vmail
+  when: ansible_facts['distribution'] in ["Archlinux"]
 
-- name: Config_all-mail - dovecot - create /etc/dovecot/conf.d and set permissions (all)
+- name: Config_all-mail - dovecot - create /etc/dovecot/conf.d and set permissions (Arch)
   ansible.builtin.file:
     path: /etc/dovecot/conf.d
     state: directory
     mode: '0750'
     owner: root
     group: vmail
+  when: ansible_facts['distribution'] in ["Archlinux"]
 
-- name: Config_all-mail - dovecot - create dovecot.conf (all)
+- name: Config_all-mail - dovecot - create dovecot.conf (Arch)
   ansible.builtin.copy:
     dest: /etc/dovecot/dovecot.conf
     backup: true
@@ -246,8 +254,9 @@
     mode: '0640'
     owner: root
     group: vmail
+  when: ansible_facts['distribution'] in ["Archlinux"]
 
-- name: Config_all-mail - dovecot - create config files in conf.d directory - 10-auth.conf (all)
+- name: Config_all-mail - dovecot - create config files in conf.d directory - 10-auth.conf (Arch)
   ansible.builtin.blockinfile:
     path: /etc/dovecot/conf.d/10-auth.conf
     create: true
@@ -265,8 +274,9 @@
     mode: '0640'
     owner: root
     group: vmail
+  when: ansible_facts['distribution'] in ["Archlinux"]
 
-- name: Config_all-mail - dovecot - create config files in conf.d directory - 10-auth-format.conf (all)
+- name: Config_all-mail - dovecot - create config files in conf.d directory - 10-auth-format.conf (Arch)
   ansible.builtin.blockinfile:
     path: /etc/dovecot/conf.d/10-auth-format.conf
     create: true
@@ -292,8 +302,9 @@
     mode: '0640'
     owner: root
     group: vmail
+  when: ansible_facts['distribution'] in ["Archlinux"]
 
-- name: Config_all-mail - dovecot - create config files in conf.d directory - 10-auth-servicelistener.conf (all)
+- name: Config_all-mail - dovecot - create config files in conf.d directory - 10-auth-servicelistener.conf (Arch)
   ansible.builtin.blockinfile:
     path: /etc/dovecot/conf.d/10-auth-servicelistener.conf
     create: true
@@ -321,8 +332,9 @@
     mode: '0640'
     owner: root
     group: vmail
+  when: ansible_facts['distribution'] in ["Archlinux"]
 
-- name: Config_all-mail - dovecot - create config files in conf.d directory - 10-logging.conf (all)
+- name: Config_all-mail - dovecot - create config files in conf.d directory - 10-logging.conf (Arch)
   ansible.builtin.blockinfile:
     path: /etc/dovecot/conf.d/10-logging.conf
     create: true
@@ -338,8 +350,9 @@
     mode: '0640'
     owner: root
     group: vmail
+  when: ansible_facts['distribution'] in ["Archlinux"]
 
-- name: Config_all-mail - dovecot - create config files in conf.d directory - 10-mail.conf (all)
+- name: Config_all-mail - dovecot - create config files in conf.d directory - 10-mail.conf (Arch)
   ansible.builtin.blockinfile:
     path: /etc/dovecot/conf.d/10-mail.conf
     create: true
@@ -363,8 +376,9 @@
     mode: '0640'
     owner: root
     group: vmail
+  when: ansible_facts['distribution'] in ["Archlinux"]
 
-- name: Config_all-mail - dovecot - create config files in conf.d directory - 10-protocols.conf (all)
+- name: Config_all-mail - dovecot - create config files in conf.d directory - 10-protocols.conf (Arch)
   ansible.builtin.blockinfile:
     path: /etc/dovecot/conf.d/10-protocols.conf
     create: true
@@ -400,8 +414,9 @@
     mode: '0640'
     owner: root
     group: vmail
+  when: ansible_facts['distribution'] in ["Archlinux"]
 
-- name: Config_all-mail - dovecot - create config files in conf.d directory - 10-ssl.conf (all)
+- name: Config_all-mail - dovecot - create config files in conf.d directory - 10-ssl.conf (Arch)
   ansible.builtin.blockinfile:
     path: /etc/dovecot/conf.d/10-ssl.conf
     create: true
@@ -419,12 +434,13 @@
     mode: '0640'
     owner: root
     group: vmail
+  when: ansible_facts['distribution'] in ["Archlinux"]
 
 # ### ####################################
 # ### Maildir - create directory structure
 # ### ####################################
 
-- name: Config_all-mail - create directory structure for maildir - env_user (all)
+- name: Config_all-mail - create directory structure for maildir - env_user (Arch)
   ansible.builtin.file:
     path: "/var/spool/mail/{{ env_user }}/Maildir/{{ item }}"
     state: directory
@@ -436,8 +452,9 @@
     - cur
     - new
     - tmp
+  when: ansible_facts['distribution'] in ["Archlinux"]
 
-- name: Config_all-mail - create directory structure for maildir - root (all)
+- name: Config_all-mail - create directory structure for maildir - root (Arch)
   ansible.builtin.file:
     path: "/var/spool/mail/root/Maildir/{{ item }}"
     state: directory
@@ -449,12 +466,13 @@
     - cur
     - new
     - tmp
+  when: ansible_facts['distribution'] in ["Archlinux"]
 
 # ### #############
 # ### mutt - config
 # ### #############
 
-- name: Config_all-mail - mutt - env_user (all)
+- name: Config_all-mail - mutt - env_user (Arch)
   ansible.builtin.blockinfile:
     path: "/home/{{ env_user }}/.muttrc"
     create: true
@@ -470,8 +488,9 @@
     owner: "{{ env_user }}"
     group: "{{ env_user }}"
     mode: u=rw,g=r,o=r
+  when: ansible_facts['distribution'] in ["Archlinux"]
 
-- name: Config_all-mail - mutt - root (all)
+- name: Config_all-mail - mutt - root (Arch)
   ansible.builtin.blockinfile:
     path: "/home/root/.muttrc"
     create: true
@@ -487,3 +506,4 @@
     owner: root
     group: root
     mode: u=rw,g=r,o=r
+  when: ansible_facts['distribution'] in ["Archlinux"]
