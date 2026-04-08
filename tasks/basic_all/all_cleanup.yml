@@ -13,6 +13,8 @@
 
 - name: Clean package cache and orphaned packages (pacman)
   ansible.builtin.command: paccache -rk2 -ruk1
+  register: paccache_result
+  changed_when: "'==> would remove' in paccache_result.stdout"
   when: ansible_facts['pkg_mgr'] == "pacman"
 
 ### flatpak
