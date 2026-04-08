@@ -1,0 +1,22 @@
+# #################
+# ### favorite apps
+# #################
+
+- name: Gnome Desktop - Preferences - Adding favorite apps to dock (Gnome, all)
+  # nicht installierte Apps werden einfach nicht angezeigt (nach Installation schon), d.h. dass hier drin ist kein Problem
+  # gedit ('org.gnome.gedit.desktop') replaced with Gnome TextEditor
+  ansible.builtin.command: >
+    gsettings set org.gnome.shell favorite-apps
+    "['com.belmoussaoui.Authenticator.desktop', 'org.keepassxc.KeePassXC.desktop', 'floorp.desktop',
+    'one.ablaze.floorp.desktop', 'firefox.desktop', 'firefox-esr.desktop', 'org.mozilla.firefox.desktop',
+    'brave-browser.desktop', 'brave-browser.desktop', 'com.brave.Browser.desktop', 'org.gnome.Epiphany.desktop',
+    'chromium.desktop', 'org.chromium.Chromium.desktop', 'com.microsoft.Edge.desktop', 'com.mitchellh.ghostty.desktop',
+    'nemo.desktop', 'org.gnome.TextEditor.desktop', 'com.github.johnfactotum.Foliate.desktop',
+    'net.cozic.joplin_desktop.desktop', 'code.desktop', 'com.visualstudio.code.desktop', 'anki.desktop',
+    'net.ankiweb.Anki.desktop', 'rhythmbox.desktop', 'org.gnome.Rhythmbox3.desktop', 'de.haeckerfelix.Shortwave.desktop',
+    'io.github.celluloid_player.Celluloid.desktop', 'org.signal.Signal.desktop', 'signal-desktop.desktop',
+    'org.ferdium.Ferdium.desktop', 'virt-manager.desktop']"
+  when:
+    - env_desktop in ["gnome"]
+  register: favorites_changed
+  changed_when: favorites_changed.rc == 0

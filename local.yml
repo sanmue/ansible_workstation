@@ -236,6 +236,14 @@
   become: true
   become_user: "{{ env_user }}"
   tasks:
+    - name: Config Gnome Desktop Preferences - GDM
+      ansible.builtin.import_tasks: tasks/Desktop_Gnome/config_workstation-Gnome-DesktopPreferences-GDM.yml
+    - name: Config Gnome Desktop Preferences - GDM
+      ansible.builtin.import_tasks: tasks/Desktop_Gnome/config_workstation-Gnome-DesktopPreferences-DesktopLauncher.yml
+    - name: Config Gnome Desktop Preferences - GDM
+      ansible.builtin.import_tasks: tasks/Desktop_Gnome/config_workstation-Gnome-DesktopPreferences-AutostartApps.yml
+    - name: Config Gnome Desktop Preferences - GDM
+      ansible.builtin.import_tasks: tasks/Desktop_Gnome/config_workstation-Gnome-DesktopPreferences-FavoriteApps.yml
     - name: Config Gnome Desktop Preferences
       ansible.builtin.import_tasks: tasks/Desktop_Gnome/config_workstation-Gnome-DesktopPreferences.yml
 
