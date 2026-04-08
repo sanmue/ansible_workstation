@@ -30,8 +30,17 @@
     INSERT INTO shortcut
     (id, name, icon, url, app, open_count, created_at, updated_at, last_used_at)
     VALUES
-    ('$(uuidgen)', 'websearch', 'icon://system/firefox', 'https://www.ecosia.org/search?method=index&q={argument}', 'firefox.desktop', 0, $(date +%s), $(date +%s), $(date +%s));
+    ('$(uuidgen)',
+    'websearch',
+    'icon://system/firefox',
+    'https://www.ecosia.org/search?method=index&q={argument}',
+    'firefox.desktop',
+    0,
+    $(date +%s),
+    $(date +%s),
+    $(date +%s));
     "
+  changed_when: shortcut_exists.stdout | int == 0
   when:
     - ansible_facts['distribution'] in ["Archlinux"]
     - shortcut_exists.stdout | int == 0  # Nur ausführen, wenn der Shortcut noch nicht existiert
@@ -73,47 +82,88 @@
     repo: "{{ repo_url }}"
     dest: "{{ repo_dest_dir }}"
     force: true
+    version: main
   when: ansible_facts['distribution'] in ["Archlinux"]
 
-- name: Config workstation - Vicinae - extensions - npm install (Arch)
-  tags: upvic
-  become: true
-  become_user: "{{ env_user }}"
-  ansible.builtin.command: npm install
-  args:
-    chdir: "{{ repo_dest_dir }}/extensions/{{ item }}"
-  loop: "{{ extensions }}"
-  register: install_result
-  ignore_errors: true
-  when: ansible_facts['distribution'] in ["Archlinux"]
+# - name: Config workstation - Vicinae - extensions - npm install (Arch)
+#   tags: upvic
+#   become: true
+#   become_user: "{{ env_user }}"
+#   ansible.builtin.command: npm install
+#   args:
+#     chdir: "{{ repo_dest_dir }}/extensions/{{ item }}"
+#   loop: "{{ extensions }}"
+#   register: install_result
+#   # ignore_errors: true
+#   changed_when:
+#     - install_result.rc == 0
+#     - "'added' in install_result.stdout"
+#   when: ansible_facts['distribution'] in ["Archlinux"]
 
-- name: Config workstation - Vicinae - extensions - show install results (Arch)
-  tags: upvic
-  become: true
-  become_user: "{{ env_user }}"
-  ansible.builtin.debug:
-    var: install_result.results
-  when: ansible_facts['distribution'] in ["Archlinux"]
+# - name: Config workstation - Vicinae - extensions - show install results (Arch)
+#   tags: upvic
+#   become: true
+#   become_user: "{{ env_user }}"
+#   ansible.builtin.debug:
+#     var: install_result.results
+#   when: ansible_facts['distribution'] in ["Archlinux"]
+
+# - name: Config workstation - Vicinae - extensions - npm build (Arch)
+#   tags: upvic
+#   become: true
+#   become_user: "{{ env_user }}"
+#   ansible.builtin.command: npm run build
+#   args:
+#     chdir: "{{ repo_dest_dir }}/extensions/{{ item }}"
+#   loop: "{{ extensions }}"
+#   register: build_result
+#   ignore_errors: true
+#   when: ansible_facts['distribution'] in ["Archlinux"]
+
+# - name: Config workstation - Vicinae - extensions - show build results (Arch)
+#   tags: upvic
+#   become: true
+#   become_user: "{{ env_user }}"
+#   ansible.builtin.debug:
+#     var: build_result.results
+#   when: ansible_facts['distribution'] in ["Archlinux"]
 
 - name: Config workstation - Vicinae - extensions - npm build (Arch)
   tags: upvic
   become: true
   become_user: "{{ env_user }}"
-  ansible.builtin.command: npm run build
-  args:
-    chdir: "{{ repo_dest_dir }}/extensions/{{ item }}"
-  loop: "{{ extensions }}"
-  register: build_result
-  ignore_errors: true
-  when: ansible_facts['distribution'] in ["Archlinux"]
+  loop: "{{ extensions | default([]) }}"
+  # stellt sicher, dass Variable extensions immer als Liste interpretiert wird (auch wenn nicht definiert oder null)
+  # Falls extensions nicht existiert, wird eine leere Liste [] verwendet
+  when:
+    - ansible_facts['distribution'] in ["Archlinux"]
+  handlers:
+    - name: Run npm build only if needed
+      ansible.builtin.command: npm run build
+      args:
+        chdir: "{{ repo_dest_dir }}/extensions/{{ item }}"
+      register: build_result
+      changed_when:
+        - build_result.rc == 0
+        - "'Build successful' in build_result.stdout"
+      when:
+        - not build_dir_stat.stat.exists
+  block:
+    - name: Install npm dependencies (production only)
+      community.general.npm:
+        path: "{{ repo_dest_dir }}/extensions/{{ item }}"
+        state: present
+        production: true
+        ignore_scripts: true
+      register: npm_install_result
+      notify: Run npm build only if needed
 
-- name: Config workstation - Vicinae - extensions - show build results (Arch)
-  tags: upvic
-  become: true
-  become_user: "{{ env_user }}"
-  ansible.builtin.debug:
-    var: build_result.results
-  when: ansible_facts['distribution'] in ["Archlinux"]
+    - name: Check if build output exists
+      ansible.builtin.stat:
+        path: "{{ repo_dest_dir }}/extensions/{{ item }}/dist"
+        get_checksum: false
+      register: build_dir_stat
+      changed_when: false
 
 - name: Config workstation - Vicinae - restart service for env_user (Arch)
   tags: upvic
