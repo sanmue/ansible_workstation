@@ -2,16 +2,16 @@
 
 ## Infos
 
+- only for Arch Linux
 - executes further installation and configuration of additionally defined software and services after successful basic installation (including desktop environment)
-  - currently only tested for my Gnome desktop environment + settings
-  - (Plasma: not up to date / re-tested, therefore commented out)
-- initial bash script (works for Arch Linux, Endeavour OS and Debian):
+  - only tested for my Gnome desktop environment + settings
+- initial bash script:
   - installs some initially required packages
-  - optionally installs + configures 'snapper' for system snapshots and additional btrfs subvolumes if needed (only if filesystem is btrfs + OS is Arch Linux or Endeavour OS)
+  - optionally installs + configures 'snapper' for system snapshots and additional btrfs subvolumes if needed (only if filesystem is btrfs + OS is Arch Linux)
     - at least a basic btrfs subvolume layout must exist
   - starts the ansible playbook (local.yml)
-  - Arch Linux / Endeavour OS: optionally installs some packages from AUR after completing ansible playbook
-  - Arch Linux / Endeavour OS (with 'systemd-boot' bootloader): optionally installs [(Rescue) System on ESP](https://wiki.archlinux.org/title/Systemd-boot#Archiso_on_ESP)
+  - optionally installs some packages from AUR after completing ansible playbook
+  - with 'systemd-boot' bootloader: optionally installs [(Rescue) System on ESP](https://wiki.archlinux.org/title/Systemd-boot#Archiso_on_ESP)
     - minimum free disk space on EFI Partition needed:
       - ~3 GB for EndeavourOS
       - ~1 GB for Archlinux or grml (full)
