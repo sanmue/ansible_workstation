@@ -43,26 +43,17 @@
 #   when:
 #     - ansible_facts['distribution'] in ["Archlinux"]
 
-- name: Config all users - env_user - check if zsh is installed (Arch)
-  ansible.builtin.command: command -v zsh
-  register: zsh_installed
-  ignore_errors: true
-  changed_when: false
-  when:
-    - ansible_facts['distribution'] in ["Archlinux"]
-
-- name: Config all users - env_user - get zsh path (Arch)
+- name: Config all users - env_user - check if zsh is installed / get zsh path (Arch)
   ansible.builtin.command: which zsh
-  register: which_zsh
+  register: zsh_path
   changed_when: false
   when:
     - ansible_facts['distribution'] in ["Archlinux"]
-    - zsh_installed.rc == 0
 
 - name: Config all users - env_user - set zsh as standard shell (Arch)
   ansible.builtin.user:
     name: "{{ env_user }}"
-    shell: "{{ which_zsh.stdout }}"
+    shell: "{{ zsh_path.stdout }}"
   when:
     - ansible_facts['distribution'] in ["Archlinux"]
-    - zsh_installed.rc == 0
+    - "'zsh' in zsh_path.stdout"
