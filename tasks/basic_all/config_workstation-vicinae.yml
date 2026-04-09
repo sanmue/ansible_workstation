@@ -148,7 +148,7 @@
 
     - name: Check if build output exists
       ansible.builtin.stat:
-        path: "{{ repo_dast_dir }}/extensions/{{ item }}/dist"
+        path: "{{ repo_dest_dir }}/extensions/{{ item }}/dist"
         get_checksum: false
       register: build_dir_stat
       changed_when: false
@@ -158,7 +158,7 @@
     - name: Run npm build only if needed
       ansible.builtin.command: npm run build
       args:
-        chdir: "{{ repo_dast_dir }}/extensions/{{ item }}"
+        chdir: "{{ repo_dest_dir }}/extensions/{{ item }}"
       register: build_result
       changed_when:
         - build_result.rc == 0
