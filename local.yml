@@ -238,13 +238,13 @@
   tasks:
     - name: Config Gnome Desktop Preferences - GDM
       ansible.builtin.import_tasks: tasks/Desktop_Gnome/config_workstation-Gnome-DesktopPreferences-GDM.yml
-    - name: Config Gnome Desktop Preferences - GDM
+    - name: Config Gnome Desktop Preferences - DesktopLauncher
       ansible.builtin.import_tasks: tasks/Desktop_Gnome/config_workstation-Gnome-DesktopPreferences-DesktopLauncher.yml
-    - name: Config Gnome Desktop Preferences - GDM
+    - name: Config Gnome Desktop Preferences - AutostartApps
       ansible.builtin.import_tasks: tasks/Desktop_Gnome/config_workstation-Gnome-DesktopPreferences-AutostartApps.yml
-    - name: Config Gnome Desktop Preferences - GDM
+    - name: Config Gnome Desktop Preferences - FavoriteApps
       ansible.builtin.import_tasks: tasks/Desktop_Gnome/config_workstation-Gnome-DesktopPreferences-FavoriteApps.yml
-    - name: Config Gnome Desktop Preferences
+    - name: Config Gnome Desktop Preferences - Misc
       ansible.builtin.import_tasks: tasks/Desktop_Gnome/config_workstation-Gnome-DesktopPreferences.yml
 
 - name: Cleanup
