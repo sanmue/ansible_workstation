@@ -20,12 +20,62 @@
   ansible.builtin.debug:
     msg: "Wenn es in einem Folgeschritt zu Fehlermelung kommt: Terminal schließen + wieder neu öffnen + nochmal Script/Playbook starten"
 
+# - name: Lade Shell-Umgebung neu (bash oder zsh) für Benutzer {{ env_user }}
+#   ansible.builtin.shell: |
+#     {% if ansible_facts['shell'] | default(ansible_facts['env']['SHELL']) | basename == 'bash' %}
+#       source /home/{{ env_user }}/.bashrc
+#     {% elif ansible_facts['shell'] | default(ansible_facts['env']['SHELL']) | basename == 'zsh' %}
+#       source /home/{{ env_user }}/.zshrc
+#     {% endif %}
+#   args:
+#     executable: "{{ ansible_facts['shell'] | default(ansible_facts['env']['SHELL']) }}"
+#   # become: true
+#   # become_user: "{{ env_user }}"
+#   register: shell_refresh
+#   changed_when: shell_refresh is changed
+
 - name: Install packages - workstation - Python - pip - upgrade pip (env_user, all)
   # become: true
   # become_user: "{{ env_user }}"
   ansible.builtin.command: pip install --upgrade pip
   args:
     creates: "/home/{{ env_user }}/.ansible_PythonPip"
+
+# [ERROR]: Task failed: Module failed: non-zero return code
+# Origin: /home/USERID/ansible_workstation/tasks/basic_all/packages_workstation-pythonPip.yml:37:3
+# 35 #   changed_when: shell_refresh is changed
+# 36
+# 37 - name: Install packages - workstation - Python - pip - upgrade pip (env_user, all)
+#      ^ column 3
+# fatal: [localhost]: FAILED! => {"changed": true, "cmd": ["pip", "install", "--upgrade", "pip"],
+# "delta": "0:00:00.236152", "end": "2026-04-10 20:31:45.649753", "msg": "non-zero return code",
+# "rc": 1, "start": "2026-04-10 20:31:45.413601", "stderr": "error: externally-managed-environment
+# \n\n\C3\97 This environment is externally managed\n\E2\95\B0\E2\94\80> To install Python packages
+# system-wide, try 'pacman -S\n    python-xyz', where xyz is the package you are trying to\n
+# install.\n    \n    If you wish to install a non-Arch-packaged Python package,\n
+# create a virtual environment using 'python -m venv path/to/venv'.\n
+# Then use path/to/venv/bin/python and path/to/venv/bin/pip.\n    \n
+# If you wish to install a non-Arch packaged Python application,\n
+# it may be easiest to use 'pipx install xyz', which will manage a\n
+# virtual environment for you. Make sure you have python-pipx\n
+# installed via pacman.\n\nnote: If you believe this is a mistake, please contact your Python
+# installation or OS distribution provider. You can override this, at the risk of breaking your
+# Python installation or OS, by passing --break-system-packages.\nhint: See PEP 668 for the detailed
+# specification.", "stderr_lines": ["error: externally-managed-environment", "",
+#  "\C3\97 This environment is externally managed", "\E2\95\B0\E2\94\80>
+# To install Python packages system-wide, try 'pacman -S", "
+# python-xyz', where xyz is the package you are trying to", "    install.", "    ",
+# "    If you wish to install a non-Arch-packaged Python package,", "
+# create a virtual environment using 'python -m venv path/to/venv'.", "
+# Then use path/to/venv/bin/python and path/to/venv/bin/pip.", "    ",
+# "    If you wish to install a non-Arch packaged Python application,",
+# "    it may be easiest to use 'pipx install xyz', which will manage a",
+# "    virtual environment for you. Make sure you have python-pipx",
+# "    installed via pacman.", "", "note: If you believe this is a mistake,
+# please contact your Python installation or OS distribution provider.
+# You can override this, at the risk of breaking your Python installation or OS,
+# by passing --break-system-packages.", "hint: See PEP 668 for the detailed specification."],
+# "stdout": "", "stdout_lines": []}
 
 # - name: Python - pipx - install apps - with dependencies (all)
 #   # become: true
