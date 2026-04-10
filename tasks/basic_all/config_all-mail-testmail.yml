@@ -1,3 +1,12 @@
+- name: Config_all-mail - postfix - local mail - check if mails already sent (Arch)
+  ansible.builtin.stat:
+    path: "/home/{{ env_user }}/.ansible_testmail-sent"
+    get_checksum: false
+  register: testmail_sent
+  changed_when: false
+  when:
+    - ansible_facts['distribution'] == "Archlinux"
+
 - name: Config_all-mail - postfix - local mail - sending initial test mail to root (Arch)
   community.general.mail:
     subject: Config_all-mail - postfix - local mail - sending initial mail to root
@@ -7,6 +16,7 @@
   delegate_to: localhost
   when:
     - ansible_facts['distribution'] == "Archlinux"
+    - not testmail_sent.stat.exists
 
 - name: Config_all-mail - postfix - local mail - sending initial test mail to env_user (Arch)
   community.general.mail:
@@ -15,5 +25,17 @@
     to: "{{ env_user }}"
     # to: "{{ env_user }}@localhost"
   delegate_to: localhost
+  when:
+    - ansible_facts['distribution'] == "Archlinux"
+    - not testmail_sent.stat.exists
+
+- name: Config_all-mail - postfix - local mail - set flag-file if testmails were sent (Arch)
+  ansible.builtin.file:
+    path: "/home/{{ env_user }}/.ansible_testmail-sent"
+    state: touch
+    modification_time: preserve
+    owner: "{{ env_user }}"
+    group: "{{ env_user }}"
+    mode: '0644'
   when:
     - ansible_facts['distribution'] == "Archlinux"
