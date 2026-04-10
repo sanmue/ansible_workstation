@@ -4,12 +4,12 @@
 
 - name: All update - install collection from ansible galaxy - community.general (Arch)
   become: true
-  become_user: "{{ env_user }}"
+  # become_user: "{{ env_user }}"
   ansible.builtin.command: ansible-galaxy collection install community.general
   register: install_community_general
   changed_when: "'installed successfully' in install_community_general.stdout"
   when:
-    - ansible_facts['distribution'] == "Archlinux"
+    - ansible_facts['distribution'] in ["Archlinux"]
 
 - name: Update repository index and update system (pacman, Arch)
   become: true
@@ -18,7 +18,7 @@
     upgrade: true
   when:
     - ansible_facts['pkg_mgr'] == "pacman"
-    - ansible_facts['distribution'] == "Archlinux"
+    - ansible_facts['distribution'] in ["Archlinux"]
 
 # ###########
 # ### flatpak
