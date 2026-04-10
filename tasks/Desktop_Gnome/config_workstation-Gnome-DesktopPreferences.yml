@@ -14,9 +14,6 @@
     mode: "0777"
   when:
     - env_desktop in ["gnome"]
-  register: command_dconf_changed
-  changed_when: command_dconf_changed.rc == 0
-
 
 - name: Gnome Desktop - Preferences - Copy desktop-wallpaper file to local user-folder (Gnome)
   # become: true
@@ -30,9 +27,6 @@
     mode: u=rw,g=rw,o=rw
   when:
     - env_desktop in ["gnome"]
-  register: command_dconf_changed
-  changed_when: command_dconf_changed.rc == 0
-
 
 # - name: Set desktop - background (Gnome)
 #  community.general.dconf:
