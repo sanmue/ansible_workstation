@@ -17,8 +17,9 @@
 
 - name: Fix Gnome-Settings for Citrix IcaClient - recompile schemas (all, Gnome)
   become: true
-  ansible.builtin.shell: "sudo glib-compile-schemas ."
+  ansible.builtin.command: "sudo glib-compile-schemas ."
   args:
     chdir: /usr/share/glib-2.0/schemas/
   when:
     - env_desktop in ["gnome", "ubuntu:gnome"]
+  changed_when: false # since in bak, just to suppress ansible-lint message
