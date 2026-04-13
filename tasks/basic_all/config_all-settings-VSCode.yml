@@ -20,7 +20,6 @@
     state: directory
     mode: "0775"
 
-# Pfad bei Install des VS Code deb-Pakets (nicht bei flatpak oder snap)
 - name: All settings misc - Set/Copy 'Visual Studio Code' settings-file for Extension 'Sync Settings' (all)
   become: true
   become_user: "{{ env_user }}"
