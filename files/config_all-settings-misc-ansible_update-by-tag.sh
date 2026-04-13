@@ -15,7 +15,7 @@ if [ -z "${repo_path}" ]; then
 
     # Check if new path for REPR_DIR already exists (already cloned)
     if [ ! -d "${repo_path}" ]; then # if repo dir does not yet exist
-        git clone https://gitlab.com/sanmue/ansible_workstation.git "${repo_path}"
+        git clone "https://gitlab.com/sanmue/${REPO_NAME}.git" "${repo_path}"
     else # if repo already exists (cloned) -> update
         cd "${repo_path}" && git pull
     fi
