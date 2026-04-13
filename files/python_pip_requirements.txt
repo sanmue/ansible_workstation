@@ -8,6 +8,7 @@ pip3-autoremove
 # ### ansible
 # ansible
 ansible-core
+ansible-creator
 # ansible-compat # Ansible compatibility library for testing and development / contains functions that facilitate working with various versions of Ansible.
 # ansible-dev-tools # Ansible Developtment Tools kit bundles all tools needed for content creation and testing.
 ansible-navigator # prerquisite: container engine (podman, docker) for execution environment support
