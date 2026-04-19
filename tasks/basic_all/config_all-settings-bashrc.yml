@@ -332,7 +332,7 @@
   ansible.builtin.blockinfile:
     path: "/home/{{ env_user }}/.bashrc"
     backup: false
-    marker: "### {mark} 'uv' ANSIBLE MANAGED BLOCK ###"
+    marker: "### {mark} 'SSHClick' ANSIBLE MANAGED BLOCK ###"
     block: |
       # -------------------------------
       # SSHClick - shell autocompletion
