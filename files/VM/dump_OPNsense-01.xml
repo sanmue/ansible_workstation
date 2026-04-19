@@ -34,7 +34,7 @@
     <emulator>/usr/bin/qemu-system-x86_64</emulator>
     <disk type='file' device='disk'>
       <driver name='qemu' type='qcow2' discard='unmap'/>
-      <source file='/run/media/sandro/1TB-M2NVME/01_VM/images/OPNsense-01.20250919_2244'/>
+      <source file='/run/media/sandro/1TB-M2NVME/01_VM/images/OPNsense-01.20260417_0200'/>
       <target dev='vda' bus='virtio'/>
       <boot order='1'/>
       <address type='pci' domain='0x0000' bus='0x00' slot='0x07' function='0x0'/>

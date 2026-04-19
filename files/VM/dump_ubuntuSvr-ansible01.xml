@@ -42,7 +42,7 @@ vim config + Plugin ALE</description>
     <emulator>/usr/bin/qemu-system-x86_64</emulator>
     <disk type='file' device='disk'>
       <driver name='qemu' type='qcow2' discard='unmap'/>
-      <source file='/run/media/sandro/1TB-M2NVME/01_VM/images/ubuntuSvr-ansible01.20251021_0854'/>
+      <source file='/run/media/sandro/1TB-M2NVME/01_VM/images/ubuntuSvr-ansible01.20260417_0143'/>
       <target dev='vda' bus='virtio'/>
       <address type='pci' domain='0x0000' bus='0x04' slot='0x00' function='0x0'/>
     </disk>

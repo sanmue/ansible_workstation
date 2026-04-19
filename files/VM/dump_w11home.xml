@@ -8,7 +8,7 @@
   </metadata>
   <memory unit='KiB'>8388608</memory>
   <currentMemory unit='KiB'>8388608</currentMemory>
-  <vcpu placement='static'>4</vcpu>
+  <vcpu placement='static'>2</vcpu>
   <os firmware='efi'>
     <type arch='x86_64' machine='pc-q35-9.2'>hvm</type>
     <firmware>
@@ -56,7 +56,7 @@
     <emulator>/usr/bin/qemu-system-x86_64</emulator>
     <disk type='file' device='disk'>
       <driver name='qemu' type='qcow2' discard='unmap'/>
-      <source file='/run/media/sandro/1TB-M2NVME/01_VM/images/w11home.qcow2'/>
+      <source file='/run/media/sandro/1TB-M2NVME/01_VM/images/w11home.20260305_0619'/>
       <target dev='vda' bus='virtio'/>
       <address type='pci' domain='0x0000' bus='0x05' slot='0x00' function='0x0'/>
     </disk>

@@ -36,7 +36,7 @@
     <emulator>/usr/bin/qemu-system-x86_64</emulator>
     <disk type='file' device='disk'>
       <driver name='qemu' type='qcow2' discard='unmap'/>
-      <source file='/run/media/sandro/1TB-M2NVME/01_VM/images/debian-101.20250913_2036'/>
+      <source file='/run/media/sandro/1TB-M2NVME/01_VM/images/debian-101.20260201_1102'/>
       <target dev='vda' bus='virtio'/>
       <address type='pci' domain='0x0000' bus='0x05' slot='0x00' function='0x0'/>
     </disk>
@@ -130,14 +130,14 @@
       <mac address='52:54:00:a3:18:d9'/>
       <source network='Lab-Linux-isolated'/>
       <model type='virtio'/>
-      <link state='up'/>
+      <link state='down'/>
       <address type='pci' domain='0x0000' bus='0x01' slot='0x00' function='0x0'/>
     </interface>
     <interface type='network'>
       <mac address='52:54:00:bf:4c:0f'/>
       <source network='default'/>
       <model type='virtio'/>
-      <link state='down'/>
+      <link state='up'/>
       <address type='pci' domain='0x0000' bus='0x02' slot='0x00' function='0x0'/>
     </interface>
     <serial type='pty'>
