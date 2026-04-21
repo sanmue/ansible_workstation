@@ -14,6 +14,7 @@ echo -e "\n\e[1;33mVariablen und Parameter (set + check)\e[0m"
 # ### Variablen - Start
 echo "Pfad home directory: '${HOME}'" # home directory
 borgConfFolder="${HOME}/.config/borg" # borg conf directory
+vortaBaseConfFolder="${HOME}/.var/app/com.borgbase.Vorta" # vorta conf directory
 appConfDataFolderName="AppConfData"
 rescueAppConfDataFolder="${HOME}/RescueSystem/${appConfDataFolderName}" # AppConfData directory
 # ### Variablen - Ende
@@ -81,6 +82,11 @@ else
 	echo -e "${rsyncOptionTxt}\n# '${borgConfFolder}' nach '${rescueAppConfDataFolder}'\n" | sudo tee -a "${logfile}" >/dev/null
 	rsync -aPhEv --stats --delete "${rsyncOption}" "${borgConfFolder}" "${rescueAppConfDataFolder}" | sudo tee -a "${logfile}"
 fi
+
+echo -e "# 'Vorta (flatpak) data' nach '${rescueAppConfDataFolder}/Vorta/AppData'\n" | sudo tee -a "${logfile}" >/dev/null
+rsync -aPhEv --stats --delete "${vortaBaseConfFolder}/.local" "${rescueAppConfDataFolder}/Vorta/AppData/" | sudo tee -a "${logfile}"
+rsync -aPhEv --stats --delete "${vortaBaseConfFolder}/config" "${rescueAppConfDataFolder}/Vorta/AppData/" | sudo tee -a "${logfile}"
+rsync -aPhEv --stats --delete "${vortaBaseConfFolder}/data" "${rescueAppConfDataFolder}/Vorta/AppData/" | sudo tee -a "${logfile}"
 
 echo -e "\n\e[1;33mStarte rsync von '${rescueAppConfDataFolder}/' nach '${dest}/'...\e[0m"
 if [ -z "${rsyncOption}" ]; then # -z: True if the length of string is zero
