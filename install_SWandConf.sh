@@ -26,7 +26,7 @@ source install_SWandConf.shlib
 playbookdir="ansible_workstation" # also repo name
 playbook="local.yml"
 userid=$(whoami)                                       # or: userid=${USER}
-oslist=("Arch Linux" "EndeavourOS" "Debian GNU/Linux") # currently supported distributions
+oslist=("Arch Linux") # currently supported distributions
 # currentSystemHostname=$(hostname) # command not available in arch (anymore); net-tool (deprecated) or inetutils not installed by default
 # currentSystemHostname=$(cat /etc/hostname)
 currentSystemHostname=$(hostnamectl hostname) # only systemd # prints system hostname (if domain is set: DNS FQDN, e.g. archlinux.mydomain.com)
@@ -223,7 +223,7 @@ case "${os}" in
         fi
 
         echo -e "\n\e[0;33mAUR helper (Ach)\e[0m"
-        install-aur-helper 
+        install-aur-helper
         # needed in ansible playbook:
         # - docker rootless (package 'docker-rootless-extras')
         # - Vicinae - desktop launcher (package 'vicinae-bin' )
