@@ -28,13 +28,6 @@
     creates: /home/{{ env_user }}/.ansible_freshclamInitialStartExecuted
   when: ansible_facts['distribution'] in ["Archlinux"]
 
-# - name: All services misc - Update clamav database (Debian)
-#  # ansible.builtin.shell: freshclam
-#  ansible.builtin.shell: freshclam --daemon --user=clamav   # Fehlermeldung
-#  args:
-#    creates: /home/{{ env_user }}/.ansible_freshclamInitialStartExecuted
-#  when: ansible_facts['distribution'] in ["Debian"]
-
 - name: All services - clamav - Set flag file freshclamInitialStartExecuted (all)
   ansible.builtin.file:
     path: "/home/{{ env_user }}/.ansible_freshclamInitialStartExecuted"
@@ -95,7 +88,7 @@
 
       [Timer]
       Unit=clamav_scanHome.service
-      OnCalendar=Sat *-*-* 21:00:00
+      OnCalendar=Sat *-*-* 23:30:00
       AccuracySec=2h
       #RandomizedDelaySec=24h
       Persistent=true

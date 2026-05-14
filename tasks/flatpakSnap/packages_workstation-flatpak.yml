@@ -4,49 +4,111 @@
     state: present
     method: system
   with_items:
-    - "net.ankiweb.Anki"
-    - "com.belmoussaoui.Authenticator"
+    - "net.ankiweb.Anki" # Powerful, intelligent flash cards
+    - "com.belmoussaoui.Authenticator" # Generate two-factor codes
     - "io.github.kolunmi.Bazaar" # Flatpak App Store
-    - "com.brave.Browser" # ArchPacStuff
-    - "com.github.finefindus.eyedropper" # Pick and format colors from screen
-    - "org.kde.kasts"
+    # - org.bleachbit.BleachBit # Free space and maintain privacy
+    - "com.brave.Browser"
+    - "com.calibre_ebook.calibre" # The one stop solution to all your e-book needs
+    - "io.github.celluloid_player.Celluloid" # Plays videos
+    - "org.chromium.Chromium"
+    - "io.github.linx_systems.ClamUI" # GUI for ClamAV
     - "de.leopoldluley.Clapgrep" # One app to search through all your files (incl. PDF, Office, ...)
-    - "org.cryptomator.Cryptomator"
+    - "com.visualstudio.code" # Visual Studio Code # Code editing
+    - "com.github.hluk.copyq" # Advanced clipboard manager
+    - "org.cryptomator.Cryptomator" # Encryption for your cloud made easy
+    - "com.belmoussaoui.Decoder" # Scan and generate QR codes
+    - "me.iepure.devtoolbox" # Dev tools at your fingertips
+    - "org.kde.digikam" # Photo Management
+    - "com.discordapp.Discord" # Talk, play, hang out
     - "com.ranfdev.DistroShelf" # graphical interface for managing Distrobox containers on Linux
     - "com.jgraph.drawio.desktop" # diagramming tool
-    - "me.iepure.devtoolbox"
-    - "one.ablaze.floorp"
     - "com.microsoft.Edge"
-    - "io.github.getnf.embellish"  # managing Nerd Fonts
-    - "org.ferdium.Ferdium" # Messenger for the desktop - based on Franz
+    - "io.github.getnf.embellish" # managing Nerd Fonts
+    - "com.github.finefindus.eyedropper" # Pick and format colors from screen
+    # - "org.ferdium.Ferdium" # Messenger for the desktop - based on Franz
+    - "org.mozilla.firefox"
     - "com.github.tchx84.Flatseal"
+    - "one.ablaze.floorp"
+    - "com.github.johnfactotum.Foliate" # Read e-books in style
     - "nl.hjdskes.gcolor3" # Color Picker
     - "it.mijorus.gearlever" # Manage AppImages
+    - "org.gimp.GIMP" # High-end image creation and manipulation
+    - "be.alexandervanhee.gradia" # Annotate your screenshots
+    # - "org.gtkhash.gtkhash" # Calculate message digests or checksums
+    - "io.github.pleromix.IceBox" # PDF Maker
     - "io.github.flattool.Ignition" # add, remove, and modify startup entries
     - "io.gitlab.adhami3310.Impression" # create bootable disk drives
-    - "de.willuhn.Jameica"
-    - "net.cozic.joplin_desktop"
-    - "de.mediathekview.MediathekView"
-    - "io.missioncenter.MissionCenter"
+    - "org.inkscape.Inkscape" # Vector Graphics Editor
+    - "de.willuhn.Jameica" # Application-Platform similar to OSGI
+    - "net.cozic.joplin_desktop" # open source note taking and to-do application
+    - "org.kde.kasts" # Podcast application
+    - "org.keepassxc.KeePassXC" # Secure and Full-featured Password Manager
+    - "org.kde.kmines" # Minesweeper-like Game
+    - "org.libreoffice.LibreOffice" # The LibreOffice productivity suite
+    - "org.localsend.localsend_app" # Share files to nearby deviced
+    - "de.mediathekview.MediathekView" # Access public German TV Mediatheken
+    - "io.missioncenter.MissionCenter" # Monitor system resource usage
+    # - "io.mpv.Mpv" # A free, open source, and cross-platform media player
+    - "com.nextcloud.desktopclient.nextcloud" # Sync and collaborate on your desktop or laptop
+    - "com.obsproject.Studio" # Live stream and record video
+    - "com.github.jeromerobert.pdfarranger" # Merge, shuffle, and crop PDFs
     - "com.github.PintaProject.Pinta" # image editing, drawing and painting application with a simple yet powerful interface
-    - "io.podman_desktop.PodmanDesktop"
-    - "io.github.vikdevelop.SaveDesktop"
-    - "de.haeckerfelix.Shortwave"
-    # - "net.mkiol.SpeechNote"
-    - "io.github.mfat.sshpilot"
-    - "com.valvesoftware.Steam"
+    - "io.podman_desktop.PodmanDesktop" # Manage Podman and other container engines from a single UI
+    - "io.github.zarestia_dev.rclone-manager"
+    - "page.tesk.Refine" # Tweak various aspects of GNOME
+    # - "org.remmina.Remmina" # Remote Desktop Client
+    - "org.gnome.Rhythmbox3" # Play and organize all your music
+    - "io.github.vikdevelop.SaveDesktop" # Save your desktop configuration
+    - "de.haeckerfelix.Shortwave" # Listen to internet radio
+    - "org.signal.Signal" # Private messenger
+    - "it.mijorus.smile" # emoji picker
+    # - "io.speedofsound.SpeedOfSound" # Voice typing for the Linux desktop
+    - "io.github.pwr_solaar.solaar" # Linux manager for Logitech keyboards, mice, and trackpads
+    - "org.gnome.Solanum" # time tracking app that uses the pomodoro technique
+    # - "net.mkiol.SpeechNote" # Notes with offline Speech to Text, Text to Speech and Machine Translation
+    # - "net.mkiol.SpeechNote.Addon.amd"
+    # - "net.mkiol.SpeechNote.Addon.nvidia"
+    - "org.sqlitebrowser.sqlitebrowser" # light GUI editor for SQLite databases
+    - "io.github.mfat.sshpilot" # Manage your servers with ease
+    - "com.valvesoftware.Steam" # Launcher for the Steam software distribution service
+    - "org.gnome.Sudoku"
+    - "io.github.plrigaux.sysd-manager" # application to manage systemd's units
     - "org.tenacityaudio.Tenacity" # Audacity fork / replacement
-    - "com.visualstudio.code"
-    - "com.borgbase.Vorta"
+    - "org.mozilla.Thunderbird"
+    - "org.torproject.torbrowser-launcher"
+    - "com.transmissionbt.Transmission" # Download and share files over BitTorrent
+    - "org.videolan.VLC" # VLC media player, the open-source multimedia player
+    - "com.borgbase.Vorta" # Backup client # GUI for BorgBackup
     - "io.github.flattool.Warehouse" # control complex Flatpak options
+    - "dev.zed.Zed" # High-performance code editor
 
-- name: Install flatpak packages (Extension Manager) for Gnome (Gnome, all)
+- name: Install flatpak packages - Gnome related (Gnome, all)
   community.general.flatpak:
     name: "{{ item }}"
     state: present
     method: system
   with_items:
+    - "org.gnome.Calculator"
+    - "org.gnome.Characters"
+    - "org.gnome.clocks"
+    - "org.gnome.Connections" # gnome-remote-desktop
+    - "ca.desrt.dconf-editor"
+    - "org.gnome.Decibels" # audio player that just plays audio files
+    - "org.gnome.Epiphany" # Web # GNOME Project
     - "org.gnome.Extensions"
     - "com.mattjakeman.ExtensionManager"
+    - "org.gnome.FileRoller" # Open, modify and create compressed archive files
+    - "org.gnome.Firmware"
+    - "org.gnome.font-viewer"
+    - "org.gnome.gedit" # Text editor # replaced by gnome.TextEditor
+    - "org.gnome.Loupe" # Image viewer for GNOME
+    - "org.gnome.Papers" # Document Viewer
+    - "org.gnome.seahorse.Application" # Passwords and Keys
+    - "org.gnome.Showtime" # Video Player
+    - "org.gnome.SimpleScan" # Document Scanner
+    - "org.gnome.Snapshot" # Gnome camera # Take pictures and videos
+    - "org.gnome.TextEditor"
+    - "org.gnome.Weather" # Show weather conditions and forecast
   when:
     - env_desktop in ["gnome"]

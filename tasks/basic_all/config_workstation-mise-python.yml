@@ -28,7 +28,7 @@
     creates: "{{ ansible_facts['env']['HOME'] }}/.local/share/mise/installs/python/{{ python_version.stdout }}"
   register: mise_install_result
   changed_when: mise_install_result.rc == 0 # Markiert den Task nur als "changed", wenn der Befehl erfolgreich war (Return Code 0)
-  failed_when: # Definieren, wann Task als fehlgeschlagen gilt
+  failed_when:
     - mise_install_result.rc != 0
     - "'already installed' not in mise_install_result.stderr"
     - "'definition not found' not in mise_install_result.stderr"

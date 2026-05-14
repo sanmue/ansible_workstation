@@ -34,7 +34,7 @@
     'websearch',
     'icon://system/firefox',
     'https://www.ecosia.org/search?method=index&q={argument}',
-    'firefox.desktop',
+    'org.mozilla.firefox.desktop',
     0,
     $(date +%s),
     $(date +%s),
@@ -129,6 +129,9 @@
 #   when: ansible_facts['distribution'] in ["Archlinux"]
 
 - name: Config workstation - Vicinae - install vicinae extensions (Arch)
+  tags: upvic
+  become: true
+  become_user: "{{ env_user }}"
   community.general.npm:
     path: "{{ repo_dest_dir }}/extensions/{{ item }}"
     state: present
@@ -140,6 +143,9 @@
     - extensions | default([]) | length > 0
 
 - name: Config workstation - Vicinae - check if build output exists (Arch)
+  tags: upvic
+  become: true
+  become_user: "{{ env_user }}"
   ansible.builtin.stat:
     path: "{{ repo_dest_dir }}/extensions/{{ item }}/dist"
     get_checksum: false
@@ -151,6 +157,9 @@
     - extensions | default([]) | length > 0
 
 - name: Config workstation - Vicinae - run npm build only if needed (Arch)
+  tags: upvic
+  become: true
+  become_user: "{{ env_user }}"
   ansible.builtin.command: npm run build
   args:
     chdir: "{{ repo_dest_dir }}/extensions/{{ item }}"

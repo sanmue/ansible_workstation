@@ -23,7 +23,7 @@ source install_SWandConf.shlib
 ### ---
 ### Variablen
 ### ---
-playbookdir="ansible_workstation" # also repo name
+playbookdir="ansible_workstation_flatpak" # also repo name
 playbook="local.yml"
 userid=$(whoami)                                       # or: userid=${USER}
 oslist=("Arch Linux") # currently supported distributions
@@ -214,16 +214,23 @@ case "${os}" in
         fi
 
         # ### Installs
-        if [[ ! -f "${HOME}/.ansible_installScript_initalSofware" ]]; then
-            echo -e "\n\e[0;33mInitial installs (Arch)\e[0m"
+        #
+        # Setzen / Prüfung auf '.ansible_installScript_initalSofware' auskommentiert:
+        # Wenn Playbook (s.u.) wieder ausgeführt wird, nachdem es schon mal durch war und initiale SW (insbes. ansible) deinstalliert wurde
+        # d.h. wenn Datei ".ansible_playbookFinished" (s.u.) vorhanden ist
+        # damit für Ausführung (als root) die galaxyCollections "community.general" und damit "community.general.pacman" zur Verfügung steht
+        # muss 'ansible' wieder vorhanden sein. Bereits installierte Software wir nicht nochmal installiet (pacman -S --needed...)
+        #
+        # if [[ ! -f "${HOME}/.ansible_installScript_initalSofware" ]]; then
+            echo -e "\n\e[0;33mInitial software installs (Arch)\e[0m"
             install-initialSw-Arch
-            touch "${HOME}/.ansible_installScript_initalSofware"
-        else
-            echo "Initial installs (Arch) bereits abgearbeitet."
-        fi
+            # touch "${HOME}/.ansible_installScript_initalSofware"
+        # else
+        #     echo "Initial software installs (Arch) bereits abgearbeitet."
+        # fi
 
         echo -e "\n\e[0;33mAUR helper (Ach)\e[0m"
-        install-aur-helper
+        install-aur-helper 
         # needed in ansible playbook:
         # - docker rootless (package 'docker-rootless-extras')
         # - Vicinae - desktop launcher (package 'vicinae-bin' )
@@ -303,14 +310,22 @@ if [ "${executePlaybook}" = "y" ]; then
     # echo -e "\e[0;33m#   - If VS Code app opens you can simply close it again or leave it open until script is finished\e[0m"
     echo -e "\e[0;33m###\e[39m\n"
 
+    # wenn wieder ausgeführt wird, nachdem playbook schon durch war und initiale SW (ansible) deinstalliert wurde
+    # d.h. wenn ".ansible_playbookFinished" vorhanden
+    # damit für Ausführung (als root) die galaxyCollections "community.general" und damit "community.general.pacman" zur Verfügung steht
+
+    if [[ -f ./files/ansible_galaxyCollections-requirements.yml ]]; then
+        ansible-galaxy collection install --requirements-file ./files/ansible_galaxyCollections-requirements.yml # to make sure collection is available
+    fi
+    
     # auskommenitert, da vorerst ansible wieder über Paketmanager installiert wird
     # echo -e "\e[0;33m'ansible' Befehl evtl. zunächst noch nicht verfügbar\e[0m"
     # echo -e "\e[0;33mShell neu starten (oder source der shell config) und dann Script erneut ausführen\e[39m\n"
 
     echo -e "Path to playbook: ${HOME}/${playbookdir}/${playbook}"
-    # ansible-playbook "${HOME}/${playbookdir}/${playbook}" -v -K
+    # ansible-playbook "${HOME}/${playbookdir}/${playbook}" -vv -K
     # if [ $? -eq 0 ]; then
-    if ansible-playbook "${HOME}/${playbookdir}/${playbook}" -v -K; then
+    if ansible-playbook "${HOME}/${playbookdir}/${playbook}" -vv -K; then
         echo "No error when executing playbook, setting 'flag file'"
         touch "${HOME}/.ansible_playbookFinished"
     else
@@ -337,7 +352,7 @@ if [[ -f "${HOME}/.ansible_playbookFinished" ]]; then
             # remove ansible and unneeded dependencies # ansble-core, ... installed via pip requirements.txt
             if pacman -Q ansible-core &>/dev/null; then
                 echo "Removing ansible and unneeded dependencies (Arch)..."
-                sudo pacman -R --noconfirm --recursive --unneeded ansible
+                sudo pacman -Rns --noconfirm --recursive --unneeded ansible
             else
                 echo "Ansible already uninstalled";
             fi

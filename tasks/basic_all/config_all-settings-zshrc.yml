@@ -5,31 +5,31 @@
 
 # --------
 # ### user
-- name: All settings misc - Zshrc - check status .zshrc (User, all)
-  tags: shellrc
-  ansible.builtin.stat:
-    path: "/home/{{ env_user }}/.zshrc"
-  register: zshrc_user
+# - name: All settings misc - Zshrc - check status .zshrc (User, all)
+#   tags: shellrc
+#   ansible.builtin.stat:
+#     path: "/home/{{ env_user }}/.zshrc"
+#   register: zshrc_user
 
-- name: All settings misc - Zshrc - backup existing .zshrc (User, all)
-  tags: shellrc
-  ansible.builtin.copy:
-    src: "/home/{{ env_user }}/.zshrc"
-    dest: "/home/{{ env_user }}/.zshrc.old"
-    owner: "{{ env_user }}"
-    group: "{{ env_user }}"
-    mode: u=rw,g=r,o=r
-    backup: true
-  when:
-    - zshrc_user.stat.exists
+# - name: All settings misc - Zshrc - backup existing .zshrc (User, all)
+#   tags: shellrc
+#   ansible.builtin.copy:
+#     src: "/home/{{ env_user }}/.zshrc"
+#     dest: "/home/{{ env_user }}/.zshrc.old"
+#     owner: "{{ env_user }}"
+#     group: "{{ env_user }}"
+#     mode: u=rw,g=r,o=r
+#     backup: true
+#   when:
+#     - zshrc_user.stat.exists
 
-- name: All settings misc - Zshrc - delete existing .zshrc (User, all)
-  tags: shellrc
-  ansible.builtin.file:
-    path: "/home/{{ env_user }}/.zshrc"
-    state: absent
-  when:
-    - zshrc_user.stat.exists
+# - name: All settings misc - Zshrc - delete existing .zshrc (User, all)
+#   tags: shellrc
+#   ansible.builtin.file:
+#     path: "/home/{{ env_user }}/.zshrc"
+#     state: absent
+#   when:
+#     - zshrc_user.stat.exists
 
 - name: All settings misc - Zshrc - Insert/Update additional paths and config - starship shell prompt (User,all)
   tags: shellrc
@@ -282,22 +282,6 @@
   when:
     - archinstall_autobash.stat.exists # if installed via 'archinstall_autoBash'
     - rollback_script.stat.exists # if rollback script exists (installed via 'archinstall_autoBash' + systemd-boot + snapper/snapper-rollback)
-
-# for EndeavourOS installation
-# - name: All settings misc - Zshrc - custom alias definitions - alias rollback script - EndeavourOS (User, all)
-#   tags: shellrc
-#   ansible.builtin.blockinfile:
-#     path: "/home/{{ env_user }}/.zshrc"
-#     backup: false
-#     marker: "### {mark} 'rollback eos' - ANSIBLE MANAGED BLOCK ###"
-#     block: |
-#       # -----------------------------------
-#       # alias rollback script - EndeavourOS
-#       # -----------------------------------
-#       alias rollback='/usr/bin/rollback_eos.sh'
-#   when:
-#     - not archinstall_autobash.stat.exists # if EndeavourOS
-#     - rollback_eos_script.stat.exists # if rollback script exists (EndeavourOS + systemd-boot + snapper/snapper-rollback)
 
 - name: All settings misc - Zshrc - custom alias definitions - snapper snapshot after snapper-rollback (User, all)
   tags: shellrc

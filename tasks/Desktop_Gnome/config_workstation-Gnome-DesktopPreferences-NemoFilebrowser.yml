@@ -1,0 +1,83 @@
+# ###################
+# ## Nemo filebrowser
+# ###################
+
+- name: Gnome Desktop - Preferences - Set nemo preferences - click-policy (Gnome)
+  community.general.dconf:
+    key: "/org/nemo/preferences/click-policy"
+    value: "'double'"
+    state: present
+  when:
+    - env_desktop in ["gnome"]
+
+- name: Gnome Desktop - Preferences - Set nemo preferences - show-computer-icon-toolbar (Gnome)
+  community.general.dconf:
+    key: "/org/nemo/preferences/show-computer-icon-toolbar"
+    value: "true"
+    state: present
+  when:
+    - env_desktop in ["gnome"]
+
+- name: Gnome Desktop - Preferences - Set nemo preferences - show-home-icon-toolbar (Gnome)
+  community.general.dconf:
+    key: "/org/nemo/preferences/show-home-icon-toolbar"
+    value: "true"
+    state: present
+  when:
+    - env_desktop in ["gnome"]
+
+- name: Gnome Desktop - Preferences - Set nemo preferences - show-list-view-icon-toolbar (Gnome)
+  community.general.dconf:
+    key: "/org/nemo/preferences/show-list-view-icon-toolbar"
+    value: "true"
+    state: present
+  when:
+    - env_desktop in ["gnome"]
+
+- name: Gnome Desktop - Preferences - Set nemo preferences - show-location-entry (Gnome)
+  community.general.dconf:
+    key: "/org/nemo/preferences/show-location-entry"
+    value: "true"
+    state: present
+  when:
+    - env_desktop in ["gnome"]
+
+- name: Gnome Desktop - Preferences - Set nemo preferences - show-new-folder-icon-toolbar (Gnome)
+  community.general.dconf:
+    key: "/org/nemo/preferences/show-new-folder-icon-toolbar"
+    value: "true"
+    state: present
+  when:
+    - env_desktop in ["gnome"]
+
+- name: Gnome Desktop - Preferences - Set nemo preferences - show-open-in-terminal-toolbar (Gnome)
+  community.general.dconf:
+    key: "/org/nemo/preferences/show-open-in-terminal-toolbar"
+    value: "true"
+    state: present
+  when:
+    - env_desktop in ["gnome"]
+
+- name: Gnome Desktop - Preferences - Set nemo preferences - show-reload-icon-toolbar (Gnome)
+  community.general.dconf:
+    key: "/org/nemo/preferences/show-reload-icon-toolbar"
+    value: "true"
+    state: present
+  when:
+    - env_desktop in ["gnome"]
+
+- name: Gnome Desktop - Preferences - Set nemo preferences - show-show-thumbnails-toolbar (Gnome)
+  community.general.dconf:
+    key: "/org/nemo/preferences/show-show-thumbnails-toolbar"
+    value: "true"
+    state: present
+  when:
+    - env_desktop in ["gnome"]
+
+- name: Gnome Desktop - Preferences - Set nemo extensions - nemo terminal - default-visible (Gnome)
+  community.general.dconf:
+    key: "/org/nemo/extensions/nemo-terminal/default-visible"
+    value: "false"
+    state: present
+  when:
+    - env_desktop in ["gnome"]

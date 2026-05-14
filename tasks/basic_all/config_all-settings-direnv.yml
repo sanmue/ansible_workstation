@@ -1,7 +1,7 @@
 # ##########
 # ### direnv
 # ##########
-# + s.u.: hook in .bahsrc + .zshrc
+# see also direnv hook in .bashrc and .zshrc
 
 - name: All settings misc - direnv - create config folder (User, all)
   tags: shellrc
@@ -12,18 +12,18 @@
     group: "{{ env_user }}"
     mode: "u=rwx,g=rx,o=rx"
 
-- name: All settings misc - direnv - config (User, all)
-  tags: shellrc
-  ansible.builtin.blockinfile:
-    path: "/home/{{ env_user }}/.config/direnv/direnv.toml"
-    create: true
-    marker: "### {mark} 'direnv config' ANSIBLE MANAGED BLOCK ###"
-    block: |
-      [global]
-      hide_env_diff = true
-    owner: "{{ env_user }}"
-    group: "{{ env_user }}"
-    mode: u=rwx,g=rx,o=rx
+# - name: All settings misc - direnv - config (User, all)
+#   tags: shellrc
+#   ansible.builtin.blockinfile:
+#     path: "/home/{{ env_user }}/.config/direnv/direnv.toml"
+#     create: true
+#     marker: "### {mark} 'direnv config' ANSIBLE MANAGED BLOCK ###"
+#     block: |
+#       [global]
+#       hide_env_diff = true
+#     owner: "{{ env_user }}"
+#     group: "{{ env_user }}"
+#     mode: u=rwx,g=rx,o=rx
 
 - name: All settings misc - direnv - project layouts - python - uv (User, all)
   tags: shellrc

@@ -16,7 +16,7 @@
 
 - name: AnsibleFacts - Get PWD (PATH) (all)
   ansible.builtin.set_fact:
-    env_pwd: "{{ ansible_facts['env']['PWD'] }}" # z.B.: "/home/userid/dev"
+    env_pwd: "{{ ansible_facts['env']['PWD'] }}" # z.B.: "/home/userid/development"
 
 - name: AnsibleFacts - Get user (USER) (all)
   ansible.builtin.set_fact:
@@ -27,6 +27,10 @@
     env_user_xdg_runtime_dir: "{{ ansible_facts['env']['XDG_RUNTIME_DIR'] }}" # z.B.: "/run/user/1000"
   # when:
   #   - not "'shellrc' in ansible_run_tags"
+
+- name: AnsibleFacts - Get env - HOME
+  ansible.builtin.set_fact:
+    env_home: "{{ ansible_facts['env']['HOME'] }}" # z.B.: "/var/home/userid"
 
 - name: AnsibleFacts - Get distribution version (all)
   ansible.builtin.set_fact:
@@ -49,3 +53,7 @@
 #    msg: "env_lsbmajor: {{ env_lsbmajor }}"
 #    #msg: "distribution_version: {{ distribution_version }}"
 #    msg: "env_distribution_major_version: {{ distribution_major_version }}"
+
+- name: AnsibleFacts - Print variable - env_home
+  ansible.builtin.debug:
+    msg: "env_home: {{ env_home }}"

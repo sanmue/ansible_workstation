@@ -1,0 +1,36 @@
+# #################
+# ## Web (Epiphany)
+# #################
+
+- name: Gnome Desktop - Preferences - Set gnome - epiphany - aks-for-default (Gnome)
+  community.general.dconf:
+    key: "/org/gnome/epiphany/ask-for-default"
+    value: "false"
+    state: present
+  when:
+    - env_desktop in ["gnome"]
+
+- name: Gnome Desktop - Preferences - Set gnome - epiphany - default-search-engine (Gnome)
+  community.general.dconf:
+    key: "/org/gnome/epiphany/default-search-engine"
+    value: "'DuckDuckGo'"
+    state: present
+  when:
+    - env_desktop in ["gnome"]
+
+- name: Gnome Desktop - Preferences - Set gnome - epiphany - reader - color-scheme (Gnome)
+  community.general.dconf:
+    key: "/org/gnome/epiphany/reader/color-scheme"
+    value: "'dark'"
+    state: present
+  when:
+    - env_desktop in ["gnome"]
+
+
+- name: Gnome Desktop - Preferences - Set gnome - epiphany - web - remember-passwords (Gnome)
+  community.general.dconf:
+    key: "/org/gnome/epiphany/web/remember-passwords"
+    value: "false"
+    state: present
+  when:
+    - env_desktop in ["gnome"]

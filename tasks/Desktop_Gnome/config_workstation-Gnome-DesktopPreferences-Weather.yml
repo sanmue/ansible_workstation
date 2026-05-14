@@ -1,0 +1,10 @@
+# ##########
+# ## Weather
+# ##########
+
+- name: Gnome Desktop - Preferences - Weather - locations (Gnome)
+  community.general.dconf:
+    key: "/org/gnome/Weather/locations"
+    value: "[<(uint32 2, <('Saarbrücken', 'EDDR', true, [(0.85899288600764001, 0.12420927091802728)], [(0.85928376258077743, 0.12217304763960307)])>)>]"
+  when:
+    - env_desktop in ["gnome"]

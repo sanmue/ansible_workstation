@@ -4,7 +4,7 @@
 # ###############################
 # - https://github.com/vicinaehq/vicinae
 
-# um via paru zu installieren wird sudo tmp. do konfiguriert, dass die Gruppe wheel kein passwort braucht
+# um via paru zu installieren wird sudo temporär so konfiguriert, dass die Gruppe wheel kein passwort braucht
 # Anmkerung: env_user ist in der Gruppe wheel drin
 
 - name: Install - packages workstation - vicinae - Backup existing wheel sudoers file (Arch)

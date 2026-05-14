@@ -1,0 +1,11 @@
+# ###########
+# ## Calendar
+# ###########
+
+- name: Gnome Desktop - Preferences - Set desktop calendar - show-weekdate in calendar (Gnome)
+  community.general.dconf:
+    key: "/org/gnome/desktop/calendar/show-weekdate"
+    value: "true"
+    state: present
+  when:
+    - env_desktop in ["gnome"]

@@ -1,6 +1,8 @@
-# ansible_workstation - automated post-installation of my workstation
+# ansible_workstation_flatpak - automated post-installation of my workstation
 
 ## Infos
+
+### General
 
 - only for Arch Linux
 - executes further installation and configuration of additionally defined software and services after successful basic installation (including desktop environment)
@@ -17,15 +19,33 @@
       - ~1 GB for Archlinux or grml (full)
       - and add 300MB reserve disk space
 
+### GUI Apps
+
+If possible flatpak for GUI Applications are prefered.
+
+Exceptions:
+- baobab # Disk Usage Analyzer
+- gnome-disk-utility
+- Btrfs Assistant
+- gnome-tweaks # already / also installed via "archinstall_autoBash" and/or packages gnomeshellstuff
+- gnome-system-monitor
+- grsync
+- nemo # File manager
+- virt-manager # Virtual Machine Manager
+
+### CLI Tools
+
+Non GUI Applications are installed via system package manager.
+
 ## Usage
 
 ### Start initial bash script
 
 - boot to desktop environment + login
 - clone the repo to the home directory of the current user
-  - `git clone https://gitlab.com/sanmue/ansible_workstation.git`
+  - `git clone https://gitlab.com/sanmue/ansible_workstation_flatpak.git`
 - cd into the repo folder
-  - `cd ansible_workstation`
+  - `cd ansible_workstation_flatpak`
 - execute the initial bash script
   - `./install_SWandConf.sh`
   - check if script is executable first

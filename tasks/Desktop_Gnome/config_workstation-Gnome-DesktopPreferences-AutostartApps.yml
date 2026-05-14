@@ -17,6 +17,7 @@
     - env_desktop in ["gnome"]
 
 # ### Autostart-Programme
+
 - name: Gnome Desktop - Preferences - Copy autostart file for 'Nextcloud Client' (flatpak) to local user-folder (Debian + Gnome)
   ansible.builtin.copy:
     src: "files/gnome/Gnome_AutostartApp_User_NextcloudClient_flatpak.desktop"
@@ -27,19 +28,6 @@
     mode: u=rw,g=rw,o=r # mode: '0664'
   when:
     - env_desktop == "gnome"
-    - ansible_facts['distribution'] == "Debian"
-
-- name: Gnome Desktop - Preferences - Copy autostart file for 'Nextcloud Client' to local user-folder (Arch + Gnome)
-  ansible.builtin.copy:
-    src: "files/gnome/Gnome_AutostartApp_User_NextcloudClient.desktop"
-    dest: "/home/{{ env_user }}/.config/autostart/NextcloudClient.desktop"
-    remote_src: true
-    owner: "{{ env_user }}"
-    group: "{{ env_user }}"
-    mode: u=rw,g=rw,o=r # mode: '0664'
-  when:
-    - env_desktop == "gnome"
-    - ansible_facts['distribution'] == "Archlinux"
 
 - name: Gnome Desktop - Preferences - Copy autostart file for 'Syncthing Start' to local user-folder (Arch + Gnome)
   ansible.builtin.copy:

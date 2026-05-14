@@ -62,7 +62,7 @@
     #
     # ----------------------------------------------------------
     # Desktop Environment specific packages:
-    - name: Gnome - Removing unused pre-installed packages
+    - name: Gnome - Removing unused pre-installed packages or replaced with flatpak app
       ansible.builtin.import_tasks: tasks/Desktop_Gnome/packages_workstation-Gnome-removePreInstalls.yml
     - name: Gnome - Packages
       ansible.builtin.import_tasks: tasks/Desktop_Gnome/packages_workstation-Gnome.yml
@@ -126,9 +126,6 @@
       ansible.builtin.import_tasks: tasks/basic_all/config_all-services-printingCups.yml
     - name: Config Services all - SSH
       ansible.builtin.import_tasks: tasks/basic_all/config_all-services-ssh.yml
-    # - name: Config Services all - Starship shell prompt
-        # installed from package repo, no seperate manual update process necessary anymore
-    #   ansible.builtin.import_tasks: tasks/basic_all/bak/config_all-services-starship.yml
     - name: Config Services all - Syncthing
       ansible.builtin.import_tasks: tasks/basic_all/config_all-services-syncthing.yml
     - name: Config Services all - misc (system + user)
@@ -192,6 +189,9 @@
     - name: Mise - python
       become: false
       ansible.builtin.import_tasks: tasks/basic_all/config_workstation-mise-python.yml
+    - name: Mise - helm-ls
+      become: false
+      ansible.builtin.import_tasks: tasks/basic_all/config_workstation-mise-helm-ls.yml
     #
     # ----------------------------------------------------------
     # ### Node / mpm:
@@ -215,9 +215,9 @@
       ansible.builtin.import_tasks: tasks/basic_all/packages_workstation-hugo.yml
     #
     # ----------------------------------------------------------
-    # ### C/C++:
-    - name: C/C++ packages
-      ansible.builtin.import_tasks: tasks/basic_all/packages_workstation-cpp.yml
+    # ### C/C++: # change: use container
+    # - name: C/C++ packages
+    #   ansible.builtin.import_tasks: tasks/basic_all/packages_workstation-cpp.yml
     #
     # ----------------------------------------------------------
     # ### Vicinae - desktop launcher:
@@ -244,6 +244,18 @@
       ansible.builtin.import_tasks: tasks/Desktop_Gnome/config_workstation-Gnome-DesktopPreferences-AutostartApps.yml
     - name: Config Gnome Desktop Preferences - FavoriteApps
       ansible.builtin.import_tasks: tasks/Desktop_Gnome/config_workstation-Gnome-DesktopPreferences-FavoriteApps.yml
+    - name: Config Gnome Desktop Preferences - Calendar
+      ansible.builtin.import_tasks: tasks/Desktop_Gnome/config_workstation-Gnome-DesktopPreferences-Calendar.yml
+    - name: Config Gnome Desktop Preferences - Weather
+      ansible.builtin.import_tasks: tasks/Desktop_Gnome/config_workstation-Gnome-DesktopPreferences-Weather.yml
+    - name: Config Gnome Desktop Preferences - Nemo filebrowser
+      ansible.builtin.import_tasks: tasks/Desktop_Gnome/config_workstation-Gnome-DesktopPreferences-NemoFilebrowser.yml
+    - name: Config Gnome Desktop Preferences - Ptyxis terminal
+      ansible.builtin.import_tasks: tasks/Desktop_Gnome/config_workstation-Gnome-DesktopPreferences-PtyxisTerminal.yml
+    - name: Config Gnome Desktop Preferences - Web (Epiphany)
+      ansible.builtin.import_tasks: tasks/Desktop_Gnome/config_workstation-Gnome-DesktopPreferences-WebEpiphany.yml
+    # - name: Config Gnome Desktop Preferences - Keyboard Shortcuts
+    #   ansible.builtin.import_tasks: tasks/Desktop_Gnome/config_workstation-Gnome-DesktopPreferences-KeyboardShortcuts.yml
     - name: Config Gnome Desktop Preferences - Misc
       ansible.builtin.import_tasks: tasks/Desktop_Gnome/config_workstation-Gnome-DesktopPreferences.yml
 

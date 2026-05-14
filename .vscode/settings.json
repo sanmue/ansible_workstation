@@ -40,8 +40,7 @@
   "files.associations": {
     "*.yml": "ansible"
   },
-  "python-envs.defaultEnvManager": "ms-python.python:pyenv",
-  "python-envs.pythonProjects": [],
+  "python-envs.defaultEnvManager": "ms-python.python:system",
   "ansible.python.interpreterPath": "/home/sandro/.pyenv/versions/3.13.9/bin/python",
   "ansible.ansible.path": "/home/sandro/.local/bin/ansible",
   "ansible.ansibleNavigator.path": "/home/sandro/.local/bin/ansible-navigator",

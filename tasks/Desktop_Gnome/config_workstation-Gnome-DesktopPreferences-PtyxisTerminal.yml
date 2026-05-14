@@ -1,0 +1,185 @@
+# ##################
+# ## Ptyxis terminal
+# ##################
+
+# deactivatet (F10) because of conflict with keybinding of 'htop' (F10 = quit htop)
+- name: Gnome Desktop - Preferences - Set Ptyxis terminal preferences - primary-menu (Gnome)
+  when:
+    - env_desktop in ["gnome"]
+  # become: true
+  # become_user: "{{ env_user }}"
+  community.general.dconf:
+    key: "/org/gnome/Ptyxis/Shortcuts/primary-menu"
+    value: "''"
+    state: present
+
+# ### size an font
+
+- name: Gnome Desktop - Preferences - Set Ptyxis terminal preferences - restore-window-size (Gnome)
+  when:
+    - env_desktop in ["gnome"]
+  community.general.dconf:
+    key: "/org/gnome/Ptyxis/restore-window-size"
+    value: "false"
+    state: present
+
+- name: Gnome - ptyxis - config - default-columns
+  when:
+    - env_desktop in ["gnome"]
+  community.general.dconf:
+    key: "/org/gnome/Ptyxis/default-columns"
+    value: "uint32 110"
+    state: present
+
+- name: Gnome - ptyxis - config - default-rows
+  when:
+    - env_desktop in ["gnome"]
+  community.general.dconf:
+    key: "/org/gnome/Ptyxis/default-rows"
+    value: "uint32 34"
+    state: present
+
+- name: Gnome - ptyxis - config - use-system-font false
+  when:
+    - env_desktop in ["gnome"]
+  community.general.dconf:
+    key: "/org/gnome/Ptyxis/use-system-font"
+    value: "false"
+    state: present
+
+- name: Gnome - ptyxis - config - check if 'JetBrainsMono Nerd Font' installed
+  ansible.builtin.shell: |
+    set -o pipefail
+    fc-list | grep -i "JetBrainsMono Nerd Font"
+  register: font_check
+  changed_when: false
+  failed_when: false
+  no_log: true # the list can be quite long, hiding output
+
+- name: Gnome - ptyxis - config - font-name
+  when:
+    - env_desktop in ["gnome"]
+    - font_check.rc == 0
+  community.general.dconf:
+    key: "/org/gnome/Ptyxis/font-name"
+    value: "'JetBrainsMono Nerd Font 13'"
+    state: present
+
+# ### --------------
+# ### Profile "bash"
+# ### --------------
+- name: Gnome - ptyxis - config - add new profile bash (predefined value)
+  when:
+    - env_desktop in ["gnome"]
+  community.general.dconf:
+    key: "/org/gnome/Ptyxis/profile-uuids"
+    value: "['3cba4f5dbeae30b27ab0a46d69e20e40']"
+    state: present
+
+- name: Gnome - ptyxis - config - add name for profile bash
+  when:
+    - env_desktop in ["gnome"]
+  community.general.dconf:
+    key: "/org/gnome/Ptyxis/Profiles/3cba4f5dbeae30b27ab0a46d69e20e40/label"
+    value: "'bash'"
+    state: present
+
+- name: Gnome - ptyxis - config - use custom command for profile bash
+  when:
+    - env_desktop in ["gnome"]
+  community.general.dconf:
+    key: "/org/gnome/Ptyxis/Profiles/3cba4f5dbeae30b27ab0a46d69e20e40/use-custom-command"
+    value: "true"
+    state: present
+
+- name: Gnome - ptyxis - config - set custom command for profile bash
+  when:
+    - env_desktop in ["gnome"]
+  community.general.dconf:
+    key: "/org/gnome/Ptyxis/Profiles/3cba4f5dbeae30b27ab0a46d69e20e40/custom-command"
+    value: "'/bin/bash'"
+    state: present
+
+- name: Gnome - ptyxis - config - set using login shell for profile bash
+  when:
+    - env_desktop in ["gnome"]
+  community.general.dconf:
+    key: "/org/gnome/Ptyxis/Profiles/3cba4f5dbeae30b27ab0a46d69e20e40/login-shell"
+    value: "true"
+    state: present
+
+- name: Gnome - ptyxis - config - set palette for profile bash
+  community.general.dconf:
+    key: "/org/gnome/Ptyxis/Profiles/3cba4f5dbeae30b27ab0a46d69e20e40/palette"
+    value: "'Tokyo Night'"
+    state: present
+
+- name: Gnome - ptyxis - config - set default profile (bash) - uuid
+  # will be overriden further below if zsh is available
+  community.general.dconf:
+    key: "/org/gnome/Ptyxis/default-profile-uuid"
+    value: "'3cba4f5dbeae30b27ab0a46d69e20e40'"
+    state: present
+
+# ### -------------
+# ### Profile "zsh"
+# ### -------------
+- name: Gnome - ptyxis - config - test if zsh is available
+  when:
+    - env_desktop in ["gnome"]
+  ansible.builtin.shell: which zsh >/dev/null 2>&1
+  register: zsh_available
+  ignore_errors: true
+  changed_when: false
+
+- name: Gnome - ptyxis - config - zsh-related settings
+  # only execute the following block when:
+  when:
+    - env_desktop in ["gnome"]
+    - zsh_available.rc == 0
+  block:
+    - name: Gnome - ptyxis - config - add new profile zsh (predefined value)
+      community.general.dconf:
+        key: "/org/gnome/Ptyxis/profile-uuids"
+        value: "['3cba4f5dbeae30b27ab0a46d69e20e40', 'bcb6a342eea387b804bfee3869e22157']"
+        state: present
+
+    - name: Gnome - ptyxis - config - add name for profile zsh
+      community.general.dconf:
+        key: "/org/gnome/Ptyxis/Profiles/bcb6a342eea387b804bfee3869e22157/label"
+        value: "'zsh'"
+        state: present
+
+    - name: Gnome - ptyxis - config - use custom command for profile zsh
+      community.general.dconf:
+        key: "/org/gnome/Ptyxis/Profiles/bcb6a342eea387b804bfee3869e22157/use-custom-command"
+        value: "true"
+        state: present
+
+    - name: Gnome - ptyxis - config - set custom command for profile zsh
+      community.general.dconf:
+        key: "/org/gnome/Ptyxis/Profiles/bcb6a342eea387b804bfee3869e22157/custom-command"
+        value: "'/bin/zsh'"
+        state: present
+      when:
+        - env_desktop in ["gnome"]
+
+    - name: Gnome - ptyxis - config - set using login shell for profile zsh
+      community.general.dconf:
+        key: "/org/gnome/Ptyxis/Profiles/bcb6a342eea387b804bfee3869e22157/login-shell"
+        value: "true"
+        state: present
+
+    - name: Gnome - ptyxis - config - set palette for profile zsh
+      community.general.dconf:
+        key: "/org/gnome/Ptyxis/Profiles/bcb6a342eea387b804bfee3869e22157/palette"
+        value: "'Tokyo Night'"
+        state: present
+
+    - name: Gnome - ptyxis - config - set default profile (zsh) - uuid
+      community.general.dconf:
+        key: "/org/gnome/Ptyxis/default-profile-uuid"
+        value: "'bcb6a342eea387b804bfee3869e22157'"
+        state: present
+
+# --- end of block

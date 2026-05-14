@@ -21,7 +21,7 @@
 
 - name: All settings misc - rclone - create folder pCloud-Mnt in homedir (all, env_user)
   ansible.builtin.file:
-    path: "/home/{{ env_user }}/pCloud-Mnt"
+    path: "/home/{{ env_user }}/mnt/pCloud-Mnt"
     owner: "{{ env_user }}"
     group: "{{ env_user }}"
     mode: "0755"

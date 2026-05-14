@@ -1,31 +1,44 @@
 # #########
 # ### Gnome
 # #########
-- name: Uninstall packages for workstations - 1 (Gnome, Arch)
+
+- name: Uninstall packages for workstations (Gnome, Arch)
   ansible.builtin.package:
     state: absent
     name:
+      - transmission-gtk # Download and share files over BitTorrent # installed via "archinstall_autoBash" # flatpak
+      # ----------------
       - aisleriot
+      - decibels # Audio Player # flatpak
+      - sushi # A quick previewer for Nautilus # removing evince breaks dependency 'evince' required by sushi
+      - evince # Document viewer # replaced by papers # removing evince breaks dependency 'evince' required by sushi
       - five-or-more
       - four-in-a-row
       - gnome-2048
+      - gnome-calculator # flatpak
       - gnome-calendar
+      - gnome-characters # flatpak
       - gnome-chess
+      - gnome-clocks # flatpak
       - gnome-contacts
+      - gnome-font-viewer # flatpak
       - gnome-games
-      - gnome-maps
       - gnome-klotski
+      - gnome-logs # flatpak
+      - gnome-maps
+      - gnome-music # replaced by Rhythmbox # flatpak
+      - gnome-remote-desktop # Connections # flatpak
+      - gnome-software
+      # - gnome-system-monitor # replaced by Mission Center # flatpak
+      - gnome-text-editor # flatpak
       - gnome-todo
+      - gnome-tour
       - hitori
+      - loupe # image viewer for GNOME # flatpak
+      - papers # Document viewer # flatpak
+      - showtime # Video Player # flatpak
+      - simple-scan # Document Scanner # flatpak
+      - snapshot # Gnome Camera # flatpak
   when:
     - ansible_facts['distribution'] == "Archlinux"
     - env_desktop in ["gnome"]
-
-- name: Uninstall packages for workstations - 2 (Gnome, Arch)
-  ansible.builtin.package:
-    state: absent
-    name:
-      - gnome-software
-  when:
-    - ansible_facts['distribution'] == "Archlinux"
-    - env_desktop == "gnome"
