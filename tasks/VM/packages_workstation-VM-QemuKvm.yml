@@ -4,21 +4,26 @@
   ansible.builtin.package:
     state: present
     name:
-      - bridge-utils # Utilities for configuring the Linux ethernet bridge
-      - dnsmasq # Lightweight, easy to configure DNS forwarder and DHCP server
-      - iptables-nft # conflicts with 'iptables' ('iptables" ist installiert (Standard), wird über install script geändert und durch iptables-nft ersetzt)
-        # Linux kernel packet control tool (using nft interface)
-      - edk2-ovmf # UEFI Support # Firmware for Virtual Machines
+      # - bridge-utils # Utilities for configuring the Linux ethernet bridge # package not available anymore as std-package but in AUR
+      - dmidecode # Desktop Management Interface table related utilities # DMI system info support
+      - dnsmasq # Lightweight, easy to configure DNS forwarder and DHCP server # for the default NAT/DHCP networking
+      - edk2-ovmf # UEFI support for Virtual Machines
+      - iptables # Linux kernel packet control tool (using nft interface)
       - libguestfs # Access and modify virtual machine disk images
-      - libvirt # # API for controlling virtualization engines (openvz,kvm,qemu,virtualbox,xen,etc)
+      - libvirt # API for controlling virtualization engines (openvz,kvm,qemu,virtualbox,xen,etc)
+      - nfs-utils # Support programs for Network File Systems
       # QEMU - https://wiki.archlinux.org/title/QEMU
-      - openbsd-netcat # TCP/IP swiss army knife. OpenBSD variant. # network piping application
+      - openbsd-netcat # TCP/IP swiss army knife. OpenBSD variant. # network piping application # for remote management over SSH.
       # - qemu              # hier muss aus 3 Optionen ausgewählt werden (base, desktop, full), daher bliebe da hängen
       # - qemu-base         # A basic QEMU setup for headless environments
       # - qemu-desktop      # A QEMU setup for desktop environments
       - qemu-full # A Full QEMU setup # http://archlinux.org/packages/extra/x86_64/qemu-full/
+      # - qemu-block-gluster # Glusterfs block support
+      # - qemu-block-iscsi # iSCSI block support
+      - samba # SMB/CIFS server support
       - swtpm # Libtpms-based TPM emulator with socket, character device, and Linux CUSE interface
       - vde2 # Virtual Distributed Ethernet for emulators like qemu
+      - virtiofsd # modern and high-performance way to conveniently share files between host and guest
       - virt-firmware # Collection of tools for edk2 firmware images # Debian: python3-virt-firmware
       - virt-install # Command line tool for creating new KVM , Xen, or Linux container guests using the libvirt hypervisor
   when:
@@ -40,5 +45,7 @@
     name:
       - spice-vdagent # spice agent for Linux guests (z.B. für clipboard sharing host+guest)
       - qemu-guest-agent # allows the hypervisor host to perform various operations in the guest... # https://www.qemu.org/docs/master/interop/qemu-ga.html
+      # - xf86-video-qxl # Xorg QXL video driver
+      # - wl-clipboard # Wayland clipboard support
   when:
     - ansible_facts['virtualization_role'] == "guest"
