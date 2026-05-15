@@ -183,7 +183,7 @@
       - vim-jedi # Vim plugin for jedi, an awesome Python autocompletion
       - viu # Simple terminal image viewer (u.a. wg. nnn)
       - wireguard-tools
-      # - zed # A high-performance, multiplayer code editor from the creators of Atom and Tree-sitter # flatpak
+      - zed # A high-performance, multiplayer code editor from the creators of Atom and Tree-sitter # flatpak
       - zsh-autocomplete # alternative: install from git
       - zsh-autosuggestions # alternative: install from git
       - zsh-completions # alternative: install from git
