@@ -23,7 +23,7 @@ source install_SWandConf.shlib
 ### ---
 ### Variablen
 ### ---
-playbookdir="ansible_workstation_flatpak" # also repo name
+playbookdir="ansible_workstation" # also repo name
 playbook="local.yml"
 userid=$(whoami)                                       # or: userid=${USER}
 oslist=("Arch Linux") # currently supported distributions
