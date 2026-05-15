@@ -15,6 +15,7 @@
     - "io.github.linx_systems.ClamUI" # GUI for ClamAV
     - "de.leopoldluley.Clapgrep" # One app to search through all your files (incl. PDF, Office, ...)
     - "com.visualstudio.code" # Visual Studio Code # Code editing
+    - "com.visualstudio.code.tool.podman//stable" # A tool for VS Code for managing OCI containers and pods
     - "com.github.hluk.copyq" # Advanced clipboard manager
     - "org.cryptomator.Cryptomator" # Encryption for your cloud made easy
     - "com.belmoussaoui.Decoder" # Scan and generate QR codes
