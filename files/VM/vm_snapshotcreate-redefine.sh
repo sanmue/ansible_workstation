@@ -7,28 +7,26 @@
 ######################
 ### redefine snapshots
 ######################
-snapshotfileList=$(ls snapshotdump_*)
-#echo "${snapshotfileList}"
-
 snapshotfileList=$(ls snapshotList_*)
 #echo "${snapshotfileList}"
 
 echo -e "\nredefine snapshots:"
 for snapshotfile in ${snapshotfileList}; do
-	#echo "- snapshotfile: ${snapshotfile}"          # z.B. snapshotList_ubuntu22.04.xml
-	domain=$(echo "${snapshotfile}" | cut -d _ -f 2 | awk '{print substr($0,1,length-4)}')   # -> 'ubuntu22.04' (2. Teilstück + letzte 4 Zeichen abschneiden (.txt))
+	#echo "- snapshotfile: ${snapshotfile}"                                                 # z.B. snapshotList_ubuntu22.04.xml
+	domain=$(echo "${snapshotfile}" | cut -d _ -f 2 | awk '{print substr($0,1,length-4)}')  #   -> 'ubuntu22.04' (2. Teilstück + letzte 4 Zeichen (.txt) abschneiden)
 	echo "- domain: ${domain}"
 
-	domainSnapshotfileList=$(cat "${snapshotfile}")
-	if [ -n "${domainSnapshotfileList}" ]; then
+	domainSnapshotfileList=$(cat "${snapshotfile}") # 1-n Zeilen mit z.B.: Zeile 1 enthält: '20260123_2015' Zeile 2 enthält: '20260201_1102'
+	if [ -n "${domainSnapshotfileList}" ]; then # if length of string 'domainSnapshotfileList' is non-zero
+                                                # e.g.: 'snapshotdump_debian-101_20260123_2015.xml' and 'snapshotdump_debian-101_20260201_1102.xml'
 		for snapshot in ${domainSnapshotfileList}; do echo
-			snapshotdumpfile="snapshotdump_${domain}_${snapshot}.xml"
+			snapshotdumpfile="snapshotdump_${domain}_${snapshot}.xml" # e.g.: snapshotdump_debian-101_20260123_2015.xml
 			
 			# snapshot-create --redefine
 			existingDomainSnapshotList=$(sudo virsh snapshot-list "${domain}" --name --topological)
 			found='nein'   # Init mit Standardwert
-			for existingSnapshot in $existingDomainSnapshotList; do   	# zuerst prüfen, ob der Snapshot nicht innerhalb eines vorhergehendne Laufs schon existiert
-																		# ansonsten würde wieder neu definiert. Funktioniert, gefällt aber nicht
+			for existingSnapshot in $existingDomainSnapshotList; do # zuerst prüfen, ob der Snapshot nicht von einem vorhergehendne Lauf existiert
+                                                                    # sonst würde wieder neu definiert. Funktioniert, gefällt aber nicht.
 				if [ "${snapshot}" == "${existingSnapshot}" ]; then
 					found='ja'
 					echo "Snapshot '${snapshot}' für domain '${domain}' existiert bereits."
