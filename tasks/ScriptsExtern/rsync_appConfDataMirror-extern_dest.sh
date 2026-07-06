@@ -15,8 +15,10 @@ echo -e "\n\e[1;33mVariablen und Parameter (set + check)\e[0m"
 echo "Pfad home directory: '${HOME}'" # home directory
 borgConfFolder="${HOME}/.config/borg" # borg conf directory
 vortaBaseConfFolder="${HOME}/.var/app/com.borgbase.Vorta" # vorta conf directory
+ansibleVaultFolder="${HOME}/.config/.vault"
 appConfDataFolderName="AppConfData"
-rescueAppConfDataFolder="${HOME}/RescueSystem/${appConfDataFolderName}" # AppConfData directory
+rescueDataFolderName="RescueSystem"
+rescueAppConfDataFolder="${HOME}/${rescueDataFolderName}/${appConfDataFolderName}" # AppConfData directory
 # ### Variablen - Ende
 # ### ----------------
 
@@ -43,6 +45,22 @@ if [ "$(ls "${borgConfFolder}")" ]; then
 	echo "borgConfFolder: '${borgConfFolder}'"
 else
 	echo -e "\e[0;31mborgConfFolder '${borgConfFolder}' existiert nicht, bitte prüfen.\nSkript wird beendet.\e[0m"
+	exit 1
+fi
+
+# - vortaBaseConfFolder:
+if [[ -d "${vortaBaseConfFolder}" ]]; then
+	echo "vortaBaseConfFolder: '${vortaBaseConfFolder}'"
+else
+	echo -e "\e[0;31mvortaBaseConfFolder '${vortaBaseConfFolder}' existiert nicht, bitte prüfen.\nSkript wird beendet.\e[0m"
+	exit 1
+fi
+
+# - ansibleVaultFolder:
+if [[ -d "${ansibleVaultFolder}" ]]; then
+	echo "ansibleVaultFolder: '${ansibleVaultFolder}'"
+else
+	echo -e "\e[0;31mansibleVaultFolder '${ansibleVaultFolder}' existiert nicht, bitte prüfen.\nSkript wird beendet.\e[0m"
 	exit 1
 fi
 
@@ -73,8 +91,9 @@ logfile="${logfolder}/${logname}"
 # rsyncOption='--dry-run'
 rsyncOptionTxt="# ---------\n# ${rsyncOption}\n# ---------"
 
+echo -e "\nGgf. erscheint Aufforderung zur Passworteingabe für sudo Berechtigung, damit logfile nach '${logfolder}' geschrieben und zum Schluss die Rechte gesetzt werden können.\n"
+
 echo -e "\n\e[1;33mStarte rsync von '${borgConfFolder}' nach '${rescueAppConfDataFolder}'...\e[0m"
-echo "Ggf. erscheint Aufforderung zur Passworteingabe für sudo Berechtigung, damit logfile nach '${logfolder}' geschrieben und zum Schluss die Rechte gesetzt werden können."
 if [ -z "${rsyncOption}" ]; then # -z: True if the length of string is zero
 	echo -e "# '${borgConfFolder}' nach '${rescueAppConfDataFolder}'\n" | sudo tee -a "${logfile}" >/dev/null
 	rsync -aPhEv --stats --delete "${borgConfFolder}" "${rescueAppConfDataFolder}" | sudo tee -a "${logfile}"
@@ -87,6 +106,15 @@ echo -e "# 'Vorta (flatpak) data' nach '${rescueAppConfDataFolder}/Vorta/AppData
 rsync -aPhEv --stats --delete "${vortaBaseConfFolder}/.local" "${rescueAppConfDataFolder}/Vorta/AppData/" | sudo tee -a "${logfile}"
 rsync -aPhEv --stats --delete "${vortaBaseConfFolder}/config" "${rescueAppConfDataFolder}/Vorta/AppData/" | sudo tee -a "${logfile}"
 rsync -aPhEv --stats --delete "${vortaBaseConfFolder}/data" "${rescueAppConfDataFolder}/Vorta/AppData/" | sudo tee -a "${logfile}"
+
+echo -e "\n\e[1;33mStarte rsync von '${ansibleVaultFolder}' nach '${rescueAppConfDataFolder}'...\e[0m"
+if [ -z "${rsyncOption}" ]; then # -z: True if the length of string is zero
+	echo -e "# '${ansibleVaultFolder}' nach '${rescueAppConfDataFolder}'\n" | sudo tee -a "${logfile}" >/dev/null
+	rsync -aPhEv --stats --delete "${ansibleVaultFolder}" "${rescueAppConfDataFolder}" | sudo tee -a "${logfile}"
+else
+	echo -e "${rsyncOptionTxt}\n# '${ansibleVaultFolder}' nach '${rescueAppConfDataFolder}'\n" | sudo tee -a "${logfile}" >/dev/null
+	rsync -aPhEv --stats --delete "${rsyncOption}" "${ansibleVaultFolder}" "${rescueAppConfDataFolder}" | sudo tee -a "${logfile}"
+fi
 
 echo -e "\n\e[1;33mStarte rsync von '${rescueAppConfDataFolder}/' nach '${dest}/'...\e[0m"
 if [ -z "${rsyncOption}" ]; then # -z: True if the length of string is zero
