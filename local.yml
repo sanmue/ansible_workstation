@@ -140,7 +140,6 @@
     - name: VM - users
       ansible.builtin.import_tasks: tasks/VM/config_all-VM-users.yml
     # - name: VM - create # moved to separate repo: https://gitlab.com/sanmue/ansible_vm_qemukvm.git
-    #   ansible.builtin.import_tasks: tasks/VM/config_all-VM-QemuKvm-create.yml
     #
     # ----------------------------------------------------------
     # ### Create Users / Config User privileges:
