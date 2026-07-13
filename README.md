@@ -24,6 +24,7 @@
 If possible flatpak for GUI Applications are prefered.
 
 Exceptions:
+
 - baobab # Disk Usage Analyzer
 - gnome-disk-utility
 - Btrfs Assistant
