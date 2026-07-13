@@ -15,7 +15,7 @@ echo -e "\n\e[1;33mVariablen und Parameter (set + check)\e[0m"
 echo "Pfad home directory: '${HOME}'" # home directory
 borgConfFolder="${HOME}/.config/borg" # borg conf directory
 vortaBaseConfFolder="${HOME}/.var/app/com.borgbase.Vorta" # vorta conf directory
-ansibleVaultFolder="${HOME}/.config/.vault"
+ansibleVaultFolder="${HOME}/.vault"
 appConfDataFolderName="AppConfData"
 rescueDataFolderName="RescueSystem"
 rescueAppConfDataFolder="${HOME}/${rescueDataFolderName}/${appConfDataFolderName}" # AppConfData directory
